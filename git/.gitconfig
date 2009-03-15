@@ -1,0 +1,37 @@
+[user]
+	name = Jan Larres
+	email = jan@majutsushi.net
+
+[giggle]
+	compact-mode = false
+	main-window-geometry = 1083x696+84+47
+	main-window-maximized = false
+
+[gui]
+	fontdiff = -family Courier -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	rlog = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"
+	slog = log --stat
+
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+	interactive = auto
+[merge]
+	tool = vimdiff
+[core]
+	excludesfile = /home/jan/.gitignore
+	fsyncobjectfiles = true
+[web]
+	browser = firefox
+[instaweb]
+	httpd = lighttpd
+
+[cola]
+	fontui = DejaVu Sans,8,-1,5,50,0,0,0,0,0
+	fontdiff = DejaVu Sans Mono,8,-1,5,50,0,0,0,0,0

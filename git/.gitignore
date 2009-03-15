@@ -1,0 +1,8 @@
+.*.swp
+*.[ao]
+*.so
+tags
+*.aux
+*.pdf
+config.log
+config.status
