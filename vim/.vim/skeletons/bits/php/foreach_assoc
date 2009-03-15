@@ -1,0 +1,3 @@
+foreach($<+CURSOR+> as <+VAR+> => <+VAL+>) {
+    <+CODE+>
+}

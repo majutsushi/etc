@@ -1,0 +1,5 @@
+module <+FILE NAME ROOT:cs*\W*_*+><+CURSOR+>
+    #module_function
+    <+BODY+>
+end
+<++>

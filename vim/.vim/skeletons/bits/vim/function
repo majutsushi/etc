@@ -1,0 +1,4 @@
+fun! <+CURSOR+>(<+ARGS+>)
+    <+BODY+>
+endf
+<++>

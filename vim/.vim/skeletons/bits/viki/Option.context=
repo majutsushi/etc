@@ -1,0 +1,7 @@
+<tskel:before>
+let b:tskelChoices = "ruby\ndeplate\nself"
+</tskel:before>
+<tskel:after>
+unlet b:tskelChoices
+</tskel:after>
+context=<+?b:tskelChoices|Type:?+><+CURSOR+>

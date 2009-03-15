@@ -1,0 +1,3 @@
+collect do |e|
+    <+CURSOR+>
+end<++>

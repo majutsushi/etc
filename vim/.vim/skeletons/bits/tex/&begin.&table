@@ -1,0 +1,5 @@
+\begin{table}<+CURSOR+>
+    <+tskel:tabular+>
+    \caption{<+CAPTION+>}
+\end{table}
+<++>

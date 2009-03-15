@@ -1,0 +1,1 @@
+/usr/share/vim-scripts/autoload/omni/common/debug.vim

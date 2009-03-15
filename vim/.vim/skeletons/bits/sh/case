@@ -1,0 +1,9 @@
+case <+CURSOR+> in
+<+PATTERN+>)
+    <+BODY+>
+    ;;
+*)
+    <+DEFAULT+>
+    ;;
+esac
+<++>

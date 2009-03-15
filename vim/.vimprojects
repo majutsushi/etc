@@ -1,0 +1,45 @@
+
+wput=~/work/dev/projects/wput CD=. filter="Makefile.in ChangeLog" in=../in.vim {
+ ChangeLog
+ Makefile.in
+ src=src filter="*.c *.h Makefile.in" {
+  _queue.h
+  config.h
+  constants.h
+  ftp-ls.c
+  ftp.c
+  ftp.h
+  ftplib.c
+  ftplib.h
+  Makefile.in
+  memdbg.c
+  netrc.c
+  netrc.h
+  progress.c
+  progress.h
+  queue.c
+  socketlib.c
+  socketlib.h
+  url.h
+  utils.c
+  utils.h
+  wdel.c
+  wdel.h
+  wget.h
+  windows.h
+  wput.c
+  wput.h
+  getopt=getopt {
+   getopt.c
+   getopt.h
+   getopt1.c
+  }
+  msvcpp=msvcpp {
+   strptime.c
+  }
+ }
+ doc=doc filter="*.1.gz" {
+  wdel.1.gz
+  wput.1.gz
+ }
+}

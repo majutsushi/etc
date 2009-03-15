@@ -1,0 +1,4 @@
+while <+CURSOR+>
+    <+BODY+>
+endwh
+<++>

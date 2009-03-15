@@ -1,0 +1,20 @@
+<tskel:before>
+let b:tskelBibID = input("ID of bibentry: ")
+if b:tskelBibID == "" | let b:tskelBibID = "<+CURSOR+>" | endif
+</tskel:before>
+<tskel:after>
+unlet b:tskelBibID
+</tskel:after>
+@ARTICLE{<+b:tskelBibID+>,
+    author       = {<+CURSOR+>},
+    title        = {<+BIB TITLE+>},
+    journal      = {<+JOURNAL+>},
+    year         = {<+YEAR+>},
+    <+OPTIONAL FIELDS+>
+    volume       = {<+VOL+>},
+    number       = {<+NUM+>},
+    month        = {<+MONTH+>},
+    pages        = {<+PAGES+>},
+    <+bit:standardEntries+>
+}
+<++>

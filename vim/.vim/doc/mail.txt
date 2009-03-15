@@ -1,0 +1,384 @@
+*mail.txt* FtPlugin for helping writing mail
+
+For instructions on installing this file, type
+	:help add-local-help
+inside Vim.
+
+For Vim version 6.0.
+
+*mail* *mail.vim*
+
+1. Installation                                         |mail-installation|
+2. Terminology                                          |mail-terminology|
+3. Usage                                                |mail-usage|
+4. Configuration                                        |mail-configuration|
+
+The functionality mentioned here is a plugin, see |add-plugin|.
+You can avoid loading this plugin by setting the "did_ftplugin_after" variable
+in your |vimrc| file: >
+
+	:let did_ftplugin_after = 1
+
+This plugin's purpose is helping with mail editing.  It has two major roles.
+The first is email address retrievel and the second is added functionality
+while editing.
+
+==============================================================================
+1. Installation                             *mail-installation*
+
+I envisioned people putting this in their after/ftplugin directory.  IMO, this
+would give them more flexibility when dealing with changing / adding to the
+default mail ftpluing.
+
+==============================================================================
+2. Terminology                              *mail-terminology*
+
+    quote_mark    => a delimiter that shows who is responsible for a certain
+                     section of an email
+    quote_block   => all of the quote_marks added together
+    quote_depth   => the number of quote_marks in a quote_block
+    quote_segment => a contiguous sequence of lines which have the
+                     same quote_block (or quote_depth)
+    E.g. Given:
+        > ) ab% you going to be there on saturday
+        > } ab% for the party?
+        > } yeah, i wouldn't miss it
+        > } --
+        > } bilbo
+        > oh man, i'm not going if bilbo is going
+        no doubt
+    quote_marks:
+        "> "
+        "} "
+        "ab% "
+    quote_blocks:
+        "> } ab% "
+        "> } "
+        "> "
+    quote_depths:
+        "> } ab% "  => 3
+        "> } "      => 2
+        "> "        => 1
+        ""          => 0
+    quote_segments:
+        length: 2
+        > ) ab% you going to be there on saturday
+        > } ab% for the party?
+               ----------
+        length: 1
+        > } yeah, i wouldn't miss it
+        > } --
+        > } bilbo
+               ----------
+        length: 1
+        > oh man, i'm not going if bilbo is going
+               ----------
+        length: 1
+        no doubt
+ 
+==============================================================================
+3. Usage                                    *mail-usage*
+
+Below is a description of the user callable functions in this plugin.
+
+Email address retrieval
+-----------------------
+
+Name: MailAliasList
+Default Binding: <LocalLeader>al
+Modes: normal, insert
+Description:
+
+This routine is designed to run an external program, allow the user to select
+a bunch of emails, and then these emails are returned in a comma seperated
+list.  For example, suppose the following line exists (the cursor is at the
+caret):
+
+    To:
+        ^
+
+If the user hits '<LocalLeader>al' then the currently configured program
+launches and the plugin will wait for the email list to be retrieved.  At
+present, only Abook is supported in this manner.  Patches are welcome.
+        
+Name: MailAliasQuery
+Default Binding: <LocalLeader>aq
+Modes: normal, insert
+Description:
+
+This routine is designed to take the <cword> under the cursor and do a lookup
+on it.  This lookup should return a mutt email query, for example, given the
+following:
+
+    To: john
+          ^
+
+If the user hits <LocalLeader>aq, then the plugin will go out and attempt to
+lookup "john" in the current alias source.  Currently, both abook and the mutt
+alias file are supported sources.
+
+Formatting
+----------
+
+Name: MailFormatQuote
+Default Binding: none
+Modes: normal, insert
+Description:
+
+Format a quote segment using QuoteMotion1.
+
+Name: MailFormatLine
+Default Binding: none
+Modes: normal, insert
+Description:
+
+Formats the current line.
+
+Name: MailFormatMerge
+Default Binding: none
+Modes: normal
+Description:
+
+Conjoins the current line with the previous line.
+
+Name: MailFormatParagraph
+Default Binding: none
+Modes: normal, insert
+Description:
+
+Formats the current paragraph.
+
+None of these are mapped by default.  Originally, they were mapped to the
+first four function keys.  However, an astute reader pointed out that <F1>
+is mapped to help by default and that in the documentation there is a 
+recommendation for an <F4> mapping.  
+
+Now, I'm going to give the user more flexibility so they can define whatever
+they want (i.e. I'm too lazy too figure out good substitutes <g>).
+
+To define your own, do something like the following:
+
+map <buffer> <unique> <LocalLeader>qfq <Plug>MailFormatQuote
+map! <buffer> <unique> <LocalLeader>qfq <Plug>MailFormatQuote
+
+Quote Manipulation
+------------------
+
+Name: MailQuoteEraseSig
+Default Binding: <LocalLeader>qes
+Modes: normal
+Description:
+
+This routine will remove quoted signatures.  It always operates over the
+entire email.
+
+% | No, I don't agree with you.
+%
+% Nonsense.  You are wrong.  Grow up.
+%
+% | I can't believe I'm even replying to this.
+% | --
+% | Some power user
+%
+% Yeah, believe it, brother.
+% --
+% Some other user
+
+will become:
+
+% | No, I don't agree with you.
+%
+% Nonsense.  You are wrong.  Grow up.
+%
+% | I can't believe I'm even replying to this.
+%
+% Yeah, believe it, brother.
+
+Name: MailQuoteFixupSpaces
+Default Binding: <LocalLeader>qfs
+Modes: normal, visual
+Description:
+
+This will take a quote segment and try to put spaces in quote blocks where
+they don't currently exist.  For example,
+    
+    >>% hello
+    >> bob
+
+would turn into:
+
+    > > % hello
+    > > bob
+
+In normal mode the ranger to operate over comes from mail_quote_motion1.
+
+Name: MailQuoteMangledMerge
+Default Binding: <LocalLeader>qmm
+Modes: normal, visual
+Description:
+
+This routine will try and make sense out of 'Mangled' quoted paragraph.
+For example, it will try and turn
+
+> > starting to look like a distro problem... Anyone
+> else
+> > having this problem running a different distro
+> besides
+> > LinuxBlast 8? Anyone tried 8.1 yet?
+
+into:
+
+> > starting to look like a distro problem... Anyone else
+> > having this problem running a different distro besides
+> > LinuxBlast 8? Anyone tried 8.1 yet?
+
+In normal mode this routine will operate over the current and next line.
+
+Name: MailQuoteDelEmpty
+Default Binding: <LocalLeader>qde
+Modes: normal, visual
+Description:
+
+This will search through the given range and attempt to delete all
+lines consisting of a quote block and optional white space.
+
+For example,
+
+% > yellow
+% > blue
+% > 
+% yes
+
+will become:
+
+% > yellow
+% > blue
+
+% yes
+
+In normal mode this routine will operate over the entire email.
+
+Name: MailQuoteRemoveDpth
+Default Binding: <LocalLeader>qrd
+Modes: normal, visual
+Description:
+
+This routine will try and decrease the quote depth of a quote segment by one.
+However, it will remove the last layer of quoting.  This is because it is
+assumed that the user wants the oldest quote to be gone.
+
+For example,
+
+ab> % > I really
+ab> % > like
+ab> % > apples
+
+will become:
+
+ab> % I really
+ab> % like
+ab> % apples
+
+In normal mode the ranger to operate over comes from mail_quote_motion1.
+
+Quote Motions
+-------------
+
+A quote motion is a vim linewise motion that operates over quotes.  The
+default motion character is 'q'.  These motions are analogous to '$', 'E', and
+others.  They allow the user to use operator commands over a quote range.  For
+example, dq would allow the user to delete the current quote.  This means that
+given:
+
+> % Hi                                  <<< cursor on this line,
+> % How are you doing?
+> % Did you get over that STD?
+> Yeah, It only took a few months.
+
+And the user hits dq, the text will be transformed into:
+
+> Yeah, It only took a few months.
+
+Or if the user were to hit, dqq, the text would be transformed into:
+
+> % Hi How are you doing?  Did you get over that STD?
+> Yeah, It only took a few months.
+
+To re-define the first or define the other two, use something like this:
+
+    omap <silent> <unique> q <Plug>MailQuoteMotion1
+    omap <silent> <unique> Q <Plug>MailQuoteMotion2
+    omap <silent> <unique> x <Plug>MailQuoteMotion3
+
+See below on howto configure the range that the quote motions operate over.
+
+==============================================================================
+4. Configuration                            *mail-configuration*
+
+Variables:
+
+g:mail_alias_source
+
+    Where you want the script to get aliases from.  Currently, there are three
+    sources.  They are described below:
+    
+    MuttAlias: use the mutt alias file
+    MuttQuery: use a mutt external query command
+    Abook: use the abook addressbook
+
+    The default is MuttAlias.  To change it:
+        let g:mail_alias_source = "Abook"
+    
+g:mail_mutt_alias_file
+    
+    Where the script looks for your alias file.  Default:
+        "~/.mutt/aliases"
+    
+g:mail_mutt_query_command
+
+    The command that will be executed whenever a mutt external query is used.
+    Default: mutt_ldap_query.pl
+
+g:mail_quote_chars
+    
+    What the script thinks are characters that start quotes.  Careful, if you
+    include ":", then there will be many false positives.  Default:
+        "|>}#%"
+        
+g:mail_quote_mark_re
+    
+    The regular expression that determines how this script finds quotes.  The
+    default is somewhat long, so it will not be listed here.
+
+g:mail_quote_motion1
+g:mail_quote_motion2
+g:mail_quote_motion3
+
+    These three allow for the configuration of quote motions.
+
+    The configuration allows the user to specify how many lines the operation
+    will affect.  The way this is determined is by inspecting when the quote
+    depth changes.  Each motion can be configured to stop when the depth
+    changes at all, decreases, or increases.  This correlates to the values
+    of: inc_or_dec, dec, and inc.
+
+    Also, several routines use mail_quote_motion1 to determine the default
+    range to operate over.  See the usage notes for exactly which routines do
+    this.
+
+g:mail_erase_quoted_sig
+
+    Set this to automatically have the script remove quotes.
+
+g:mail_delete_empty_quoted
+
+    Set this to qutom remove quote lines that are empty.
+
+g:mail_generate_abbrev
+
+    Set this to parse your mutt aliases and turn each entry into an
+    abbreviation.
+
+g:mail_cursor_start
+
+    Set this to place the cursor at a sensible position.

@@ -1,0 +1,7 @@
+<tskel:before>
+let b:tskelhtml_tag = input('Tag: ')
+</tskel:before>
+<tskel:after>
+unlet b:tskelhtml_tag
+</tskel:after>
+<<+b:tskelhtml_tag+><+CURSOR+>><+TEXT+></<+b:tskelhtml_tag+>><++>

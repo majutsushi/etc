@@ -1,0 +1,3 @@
+def <+CURSOR+>(<+ARGS+>)
+    <+BODY+>
+end<++>

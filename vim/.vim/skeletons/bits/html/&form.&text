@@ -1,0 +1,1 @@
+<input type="text" name="<+CURSOR+>" value="<+VALUE+>" <+?|Size?|size="%s" ?+><+?|Max length?|maxlength="%s" ?+>/><++>

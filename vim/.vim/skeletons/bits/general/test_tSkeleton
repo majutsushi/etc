@@ -1,0 +1,43 @@
+<tskel:before>
+let b:foo = "bar"
+let b:bar = "red\nblue\ngreen"
+</tskel:before>
+<tskel:after>
+unlet b:foo
+</tskel:after>
+Standard Field:        <+AUTHOR+>
+2 Standard Fields:     <+FILE NAME+><+NOTE+>
+Unknown Field:         <+FOO+>
+2 Unknown Field:       <+FOO+><+BAR+>
+Cursor:                <+CURSOR+>
+Vim Option:            <+&comments+>
+Global Variable:       <+g:tskelDateFormat+>
+Buffer Local Variable: <+b:foo+>
+Query:                 <+?What's up Doc?+>
+Query + Choices:       <+?b:bar|What's your favourite color Doc:?+>
+Code Skeleton:
+                       <+bit:header+>
+Call Function:         <+call:bufname("%")+>
+
+Modifiers:
+Capitalized:           <+b:foo:c+>
+Lower:                 <+AUTHOR:l+>
+Upper:                 <+AUTHOR:u+>
+CamelCase:             <+AUTHOR:C+>
+Substitute:            <+call:bufname("%"):s/[aeiou]/_/+>
+
+Copyright:    © <+call:strftime('%Y')+> <+AUTHOR+>
+Copyright:    ©<+DATE+> <+AUTHOR+> 
+
+Date	<+DATE+>
+Date
+	<+DATE+>
+/**
+ * \file <+FILE NAME+>
+ * \author <+AUTHOR+> <<+EMAIL+>>
+ * \par Created:
+ *      <+DATE+>
+ * \par Modified: 19.09.2006 20:54
+ *	<+DATE+>
+ */
+

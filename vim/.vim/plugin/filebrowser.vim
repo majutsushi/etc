@@ -1,0 +1,1 @@
+/usr/share/vim/addons/plugin/filebrowser.vim

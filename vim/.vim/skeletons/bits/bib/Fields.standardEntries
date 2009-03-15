@@ -1,0 +1,10 @@
+note         = {<+BIB NOTE+>},
+keywords     = {<+KEYWORDS+>},
+abstract     = {[[EXZ::<+b:tskelBibID+>]]},
+url          = {<+URL+>},
+file         = {[[NDOCS::<+FILENAME+>]]},
+doi          = {[[DOI::<+DOI+>]]},
+language     = {en<+LANGUAGE+>},
+language     = {de<+LANGUAGE+>},
+language     = {<+LANGUAGE+>},
+<+Press <Leader>#c when finished!+>

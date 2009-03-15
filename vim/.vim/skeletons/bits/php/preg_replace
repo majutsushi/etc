@@ -1,0 +1,1 @@
+preg_replace(<+CURSOR+>, <+REPLACEMENT+>, <+STRING+>);

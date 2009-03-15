@@ -1,0 +1,12 @@
+class <+FILE NAME ROOT:cs*\W*_*+>::<+CURSOR+>
+    #attr_accessor :<+NAME+>
+    #attr_writer   :<+NAME+>
+    #attr_reader   :<+NAME+>
+
+    # def initialize
+    #     <+INIT+>
+    # end
+    
+    <+BODY+>
+end
+<++>

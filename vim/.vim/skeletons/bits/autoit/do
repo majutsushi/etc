@@ -1,0 +1,4 @@
+do
+    <+CURSOR+>
+until <+TEST+>
+<++>

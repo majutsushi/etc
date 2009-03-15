@@ -1,0 +1,1 @@
+/usr/share/doc/devhelp/tools/devhelp.vim

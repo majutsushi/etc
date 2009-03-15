@@ -1,0 +1,2 @@
+rescue<+CURSOR+> <+EXCEPTION_CLASS+> => e
+    <+HANDLER+>

@@ -1,0 +1,12 @@
+<tskel:before>
+let b:tskelForVar = input('Variable: ')
+if b:tskelForVar == ''
+    let b:tskelForVar = '<+CURSOR+>'
+endif
+</tskel:before>
+<tskel:after>
+unlet b:tskelForVar
+</tskel:after>
+for($<+b:tskelForVar+>=<+FROM+>; $<+b:tskelForVar+> < <+CONDITION+>; $<+b:tskelForVar+>++) {
+    <+CODE+>
+}

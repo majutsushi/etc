@@ -1,0 +1,6 @@
+/**
+ * <+CURSOR+>
+ */
+function <+NAME+>(<+PARAMS+>) {
+    <+BODY+>
+}

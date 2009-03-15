@@ -1,0 +1,8 @@
+<tskel:before>
+let b:tskelChoices = "contents\ntoc\nminitoc\ntables\nfigures\nindex"
+</tskel:before>
+<tskel:after>
+unlet b:tskelChoices
+</tskel:after>
+#LIST<+CURSOR+>: <+?b:tskelChoices|List:?+>
+<++>

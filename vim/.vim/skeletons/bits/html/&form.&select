@@ -1,0 +1,14 @@
+<tskel:here_before>
+let n = input('Number of Options: ')
+let b:tskelOptions = TSkeletonGetBit('option')
+if n != ''
+    let b:tskelOptions = TSkeletonRepeat(n, b:tskelOptions, "    \n")
+endif
+</tskel:here_before>
+<tskel:here_after>
+unlet! b:tskelOptions
+</tskel:here_after>
+<select name="<+CURSOR+>" size="1">
+    <+b:tskelOptions+>
+</select>
+<++>

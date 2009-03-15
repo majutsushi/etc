@@ -1,0 +1,4 @@
+#IF<+CURSOR+>: <+CONDITION+>
+<+BODY+>
+#ENDIF
+<++>

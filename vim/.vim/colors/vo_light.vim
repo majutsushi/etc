@@ -1,0 +1,1 @@
+/usr/share/vim/addons/colors/vo_light.vim

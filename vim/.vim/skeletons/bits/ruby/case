@@ -1,0 +1,7 @@
+case <+CURSOR+>
+when <+CASE+>
+    <+DO+>
+else
+    <+DO+>
+end
+<++>
