@@ -204,7 +204,7 @@ set incsearch
 
 if &encoding == "utf-8"
     set list
-    set listchars=tab:»·,trail:␣
+    set listchars=tab:»·,trail:·
 endif
 
 "set lines=80
