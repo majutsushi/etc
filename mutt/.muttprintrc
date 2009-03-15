@@ -1,0 +1,133 @@
+# MUTTPRINT Konfigurationsdatei
+#
+# ~/.muttprintrc oder /etc/Muttprintrc
+
+
+#
+# Hier kann der Drucker konfiguriert werden
+# Um ein eine Datei zu drucken, folgenden Eintrag
+# verwenden
+PRINTER="TO_FILE:/home/jan/print.ps"
+# PRINTER="lp"
+
+#
+# Hier kann das Druckkommando angegeben werden
+# $PRINTER wird automatisch durch die PRINTER-
+# Variable ersetzt
+# CUPS: Entweder "CUPS" oder beliebiges Kommando mit
+# $CUPS_OPTIONS, was dann durch die Optionen ersetzt wird
+# PRINT_COMMAND="lpr -P$PRINTER"
+PRINT_COMMAND="CUPS"
+# PRINT_COMMAND="gv -"
+
+#
+# Hier kann der Pfad zum Pinguin angegeben werden
+PENGUIN="off"
+
+#
+# Druck von X-Face ein-/ausschalten
+XFACE="on"
+
+#
+# Hier kann der Duplexdruck ein- oder ausgeschaltet
+# werden. Entweder "off" oder "on".
+#
+# Für PostScript-Duplexdrucker auf "printer" setzen
+DUPLEX="off"
+
+#
+# Hier kann der Papiersparmodus (2 Seiten auf 1 Seite)
+# ein- und ausgeschaltet werden.
+# Ausserdem kann die Variable auf 'optional' gesetzt werden,
+# um den Papiersparmodus nur bei mehr als einer Seite einzuschalten.
+PAPERSAVE="off"
+
+#
+# Hier kann die Druckgeschwindigkeit pro Seite in
+# Sekunden eingestellt werden
+SPEED="30"
+
+#
+# Wählen Sie eine Schriftart:
+# - Latex (EC-Fonts)
+# - Latex-bright (CM-bright)
+# - Times
+# - Utopia
+# - Palatino
+# - Charter
+# - Bookman
+# - AvantGarde
+# - CentSchool
+# - Chancery
+# - Helvetica
+FONT="Utopia"
+
+#
+# Wählen Sie einen Style für die erste Seite aus
+# - plain       keine Linien
+# - border      Linie nach den Headern
+# - fbox        Einfacher Kasten um die Header
+# - shadowbox   Schattierter Kasten um die Header
+# - ovalbox     Kasten mit abgerundeten Ecken um die Header (dünne Linien)
+# - Ovalbox     wie "ovalbox" nur etwas dickere Linien
+# - doublebox   Kasten mit doppelten Linien um die Header
+# - grey        grau hinterlegte Header
+# - greybox     wie "grey" nur mit zusätzlichem Kasten
+FRONTSTYLE="shadowbox"
+
+#
+# Soll nach der Kopfzeile (ab Seite 2) eine Linie gedruckt werden
+HEADRULE="on"
+
+#
+# Soll vor der Fußzeile (jede Seite) eine Linie gedruckt werden
+FOOTRULE="on"
+
+#
+# Wählen Sie ein Papierformat
+# - A4
+# - letter
+PAPER="A4"
+
+#
+# druckt keine Signaturen, die mit "-- " abgetrennt wurden
+REM_SIG="off"
+
+#
+# Druckt kein Quoting (zitierte Textstellen)
+REM_QUOTE="off"
+
+#
+# Auswahl der gedruckten Header, Trennung mit "_"
+# /Header/ : Kursivschrift
+# *Header* : Fettdruck
+# Nicht vorhandene Header werden nicht gedruckt
+PRINTED_HEADERS="Date_To_From_CC_Newsgroups_*Subject*"
+
+# 
+# Protokolliert Fehlermeldungen in /tmp/muttprint.log
+DEBUG="0"
+
+#
+# Schriftgröße: 10pt, 11pt oder 12pt
+FONTSIZE="10pt"
+
+#
+# Maximale Zeilenlänge
+WRAPMARGIN="80"
+
+#
+# Datum (Format des Ausdrucks)
+# original, local
+DATE="original"
+
+#
+# Datumformatstring (nur wenn DATE=local)
+# Siehe strftime(3) für Details
+DATE_FORMAT="%c"
+
+# 
+# soll Muttprint nach dem Einlesen der Maildaten in den
+# Hintergrund geschickt werden (keine Fehlermeldungen mehr!)
+BACKGROUND="off"
+
