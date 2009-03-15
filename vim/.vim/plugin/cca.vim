@@ -740,6 +740,10 @@ endfunction
 " s:define_snippets {{{2
 
 function! s:define_snippets(cmd)
+    if bufname("%") =~ 'NERD_tree'
+        return
+    endif
+
     if !exists('b:cca')
         call s:create_bufinfo()
     endif
