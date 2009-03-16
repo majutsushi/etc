@@ -554,7 +554,7 @@ function! GenerateStatusline()
 "    let filestate = "%1*%f %2*%{GetState()}%*%w"
     let filestate = "%1*%{GetFileName()} %2*%{GetState()}%*%w"
 "    let filestate = "%f%m%r%h%w"
-    let fileinfo = "%3*|%{GetFileformat()}:%{GetFileencoding()}:%{GetFiletype()}|%*"
+    let fileinfo = "%3*|%{GetFileformat()}:%{GetFileencoding()}:%{GetFiletype()}%{GetSpellLang()}|%*"
     let curdir = "%<%{GetCurDir()}"
     let tabinfo = "%3*|%1*%{GetExpandTab()}%3*:%{&tabstop}:%{&softtabstop}:%{&shiftwidth}|%*"
 "    let tabinfo = "[%{GetExpandTab()}:%{GetTabstop()}]"
@@ -627,6 +627,18 @@ function! GetFiletype()
         return "--"
     else
         return &filetype
+    endif
+endfunction
+"}}}
+
+" GetSpellLang() {{{
+function! GetSpellLang()
+    if &spell == 0
+        return ""
+    elseif &spelllang == ""
+        return ":--"
+    else
+        return ":" . &spelllang
     endif
 endfunction
 "}}}
