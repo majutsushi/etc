@@ -1,0 +1,53 @@
+!Mode_switch == 3rd level, Multi_key == Compose
+
+![General]
+pointer = 1 2 6 4 5 8 9 3 7 10 11
+
+keysym  e = e E EuroSign currency
+keysym  u = u U udiaeresis Udiaeresis
+keysym  o = o O odiaeresis Odiaeresis
+keysym  a = a A adiaeresis Adiaeresis
+keysym  s = s S ssharp
+keysym  c = c C cent
+! keycode  26 = e E EuroSign currency
+! keycode  30 = u U udiaeresis Udiaeresis
+! keycode  32 = o O odiaeresis Odiaeresis
+! keycode  38 = a A adiaeresis Adiaeresis
+! keycode  39 = s S ssharp
+! keycode  54 = c C cent
+
+![MacBook]
+keycode  49 = section plusminus
+keycode  94 = grave asciitilde
+keycode 108 = Insert NoSymbol Pointer_Button3
+keycode 116 = Mode_switch Multi_key Pointer_Button2
+
+
+!remove Mod1 = Alt_R
+!remove Mod1 = Control_R
+!remove Mod4 = Super_R
+!remove Mod4 = Meta_L
+!remove Mod4 = Mode_switch
+!!remove Mod5 = Mode_switch
+
+!remove Mod1 = Meta_L
+!remove Mod1 = Meta_R
+!remove Mod2 = Alt_L
+
+!keycode  64 = Alt_L
+!keycode  78 = Scroll_Lock
+!keycode 113 = Control_R
+!keycode 115 = Super_L
+!keycode 117 = Multi_key
+
+!add Control = Control_R
+!add Mod1    = Meta_L
+!add Mod3    = Mode_switch
+!add Mod4    = Super_L
+!add Mod4    = Meta_L
+!add Mod5    = Scroll_Lock
+
+!add Mod1 = Alt_L
+!add Mod2 = Meta_L
+!add Mod2 = Meta_R
+

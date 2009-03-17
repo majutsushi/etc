@@ -1,0 +1,69 @@
+!Xft.dpi: 96
+!Xft.hinting: 0
+!Xft.hintstyle: hintmedium
+
+!*fontList: -*-helvetica-medium-r-normal-*-*-80-*-*-*-*-*-*
+
+URxvt.reverseVideo: false
+URxvt.foreground: grey90
+
+URxvt.font: terminus-12
+URxvt.boldFont: -maju-terminus-bold-r-normal--12-120-72-72-c-60-iso10646-1
+!URxvt.italicFont:
+!URxvt.boldItalicFont:
+
+! for real transparency
+URxvt.depth: 32
+URxvt.background: rgba:0000/0000/0000/dddd
+! for fake transparency
+!URxvt.depth: 24
+!URxvt.inheritPixmap: true
+!URxvt.background: black
+!URxvt.tintColor: white
+!URxvt.shading: 15
+
+URxvt.cursorColor: yellow
+URxvt.underlineColor: yellow
+URxvt.fading: 50
+
+URxvt.geometry: 80x50
+
+URxvt.inputMethod: scim
+URxvt.imLocale: ja_JP.UTF-8
+URxvt.preeditType: OnTheSpot,OverTheSpot,Root,None
+
+URxvt.scrollBar: false
+URxvt.scrollstyle: plain
+URxvt.secondaryScroll: true
+URxvt.scrollTtyOutput: false
+URxvt.saveLines: 8192
+
+URxvt.visualBell: true
+URxvt.urgentOnBell: false
+URxvt.utmpInhibit: true
+
+URxvt.perl-ext-common: default,matcher,xim-onthespot,selection-pastebin
+URxvt.urlLauncher: gnome-open
+URxvt.keysym.C-M-e: perl:selection-pastebin:remote-pastebin
+URxvt.selection-pastebin.cmd: pub %
+URxvt.selection-pastebin.url: http://majutsushi.net/stuff/%
+
+!URxvt.termName: xterm
+!URxvt.keysym.Home: \033[1~
+!URxvt.keysym.End: \033[4~
+!URxvt.keysym.F1: \033[11~
+!URxvt.keysym.F2: \033[12~
+!URxvt.keysym.F3: \033[13~
+!URxvt.keysym.F4: \033[14~
+
+yeahconsole.term: urxvt
+yeahconsole.screenWidth: 600
+yeahconsole.consoleHeight: 50
+yeahconsole.aniDelay: 10
+!yeahconsole.toggleKey: ControlAlt+y
+!yeahconsole.toggleKey: None+F1
+yeahconsole.toggleKey: Control+F1
+
+KDrill*kdictfile: /usr/share/edict/kanjidic
+!KDrill*edictfile: /usr/share/edict/edict
+
