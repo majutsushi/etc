@@ -493,11 +493,6 @@ let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
 let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$']
 "}}}
 
-" showmarks {{{
-let g:showmarks_enable = 0
-"let g:showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.'`^<>\""
-"}}}
-
 "}}}
 
 " Functions {{{
