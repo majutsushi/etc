@@ -948,7 +948,7 @@ map <F8>  :bd<C-M>
 " delete buffer, but keep window
 map <S-F8> :call Bclose()<cr>
 
-nnoremap <silent> <F9> :Tlist<CR>
+nmap <silent> <F9>  :Tlist<CR>
 "nmap <silent> <F10> <Plug>ToggleProject
 nmap <silent> <F10> :NERDTreeToggle<CR>
 
