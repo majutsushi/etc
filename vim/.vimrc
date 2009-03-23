@@ -817,6 +817,9 @@ command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 
 "}}}
 
+command! -range=% -nargs=0 Tab2Space exec "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', "repeat(' ', ".&ts."), 'g')"
+command! -range=% -nargs=0 Space2Tab exec "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0), ' \\{".&ts."\\}', '\\t', 'g')"
+
 "}}}
 
 " Abbrevs {{{
