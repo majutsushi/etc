@@ -667,7 +667,7 @@ folder-hook tnt@a-n-t_de unset crypt_autosign
 # folder-hook lists        set sort=threads sort_aux=last-date-received
 folder-hook lists        set sort=threads sort_aux=date-sent
 folder-hook lists        my_hdr From: Jan Larres <lists@majutsushi.net>
-folder-hook lists        my_hdr Reply-To: Jan Larres <jan@majutsushi.net>
+# folder-hook lists        my_hdr Reply-To: Jan Larres <jan@majutsushi.net>
 # send-hook '~A'           my_hdr From: Jan Larres <jan@majutsushi.net>
 # send-hook '~t uni-passau\.de$' 'my_hdr From: Jan Larres <larres@fim.uni-passau.de>'
 
