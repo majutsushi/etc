@@ -336,8 +336,9 @@ let Tlist_Inc_Winwidth = 0 " to prevent problems with project.vim
 let Tlist_Sort_Type = "name"
 "}}}
 
-" cppcomplete {{{
-let g:cppcomplete_placeholders = 1
+" omnicppcomplete {{{
+let g:OmniCpp_SelectFirstItem = 2 " select first completion item, but don't insert it
+"let g:OmniCpp_ShowPrototypeInAbbr = 1
 "}}}
 
 " Viki {{{
