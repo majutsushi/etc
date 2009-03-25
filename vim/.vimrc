@@ -34,7 +34,7 @@ au FileType python setlocal omnifunc=pythoncomplete#Complete
 augroup cfile
     "au FileType c setlocal path+=/usr/include,/usr/include/sys,/usr/include/linux
     au FileType c,cpp setlocal foldmethod=syntax
-    au FileType c,cpp setlocal tags+=~/.vim/systags/systags_base,~/.vim/systags/systags_linux
+    au FileType c,cpp setlocal tags+=~/.vim/systags/systags
     au FileType c,cpp setlocal cinoptions=t0,(0,)50
 augroup END
 
