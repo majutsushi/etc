@@ -152,8 +152,8 @@ if exists('&macatsui')
     set nomacatsui
 endif
 
-"set completeopt=longest,menuone,preview
-set completeopt=longest,menu,preview
+"set completeopt=longest,menu,preview
+set completeopt=longest,menu
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 set cscopetag
