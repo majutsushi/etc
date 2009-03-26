@@ -945,10 +945,8 @@ vmap <S-Insert> "-d"+P
 nmap <S-Insert> "+P
 imap <S-Insert> <C-R><C-O>+
 
-noremap <C-K>  gk
-noremap <C-J>  gj
-noremap <Up>   gk
-noremap <Down> gj
+noremap <expr> <Up> pumvisible() ? "\<Up>" : "gk"
+noremap <expr> <Down> pumvisible() ? "\<Down>" : "gj"
 
 inoremap <M-j> <C-O>gj
 inoremap <M-k> <C-O>gk
