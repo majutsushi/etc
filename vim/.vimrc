@@ -169,7 +169,7 @@ set cscopeverbose
 
 "set wildmenu
 set wildmode=list:longest,full
-set wildignore=*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.pdf,*.lof,*.lol,*.toc,*.out,*.class
+set wildignore=*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.out,*.class
 set ruler " position information in status line
 "set cmdheight=2
 "set number " line numbers
@@ -187,7 +187,7 @@ set switchbuf=useopen " or usetab
 "set report=0
 set more
 "set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc,.nav,.snm,.pdf,.lof,.lol,.hi
-set suffixes=.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm
+set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm
 set tildeop
 set title
 set ttyfast
