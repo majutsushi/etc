@@ -193,6 +193,7 @@ set title
 set ttyfast
 set ttymouse=xterm
 set diffopt=filler,vertical
+set previewheight=9
 
 "}}}
 
@@ -448,21 +449,6 @@ let g:AutoComplPop_MappingDriven = 1
 " rubycomplete {{{
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_rails = 1
-" }}}
-
-" srcexpl {{{
-" Set the refreshing time interval, such as 2 seconds
-"let g:SrcExpl_refreshTime   = 1800000
-" Initialize the height of the Source Explorer window
-let g:SrcExpl_winHeight     = 9
-" Make your own map key to force to do a refreshing
-"let g:SrcExpl_RefreshMapKey = "<Space>"
-let g:SrcExpl_refreshKey = "<C-S>"
-" Make your own map key for 'SrcExplGoBack' operation
-let g:SrcExpl_gobackKey  = "<C-b>"
-let g:SrcExpl_updateTags = 0
-" Toggles the Source Explorer on and off
-nmap <S-F9> :SrcExplToggle<CR>
 " }}}
 
 " vimblog {{{
@@ -818,6 +804,70 @@ command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 
 "}}}
 
+" PreviewWord() {{{
+function! PreviewWord(local)
+    if &previewwindow			" don't do this in the preview window
+        return
+    endif
+
+    let l:editwinnum = winnr()
+
+    let w = expand("<cword>")		" get the word under cursor
+    if w =~ '\a'			" if the word contains a letter
+
+        " Delete any existing highlight before showing another tag
+        silent! wincmd P		" jump to preview window
+        if &previewwindow		" if we really get there...
+            match none			" delete existing highlight
+            silent! exe l:editwinnum . "wincmd w"
+        endif
+
+        if a:local == 1
+            call PreviewWordLocal(w, l:editwinnum)
+        else
+            " Try displaying a matching tag for the word under the cursor
+            try
+                exe "belowright ptag " . w
+            catch
+                call PreviewWordLocal(w, l:editwinnum)
+            endtry
+        endif
+
+        silent! wincmd P		" jump to preview window
+        if &previewwindow		" if we really get there...
+            if has("folding")
+                silent! .foldopen	" don't want a closed fold
+            endif
+            call search("$", "b")	" to end of previous line
+            let w = substitute(w, '\\', '\\\\', "")
+            call search('\<\V' . w . '\>')	" position cursor on match
+            " Add a match highlight to the word at this position
+            hi previewWord term=bold ctermbg=green guibg=green
+            exe 'match previewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
+            normal zz
+            silent! exe l:editwinnum . "wincmd w"
+        endif
+    endif
+endfun
+
+function! PreviewWordLocal(w, editwinnum)
+    let l:editpath   = expand("%:p")
+
+    let l:eoldline = line(".")
+    let l:eoldcol  = col(".")
+    call searchdecl(a:w, 0, 1)
+    let l:enewline = line(".")
+    let l:enewcol  = col(".")
+    call cursor(l:eoldline, l:eoldcol)
+    exe "belowright pedit " . l:editpath
+    silent! wincmd P
+    if &previewwindow
+        call cursor(l:enewline, l:enewcol)
+        silent! exe a:editwinnum . "wincmd w"
+    endif
+endfun
+"}}}
+
 command! -range=% -nargs=0 Tab2Space exec "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', "repeat(' ', ".&ts."), 'g')"
 command! -range=% -nargs=0 Space2Tab exec "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0), ' \\{".&ts."\\}', '\\t', 'g')"
 
@@ -953,6 +1003,9 @@ map <F8>  :bd<C-M>
 map <S-F8> :call Bclose()<cr>
 
 nmap <silent> <F9>  :Tlist<CR>
+nmap <silent> <C-F9> :call PreviewWord(0)<CR>
+nmap <silent> <S-F9> :call PreviewWord(1)<CR>
+
 "nmap <silent> <F10> <Plug>ToggleProject
 nmap <silent> <F10> :NERDTreeToggle<CR>
 
