@@ -1,8 +1,7 @@
-" pastie.vim: Vim plugin for pastie.caboo.se
+" pastie.vim: Vim plugin for pastie.org
 " Maintainer: Tim Pope <vimNOSPAM@tpope.info>
 " URL:        http://www.vim.org/scripts/script.php?script_id=1624
-" GetLatestVimScripts: 1624 1
-" $Id: pastie.vim,v 1.15 2007-12-13 16:44:26 tpope Exp $
+" GetLatestVimScripts: 1624 1 :AutoInstall: pastie.vim
 
 " Installation:
 " Place in ~/.vim/plugin or vimfiles/plugin
@@ -27,8 +26,8 @@
 " :Pastie _                 Create a new, blank paste
 " :768Pastie                Load existing paste 768
 " :0Pastie                  Load the newest paste
-" :Pastie http://pastie.caboo.se/768            Load existing paste 768
-" :Pastie http://pastie.caboo.se/123456?key=... Use login from pastie bot
+" :Pastie http://pastie.org/768            Load existing paste 768
+" :Pastie http://pastie.org/123456?key=... Use login from pastie bot
 
 " Regardless of the command used, on the first write, this script will create
 " a new paste, and on subsequent writes, it will update the existing paste.
@@ -78,6 +77,15 @@ augroup pastie
     autocmd BufWriteCmd http://pastie.org/pastes/*[0-9]/download call s:PastieWrite(expand("<amatch>"))
     autocmd BufWriteCmd http://pastie.org/*[0-9].*               call s:PastieWrite(expand("<amatch>"))
     autocmd BufWriteCmd http://pastie.org/pastes/                call s:PastieWrite(expand("<amatch>"))
+
+    autocmd BufReadPre  http://pastie.caboo.se/*[0-9]?key=*           call s:extractcookies(expand("<amatch>"))
+    autocmd BufReadPost http://pastie.caboo.se/*[0-9]?key=*           call s:PastieSwapout(expand("<amatch>"))
+    autocmd BufReadPost http://pastie.caboo.se/*[0-9]                 call s:PastieSwapout(expand("<amatch>"))
+    autocmd BufReadPost http://pastie.caboo.se/pastes/*[0-9]/download call s:PastieRead(expand("<amatch>"))
+    autocmd BufReadPost http://pastie.caboo.se/*[0-9].*               call s:PastieRead(expand("<amatch>"))
+    autocmd BufWriteCmd http://pastie.caboo.se/pastes/*[0-9]/download call s:PastieWrite(expand("<amatch>"))
+    autocmd BufWriteCmd http://pastie.caboo.se/*[0-9].*               call s:PastieWrite(expand("<amatch>"))
+    autocmd BufWriteCmd http://pastie.caboo.se/pastes/                call s:PastieWrite(expand("<amatch>"))
 augroup END
 
 let s:domain = "pastie.org"
