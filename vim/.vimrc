@@ -416,7 +416,8 @@ let s:re = '+>'
 "}}}
 
 " cca {{{
-let cca_hotkey = "<Tab>"
+"let cca_hotkey = "<Tab>"
+let cca_hotkey = "<S-Space>"
 " }}}
 
 " detectindent {{{
