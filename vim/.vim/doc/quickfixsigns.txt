@@ -25,11 +25,12 @@ please make sure, you have the current version of vimball
 ========================================================================
 Contents~
 
-        g:quickfixsigns_lists ........ |g:quickfixsigns_lists|
-        g:quickfixsigns_show_marks ... |g:quickfixsigns_show_marks|
-        g:quickfixsigns_balloon ...... |g:quickfixsigns_balloon|
-        QuickfixsignsSet ............. |QuickfixsignsSet()|
-        QuickfixsignsBalloon ......... |QuickfixsignsBalloon()|
+        g:quickfixsigns_lists ...... |g:quickfixsigns_lists|
+        g:quickfixsigns_marks ...... |g:quickfixsigns_marks|
+        g:quickfixsigns_balloon .... |g:quickfixsigns_balloon|
+        g:quickfixsigns_max ........ |g:quickfixsigns_max|
+        QuickfixsignsSet ........... |QuickfixsignsSet()|
+        QuickfixsignsBalloon ....... |QuickfixsignsBalloon()|
 
 
 ========================================================================
@@ -40,7 +41,7 @@ g:quickfixsigns_lists          (default: [...])
     A list of list definitions whose items should be marked with signs.
     By default, the following lists are included: |quickfix|, 
     |location-list|, marks |'a|-zA-Z (see also 
-    |g:quickfixsigns_show_marks|).
+    |g:quickfixsigns_marks|).
     
     A list definition is a |Dictionary| with the following fields:
     
@@ -53,9 +54,9 @@ g:quickfixsigns_lists          (default: [...])
       event: The event on which signs of this type should be set. 
              Possible values: BufEnter, any
 
-                                                    *g:quickfixsigns_show_marks*
-g:quickfixsigns_show_marks     (default: 1)
-    If non-null, also display signs for the marks a-zA-Z.
+                                                    *g:quickfixsigns_marks*
+g:quickfixsigns_marks          (default: split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>', '\zs'))
+    A list of marks that should be displayed as signs.
 
                                                     *g:quickfixsigns_balloon*
 g:quickfixsigns_balloon        (default: 1)
@@ -63,8 +64,16 @@ g:quickfixsigns_balloon        (default: 1)
     the sign.
     buffer-local or global
 
+                                                    *g:quickfixsigns_max*
+g:quickfixsigns_max            (default: 100)
+    Don't display signs if the list is longer than n items.
+
                                                     *QuickfixsignsSet()*
 QuickfixsignsSet(event)
+    (Re-)Set the signs that should be updated at a certain event. If event 
+    is empty, update all signs.
+    
+    Normally, the end-user doesn't need to call this function.
 
                                                     *QuickfixsignsBalloon()*
 QuickfixsignsBalloon()
