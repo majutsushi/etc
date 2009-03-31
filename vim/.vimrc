@@ -99,6 +99,7 @@ set define=^\\(\\s*#\\s*define\\\|[a-z]*\\s*const\\s*[a-z]*\\)
 set undolevels=1000
 set viminfo=!,%,'20,<500,:500,s100,h,n~/.cache/vim/viminfo
 set complete+=k
+set complete-=i
 "set tags+=./tags,tags
 "set tags+=~/.vim/systags/systags_base,~/.vim/systags/systags_linux
 let mapleader=","
