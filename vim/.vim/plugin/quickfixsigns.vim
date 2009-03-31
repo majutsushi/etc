@@ -5,13 +5,13 @@
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2009-03-14.
 " @Last Change: 2009-03-29.
-" @Revision:    199
+" @Revision:    250
 " GetLatestVimScripts: 2584 1 :AutoInstall: quickfixsigns.vim
 
 if &cp || exists("loaded_quickfixsigns") || !has('signs')
     finish
 endif
-let loaded_quickfixsigns = 3
+let loaded_quickfixsigns = 4
 
 let s:save_cpo = &cpo
 set cpo&vim
@@ -40,19 +40,24 @@ if !exists('g:quickfixsigns_lists')
                 \ ]
 endif
 
-if !exists('g:quickfixsigns_marks') || g:quickfixsigns_marks
+if !exists('g:quickfixsigns_marks')
     " A list of marks that should be displayed as signs.
     let g:quickfixsigns_marks = split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>', '\zs') "{{{2
     " let g:quickfixsigns_marks = split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>''`^.(){}[]', '\zs') "{{{2
 endif
-if !empty(g:quickfixsigns_marks)
-    call add(g:quickfixsigns_lists, {
+
+if !exists('g:quickfixsigns_marks_def')
+    " The definition of the |g:quickfixsigns_lists| item for marks. Must 
+    " have a field "type" with value "marks".
+    " :read: let g:quickfixsigns_marks_def = {...} "{{{2
+    let g:quickfixsigns_marks_def = {
+                \ 'type': 'marks',
                 \ 'sign': '*s:MarkSign',
                 \ 'get': 's:Marks()',
                 \ 'event': ['BufEnter', 'CursorHold', 'CursorHoldI', 'CursorMoved', 'CursorMovedI'],
                 \ 'id': 's:MarkId',
                 \ 'timeout': 2
-                \ })
+                \ }
 endif
 
 if !exists('g:quickfixsigns_balloon')
@@ -66,20 +71,6 @@ if !exists('g:quickfixsigns_max')
     " Don't display signs if the list is longer than n items.
     let g:quickfixsigns_max = 100   "{{{2
 endif
-
-augroup QuickFixSigns
-    autocmd!
-    let s:ev_set = []
-    for s:def in g:quickfixsigns_lists
-        for s:ev in get(s:def, 'event', ['BufEnter'])
-            if index(s:ev_set, s:ev) == -1
-                exec 'autocmd '. s:ev .' * call QuickfixsignsSet("'. s:ev .'")'
-                call add(s:ev_set, s:ev)
-            endif
-        endfor
-    endfor
-    unlet s:ev_set s:ev s:def
-augroup END
 
 
 
@@ -100,16 +91,6 @@ if index(s:signs, 'QFS_LOC') == -1
     sign define QFS_LOC text=> texthl=Special
 endif
 sign define QFS_DUMMY text=. texthl=SignColumn
-
-
-
-for s:i in g:quickfixsigns_marks
-    if index(s:signs, 'QFS_Mark_'. s:i) == -1
-        exec 'sign define QFS_Mark_'. s:i .' text='. s:i .' texthl=Identifier'
-    endif
-endfor
-unlet s:i s:signs s:signss
-
 
 let s:last_run = {}
 
@@ -221,18 +202,26 @@ let s:base = 5272
 let s:register = {}
 
 
+" Clear all signs with name SIGN.
+function! QuickfixsignsClear(sign) "{{{3
+    " TLogVAR a:sign_rx
+    let idxs = filter(keys(s:register), 's:register[v:val].sign ==# a:sign')
+    " TLogVAR idxs
+    for idx in idxs
+        exec 'sign unplace '. idx .' buffer='. s:register[idx].bn
+        call remove(s:register, idx)
+    endfor
+endf
+
+
 " Clear all signs with name SIGN in buffer BUFNR.
 function! s:ClearBuffer(sign, bufnr, new_idxs) "{{{3
     " TLogVAR a:sign, a:bufnr, a:new_idxs
-    for bn in keys(s:register)
-        let old_idxs = keys(s:register)
-        " TLogVAR old_idxs
-        call filter(old_idxs, 's:register[v:val].sign ==# a:sign && s:register[v:val].bn == a:bufnr && index(a:new_idxs, v:val) == -1')
-        " TLogVAR old_idxs
-        for idx in old_idxs
-            exec 'sign unplace '. idx .' buffer='. s:register[idx].bn
-            call remove(s:register, idx)
-        endfor
+    let old_idxs = filter(keys(s:register), 's:register[v:val].sign ==# a:sign && s:register[v:val].bn == a:bufnr && index(a:new_idxs, v:val) == -1')
+    " TLogVAR old_idxs
+    for idx in old_idxs
+        exec 'sign unplace '. idx .' buffer='. s:register[idx].bn
+        call remove(s:register, idx)
     endfor
 endf
 
@@ -240,6 +229,7 @@ endf
 function! s:ClearDummy(idx, bufnr) "{{{3
     exec 'sign unplace '. a:idx .' buffer='. a:bufnr
 endf
+
 
 function! s:SignId(item) "{{{3
     " TLogVAR a:item
@@ -307,6 +297,46 @@ function! s:PlaceSign(sign, list, ...) "{{{3
 endf
 
 
+" Enable (state=1) or disable (state=0) the display of marks.
+function! QuickfixsignsMarks(state) "{{{3
+    " TLogVAR a:state
+    call filter(g:quickfixsigns_lists, 'get(v:val, "type", "") != "marks"')
+    if a:state
+        call add(g:quickfixsigns_lists, g:quickfixsigns_marks_def)
+    else
+        call QuickfixsignsClear(g:quickfixsigns_marks_def.sign)
+    endif
+endf
+
+
+if !empty(g:quickfixsigns_marks)
+    call QuickfixsignsMarks(1)
+    
+    for s:i in g:quickfixsigns_marks
+        if index(s:signs, 'QFS_Mark_'. s:i) == -1
+            exec 'sign define QFS_Mark_'. s:i .' text='. s:i .' texthl=Identifier'
+        endif
+    endfor
+    unlet s:i
+endif
+
+unlet s:signs s:signss
+
+
+augroup QuickFixSigns
+    autocmd!
+    let s:ev_set = []
+    for s:def in g:quickfixsigns_lists
+        for s:ev in get(s:def, 'event', ['BufEnter'])
+            if index(s:ev_set, s:ev) == -1
+                exec 'autocmd '. s:ev .' * call QuickfixsignsSet("'. s:ev .'")'
+                call add(s:ev_set, s:ev)
+            endif
+        endfor
+    endfor
+    unlet s:ev_set s:ev s:def
+augroup END
+
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
@@ -328,4 +358,9 @@ Incompatible changes:
 - g:quickfixsigns_marks: Marks that should be used for signs
 - g:quickfixsigns_lists: event field is a list
 - g:quickfixsigns_lists: timeout field: don't re-display this list more often than n seconds
+
+0.4
+- FIX: Error when g:quickfixsigns_marks = []
+- s:ClearBuffer: removed old code
+- QuickfixsignsMarks(state): Switch the display of marks on/off.
 

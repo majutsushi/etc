@@ -25,12 +25,15 @@ please make sure, you have the current version of vimball
 ========================================================================
 Contents~
 
-        g:quickfixsigns_lists ...... |g:quickfixsigns_lists|
-        g:quickfixsigns_marks ...... |g:quickfixsigns_marks|
-        g:quickfixsigns_balloon .... |g:quickfixsigns_balloon|
-        g:quickfixsigns_max ........ |g:quickfixsigns_max|
-        QuickfixsignsSet ........... |QuickfixsignsSet()|
-        QuickfixsignsBalloon ....... |QuickfixsignsBalloon()|
+        g:quickfixsigns_lists ....... |g:quickfixsigns_lists|
+        g:quickfixsigns_marks ....... |g:quickfixsigns_marks|
+        g:quickfixsigns_marks_def ... |g:quickfixsigns_marks_def|
+        g:quickfixsigns_balloon ..... |g:quickfixsigns_balloon|
+        g:quickfixsigns_max ......... |g:quickfixsigns_max|
+        QuickfixsignsSet ............ |QuickfixsignsSet()|
+        QuickfixsignsBalloon ........ |QuickfixsignsBalloon()|
+        QuickfixsignsClear .......... |QuickfixsignsClear()|
+        QuickfixsignsMarks .......... |QuickfixsignsMarks()|
 
 
 ========================================================================
@@ -58,6 +61,11 @@ g:quickfixsigns_lists          (default: [...])
 g:quickfixsigns_marks          (default: split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>', '\zs'))
     A list of marks that should be displayed as signs.
 
+                                                    *g:quickfixsigns_marks_def*
+g:quickfixsigns_marks_def      (default: {...})
+    The definition of the |g:quickfixsigns_lists| item for marks. Must 
+    have a field "type" with value "marks".
+
                                                     *g:quickfixsigns_balloon*
 g:quickfixsigns_balloon        (default: 1)
     If non-null, display a balloon when hovering with the mouse over 
@@ -77,6 +85,14 @@ QuickfixsignsSet(event)
 
                                                     *QuickfixsignsBalloon()*
 QuickfixsignsBalloon()
+
+                                                    *QuickfixsignsClear()*
+QuickfixsignsClear(sign)
+    Clear all signs with name SIGN.
+
+                                                    *QuickfixsignsMarks()*
+QuickfixsignsMarks(state)
+    Enable (state=1) or disable (state=0) the display of marks.
 
 
 
