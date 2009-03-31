@@ -828,7 +828,7 @@ function! PreviewWord(local)
         else
             " Try displaying a matching tag for the word under the cursor
             try
-                exe "belowright ptag " . w
+                exe "ptag " . w
             catch
                 call PreviewWordLocal(w, l:editwinnum)
             endtry
@@ -860,7 +860,7 @@ function! PreviewWordLocal(w, editwinnum)
     let l:enewline = line(".")
     let l:enewcol  = col(".")
     call cursor(l:eoldline, l:eoldcol)
-    exe "belowright pedit " . l:editpath
+    exe "pedit " . l:editpath
     silent! wincmd P
     if &previewwindow
         call cursor(l:enewline, l:enewcol)
