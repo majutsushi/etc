@@ -212,7 +212,7 @@ alias g="grep"
 alias CO="./configure"
 alias CH="./configure --help"
 alias make='colormake'
-alias ddiff='diff -Naurd -x *.swp -x cscope.* -x tags -x .git -x .svn -x CVS'
+alias ddiff='diff -Naurd -x *.swp -x *.o -x *.so -x cscope.* -x tags -x .git -x .svn -x CVS'
 
 # prefer normal stat
 alias  stat='command stat'
