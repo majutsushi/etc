@@ -19,8 +19,10 @@ keysym  c = c C cent
 ![MacBook]
 keycode  49 = section plusminus
 keycode  94 = grave asciitilde
-keycode 108 = Insert NoSymbol Pointer_Button3
-keycode 116 = Mode_switch Multi_key Pointer_Button2
+! keycode 108 = Insert NoSymbol Pointer_Button3
+! keycode 116 = Mode_switch Multi_key Pointer_Button2
+keycode 104 = Insert NoSymbol Pointer_Button3
+keycode 134 = Mode_switch Multi_key Pointer_Button2
 
 
 !remove Mod1 = Alt_R
