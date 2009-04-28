@@ -55,10 +55,6 @@ hi WarningMsg	guifg=salmon
 "hi Tooltip
 hi SignColumn	guibg=grey15
 
-hi TabLine	cterm=underline ctermfg=15 ctermbg=8 gui=underline guibg=DarkGrey
-hi TabLineSel	cterm=bold gui=bold
-hi TabLineFill	cterm=reverse guibg=grey40
-
 " syntax highlighting groups
 hi Comment	guifg=SkyBlue
 hi Constant	guifg=#ffa0a0
@@ -110,8 +106,18 @@ hi Ignore	cterm=bold ctermfg=7
 hi Ignore	ctermfg=darkgrey
 hi Error	cterm=bold ctermfg=7 ctermbg=1
 
-hi User1 cterm=bold,reverse guibg=#c2bfa5 guifg=black   gui=bold
-hi User2 cterm=bold,reverse guibg=#c2bfa5 guifg=#990f0f gui=bold
-hi User3 cterm=bold,reverse guibg=#c2bfa5 guifg=grey40  gui=none
+hi TabLine	cterm=underline ctermfg=15 ctermbg=8 guifg=grey20 guibg=DarkGrey gui=none
+hi TabLineSel	cterm=bold gui=bold
+hi TabLineFill	cterm=reverse guifg=grey40
+
+hi User1	cterm=bold,reverse guibg=#c2bfa5 guifg=black   gui=bold
+hi User2	cterm=bold,reverse guibg=#c2bfa5 guifg=#990f0f gui=bold
+hi User3	cterm=bold,reverse guibg=#c2bfa5 guifg=grey40  gui=none
+
+hi User4	cterm=underline ctermfg=15 ctermbg=8 guibg=#c2bfa5 guifg=black
+hi User5	cterm=bold guibg=#c2bfa5 guifg=#990f0f gui=bold
+hi User6	cterm=bold ctermfg=15 ctermbg=8 guibg=#c2bfa5 guifg=black gui=bold
+"hi User6	cterm=bold guibg=DarkGrey guifg=indianred
+"hi User7	cterm=bold guifg=indianred
 
 "vim: sw=4 noexpandtab
