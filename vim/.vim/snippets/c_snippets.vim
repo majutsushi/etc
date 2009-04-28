@@ -38,8 +38,8 @@ endfunction
 function! s:define_snippets()
     DefineSnippet df            #define <{}>
     DefineSnippet ic            #include "<{}>"
-    DefineSnippet ud            #undef <{}>
     DefineSnippet ii            #include <<{}>>
+    DefineSnippet ud            #undef <{}>
     DefineSnippet fc            #if 0<CR><{}><CR>#endif<CR>
     DefineSnippet ff            #ifndef <C-R>=cca:c:get_file_name(1)<CR><CR>#define <C-R>=cca:c:get_file_name(1)<CR><CR><CR><CR><{}><CR><CR><CR>#endif /* <C-R>=cca:c:get_file_name(1)<CR> */
     DefineSnippet co            /* <{}> */
