@@ -431,7 +431,7 @@ let g:detectindent_preferred_indent = 4
 
 " haskellmode {{{
 let g:haddock_browser="/usr/bin/gnome-www-browser"
-let g:haddock_docdir="/usr/share/doc/ghc6-doc/html/"
+let g:haddock_docdir="/usr/share/doc/ghc6-doc/libraries/"
 let g:haddock_indexfiledir="~/.vim/cache/"
 
 "let hs_highlight_delimiters = 1
