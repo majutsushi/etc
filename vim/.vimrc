@@ -902,6 +902,7 @@ function! PreviewWord(local)
             hi previewWord term=bold ctermbg=green guibg=green
             exe 'match previewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
             normal zz
+            redraw!
             silent! exe l:editwinnum . "wincmd w"
         endif
     endif
