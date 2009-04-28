@@ -8,7 +8,8 @@
 	main-window-maximized = false
 
 [gui]
-	fontdiff = -family Courier -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family fixed -size 8 -weight normal -slant roman -underline 0 -overstrike 0
+	fontui = -family fixed -size 8 -weight bold -slant roman -underline 0 -overstrike 0
 
 [alias]
 	st = status
