@@ -13,6 +13,9 @@ autocmd!
     autocmd InsertEnter * set cul
 "endif
 
+" create undo break point
+autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
+
 "au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
 
 " set the textwidth to 72 characters for replies (email&usenet)
@@ -991,6 +994,8 @@ nn  <leader>va :edit   <C-R>=myabbr<CR><CR>
 
 " Control-Space for omnicomplete
 inoremap <C-Space> <C-X><C-O>
+
+inoremap <C-U> <C-G>u<C-U>
 
 " copy to/from the x cut-buffer
 vmap <C-Insert> "+y
