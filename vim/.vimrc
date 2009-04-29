@@ -198,6 +198,7 @@ set ttyfast
 set ttymouse=xterm
 set diffopt=filler,vertical
 set previewheight=9
+set display=lastline,uhex
 
 "}}}
 
