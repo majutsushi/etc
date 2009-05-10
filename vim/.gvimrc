@@ -17,5 +17,5 @@ set lines=50
 set columns=95
 winpos 310 70
 
-set listchars=tab:»·,trail:␣
+set listchars=tab:»-,trail:␣,nbsp:~
 
