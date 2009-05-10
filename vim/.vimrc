@@ -1007,6 +1007,10 @@ inoremap <C-Space> <C-X><C-O>
 
 inoremap <C-U> <C-G>u<C-U>
 
+" make some jumps more intuitive
+nnoremap ][ ]]
+nnoremap ]] ][
+
 " copy to/from the x cut-buffer
 vmap <C-Insert> "+y
 vmap <S-Insert> "-d"+P
