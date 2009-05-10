@@ -94,7 +94,7 @@ unset pgp_long_ids
 unset pgp_replyinline # reply to inline as inline
 unset pgp_retainable_sigs
   set pgp_show_unusable # Show non-usable keys on the PGP key selection menu?
-#  set pgp_sign_as="CF1635D4"
+  set pgp_sign_as="00A0FD5F"
   set pgp_strict_enc
   set pgp_sort_keys=address
   set pgp_timeout=1000  # number of seconds to cache passphrase
