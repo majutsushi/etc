@@ -908,8 +908,6 @@ swiki()   { ${=BROWSER} http://de.wikipedia.org/wiki/Spezial:Search/${(C)1} }
 wodeb ()  { ${=BROWSER} "http://packages.debian.org/cgi-bin/search_contents.pl?word=$1&version=${2:-unstable}" }
 vman()    { man $* | vim --cmd 'let no_plugin_maps = 1' -c 'runtime! macros/less.vim' -c 'set ft=man nolist' - }
 2html()   { gvim -f -n +"syntax on" +"run! syntax/2html.vim" +"wq" +"q" $1 }
-# upload()  { scp -p $1 cip:public_html/$2 }
-upload()  { wput ftp://majutsushi.net/httpdocs/stuff/ "$@" }
 sshot()   { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desk/screenshots/' $@ }
 
 # http://ft.bewatermyfriend.org/comp/zsh/zfunct.html
@@ -919,6 +917,19 @@ hl() {
         return 1
     fi
     highlight --xterm256 --syntax $1 --style darkness $2 | less
+}
+
+# upload()  { scp -p $1 cip:public_html/$2 }
+upload() {
+    if [[ -z "$1" ]]; then
+        echo "usage: upload file1 file2 ..."
+        return 1
+    else
+        wput ftp://majutsushi.net/httpdocs/stuff/ "$@"
+    fi
+    for i in "$@"; do
+        echo "http://majutsushi.net/stuff/${i// /%20}"
+    done
 }
 
 uploadshot() {
