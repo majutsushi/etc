@@ -225,6 +225,7 @@ set wrap
 set linebreak
 "set breakat=\ ^I
 set showbreak=+\ 
+set showcmd
 set showmode
 
 " Has to be set in colorscheme files, see desert.vim and inkpot.vim
