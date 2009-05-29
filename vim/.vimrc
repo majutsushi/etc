@@ -1076,8 +1076,10 @@ map <F8>  :bd<C-M>
 map <S-F8> :call Bclose()<cr>
 
 nmap <silent> <F9>  :Tlist<CR>
-nmap <silent> <C-F9> :call PreviewWord(0)<CR>
-nmap <silent> <S-F9> :call PreviewWord(1)<CR>
+"nmap <silent> <C-F9> :call PreviewWord(0)<CR>
+"nmap <silent> <S-F9> :call PreviewWord(1)<CR>
+nmap <silent> <leader>pw :call PreviewWord(0)<CR>
+nmap <silent> <leader>pl :call PreviewWord(1)<CR>
 
 "nmap <silent> <F10> <Plug>ToggleProject
 nmap <silent> <F10> :NERDTreeToggle<CR>
