@@ -28,7 +28,7 @@ LOGFILE=$MAILDIR/procmail_log
 * ! ^From[ ]
 * ^rom[ ]
 {
-#  LOG="*** Dropped F off From_ header! Fixing up. "
+   LOG="*** Dropped F off From_ header! Fixing up. "
 
   :0 fhw
   | sed -e 's/^rom /From /'
@@ -38,7 +38,7 @@ LOGFILE=$MAILDIR/procmail_log
 :0 H
 * ! ^Content-Type:
 {
-#  LOG="*** Added Content-Type: header"
+   LOG="*** Added Content-Type: header"
 
   :0 fhw
   | formail -a "Content-Type: text/plain; charset=iso-8859-1"
