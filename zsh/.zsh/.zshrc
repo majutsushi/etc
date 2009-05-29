@@ -510,7 +510,7 @@ precmd () {
     fi
 
     if command -v acpi >/dev/null 2>&1; then
-        ACPI=$(acpi -b | grep discharging)
+        ACPI=$(acpi -b | grep -i discharging)
         if [[ -n "$ACPI" ]]; then
             PERCENT=$(echo $ACPI | cut -d',' -f 2 | tr -d " %")
             # PERCENT=${(s|,|)=${(s| |)ACPI}[4]}
@@ -613,11 +613,11 @@ generate_path_info () {
 
 prompt_set_line_1 () {
 
-    local left_left="${C_BOLD}[$BATTERY($C_F_GREEN"
+    local left_left="${C_BOLD}[($C_F_GREEN"
     local left_dir="$CPATH"
     local left_right="$C_F_DEFAULT$WPERM)"
     local left_side=$left_left$left_dir$left_right
-    local right_side="---($C_F_CYAN%D{%H:%M:%S}$C_F_DEFAULT)]$C_DEFAULT"
+    local right_side="---$BATTERY($C_F_CYAN%D{%H:%M:%S}$C_F_DEFAULT)]$C_DEFAULT"
 
     local left_side_width=${#${(S%%)left_side//\%\{*\%\}/}}
     local right_side_width=${#${(S%%)right_side//\%\{*\%\}/}}
