@@ -485,6 +485,7 @@ let g:devhelpWordLength = 5
 "let NERDTreeCaseSensitiveSort = 1
 let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
 let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$']
+let NERDTreeHijackNetrw = 0
 "}}}
 
 "}}}
