@@ -424,11 +424,11 @@ macro generic   ,vu   ":source ~/.muttrc\r" "Source muttrc"
 
 # spam handlers
 # spamassassin classify as spam
-macro index S "|/usr/bin/sa-learn --spam --no-sync --single" "Classify as Spam"
+macro index S "|/usr/bin/sa-learn --spam --no-sync --single\r" "Classify as Spam"
 # spamassassin classify as ham
-macro index H "|/usr/bin/sa-learn --ham  --no-sync --single" "Classify as Ham"
+macro index H "|/usr/bin/sa-learn --ham  --no-sync --single\r" "Classify as Ham"
 # rebuild the spamassassin bayes filter db
-macro index P "!/usr/bin/sa-learn --sync" "Sync Spamassassin-db"
+macro index P "!/usr/bin/sa-learn --sync\r" "Sync Spamassassin-db"
 
 # Quickly change to my favorite folders:
 macro index  "\\s"  "c<\r" "Go to 'sent' folder"
