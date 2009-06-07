@@ -498,7 +498,9 @@ macro pager  ,p  "<display-toggle-weed> <print-message> <display-toggle-weed>"
 # =============================================================================
 # compose {{{
 
-bind compose   \n  send-message
+bind compose   <enter>  send-message
+bind compose   <return> send-message
+bind compose   v   view-attach
 
 macro compose \es "Fgpg --clearsign\ny" "clearsign with GnuPG"
 macro compose \ee "Fgpg --encrypt --armor\ny" "encrypt with GnuPG"
