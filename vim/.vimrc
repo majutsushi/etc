@@ -1120,8 +1120,8 @@ nnoremap <silent> <Leader>lw
       \ endif<CR>
 
 " crefvim
-map <silent> <Leader>ca <Plug>CRV_CRefVimAsk
-map <silent> <Leader>cv <Plug>CRV_CRefVimInvoke
+"map <silent> <Leader>cw <Plug>CRV_CRefVimAsk
+map <silent> <Leader>ct <Plug>CRV_CRefVimInvoke
 
 " for pupop-menu completion
 " http://www.vim.org/tips/tip.php?tip_id=1386
