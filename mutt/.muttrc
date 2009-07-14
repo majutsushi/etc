@@ -575,11 +575,12 @@ color sidebar_new red      default
 # =============================================================================
 # index {{{
 
-# color index     yellow         default  ~N      # New
-# color index     yellow         default  ~O      # Old
-color index     brightgreen    default  '~p'    # mail to myself
-color index     green          default  '! ~p'  # mail not to myself
-color index     brightcyan     default  '~P'    # mail from myself
+color index     green    default  '~p'    # mail to myself
+# color index     green          default  '! ~p'  # mail not to myself
+color index     yellow    default  '~N !~D'    # new undeleted mail
+# color index     brightyellow default '~N ~p'
+# color index     green    default  '!~N'    # read mail
+color index     cyan     default  '(~P !~D) | (~v ~(~P !~D))'    # mail from myself
 
 # color index     brightmagenta  brightblack "=h 'X-Spam-Status: Yes'"
 # color index     brightmagenta  brightblack "~H '.*'"
@@ -588,7 +589,7 @@ color index     brightcyan     default  '~P'    # mail from myself
 color index     brightblack    default     "=s '*****SPAM*****'"
 color index     brightblack    default     "=s '*** GMX Spamverdacht ***'"
 
-color index     red            default  ~F      # Flagged
+color index     red            default  '(~F !~D) | (~v ~(~F !~D))'  # Flagged
 color index     blue           default  ~T      # Tagged
 color index     magenta        default  ~D      # Deleted
 # color index brightblack default '~d>1w'
