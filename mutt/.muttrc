@@ -343,6 +343,7 @@ unignore organization organisation
 unignore user-agent: x-agent: x-mailer: x-newsreader:
 unignore newsgroups: posted-to: X-Spam-Status:
 unignore X-Fnord: X-Message-Flag:
+unignore x-label:
 
 # ordering of headers in the pager
 unhdr_order *
