@@ -1,1 +1,5 @@
 image/*; eog '%s'
+application/pdf; evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf
+application/x-pdf; evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf
+application/x-bzpdf; evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf.bz2
+application/x-gzpdf; evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf.gz
