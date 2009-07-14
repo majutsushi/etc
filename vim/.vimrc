@@ -13,6 +13,8 @@ autocmd!
     autocmd InsertEnter * set cul
 "endif
 
+autocmd BufEnter * call LoadProjectConfig()
+
 " create undo break point
 autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 
@@ -928,6 +930,14 @@ function! PreviewWordLocal(w, editwinnum)
     endif
 endfun
 "}}}
+
+" LoadProjectConfig() {{{
+function LoadProjectConfig()
+    if filereadable(expand('%:h') . '/project_config.vim')
+        exe 'source %:h/project_config.vim'
+    endif
+endfunction
+" }}}
 
 command! -range=% -nargs=0 Tab2Space exec "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', "repeat(' ', ".&ts."), 'g')"
 command! -range=% -nargs=0 Space2Tab exec "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0), ' \\{".&ts."\\}', '\\t', 'g')"
