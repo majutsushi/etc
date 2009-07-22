@@ -533,6 +533,9 @@ precmd () {
         WPERM="$C_F_RED!$C_F_DEFAULT"
     fi
 
+#     ┌─[x]──────────────────────────────────────────────────────[x]─┐
+#     └─[x]─── COMMANDS                                       ───[x]─┘
+
     generate_path_info
     prompt_set_line_1
     prompt_set_line_2
@@ -613,7 +616,8 @@ generate_path_info () {
 
 prompt_set_line_1 () {
 
-    local left_left="${C_BOLD}[($C_F_GREEN"
+#     local left_left="${C_BOLD}[($C_F_GREEN"
+    local left_left="${C_BOLD}${C_F_RED}┌${C_F_DEFAULT}($C_F_GREEN"
     local left_dir="$CPATH"
     local left_right="$C_F_DEFAULT$WPERM)"
     local left_side=$left_left$left_dir$left_right
@@ -640,7 +644,8 @@ prompt_set_line_1 () {
 }
 
 prompt_set_line_2 () {
-    local p_arrow="${C_BOLD}${C_F_RED}${ARROW}${C_F_DEFAULT}"
+#     local p_arrow="${C_BOLD}${C_F_RED}${ARROW}${C_F_DEFAULT}"
+    local p_arrow="${C_BOLD}${C_F_RED}└${C_F_DEFAULT}"
     local p_info="${JOBS}${EXITCODE}"
     local p_user="($C_ROOT%n$C_F_YELLOW@$C_F_DEFAULT"
     local p_host="${SSH_CLIENT:+${C_F_GREEN}}%m${C_F_DEFAULT})${C_DEFAULT}"
