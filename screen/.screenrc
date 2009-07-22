@@ -184,7 +184,10 @@
 # caption always '%{= Wk}%{= Wk}%?%-Lw%?%{= yk}%n %t%{= Wk} %?%+Lw%?%?%= %{= Wk}'
 # caption always '%{= kw}%?%-Lw%?%{= wb}%n*%f %t%?(%u)%?%{= kw}%?%+Lw%?'
 # caption always '%{= Kw}%?%-Lw%?%45L>%{+b}%{.r}[%{.w}%n*%f %t%?(%u)%?%{.r}]%{-b}%{.w}%?%+Lw%?%<'
-caption always '%{= Kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= Kw}%?%+Lw%?%<'
+
+# caption always '%{= Kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= Kw}%?%+Lw%?%<'
+caption always '%{= dw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= dw}%?%+Lw%?%<'
+
 # ===============================================================
 #
 # ===============================
@@ -220,7 +223,8 @@ caption always '%{= Kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= Kw}%?%+Lw%?%<'
 #   hardstatus alwayslastline "%{= kw}%{+b}%h%{-b} %{.r}%= %{.y}%2` %{.g}%Y-%m-%d %c:%s"
 
 #   w/o battery
-  hardstatus alwayslastline "%L>%{= kw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-029=%< %{.y}%2` %{.g}%Y-%m-%d %c:%s"
+#   hardstatus alwayslastline "%L>%{= kw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-029=%< %{.y}%2` %{.g}%Y-%m-%d %c:%s"
+  hardstatus alwayslastline "%L>%{= dw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-029=%< %{.y}%2` %{.g}%Y-%m-%d %c:%s"
 #   w/ battery
 #   hardstatus alwayslastline "%L>%{= kw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-033=%< %{.r}%3` %{.y}%2` %{.g}%Y-%m-%d %c:%s"
 #   hardstatus alwayslastline "%L>%{= kw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-033L=%?%-029=%:%<%?%{.r}%3` %{.y}%2` %{.g}%Y-%m-%d %c:%s"
