@@ -240,7 +240,8 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     endfun
     " }}}
 
-    call <SID>X("Normal", "cccccc", "000000", "")
+"    call <SID>X("Normal", "cccccc", "000000", "")
+    call <SID>X("Normal", "eeeeee", "333333", "")
 
     " highlight groups
     call <SID>X("Cursor", "708090", "f0e68c", "")
@@ -285,6 +286,10 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     call <SID>X("Ignore", "666666", "", "")
     "Error
     call <SID>X("Todo", "ff4500", "eeee00", "")
+
+    call <SID>X("User1", "000000", "c2bfa5", "bold")
+    call <SID>X("User2", "990f0f", "c2bfa5", "bold")
+    call <SID>X("User3", "666666", "c2bfa5", "")
 
     " delete functions {{{
     delf <SID>X
