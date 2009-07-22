@@ -4,13 +4,13 @@
 
 !*fontList: -*-helvetica-medium-r-normal-*-*-80-*-*-*-*-*-*
 
-URxvt.reverseVideo: false
-URxvt.foreground: grey90
-
 URxvt.font: terminus-12
 URxvt.boldFont: -maju-terminus-bold-r-normal--12-120-72-72-c-60-iso10646-1
 !URxvt.italicFont:
 !URxvt.boldItalicFont:
+
+URxvt.reverseVideo: false
+URxvt.foreground: grey90
 
 ! for real transparency
 URxvt.depth: 32
@@ -21,6 +21,41 @@ URxvt.background: rgba:0000/0000/0000/dddd
 !URxvt.background: black
 !URxvt.tintColor: white
 !URxvt.shading: 15
+
+! tangoesque scheme
+!URxvt.foreground:  #aaaaaa
+!URxvt.background:  #222222
+! Black
+URxvt.color0:      #000000
+URxvt.color8:      #555753
+! Red
+URxvt.color1:      #cc0000
+URxvt.color9:      #ef2929
+! Green
+!URxvt.color2:      #73d216
+!URxvt.color10:     #8ae234
+URxvt.color2:      #15d115
+URxvt.color10:     #34e334
+! Yellow
+URxvt.color3:      #edd400
+!URxvt.color11:     #fce94f
+URxvt.color11:     #ffe629
+! Blue
+URxvt.color4:      #044eb0
+URxvt.color12:     #3465a4
+! Magenta
+!URxvt.color5:      #ce5c00
+!URxvt.color13:     #f57900
+URxvt.color5:      #d345e5
+URxvt.color13:     #ea00ff
+! Cyan
+URxvt.color6:      #89b6e2
+!URxvt.color14:     #46a4ff
+URxvt.color14:     #5ec8ff
+!URxvt.color14:     #5ee4ff
+! White
+URxvt.color7:      #cccccc
+URxvt.color15:     #ffffff
 
 URxvt.cursorColor: yellow
 URxvt.underlineColor: yellow
