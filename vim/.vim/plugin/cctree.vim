@@ -16,8 +16,8 @@
 "  Description: C Call-Tree Explorer Vim Plugin
 "   Maintainer: Hari Rangarajan <hari.rangarajan@gmail.com>
 "          URL: http://vim.sourceforge.net/scripts/script.php?script_id=2368
-"  Last Change: December 24, 2008
-"      Version: 0.61
+"  Last Change: July 12, 2009
+"      Version: 0.65
 "
 "=============================================================================
 " 
@@ -86,7 +86,7 @@
 "               Cscope database file, g:CCTreeCscopeDb = "cscope.out"
 "               Maximum call levels,   g:CCTreeRecursiveDepth = 3
 "               Maximum visible(unfolded) level, g:CCTreeMinVisibleDepth = 3
-"               Orientation of window,  g:CCTreeOrientation = "leftabove"
+"               Orientation of window,  g:CCTreeOrientation = "topleft"
 "                (standard vim options for split: [right|left][above|below])
 "
 "               Use Vertical window, g:CCTreeWindowVertical = 1
@@ -133,6 +133,8 @@
 "                 in incorrectly identified function blocks, etc.
 "
 "  History:
+"           Version 0.65: July 12, 2009
+"           	  1. Toggle preview window
 "
 "           Version 0.61: December 24, 2008
 "                 1. Fixed bug when processing include files
@@ -211,7 +213,7 @@ if !exists('CCTreeMinVisibleDepth')
     let CCTreeMinVisibleDepth = 3
 endif
 if !exists('CCTreeOrientation')
-    let CCTreeOrientation = "leftabove"
+    let CCTreeOrientation = "topleft"
 endif
 if !exists('CCTreeWindowVertical')
     let CCTreeWindowVertical = 1
@@ -488,21 +490,33 @@ function! s:CCTreeGetCallsForSymbol(symname, depth, direction)
 endfunction
 
 func! s:FindOpenBuffer(filename)
-    let bnrList = tabpagebuflist(tabpagenr())
+    let bnrHigh = bufnr("$")
+    "tabpagebuflist(tabpagenr())
 
-    for bufnrs in bnrList
-        if (bufname(bufnrs) == a:filename)
-            let newWinnr = bufwinnr(bufnrs)
-            exec newWinnr.'wincmd w'
-            return 1
+    for bufnrs in range(1, bnrHigh)
+        if (bufexists(bufnrs) == 1 && bufname(bufnrs) == a:filename)
+            return bufnrs
         endif
     endfor
     " Could not find the buffer
     return 0
 endfunction
 
+func! s:FindOpenWindow(filename)
+    let bufnr = s:FindOpenBuffer(a:filename)
+    if (bufnr > 0)
+       let newWinnr = bufwinnr(bufnr)
+       if newWinnr != -1 
+	       exec newWinnr.'wincmd w'
+	       return 1
+       endif 
+    endif
+    " Could not find the buffer
+    return 0
+endfunction
+
 function! s:CCTreePreviewWindowLeave()
-    call s:FindOpenBuffer(s:lastbufname)
+    call s:FindOpenWindow(s:lastbufname)
 endfunction
 
 function! CCTreePreviewStatusLine()
@@ -520,7 +534,7 @@ endfunction
 
 function! s:CCTreePreviewWindowEnter()
     let s:lastbufname = bufname("%")
-    if s:FindOpenBuffer(s:windowtitle) == 0
+    if s:FindOpenWindow(s:windowtitle) == 0
         if g:CCTreeWindowVertical == 1
             exec  g:CCTreeOrientation." vsplit ". s:windowtitle
             set winfixwidth
@@ -530,7 +544,7 @@ function! s:CCTreePreviewWindowEnter()
         endif
 
         setlocal buftype=nofile
-        setlocal bufhidden=wipe
+        setlocal bufhidden=hide
         setlocal noswapfile
         setlocal nonumber
         setlocal statusline=%=%{CCTreePreviewStatusLine()}
@@ -682,21 +696,21 @@ function! s:CCTreeMarkCallTree(treelst, keyword)
     endfor
 endfunction
 
-
-
-function! s:CCTreeDisplayTreeInWindow(atree)
-    let incctreewin = 1
-    if (bufname('%') != s:windowtitle) 
-        call s:CCTreePreviewWindowEnter()
-        let incctreewin = 0
+function! s:CCTreeDisplayWindowToggle()
+    if s:FindOpenWindow(s:windowtitle) == 1
+	silent! exec "hide"
+    else 
+	let winbufnr = s:FindOpenBuffer(s:windowtitle)
+	if winbufnr !=0 
+	   call s:CCTreePreviewWindowEnter()
+	   silent! exec "buf ".winbufnr
+	   call s:CCTreeWindowResize()
+	   silent! exec "wincmd p"
+	endif
     endif
-    setlocal modifiable
-    1,$d
-    let b:treelist = []
-    let b:maxwindowlen = g:CCTreeWindowMinWidth
-    let treemarkertxtlist = s:CCTreeBuildTreeDisplayItems(a:atree, b:treelist)
-    call s:CCTreeDisplayTreeList(treemarkertxtlist, b:treelist)
+endfunction
 
+function! s:CCTreeWindowResize()
     if g:CCTreeWindowVertical == 1
         if g:CCTreeWindowWidth == -1
             exec "vert resize". b:maxwindowlen
@@ -709,7 +723,24 @@ function! s:CCTreeDisplayTreeInWindow(atree)
            exec "resize".g:CCTreeWindowHeight
         endif
     endif
+endfunction
 
+
+function! s:CCTreeDisplayTreeInWindow(atree)
+    let incctreewin = 1
+    if (bufname('%') != s:windowtitle) 
+    	call s:CCTreePreviewWindowEnter()
+        let incctreewin = 0
+    endif
+
+    setlocal modifiable
+    1,$d
+    let b:treelist = []
+    let b:maxwindowlen = g:CCTreeWindowMinWidth
+    let treemarkertxtlist = s:CCTreeBuildTreeDisplayItems(a:atree, b:treelist)
+    call s:CCTreeDisplayTreeList(treemarkertxtlist, b:treelist)
+
+    call s:CCTreeWindowResize()
     exec "normal gg"
 
     " Need to force this again
@@ -939,6 +970,7 @@ command! -nargs=0 CCTreeLoadBufferUsingTag call s:CCTreeLoadBufferFromKeyword()
 command! -nargs=0 CCTreePreviewBufferUsingTag call s:CCTreePreviewBufferFromKeyword()
 command! -nargs=0 CCTreeRecurseDepthPlus call s:CCTreeRecursiveDepthIncrease()
 command! -nargs=0 CCTreeRecurseDepthMinus call s:CCTreeRecursiveDepthDecrease()
+command! -nargs=0 CCTreeWindowToggle 	call s:CCTreeDisplayWindowToggle()
 
 
 function! s:CCTreeGetKeyword()
@@ -962,6 +994,7 @@ function! s:CCTreeBufferKeyMappingsCreate()
      let func_expr = '<SNR>'.s:sid.'CCTreeGetKeyword()'
      exec 'nnoremap <buffer> <silent> <C-\>< :CCTreeTraceReverse <C-R>='.func_expr.'<CR><CR>'
      exec 'nnoremap <buffer> <silent> <C-\>> :CCTreeTraceForward <C-R>='.func_expr.'<CR><CR>'
+     exec 'nnoremap <silent> <C-\>w :CCTreeWindowToggle<CR>'
 
      nnoremap <buffer> <silent> <C-\>= :CCTreeRecurseDepthPlus<CR> 
      nnoremap <buffer> <silent> <C-\>- :CCTreeRecurseDepthMinus<CR> 
