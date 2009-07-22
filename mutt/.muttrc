@@ -297,7 +297,7 @@ unset confirmappend     # prompt for confirm when appending message to ex. mbox
   set delete=yes        # ask for confirmation when deleting messages?
   set delete_untag      # untag messages when marking them for deletion.
 #   set index_format="%4C %?H?%-12.12H&%Z %[%d/%m/%y]? %-17.17F %?M?(#%03M)&(%4c)? %s"
-  set index_format="%[%d/%m/%y] %[%H:%M] %Z %-20.20F %?M?(%M) ?%?Y?[%Y] ?%s%> %c"
+  set index_format="%[%d/%m/%y] %[%H:%M] [%Z] %-20.20F %?M?(%M) ?%?Y?[%Y] ?%s%> %c"
 unset mark_old          # mark new articles as old, when leaving mbox
   set mh_purge          # remove messages marked as deleted from MH folders.
   set narrow_tree
@@ -359,6 +359,8 @@ alternative_order text/plain text/html  # I like plaintext more than html.
 #   set sidebar_boundary="._-"
 # unset sidebar_newmail_only
 # unset sidebar_shorten_hierarchy
+  set sidebar_sort
+  set sidebar_shortpath
   set sidebar_visible
   set sidebar_width=40
 
