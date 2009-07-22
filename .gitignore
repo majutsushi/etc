@@ -1,3 +1,5 @@
+*.pyc
+
 mutt/.mutt/accounts
 vim/.vim/systags
 vim/.vim/.netrwhist
