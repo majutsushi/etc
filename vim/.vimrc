@@ -1,7 +1,7 @@
 " This must be at the beginning
 set nocompatible
 
-" Autocommands {{{
+" Autocommands {{{1
 
 " remove all autocommands to avoid sourcing them twice
 autocmd!
@@ -79,9 +79,7 @@ augroup END
 " temporary LooPo setting
 au BufNewFile,BufReadPost ~/apps/loopo/loopo.svn/hsloopo/** setlocal makeprg=make\ compiled-o0
 
-"}}}
-
-" General {{{
+" General {{{1
 
 set confirm
 filetype on
@@ -111,9 +109,7 @@ let mapleader=","
 set grepprg=ack-grep
 "set winaltkeys=no " use alt-mappings for menu shortcuts?
 
-"}}}
-
-" Theme/Colors {{{
+" Theme/Colors {{{1
 
 set background=dark
 if  &term =~ "xterm"
@@ -131,9 +127,7 @@ endif
 syntax on
 hi SignColumn guibg=grey20
 
-"}}}
-
-" Files/Backups {{{
+" Files/Backups {{{1
 
 "set backup
 "set backupdir= " where to put backup files
@@ -144,9 +138,7 @@ set path=.,./**,/usr/include,/usr/include/**,,
 set updatecount=100
 set updatetime=2000
 
-"}}}
-
-" UI {{{
+" UI {{{1
 
 " http://ft.bewatermyfriend.org/comp/vim/vimrc.html
 if (&term =~ '^screen')
@@ -204,9 +196,7 @@ set diffopt=filler,vertical
 set previewheight=9
 set display=lastline,uhex
 
-"}}}
-
-" Visual Cues {{{
+" Visual Cues {{{1
 
 set showmatch
 set hlsearch
@@ -237,9 +227,7 @@ set showmode
 "hi User2 term=bold,reverse ctermfg=244 ctermbg=235 cterm=bold guibg=#c2bfa5 guifg=#990f0f gui=bold
 "hi User3 term=reverse ctermfg=244 ctermbg=235 cterm=none guibg=#c2bfa5 guifg=grey40  gui=none
 
-"}}}
-
-" Text Formatting/Layout {{{
+" Text Formatting/Layout {{{1
 
 set formatoptions=tcqrol
 set autoindent
@@ -256,18 +244,14 @@ set textwidth=75
 "set pastetoggle=<C-P> " see mappings
 set fileformats=unix,dos,mac
 
-"}}}
-
-" Folding {{{
+" Folding {{{1
 
 set nofoldenable
 "set foldcolumn=3
 "set foldlevel=100
 "set foldmethod=syntax
 
-"}}}
-
-" Printing {{{
+" Printing {{{1
 
 "set printdevice=
 set printoptions=number:y,paper:A4,left:5pc,right:5pc,top:5pc,bottom:5pc
@@ -281,16 +265,14 @@ function! PrintFile(fname)
     return v:shell_error
 endfunc
 
-"}}}
-
-" Plugin and script options {{{
+" Plugin and script options {{{1
 
 " default format for .tex filetype recognition
 let g:tex_flavor = "latex"
 
 let treeExplVertical = 1
 
-" vim-latexsuite {{{
+" vim-latexsuite {{{2
 let g:Tex_DefaultTargetFormat = "pdf"
 let g:Tex_IgnoredWarnings = 
             \'Underfull'."\n".
@@ -304,39 +286,34 @@ let g:Tex_IgnoredWarnings =
 "let g:Tex_ViewRule_pdf = 'xpdf -remote TexServer'
 let g:Tex_ViewRule_pdf = 'evince'
 let g:Tex_MultipleCompileFormats = 'dvi,pdf'
-"}}}
 
-" TOhtml syntax script {{{
+" TOhtml syntax script {{{2
 let html_use_css = 1
 let html_number_lines = 0
 let use_xhtml = 1
 let html_ignore_folding = 1
-"}}}
 
-" mail.tgz {{{
+" mail.tgz {{{2
 let g:mail_erase_quoted_sig = 1
 "let g:mail_alias_source = "Abook"
 let g:mail_alias_source = "MuttQuery"
 let g:mail_mutt_query_command = "mutt-evo-query.rb"
-"}}}
 
-" project {{{
+" project {{{2
 let g:proj_window_width = 30
 let g:proj_window_increment = 50
 let g:proj_flags = 'gimsSt'
 let g:proj_run1 = ":call ManCscopeAndTags()"
-"}}}
 
 let ri_unfold_nonunique = 'on'
 let ri_prompt_complete = 'on'
 
-" po {{{
+" po {{{2
 let g:po_translator = 'Jan Larres <jan@majutsushi.net>'
 let g:po_lang_team = ''
 "let g:po_path = '.,..'
-"}}}
 
-" taglist {{{
+" taglist {{{2
 "let Tlist_File_Fold_Auto_Close = 1
 "let Tlist_Display_Prototype = 1
 let Tlist_Show_One_File = 1
@@ -345,14 +322,12 @@ let Tlist_Enable_Fold_Column = 0
 let Tlist_Use_Right_Window = 1
 let Tlist_Inc_Winwidth = 0 " to prevent problems with project.vim
 let Tlist_Sort_Type = "name"
-"}}}
 
-" omnicppcomplete {{{
+" omnicppcomplete {{{2
 let g:OmniCpp_SelectFirstItem = 2 " select first completion item, but don't insert it
 "let g:OmniCpp_ShowPrototypeInAbbr = 1
-"}}}
 
-" Viki {{{
+" Viki {{{2
 let g:vikiLowerCharacters = "a-zäöüßáàéèíìóòçñ"
 let g:vikiUpperCharacters = "A-ZÄÖÜ"
 let g:vikiUseParentSuffix = 1
@@ -364,9 +339,8 @@ let g:vikiOpenFileWith_ANY   = "silent !start %{FILE}"
 let g:deplatePrg = "deplate -x -X "
 let g:vikiNameSuffix=".viki"
 let g:vikiHomePage = "~/projects/viki/Main.viki"
-"}}}
 
-" tSkeleton {{{
+" tSkeleton {{{2
 let g:tskelUserName = "Jan Larres"
 let g:tskelUserEmail = "jan@majutsushi.net"
 let g:tskelUserWWW = "http://majutsushi.net"
@@ -376,37 +350,31 @@ let g:tskelMenuPrefix = ""
 let g:timestamp_modelines = 10
 let g:timestamp_rep = '%a %d %b %Y %T %Z'
 let g:timestamp_regexp = '\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}  ?%(\a+)?|TIMESTAMP'
-"}}}
 
-" selectbuf {{{
+" selectbuf {{{2
 let g:selBufAlwaysShowDetails = 1
 let g:selBufLauncher = "!see"
-"}}}
 
-" minibufexplorer (obsolete) {{{
+" minibufexplorer (obsolete) {{{2
 let g:miniBufExplMapWindowNavVim = 0
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplForceSyntaxEnable = 1
 let g:Tb_ModSelTarget = 1
-"}}}
 
-" flagit {{{
+" flagit {{{2
 let icons_path = "/home/jan/.vim/signs/"
 let g:Fi_Flags = { "todo" : [icons_path."emblem-important.png", "! ", 0, ""] }
 let g:Fi_OnlyText = 0
 let g:Fi_ShowMenu = 1
-"}}}
 
-" vcscommand {{{
+" vcscommand {{{2
 let g:VCSCommandResultBufferNameExtension = ".vcs"
-"}}}
 
-" vtreeexplorer {{{
+" vtreeexplorer {{{2
 let g:treeExplDirSort = 1
-"}}}
 
-" exUtilities (obsolete) {{{
+" exUtilities (obsolete) {{{2
 "nnoremap <silent> <F7> :ExtsToggle<CR>
 "nnoremap <silent> <Leader>ts :ExtsSelectToggle<CR>
 "nnoremap <silent> <Leader>tt :ExtsStackToggle<CR>
@@ -414,28 +382,23 @@ let g:treeExplDirSort = 1
 "map <silent> <Leader>[ :PopTagStack<CR>
 "let g:exTS_backto_editbuf = 0
 "let g:exTS_close_when_selected = 1
-"}}}
 
-" SuperTab (obsolete) {{{
+" SuperTab (obsolete) {{{2
 let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-"}}}
 
-" code_complete (obsolete) {{{
+" code_complete (obsolete) {{{2
 let s:rs = '<+'
 let s:re = '+>'
-"}}}
 
-" cca {{{
+" cca {{{2
 "let cca_hotkey = "<Tab>"
 let cca_hotkey = "<S-Space>"
-" }}}
 
-" detectindent {{{
+" detectindent {{{2
 let g:detectindent_preferred_expandtab = 1
 let g:detectindent_preferred_indent = 4
-"}}}
 
-" haskellmode {{{
+" haskellmode {{{2
 let g:haddock_browser="/usr/bin/gnome-www-browser"
 let g:haddock_docdir="/usr/share/doc/ghc6-doc/libraries/"
 let g:haddock_indexfiledir="~/.vim/cache/"
@@ -445,58 +408,47 @@ let hs_highlight_boolean = 1
 let hs_highlight_types = 1
 let hs_highlight_more_types = 1
 let hs_highlight_debug = 1
-"}}}
 
-" git {{{
+" git {{{2
 "let g:git_diff_spawn_mode = 1
-" }}}
 
-" autocomplpop {{{
+" autocomplpop {{{2
 let g:AutoComplPop_NotEnableAtStartup = 1
 let g:AutoComplPop_MappingDriven = 1
 "let g:AutoComplPop_Behavior = 
-" }}}
 
-" rubycomplete {{{
+" rubycomplete {{{2
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_rails = 1
-" }}}
 
-" vimblog {{{
+" vimblog {{{2
 if !exists('*Wordpress_vim')
     runtime vimblog.vim
 endif
-" }}}
 
-" changelog {{{
+" changelog {{{2
 let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
-" }}}
 
-" CCTree {{{
+" CCTree {{{2
 let g:CCTreeRecursiveDepth = 2
 let g:CCTreeMinVisibleDepth = 2
 let g:CCTreeOrientation = "leftabove"
-"}}}
 
-" devhelp {{{
+" devhelp {{{2
 let g:devhelpSearch = 1
 let g:devhelpAssistant = 1
 let g:devhelpSearchKey = '<F7>'
 let g:devhelpWordLength = 5
-"}}}
 
-" NERD_Tree {{{
+" NERD_Tree {{{2
 "let NERDTreeCaseSensitiveSort = 1
 let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
 let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$']
 let NERDTreeHijackNetrw = 0
-"}}}
 
-"}}}
+" Functions {{{1
 
-" Functions {{{
-
-" ToggleFold() {{{
+" ToggleFold() {{{2
 " Toggle fold state between closed and opened.
 " If there is no fold at current line, just moves forward.
 " If it is present, reverse its state.
@@ -513,9 +465,8 @@ fun! ToggleFold()
     " Clear status line
     echo
 endfun
-"}}}
 
-" InsertTabWrapper() {{{
+" InsertTabWrapper() {{{2
 " http://vim.sourceforge.net/tips/tip.php?tip_id=102
 function! InsertTabWrapper(direction)
     let col = col('.') - 1
@@ -527,9 +478,8 @@ function! InsertTabWrapper(direction)
         return "\<c-n>"
     endif
 endfunction
-"}}}
 
-" ExtractMethod() {{{
+" ExtractMethod() {{{2
 vmap \em :call ExtractMethod()<cr>
 function! ExtractMethod() range
     let name = inputdialog("Name of new method:")
@@ -544,9 +494,8 @@ function! ExtractMethod() range
     normal ==
     normal j0w
 endfunction
-"}}}
 
-" GenerateStatusline() {{{
+" GenerateStatusline() {{{2
 " some code taken from
 " http://cream.cvs.sourceforge.net/cream/cream/cream-statusline.vim?revision=1.38&view=markup
 function! GenerateStatusline()
@@ -568,7 +517,7 @@ function! GenerateStatusline()
          \ lineinfo
 endfunction
 
-" GetFileName() {{{
+" GetFileName() {{{3
 function! GetFileName()
     if &buftype == "help"
         return expand('%:p:t')
@@ -580,9 +529,8 @@ function! GetFileName()
         return expand('%:p:~:.')
     endif
 endfunction
-"}}}
 
-" GetState() {{{
+" GetState() {{{3
 function! GetState()
     if &buftype == "help"
         return 'H'
@@ -594,9 +542,8 @@ function! GetState()
         return ''
     endif
 endfunction
-"}}}
 
-" GetFileformat() {{{
+" GetFileformat() {{{3
 function! GetFileformat()
     if &fileformat == ""
         return "--"
@@ -604,9 +551,8 @@ function! GetFileformat()
         return &fileformat
     endif
 endfunction
-"}}}
 
-" GetFileencoding() {{{
+" GetFileencoding() {{{3
 function! GetFileencoding()
     if &fileencoding == ""
         if &encoding != ""
@@ -618,9 +564,8 @@ function! GetFileencoding()
         return &fileencoding
     endif
 endfunction
-"}}}
 
-" GetFiletype() {{{
+" GetFiletype() {{{3
 function! GetFiletype()
     if &filetype == ""
         return "--"
@@ -628,9 +573,8 @@ function! GetFiletype()
         return &filetype
     endif
 endfunction
-"}}}
 
-" GetSpellLang() {{{
+" GetSpellLang() {{{3
 function! GetSpellLang()
     if &spell == 0
         return ""
@@ -640,9 +584,8 @@ function! GetSpellLang()
         return ":" . &spelllang
     endif
 endfunction
-"}}}
 
-" GetExpandTab() {{{
+" GetExpandTab() {{{3
 function! GetExpandTab()
     if &expandtab
         return "S"
@@ -650,16 +593,14 @@ function! GetExpandTab()
         return "T"
     endif
 endfunction
-" }}}
 
-" GetCurDir() {{{
+" GetCurDir() {{{3
 function! GetCurDir()
     let curdir = substitute(getcwd(), '/home/jan', "~", "g")
     return curdir
 endfunction
-"}}}
 
-" GetTabstop() {{{
+" GetTabstop() {{{3
 function! GetTabstop()
     " show by Vim option, not Cream global (modelines)
     let str = "" . &tabstop
@@ -675,11 +616,8 @@ function! GetTabstop()
     endif
     return str
 endfunction
-"}}}
 
-"}}}
-
-" MyTabLine() {{{
+" MyTabLine() {{{2
 if exists("+guioptions")
      set go-=e
 endif
@@ -729,9 +667,8 @@ if exists("+showtabline")
 "    map     <S-F10>  :tabprev<CR>
 "    map!    <S-F10>  <C-O>:tabprev<CR>
 endif
-"}}}
 
-" VisualSearch() {{{
+" VisualSearch() {{{2
 " From an idea by Michael Naumann
 function! VisualSearch(direction) range
     let l:saved_reg = @"
@@ -746,9 +683,8 @@ function! VisualSearch(direction) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
-"}}}
 
-" Bclose() {{{
+" Bclose() {{{2
 " delete buffer without closing window
 function! Bclose()
     let l:currentBufNum = bufnr("%")
@@ -768,9 +704,8 @@ function! Bclose()
         execute("bdelete! ".l:currentBufNum)
     endif
 endfunction
-"}}}
 
-" SmartTOHtml() {{{
+" SmartTOHtml() {{{2
 "A function that inserts links & anchors on a TOhtml export.
 " Notice:
 " Syntax used is:
@@ -787,9 +722,8 @@ function! SmartTOHtml()
     exe ":write!"
     exe ":bd"
 endfunction
-"}}}
 
-" ToggleExpandTab() {{{
+" ToggleExpandTab() {{{2
 function! ToggleExpandTab()
     if &sts == 4
         set softtabstop=0
@@ -802,9 +736,8 @@ function! ToggleExpandTab()
     endif
     set expandtab?
 endfunction
-"}}}
 
-" LBDBCompleteFn() {{{
+" LBDBCompleteFn() {{{2
 " from http://dollyfish.net.nz/blog/2008-04-01/mutt-and-vim-custom-autocompletion
 fun! LBDBCompleteFn(findstart, base)
     if a:findstart
@@ -828,9 +761,8 @@ fun! LBDBCompleteFn(findstart, base)
         return res
     endif
 endfun
-"}}}
 
-" ManCscopeAndTags() {{{
+" ManCscopeAndTags() {{{2
 function! ManCscopeAndTags()
     execute '!cscope -Rqbc'
     " see ~/.ctags
@@ -842,9 +774,8 @@ function! ManCscopeAndTags()
     endif
     execute 'CCTreeLoadDB'
 endfunction
-"}}}
 
-" RunShellCommand() {{{
+" RunShellCommand() {{{2
 function! s:RunShellCommand(cmdline)
     botright new
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
@@ -866,9 +797,7 @@ endfunction
 command! -complete=file -nargs=* Git   call s:RunShellCommand('git '.<q-args>)
 command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 
-"}}}
-
-" PreviewWord() {{{
+" PreviewWord() {{{2
 function! PreviewWord(local)
     if &previewwindow			" don't do this in the preview window
         return
@@ -931,19 +860,19 @@ function! PreviewWordLocal(w, editwinnum)
         silent! exe a:editwinnum . "wincmd w"
     endif
 endfun
-"}}}
 
-" LoadProjectConfig() {{{
+" LoadProjectConfig() {{{2
 function LoadProjectConfig()
     if filereadable(expand('%:h') . '/project_config.vim')
         exe 'source %:h/project_config.vim'
     endif
 endfunction
-" }}}
 
+" Tab2Space/Space2Tab {{{2
 command! -range=% -nargs=0 Tab2Space exec "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', "repeat(' ', ".&ts."), 'g')"
 command! -range=% -nargs=0 Space2Tab exec "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0), ' \\{".&ts."\\}', '\\t', 'g')"
 
+" DiffOrig {{{2
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
@@ -952,15 +881,12 @@ if !exists(":DiffOrig")
                 \ | wincmd p | diffthis
 endif
 
-"}}}
-
-" Abbrevs {{{
+" Abbrevs {{{1
 source ~/.vim/abbrevs.vim
-"}}}
 
-" Snippets {{{
+" Snippets {{{1
 
-" Java {{{
+" Java {{{2
 autocmd FileType java inorea <buffer> cfun <c-r>=IMAP_PutTextWithMovement("public<++> <++>(<++>) {\n<++>;\nreturn <++>;\n}")<cr> 
 autocmd FileType java inorea <buffer> cfunpr <c-r>=IMAP_PutTextWithMovement("private<++> <++>(<++>) {\n<++>;\nreturn <++>;\n}")<cr> 
 autocmd FileType java inorea <buffer> cfor <c-r>=IMAP_PutTextWithMovement("for(<++>; <++>; <++>) {\n<++>;\n}")<cr> 
@@ -968,11 +894,8 @@ autocmd FileType java inorea <buffer> cif <c-r>=IMAP_PutTextWithMovement("if(<++
 autocmd FileType java inorea <buffer> cifelse <c-r>=IMAP_PutTextWithMovement("if(<++>) {\n<++>;\n}\nelse {\n<++>;\n}")<cr>
 autocmd FileType java inorea <buffer> cclass <c-r>=IMAP_PutTextWithMovement("class <++> <++> {\n<++>\n}")<cr>
 autocmd FileType java inorea <buffer> cmain <c-r>=IMAP_PutTextWithMovement("public static void main(String[] argv) {\n<++>\n}")<cr>
-"}}}
 
-"}}}
-
-" Terminal keycodes {{{
+" Terminal keycodes {{{1
 
 if !has("gui_running")
     if &term == "rxvt-unicode" || &term == "screen-256color-bce"
@@ -1006,9 +929,7 @@ if !has("gui_running")
     endif
 endif
 
-" }}}
-
-" Mappings {{{
+" Mappings {{{1
 
 let vimrc='~/.vimrc'
 let myabbr='~/.abbr.vimrc'
@@ -1228,7 +1149,5 @@ map ## :/^> -- $/,/^$/d
 
 " ;rcm = remove "control-m"s - for those mails sent from DOS:
 cmap ;rcm %s/<C-M>//g
-
-"}}}
 
 " vim:tw=78 expandtab comments=\:\" foldmethod=marker foldenable
