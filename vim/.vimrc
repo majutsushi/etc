@@ -119,9 +119,11 @@ set background=dark
 if  &term =~ "xterm"
     set t_Co=256
 "    let g:inkpot_black_background = 1
-    colorscheme inkpot
+"    colorscheme inkpot
+    colorscheme desert256
 elseif &term =~ "rxvt-unicode" || &term =~ "screen-256color-bce"
-    colorscheme inkpot
+"    colorscheme inkpot
+    colorscheme desert256
 else
 "    set t_Co=16
     colorscheme desert
