@@ -75,24 +75,24 @@ let s:jumppos = -1
 let s:doappend = 1
 
 " Autocommands: {{{1
-autocmd BufReadPost,BufNewFile * call CodeCompleteStart()
+autocmd BufReadPost,BufNewFile * call s:CodeCompleteStart()
 
 " Menus:
-menu <silent>       &Tools.Code\ Complete\ Start          :call CodeCompleteStart()<CR>
-menu <silent>       &Tools.Code\ Complete\ Stop           :call CodeCompleteStop()<CR>
+menu <silent>       &Tools.Code\ Complete\ Start          :call s:CodeCompleteStart()<CR>
+menu <silent>       &Tools.Code\ Complete\ Stop           :call s:CodeCompleteStop()<CR>
 
 " Function Definitions: {{{1
 
-function! CodeCompleteStart()
+function! s:CodeCompleteStart()
     exec "silent! iunmap  <buffer> ".g:completekey
     exec "inoremap <buffer> ".g:completekey." <c-r>=CodeComplete()<cr><c-r>=SwitchRegion()<cr>"
 endfunction
 
-function! CodeCompleteStop()
+function! s:CodeCompleteStop()
     exec "silent! iunmap <buffer> ".g:completekey
 endfunction
 
-function! FunctionComplete(fun)
+function! s:FunctionComplete(fun)
     let s:signature_list=[]
     let signature_word=[]
     let ftags=taglist("^".a:fun."$")
@@ -151,7 +151,7 @@ function! FunctionComplete(fun)
     endif
 endfunction
 
-function! ExpandTemplate(cword)
+function! s:ExpandTemplate(cword)
     "let cword = substitute(getline('.')[:(col('.')-2)],'\zs.*\W\ze\w*$','','g')
     if has_key(g:template,&ft)
         if has_key(g:template[&ft],a:cword)
@@ -198,14 +198,14 @@ function! CodeComplete()
     let s:doappend = 1
     let function_name = matchstr(getline('.')[:(col('.')-2)],'\zs\w*\ze\s*(\s*$')
     if function_name != ''
-        let funcres = FunctionComplete(function_name)
+        let funcres = s:FunctionComplete(function_name)
         if funcres != ''
             let s:doappend = 0
         endif
         return funcres
     else
         let template_name = substitute(getline('.')[:(col('.')-2)],'\zs.*\W\ze\w*$','','g')
-        let tempres = ExpandTemplate(template_name)
+        let tempres = s:ExpandTemplate(template_name)
         if tempres != ''
             let s:doappend = 0
         endif
@@ -215,7 +215,7 @@ endfunction
 
 
 " [Get converted file name like __THIS_FILE__ ]
-function! GetFileName()
+function! s:GetFileName()
     let filename=expand("%:t")
     let filename=toupper(filename)
     let _name=substitute(filename,'\.','_',"g")
@@ -241,8 +241,8 @@ let g:template['c']['cd'] = "/**<  */\<left>\<left>\<left>"
 let g:template['c']['de'] = "#define     "
 let g:template['c']['in'] = "#include    \"\"\<left>"
 let g:template['c']['is'] = "#include  <>\<left>"
-let g:template['c']['ff'] = "#ifndef  \<c-r>=GetFileName()\<cr>\<CR>#define  \<c-r>=GetFileName()\<cr>".
-            \repeat("\<cr>",5)."#endif  /*\<c-r>=GetFileName()\<cr>*/".repeat("\<up>",3)
+let g:template['c']['ff'] = "#ifndef  \<c-r>=s:GetFileName()\<cr>\<CR>#define  \<c-r>=s:GetFileName()\<cr>".
+            \repeat("\<cr>",5)."#endif  /*\<c-r>=s:GetFileName()\<cr>*/".repeat("\<up>",3)
 let g:template['c']['for'] = "for( ".g:rs."...".g:re." ; ".g:rs."...".g:re." ; ".g:rs."...".g:re." )\<cr>{\<cr>".
             \g:rs."...".g:re."\<cr>}\<cr>"
 let g:template['c']['main'] = "int main(int argc, char \*argv\[\])\<cr>{\<cr>".g:rs."...".g:re."\<cr>}"
