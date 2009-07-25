@@ -862,7 +862,7 @@ function! PreviewWordLocal(w, editwinnum)
 endfun
 
 " LoadProjectConfig() {{{2
-function LoadProjectConfig()
+function! LoadProjectConfig()
     if filereadable(expand('%:h') . '/project_config.vim')
         exe 'source %:h/project_config.vim'
     endif
