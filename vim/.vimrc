@@ -937,6 +937,8 @@ nn  <leader>vs :source <C-R>=vimrc<CR><CR>
 nn  <leader>ve :edit   <C-R>=vimrc<CR><CR>
 nn  <leader>va :edit   <C-R>=myabbr<CR><CR>
 
+nmap <C-W>e :enew<CR>
+
 " Control-Space for omnicomplete
 inoremap <C-Space> <C-X><C-O>
 
