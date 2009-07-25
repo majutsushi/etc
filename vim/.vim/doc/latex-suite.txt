@@ -1,0 +1,1 @@
+/home/jan/src/vim-latex/vimfiles/doc/latex-suite.txt

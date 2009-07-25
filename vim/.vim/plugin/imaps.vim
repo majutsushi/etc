@@ -1,1 +1,1 @@
-/usr/share/vim/addons/plugin/imaps.vim
+/home/jan/src/vim-latex/vimfiles/plugin/imaps.vim

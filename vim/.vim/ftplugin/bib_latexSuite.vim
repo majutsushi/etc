@@ -1,1 +1,1 @@
-/usr/share/vim/addons/ftplugin/bib_latexSuite.vim
+/home/jan/src/vim-latex/vimfiles/ftplugin/bib_latexSuite.vim

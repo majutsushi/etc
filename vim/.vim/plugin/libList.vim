@@ -1,1 +1,1 @@
-/usr/share/vim/addons/plugin/libList.vim
+/home/jan/src/vim-latex/vimfiles/plugin/libList.vim

@@ -1,1 +1,1 @@
-/usr/share/vim/addons/plugin/SyntaxFolds.vim
+/home/jan/src/vim-latex/vimfiles/plugin/SyntaxFolds.vim

@@ -1,1 +1,1 @@
-/usr/share/vim/addons/indent/tex.vim
+/home/jan/src/vim-latex/vimfiles/indent/tex.vim

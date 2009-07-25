@@ -1,1 +1,1 @@
-/usr/share/vim/addons/plugin/filebrowser.vim
+/home/jan/src/vim-latex/vimfiles/plugin/filebrowser.vim
