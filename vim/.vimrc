@@ -899,6 +899,10 @@ autocmd FileType java inorea <buffer> cmain <c-r>=IMAP_PutTextWithMovement("publ
 
 if !has("gui_running")
     if &term == "rxvt-unicode" || &term == "screen-256color-bce"
+        set t_ku=OA
+        set t_kd=OB
+        set t_kr=OC
+        set t_kl=OD
         map [23~ <S-F1>
         map [24~ <S-F2>
         map [25~ <S-F3>
