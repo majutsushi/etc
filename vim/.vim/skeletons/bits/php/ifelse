@@ -1,5 +1,0 @@
-if (<+CURSOR+>) {
-    <+TRUE+>
-} else {
-    <+FALSE+>
-}

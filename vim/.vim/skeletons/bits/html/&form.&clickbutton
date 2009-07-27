@@ -1,4 +1,0 @@
-<button type="button" name="<+CURSOR+>" value="<+VALUE+>" onClick="self.location.href='<+URL+>">
-    <+BODY+>
-</button>
-<++>

@@ -1,5 +1,0 @@
-action=	action="<+CURSOR+>"<++>
-method=	method="<+CURSOR+>"<++>
-name=	name="<+CURSOR+>"<++>
-class=	class="<+CURSOR+>"<++>
-

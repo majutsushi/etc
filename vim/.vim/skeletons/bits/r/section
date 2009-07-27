@@ -1,4 +1,0 @@
-
-<+tskel:break+>
-cat("<+CURSOR+>\n")
-<++>

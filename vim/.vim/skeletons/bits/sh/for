@@ -1,4 +1,0 @@
-for <+CURSOR+> in <+WORDS+>; do
-    <+BODY+>
-done
-<++>

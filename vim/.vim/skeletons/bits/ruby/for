@@ -1,3 +1,0 @@
-for <+CURSOR+> in <+VALUES+>
-    <+CODE+>
-end<++>

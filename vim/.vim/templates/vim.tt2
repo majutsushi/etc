@@ -1,0 +1,15 @@
+[% title=input('Title: ') -%]
+[% fname_canonic=filename.replace('\.vim$', '') FILTER lower -%]
+" [% filename %] -- [% title %]
+" @Author:      [% user.firstname %] [% user.lastname %] <[% user.mail %]>
+" @Website:     [% user.www %]
+" @Created:     [% date('%Y-%m-%d %H:%M:%S') %]
+" @Last Change: [% date('%Y-%m-%d %H:%M:%S') %]
+
+if &cp || exists("loaded_[% fname_canonic %]")
+    finish
+endif
+let loaded_[% fname_canonic %] = 1
+
+<+CURSOR+>
+

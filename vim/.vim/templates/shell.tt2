@@ -1,0 +1,7 @@
+#!/bin/sh
+# <+FILE NAME+>
+# @Author:      [% user.firstname %] [% user.lastname %] <[% user.mail %]>
+# @Created:     [% date('%Y-%m-%d %H:%M:%S') %]
+# @Last Change: [% date('%Y-%m-%d %H:%M:%S') %]
+
+

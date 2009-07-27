@@ -1,4 +1,0 @@
-if [ <+CURSOR+> ]; then
-    <+BODY+>
-fi
-<++>

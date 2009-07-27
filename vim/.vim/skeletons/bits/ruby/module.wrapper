@@ -1,1 +1,0 @@
-module <+FILE NAME ROOT:cs*\W*_*+>; end<+CURSOR+>

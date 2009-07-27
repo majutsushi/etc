@@ -6,5 +6,6 @@ au BufNewFile,BufReadPost *.viki setfiletype viki
 au BufNewFile,BufReadPost *.mips setfiletype mips
 "au BufNewFile,BufReadPost COMMIT_EDITMSG setfiletype git
 au BufNewFile,BufReadPost *.mkd setfiletype mkd
+au BufNewFile,BufReadPost *.tt2 setfiletype tt2
 augroup END
 

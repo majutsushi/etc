@@ -1,7 +1,0 @@
-<tskel:before>
-let b:tskelChoices = "now\ntime\ntoday\nmonth\nyear"
-</tskel:before>
-<tskel:after>
-unlet b:tskelChoices
-</tskel:after>
-{date: <+?b:tskelChoices|Type of Format String:?+>}<+CURSOR+>

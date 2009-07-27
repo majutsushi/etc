@@ -1,0 +1,55 @@
+[% classname=input('Class name: ')
+   doxygen=choice('with Doxygen comments: ', 'no', 'yes')
+-%]
+#ifndef [% uc(classname) %]_HPP
+#define [% uc(classname) %]_HPP
+
+[% IF doxygen=='yes' -%]
+/**
+ * @brief [% classname %] ... short description ...
+ * @author [% user.firstname %] [% user.lastname %] <[% user.mail %]>
+ * @date [% date('%Y-%m-%d') %]
+ * ... description ...
+ */
+
+[% END -%]
+class [% classname %]
+{
+  public:
+[% IF doxygen=='yes' -%]
+
+    /**
+     * Default constructor
+     */
+[% END -%]
+    [% classname %]();
+[% IF doxygen=='yes' -%]
+
+    /**
+     * Destructor
+     */
+[% END -%]
+    virtual ~[% classname %]();
+[% IF doxygen=='yes' -%]
+
+    /**
+     * Copy constructor
+     * @param other Reference on object to copy.
+     */
+[% END -%]
+    [% classname %](const [% classname %]& other);
+[% IF doxygen=='yes' -%]
+
+    /** 
+     * Assignment operator
+     * @param other Reference on object to copy.
+     * @return Reference on initialisated object.
+     */
+[% END -%]
+    [% classname %]& operator=(const [% classname %]& other);
+
+  private:
+
+};
+
+#endif /* #ifndef [% uc(classname) %]_HPP */

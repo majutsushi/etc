@@ -1,0 +1,174 @@
+[% programname=input("Program name: ")
+   log4perl=choice('with Log::Log4perl: ', 'no', 'yes')
+-%]
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+
+=head1 NAME
+
+[% programname %] - short description
+
+=cut
+
+use constant VERSION => '0.0.1';
+
+use diagnostics;
+use Getopt::Long qw(:config no_ignore_case posix_default );
+use Pod::Usage;
+[% IF log4perl=='yes' -%]
+use Log::Log4perl qw(:easy);
+[% END -%]
+
+=head1 SYNOPSIS
+
+[% programname %] -run -help|-h -man -version [...]
+[% IF log4perl=='yes' -%]
+                  -loglevel=<string> -logfile=<file> -loglayout=<layout string>
+[% END -%]
+
+=cut
+
+my %opt = ();
+GetOptions( \%opt, 'run!', 'help|h!', 'man!', 'version!',
+         [% IF log4perl=='yes' -%] 'loglevel=s', 'logfile=s', 'loglayout=s' [% END -%] )
+  or pod2usage( -verbose => 0, -exitval => 1, -output  => \*STDERR );
+
+=head1 OPTIONS
+
+=over 4
+[% IF log4perl=='yes' -%]
+
+=item B<-loglevel>
+
+Set the loglevel=<DEBUG|INFO|WARN|ERROR|FATAL> default is WARN.
+
+=cut
+
+$opt{loglevel} ='INFO' unless (defined $opt{loglevel});
+
+=item B<-logfile>
+
+Set the logfile=<file> default is STDERR.
+
+=cut
+
+$opt{logfile}  ='STDERR' unless (defined $opt{logfile});
+
+=item B<-loglayout>
+
+Set the loglayout=<format> default is '%d %r %p %F %L %M %m%n'
+
+The format string can contain a number of placeholders which will be
+replaced by the logging engine when it's time
+to log the message:
+
+  %c Category of the logging event.
+  %C Fully qualified package (or class) name of the caller
+  %d Current date in yyyy/MM/dd hh:mm:ss format
+  %F File where the logging event occurred
+  %H Hostname
+  %l Fully qualified name of the calling method followed by the
+     callers source the file name and line number between
+     parentheses.
+  %L Line number within the file where the log statement was issued
+  %m The message to be logged
+  %M Method or function where the logging request was issued
+  %n Newline (OS-independent)
+  %p Priority of the logging event
+  %P pid of the current process
+  %r Number of milliseconds elapsed from program start to logging
+     event
+  %x The elements of the NDC stack (see below)
+  %X{key} The entry 'key' of the MDC (see below)
+  %% A literal percent (%) sign
+
+=cut
+
+$opt{loglayout}="%d $$ %p %F %L %M %m%n" unless (defined $opt{loglayout});
+
+Log::Log4perl->easy_init(
+                          {
+                            category => __PACKAGE__,
+                            level    => $opt{loglevel},
+                            file     => $opt{logfile},
+                            layout   => $opt{loglayout},
+                          }
+);
+DEBUG("Option: \$opt{$_}=$opt{$_}") for ( keys %opt );
+[% END -%]
+
+=item B<-help|-h>
+
+Print a brief help message and exit.
+
+=cut
+
+if ( defined $opt{help} ) {
+  pod2usage( -verbose => 1, -exitval => 0 );
+}
+
+=item B<-man>
+
+Prints the manual page and exit.
+
+=cut
+
+if ( defined $opt{man} ) {
+  pod2usage(-verbose => 2, -exitval => 0);
+}
+
+=item B<-version>
+
+Prints the version number and exit.
+
+=cut
+
+if ( defined $opt{version} ) {
+  print '[% programname %] version ' . VERSION . "\n";
+  exit 0;
+}
+
+=item B<-run>
+
+This option is running your program.
+
+=cut
+
+unless ( defined( $opt{run} )) {
+  pod2usage(-verbose => 0, -exitval => 1);
+}
+
+=back
+
+=cut
+
+# # # #
+
+[% IF log4perl=='yes'; 'INFO "Program is running."'; ELSE; 'print "Program is running.\n"'; END %]
+
+# # # #
+
+__END__
+
+=head1 DESCRIPTION
+
+B<foo.pl> will do something...
+
+=head1 AUTHOR
+
+[% user.firstname %] [% user.lastname %] <[% user.mail %]>
+
+=head1 COPYRIGHT
+
+Copyright (c) [% date("%Y") %], [% user.firstname %] [% user.lastname %] <[% user.mail %]>
+
+All rights reserved. This program is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.
+
+=head1 SEE ALSO
+
+L<perl(1)|perl>[% IF log4perl=='yes' -%] L<Log::Log4perl> [% END -%]
+
+=cut

@@ -1,7 +1,0 @@
-<tskel:before>
-let b:tskelChoices = "ol\nul\ndl"
-</tskel:before>
-<tskel:after>
-unlet b:tskelChoices
-</tskel:after>
-{list type=<+?b:tskelChoices|Type:?+>: <+CURSOR+>}<++>

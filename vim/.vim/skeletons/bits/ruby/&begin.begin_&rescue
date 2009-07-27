@@ -1,5 +1,0 @@
-begin
-    <+CURSOR+>
-<+tskel:rescue+>
-# else
-end<++>

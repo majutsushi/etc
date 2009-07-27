@@ -1,7 +1,0 @@
-switch (<+CURSOR+>) {
-case <+CASE+>:
-    <+CODE+>;
-    break;
-default:
-    <+CODE+>;
-}

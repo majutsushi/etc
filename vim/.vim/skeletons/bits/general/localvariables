@@ -1,6 +1,0 @@
-<tskel:here_after>
-if exists("*TComment")|call TCommentAs(1, line("$"), "!", b:tskelFiletype)|endif
-</tskel:here_after>
-vi: <+CURSOR+>
-Local Variables:
-End:

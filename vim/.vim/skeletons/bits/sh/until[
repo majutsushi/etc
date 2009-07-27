@@ -1,4 +1,0 @@
-until [ <+CURSOR+> ]; do
-    <+BODY+>
-done
-<++>

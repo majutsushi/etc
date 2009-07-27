@@ -1,0 +1,43 @@
+[% name=input('Name of the main LaTeX file: ') -%]
+##################################################
+# Author: [% user.firstname %] [% user.lastname %] <[% user.mail %]>
+# Date:   [% date('C', '%Y-%m-%d') %]
+##################################################
+
+NAME = [% name %]
+
+default: ${NAME}.dvi
+all: ${NAME}.dvi ${NAME}.ps ${NAME}.pdf html
+dvi: ${NAME}.dvi
+ps:  ${NAME}.ps
+pdf: ${NAME}.pdf
+txt: ${NAME}.txt
+
+${NAME}.dvi: ${NAME}.tex
+	latex ${NAME}.tex
+	latex ${NAME}.tex
+	latex ${NAME}.tex
+
+${NAME}.ps: ${NAME}.dvi
+	dvips -Ppdf ${NAME}.dvi
+
+${NAME}.pdf: ${NAME}.ps
+	ps2pdf ${NAME}.ps
+	thumbpdf --modes=ps2pdf ${NAME}.pdf 
+	dvips -Ppdf ${NAME}.dvi
+	ps2pdf ${NAME}.ps
+
+html: ${NAME}.tex
+	${RM} -rf html
+	latex2html -dir html -mkdir ${NAME}.tex
+
+one_html: ${NAME}.tex
+	${RM} -rf one_html
+	latex2html -split 0 -no_navigation -dir one_html -mkdir ${NAME}.tex
+
+${NAME}.txt: one_html
+	lynx -dump one_html/index.html >${NAME}.txt
+
+clean:
+	${RM} *.aux *.log *.out *.toc *.tpm \
+	${NAME}.dvi ${NAME}.ps ${NAME}.pdf ${NAME}.txt -rf html one_html

@@ -1,6 +1,0 @@
-try
-    <+CURSOR+>
-finally <+COND+>
-    <+HANDLER+>
-endtry
-<++>

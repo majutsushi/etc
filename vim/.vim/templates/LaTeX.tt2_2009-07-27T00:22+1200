@@ -1,0 +1,100 @@
+[% titel=input('titel: ')
+   class=choice('class type: ', 'article', 'report', 'letter', 'book')
+   german=choice('language german: ', 'no', 'yes')
+   tfsize=choice('typeface size: ', '10pt', '11pt', '12pt')
+   paper=choice('paper: ', 'a4paper', 'a5paper', 'b5paper', 'letterpaper', 'legalpaper', 'executivepaper')
+   titelpg=choice('titel page: ', 'notitlepage', 'titlepage')
+   side=choice('side layout: ', 'oneside', 'twoside')
+   column=choice('column: ', 'onecolumn', 'twocolumn')
+-%]
+\documentclass[[% tfsize %],[% paper %],[% titelpg %],[% side %],[% column %],pagesize]{[% class %]}
+\usepackage{multicol}
+\usepackage{graphicx}    % extended graphics package.
+\usepackage{color}
+\usepackage{isolatin1}   % 8 bit character and ISO-8859 Latin-1 codes.
+\usepackage{eurosym}
+\usepackage{textcomp}    % allow TS1-encoding symbols.
+\usepackage{anysize}     % set margin sizes with simple commands.
+[% IF german=='yes' -%]
+\usepackage{german}
+[% END -%]
+\usepackage{html}
+\usepackage{hthtml}
+\usepackage[ps2pdf]{thumbpdf}
+\usepackage[
+  ps2pdf,
+  pagebackref,
+  pdfpagelabels,
+  extension=pdf,
+]{hyperref}
+\hypersetup{ 
+  pdftitle          = {[% titel %]},
+  pdfsubject        = {},
+  pdfauthor         = {[% user.firstname %] [% user.lastname %] <[% user.mail %]>},
+  pdfkeywords       = {},
+  pdfcreator        = {ps2pdf with Ghostscript},
+  pdfproducer       = {LaTeX with hyperref and thumbpdf},
+  bookmarks         = true,
+  bookmarksopen     = true,
+  bookmarksnumbered = true,
+  pdfstartpage      = {1},
+  pdfpagemode       = UseThumbs,
+  colorlinks        = true,
+  linkcolor         = red,
+  anchorcolor       = red,
+  citecolor         = blue,
+  filecolor         = red,
+  pagecolor         = red,
+  urlcolor          = red
+}
+
+\marginsize{25mm}{25mm}{25mm}{15mm} %anysize, links*rechts*oben*unten
+\setlength{\parindent}{0mm}
+
+[% IF german=='yes' -%]
+\date{[% date('de_DE', '%d. %B %Y') %]}
+[% ELSE -%]
+\date{[% date('C', '%d. %B %Y') %]}
+[% END -%]
+\author{[% user.firstname %]~[% user.lastname %]}
+\title{[% titel %]}
+
+\begin{document}
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+% Beispiele
+%
+% URL
+% \href{http://napali.ch}{napali}
+% \url{http://napali.ch}
+% \url{mailto:stotz@gmx.ch}
+%
+% Bilder
+% \begin{figure}[htb]
+%   \begin{center}
+%     \includegraphics[scale=1]{logo}
+%     \caption{Welcome}
+%     \label{fig:logo}
+%   \begin{center}
+% \end{figure}
+%
+% Bibliographie
+% \cite{ID} 
+% \begin{thebibliography}{1}
+%   \bibitem{ID} Buchtitel
+%   Vorname Name: \textit{Titel}
+%   Verlag 1999.
+% \end{thebibliography}
+
+[% IF class=='book' -%]
+\chapter{Kapiteltitel}
+[% ELSE -%]
+\section{Sektionstitel}
+[% END -%]
+...
+
+\end{document}

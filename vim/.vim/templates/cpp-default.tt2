@@ -1,0 +1,26 @@
+[% classname=input("Class name: ") -%]
+#include "[% classname %].hpp"
+
+// [% date('%Y-%m-%d') %] [% user.firstname %] [% user.lastname %] <[% user.mail %]>
+
+[% classname %]::[% classname %]()
+{
+}
+
+[% classname %]::~[% classname %]()
+{
+  // cleanup
+}
+
+[% classname %]::[% classname %](const [% classname %]& other)
+{
+  *this=other;
+}
+
+[% classname %]& [% classname %]::operator=(const [% classname %]& other)
+{
+  if (this != &other){  // no self-assignmet
+    // deep copy
+  }
+  return *this;
+}

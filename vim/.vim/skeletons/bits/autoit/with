@@ -1,4 +1,0 @@
-with $<+CURSOR+>
-    <+BODY+>
-endwith
-<++>

@@ -1,3 +1,0 @@
-case <+CURSOR+>:
-    <+CODE+>;
-    break;

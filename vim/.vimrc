@@ -59,9 +59,11 @@ augroup END
 "au FileType c endif
 "au FileType c set cscopeverbose
 
-" setup skeletons
-au BufNewFile *.vim TSkeletonSetup plugin.vim
-au BufNewFile ~/work/dev/studium/ppp/**.c silent TSkeletonSetup mpi.c
+" setup templates
+au BufNewFile *.tex Vimplate LaTeX
+au BufNewFile *.sh Vimplate shell
+au BufNewFile *.c Vimplate c
+au BufNewFile *.vim Vimplate vim
 
 au BufWritePost,FileWritePost *.c TlistUpdate
 "au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
@@ -340,13 +342,10 @@ let g:deplatePrg = "deplate -x -X "
 let g:vikiNameSuffix=".viki"
 let g:vikiHomePage = "~/projects/viki/Main.viki"
 
-" tSkeleton {{{2
-let g:tskelUserName = "Jan Larres"
-let g:tskelUserEmail = "jan@majutsushi.net"
-let g:tskelUserWWW = "http://majutsushi.net"
-let g:tskelLicense = "GPLv2 (see http://www.gnu.org/licenses/gpl.txt)"
-let g:tskelMenuPrefix = ""
+" vimplate {{{2
+let Vimplate = "~/.vim/tools/vimplate"
 
+" timestamp {{{2
 let g:timestamp_modelines = 10
 let g:timestamp_rep = '%a %d %b %Y %T %Z'
 let g:timestamp_regexp = '\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}  ?%(\a+)?|TIMESTAMP'

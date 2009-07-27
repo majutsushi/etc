@@ -1,4 +1,0 @@
-for (( <+CURSOR+>; <+TEST+>; <+INC+> )); do
-    <+BODY+>
-done
-<++>

@@ -1,0 +1,24 @@
+##################################################
+# Author: [% user.firstname %] [% user.lastname %] <[% user.mail %]>
+# Date:   [% date('C', '%Y-%m-%d') %]
+##################################################
+
+PROGS     = [% input('list of program names:') %]
+DEBUG     = -O0 -ggdb -pg
+CFLAGS   += -Wall -pedantic -ansi ${DEBUG}
+LDFLAGS  +=
+CPPFLAGS +=
+FLAGS    += ${CFLAGS} ${LDFLAGS} ${CPPFLAGS}
+
+all: ${PROGS}
+
+${PROGS}: % : %.c
+	${CC} -o $@ ${FLAGS} $<
+
+test: all
+	@for prog in ${PROGS}; do \
+		echo $$prog; ./$$prog; \
+	done
+
+clean:
+	${RM} *.o core ${PROGS}

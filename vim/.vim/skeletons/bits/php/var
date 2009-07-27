@@ -1,6 +1,0 @@
-/**
- * <+CURSOR+>
- *
- * @var <+TYPE+>
- */
-var $<+NAME+> = <+VALUE+>;
