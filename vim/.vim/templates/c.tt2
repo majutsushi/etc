@@ -32,8 +32,8 @@
  *    <http://www.gnu.org/licenses/>.
 [% END -%]
  *
- * @Created:     [% date('%Y-%m-%d %H:%M:%S') %]
- * @Last Change: [% date('%Y-%m-%d %H:%M:%S') %]
+ * Created:      [% date('%Y-%m-%d %H:%M:%S %z %Z') %]
+ * Last changed: [% date('%Y-%m-%d %H:%M:%S %z %Z') %]
  *
  */
 
