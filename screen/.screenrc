@@ -46,7 +46,8 @@
 # ESCAPE - the COMMAND CHARACTER
 # ===============================================================
 # escape ^aa  # default
-  escape ^tt
+#   escape ^tt
+  escape ^yy
 #   escape ^@a # control-space
 #
 # ===============================================================
