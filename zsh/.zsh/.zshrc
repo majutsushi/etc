@@ -965,11 +965,9 @@ mkvrepack() {
     MP4Box -fps 29.970628 -add "${name}".264 "${name}".mp4 && rm "${name}".264
 }
 
-genvimtags() {
-    echo "Generating systags_base"
-    ctags -f ~/.vim/systags/systags_base /usr/include/*
-    echo "Generating systags_linux"
-    ctags -R -f ~/.vim/systags/systags_linux /usr/include/linux /usr/include/arpa /usr/include/asm* /usr/include/bits /usr/include/gnu /usr/include/ncursesw /usr/include/net* /usr/include/nfs /usr/include/protocols /usr/include/rpc* /usr/include/scsi /usr/include/sys /usr/include/readline
+gensystags() {
+    echo "Generating vim systags"
+    ctags -f ~/.vim/systags/systags --recurse --verbose --totals=yes /usr/include
 }
 
 pdf2pdf() {
