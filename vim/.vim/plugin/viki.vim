@@ -1,9 +1,9 @@
 " Viki.vim -- Some kind of personal wiki for Vim
-" @Author:      Thomas Link (micathom AT gmail com?subject=vim)
+" @Author:      Tom Link (micathom AT gmail com?subject=vim)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     08-Dec-2003.
-" @Last Change: 2007-12-23.
-" @Revision: 3.4.2536
+" @Last Change: 2009-03-20.
+" @Revision:    2627
 "
 " GetLatestVimScripts: 861 1 viki.vim
 "
@@ -34,11 +34,14 @@
 if &cp || exists("loaded_viki") "{{{2
     finish
 endif
-if !exists('loaded_tlib') || loaded_tlib < 15
-    echoerr 'tlib >= 0.15 is required'
-    finish
+if !exists('g:loaded_tlib') || g:loaded_tlib < 15
+    runtime plugin/02tlib.vim
+    if !exists('g:loaded_tlib') || g:loaded_tlib < 15
+        echoerr 'tlib >= 0.15 is required'
+        finish
+    endif
 endif
-let loaded_viki = 304
+let loaded_viki = 311
 
 " This is what we consider nil, in the absence of nil in vimscript
 let g:vikiDefNil  = ''
@@ -77,6 +80,17 @@ if !exists("g:vikiLowerCharacters") "{{{2
     let g:vikiLowerCharacters = "a-z"
 endif
 
+" Characters allowed in anchors
+" Defaults to:
+" [b:vikiLowerCharacters][b:vikiLowerCharacters +  b:vikiUpperCharacters + '_0-9]*
+if !exists('g:vikiAnchorNameRx')
+    let g:vikiAnchorNameRx = '' "{{{2
+endif
+
+if !exists('g:vikiUrlRestRx')
+    let g:vikiUrlRestRx = '['. g:vikiLowerCharacters . g:vikiUpperCharacters .'0-9?%_=&+-]*'  "{{{2
+endif
+
 " The prefix for the menu of intervikis. Set to '' in order to remove the 
 " menu.
 if !exists("g:vikiMenuPrefix") "{{{2
@@ -107,6 +121,7 @@ if !exists("g:vikiSpecialFiles") "{{{2
                 \ 'au',
                 \ 'avi',
                 \ 'bmp',
+                \ 'dia',
                 \ 'doc',
                 \ 'dvi',
                 \ 'eps',
@@ -174,7 +189,7 @@ endif
 " If non-nil, use the parent document's suffix.
 if !exists("g:vikiUseParentSuffix") | let g:vikiUseParentSuffix = 0      | endif "{{{2
 
-" Default file suffix.
+" Default file suffix (including the optional period, e.g. '.txt').
 if !exists("g:vikiNameSuffix")      | let g:vikiNameSuffix = ""          | endif "{{{2
 
 " Prefix for anchors
@@ -299,6 +314,12 @@ if v:version >= 700 && !exists("g:vikiHyperWordsFiles") "{{{2
                 \ ]
 endif
 
+" Definition of intervikis. (This variable won't be evaluated until 
+" autoload/viki.vim is loaded).
+if !exists('g:viki_intervikis')
+    let g:viki_intervikis = {}   "{{{2
+endif
+
 " Define which keys to map
 if !exists("g:vikiMapFunctionality") "{{{2
     " b     ... go back
@@ -339,13 +360,15 @@ endif
 
 if !exists("g:vikiOpenFileWith_ANY") "{{{2
     if exists('g:netrw_browsex_viewer')
-        let g:vikiOpenFileWith_ANY = "exec 'silent !'. g:netrw_browsex_viewer .' '. escape('%{FILE}', ' &!%')"
+        let g:vikiOpenFileWith_ANY = "exec 'silent !'. g:netrw_browsex_viewer .' '. shellescape('%{FILE}')"
     elseif has("win32") || has("win16") || has("win64")
-        let g:vikiOpenFileWith_ANY = "exec 'silent !cmd /c start '. escape('%{FILE}', ' &!%')"
+        let g:vikiOpenFileWith_ANY = "exec 'silent ! start \"\" '. shellescape('%{FILE}')"
+    elseif has("mac")
+        let g:vikiOpenFileWith_ANY = "exec 'silent !open '. shellescape('%{FILE}')"
     elseif $GNOME_DESKTOP_SESSION_ID != ""
-        let g:vikiOpenFileWith_ANY = "exec 'silent !gnome-open '. escape('%{FILE}', ' &!%')"
+        let g:vikiOpenFileWith_ANY = "exec 'silent !gnome-open '. shellescape('%{FILE}')"
     elseif $KDEDIR != ""
-        let g:vikiOpenFileWith_ANY = "exec 'silent !kfmclient exec '. escape('%{FILE}', ' &!%')"
+        let g:vikiOpenFileWith_ANY = "exec 'silent !kfmclient exec '. shellescape('%{FILE}')"
     endif
 endif
 
@@ -361,9 +384,10 @@ if !exists('*VikiOpenSpecialFile') "{{{2
             let prot = ''
         endif
         if prot != ''
+            " let openFile = viki#SubstituteArgs(prot, 'FILE', fnameescape(a:file))
             let openFile = viki#SubstituteArgs(prot, 'FILE', a:file)
             " TLogVAR openFile
-            exec openFile
+            call viki#ExecExternal(openFile)
         else
             throw 'Viki: Please define g:vikiOpenFileWith_'. proto .' or g:vikiOpenFileWith_ANY!'
         endif
@@ -391,6 +415,7 @@ if !exists("g:vikiUrlFileAs") | let g:vikiUrlFileAs = 'special' | endif "{{{2
 if !exists("g:vikiOpenUrlWith_file") "{{{2
     let g:vikiOpenUrlWith_file="call VikiOpenFileUrl('%{URL}')"
     function! VikiOpenFileUrl(url) "{{{3
+        " TLogVAR url
         if viki#IsSpecialFile(a:url)
             if g:vikiUrlFileAs == 'special'
                 let as_special = 1
@@ -401,16 +426,17 @@ if !exists("g:vikiOpenUrlWith_file") "{{{2
             else
                 let as_special = 0
             endif
+            " TLogVAR as_special
             if as_special
                 call VikiOpenSpecialFile(a:url)
                 return
             endif
         endif
         exec viki#DecomposeUrl(strpart(a:url, 7))
-        if filereadable(filename)
+        if filereadable(filename) || isdirectory(filename)
             call viki#OpenLink(filename, anchor)
         else
-            throw 'Viki: Can't find file url: '.filename
+            throw "Viki: Can't find file url: ". filename
         endif
     endf
 endif
@@ -418,16 +444,20 @@ endif
 if !exists("g:vikiOpenUrlWith_ANY") "{{{2
     " let g:vikiOpenUrlWith_ANY = "exec 'silent !". g:netrw_browsex_viewer ." '. escape('%{URL}', ' &!%')"
     if has("win32")
-        let g:vikiOpenUrlWith_ANY = "exec 'silent !rundll32 url.dll,FileProtocolHandler '. escape('%{URL}', ' !&%')"
+        let g:vikiOpenUrlWith_ANY = "exec 'silent !rundll32 url.dll,FileProtocolHandler '. shellescape('%{URL}')"
+    elseif has("mac")
+        let g:vikiOpenUrlWith_ANY = "exec 'silent !open '. escape('%{URL}', ' &!%')"
     elseif $GNOME_DESKTOP_SESSION_ID != ""
-        let g:vikiOpenUrlWith_ANY = "exec 'silent !gnome-open '. escape('%{URL}', ' !&%')"
+        let g:vikiOpenUrlWith_ANY = "exec 'silent !gnome-open '. shellescape('%{URL}')"
     elseif $KDEDIR != ""
-        let g:vikiOpenUrlWith_ANY = "exec 'silent !kfmclient exec '. escape('%{URL}', ' !&%')"
+        let g:vikiOpenUrlWith_ANY = "exec 'silent !kfmclient exec '. shellescape('%{URL}')"
     endif
 endif
 
 if !exists("*VikiOpenSpecialProtocol") "{{{2
     function! VikiOpenSpecialProtocol(url) "{{{3
+        " TLogVAR a:url
+        " TLogVAR a:url
         let proto = tolower(matchstr(a:url, '\c^[a-z]\{-}\ze:'))
         let prot  = 'g:vikiOpenUrlWith_'. proto
         let protp = exists(prot)
@@ -437,9 +467,12 @@ if !exists("*VikiOpenSpecialProtocol") "{{{2
         endif
         if protp
             exec 'let openURL = '. prot
-            let openURL = viki#SubstituteArgs(openURL, 'URL', a:url)
+            " let url = shellescape(a:url)
+            let url = a:url
+            " TLogVAR url, a:url
+            let openURL = viki#SubstituteArgs(openURL, 'URL', url)
             " TLogVAR openURL
-            exec openURL
+            call viki#ExecExternal(openURL)
         else
             throw 'Viki: Please define g:vikiOpenUrlWith_'. proto .' or g:vikiOpenUrlWith_ANY!'
         endif
@@ -968,5 +1001,40 @@ it can be included from other syntax files.
 - Cascade menu of intervikis
 - FIX: don't register viki names as known/unknown more than once
 
+3.5
+- Don't try to append an empty anchor to an url (Thanks RM Schmid).
+- New variable g:viki_intervikis to define intervikis in ~/.vimrc.
+- Minor updates to the help file.
+
+3.6
+- Forgot to define a default value for g:viki_intervikis.
+
+3.7
+- In a file that doesn't contain headings, return 0 instead of '=' as 
+default value if g:vikiFoldMethodVersion == 4.
+- FIX: "=" in if expressions in certain versions of VikiFoldLevel()
+
+3.8
+- FIX: viki#MarkInexistentInElement() for pre 7.0.009 vim (thanks to M 
+Brandmeyer)
+- FIX: Make sure tlib is loaded even if it is installed in a different 
+rtp-directory (thanks to M Brandmeyer)
+- Added dia to g:vikiSpecialFiles
+- FIX: Scrambled window when opening an url from vim (thanks A Moell)
+
+3.9
+- VikiOpenSpecialFile() uses fnameescape()
+
+3.10
+- FIX: automatically set marks (#m? type of anchors)
+- Anchor regexp can be configured via g:vikiAnchorNameRx
+
+3.11
+- Disabled regions' #END-syntax
+- Don't define interviki commands if a command of the same name already 
+exists.
+- Default values for g:vikiOpenUrlWith_ANY and g:vikiOpenFileWith_ANY on 
+Macs (thanks mboniou)
+- Correct default value for g:vikiOpenFileWith_ANY @ Windows
 
 " vim: ff=unix

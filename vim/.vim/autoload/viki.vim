@@ -1,10 +1,10 @@
 " viki.vim
-" @Author:      Thomas Link (micathom AT gmail com?subject=vim-viki)
+" @Author:      Tom Link (micathom AT gmail com?subject=vim-viki)
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-03-25.
-" @Last Change: 2007-12-23.
-" @Revision:    0.447
+" @Last Change: 2009-02-15.
+" @Revision:    0.521
 
 if &cp || exists("loaded_viki_auto") "{{{2
     finish
@@ -62,7 +62,11 @@ function! viki#Define(name, prefix, ...) "{{{3
     end
     " let vname = escape(vname, ' \%#')
     " exec 'command! -bang -nargs=? -complete=customlist,viki#EditComplete '. a:name .' call viki#Edit(escape(empty(<q-args>) ?'. string(vname) .' : <q-args>, "#"), "<bang>")'
-    exec 'command! -bang -nargs=? -complete=customlist,viki#EditComplete '. a:name .' call viki#Edit(empty(<q-args>) ?'. string(vname) .' : viki#InterEditArg('. string(a:name) .', <q-args>), "<bang>")'
+    if !exists(':'+ a:name)
+        exec 'command -bang -nargs=? -complete=customlist,viki#EditComplete '. a:name .' call viki#Edit(empty(<q-args>) ? '. string(vname) .' : viki#InterEditArg('. string(a:name) .', <q-args>), "<bang>")'
+    else
+        echom "Viki: Command already exists. Cannot define a command for "+ a:name
+    endif
     if g:vikiMenuPrefix != ''
         if g:vikiMenuLevel > 0
             let name = [ a:name[0 : g:vikiMenuLevel - 1] .'&'. a:name[g:vikiMenuLevel : -1] ]
@@ -81,6 +85,15 @@ function! viki#Define(name, prefix, ...) "{{{3
     endif
 endf
 
+for [s:iname, s:idef] in items(g:viki_intervikis)
+    " viki#Define(name, prefix, ?suffix="*", ?index="Index.${suffix}")
+    if type(s:idef) == 1
+        call call('viki#Define', [s:iname, s:idef])
+    else
+        call call('viki#Define', [s:iname] + s:idef)
+    endif
+    unlet! s:iname s:idef
+endfor
 
 function! s:AddToRegexp(regexp, pattern) "{{{3
     if a:pattern == ''
@@ -327,7 +340,7 @@ function! s:MarkInexistent(line1, line2, ...) "{{{3
                             let partx = escape(v_part, "'\"\\/")
                         endif
                         " elseif v_part =~ b:vikiCmdSimpleRx
-                        " <+TBD+>
+                        " <+TODO+>
                     else
                         " TLogDBG "else3 => 0"
                         let check = 0
@@ -406,7 +419,7 @@ if v:version == 700 && !has('patch8')
         let lr = &lazyredraw
         set lazyredraw
         call viki#SaveCursorPosition()
-        let kpk = s:SID() . "VikiMarkInexistentIn" . a:elt
+        let kpk = s:SID() . "MarkInexistentIn" . a:elt
         call {kpk}()
         call viki#RestoreCursorPosition()
         call s:ResetSavedCursorPosition()
@@ -974,7 +987,7 @@ function! viki#SubstituteArgs(str, ...) "{{{3
         if lab == ''
             let default = val
         else
-            let rv0 = substitute(rv, '\C\(^\|[^%]\)\zs%{'. lab .'}', escape(val, '\&'), "g")
+            let rv0 = substitute(rv, '\C\(^\|[^%]\)\zs%{'. lab .'}', escape(val, '\~&'), 'g')
             if rv != rv0
                 let done = 1
                 let rv = rv0
@@ -1043,9 +1056,10 @@ function! viki#SetAnchorMarks() "{{{3
     let pos = getpos(".")
     " TLogVAR pos
     let sr  = @/
-    let anchorRx = viki#GetAnchorRx('m\(\[a-zA-Z]\)\s\*\$')
+    let anchorRx = viki#GetAnchorRx('m\zs\[a-zA-Z]\ze\s\*\$')
+    " TLogVAR anchorRx
     " exec 'silent keepjumps g /'. anchorRx .'/exec "norm! m". substitute(getline("."), anchorRx, ''\2'', "")'
-    exec 'silent keepjumps g /'. anchorRx .'/exec "norm! m". matchlist(getline("."), anchorRx)[1]'
+    exec 'silent keepjumps g /'. anchorRx .'/exec "norm! m". matchstr(getline("."), anchorRx)'
     let @/ = sr
     " TLogVAR pos
     call setpos('.', pos)
@@ -1277,7 +1291,9 @@ function! s:OpenLink(dest, anchor, winNr)
     " TLogVAR a:dest, a:anchor, a:winNr
     try
         if viki#IsSpecialProtocol(a:dest)
-            call VikiOpenSpecialProtocol(viki#MakeUrl(a:dest, a:anchor))
+            let url = viki#MakeUrl(a:dest, a:anchor)
+            " TLogVAR url
+            call VikiOpenSpecialProtocol(url)
         elseif viki#IsSpecialFile(a:dest)
             call VikiOpenSpecialFile(a:dest)
         elseif isdirectory(a:dest)
@@ -1300,7 +1316,17 @@ function! s:OpenLink(dest, anchor, winNr)
 endf
 
 function! viki#MakeUrl(dest, anchor) "{{{3
-    return join([a:dest, a:anchor], '#')
+    if a:anchor == ""
+        return a:dest
+    else
+        " if a:dest[-1:-1] != '/'
+        "     let dest = a:dest .'/'
+        " else
+        "     let dest = a:dest
+        " endif
+        " return join([dest, a:anchor], '#')
+        return join([a:dest, a:anchor], '#')
+    endif 
 endf
 
 " Guess the interviki name from a viki name definition
@@ -1878,8 +1904,10 @@ endf
 " Command line completion of :VikiEdit
 function! viki#EditComplete(ArgLead, CmdLine, CursorPos) "{{{3
     " TLogVAR a:ArgLead, a:CmdLine, a:CursorPos
-    let arglead = a:ArgLead
-    let ii = matchstr(a:CmdLine, '^\s*\(\d*\(verb\|debug\|sil\|sp\|vert\|tab\)\w\+!\?\s\+\)*\zs\(\u\+\)\ze\s')
+    " let arglead = a:ArgLead
+    let rx_pre = '^\s*\(\d*\(verb\|debug\|sil\|sp\|vert\|tab\)\w\+!\?\s\+\)*'
+    let arglead = matchstr(a:CmdLine, rx_pre .'\(\u\+\)\s\zs.*')
+    let ii = matchstr(a:CmdLine, rx_pre .'\zs\(\u\+\)\ze\s')
     " TLogVAR ii
     if !empty(ii) && arglead !~ '::'
         let arglead = ii.'::'.arglead
@@ -1905,6 +1933,7 @@ function! viki#EditComplete(ArgLead, CmdLine, CursorPos) "{{{3
         " TLogVAR f,d,r
         let d  = substitute(d, '\', '/', 'g')
         let rv = split(glob(d), '\n')
+        " call map(rv, 'escape(v:val, " ")')
         " TLogVAR d,rv
         if sfx != ''
             call filter(rv, 'isdirectory(v:val) || ".". fnamemodify(v:val, ":e") == sfx')
@@ -1921,6 +1950,8 @@ function! viki#EditComplete(ArgLead, CmdLine, CursorPos) "{{{3
         " TLogVAR rv
         call map(rv, 's:EditCompleteAgent('. string(i) .', v:val, v:val)')
         " TLogVAR rv
+        " call map(rv, 'escape(v:val, " ")')
+        " TLogVAR rv
         if arglead == ''
             let rv += s:InterVikis
         else
@@ -1928,6 +1959,7 @@ function! viki#EditComplete(ArgLead, CmdLine, CursorPos) "{{{3
         endif
     endif
     " TLogVAR rv
+    " call map(rv, 'substitute(v:val, ''^\(.\{-}\s\ze\S*$'', "", "")')
     " call map(rv, 'escape(v:val, "%# ")')
     return rv
 endf
@@ -1958,6 +1990,7 @@ fun! viki#GetIndent()
     let lr = &lazyredraw
     set lazyredraw
     try
+        let cnum = v:lnum
         " Find a non-blank line above the current line.
         let lnum = prevnonblank(v:lnum - 1)
 
@@ -1974,10 +2007,11 @@ fun! viki#GetIndent()
         " end
 
         let line = getline(lnum)      " last line
+        " TLogVAR lnum, ind, line
         
-        let cnum  = v:lnum
         let cind  = indent(cnum)
         let cline = getline(cnum)
+        " TLogVAR v:lnum, cnum, cind, cline
         
         " Do not change indentation in regions
         if viki#IsInRegion(cnum)
@@ -2013,7 +2047,7 @@ fun! viki#GetIndent()
 
             let markRx = '^\s\+\([#?!+]\)\1\{2,2}\s\+'
             let listRx = '^\s\+\([-+*#?@]\|[0-9#]\+\.\|[a-zA-Z?]\.\)\s\+'
-            let priRx  = '^\s\+#[A-F]\d\? \+\([x_0-9%-]\+ \+\)\?'
+            let priRx  = '^\s\+#[A-Z]\d\? \+\([x_0-9%-]\+ \+\)\?'
             let descRx = '^\s\+.\{-1,}\s::\s\+'
             
             let clMark = matchend(cline, markRx)
@@ -2064,7 +2098,7 @@ fun! viki#GetIndent()
                     endif
                 endif
 
-                " TLogVAR cind, ind, rv
+                " TLogVAR cind, ind
                 if cind < ind
                     let rv = (cind / &sw) * &sw
                     return rv
@@ -2085,6 +2119,14 @@ fun! viki#GetIndent()
     endtry
 endf
 
+function! viki#ExecExternal(cmd) "{{{3
+    " TLogVAR a:cmd
+    exec a:cmd
+    if !has("gui_running")
+        " Scrambled window with vim
+        redraw!
+    endif
+endf
 
 
 """ #Files related stuff {{{1
@@ -2186,6 +2228,7 @@ endf
 
 fun! viki#DirListing(lhs, lhb, indent) "{{{3
     let args = s:GetRegionArgs(a:lhs, a:lhb - 1)
+    " TLogVAR args
     let patt = get(args, 'glob', '')
     " TLogVAR patt
     if empty(patt)
@@ -2290,17 +2333,21 @@ fun! s:GetRegionArgs(ls, le) "{{{3
     " let p = getpos('.')
     try
         let t = s:GetBrokenLine(a:ls, a:le)
+        " TLogVAR t
         let t = matchstr(t, '^\s*#\([A-Z]\([a-z][A-Za-z]*\)\?\>\|!!!\)\zs.\{-}\ze<<$')
+        " TLogVAR t
         let args = {}
         let rx = '^\s*\(\(\S\{-}\)=\("\(\(\"\|.\{-}\)\{-}\)"\|\(\(\S\+\|\\ \)\+\)\)\|\(\w\)\+!\)\s*'
         let s  = 0
         let sm = len(t)
         while s < sm
             let m = matchlist(t, rx, s)
+            " TLogVAR m
             if empty(m)
                 echoerr "Viki: Can't parse argument list: ". t
             else
                 let key = m[2]
+                " TLogVAR key
                 if !empty(key)
                     let val = empty(m[4]) ? m[6] : m[4]
                     if val =~ '^".\{-}"'

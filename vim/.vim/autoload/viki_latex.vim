@@ -1,9 +1,9 @@
 " vikiLatex.vim -- viki add-on for LaTeX
-" @Author:      Thomas Link (micathom AT gmail com?subject=vim)
+" @Author:      Tom Link (micathom AT gmail com?subject=vim)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     28-Jän-2004.
-" @Last Change: 2007-10-05.
-" @Revision:    0.195
+" @Last Change: 2009-02-15.
+" @Revision:    0.196
 
 if &cp || exists('loaded_viki_latex')
     finish

@@ -1,10 +1,10 @@
 " texmath.vim
-" @Author:      Thomas Link (mailto:micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (mailto:micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-11-15.
-" @Last Change: 2007-11-18.
-" @Revision:    0.0.12
+" @Last Change: 2009-02-15.
+" @Revision:    0.0.16
 
 " Use only as embedded syntax to be included from other syntax files.
 
@@ -26,21 +26,22 @@ endif
 
 
 " syn match texmathArgDelimiters /[{}\[\]]/ contained containedin=texmathMath
-syn match texmathCommand /\\[[:alnum:]]\+/ contained
-syn match texmathMathFont /\\\(math[[:alnum:]]\+\|Bbb\|frak\)/ contained
-syn match texmathMathWord /[[:alnum:].]\+/ contained
-syn match texmathUnword /\(\\\\\|[^[:alnum:]${}()[\]^_\\]\+\)/ contained
-syn match texmathPairs /\([<>()[\]]\|\\[{}]\|\\[lr]\(brace\|vert\|Vert\|angle\|ceil\|floor\|group\|moustache\)\)/ contained
-syn match texmathSub /_/ contained
-syn match texmathSup /\^/ contained
+syn match texmathCommand /\\[[:alnum:]]\+/ contained containedin=texmath
+syn match texmathMathFont /\\\(math[[:alnum:]]\+\|Bbb\|frak\)/ contained containedin=texmath
+syn match texmathMathWord /[[:alnum:].]\+/ contained containedin=texmathMath
+syn match texmathUnword /\(\\\\\|[^[:alnum:]${}()[\]^_\\]\+\)/ contained containedin=texmath
+syn match texmathPairs /\([<>()[\]]\|\\[{}]\|\\[lr]\(brace\|vert\|Vert\|angle\|ceil\|floor\|group\|moustache\)\)/
+            \ contained containedin=texmath
+syn match texmathSub /_/ contained containedin=texmathMath
+syn match texmathSup /\^/ contained containedin=texmathMath
 syn region texmathText matchgroup=Statement
             \ start=/\\text{/ end=/}/ skip=/\\[{}]/
-            \ contained
-syn cluster texmath contains=texmathArgDelimiters,texmathCommand,texmathMathFont,texmathPairs,texmathUnword,texmathText
-syn cluster texmathMath contains=@texmath,texmathMathWord,texmathSup,texmathSub
+            \ contained containedin=texmath
 syn region texmathArgDelimiters matchgroup=Delimiter
             \ start=/\\\@<!{/ end=/\\\@<!}/ skip=/\\[{}]/
-            \ contained contains=@texmathMath
+            \ contained contains=@texmathMath containedin=texmath
+syn cluster texmath contains=texmathArgDelimiters,texmathCommand,texmathMathFont,texmathPairs,texmathUnword,texmathText
+syn cluster texmathMath contains=@texmath,texmathMathWord,texmathSup,texmathSub
 
 " Statement PreProc
 HiLink texmathSup Type

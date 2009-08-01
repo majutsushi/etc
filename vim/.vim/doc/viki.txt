@@ -144,11 +144,37 @@ you could make viki to open references to pdf files right in VIM: >
     endf
     let g:vikiOpenFileWith_pdf = 'call viki#OpenLink("%{FILE}", "", 1)|silent call ConvertPDF()'
 
+                                                    *viki-intervikis*
 Later on, you probably want to define some intervikis. A |interviki| is a 
 shortcut to a different viki directory/namespace, so that you have to care 
-less about page names: >
+less about page names.
 
-    call viki#Define('SCI', $HOME."/Projects/Sci/Ideas", ".txt")
+There are two ways to define an interviki:
+
+                                                    *viki#Define()*
+    1. Use viki#Define(name, prefix, ?suffix="*", ?index="Index.${suffix}")
+
+        call viki#Define('SCI', $HOME."/Projects/Sci/Ideas", ".txt")
+
+       This command will automatically define a menu for each interviki 
+       (unless g:vikiMenuPrefix is empty) and it will also define a command 
+       with the name of the interviki that can be used to quickly access viki 
+       files from the vim command line.
+
+                                                    *g:viki_intervikis*
+    2. Use g:viki_intervikis (a dictionary). The values can be either a list 
+       (arguments for |viki#Define()|) or a string.
+
+        let g:viki_intervikis['SCI']  = [$HOME."/Projects/Sci/Ideas", ".txt"]
+        let g:viki_intervikis['PROJ'] = $HOME."/Projects"
+
+Intervikis added to g:viki_intervikis will be defined via |viki#Define()| when 
+first loading ~/vimfiles/autoload/viki.vim. I.e. you cannot use automatically 
+defined commands or menus before loading the autoload file. So, if you don't 
+use the menus and the interviki commands to open files from the command line, 
+use the variable. Otherwise, calling |viki#Define()| from 
+~/vimfiles/after/plugin/viki.vim might be the better solution (which would 
+also load autoload/viki.vim on startup though).
 
 This could then be accessed as SCI::ThisIdea, which would refer to the file 
 "~/Projects/Sci/Ideas/ThisIdea.txt".
@@ -458,7 +484,7 @@ Textstyles~
 
     __emphasized__, ''typewriter''
 
-<   NOTE: There must not by a whitespace after the opening mark.
+<   NOTE: There must not be a whitespace after the opening mark.
 
     NOTE: For the word styles, there must be a non-word character (|/\W|) 
     before the opening mark, i.e. a__b__c will be highlighted as normal text -- 
@@ -661,7 +687,7 @@ Commands~
   Open the |viki-homepage|.
 
 - VikiDefine NAME BASE ?SUFFIX                      *:VikiDefine*
-    Define an interviki.
+    Define an interviki. See also |viki#Define()|.
 
 ================================================================================
                                                     *viki-functions*
@@ -1115,8 +1141,7 @@ The bibtex ftplugin defines record labels as anchors. Thus, if make an
 |interviki| definition point to your bib files you can refer to bib entries as 
 viki names. Example: >
 
-    let g:vikiInterBIB         = $HOME ."/local/share/texmf/bibtex/bib/tml"
-    let g:vikiInterBIB_suffix  = ".bib"
+    call viki#Define('BIB', $HOME ."/local/share/texmf/bibtex/bib/tml", ".bib")
 
     Then, activating the following viki name
     BIB::[-monos-]#rec02

@@ -1,9 +1,9 @@
 " viki.vim -- the viki ftplugin
-" @Author:      Thomas Link (micathom AT gmail com?subject=vim)
+" @Author:      Tom Link (micathom AT gmail com?subject=vim)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     12-Jän-2004.
-" @Last Change: 2007-09-09.
-" @Revision: 396
+" @Last Change: 2009-02-15.
+" @Revision: 405
 
 " if !g:vikiEnabled
 "     finish
@@ -34,6 +34,7 @@ setlocal foldtext=VikiFoldText()
 setlocal expandtab
 " setlocal iskeyword+=#,{
 setlocal iskeyword+={
+setlocal iskeyword-=_
 
 let &include='\(^\s*#INC.\{-}\(\sfile=\|:\)\)'
 " let &include='\(^\s*#INC.\{-}\(\sfile=\|:\)\|\[\[\)'
@@ -137,7 +138,7 @@ if g:vikiFoldMethodVersion == 5
             let fh = matchend(lt, '\V\^'. b:vikiHeadingStart .'\+\ze\s')
             if fh != -1
                 " TLogVAR fh, b:vikiHeadingMaxLevel
-                if b:vikiHeadingMaxLevel = -1
+                if b:vikiHeadingMaxLevel == -1
                     " TLogDBG 'SetMaxLevel'
                     call s:SetMaxLevel()
                 endif
@@ -167,7 +168,7 @@ elseif g:vikiFoldMethodVersion == 4
             let fh = matchend(lt, '\V\^'. b:vikiHeadingStart .'\+\ze\s')
             if fh != -1
                 " TLogVAR fh, b:vikiHeadingMaxLevel
-                if b:vikiHeadingMaxLevel = -1
+                if b:vikiHeadingMaxLevel == -1
                     " TLogDBG 'SetMaxLevel'
                     call s:SetMaxLevel()
                 endif
@@ -181,7 +182,11 @@ elseif g:vikiFoldMethodVersion == 4
                 " TLogVAR fh, lt
                 return '>'.fh
             endif
-            return '='
+            if b:vikiHeadingMaxLevel <= 0
+                return b:vikiHeadingMaxLevel + 1
+            else
+                return '='
+            endif
         endif
     endf
 
@@ -195,7 +200,7 @@ elseif g:vikiFoldMethodVersion == 3
         let fh = matchend(lt, '\V\^'. b:vikiHeadingStart .'\+\ze\s')
         if fh != -1
             " let fh += 1
-            if b:vikiHeadingMaxLevel = -1
+            if b:vikiHeadingMaxLevel == -1
                 call s:SetMaxLevel()
             endif
             if fh > b:vikiHeadingMaxLevel
@@ -249,7 +254,7 @@ else
                 " TLogDBG 'no folds'
                 return
             endif
-            if b:vikiHeadingMaxLevel = -1
+            if b:vikiHeadingMaxLevel == -1
                 call s:SetMaxLevel()
             endif
             if vikiFolds =~# 'f'
@@ -357,7 +362,7 @@ else
     endf
 
     function! s:SetHeadingMaxLevel(once) "{{{3
-        if a:once && b:vikiHeadingMaxLevel != 0
+        if a:once && b:vikiHeadingMaxLevel == 0
             return
         endif
         let pos = getpos('.')
