@@ -613,7 +613,8 @@ generate_path_info () {
 prompt_set_line_1 () {
 
 #     local left_left="${C_BOLD}[($C_F_GREEN"
-    local left_left="${C_BOLD}${C_F_RED}┌${C_F_DEFAULT}($C_F_GREEN"
+#     local left_left="${C_BOLD}${C_F_RED}┌${C_F_DEFAULT}($C_F_GREEN"
+    local left_left="${PR_SET_CHARSET}${C_BOLD}${C_F_RED}${PR_SHIFT_IN}${PR_ULCORNER}${PR_SHIFT_OUT}${C_F_DEFAULT}($C_F_GREEN"
     local left_dir="$CPATH"
     local left_right="$C_F_DEFAULT$WPERM)"
     local left_side=$left_left$left_dir$left_right
@@ -641,7 +642,8 @@ prompt_set_line_1 () {
 
 prompt_set_line_2 () {
 #     local p_arrow="${C_BOLD}${C_F_RED}${ARROW}${C_F_DEFAULT}"
-    local p_arrow="${C_BOLD}${C_F_RED}└${C_F_DEFAULT}"
+#     local p_arrow="${C_BOLD}${C_F_RED}└${C_F_DEFAULT}"
+    local p_arrow="${C_BOLD}${C_F_RED}${PR_SHIFT_IN}${PR_LLCORNER}${PR_SHIFT_OUT}${C_F_DEFAULT}"
     local p_info="${JOBS}${EXITCODE}"
     local p_user="($C_ROOT%n$C_F_YELLOW@$C_F_DEFAULT"
     local p_host="${SSH_CLIENT:+${C_F_GREEN}}%m${C_F_DEFAULT})${C_DEFAULT}"
@@ -653,6 +655,19 @@ prompt_set_line_2 () {
 setprompt () {
     setopt prompt_subst
 
+    # setup alternate character set
+    # http://aperiodic.net/phil/prompt/
+    typeset -A altchar
+    set -A altchar ${(s..)terminfo[acsc]}
+    PR_SET_CHARSET="%{$terminfo[enacs]%}"
+    PR_SHIFT_IN="%{$terminfo[smacs]%}"
+    PR_SHIFT_OUT="%{$terminfo[rmacs]%}"
+    PR_HBAR=${altchar[q]:--}
+    PR_ULCORNER=${altchar[l]:--}
+    PR_LLCORNER=${altchar[m]:--}
+    PR_LRCORNER=${altchar[j]:--}
+    PR_URCORNER=${altchar[k]:--}
+
     # set colors
     autoload colors && colors
 
@@ -663,15 +678,6 @@ setprompt () {
     for COLOR in BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE DEFAULT; do
         eval C_F_$COLOR='%{$fg[${(L)COLOR}]%}'
     done
-#     C_F_BLACK="%{${fg[black]}%}"
-#     C_F_RED="%{${fg[red]}%}"
-#     C_F_GREEN="%{${fg[green]}%}"
-#     C_F_YELLOW="%{${fg[yellow]}%}"
-#     C_F_BLUE="%{${fg[blue]}%}"
-#     C_F_MAGENTA="%{${fg[magenta]}%}"
-#     C_F_CYAN="%{${fg[cyan]}%}"
-#     C_F_WHITE="%{${fg[white]}%}"
-#     C_F_DEFAULT="%{${fg[default]}%}"
 
     if [[ $UID == 0 ]]; then
         C_ROOT=$C_F_RED
