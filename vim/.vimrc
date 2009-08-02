@@ -1049,7 +1049,7 @@ map <silent> <leader>g :silent !gitk<cr>
 "map ,G yaw:.!git-show -f <c-r>" <CR>
 
 " highlight long lines
-nnoremap <silent> <Leader>lw
+nnoremap <silent> <Leader>hl
       \ :if exists('w:long_line_match') <Bar>
       \   silent! call matchdelete(w:long_line_match) <Bar>
       \   unlet w:long_line_match <Bar>
