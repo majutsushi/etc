@@ -336,6 +336,7 @@ let g:vikiUseParentSuffix = 1
 let g:vikiOpenUrlWith_http = "silent !galeon %{URL}"
 let g:vikiOpenFileWith_html  = "silent !galeon %{FILE}"
 let g:vikiOpenFileWith_ANY   = "silent !start %{FILE}"
+let g:vikiMapQParaKeys = ""
 " we want to allow deplate to execute ruby code and external helper 
 " application
 let g:deplatePrg = "deplate -x -X "
