@@ -123,13 +123,6 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CONFIG_DIRS=/etc/xdg
 export XDG_CACHE_HOME=$HOME/.cache
 
-# for java; XToolkit is the new one, but it doesn't work everywhere
-# export AWT_TOOLKIT=XToolkit
-# export AWT_TOOLKIT=MToolkit
-
-# temporary workaround
-export LIBXCB_SLOPPY_LOCK=1
-
 export TERMINFO=$HOME/.terminfo
 
 export NNTPSERVER=news.gmane.org
