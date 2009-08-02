@@ -285,7 +285,9 @@ unset wait_key          # Only "press a key" if return value non-zero
 unset collapse_unread   # collapse threads with unread mails
 unset digest_collapse
   set duplicate_threads
-unset strict_threads    # thread only by In-Reply-To/References or by Subject.
+unset strict_threads    # thread only by In-Reply-To/References.
+  set reply_regexp="^((Re|RE|re|Aw|AW|aw) ?:[ \t]*)*"
+  set sort_re           # only put a child in a thread if starts with 'reply_regexp'
 unset thread_received   # use date received instead of date sent for thread subject sort
 unset uncollapse_jump   # don't move pointer when uncollapsing thread
 
@@ -302,10 +304,8 @@ unset mark_old          # mark new articles as old, when leaving mbox
   set mh_purge          # remove messages marked as deleted from MH folders.
   set narrow_tree
   set read_inc=20
-  set reply_regexp="^((re|RE|SV|Re|r e|aw) ?:[ \t]*)*"
 unset resolve           # go to next undeleted message after modifying actual
 unset reverse_alias     # use realname from reverse alias lookup
-  set sort_re           # set: only put a child in a thread, if starts with Re:
   set status_chars="-*%A" # status of mbox (unchanged, changed, readonly, attach)
   set status_format="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---"
   set to_chars=" +TCFL" # default (Not to me, To me, CC me, From me)
