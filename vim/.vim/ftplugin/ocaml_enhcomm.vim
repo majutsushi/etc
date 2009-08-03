@@ -1,1 +1,1 @@
-/usr/share/vim-scripts/ftplugin/ocaml_enhcomm.vim
+set commentstring=(*%s*)
