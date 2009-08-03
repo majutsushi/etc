@@ -1,1 +1,0 @@
-/usr/share/vim/addons/ftplugin/vo_base.vim

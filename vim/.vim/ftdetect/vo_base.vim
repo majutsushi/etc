@@ -1,1 +1,0 @@
-/usr/share/vim/addons/ftdetect/vo_base.vim
