@@ -1,1 +1,2 @@
-/usr/share/vim-scripts/after/ftplugin/c.vim
+" OmniCppComplete initialization
+call omni#cpp#complete#Init()
