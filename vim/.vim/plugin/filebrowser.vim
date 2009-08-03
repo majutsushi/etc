@@ -1,1 +1,1 @@
-/home/jan/src/vim-latex/vimfiles/plugin/filebrowser.vim
+../../../../src/vim-latex/vimfiles/plugin/filebrowser.vim

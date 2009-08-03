@@ -1,1 +1,1 @@
-/home/jan/src/vim-latex/vimfiles/ftplugin/bib_latexSuite.vim
+../../../../src/vim-latex/vimfiles/ftplugin/bib_latexSuite.vim

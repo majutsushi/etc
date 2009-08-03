@@ -1,1 +1,1 @@
-/home/jan/src/vim-latex/vimfiles/plugin/libList.vim
+../../../../src/vim-latex/vimfiles/plugin/libList.vim

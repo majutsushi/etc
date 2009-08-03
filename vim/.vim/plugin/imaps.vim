@@ -1,1 +1,1 @@
-/home/jan/src/vim-latex/vimfiles/plugin/imaps.vim
+../../../../src/vim-latex/vimfiles/plugin/imaps.vim

@@ -1,1 +1,1 @@
-/home/jan/src/vim-latex/vimfiles/plugin/remoteOpen.vim
+../../../../src/vim-latex/vimfiles/plugin/remoteOpen.vim

@@ -1,1 +1,1 @@
-/home/jan/src/vim-latex/vimfiles/compiler/tex.vim
+../../../../src/vim-latex/vimfiles/compiler/tex.vim
