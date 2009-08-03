@@ -13,7 +13,7 @@ autocmd!
     autocmd InsertEnter * set cul
 "endif
 
-autocmd BufEnter * call LoadProjectConfig()
+autocmd BufNewFile,BufReadPost * call LoadProjectConfig()
 
 " create undo break point
 autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
@@ -50,15 +50,6 @@ augroup java
 "    au FileType java setlocal cinoptions=t0,(0,j1,)50 " see after/indent/java.vim
 augroup END
 
-" add cscope databases if available
-"au FileType c set nocscopeverbose
-"au FileType c if filereadable("cscope.out")
-"au FileType c     silent! cs add cscope.out
-"au FileType c elseif $CSCOPE_DB != ""
-"au FileType c     silent! cs add $CSCOPE_DB
-"au FileType c endif
-"au FileType c set cscopeverbose
-
 " setup templates
 au BufNewFile *.tex Vimplate LaTeX
 au BufNewFile *.sh Vimplate shell
@@ -70,16 +61,7 @@ au BufWritePost,FileWritePost *.c TlistUpdate
 "au CursorMoved,CursorMovedI *   TlistHighlightTag
 "au CursorMoved,CursorMovedI * endif
 
-"au BufWritePost,FileWritePost ~/work/dev/ruby/filmdb/* silent !cp <afile> /var/www/filmdb/
-
 au BufWritePost,FileWritePost *.sh silent !chmod u+x %
-
-augroup VCSCommand
-    au VCSCommand User VCSBufferCreated silent! nmap <unique> <buffer> q :bwipeout<cr>
-augroup END
-
-" temporary LooPo setting
-au BufNewFile,BufReadPost ~/apps/loopo/loopo.svn/hsloopo/** setlocal makeprg=make\ compiled-o0
 
 " General {{{1
 
@@ -95,18 +77,12 @@ set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,default,latin1
 set modeline
 set modelines=5
-"set path+=~/work/dev/ruby/cookbook/app/**
-"set path+=~/work/dev/ruby/cookbook/lib/**
 set suffixesadd=.rb
-"set include="^\s*#\s*include"
-"set includeexpr+=substitute(v:fname,'s$','','g')
 set define=^\\(\\s*#\\s*define\\\|[a-z]*\\s*const\\s*[a-z]*\\)
 set undolevels=1000
 set viminfo=!,%,'20,<500,:500,s100,h,n~/.cache/vim/viminfo
 set complete+=k
 set complete-=i
-"set tags+=./tags,tags
-"set tags+=~/.vim/systags/systags_base,~/.vim/systags/systags_linux
 let mapleader=","
 set grepprg=ack-grep
 "set winaltkeys=no " use alt-mappings for menu shortcuts?
@@ -136,7 +112,7 @@ hi SignColumn guibg=grey20
 "set directory= " for temp files
 "set makeef= " error file for make
 "set patchmode=.orig
-set path=.,./**,/usr/include,/usr/include/**,,
+" set path=.,./**,/usr/include,/usr/include/**,,
 set updatecount=100
 set updatetime=2000
 
@@ -159,14 +135,6 @@ set completeopt=longest,menu
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 set cscopetag
-set nocscopeverbose
-" add any database in current directory
-if filereadable("cscope.out")
-    silent! cs add cscope.out
-" else add database pointed to by environment
-elseif $CSCOPE_DB != ""
-    silent! cs add $CSCOPE_DB
-endif
 set cscopeverbose
 
 "set wildmenu
@@ -174,7 +142,7 @@ set wildmode=list:longest,full
 set wildignore=*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.out,*.class
 set ruler " position information in status line
 "set cmdheight=2
-"set number " line numbers
+set number " line numbers
 set lazyredraw " don't update screen while running macros (faster)
 set hidden
 set backspace=indent,eol,start
@@ -188,7 +156,6 @@ set switchbuf=useopen " or usetab
 "set splitbelow " split below instead of above the current buffer
 "set report=0
 set more
-"set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc,.nav,.snm,.pdf,.lof,.lol,.hi
 set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm
 set tildeop
 set title
@@ -223,11 +190,6 @@ set linebreak
 set showbreak=+\ 
 set showcmd
 set showmode
-
-" Has to be set in colorscheme files, see desert.vim and inkpot.vim
-"hi User1 term=bold,reverse ctermfg=244 ctermbg=235 cterm=bold guibg=#c2bfa5 guifg=black   gui=bold
-"hi User2 term=bold,reverse ctermfg=244 ctermbg=235 cterm=bold guibg=#c2bfa5 guifg=#990f0f gui=bold
-"hi User3 term=reverse ctermfg=244 ctermbg=235 cterm=none guibg=#c2bfa5 guifg=grey40  gui=none
 
 " Text Formatting/Layout {{{1
 
@@ -270,12 +232,120 @@ endfunc
 
 " Plugin and script options {{{1
 
-" default format for .tex filetype recognition
-let g:tex_flavor = "latex"
+" autocomplpop {{{2
+let g:AutoComplPop_NotEnableAtStartup = 1
+let g:AutoComplPop_MappingDriven = 1
+"let g:AutoComplPop_Behavior = 
 
-let treeExplVertical = 1
+" CCTree {{{2
+let g:CCTreeRecursiveDepth = 2
+let g:CCTreeMinVisibleDepth = 2
+let g:CCTreeOrientation = "leftabove"
+
+" changelog {{{2
+let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
+
+" code_complete {{{2
+let s:rs = '<+'
+let s:re = '+>'
+
+" detectindent {{{2
+let g:detectindent_preferred_expandtab = 1
+let g:detectindent_preferred_indent = 4
+
+" devhelp {{{2
+let g:devhelpSearch = 1
+let g:devhelpAssistant = 0
+let g:devhelpSearchKey = '<F7>'
+let g:devhelpWordLength = 5
+
+" enhanced-commentify {{{2
+" let g:EnhCommentifyRespectIndent = 'Yes'
+let g:EnhCommentifyPretty = 'Yes'
+let g:EnhCommentifyTraditionalMode = 'No'
+let g:EnhCommentifyFirstLineMode = 'Yes'
+
+" git {{{2
+"let g:git_diff_spawn_mode = 1
+
+" haskellmode {{{2
+let g:haddock_browser="/usr/bin/gnome-www-browser"
+let g:haddock_docdir="/usr/share/doc/ghc6-doc/libraries/"
+let g:haddock_indexfiledir="~/.vim/cache/"
+
+"let hs_highlight_delimiters = 1
+let hs_highlight_boolean = 1
+let hs_highlight_types = 1
+let hs_highlight_more_types = 1
+let hs_highlight_debug = 1
+
+" mail.tgz {{{2
+let g:mail_erase_quoted_sig = 1
+let g:mail_alias_source = "MuttQuery"
+let g:mail_mutt_query_command = "lbdbq"
+
+" NERD_Tree {{{2
+"let NERDTreeCaseSensitiveSort = 1
+let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
+let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$']
+let NERDTreeHijackNetrw = 0
+
+" omnicppcomplete {{{2
+let g:OmniCpp_SelectFirstItem = 2 " select first completion item, but don't insert it
+"let g:OmniCpp_ShowPrototypeInAbbr = 1
+
+" po {{{2
+let g:po_translator = 'Jan Larres <jan@majutsushi.net>'
+let g:po_lang_team = ''
+"let g:po_path = '.,..'
+
+" rubycomplete {{{2
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_rails = 1
+
+" selectbuf {{{2
+let g:selBufAlwaysShowDetails = 1
+let g:selBufLauncher = "!see"
+
+" taglist {{{2
+"let Tlist_File_Fold_Auto_Close = 1
+"let Tlist_Display_Prototype = 1
+let Tlist_Show_One_File = 1
+"let Tlist_Auto_Highlight_Tag = 0
+let Tlist_Enable_Fold_Column = 0
+let Tlist_Use_Right_Window = 1
+let Tlist_Inc_Winwidth = 0 " to prevent problems with project.vim
+let Tlist_Sort_Type = "name"
+
+" timestamp {{{2
+let g:timestamp_modelines = 20
+let g:timestamp_rep = '%Y-%m-%d %H:%M:%S %z %Z'
+"let g:timestamp_regexp = '\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}  ?%(\a+)?|TIMESTAMP'
+let g:timestamp_regexp = '\v\C%(<Last changed:\s+)@<=\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [+-]\d{4} \a+|TIMESTAMP'
+
+" TOhtml syntax script {{{2
+let html_use_css = 1
+let html_number_lines = 0
+let use_xhtml = 1
+let html_ignore_folding = 1
+
+" Viki {{{2
+let g:vikiLowerCharacters = "a-zäöüßáàéèíìóòçñ"
+let g:vikiUpperCharacters = "A-ZÄÖÜ"
+let g:vikiUseParentSuffix = 1
+let g:vikiOpenUrlWith_http = "silent !firefox %{URL}"
+let g:vikiOpenFileWith_html  = "silent !firefox %{FILE}"
+let g:vikiOpenFileWith_ANY   = "silent !start %{FILE}"
+let g:vikiMapQParaKeys = ""
+" we want to allow deplate to execute ruby code and external helper 
+" application
+let g:deplatePrg = "deplate -x -X "
+let g:vikiNameSuffix=".viki"
+let g:vikiHomePage = "~/projects/viki/Main.viki"
 
 " vim-latexsuite {{{2
+" default format for .tex filetype recognition
+let g:tex_flavor = "latex"
 let g:Tex_DefaultTargetFormat = "pdf"
 let g:Tex_IgnoredWarnings = 
             \'Underfull'."\n".
@@ -290,212 +360,45 @@ let g:Tex_IgnoredWarnings =
 let g:Tex_ViewRule_pdf = 'evince'
 let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 
-" TOhtml syntax script {{{2
-let html_use_css = 1
-let html_number_lines = 0
-let use_xhtml = 1
-let html_ignore_folding = 1
-
-" mail.tgz {{{2
-let g:mail_erase_quoted_sig = 1
-"let g:mail_alias_source = "Abook"
-let g:mail_alias_source = "MuttQuery"
-let g:mail_mutt_query_command = "mutt-evo-query.rb"
-
-" project {{{2
-let g:proj_window_width = 30
-let g:proj_window_increment = 50
-let g:proj_flags = 'gimsSt'
-let g:proj_run1 = ":call ManCscopeAndTags()"
-
-let ri_unfold_nonunique = 'on'
-let ri_prompt_complete = 'on'
-
-" po {{{2
-let g:po_translator = 'Jan Larres <jan@majutsushi.net>'
-let g:po_lang_team = ''
-"let g:po_path = '.,..'
-
-" taglist {{{2
-"let Tlist_File_Fold_Auto_Close = 1
-"let Tlist_Display_Prototype = 1
-let Tlist_Show_One_File = 1
-"let Tlist_Auto_Highlight_Tag = 0
-let Tlist_Enable_Fold_Column = 0
-let Tlist_Use_Right_Window = 1
-let Tlist_Inc_Winwidth = 0 " to prevent problems with project.vim
-let Tlist_Sort_Type = "name"
-
-" omnicppcomplete {{{2
-let g:OmniCpp_SelectFirstItem = 2 " select first completion item, but don't insert it
-"let g:OmniCpp_ShowPrototypeInAbbr = 1
-
-" Viki {{{2
-let g:vikiLowerCharacters = "a-zäöüßáàéèíìóòçñ"
-let g:vikiUpperCharacters = "A-ZÄÖÜ"
-let g:vikiUseParentSuffix = 1
-let g:vikiOpenUrlWith_http = "silent !galeon %{URL}"
-let g:vikiOpenFileWith_html  = "silent !galeon %{FILE}"
-let g:vikiOpenFileWith_ANY   = "silent !start %{FILE}"
-let g:vikiMapQParaKeys = ""
-" we want to allow deplate to execute ruby code and external helper 
-" application
-let g:deplatePrg = "deplate -x -X "
-let g:vikiNameSuffix=".viki"
-let g:vikiHomePage = "~/projects/viki/Main.viki"
-
-" vimplate {{{2
-let Vimplate = "~/.vim/tools/vimplate"
-
-" timestamp {{{2
-let g:timestamp_modelines = 20
-let g:timestamp_rep = '%Y-%m-%d %H:%M:%S %z %Z'
-"let g:timestamp_regexp = '\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}  ?%(\a+)?|TIMESTAMP'
-let g:timestamp_regexp = '\v\C%(<Last changed:\s+)@<=\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [+-]\d{4} \a+|TIMESTAMP'
-
-" selectbuf {{{2
-let g:selBufAlwaysShowDetails = 1
-let g:selBufLauncher = "!see"
-
-" minibufexplorer (obsolete) {{{2
-let g:miniBufExplMapWindowNavVim = 0
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplForceSyntaxEnable = 1
-let g:Tb_ModSelTarget = 1
-
-" flagit {{{2
-let icons_path = "/home/jan/.vim/signs/"
-let g:Fi_Flags = { "todo" : [icons_path."emblem-important.png", "! ", 0, ""] }
-let g:Fi_OnlyText = 0
-let g:Fi_ShowMenu = 1
-
-" vcscommand {{{2
-let g:VCSCommandResultBufferNameExtension = ".vcs"
-
-" vtreeexplorer {{{2
-let g:treeExplDirSort = 1
-
-" exUtilities (obsolete) {{{2
-"nnoremap <silent> <F7> :ExtsToggle<CR>
-"nnoremap <silent> <Leader>ts :ExtsSelectToggle<CR>
-"nnoremap <silent> <Leader>tt :ExtsStackToggle<CR>
-"map <silent> <Leader>] :ExtsGoDirectly<CR>
-"map <silent> <Leader>[ :PopTagStack<CR>
-"let g:exTS_backto_editbuf = 0
-"let g:exTS_close_when_selected = 1
-
-" SuperTab (obsolete) {{{2
-let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-
-" code_complete (obsolete) {{{2
-let s:rs = '<+'
-let s:re = '+>'
-
-" cca {{{2
-"let cca_hotkey = "<Tab>"
-let cca_hotkey = "<S-Space>"
-
-" detectindent {{{2
-let g:detectindent_preferred_expandtab = 1
-let g:detectindent_preferred_indent = 4
-
-" haskellmode {{{2
-let g:haddock_browser="/usr/bin/gnome-www-browser"
-let g:haddock_docdir="/usr/share/doc/ghc6-doc/libraries/"
-let g:haddock_indexfiledir="~/.vim/cache/"
-
-"let hs_highlight_delimiters = 1
-let hs_highlight_boolean = 1
-let hs_highlight_types = 1
-let hs_highlight_more_types = 1
-let hs_highlight_debug = 1
-
-" git {{{2
-"let g:git_diff_spawn_mode = 1
-
-" autocomplpop {{{2
-let g:AutoComplPop_NotEnableAtStartup = 1
-let g:AutoComplPop_MappingDriven = 1
-"let g:AutoComplPop_Behavior = 
-
-" rubycomplete {{{2
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_rails = 1
-
 " vimblog {{{2
 if !exists('*Wordpress_vim')
     runtime vimblog.vim
 endif
 
-" changelog {{{2
-let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
-
-" CCTree {{{2
-let g:CCTreeRecursiveDepth = 2
-let g:CCTreeMinVisibleDepth = 2
-let g:CCTreeOrientation = "leftabove"
-
-" devhelp {{{2
-let g:devhelpSearch = 1
-let g:devhelpAssistant = 1
-let g:devhelpSearchKey = '<F7>'
-let g:devhelpWordLength = 5
-
-" NERD_Tree {{{2
-"let NERDTreeCaseSensitiveSort = 1
-let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
-let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$']
-let NERDTreeHijackNetrw = 0
+" vimplate {{{2
+let Vimplate = "~/.vim/tools/vimplate"
 
 " Functions {{{1
 
-" ToggleFold() {{{2
-" Toggle fold state between closed and opened.
-" If there is no fold at current line, just moves forward.
-" If it is present, reverse its state.
-fun! ToggleFold()
-    if foldlevel('.') == 0
-        normal! l
-    else
-        if foldclosed('.') < 0
-            . foldclose
-        else
-            . foldopen
-        endif
-    endif
-    " Clear status line
-    echo
-endfun
+" Bclose() {{{2
+" delete buffer without closing window
+function! Bclose()
+    let l:currentBufNum = bufnr("%")
+    let l:alternateBufNum = bufnr("#")
 
-" InsertTabWrapper() {{{2
-" http://vim.sourceforge.net/tips/tip.php?tip_id=102
-function! InsertTabWrapper(direction)
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    elseif "backward" == a:direction
-        return "\<c-p>"
+    if buflisted(l:alternateBufNum)
+        buffer #
     else
-        return "\<c-n>"
+        bnext
+    endif
+
+    if bufnr("%") == l:currentBufNum
+        new
+    endif
+
+    if buflisted(l:currentBufNum)
+        execute("bdelete! ".l:currentBufNum)
     endif
 endfunction
 
-" ExtractMethod() {{{2
-vmap \em :call ExtractMethod()<cr>
-function! ExtractMethod() range
-    let name = inputdialog("Name of new method:")
-    '<
-    exe "normal O\<bs>private " . name ."()\<cr>{\<esc>"
-    '>
-    exe "normal oreturn ;\<cr>}\<esc>k"
-    s/return/\/\/ return/ge
-    normal j%
-    normal kf(
-    exe "normal yyPi// = \<esc>wdwA;\<esc>"
-    normal ==
-    normal j0w
-endfunction
+" DiffOrig {{{2
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+                \ | wincmd p | diffthis
+endif
 
 " GenerateStatusline() {{{2
 " some code taken from
@@ -598,7 +501,7 @@ endfunction
 
 " GetCurDir() {{{3
 function! GetCurDir()
-    let curdir = substitute(getcwd(), '/home/jan', "~", "g")
+    let curdir = fnamemodify(getcwd(), ":~")
     return curdir
 endfunction
 
@@ -617,6 +520,54 @@ function! GetTabstop()
         endif
     endif
     return str
+endfunction
+
+" LBDBCompleteFn() {{{2
+" from http://dollyfish.net.nz/blog/2008-04-01/mutt-and-vim-custom-autocompletion
+fun! LBDBCompleteFn(findstart, base)
+    if a:findstart
+        " locate the start of the word
+        let line = getline('.')
+        let start = col('.') - 1
+        while start > 0 && line[start - 1] =~ '[^:,]'
+          let start -= 1
+        endwhile
+        while start < col('.') && line[start] =~ '[:, ]'
+            let start += 1
+        endwhile
+        return start
+    else
+        let res = []
+        let query = substitute(a:base, '"', '', 'g')
+        let query = substitute(query, '\s*<.*>\s*', '', 'g')
+        for m in LbdbQuery(query)
+            call add(res, printf('"%s" <%s>', escape(m[0], '"'), m[1]))
+        endfor
+        return res
+    endif
+endfun
+
+" LoadProjectConfig() {{{2
+function! LoadProjectConfig()
+    if filereadable('project_config.vim')
+        exe 'sandbox source project_config.vim'
+    endif
+    if filereadable(expand('%:h') . '/project_config.vim')
+        exe 'sandbox source %:h/project_config.vim'
+    endif
+endfunction
+
+" ManCscopeAndTags() {{{2
+function! ManCscopeAndTags()
+    execute '!cscope -Rqbc'
+    " see ~/.ctags
+    execute '!ctags -R'
+    if cscope_connection() == 0
+        execute 'cs add cscope.out'
+    else
+        execute 'cs reset'
+    endif
+    execute 'CCTreeLoadDB'
 endfunction
 
 " MyTabLine() {{{2
@@ -664,140 +615,7 @@ if exists("+showtabline")
     endfunction
 "    set stal=2
     set tabline=%!MyTabLine()
-"    map     <F10>    :tabnext<CR>
-"    map!    <F10>    <C-O>:tabnext<CR>
-"    map     <S-F10>  :tabprev<CR>
-"    map!    <S-F10>  <C-O>:tabprev<CR>
 endif
-
-" VisualSearch() {{{2
-" From an idea by Michael Naumann
-function! VisualSearch(direction) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
-    let l:pattern = escape(@", '\\/.*$^~[]')
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-    if a:direction == 'b'
-        execute "normal ?" . l:pattern . "^M"
-    else
-        execute "normal /" . l:pattern . "^M"
-    endif
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
-
-" Bclose() {{{2
-" delete buffer without closing window
-function! Bclose()
-    let l:currentBufNum = bufnr("%")
-    let l:alternateBufNum = bufnr("#")
-
-    if buflisted(l:alternateBufNum)
-        buffer #
-    else
-        bnext
-    endif
-
-    if bufnr("%") == l:currentBufNum
-        new
-    endif
-
-    if buflisted(l:currentBufNum)
-        execute("bdelete! ".l:currentBufNum)
-    endif
-endfunction
-
-" SmartTOHtml() {{{2
-"A function that inserts links & anchors on a TOhtml export.
-" Notice:
-" Syntax used is:
-"   *> Link
-"   => Anchor
-function! SmartTOHtml()
-    TOhtml
-    try
-        %s/&quot;\s\+\*&gt; \(.\+\)</" <a href="#\1" style="color: cyan">\1<\/a></g
-        %s/&quot;\(-\|\s\)\+\*&gt; \(.\+\)</" \&nbsp;\&nbsp; <a href="#\2" style="color: cyan;">\2<\/a></g
-        %s/&quot;\s\+=&gt; \(.\+\)</" <a name="\1" style="color: #fff">\1<\/a></g
-    catch
-    endtry
-    exe ":write!"
-    exe ":bd"
-endfunction
-
-" ToggleExpandTab() {{{2
-function! ToggleExpandTab()
-    if &sts == 4
-        set softtabstop=0
-        set shiftwidth=8
-        set noexpandtab
-    else
-        set softtabstop=4
-        set shiftwidth=4
-        set expandtab
-    endif
-    set expandtab?
-endfunction
-
-" LBDBCompleteFn() {{{2
-" from http://dollyfish.net.nz/blog/2008-04-01/mutt-and-vim-custom-autocompletion
-fun! LBDBCompleteFn(findstart, base)
-    if a:findstart
-        " locate the start of the word
-        let line = getline('.')
-        let start = col('.') - 1
-        while start > 0 && line[start - 1] =~ '[^:,]'
-          let start -= 1
-        endwhile
-        while start < col('.') && line[start] =~ '[:, ]'
-            let start += 1
-        endwhile
-        return start
-    else
-        let res = []
-        let query = substitute(a:base, '"', '', 'g')
-        let query = substitute(query, '\s*<.*>\s*', '', 'g')
-        for m in LbdbQuery(query)
-            call add(res, printf('"%s" <%s>', escape(m[0], '"'), m[1]))
-        endfor
-        return res
-    endif
-endfun
-
-" ManCscopeAndTags() {{{2
-function! ManCscopeAndTags()
-    execute '!cscope -Rqbc'
-    " see ~/.ctags
-    execute '!ctags -R'
-    if cscope_connection() == 0
-        execute 'cs add cscope.out'
-    else
-        execute 'cs reset'
-    endif
-    execute 'CCTreeLoadDB'
-endfunction
-
-" RunShellCommand() {{{2
-function! s:RunShellCommand(cmdline)
-    botright new
-    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
-    setlocal nowrap
-"    call setline(1,a:cmdline)
-"    call setline(2,substitute(a:cmdline,'.','=','g'))
-    if v:version >= 702
-        if stridx(a:cmdline, "git") == 0
-            setlocal filetype=git
-        endif
-    elseif stridx(a:cmdline, "diff") >= 0
-        set filetype=diff
-    endif
-    execute 'silent 0read !'.escape(a:cmdline,'%#')
-    setlocal nomodifiable
-    1
-endfunction
-
-command! -complete=file -nargs=* Git   call s:RunShellCommand('git '.<q-args>)
-command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
 
 " PreviewWord() {{{2
 function! PreviewWord(local)
@@ -863,39 +681,100 @@ function! PreviewWordLocal(w, editwinnum)
     endif
 endfun
 
-" LoadProjectConfig() {{{2
-function! LoadProjectConfig()
-    if filereadable(expand('%:h') . '/project_config.vim')
-        exe 'source %:h/project_config.vim'
+" RunShellCommand() {{{2
+function! s:RunShellCommand(cmdline)
+    botright new
+    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
+    setlocal nowrap
+"    call setline(1,a:cmdline)
+"    call setline(2,substitute(a:cmdline,'.','=','g'))
+    if v:version >= 702
+        if stridx(a:cmdline, "git") == 0
+            setlocal filetype=git
+        endif
+    elseif stridx(a:cmdline, "diff") >= 0
+        set filetype=diff
     endif
+    execute 'silent 0read !'.escape(a:cmdline,'%#')
+    setlocal nomodifiable
+    1
+endfunction
+
+command! -complete=file -nargs=* Git   call s:RunShellCommand('git '.<q-args>)
+command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
+
+" SmartTOHtml() {{{2
+"A function that inserts links & anchors on a TOhtml export.
+" Notice:
+" Syntax used is:
+"   *> Link
+"   => Anchor
+function! SmartTOHtml()
+    TOhtml
+    try
+        %s/&quot;\s\+\*&gt; \(.\+\)</" <a href="#\1" style="color: cyan">\1<\/a></g
+        %s/&quot;\(-\|\s\)\+\*&gt; \(.\+\)</" \&nbsp;\&nbsp; <a href="#\2" style="color: cyan;">\2<\/a></g
+        %s/&quot;\s\+=&gt; \(.\+\)</" <a name="\1" style="color: #fff">\1<\/a></g
+    catch
+    endtry
+    exe ":write!"
+    exe ":bd"
 endfunction
 
 " Tab2Space/Space2Tab {{{2
 command! -range=% -nargs=0 Tab2Space exec "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', "repeat(' ', ".&ts."), 'g')"
 command! -range=% -nargs=0 Space2Tab exec "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0), ' \\{".&ts."\\}', '\\t', 'g')"
 
-" DiffOrig {{{2
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-                \ | wincmd p | diffthis
-endif
+" ToggleExpandTab() {{{2
+function! ToggleExpandTab()
+    if &sts == 4
+        set softtabstop=0
+        set shiftwidth=8
+        set noexpandtab
+    else
+        set softtabstop=4
+        set shiftwidth=4
+        set expandtab
+    endif
+    set expandtab?
+endfunction
+
+" ToggleFold() {{{2
+" Toggle fold state between closed and opened.
+" If there is no fold at current line, just moves forward.
+" If it is present, reverse its state.
+fun! ToggleFold()
+    if foldlevel('.') == 0
+        normal! l
+    else
+        if foldclosed('.') < 0
+            . foldclose
+        else
+            . foldopen
+        endif
+    endif
+    " Clear status line
+    echo
+endfun
+
+" VisualSearch() {{{2
+" From an idea by Michael Naumann
+function! VisualSearch(direction) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+    let l:pattern = escape(@", '\\/.*$^~[]')
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+    if a:direction == 'b'
+        execute "normal ?" . l:pattern . "^M"
+    else
+        execute "normal /" . l:pattern . "^M"
+    endif
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
 
 " Abbrevs {{{1
 source ~/.vim/abbrevs.vim
-
-" Snippets {{{1
-
-" Java {{{2
-autocmd FileType java inorea <buffer> cfun <c-r>=IMAP_PutTextWithMovement("public<++> <++>(<++>) {\n<++>;\nreturn <++>;\n}")<cr> 
-autocmd FileType java inorea <buffer> cfunpr <c-r>=IMAP_PutTextWithMovement("private<++> <++>(<++>) {\n<++>;\nreturn <++>;\n}")<cr> 
-autocmd FileType java inorea <buffer> cfor <c-r>=IMAP_PutTextWithMovement("for(<++>; <++>; <++>) {\n<++>;\n}")<cr> 
-autocmd FileType java inorea <buffer> cif <c-r>=IMAP_PutTextWithMovement("if(<++>) {\n<++>;\n}")<cr> 
-autocmd FileType java inorea <buffer> cifelse <c-r>=IMAP_PutTextWithMovement("if(<++>) {\n<++>;\n}\nelse {\n<++>;\n}")<cr>
-autocmd FileType java inorea <buffer> cclass <c-r>=IMAP_PutTextWithMovement("class <++> <++> {\n<++>\n}")<cr>
-autocmd FileType java inorea <buffer> cmain <c-r>=IMAP_PutTextWithMovement("public static void main(String[] argv) {\n<++>\n}")<cr>
 
 " Terminal keycodes {{{1
 
@@ -938,7 +817,7 @@ endif
 " Mappings {{{1
 
 let vimrc='~/.vimrc'
-let myabbr='~/.abbr.vimrc'
+let myabbr='~/.vim/abbrevs.vim'
 nn  <leader>vs :source <C-R>=vimrc<CR><CR>
 nn  <leader>ve :edit   <C-R>=vimrc<CR><CR>
 nn  <leader>va :edit   <C-R>=myabbr<CR><CR>
@@ -948,6 +827,7 @@ nmap <C-W>e :enew<CR>
 " Control-Space for omnicomplete
 inoremap <C-Space> <C-X><C-O>
 
+" create undo break points
 inoremap <C-U> <C-G>u<C-U>
 
 " make some jumps more intuitive
@@ -969,19 +849,12 @@ noremap! <M-h> <Left>
 noremap! <M-l> <Right>
 
 " create an undo point after each word
-imap <Space> <Space><C-G>u
+" imap <Space> <Space><C-G>u
 "inoremap <Tab>   <Tab><C-G>u
 imap <CR>    <CR><C-G>u
 
-"if !empty(maparg('<F1>', 'n'))
-"  nunmap <F1>
-"endif
-"nmap <unique> <silent> <F1> <Plug>SelectBuf
-"if !empty(maparg('<F1>', 'i'))
-"  iunmap <F1>
-"endif
-"imap <unique> <silent> <F1> <ESC><Plug>SelectBuf
 nmap <silent> <leader>b <Plug>SelectBuf
+" needed to keep SelectBuf from complaining about existing maps
 imap <silent> <S-F1> <ESC><Plug>SelectBuf
 
 " have \tl ("toggle list") toggle list on/off and report the change:
@@ -1007,10 +880,6 @@ set pastetoggle=<F4>
 "map <silent> <F5> :silent nohl<cr>
 map <silent> <M-/> :silent nohl<cr>
 
-" have \th ("toggle highlight") toggle highlighting of search matches, and
-" report the change:
-nnoremap \th :set invhls hls?<CR>
-
 " delete buffer and close window
 map <F8>  :bd<C-M>
 " delete buffer, but keep window
@@ -1022,14 +891,10 @@ nmap <silent> <F9>  :Tlist<CR>
 nmap <silent> <leader>pw :call PreviewWord(0)<CR>
 nmap <silent> <leader>pl :call PreviewWord(1)<CR>
 
-"nmap <silent> <F10> <Plug>ToggleProject
 nmap <silent> <F10> :NERDTreeToggle<CR>
-
-"nnoremap <S-F10> :execute '!cscope -Rqbc; ctags -R --c-kinds=+p --c++-kinds=+p --fields=+S' \| :cs reset<CR>
 nnoremap <S-F10> :call ManCscopeAndTags()<CR>
 
 imap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
-"inoremap <expr> <m-'> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
 imap <c-a> <esc>0i
 
 " Switch to current dir
@@ -1047,7 +912,6 @@ map <m-n> :cn<cr>
 map <m-p> :cp<cr>
 
 map <silent> <leader>g :silent !gitk<cr>
-"map ,G yaw:.!git-show -f <c-r>" <CR>
 
 " highlight long lines
 nnoremap <silent> <Leader>hl
@@ -1075,17 +939,16 @@ inoremap <expr> <CR>       pumvisible()?"\<C-Y>":"\<CR>"
 inoremap <expr> <Down>     pumvisible()?"\<C-N>":"\<Down>"
 inoremap <expr> <Up>       pumvisible()?"\<C-P>":"\<Up>"
 inoremap <expr> <PageDown> pumvisible()?"\<PageDown>\<C-P>\<C-N>":"\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible()?"\<PageUp>\<C-P>\<C-N>":"\<PageUp>" 
+inoremap <expr> <PageUp>   pumvisible()?"\<PageUp>\<C-P>\<C-N>":"\<PageUp>"
 
 " Parenthesis/bracket expanding
+vnoremap §§ <esc>`>a"<esc>`<i"<esc>
+vnoremap §q <esc>`>a'<esc>`<i'<esc>
 vnoremap §1 <esc>`>a)<esc>`<i(<esc>
 vnoremap §2 <esc>`>a]<esc>`<i[<esc>
 vnoremap §3 <esc>`>a}<esc>`<i{<esc>
-vnoremap §§ <esc>`>a"<esc>`<i"<esc>
-vnoremap §q <esc>`>a'<esc>`<i'<esc>
-vnoremap §w <esc>`>a"<esc>`<i"<esc>
 
-" Fast open a buffer by search for a name
+" Fast open a buffer by searching for a name
 map <c-q> :b 
 
 " Search for the current selection
@@ -1094,28 +957,12 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
 
 " indent for C programs
 nmap <Leader>i :%!indent<CR>
+
 " open main viki
 nmap <Leader>vo :VikiHome<CR>
 
 " see functions
 noremap <space> :call ToggleFold()<CR>
-"inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
-"inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
-
-" change VCS-mappings from cx -> sx
-nmap <Leader>sa <Plug>VCSAdd
-nmap <Leader>sn <Plug>VCSAnnotate
-nmap <Leader>sc <Plug>VCSCommit
-nmap <Leader>sd <Plug>VCSDiff
-nmap <Leader>sg <Plug>VCSGotoOriginal
-nmap <Leader>sG <Plug>VCSGotoOriginal!
-nmap <Leader>sl <Plug>VCSLog
-nmap <Leader>sL <Plug>VCSLock
-nmap <Leader>sr <Plug>VCSReview
-nmap <Leader>ss <Plug>VCSStatus
-nmap <Leader>su <Plug>VCSUpdate
-nmap <Leader>sU <Plug>VCSUnlock
-nmap <Leader>sv <Plug>VCSVimDiff
 
 " have Y behave analogously to D and C rather than to dd and cc (which is
 " already done by yy):
@@ -1130,27 +977,11 @@ inoremap  
 " scroll whole buffer without cursor
 map <silent> <C-Down> 1<C-d>:set scroll=0<cr>
 map <silent> <C-Up> 1<C-u>:set scroll=0<cr>
-"map <silent> <C-J> 1<C-d>:set scroll=0<cr>
-"map <silent> <C-K> 1<C-u>:set scroll=0<cr>
 
 map <M-,>     :bprevious!<CR>
 map <M-.>     :bnext!<CR>
 map <M-Left>  :tabprevious<CR>
 map <M-Right> :tabnext<CR>
-
-"imap <C-H> <Plug>IMAP_JumpForward
-"nmap <C-H> <Plug>IMAP_JumpForward
-"if exists('g:Imap_StickyPlaceHolders') && g:Imap_StickyPlaceHolders
-"    vmap <C-H> <Plug>IMAP_JumpForward
-"else
-"    vmap <C-H> <Plug>IMAP_DeleteAndJumpForward
-"endif
-
-" Ruby
-"map <C-R> :!ruby %<CR>
-"map <C-E> :!eruby %<CR>
-"map <C-I> :!ri <cword><CR>
-"map <C-T> :!ruby % <cword><CR>
 
 " Remove quoted signatures
 map ## :/^> -- $/,/^$/d
