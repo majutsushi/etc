@@ -63,173 +63,162 @@ au BufWritePost,FileWritePost *.c TlistUpdate
 
 au BufWritePost,FileWritePost *.sh silent !chmod u+x %
 
-" General {{{1
+" important {{{1
+" set cpoptions TODO
 
-set confirm
-filetype on
-filetype plugin on
-filetype indent on
+" moving around, searching and patterns {{{1
+
+" list of flags specifying which commands wrap to another line (local to window)
+set whichwrap=<,>,b,s,[,]
+" change to directory of file in buffer
 "set autochdir
-set history=100
-"set encoding=iso-8859-15
-set encoding=utf-8
-"set fileencodings=ucs-bom,utf-8,default,euc-jp,iso-2022-jp,shift-jis,latin1
-set fileencodings=ucs-bom,utf-8,default,latin1
-set modeline
-set modelines=5
-set suffixesadd=.rb
+
+" show match for partly typed search command
+set incsearch
+" ignore case when using a search pattern
+set ignorecase
+" override 'ignorecase' when pattern has upper case characters
+set smartcase
+
+" pattern for a macro definition line (global or local to buffer)
 set define=^\\(\\s*#\\s*define\\\|[a-z]*\\s*const\\s*[a-z]*\\)
-set undolevels=1000
-set viminfo=!,%,'20,<500,:500,s100,h,n~/.cache/vim/viminfo
-set complete+=k
-set complete-=i
-let mapleader=","
-set grepprg=ack-grep
-"set winaltkeys=no " use alt-mappings for menu shortcuts?
 
-" Files/Backups {{{1
+" tags {{{1
 
-"set backup
-"set backupdir= " where to put backup files
-"set directory= " for temp files
-"set makeef= " error file for make
-"set patchmode=.orig
-" set path=.,./**,/usr/include,/usr/include/**,,
-set updatecount=100
-set updatetime=2000
+" use cscope for tag commands
+set cscopetag
+" give messages when adding a cscope database
+set cscopeverbose
+" When to open a quickfix window for cscope
+set cscopequickfix=s-,c-,d-,i-,t-,e-
 
-" UI {{{1
+" displaying text {{{1
 
+" number of screen lines to show around the cursor
+set scrolloff=2
+
+" long lines wrap
+set wrap
+" wrap long lines at a character in 'breakat' (local to window)
+set linebreak
+" which characters might cause a line break
+"set breakat=\ ^I
+" string to put before wrapped screen lines
+set showbreak=+\ 
+
+" include "lastline" to show the last line even if it doesn't fit
+" include "uhex" to show unprintable characters as a hex number
+set display=lastline
+" number of lines used for the command-line
+"set cmdheight=2
+" don't redraw while executing macros
+set lazyredraw
+
+" show <Tab> as ^I and end-of-line as $ (local to window)
+set list
+" list of strings used for list mode
+if has("gui_running")
+    set listchars=tab:»-,trail:␣,nbsp:~
+else
+    set listchars=tab:»-,trail:·,nbsp:~
+endif
+
+" show the line number for each line (local to window)
+set number
+
+" syntax, highlighting and spelling {{{1
+
+" "dark" or "light"; the background color brightness
 set background=dark
+" highlight all matches for the last used search pattern
+set hlsearch
 
 if has("gui_running")
     colorscheme desert
-
-    set guifont=Monospace\ 8
-    set guioptions+=c
-    set guioptions-=T
-    set guioptions-=e
-
-"     set lines=50
-"     set columns=95
-"     winpos 310 70
-
-    set listchars=tab:»-,trail:␣,nbsp:~
-
-    hi SignColumn guibg=grey20
 else
-    if  &term =~ "xterm"
-        set t_Co=256
-    endif
-
     colorscheme desert256
+endif
 
-    set listchars=tab:»-,trail:·,nbsp:~
+" multiple windows {{{1
+
+" 0, 1 or 2; when to use a status line for the last window
+set laststatus=2
+" alternate format to be used for a status line
+set statusline=%!GenerateStatusline()
+" default height for the preview window
+set previewheight=9
+" don't unload a buffer when no longer shown in a window
+set hidden
+" "useopen" and/or "split"; which window to use when jumping to a buffer
+set switchbuf=useopen " or usetab
+" a new window is put below the current one
+"set splitbelow
+
+" multiple tab pages {{{1
+
+if exists("+showtabline")
+    " 0, 1 or 2; when to use a tab pages line
+    set showtabline=1
+    " custom tab pages line
+    set tabline=%!MyTabLine()
+endif
+
+" terminal {{{1
+
+" terminal connection is fast
+set ttyfast
+" show info in the window title
+set title
+
+if (&term =~ "xterm")
+    set t_Co=256
 endif
 
 " http://ft.bewatermyfriend.org/comp/vim/vimrc.html
 if (&term =~ '^screen')
     set t_ts=k
     set t_fs=\
-    set title
     autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
+endif
+
+" using the mouse {{{1
+
+" list of flags for using the mouse
+set mouse=a
+" "extend", "popup" or "popup_setpos"; what the right mouse button is used for
+set mousemodel=popup
+" "xterm", "xterm2", "dec" or "netterm"; type of mouse
+set ttymouse=xterm
+
+" GUI {{{1
+
+if has("gui_running")
+    " list of font names to be used in the GUI
+    set guifont=Monospace\ 8
+
+    " list of flags that specify how the GUI works
+    set guioptions+=c
+    set guioptions-=T
+    set guioptions-=e
+
+    " "no", "yes" or "menu"; how to use the ALT key
+    "set winaltkeys=no
+
+    hi SignColumn guibg=grey20
 endif
 
 if exists('&macatsui')
     set nomacatsui
 endif
 
-syntax on
-set list
+" printing {{{1
 
-"set completeopt=longest,menu,preview
-set completeopt=longest,menu
-
-" command-mode completion
-"set wildmenu
-set wildmode=list:longest,full
-set wildignore=*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.out,*.class
-
-" cscope
-set cscopequickfix=s-,c-,d-,i-,t-,e-
-set cscopetag
-set cscopeverbose
-
-" search
-set hlsearch
-set ignorecase
-set incsearch
-set smartcase
-
-" statusline/ruler
-set laststatus=2
-set ruler " position information in status line
-set statusline=%!GenerateStatusline()
-
-" wrapping (display only)
-"set breakat=\ ^I
-set linebreak
-set showbreak=+\ 
-set wrap
-
-set backspace=indent,eol,start
-"set cmdheight=2
-set diffopt=filler,vertical
-set display=lastline
-set hidden
-set lazyredraw " don't update screen while running macros (faster)
-set more
-set mouse=a
-set mousemodel=popup
-set number " line numbers
-set previewheight=9
-set scrolloff=2
-set shortmess=atI
-set showcmd
-set showmatch
-set showmode
-"set splitbelow " split below instead of above the current buffer
-set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm
-set switchbuf=useopen " or usetab
-set tildeop
-set title
-set ttyfast
-set ttymouse=xterm
-set whichwrap=<,>,b,s,[,] " characters that can move over linebreaks
-
-" Text Formatting/Layout {{{1
-
-" indentation
-set autoindent
-set smartindent
-
-" tabs/spaces
-set expandtab     " convert tabs -> spaces; WARNING: don't unset if ts != sw
-set shiftwidth=4  " number of spaces used for auto-indent
-"set smarttab      " shiftwidth at start of line, tabstop/sts elsewhere
-set softtabstop=4 " WARNING: mixes spaces and tabs if >0 and noexpandtab!
-set tabstop=8     " number of spaces a <Tab> counts for, should always be 8
-
-set fileformats=unix,dos,mac
-set formatoptions+=rol2n
-set nojoinspaces  " insert two spaces after . ? ! with join
-"set cindent
-set shiftround
-set textwidth=78
-
-" Folding {{{1
-
-set nofoldenable
-"set foldcolumn=3
-"set foldlevel=100
-"set foldmethod=syntax
-
-" Printing {{{1
-
-"set printdevice=
+" list of items that control the format of :hardcopy output
 set printoptions=number:y,paper:A4,left:5pc,right:5pc,top:5pc,bottom:5pc
+" name of the font to be used for :hardcopy
 set printfont=Monospace\ 8
 
+" expression used to print the PostScript file for :hardcopy
 set printexpr=PrintFile(v:fname_in)
 function! PrintFile(fname)
 "    call system("lp " . (&printdevice == '' ? '' : ' -s -d' . &printdevice) . ' ' . a:fname)
@@ -237,6 +226,151 @@ function! PrintFile(fname)
     call delete(a:fname)
     return v:shell_error
 endfunc
+
+" messages and info {{{1
+
+" list of flags to make messages shorter
+set shortmess=atI
+" show (partial) command keys in the status line
+set showcmd
+" display the current mode in the status line
+set showmode
+" show cursor position below each window
+set ruler
+" pause listings when the screen is full
+set more
+" start a dialog when a command fails
+set confirm
+
+" selecting text {{{1
+
+" editing text {{{1
+
+" maximum number of changes that can be undone
+set undolevels=1000
+" line length above which to break a line (local to buffer)
+set textwidth=78
+" specifies what <BS>, CTRL-W, etc. can do in Insert mode
+set backspace=indent,eol,start
+" list of flags that tell how automatic formatting works (local to buffer)
+set formatoptions+=rol2n
+
+" specifies how Insert mode completion works for CTRL-N and CTRL-P
+" (local to buffer)
+set complete+=k
+set complete-=i
+" whether to use a popup menu for Insert mode completion
+"set completeopt=longest,menu,preview
+set completeopt=longest,menu
+
+" the "~" command behaves like an operator
+set tildeop
+" When inserting a bracket, briefly jump to its match
+set showmatch
+" use two spaces after '.' when joining a line
+set nojoinspaces
+
+" tabs and indenting {{{1
+
+" number of spaces a <Tab> in the text stands for (local to buffer)
+set tabstop=8     " should always be 8
+" number of spaces used for each step of (auto)indent (local to buffer)
+set shiftwidth=4
+" a <Tab> in an indent inserts 'shiftwidth' spaces
+"set smarttab      " shiftwidth at start of line, tabstop/sts elsewhere
+" if non-zero, number of spaces to insert for a <Tab> (local to buffer)
+set softtabstop=4 " WARNING: mixes spaces and tabs if >0 and noexpandtab!
+" round to 'shiftwidth' for "<<" and ">>"
+set shiftround
+" expand <Tab> to spaces in Insert mode (local to buffer)
+set expandtab     " WARNING: don't unset if ts != sw
+
+" automatically set the indent of a new line (local to buffer)
+set autoindent
+" do clever autoindenting (local to buffer)
+set smartindent
+
+" folding {{{1
+
+" set to display all folds open (local to window)
+set nofoldenable
+" folds with a level higher than this number will be closed (local to window)
+"set foldlevel=100
+" width of the column used to indicate folds (local to window)
+"set foldcolumn=3
+
+" diff mode {{{1
+
+" options for using diff mode
+set diffopt=filler,vertical
+
+" reading and writing files {{{1
+
+" enable using settings from modelines when reading a file (local to buffer)
+set modeline
+" number of lines to check for modelines
+set modelines=5
+" last line in the file has an end-of-line (local to buffer)
+set endofline
+" list of file formats to look for when editing a file
+set fileformats=unix,dos,mac
+
+" keep a backup after overwriting a file
+"set backup
+" list of directories to put backup files in
+"set backupdir= " where to put backup files
+
+" automatically read a file when it was modified outside of Vim
+" (global or local to buffer)
+set autoread
+
+" keep oldest version of a file; specifies file name extension
+"set patchmode=.orig
+
+" the swap file {{{1
+
+" list of directories for the swap file
+"set directory=
+" number of characters typed to cause a swap file update
+set updatecount=100
+" time in msec after which the swap file will be updated
+set updatetime=2000
+
+" command line editing {{{1
+
+" how many command lines are remembered
+set history=100
+
+" specifies how command line completion works
+set wildmode=list:longest,full
+" list of file name extensions that have a lower priority
+set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm
+" list of file name extensions added when searching for a file (local to buffer)
+set suffixesadd=.rb
+" list of patterns to ignore files for file name completion
+set wildignore=*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.out,*.class
+" command-line completion shows a list of matches
+"set wildmenu
+
+" running make and jumping to errors {{{1
+
+" program used for the ":grep" command (global or local to buffer)
+set grepprg=ack-grep
+
+" multi-byte characters {{{1
+
+" character encoding used in Vim: "latin1", "utf-8" "euc-jp", "big5", etc.
+set encoding=utf-8
+" automatically detected character encodings
+set fileencodings=ucs-bom,utf-8,default,latin1
+
+" various {{{1
+
+filetype plugin indent on
+syntax enable
+
+" list that specifies what to write in the viminfo file
+set viminfo=!,%,'20,<500,:500,s100,h,n~/.cache/vim/viminfo
 
 " Plugin and script options {{{1
 
@@ -622,7 +756,6 @@ if exists("+showtabline")
         return s
     endfunction
 "    set stal=2
-    set tabline=%!MyTabLine()
 endif
 
 " PreviewWord() {{{2
@@ -823,6 +956,8 @@ if !has("gui_running")
 endif
 
 " Mappings {{{1
+
+let mapleader=","
 
 let vimrc='~/.vimrc'
 let myabbr='~/.vim/abbrevs.vim'
