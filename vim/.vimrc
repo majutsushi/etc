@@ -87,24 +87,6 @@ let mapleader=","
 set grepprg=ack-grep
 "set winaltkeys=no " use alt-mappings for menu shortcuts?
 
-" Theme/Colors {{{1
-
-set background=dark
-if  &term =~ "xterm"
-    set t_Co=256
-"    let g:inkpot_black_background = 1
-"    colorscheme inkpot
-    colorscheme desert256
-elseif &term =~ "rxvt-unicode" || &term =~ "screen-256color-bce"
-"    colorscheme inkpot
-    colorscheme desert256
-else
-"    set t_Co=16
-    colorscheme desert
-endif
-syntax on
-hi SignColumn guibg=grey20
-
 " Files/Backups {{{1
 
 "set backup
@@ -118,6 +100,33 @@ set updatetime=2000
 
 " UI {{{1
 
+set background=dark
+
+if has("gui_running")
+    colorscheme desert
+
+    set guifont=Monospace\ 8
+    set guioptions+=c
+    set guioptions-=T
+    set guioptions-=e
+
+"     set lines=50
+"     set columns=95
+"     winpos 310 70
+
+    set listchars=tab:»-,trail:␣,nbsp:~
+
+    hi SignColumn guibg=grey20
+else
+    if  &term =~ "xterm"
+        set t_Co=256
+    endif
+
+    colorscheme desert256
+
+    set listchars=tab:»-,trail:·,nbsp:~
+endif
+
 " http://ft.bewatermyfriend.org/comp/vim/vimrc.html
 if (&term =~ '^screen')
     set t_ts=k
@@ -130,84 +139,83 @@ if exists('&macatsui')
     set nomacatsui
 endif
 
+syntax on
+set list
+
 "set completeopt=longest,menu,preview
 set completeopt=longest,menu
 
+" command-mode completion
+"set wildmenu
+set wildmode=list:longest,full
+set wildignore=*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.out,*.class
+
+" cscope
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 set cscopetag
 set cscopeverbose
 
-"set wildmenu
-set wildmode=list:longest,full
-set wildignore=*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.out,*.class
+" search
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+
+" statusline/ruler
+set laststatus=2
 set ruler " position information in status line
-"set cmdheight=2
-set number " line numbers
-set lazyredraw " don't update screen while running macros (faster)
-set hidden
+set statusline=%!GenerateStatusline()
+
+" wrapping (display only)
+"set breakat=\ ^I
+set linebreak
+set showbreak=+\ 
+set wrap
+
 set backspace=indent,eol,start
-set whichwrap=<,>,b,s,[,]
+"set cmdheight=2
+set diffopt=filler,vertical
+set display=lastline
+set hidden
+set lazyredraw " don't update screen while running macros (faster)
+set more
 set mouse=a
 set mousemodel=popup
-set ignorecase " for searching
-set smartcase
+set number " line numbers
+set previewheight=9
+set scrolloff=2
 set shortmess=atI
-set switchbuf=useopen " or usetab
+set showcmd
+set showmatch
+set showmode
 "set splitbelow " split below instead of above the current buffer
-"set report=0
-set more
 set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm
+set switchbuf=useopen " or usetab
 set tildeop
 set title
 set ttyfast
 set ttymouse=xterm
-set diffopt=filler,vertical
-set previewheight=9
-set display=lastline
-
-" Visual Cues {{{1
-
-set showmatch
-set hlsearch
-set incsearch
-
-if &encoding == "utf-8"
-    set list
-    set listchars=tab:»-,trail:·,nbsp:~
-endif
-
-"set lines=80
-"set columns=160
-set scrolloff=2
-set laststatus=2
-"set statusline=%f%m%r%h%w\ %y\ (%<%{CurDir()})\ %=%-10.(%l,%c%V%)\ %L\ %p%%
-set statusline=%!GenerateStatusline()
-"set ruler
-"set rulerformat=%F
-set wrap
-set linebreak
-"set breakat=\ ^I
-set showbreak=+\ 
-set showcmd
-set showmode
+set whichwrap=<,>,b,s,[,] " characters that can move over linebreaks
 
 " Text Formatting/Layout {{{1
 
-set formatoptions+=rol2n
-set nojoinspaces  " insert two spaces after . ? ! with join
+" indentation
 set autoindent
 set smartindent
-"set cindent
-set tabstop=8     " number of spaces a <Tab> counts for, should always be 8
-set softtabstop=4 " WARNING: mixes spaces and tabs if >0 and noexpandtab!
+
+" tabs/spaces
+set expandtab     " convert tabs -> spaces; WARNING: don't unset if ts != sw
 set shiftwidth=4  " number of spaces used for auto-indent
 "set smarttab      " shiftwidth at start of line, tabstop/sts elsewhere
-set expandtab     " convert tabs -> spaces; WARNING: don't unset if ts != sw
-set shiftround
-"set comments=nb:>
-set textwidth=75
-"set pastetoggle=<C-P> " see mappings
+set softtabstop=4 " WARNING: mixes spaces and tabs if >0 and noexpandtab!
+set tabstop=8     " number of spaces a <Tab> counts for, should always be 8
+
 set fileformats=unix,dos,mac
+set formatoptions+=rol2n
+set nojoinspaces  " insert two spaces after . ? ! with join
+"set cindent
+set shiftround
+set textwidth=78
 
 " Folding {{{1
 
