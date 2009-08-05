@@ -949,6 +949,10 @@ uploadshot() {
     done
 }
 
+wp() {
+    dig +short txt ${1// /_}.wp.dg.cx
+}
+
 flv2ogg() {
 #    ffmpeg -i $1 -ab 56 -ar 22050 -b 500 ${1%flv}mpg
     ffmpeg2theora --audiobitrate 56 --samplerate 22050 --videobitrate 500 --sync $1
