@@ -310,8 +310,6 @@ set diffopt=filler,vertical
 set modeline
 " number of lines to check for modelines
 set modelines=5
-" last line in the file has an end-of-line (local to buffer)
-set endofline
 " list of file formats to look for when editing a file
 set fileformats=unix,dos,mac
 
