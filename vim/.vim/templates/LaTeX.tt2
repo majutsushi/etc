@@ -28,6 +28,8 @@
 \usepackage{float}
 \usepackage{boxedminipage}
 \usepackage{subfigure}
+\usepackage{setspace}
+\usepackage{alltt}
 
 \usepackage[
 %    bookmarks=true,          % show bookmarks bar?
@@ -62,7 +64,13 @@
 %\renewcommand{\textfraction}{0.1}
 %\renewcommand{\floatpagefraction}{0.75}
 
+% from setspace package
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
+
 \author{[% user.firstname %]~[% user.lastname %]\\\href{mailto:[% user.mail %]}{\texttt{[% user.mail %]}}}
+% \author{[% user.firstname %]~[% user.lastname %]}
 \title{[% title %]}
 
 \begin{document}
