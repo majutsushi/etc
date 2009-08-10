@@ -21,7 +21,7 @@ autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 "au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
 
 " set the textwidth to 72 characters for replies (email&usenet)
-au BufNewFile,BufReadPost .followup,.letter,mutt-*,muttng-*,nn.*,snd.* setlocal tw=72 completefunc=LBDBCompleteFn fo+=a fo-=c
+au BufNewFile,BufReadPost .followup,.letter,mutt-*,muttng-*,nn.*,snd.* setlocal tw=72 completefunc=LBDBCompleteFn
 
 " filetype-specific settings
 au Filetype html,xml,xsl source ~/.vim/macros/closetag.vim
