@@ -438,8 +438,8 @@ macro index H "|/usr/bin/sa-learn --ham  --no-sync --single\r" "Classify as Ham"
 macro index P "!/usr/bin/sa-learn --sync\r" "Sync Spamassassin-db"
 
 # Quickly change to my favorite folders:
-macro index  "\\s"  "c<\r" "Go to 'sent' folder"
-macro pager  "\\s"  "c<\r" "Go to 'sent' folder"
+macro index  '\s'   "c<\r" "Go to 'sent' folder"
+macro pager  '\s'   "c<\r" "Go to 'sent' folder"
 macro index  I      "c!\n" "Go to Inbox"
 macro pager  I      "c!\n" "Go to Inbox"
 
