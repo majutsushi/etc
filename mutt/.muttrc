@@ -486,6 +486,9 @@ macro index  ,n         "l~N\n" "Limit to new messages"
 macro index  ,p         "<display-toggle-weed> <print-message> <display-toggle-weed> <exit>"
 macro index  \CR        "<read-thread><collapse-thread><next-unread><current-middle>" "mark the current thread as read"
 macro index  '{'        "<collapse-thread>"
+macro index  '\a'       "<save-message>=archive\n<next-unread>" "move message to folder 'archive'"
+macro index  '\w'       "<save-message>=0WAITING\n<next-unread>" "move message to folder '0WAITING'"
+macro index  '\f'       "<save-message>=0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
 
 # }}}
 # =============================================================================
@@ -505,6 +508,9 @@ macro pager  J   "!gpg --keyserver search.keyserver.net --keyserver-options hono
 macro pager  K   "!gpg --lsign-key " "Sign PGP Key"
 macro pager  ,p  "<display-toggle-weed> <print-message> <display-toggle-weed>"
 macro pager  \CR "<read-thread><collapse-thread><next-unread><display-message>" "mark the current thread as read"
+macro pager  '\a'       "<save-message>=archive\n<next-unread>" "move message to folder 'archive'"
+macro pager  '\w'       "<save-message>=0WAITING\n<next-unread>" "move message to folder '0WAITING'"
+macro pager  '\f'       "<save-message>=0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
 
 # }}}
 # =============================================================================
