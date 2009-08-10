@@ -401,7 +401,7 @@ let g:devhelpWordLength = 5
 
 " enhanced-commentify {{{2
 " let g:EnhCommentifyRespectIndent = 'Yes'
-let g:EnhCommentifyPretty = 'Yes'
+" let g:EnhCommentifyPretty = 'Yes'
 let g:EnhCommentifyTraditionalMode = 'No'
 let g:EnhCommentifyFirstLineMode = 'Yes'
 
