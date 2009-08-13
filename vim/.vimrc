@@ -985,6 +985,17 @@ imap <S-Insert> <C-R><C-O>+
 noremap <expr> <Up> pumvisible() ? "\<Up>" : "gk"
 noremap <expr> <Down> pumvisible() ? "\<Down>" : "gj"
 
+" change tabs fast
+nmap <M-1> 1gt
+nmap <M-2> 2gt
+nmap <M-3> 3gt
+nmap <M-4> 4gt
+nmap <M-5> 5gt
+nmap <M-6> 6gt
+nmap <M-7> 7gt
+nmap <M-8> 8gt
+nmap <M-9> 9gt
+
 inoremap <M-j> <C-O>gj
 inoremap <M-k> <C-O>gk
 noremap! <M-h> <Left>
