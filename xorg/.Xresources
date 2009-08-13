@@ -77,6 +77,8 @@ URxvt.visualBell: true
 URxvt.urgentOnBell: false
 URxvt.utmpInhibit: true
 
+URxvt.modifier: alt
+
 URxvt.perl-ext-common: default,matcher,xim-onthespot,selection-pastebin
 URxvt.urlLauncher: gnome-open
 URxvt.keysym.C-M-e: perl:selection-pastebin:remote-pastebin
