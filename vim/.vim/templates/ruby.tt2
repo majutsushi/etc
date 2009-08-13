@@ -1,0 +1,27 @@
+[% title=input('Title: ') -%]
+[% fname_canonic=filename.remove('\.rb$') FILTER lower FILTER ucfirst -%]
+#!/usr/bin/env ruby
+# [% filename %] -- [% title %]
+# Author       : [% user.firstname %] [% user.lastname %] <[% user.mail %]>
+# Website      : [% user.www %]
+# License      : GPLv3, see http://www.gnu.org/licenses/gpl.html
+# Created      : [% date('%Y-%m-%d %H:%M:%S %z %Z') %]
+# Last changed : [% date('%Y-%m-%d %H:%M:%S %z %Z') %]
+#
+# = Description
+# = Usage
+# = TODO
+# = CHANGES
+
+# require ''
+
+# [% fname_canonic %]: <+CURSOR+>
+class [% fname_canonic %]
+    <+BODY+>
+end
+
+
+if __FILE__ == $0
+end
+
+

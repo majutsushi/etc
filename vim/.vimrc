@@ -55,6 +55,7 @@ au BufNewFile *.tex Vimplate LaTeX
 au BufNewFile *.sh Vimplate shell
 au BufNewFile *.c Vimplate c
 au BufNewFile *.vim Vimplate vim
+au BufNewFile *.rb Vimplate ruby
 
 au BufWritePost,FileWritePost *.c TlistUpdate
 "au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
@@ -461,7 +462,7 @@ let Tlist_Sort_Type = "name"
 let g:timestamp_modelines = 20
 let g:timestamp_rep = '%Y-%m-%d %H:%M:%S %z %Z'
 "let g:timestamp_regexp = '\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}  ?%(\a+)?|TIMESTAMP'
-let g:timestamp_regexp = '\v\C%(<Last changed:\s+)@<=\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [+-]\d{4} \a+|TIMESTAMP'
+let g:timestamp_regexp = '\v\C%(<Last changed\s*:\s+)@<=\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [+-]\d{4} \a+|TIMESTAMP'
 
 " TOhtml syntax script {{{2
 let html_use_css = 1

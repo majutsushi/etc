@@ -5,20 +5,20 @@
 
 PROGS     = [% input('list of program names:') %]
 DEBUG     = -O0 -ggdb -pg
-CFLAGS   += -Wall -pedantic -ansi ${DEBUG}
+CFLAGS   += -Wall -pedantic -ansi $(DEBUG)
 LDFLAGS  +=
 CPPFLAGS +=
-FLAGS    += ${CFLAGS} ${LDFLAGS} ${CPPFLAGS}
+FLAGS    += $(CFLAGS) $(LDFLAGS) $(CPPFLAGS)
 
-all: ${PROGS}
+all: $(PROGS)
 
-${PROGS}: % : %.c
-	${CC} -o $@ ${FLAGS} $<
+$(PROGS): % : %.c
+	$(CC) -o $@ $(FLAGS) $<
 
 test: all
-	@for prog in ${PROGS}; do \
+	@for prog in $(PROGS); do \
 		echo $$prog; ./$$prog; \
 	done
 
 clean:
-	${RM} *.o core ${PROGS}
+	$(RM) *.o core $(PROGS)
