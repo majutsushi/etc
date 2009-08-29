@@ -56,6 +56,7 @@ au BufNewFile *.sh Vimplate shell
 au BufNewFile *.c Vimplate c
 au BufNewFile *.vim Vimplate vim
 au BufNewFile *.rb Vimplate ruby
+au BufNewFile Makefile Vimplate Makefile-C
 
 au BufWritePost,FileWritePost *.c TlistUpdate
 "au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
@@ -96,7 +97,7 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-
 " displaying text {{{1
 
 " number of screen lines to show around the cursor
-set scrolloff=2
+set scrolloff=8
 
 " long lines wrap
 set wrap
@@ -368,6 +369,8 @@ set fileencodings=ucs-bom,utf-8,default,latin1
 filetype plugin indent on
 syntax enable
 
+" when to use virtual editing: "block", "insert" and/or "all"
+set virtualedit=block
 " list that specifies what to write in the viminfo file
 set viminfo=!,%,'20,<500,:500,s100,h,n~/.cache/vim/viminfo
 
@@ -868,13 +871,13 @@ command! -range=% -nargs=0 Space2Tab exec "<line1>,<line2>s/^\\( \\{".&ts."\\}\\
 " ToggleExpandTab() {{{2
 function! ToggleExpandTab()
     if &sts == 4
-        set softtabstop=0
-        set shiftwidth=8
-        set noexpandtab
+        setlocal softtabstop=0
+        setlocal shiftwidth=8
+        setlocal noexpandtab
     else
-        set softtabstop=4
-        set shiftwidth=4
-        set expandtab
+        setlocal softtabstop=4
+        setlocal shiftwidth=4
+        setlocal expandtab
     endif
     set expandtab?
 endfunction
