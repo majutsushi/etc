@@ -10,6 +10,11 @@
     12pt,
     a4paper,
 %    oneside,
+%    twoside,
+%    onecolumn,
+%    twocolumn,
+%    openright,
+%    openany,
 %    halfparskip,
 %    chapterprefix,
 %    bibtotoc,
@@ -27,9 +32,10 @@
 \usepackage{amsmath,amsfonts,amstext,amssymb,amsbsy,amsopn,amsthm,eucal}
 \usepackage{float}
 \usepackage{boxedminipage}
-\usepackage{subfigure}
+\usepackage{subfig}
 \usepackage{setspace}
 \usepackage{alltt}
+\usepackage{multicol}
 
 \usepackage[
 %    bookmarks=true,          % show bookmarks bar?
@@ -59,10 +65,26 @@
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{<#1>}}}
 \newcommand{\janmn}{\email{jan@majutsushi.net}}
 
-% More tolerant placing of figures
-%\renewcommand{\topfraction}{0.85}
-%\renewcommand{\textfraction}{0.1}
-%\renewcommand{\floatpagefraction}{0.75}
+% don't hyphenate so much - default = 200, max (never hyphenate) = 10,000
+%\hyphenpenalty=800
+
+% two column float page must be 90% full
+%\renewcommand\dblfloatpagefraction{0.90}
+% two column top float can cover up to 80% of page
+%\renewcommand\dbltopfraction{0.80}
+% float page must be 90% full
+%\renewcommand\floatpagefraction{0.90}
+% top float can cover up to 80% of page
+%\renewcommand\topfraction{0.80}
+% bottom float can cover up to 80% of page
+%\renewcommand\bottomfraction{0.80}
+% at least 10% of a normal page must contain text
+%\renewcommand\textfraction{0.1}
+
+% separation between floats and text
+%\setlength\dbltextfloatsep{9pt plus 5pt minus 3pt }
+% separation between two column floats and text
+%\setlength\textfloatsep{10pt plus 4pt minus 3pt}
 
 % from setspace package
 %\singlespacing
