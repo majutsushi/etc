@@ -555,6 +555,7 @@ function! GenerateStatusline()
     let curdir = "%<%{GetCurDir()}"
     let tabinfo = "%3*|%1*%{GetExpandTab()}%3*:%{&tabstop}:%{&softtabstop}:%{&shiftwidth}|%*"
 "    let tabinfo = "[%{GetExpandTab()}:%{GetTabstop()}]"
+    let charinfo = "%3*0x%B|%*"
     let lineinfo = "%(%3*%05(%l%),%03(%c%V%)%*%)\ %1*%p%%"
 "    let lineinfo = "%(%3*%l,%c%V%*%)\ %1*%p%%"
 
@@ -563,6 +564,7 @@ function! GenerateStatusline()
          \ curdir .
          \ "%=" .
          \ tabinfo .
+         \ charinfo .
          \ lineinfo
 endfunction
 
