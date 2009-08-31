@@ -316,7 +316,7 @@ unset reverse_alias     # use realname from reverse alias lookup
 # pager {{{
 
 unset allow_ansi
-  set display_filter=""
+  set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L$XDG_CONFIG_HOME/t-prot/footers -A$XDG_CONFIG_HOME/t-prot/ads'
 unset implicit_autoview # use autoview, if a "copiousoutput" is in mailcap.
 #  set mailcap_path=""
   set mailcap_sanitize  # remove ugly chars from mailcap % expands.
@@ -462,6 +462,10 @@ bind  browser <left>   exit
 # X-Label patch
 ifdef edit-label bind index,pager y edit-label
 
+# toggle TOFU protection with ESC-0 (off) and ESC-1 (on)
+macro generic \e0 ":unset display_filter\n" "Turn TOFU protection off"
+macro generic \e1 ":set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L$XDG_CONFIG_HOME/t-prot/footers -A$XDG_CONFIG_HOME/t-prot/ads'\n" "Turn TOFU protection on"
+
 # }}}
 # =============================================================================
 # browser {{{
@@ -512,6 +516,10 @@ macro pager  \CR "<read-thread><collapse-thread><next-unread><display-message>" 
 macro pager  '\a'       "<save-message>=archive\n<next-unread>" "move message to folder 'archive'"
 macro pager  '\w'       "<save-message>=0WAITING\n<next-unread>" "move message to folder '0WAITING'"
 macro pager  '\f'       "<save-message>=0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
+
+# same in pager mode - ugly but what the hell...
+macro pager \e0 ":unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
+macro pager \e1 ":set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L$XDG_CONFIG_HOME/t-prot/footers -A$XDG_CONFIG_HOME/t-prot/ads'; exec exit\n:exec display-message\n" "Turn TOFU protection on"
 
 # }}}
 # =============================================================================
@@ -658,6 +666,10 @@ color tilde     blue        default
 color markers   red         default  # wrap markers
 # color bold      green       default
 # color underline yellow      default
+
+# highlight TOFU protection:
+color body	brightmagenta		black	"^\\[---.*"
+color body	green			black	"^#v[-+]"
 
 # }}}
 # =============================================================================
