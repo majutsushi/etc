@@ -66,7 +66,7 @@ au BufWritePost,FileWritePost *.c TlistUpdate
 au BufWritePost,FileWritePost *.sh silent !chmod u+x %
 
 " important {{{1
-" set cpoptions TODO
+set cpoptions+=$
 
 " moving around, searching and patterns {{{1
 
@@ -370,7 +370,7 @@ filetype plugin indent on
 syntax enable
 
 " when to use virtual editing: "block", "insert" and/or "all"
-set virtualedit=block
+set virtualedit=all
 " list that specifies what to write in the viminfo file
 set viminfo=!,%,'20,<500,:500,s100,h,n~/.cache/vim/viminfo
 
