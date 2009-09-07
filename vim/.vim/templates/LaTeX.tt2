@@ -36,6 +36,7 @@
 \usepackage{setspace}
 \usepackage{alltt}
 \usepackage{multicol}
+\usepackage[activate=normal]{pdfcprot}
 
 \usepackage[
 %    bookmarks=true,          % show bookmarks bar?
