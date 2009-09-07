@@ -97,7 +97,7 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-
 " displaying text {{{1
 
 " number of screen lines to show around the cursor
-set scrolloff=8
+set scrolloff=5
 
 " long lines wrap
 set wrap
