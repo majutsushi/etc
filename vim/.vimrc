@@ -504,11 +504,6 @@ let g:Tex_IgnoredWarnings =
 let g:Tex_ViewRule_pdf = 'evince'
 let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 
-" vimblog {{{2
-if !exists('*Wordpress_vim')
-    runtime vimblog.vim
-endif
-
 " vimplate {{{2
 let Vimplate = "~/.vim/tools/vimplate"
 
