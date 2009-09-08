@@ -1124,8 +1124,10 @@ noremap Y y$
 " insert mode completion
 inoremap  
 inoremap  
-inoremap  
-inoremap  
+"inoremap  
+"inoremap  
+
+inoremap  <Esc><Right>
 
 " scroll whole buffer without cursor
 map <silent> <C-Down> 1<C-d>:set scroll=0<cr>
