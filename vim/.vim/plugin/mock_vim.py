@@ -12,7 +12,7 @@ class Mock_Buffer(list):
             self[:] = ['']
         self._buffers[self.number] = self
 
-    def change_buffer(self, number):
+    def change_buffer(self, number=None):
         """
         >>> b = Mock_Buffer()
         >>> b.number
@@ -21,6 +21,10 @@ class Mock_Buffer(list):
         >>> b.number
         7
         """
+        if number is None:
+            number = self.number
+            while number in self._buffers:
+                number += 1
         self._buffers[self.number] = self[:]
         try:
             self[:] = self._buffers[number]
