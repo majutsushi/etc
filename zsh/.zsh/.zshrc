@@ -126,6 +126,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 export TODOTXT_DEFAULT_ACTION="ls"
 
 export RUBYOPT="-w $RUBYOPT"
+export RI="-f ansi"
 
 export TERMINFO=$HOME/.terminfo
 
