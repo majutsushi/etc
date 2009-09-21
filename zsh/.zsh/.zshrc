@@ -152,6 +152,7 @@ export NNTPSERVER=news.gmane.org
   hash -d tt=/usr/share/doc/texttools-doc
   hash -d www=/var/www
   hash -d vuw=~/work/university/VUW/Classes
+  hash -d win="/mnt/winxp/Documents and Settings/Jan/Desktop/share"
 # }}}
 
 # aliases {{{
