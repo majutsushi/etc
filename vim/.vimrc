@@ -372,7 +372,7 @@ syntax enable
 " when to use virtual editing: "block", "insert" and/or "all"
 set virtualedit=all
 " list that specifies what to write in the viminfo file
-set viminfo=!,%,'20,<500,:500,s100,h,n~/.cache/vim/viminfo
+set viminfo=!,'20,<500,:500,s100,h,r/tmp,r/mnt,r/media,n~/.cache/vim/viminfo
 
 " Plugin and script options {{{1
 
@@ -977,10 +977,14 @@ nnoremap ][ ]]
 nnoremap ]] ][
 
 " copy to/from the x cut-buffer
-vmap <C-Insert> "+y
+nmap <S-Insert> "+gP
 vmap <S-Insert> "-d"+P
-nmap <S-Insert> "+P
-imap <S-Insert> <C-R><C-O>+
+imap <S-Insert> <C-R>+
+cmap <S-Insert> <C-R>+
+imap <C-Insert> <C-O>"+y
+vmap <C-Insert> "+y
+vmap <S-Del> "+d
+imap <C-Del> <C-O>daw
 
 noremap <expr> <Up> pumvisible() ? "\<Up>" : "gk"
 noremap <expr> <Down> pumvisible() ? "\<Down>" : "gj"
