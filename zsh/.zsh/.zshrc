@@ -216,6 +216,9 @@ alias CH="./configure --help"
 alias make='colormake'
 alias ddiff='diff -Naurd -x *.swp -x *.o -x *.so -x cscope.* -x tags -x .git -x .svn -x CVS'
 
+# net
+alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
+
 # prefer normal stat
 alias  stat='command stat'
 alias zstat='builtin stat'
