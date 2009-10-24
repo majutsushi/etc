@@ -1009,10 +1009,8 @@ nmap <M-7> 7gt
 nmap <M-8> 8gt
 nmap <M-9> 9gt
 
-inoremap <M-j> <C-O>gj
-inoremap <M-k> <C-O>gk
-noremap! <M-h> <Left>
-noremap! <M-l> <Right>
+nnoremap j gj
+nnoremap k gk
 
 " create an undo point after each word
 " imap <Space> <Space><C-G>u
