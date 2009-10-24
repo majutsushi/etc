@@ -987,12 +987,12 @@ nnoremap ]] ][
 
 " copy to/from the x cut-buffer
 nmap <S-Insert> "+gP
-vmap <S-Insert> "-d"+P
+xmap <S-Insert> "-d"+P
 imap <S-Insert> <C-R>+
 cmap <S-Insert> <C-R>+
 imap <C-Insert> <C-O>"+y
-vmap <C-Insert> "+y
-vmap <S-Del> "+d
+xmap <C-Insert> "+y
+xmap <S-Del> "+d
 imap <C-Del> <C-O>daw
 
 noremap <expr> <Up> pumvisible() ? "\<Up>" : "gk"
@@ -1108,18 +1108,18 @@ inoremap <expr> <PageDown> pumvisible()?"\<PageDown>\<C-P>\<C-N>":"\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible()?"\<PageUp>\<C-P>\<C-N>":"\<PageUp>"
 
 " Parenthesis/bracket expanding
-vnoremap §§ <esc>`>a"<esc>`<i"<esc>
-vnoremap §q <esc>`>a'<esc>`<i'<esc>
-vnoremap §1 <esc>`>a)<esc>`<i(<esc>
-vnoremap §2 <esc>`>a]<esc>`<i[<esc>
-vnoremap §3 <esc>`>a}<esc>`<i{<esc>
+xnoremap §§ <esc>`>a"<esc>`<i"<esc>
+xnoremap §q <esc>`>a'<esc>`<i'<esc>
+xnoremap §1 <esc>`>a)<esc>`<i(<esc>
+xnoremap §2 <esc>`>a]<esc>`<i[<esc>
+xnoremap §3 <esc>`>a}<esc>`<i{<esc>
 
 " Fast open a buffer by searching for a name
 map <c-q> :b 
 
 " Search for the current selection
-vnoremap <silent> * :call VisualSearch('f')<CR>
-vnoremap <silent> # :call VisualSearch('b')<CR>
+xnoremap <silent> * :call VisualSearch('f')<CR>
+xnoremap <silent> # :call VisualSearch('b')<CR>
 
 " indent for C programs
 nmap <Leader>i :%!indent<CR>
