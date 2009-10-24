@@ -494,6 +494,7 @@ macro index  '{'        "<collapse-thread>"
 macro index  '\a'       "<save-message>=archive\n<next-unread>" "move message to folder 'archive'"
 macro index  '\w'       "<save-message>=0WAITING\n<next-unread>" "move message to folder '0WAITING'"
 macro index  '\f'       "<save-message>=0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
+macro index  '\p'       "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
 
 # }}}
 # =============================================================================
@@ -516,6 +517,7 @@ macro pager  \CR "<read-thread><collapse-thread><next-unread><display-message>" 
 macro pager  '\a'       "<save-message>=archive\n<next-unread>" "move message to folder 'archive'"
 macro pager  '\w'       "<save-message>=0WAITING\n<next-unread>" "move message to folder '0WAITING'"
 macro pager  '\f'       "<save-message>=0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
+macro pager  '\p'       "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
 
 # same in pager mode - ugly but what the hell...
 macro pager \e0 ":unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
