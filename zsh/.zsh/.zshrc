@@ -521,7 +521,7 @@ precmd () {
             # PERCENT=${(s|,|)=${(s| |)ACPI}[4]}
             if [[ ${PERCENT} -gt 50 ]]; then
                 BATTERY="($C_F_GREEN${PERCENT}%%$C_F_DEFAULT)"
-            elif [[ ${PERCENT} -gt 20 ]]; then
+            elif [[ ${PERCENT} -gt 15 ]]; then
                 BATTERY="($C_F_YELLOW${PERCENT}%%$C_F_DEFAULT)"
             else
                 BATTERY="($C_F_RED${PERCENT}%%$C_F_DEFAULT)"
