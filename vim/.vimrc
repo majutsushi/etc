@@ -913,6 +913,15 @@ function! VisualSearch(direction) range
     let @" = l:saved_reg
 endfunction
 
+" GPicker() {{{2
+function! GPicker()
+    let l:filet = system("gpicker .")
+    let l:filet = substitute(l:filet, '\"', "", "g")
+    let l:filet = substitute(l:filet, '\n', "", "g")
+    execute "edit " . fnameescape(l:filet)
+endfunction
+map ,e :call GPicker()<CR>
+
 " Abbrevs {{{1
 source ~/.vim/abbrevs.vim
 
