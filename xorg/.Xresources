@@ -14,7 +14,8 @@ URxvt.foreground: grey90
 
 ! for real transparency
 URxvt.depth: 32
-URxvt.background: rgba:0000/0000/0000/dddd
+!URxvt.background: rgba:0000/0000/0000/dddd
+URxvt.background: rgba:0000/0000/0000/8888
 ! for fake transparency
 !URxvt.depth: 24
 !URxvt.inheritPixmap: true
@@ -22,10 +23,10 @@ URxvt.background: rgba:0000/0000/0000/dddd
 !URxvt.tintColor: white
 !URxvt.shading: 15
 
-! tangoesque scheme
 !URxvt.foreground:  #aaaaaa
 !URxvt.background:  #222222
 ! Black
+!URxvt.color0:      #2e3436
 URxvt.color0:      #000000
 URxvt.color8:      #555753
 ! Red
@@ -41,8 +42,8 @@ URxvt.color3:      #edd400
 !URxvt.color11:     #fce94f
 URxvt.color11:     #ffe629
 ! Blue
-URxvt.color4:      #044eb0
-URxvt.color12:     #3465a4
+URxvt.color4:      #3465a4
+URxvt.color12:     #729fcf
 ! Magenta
 !URxvt.color5:      #ce5c00
 !URxvt.color13:     #f57900
