@@ -997,9 +997,6 @@ xmap <C-Insert> "+y
 xmap <S-Del> "+d
 imap <C-Del> <C-O>daw
 
-noremap <expr> <Up> pumvisible() ? "\<Up>" : "gk"
-noremap <expr> <Down> pumvisible() ? "\<Down>" : "gj"
-
 " change tabs fast
 nmap <M-1> 1gt
 nmap <M-2> 2gt
@@ -1141,10 +1138,6 @@ inoremap  
 "inoremap  
 
 inoremap  <Esc><Right>
-
-" scroll whole buffer without cursor
-map <silent> <C-Down> 1<C-d>:set scroll=0<cr>
-map <silent> <C-Up> 1<C-u>:set scroll=0<cr>
 
 map <M-,>     :bprevious!<CR>
 map <M-.>     :bnext!<CR>
