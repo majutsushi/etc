@@ -743,6 +743,8 @@ zstyle ':completion:*:default'         list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:descriptions'    format $'%{\e[0;32m%}completing %B%d%b%{\e[0m%}'
 # complete 'cd -<tab>' with menu
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+# complete '..'
+zstyle ':completion:*'                 special-dirs true
 # insert all expansions for expand completer
 zstyle ':completion:*:expand:*'        tag-order all-expansions
 zstyle ':completion:*:history-words'   list false
@@ -813,7 +815,7 @@ zstyle ':completion:*:urls' local 'www' '/var/www/' 'public_html'
 
 # caching
 [[ -d $XDG_CACHE_HOME/zsh/cache ]] && zstyle ':completion:*' use-cache yes && \
-zstyle ':completion::complete:*' cache-path $XDG_CACHE_HOME/zsh/cache/
+zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/cache/
 
 # host completion /* add brackets as vim can't parse zsh's complex cmdlines 8-) {{{ */
 if is42 ; then
