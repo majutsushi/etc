@@ -435,6 +435,8 @@ setopt hash_list_all        # Whenever a command completion is attempted, make s
 setopt completeinword       # not just at the end
 # setopt printexitvalue       # alert me if something failed
 setopt auto_pushd           # make cd push the old directory onto the directory stack.
+setopt pushd_minus
+setopt pushd_ignore_dups
 setopt nonomatch            # try to avoid the 'zsh: no matches found...'
 setopt nobeep               # avoid "beep"ing
 setopt interactivecomments
