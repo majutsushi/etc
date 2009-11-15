@@ -1,0 +1,25 @@
+  set folder="~/Maildir/"
+  set spoolfile="~/Maildir/"
+
+## "mailboxes" defines the list of folders to be checked for new mail
+## Mutt both can show the number of mailboxes with new mail in the index and
+## you can cycle through these after giving the "change-folder" command.  :-)
+mailboxes =
+mailboxes =.0FOLLOWUP
+mailboxes =.0INFO
+mailboxes =.0WAITING
+mailboxes =.accounts
+mailboxes =.archive
+mailboxes =.blog-comments
+mailboxes =.DomainBOX
+mailboxes =.projects
+mailboxes =.projects.loopo
+mailboxes =.projects.wput
+mailboxes =.selling
+mailboxes =.sent
+mailboxes =.shopping
+mailboxes =.spam
+mailboxes =.lists
+mailboxes `for file in ~/Maildir/.lists.*; do echo -n "=$(basename $file) "; done`
+
+# vim: ft=muttrc

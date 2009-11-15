@@ -9,7 +9,10 @@ source ~/.mutt/lists
 ###############################################################################
 # Server/Folder options {{{
 
-source ~/.mutt/accounts
+source ~/.mutt/smtp-majutsushi.net
+# source ~/.mutt/imap-urd
+# source ~/.mutt/imap-majutsushi.net
+source ~/.mutt/maildir
 
 # to set:
 #   set smtp_url=""
@@ -30,11 +33,6 @@ source ~/.mutt/accounts
   set imap_passive
   set imap_peek
   set imap_servernoise
-
-# probably not needed anymore
-#   set mbox=imaps://urd/INBOX # Where is my main mailbox (where should read mail go)
-#   set postponed=imaps://urd/INBOX.postponed
-#   set record=imaps://urd/INBOX.sent # Where to save sent mail?
 
   set certificate_file="~/.mutt/certificates"
   set connect_timeout=30
@@ -491,9 +489,9 @@ macro index  ,n         "l~N\n" "Limit to new messages"
 macro index  ,p         "<display-toggle-weed> <print-message> <display-toggle-weed> <exit>"
 macro index  \CR        "<read-thread><collapse-thread><next-unread><current-middle>" "mark the current thread as read"
 macro index  '{'        "<collapse-thread>"
-macro index  '\a'       "<save-message>=archive\n<next-unread>" "move message to folder 'archive'"
-macro index  '\w'       "<save-message>=0WAITING\n<next-unread>" "move message to folder '0WAITING'"
-macro index  '\f'       "<save-message>=0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
+macro index  '\a'       "<save-message>=.archive\n<next-unread>" "move message to folder 'archive'"
+macro index  '\w'       "<save-message>=.0WAITING\n<next-unread>" "move message to folder '0WAITING'"
+macro index  '\f'       "<save-message>=.0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
 macro index  '\p'       "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
 
 # }}}
@@ -514,9 +512,9 @@ macro pager  J   "!gpg --keyserver search.keyserver.net --keyserver-options hono
 macro pager  K   "!gpg --lsign-key " "Sign PGP Key"
 macro pager  ,p  "<display-toggle-weed> <print-message> <display-toggle-weed>"
 macro pager  \CR "<read-thread><collapse-thread><next-unread><display-message>" "mark the current thread as read"
-macro pager  '\a'       "<save-message>=archive\n<next-unread>" "move message to folder 'archive'"
-macro pager  '\w'       "<save-message>=0WAITING\n<next-unread>" "move message to folder '0WAITING'"
-macro pager  '\f'       "<save-message>=0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
+macro pager  '\a'       "<save-message>=.archive\n<next-unread>" "move message to folder 'archive'"
+macro pager  '\w'       "<save-message>=.0WAITING\n<next-unread>" "move message to folder '0WAITING'"
+macro pager  '\f'       "<save-message>=.0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
 macro pager  '\p'       "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
 
 # same in pager mode - ugly but what the hell...

@@ -1,6 +1,7 @@
 *.pyc
 
-mutt/.mutt/accounts
+mutt/.mutt/smtp-*
+mutt/.mutt/imap-*
 vim/.vim/systags
 vim/.vim/.netrwhist
 vim/.vim/cache
