@@ -493,6 +493,9 @@ macro index  '\a'       "<save-message>=.archive\n<next-unread>" "move message t
 macro index  '\w'       "<save-message>=.0WAITING\n<next-unread>" "move message to folder '0WAITING'"
 macro index  '\f'       "<save-message>=.0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
 macro index  '\p'       "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
+macro index  <F8>       "<shell-escape>rm -rf ~/.mu/results; mu-find --output=links --linkdir=~/.mu/results " "mu-find"
+macro index  <F9>       "<change-folder-readonly>~/.mu/results\n" "display mu-find results"
+
 
 # }}}
 # =============================================================================
