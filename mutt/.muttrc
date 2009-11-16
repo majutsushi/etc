@@ -603,12 +603,10 @@ color index     yellow    default  '~N !~D'    # new undeleted mail
 # color index     green    default  '!~N'    # read mail
 color index     cyan     default  '(~P !~D) | (~v ~(~P !~D))'    # mail from myself
 
-# color index     brightmagenta  brightblack "=h 'X-Spam-Status: Yes'"
-# color index     brightmagenta  brightblack "~H '.*'"
-# color index     white          brightblack "~h '^X-Spam-Status:.*score=([2-9]).'" # very slow
-# color index     brightmagenta  brightblack "=h 'X-Spam-Level: **'" # doesn't work for some reason
 color index     brightblack    default     "=s '*****SPAM*****'"
 color index     brightblack    default     "=s '*** GMX Spamverdacht ***'"
+# color index     brightblack    default     "~h '^X-Spam-Status:.*score=[34].'"
+# color index     brightred      default     "~h '^X-Spam-Status:.*score=[56].'"
 
 color index     red            default  '(~F !~D) | (~v ~(~F !~D))'  # Flagged
 color index     blue           default  ~T      # Tagged
