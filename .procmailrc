@@ -143,38 +143,10 @@ LOGFILE=$MAILDIR/procmail_log
 # Rest
 
 :0
-* ^From:.*mailagent.*wissenschaft
-.news.bdw/
-
-:0
 * ^From:.*domainbox
 .DomainBOX/
-
-#:0
-#* ^To:.*members@gmx\.net
-#.GMX/
-
-#:0
-#* ^Delivered-To:.*GMX.delivery.to
-#* ^To:.*jan\.larres@gmx\.net
-#.GMX-JL/
-
-#:0
-#* ^Delivered-To:.*GMX.delivery.to
-#* ^To:.*majutsushi@gmx\.net
-#.GMX-M/
-
-#:0
-#* ^Delivered-To:.*GMX.delivery.to
-#* ! ^To:.*(jan\.larres@gmx\.net|majutsushi@gmx\.net)
-#.GMX-Bulk/
-
-:0
-* ^To:.*shopping@majutsushi\.net
-.shopping/
 
 :0
 $DEFAULT
 
 # vim:noexpandtab
-
