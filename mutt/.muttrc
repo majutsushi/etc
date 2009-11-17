@@ -437,25 +437,19 @@ macro index H "|/usr/bin/sa-learn --ham  --no-sync --single\r" "Classify as Ham"
 macro index P "!/usr/bin/sa-learn --sync\r" "Sync Spamassassin-db"
 
 # Quickly change to my favorite folders:
-macro index  '\s'   "c<\r" "Go to 'sent' folder"
-macro pager  '\s'   "c<\r" "Go to 'sent' folder"
 macro index  I      "c!\n" "Go to Inbox"
 macro pager  I      "c!\n" "Go to Inbox"
+macro index  ,S     "c<\n" "Go to 'sent' folder"
+macro pager  ,S     "c<\n" "Go to 'sent' folder"
+macro index  ,A     "c=.archive\n" "Go to 'archive' folder"
+macro pager  ,A     "c=.archive\n" "Go to 'archive' folder"
+macro index  ,W     "c=.0WAITING\n" "Go to 'waiting' folder"
+macro pager  ,W     "c=.0WAITING\n" "Go to 'waiting' folder"
+macro index  ,F     "c=.0FOLLOWUP\n" "Go to 'followup' folder"
+macro pager  ,F     "c=.0FOLLOWUP\n" "Go to 'followup' folder"
 
 macro index,pager i "<sync-mailbox><change-folder>?<toggle-mailboxes>" "Go to mailbox list"
 bind browser i exit
-
-# Tom's cursor movement system [tm] ;-)
-bind  pager   <up>     previous-line
-bind  pager   <down>   next-line
-bind  pager   <left>   exit
-bind  pager   <right>  view-attachments
-bind  attach  <left>   exit
-bind  attach  <right>  view-attach
-bind  index   <right>  display-message
-macro index   <left>   "c?<tab>" "Go to mailbox list"
-bind  browser <right>  select-entry
-bind  browser <left>   exit
 
 # X-Label patch
 ifdef edit-label bind index,pager y edit-label
@@ -482,43 +476,41 @@ bind index   X          imap-fetch-mail
 #macro index  A          |'abook --add-email'\n
 #macro index  B          "!abook"
 macro index  d          "<delete-message><next-undeleted>"
-macro index  ,a         "l~A\n<collapse-all>" "Limit to all messages"
-macro index  ,l         "l~F | ~O | ~N\n" "Limit to new, old and flagged messages"
-#macro index  ,l         "l~N ! ~p\n"
-macro index  ,n         "l~N\n" "Limit to new messages"
-macro index  ,p         "<display-toggle-weed> <print-message> <display-toggle-weed> <exit>"
+macro index  ,la        "l~A\n<collapse-all>" "Limit to all messages"
+macro index  ,ll        "l~F | ~O | ~N\n" "Limit to new, old and flagged messages"
+macro index '\p'        "<display-toggle-weed> <print-message> <display-toggle-weed> <exit>"
 macro index  \CR        "<read-thread><collapse-thread><next-unread><current-middle>" "mark the current thread as read"
-macro index  '{'        "<collapse-thread>"
-macro index  '\a'       "<save-message>=.archive\n<next-unread>" "move message to folder 'archive'"
-macro index  '\w'       "<save-message>=.0WAITING\n<next-unread>" "move message to folder '0WAITING'"
-macro index  '\f'       "<save-message>=.0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
-macro index  '\p'       "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
-macro index  <F8>       "<shell-escape>rm -rf ~/.mu/results; mu-find --output=links --linkdir=~/.mu/results " "mu-find"
-macro index  <F9>       "<change-folder-readonly>~/.mu/results\n" "display mu-find results"
+macro index '{'         "<collapse-thread>"
+macro index  ,a         "<save-message>=.archive\n<next-unread>" "move message to folder 'archive'"
+macro index  ,w         "<save-message>=.0WAITING\n<next-unread>" "move message to folder '0WAITING'"
+macro index  ,f         "<save-message>=.0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
+macro index  ,p         "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
+macro index  ,mf        "<shell-escape>rm -rf ~/.mu/results; mu-find --output=links --linkdir=~/.mu/results " "mu-find"
+macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu-find results"
 
 
 # }}}
 # =============================================================================
 # pager {{{
 
-bind pager   j   next-line
-bind pager   k   previous-line
-bind pager   p   previous-undeleted
-bind pager   n   next-undeleted
-bind pager  ' '  next-unread
-bind pager   \n  next-new
-bind pager   X   imap-fetch-mail
-#macro pager  A   |'abook --add-email'\n
-#macro pager  B   "!abook"
-macro pager  d   "<delete-message><next-undeleted>"
-macro pager  J   "!gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
-macro pager  K   "!gpg --lsign-key " "Sign PGP Key"
-macro pager  ,p  "<display-toggle-weed> <print-message> <display-toggle-weed>"
-macro pager  \CR "<read-thread><collapse-thread><next-unread><display-message>" "mark the current thread as read"
-macro pager  '\a'       "<save-message>=.archive\n<next-unread>" "move message to folder 'archive'"
-macro pager  '\w'       "<save-message>=.0WAITING\n<next-unread>" "move message to folder '0WAITING'"
-macro pager  '\f'       "<save-message>=.0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
-macro pager  '\p'       "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
+bind pager   j    next-line
+bind pager   k    previous-line
+bind pager   p    previous-undeleted
+bind pager   n    next-undeleted
+bind pager  ' '   next-unread
+bind pager   \n   next-new
+bind pager   X    imap-fetch-mail
+#macro pager  A    |'abook --add-email'\n
+#macro pager  B    "!abook"
+macro pager  d    "<delete-message><next-undeleted>"
+macro pager  J    "!gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
+macro pager  K    "!gpg --lsign-key " "Sign PGP Key"
+macro pager '\p'  "<display-toggle-weed> <print-message> <display-toggle-weed>"
+macro pager  \CR  "<read-thread><collapse-thread><next-unread><display-message>" "mark the current thread as read"
+macro pager  ,a   "<save-message>=.archive\n<next-unread>" "move message to folder 'archive'"
+macro pager  ,w   "<save-message>=.0WAITING\n<next-unread>" "move message to folder '0WAITING'"
+macro pager  ,f   "<save-message>=.0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
+macro pager  ,p   "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
 
 # same in pager mode - ugly but what the hell...
 macro pager \e0 ":unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
