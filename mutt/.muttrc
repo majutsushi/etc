@@ -428,31 +428,8 @@ unset thorough_search   # MIME decode before searching.
 macro generic   ,vu   ":source ~/.muttrc\r" "Source muttrc"
 #macro generic   ,va   "!screen -t aliases vi ~/.mutt/aliases\r"
 
-# spam handlers
-# spamassassin classify as spam
-macro index S "|/usr/bin/sa-learn --spam --no-sync --single\r" "Classify as Spam"
-# spamassassin classify as ham
-macro index H "|/usr/bin/sa-learn --ham  --no-sync --single\r" "Classify as Ham"
-# rebuild the spamassassin bayes filter db
-macro index P "!/usr/bin/sa-learn --sync\r" "Sync Spamassassin-db"
-
-# Quickly change to my favorite folders:
-macro index  I      "c!\n" "Go to Inbox"
-macro pager  I      "c!\n" "Go to Inbox"
-macro index  ,S     "c<\n" "Go to 'sent' folder"
-macro pager  ,S     "c<\n" "Go to 'sent' folder"
-macro index  ,A     "c=.archive\n" "Go to 'archive' folder"
-macro pager  ,A     "c=.archive\n" "Go to 'archive' folder"
-macro index  ,W     "c=.0WAITING\n" "Go to 'waiting' folder"
-macro pager  ,W     "c=.0WAITING\n" "Go to 'waiting' folder"
-macro index  ,F     "c=.0FOLLOWUP\n" "Go to 'followup' folder"
-macro pager  ,F     "c=.0FOLLOWUP\n" "Go to 'followup' folder"
-
-macro index,pager i "<sync-mailbox><change-folder>?<toggle-mailboxes>" "Go to mailbox list"
-bind browser i exit
-
-# X-Label patch
-ifdef edit-label bind index,pager y edit-label
+macro index,pager i   "<sync-mailbox><change-folder>?<toggle-mailboxes>" "Go to mailbox list"
+bind browser i        exit
 
 # toggle TOFU protection with ESC-0 (off) and ESC-1 (on)
 macro generic \e0 ":unset display_filter\n" "Turn TOFU protection off"
@@ -466,55 +443,88 @@ bind browser x          check-new
 
 # }}}
 # =============================================================================
-# index {{{
+# index & pager {{{
 
+# movement
 bind index  ' '         next-unread
 bind index   <pagedown> next-page
 bind index   <pageup>   previous-page
+bind pager   j          next-line
+bind pager   k          previous-line
+bind pager   p          previous-undeleted
+bind pager   n          next-undeleted
+bind pager  ' '         next-unread
+bind pager   \n         next-new
+
+# syncing
 bind index   x          sync-mailbox
 bind index   X          imap-fetch-mail
-#macro index  A          |'abook --add-email'\n
-#macro index  B          "!abook"
+bind pager   X          imap-fetch-mail
+
+# deleting
 macro index  d          "<delete-message><next-undeleted>"
-macro index  ,la        "l~A\n<collapse-all>" "Limit to all messages"
-macro index  ,ll        "l~F | ~O | ~N\n" "Limit to new, old and flagged messages"
+macro pager  d          "<delete-message><next-undeleted>"
+
+# printing
 macro index '\p'        "<display-toggle-weed> <print-message> <display-toggle-weed> <exit>"
-macro index  \CR        "<read-thread><collapse-thread><next-unread><current-middle>" "mark the current thread as read"
+macro pager '\p'        "<display-toggle-weed> <print-message> <display-toggle-weed>"
+
+# threads
+macro index  \CR        "<read-thread><collapse-thread><next-unread><current-middle>" "Mark the current thread as read"
+macro pager  \CR        "<read-thread><collapse-thread><next-unread><display-message>" "Mark the current thread as read"
 macro index '{'         "<collapse-thread>"
-macro index  ,a         "<save-message>=.archive\n<next-unread>" "move message to folder 'archive'"
-macro index  ,w         "<save-message>=.0WAITING\n<next-unread>" "move message to folder '0WAITING'"
-macro index  ,f         "<save-message>=.0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
-macro index  ,p         "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
+
+# quickly change to important folders
+macro index  I          "c!\n" "Go to Inbox"
+macro pager  I          "c!\n" "Go to Inbox"
+macro index  ,S         "c<\n" "Go to 'sent' folder"
+macro pager  ,S         "c<\n" "Go to 'sent' folder"
+macro index  ,A         "c=.archive\n" "Go to 'archive' folder"
+macro pager  ,A         "c=.archive\n" "Go to 'archive' folder"
+macro index  ,W         "c=.0WAITING\n" "Go to 'waiting' folder"
+macro pager  ,W         "c=.0WAITING\n" "Go to 'waiting' folder"
+macro index  ,F         "c=.0FOLLOWUP\n" "Go to 'followup' folder"
+macro pager  ,F         "c=.0FOLLOWUP\n" "Go to 'followup' folder"
+
+# quickly file mail
+macro index  ,a         "<save-message>=.archive\n<next-unread>" "Move message to folder 'archive'"
+macro pager  ,a         "<save-message>=.archive\n<next-unread>" "Move message to folder 'archive'"
+macro index  ,w         "<save-message>=.0WAITING\n<next-unread>" "Move message to folder '0WAITING'"
+macro pager  ,w         "<save-message>=.0WAITING\n<next-unread>" "Move message to folder '0WAITING'"
+macro index  ,f         "<save-message>=.0FOLLOWUP\n<next-unread>" "Move message to folder '0FOLLOWUP'"
+macro pager  ,f         "<save-message>=.0FOLLOWUP\n<next-unread>" "Move message to folder '0FOLLOWUP'"
+macro index  ,p         "<pipe-message>procmail\n<delete-message><next-unread>" "Pipe message through procmail"
+macro pager  ,p         "<pipe-message>procmail\n<delete-message><next-unread>" "Pipe message through procmail"
+
+# search mail with maildir-utils
 macro index  ,mf        "<shell-escape>rm -rf ~/.mu/results; mu-find --output=links --linkdir=~/.mu/results " "mu-find"
 macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu-find results"
 
+# X-Label patch
+ifdef edit-label bind index,pager y edit-label
 
-# }}}
-# =============================================================================
-# pager {{{
+# spam handlers
+macro index  S          "|/usr/bin/sa-learn --spam --no-sync --single\r" "Classify as Spam"
+macro index  H          "|/usr/bin/sa-learn --ham  --no-sync --single\r" "Classify as Ham"
+macro index  P          "!/usr/bin/sa-learn --sync\r" "Sync Spamassassin-db"
 
-bind pager   j    next-line
-bind pager   k    previous-line
-bind pager   p    previous-undeleted
-bind pager   n    next-undeleted
-bind pager  ' '   next-unread
-bind pager   \n   next-new
-bind pager   X    imap-fetch-mail
-#macro pager  A    |'abook --add-email'\n
-#macro pager  B    "!abook"
-macro pager  d    "<delete-message><next-undeleted>"
-macro pager  J    "!gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
-macro pager  K    "!gpg --lsign-key " "Sign PGP Key"
-macro pager '\p'  "<display-toggle-weed> <print-message> <display-toggle-weed>"
-macro pager  \CR  "<read-thread><collapse-thread><next-unread><display-message>" "mark the current thread as read"
-macro pager  ,a   "<save-message>=.archive\n<next-unread>" "move message to folder 'archive'"
-macro pager  ,w   "<save-message>=.0WAITING\n<next-unread>" "move message to folder '0WAITING'"
-macro pager  ,f   "<save-message>=.0FOLLOWUP\n<next-unread>" "move message to folder '0FOLLOWUP'"
-macro pager  ,p   "<pipe-message>procmail\n<delete-message><next-unread>" "pipe message through procmail"
+# limit mails
+macro index  ,la        "l~A\n<collapse-all>" "Limit to all messages"
+macro index  ,ll        "l~F | ~O | ~N\n" "Limit to new, old and flagged messages"
+
+# abook
+#macro index  A          |'abook --add-email'\n
+#macro pager  A          |'abook --add-email'\n
+#macro index  B          "!abook"
+#macro pager  B          "!abook"
+
+# gpg
+macro pager  J          "!gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
+macro pager  K          "!gpg --lsign-key " "Sign PGP Key"
 
 # same in pager mode - ugly but what the hell...
-macro pager \e0 ":unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
-macro pager \e1 ":set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L$XDG_CONFIG_HOME/t-prot/footers -A$XDG_CONFIG_HOME/t-prot/ads'; exec exit\n:exec display-message\n" "Turn TOFU protection on"
+macro pager \e0         ":unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
+macro pager \e1         ":set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L$XDG_CONFIG_HOME/t-prot/footers -A$XDG_CONFIG_HOME/t-prot/ads'; exec exit\n:exec display-message\n" "Turn TOFU protection on"
 
 # }}}
 # =============================================================================
