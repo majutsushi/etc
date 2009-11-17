@@ -1,4 +1,5 @@
 *.pyc
+*.hi
 
 mutt/.mutt/smtp-*
 mutt/.mutt/imap-*
@@ -6,3 +7,6 @@ vim/.vim/systags
 vim/.vim/.netrwhist
 vim/.vim/cache
 vim/.vim/spell
+xmonad/history
+xmonad/xmonad-i386-linux
+xmonad/xmonad.errors
