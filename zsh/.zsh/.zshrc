@@ -123,8 +123,6 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CONFIG_DIRS=/etc/xdg
 export XDG_CACHE_HOME=$HOME/.cache
 
-export TODOTXT_DEFAULT_ACTION="ls"
-
 export RUBYOPT="-w $RUBYOPT"
 export RI="-f ansi"
 
@@ -202,8 +200,6 @@ alias j='jobs -l'
 alias pa='ps aux | less'
 alias pu='ps ux | less'
 alias le='/usr/share/vim/vimcurrent/macros/less.sh'
-alias t="todo.sh -d $XDG_CONFIG_HOME/todo.cfg"
-alias ta="todo.sh -d $XDG_CONFIG_HOME/todo.cfg ls +actions"
 
 # shortcuts
 alias rd='rmdir'
