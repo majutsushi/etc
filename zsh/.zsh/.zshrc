@@ -504,6 +504,16 @@ precmd () {
 #         fi
 #     fi
 
+    # handle deleted and then recreated directories
+    if ! [[ . -ef $PWD ]]; then
+         OLDOLDPWD="${OLDPWD}"
+         if ! cd -- "${PWD}" >/dev/null 2>&1; then
+            echo "W: ${PWD} does not exist anymore"
+            return 1
+         fi
+         OLDPWD="${OLDOLDPWD}"
+    fi
+
     JOBS="%(1j.${C_BOLD}[${C_F_CYAN}%j${C_F_DEFAULT}].)"
     EXITCODE="%(0?..${C_BOLD}[${C_F_RED}%?${C_F_DEFAULT}])"
 
