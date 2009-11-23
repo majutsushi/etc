@@ -587,7 +587,7 @@ bind query <space> tag-entry
 
 color normal    white      default  # normal message text
 color status    white      blue     # status lines
-color indicator white      blue     # current line in index etc
+color indicator black      yellow   # current line in index etc
 color message   white      blue     # info messages
 color error     red        default
 
