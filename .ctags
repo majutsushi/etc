@@ -2,7 +2,6 @@
 --c-kinds=+p
 --c++-kinds=+p
 --fields=+iaS
---extra=+q
 --langdef=latex
 --langmap=latex:.tex
 --regex-latex=/^\\tableofcontents/TABLE OF CONTENTS/s,toc/

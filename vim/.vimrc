@@ -704,8 +704,9 @@ endfunction
 function! ManCscopeAndTags()
     execute '!cscope -Rqbc'
     " see ~/.ctags
-    execute '!ctags -R'
-    if cscope_connection() == 0
+    " add --extra=+q here to avoid double entries in taglist
+    execute '!ctags -R --extra=+q'
+    if cscope_connection(2, "cscope.out") == 0
         execute 'cs add cscope.out'
     else
         execute 'cs reset'
