@@ -96,7 +96,7 @@ myIconBGColor = ""
 mySeperatorColor = "#555555"
 
 scratchpads = [ NS "scratchpad" "urxvt -name scratchpad -bg rgba:0000/0000/0000/dddd" (resource =? "scratchpad") (customFloating $ W.RationalRect 0.02 0.05 0.6 0.8),
-                NS "emacs" "emacs" (className =? "Emacs") (customFloating $ W.RationalRect 0.02 0.05 0.6 0.8)
+                NS "emacs" "emacs ~/projects/org/gtd.org" (className =? "Emacs") (customFloating $ W.RationalRect 0.02 0.05 0.6 0.8)
               ]
 
 myStatusBar = "dzen2 -x '0' -y '4' -h '16' -w '700' -ta 'l' -fg '"
