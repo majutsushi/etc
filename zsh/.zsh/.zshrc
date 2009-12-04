@@ -123,6 +123,8 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CONFIG_DIRS=/etc/xdg
 export XDG_CACHE_HOME=$HOME/.cache
 
+export TEXMFHOME=$HOME/.texmf
+
 export RUBYOPT="-w $RUBYOPT"
 export RI="-f ansi"
 
