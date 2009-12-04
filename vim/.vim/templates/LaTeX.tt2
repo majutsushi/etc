@@ -24,9 +24,14 @@
 
 % \usepackage[]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage[english]{babel}
+%\usepackage{lmodern}
+%\usepackage{textcomp}
+\usepackage[british]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{color}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
 \usepackage{url}
 \usepackage{latexsym}
 \usepackage{amsmath,amsfonts,amstext,amssymb,amsbsy,amsopn,amsthm,eucal}
@@ -34,9 +39,12 @@
 \usepackage{boxedminipage}
 \usepackage{subfig}
 \usepackage{setspace}
+\usepackage{fancyvrb}
 \usepackage{alltt}
 \usepackage{multicol}
-\usepackage[activate=normal]{pdfcprot}
+% \usepackage[activate=normal]{pdfcprot}
+\usepackage{microtype}
+%\usepackage{lipsum}
 
 \usepackage[
 %    bookmarks=true,          % show bookmarks bar?
@@ -65,6 +73,9 @@
 
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{<#1>}}}
 \newcommand{\janmn}{\email{jan@majutsushi.net}}
+
+\DefineVerbatimEnvironment{VerbatimCode}{Verbatim}{gobble=4,numbers=left,frame=none}
+%frame=none|leftline|topline|bottomline|lines|single
 
 % don't hyphenate so much - default = 200, max (never hyphenate) = 10,000
 %\hyphenpenalty=800
