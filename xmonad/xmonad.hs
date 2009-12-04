@@ -148,7 +148,7 @@ myManageHook = composeAll [
                where
                q ~? x = fmap (=~ x) q
 
-myLayoutHook = gaps [(D,15)]
+myLayoutHook = gaps [(D,14)]
                $ avoidStruts
                $ layoutHints
                $ maximize
