@@ -65,7 +65,7 @@ unset use_envelope_from
   set from="jan@majutsushi.net"           # takes value from $EMAIL
   set hostname="majutsushi.net"
   set realname="Jan Larres"
-unset use_from          # generate a "From:" header (unless my_hdr From:)
+  set use_from          # generate a "From:" header (unless my_hdr From:)
 
 # alternative mail addresses
 alternates (((jan(\.larres)?)|lists|majutsushi).*@majutsushi.net|jan.larres@gmail.com|jan.larres@gmx.net|larres(01)?@[a-z.]*uni-passau.de)
