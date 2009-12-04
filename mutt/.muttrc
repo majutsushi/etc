@@ -500,6 +500,8 @@ macro pager  ,p         "<pipe-message>procmail\n<delete-message><next-unread>" 
 macro index  ,mf        "<shell-escape>rm -rf ~/.mu/results; mu-find --output=links --linkdir=~/.mu/results " "mu-find"
 macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu-find results"
 
+macro index  \eR        "|~/bin/remember-mail\n"
+
 # X-Label patch
 ifdef edit-label bind index,pager y edit-label
 
