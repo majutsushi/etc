@@ -1,5 +1,6 @@
 import XMonad
 import XMonad.Actions.Warp
+import XMonad.Actions.GridSelect
 import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
@@ -53,6 +54,7 @@ myConfig = gnomeConfig {
                ((mod4Mask, xK_b), sendMessage ToggleStruts >> sendMessage ToggleGaps),
                ((mod4Mask, xK_c), banish LowerRight),
 --                ((mod4Mask, xK_f), withFocused $ windows . W.float (W.RationalRect 0 0 1 1))
+               ((mod4Mask, xK_g), goToSelected defaultGSConfig),
 --                ((mod4Mask, xK_p), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\""),
 --                ((mod4Mask, xK_p), spawn "gnome-do"),
                ((mod4Mask, xK_q), spawn "killall conky dzen2" >> restart "xmonad" True),
