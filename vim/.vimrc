@@ -783,7 +783,7 @@ function! PreviewWord(local)
         else
             " Try displaying a matching tag for the word under the cursor
             try
-                exe "ptag " . w
+                exe "ptjump " . w
             catch
                 call PreviewWordLocal(w, l:editwinnum)
             endtry
