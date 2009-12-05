@@ -17,8 +17,8 @@
 " Maintainer:   Romain Bignon
 " Contributor:  Adam Schmalhofer
 " URL:          http://symlink.me/wiki/blogit
-" Version:      1.4
-" Last Change:  2009 September 10
+" Version:      1.4.2
+" Last Change:  2009 October 28
 
 
 runtime! passwords.vim
@@ -33,7 +33,7 @@ function! BlogItComplete(findstart, base)
         " locate the start of the word
         let line = getline('.')
         let start = col('.') - 1
-        while start > 0 && line[start - 1] =~ '\a'
+        while start > 0 && line[start - 1] =~ '\S'
             let start -= 1
         endwhile
         return start
@@ -100,6 +100,7 @@ except ImportError:
 else:
     doctest = None
 
+#warnings.simplefilter('ignore', Warning)
 warnings.simplefilter('always', UnicodeWarning)
 
 #####################
@@ -107,6 +108,52 @@ warnings.simplefilter('always', UnicodeWarning)
 #####################
 
 class BlogIt(object):
+    @staticmethod
+    def enc(text):
+        r""" Helper function to encode ascii or unicode strings.
+
+        Used when communicating with Vim buffers and commands.
+
+        >>> BlogIt.enc(u'bla')
+        'bla'
+        >>> BlogIt.enc('bla')
+        'bla'
+        >>> type(BlogIt.enc(u'\xc3'))
+        <type 'str'>
+        >>> BlogIt.enc(u'\xc3')
+        '\xc3\x83'
+        """
+        try:
+            return text.encode('utf-8')
+        except UnicodeDecodeError:
+            return text
+
+
+    @staticmethod
+    def to_vim_list(L):
+        r""" Helper function to encode a List for ":let L = [ 'a', 'b' ]"
+
+        >>> BlogIt.to_vim_list([])
+        '[  ]'
+        >>> BlogIt.to_vim_list(['a'])
+        '[ "a" ]'
+        >>> BlogIt.to_vim_list(['a', 'b'])
+        '[ "a", "b" ]'
+        >>> BlogIt.to_vim_list(['a', 'b', 'c'])
+        '[ "a", "b", "c" ]'
+        >>> BlogIt.to_vim_list([r'\n']) == r'[ "\\n" ]'
+        True
+        >>> BlogIt.to_vim_list(['a"b']) == r'[ "a\"b" ]'
+        True
+        >>> BlogIt.to_vim_list(['B\xc3ume']) == '[ "B\xc3ume" ]'
+        True
+        """
+        L = [ '"%s"' % BlogIt.enc(item).replace('\\', '\\\\'
+                                               ).replace('"', r'\"')
+                    for item in L ]
+        return '[ %s ]' % ', '.join(L)
+
+
     class BlogItException(Exception):
         pass
 
@@ -213,12 +260,8 @@ class BlogIt(object):
 
     class AbstractBufferIO(object):
         def refresh_vim_buffer(self):
-            def enc(text):
-                try:
-                    return text.encode('utf-8')
-                except UnicodeDecodeError:
-                    return text
-            vim.current.buffer[:] = [ enc(line) for line in self.display() ]
+            vim.current.buffer[:] = [ BlogIt.enc(line)
+                                            for line in self.display() ]
             vim.command('setlocal nomodified')
 
         def init_vim_buffer(self):
@@ -369,6 +412,13 @@ class BlogIt(object):
         def open_row(self, n):
             id = self.post_data[n]['page_id']
             return BlogIt.WordPressPage(id, vim_vars=self.vim_vars)
+
+    class PostModel(object):
+        def __init__(self, post_data, meta_data_dict, headers, post_body):
+            self.post_data = post_data
+            self.meta_data_dict = meta_data_dict
+            self.headers = headers
+            self.post_body = post_body
 
 
     class AbstractPost(AbstractBufferIO):
@@ -883,10 +933,10 @@ class BlogIt(object):
                 multicall.wp.getCategories('', username, password)
                 multicall.wp.getTags('', username, password)
                 d, comments, categories, tags = tuple(multicall())
-                vim.command('let s:used_tags = %s' % [ tag['name']
-                        for tag in tags ])
-                vim.command('let s:used_categories = %s' % [ cat['categoryName']
-                        for cat in categories ])
+                vim.command('let s:used_tags = %s' % BlogIt.to_vim_list(
+                        [ tag['name'] for tag in tags ]))
+                vim.command('let s:used_categories = %s' % BlogIt.to_vim_list(
+                        [ cat['categoryName'] for cat in categories ]))
             else:
                 d, comments = tuple(multicall())
             comments['post_status'] = d['post_status']
@@ -1708,11 +1758,13 @@ class BlogIt(object):
         multicall.wp.getCategories('', username, password)
         multicall.wp.getTags('', username, password)
         categories, tags = tuple(multicall())
-        tags = [ tag['name'] for tag in tags ]
-        categories = [ cat['categoryName'] for cat in categories ]
-        vim.command('let s:used_tags = %s' % tags)
-        vim.command('let s:used_categories = %s' % categories)
-        sys.stdout.write('\n \n \nCategories\n==========\n \n' + ', '.join(categories))
+        tags = [ BlogIt.enc(tag['name']) for tag in tags ]
+        categories = [ BlogIt.enc(cat['categoryName']) for cat in categories ]
+        vim.command('let s:used_tags = %s' % BlogIt.to_vim_list(tags))
+        vim.command('let s:used_categories = %s' %
+                            BlogIt.to_vim_list(categories))
+        sys.stdout.write('\n \n \nCategories\n==========\n \n' +
+                         ', '.join(categories))
         sys.stdout.write('\n \n \nTags\n====\n \n' + ', '.join(tags))
 
     @vimcommand

@@ -124,8 +124,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 Maintainer:   Romain Bignon         *blogit-author*
 Contributor:  Adam Schmalhofer
 URL:          http://symlink.me/wiki/blogit
-Version:      1.4
-Last Change:  2009 September 10
+Version:      1.4.2
+Last Change:  2009 October 28
 
 ==============================================================================
 B. Links                            *blogit-links*
