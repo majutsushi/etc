@@ -716,7 +716,7 @@ function! ManCscopeAndTags()
     else
         execute 'cs reset'
     endif
-    execute 'CCTreeLoadDB'
+    execute 'CCTreeLoadDB cscope.out'
 endfunction
 
 " MyTabLine() {{{2
