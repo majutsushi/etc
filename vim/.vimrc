@@ -13,7 +13,7 @@ autocmd!
     autocmd InsertEnter * set cul
 "endif
 
-autocmd BufNewFile,BufReadPost * call LoadProjectConfig()
+autocmd BufNewFile,BufReadPost * call LoadProjectConfig(expand("%:p:h"))
 
 " create undo break point
 autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
@@ -691,12 +691,17 @@ fun! LBDBCompleteFn(findstart, base)
 endfun
 
 " LoadProjectConfig() {{{2
-function! LoadProjectConfig()
-    if filereadable('project_config.vim')
-        exe 'sandbox source project_config.vim'
+function! LoadProjectConfig(filepath)
+    let l:cwd = getcwd()
+    if a:filepath =~ "^" . l:cwd
+        if filereadable('project_config.vim')
+"            exe 'sandbox source project_config.vim'
+            exe 'source project_config.vim'
+        endif
     endif
-    if filereadable(expand('%:h') . '/project_config.vim')
-        exe 'sandbox source %:h/project_config.vim'
+    if filereadable(a:filepath . '/project_config.vim')
+"        exe 'sandbox source %:h/project_config.vim'
+        exe 'source ' . a:filepath . '/project_config.vim'
     endif
 endfunction
 
