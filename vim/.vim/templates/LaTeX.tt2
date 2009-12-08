@@ -71,6 +71,20 @@
 ]{hyperref}
 \usepackage[all]{hypcap}
 
+% use garamond font
+%\usepackage[urw-garamond]{mathdesign}
+%\renewcommand{\sfdefault}{fvs} % Bera sans
+%\renewcommand{\sfdefault}{fvm} % Bera mono
+
+% use palatino and correspondig fonts
+%\usepackage[sc]{mathpazo}
+%\linespread{1.05}         % Palatino needs more leading (space between lines)
+%\usepackage[scaled]{berasans}
+%\usepackage[scaled]{beramono}
+
+% euler math font
+%\usepackage{eulervm}
+
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{<#1>}}}
 \newcommand{\janmn}{\email{jan@majutsushi.net}}
 
