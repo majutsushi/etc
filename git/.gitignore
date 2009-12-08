@@ -2,6 +2,7 @@
 *.[ao]
 *.so
 tags
+cscope.*
 *.aux
 *.pdf
 config.log
