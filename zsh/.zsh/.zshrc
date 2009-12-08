@@ -994,7 +994,7 @@ mkvrepack() {
 
 gensystags() {
     echo "Generating vim systags"
-    ctags -f ~/.vim/systags/systags --recurse --verbose --totals=yes /usr/include
+    ctags -f ~/.vim/systags/systags --recurse --verbose --totals=yes --extra=+q /usr/include
 }
 
 pdf2pdf() {
