@@ -58,7 +58,7 @@ au BufNewFile *.vim Vimplate vim
 au BufNewFile *.rb Vimplate ruby
 au BufNewFile Makefile Vimplate Makefile-C
 
-au BufWritePost,FileWritePost *.c TlistUpdate
+au BufWritePost,FileWritePost *.c,*.cpp,*.h TlistUpdate
 "au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
 "au CursorMoved,CursorMovedI *   TlistHighlightTag
 "au CursorMoved,CursorMovedI * endif
