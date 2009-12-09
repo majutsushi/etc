@@ -24,7 +24,7 @@ B. Links                |blogit-links|
 :Blogit edit {id}                   *:Blogit-edit*
         Opens the post {id} for edition.
 
-:Blogit page {id}                   *:Blogit-edit*
+:Blogit page {id}                   *:Blogit-page*
         Opens the page {id} for edition.  If {id} is 'new' or 'this' it haves
         like those commands for posts.  An example for a common page is the
         about page.
