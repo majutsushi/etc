@@ -1126,7 +1126,7 @@ nmap <silent> <C-Up> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(
 nmap <silent> <C-Down> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)-1)', '')<CR>
 
 " indent for C programs
-nmap <Leader>i :%!indent<CR>
+nmap <Leader>i :%!astyle<CR>
 
 " open main viki
 nmap <Leader>vo :VikiHome<CR>
