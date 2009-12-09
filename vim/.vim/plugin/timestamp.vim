@@ -1,12 +1,12 @@
-" TimeStamp 1.18: Vim plugin for automated time stamping.
-" Maintainor:	Gautam Iyer <gautam@math.uchicago.edu>
+" TimeStamp 1.21: Vim plugin for automated time stamping.
+" Maintainer:	Gautam Iyer <gi1242ATusersDOTsourceforgeDOTnet>
 " Created:	Fri 06 Feb 2004 02:46:27 PM CST
-" Modified:	Thu 14 Jun 2007 12:19:44 PM PDT
+" Modified:	Wed 25 Mar 2009 03:28:34 PM PDT
 " License:	This file is placed in the public domain.
 "
 " Credits:	Thanks to Guido Van Hoecke for writing the original vim script
 " 		"timstamp.vim".
-" Discription:
+" Description:
 "   When a file is written, and the filename matches "timestamp_automask",
 "   this plugin will search the first and last "timestamp_modelines" lines of
 "   your file. If it finds the regexp "timestamp_regexp" then it will replace
@@ -99,24 +99,31 @@ function s:initialise()
     let s:hostname = s:getValue( substitute( s:Hostname, '\..*', '', ''), 'g:timestamp_hostname')
 endfunction
 
-" {{{1 Setup autocommand for timestamping.
-if has('autocmd')
-    let s:automask = s:getValue( '*', 'g:timestamp_automask')
-    let s:autocomm = "autocmd BufWritePre " . s:automask . " :call s:timestamp()"
-    augroup TimeStamp
-	" this autocommand triggers the update of the requested timestamps
-	au!
-	exec s:autocomm
-    augroup END
-else
-    echoerr 'Autocommands not enabled. Timestamping will not work'
-endif
+" {{{1 setup_autocommand(): Function to setup autocommands for timestamping.
+function s:setup_autocommand()
+    if has('autocmd')
+	if ! exists( 's:autocomm' )
+	    let l:automask = s:getValue( '*', 'g:timestamp_automask')
+	    let s:autocomm = "autocmd BufWritePre " . l:automask
+			\ . " :call s:timestamp()"
+	endif
 
-" Free up memory and delete unused functions / variables
-unlet s:autocomm s:automask
+	augroup TimeStamp
+	    " this autocommand triggers the update of the requested timestamps
+	    au!
+	    exec s:autocomm
+	augroup END
+    else
+	echoerr 'Autocommands not enabled. Timestamping will not work'
+    endif
+endfunction
 
 " {{{1 timestamp(): Function that does the timestamping
 function s:timestamp()
+    if exists('b:timestamp_disabled') && b:timestamp_disabled
+	return
+    endif
+
     " If running for the first time, initialise script variables.
     if !exists('s:timestamp_regexp')
 	call s:initialise()
@@ -167,6 +174,7 @@ function s:subst(start, end, pat, rep)
 	    let newline = substitute( curline, a:pat, a:rep, '' )
 	    if( newline != curline )
 		" Only substitute if we made a change
+		"silent! undojoin
 		keepjumps call setline(lineno, newline)
 	    endif
 	endif
@@ -174,6 +182,10 @@ function s:subst(start, end, pat, rep)
     endwhile
 endfunction
 " }}}1
+
+call s:setup_autocommand()
+command! DisableTimestamp   au! TimeStamp
+command! EnableTimestamp    call s:setup_autocommand()
 
 " Restore compatibility options
 let &cpo = s:cpo_save

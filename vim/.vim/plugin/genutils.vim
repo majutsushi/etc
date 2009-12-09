@@ -1,8 +1,8 @@
 " genutils: Useful buffer, file and window related functions.
 " Author: Hari Krishna Dara (hari_vim at yahoo dot com)
-" Last Change: 08-Jun-2007 @ 17:36
+" Last Change: 15-Sep-2009 @ 19:25
 " Requires: Vim-7.0
-" Version: 2.4.0
+" Version: 2.5.1
 " Licence: This program is free software; you can redistribute it and/or
 "          modify it under the terms of the GNU General Public License.
 "          See http://www.gnu.org/copyleft/gpl.txt 
@@ -172,6 +172,10 @@
 "   void    genutils#ClearAllSigns()
 "   String  genutils#UserFileComplete(String ArgLead, String CmdLine,
 "                  String CursorPos, String smartSlash, String searchPath)
+"   String  genutils#UserFileComplete2(String ArgLead, String CmdLine,
+"                  String CursorPos, [Map params])
+"   String  genutils#UserDirComplete2(String ArgLead, String CmdLine,
+"                  String CursorPos, [Map params])
 "   String  genutils#UserFileExpand(String fileArgs)
 "   String  genutils#GetVimCmdOutput(String cmd)
 "   void    genutils#OptClearBuffer()
@@ -498,6 +502,9 @@
 "   for win32, to avoid translating some backslash protections to be treated
 "   as regular path separators. Pass the characters that are protected, and
 "   the backslashes infront of them are preserved.
+" This function also expands the path, so any environment variables and others
+"   (such as the "~" for paths relative to home) get expanded (see help on
+"   expand()).
 "
 " String  genutils#CleanupFileName(String fileName)
 " String  genutils#CleanupFileName2(String fileName, String win32ProtectedChars)
@@ -687,24 +694,58 @@
 " -----------------------
 " -----------------------
 " This function is suitable to be used by custom command completion functions
-"   for expanding filenames conditionally. The function could based on the
-"   context, decide whether to do a file completion or a different custom
-"   completion. See breakpts.vim and perforce.vim for examples.
-" If you pass non-zero value to smartSlash, the function decides to use
-"   backslash or forwardslash as the path separator based on the user settings
-"   and the ArgLead, but if you always want to use only forwardslash as the
-"   path separator, then pass 0. If you pass in a comma separated list of
-"   directories as searchPath, then the file expansion is limited to the files
-"   under these directories. This means, you can implement your own commands
-"   that don't expect the user to type in the full path name to the file
-"   (e.g., if the user types in the command while in the explorer window, you
-"   could assume that the path is relative to the directory being viewed). Most
-"   useful with a single directory, but also useful in combination with vim
-"   'runtimepath' in loading scripts etc. (see Runtime command in
-"   breakpts.vim).
+"   for expanding filenames conditionally. The user function could, based on
+"   the context, decide whether to do a file completion or a different custom
+"   completion. See breakpts and perforce plugins for examples.
+" It is also designed such that it can be used directly as a completion
+"   function, though it would mean you can't pass any parameters.
+" Opts parameter is a dictionary of optional parameters. Each parameter has a
+"   predefined default, but can be overridden by specifying a value in the
+"   dictionary and change the behavior. Here are the list of params supported:
+"     - smartSlash: (default: 1)
+"     -- 1: indicates that the path separator must be chosen based on the
+"           ArgLead as well as user settings ('shellslash').
+"     -- 0: always uses forwardslash as the path separator.
+"     - searchPath: (default: '.')
+"     -- A comma-separated list of directories, similar to how globpath() works.
+"     - relativePaths: (default: 0)
+"     -- 1: return relative paths. Most useful when searchPath has only one
+"           path, but also useful with multiple paths, when using with
+"           'runtimepath' (see :Runtime command in breakpts plugin).
+"     -- 0: return absolute paths.
+"     - completionTypes: (default: ['file', 'dir']
+"     -- 'file': Include plain file types.
+"     -- 'dir': Include directory types.
+"     - anchorAtStart: (default: 1)
+"     -- 1: indicates that the ArgLead should be anchored to the start.
+"     -- 0: indicates that the ArgLead can occur anywhere in the filename.
+"     - resultsAsList: (default: 1)
+"     -- 1: results will be returned as a list
+"     -- 0: results will be returned as a string with one filename per line.
+"     - includeOriginal: (default: 1)
+"     -- 1: ArgLead will be included at the end of results.
+"     -- 0: ArgLead will not be included.
+"     - dedupe: (default: 0), useful when relativePaths is 1 or paths repeat
+"       in searchPath.
+"     -- 1: expend extra effort to remove duplicates
+"     -- 0: all results are includes, including any duplicates.
+"
+" String  genutils#UserFileComplete2(String ArgLead, String CmdLine, String
+"                          CursorPos, [Dictionary params])
+" -----------------------
+" Same as genutils#UserFileComplete2, with the following two parameters (for
+"   backwards compatibility).
+"     resultsAsList: 0
+"     relativePaths: 1
 "
 " String  genutils#UserFileComplete(String ArgLead, String CmdLine, String
 "                          CursorPos, String smartSlash, String searchPath)
+" -----------------------
+" Same as genutils#UserFileComplete2, except that the "completionTypes" is
+"   always set to ["dir"].
+"
+" String  genutils#UserDirComplete2(String ArgLead, String CmdLine, String
+"                          CursorPos, [Dictionary params])
 " -----------------------
 " This is a convenience function to expand filename meta-sequences in the
 "   given arguments just as Vim would have if given to a user-defined command
@@ -897,6 +938,7 @@
 " int     genutils#GetSelectedIndex()
 " -----------------------
 " Deprecations:
+"   - UserFileComplete() is now deprecated, use UserFileComplete2().
 "   - CleanDiffOptions() is deprecated as Vim now has the :diffoff command.
 "   - MakeArgumentString, MakeArgumentList and CreateArgString are deprecated.
 "     Vim7 now includes call() function to receive and pass argument lists
@@ -930,12 +972,8 @@
 "   - The :find command is very useful to search for a file in path, but it
 "     doesn't support file completion. Add the following command in your vimrc
 "     to add this functionality:
-"       command! -nargs=1 -bang -complete=custom,<SID>PathComplete FindInPath
-"             \ :find<bang> <args>
-"       function! s:PathComplete(ArgLead, CmdLine, CursorPos)
-"         return genutils#UserFileComplete(a:ArgLead, a:CmdLine, a:CursorPos, 1,
-"             \ &path)
-"       endfunction
+"       command! -nargs=1 -bang -complete=customlist,genutils#UserFileComplete2
+"             \ FindInPath :find<bang> <args>
 "
 "   - If you are running commands that generate multiple pages of output, you
 "     might find it useful to redirect the output to a new buffer. Put the
@@ -944,6 +982,19 @@
 "             \ :new | put! =genutils#GetVimCmdOutput('<args>') |
 "             \ setl bufhidden=wipe | setl nomodified
 "
+" Changes in 2.5:
+"   - Improved genutils#CleanupFileName() to expand "~" and environment
+"     variables. It also works more reliably now.
+"   - More user friendly version of genutils#UserFileComplete() function
+"     added as genutils#UserFileComplete2(). It can now be used directly as
+"     the custom or customlist function in commands (so saves trouble for
+"     users, as no wrapper needs be written), and also offer various
+"     customizations via passing params.
+"   - New function genutils#UserDirComplete2(), which is a customization on
+"     top of genutils#UserFileComplete2() for the sake of restricting the
+"     completions to directories only.
+"   - Minor improvements in genutils#PathIsAbsolute() and
+"     genutils#GetVimCmdOutput()
 " Changes in 2.4:
 "   - Fixed some corner cases in RelPathFromDir()/RelPathFromFile().
 "   - Made the default comparators sort() function friendly.
@@ -993,4 +1044,4 @@ if v:version < 700
   finish
 endif
 
-let loaded_genutils = 204
+let loaded_genutils = 205

@@ -1,12 +1,10 @@
 " genutils.vim: Please see plugin/genutils.vim
 "
 " TODO:
-"   - Vim7: redir can be used with a variable.
 "   - fnamemodify() on Unix doesn't expand to full name if the filename doesn't
 "     really exist on the filesystem.
 "   - Is setting 'scrolloff' and 'sidescrolloff' to 0 required while moving the
 "     cursor?
-"   - http://www.vim.org/tips/tip.php?tip_id=1379
 "
 "   - EscapeCommand() didn't work for David Fishburn.
 "   - Save/RestoreWindowSettings doesn't work well.
@@ -722,15 +720,8 @@ function! genutils#CleanupFileName(fileName)
 endfunction
 
 function! genutils#CleanupFileName2(fileName, win32ProtectedChars)
-  let fileName = substitute(a:fileName, '^\s\+\|\s\+$', '', 'g')
+  let fileName = expand(substitute(a:fileName, '^\s\+\|\s\+$', '', 'g'))
 
-  " Expand relative paths and paths containing relative components (takes care
-  " of ~ also).
-  if ! genutils#PathIsAbsolute(fileName)
-    let fileName = fnamemodify(fileName, ':p')
-  endif
-
-  " I think we can have UNC paths on UNIX, if samba is installed.
   if genutils#OnMS() && (match(fileName, '^//') == 0 ||
         \ match(fileName, '^\\\\') == 0)
     let uncPath = 1
@@ -753,31 +744,35 @@ function! genutils#CleanupFileName2(fileName, win32ProtectedChars)
   endif
   let fileName=substitute(fileName, '/\{2,}', '/', 'g')
 
-  " Remove ending extra path separators.
-  let fileName=substitute(fileName, '/$', '', '')
-  let fileName=substitute(fileName, '\\$', '', '')
-
   " If it was an UNC path, add back an extra slash.
   if uncPath
     let fileName = '/'.fileName
+  else
+    " Expand relative paths and paths containing relative components (takes care
+    " of ~ also). This also adds the drive letter if it is missing. Special
+    " case when drive root is used with no trailing slash (e.g., c:), don't
+    " expand, Vim replaces it with previous directory on that drive. Also
+    " don't leave any trailing slashes, as they appear conditional to whether
+    " the path is an existing dir or not.
+    let fileName = (genutils#OnMS() && fileName =~# '^[a-z]:$') ? fileName.'/' :
+          \ substitute(fnamemodify(fileName, ':p'), '\(.\)[\\/]$', '\1', '')
   endif
 
   if genutils#OnMS()
     let fileName=substitute(fileName, '^[A-Z]:', '\L&', '')
-
-    " Add drive letter if missing (just in case).
-    if !uncPath && match(fileName, '^/') == 0
-      let curDrive = substitute(getcwd(), '^\([a-zA-Z]:\).*$', '\L\1', '')
-      let fileName = curDrive . fileName
-    endif
   endif
   return fileName
 endfunction
-"echo genutils#CleanupFileName('\\a///b/c\')
-"echo genutils#CleanupFileName('C:\a/b/c\d')
-"echo genutils#CleanupFileName('a/b/c\d')
-"echo genutils#CleanupFileName('~/a/b/c\d')
-"echo genutils#CleanupFileName('~/a/b/../c\d')
+"echo genutils#CleanupFileName('\\a///b/c\') " //a/b/c
+"echo genutils#CleanupFileName('C:\a/b/c\d') " c:/a/b/c/d
+"echo genutils#CleanupFileName('a/b/c\d') " z:/hari/vimfiles/a/b/c/d
+"echo genutils#CleanupFileName('~/a/b/c\d') " z:/hari/a/b/c/d
+"echo genutils#CleanupFileName('~/a/b/../c\d') " z:/hari/a/b/c/d
+"echo genutils#CleanupFileName('') " z:/hari/vimfiles
+"echo genutils#CleanupFileName('/') " z:/
+"echo genutils#CleanupFileName('z:') " z:/
+"echo genutils#CleanupFileName('z:/') " z:/
+"echo genutils#CleanupFileName('C:/windows/') " c:/windows
 
 function! genutils#OnMS()
   return has('win32') || has('dos32') || has('win16') || has('dos16') ||
@@ -786,18 +781,19 @@ endfunction
 
 function! genutils#PathIsAbsolute(path)
   let absolute=0
+  let path = expand(a:path)
   if has('unix') || genutils#OnMS()
-    if match(a:path, '^/') == 0
+    if match(path, '^/') == 0
       let absolute=1
     endif
   endif
   if (! absolute) && genutils#OnMS()
-    if match(a:path, "^\\") == 0
+    if match(path, "^\\") == 0
       let absolute=1
     endif
   endif
   if (! absolute) && genutils#OnMS()
-    if match(a:path, "^[A-Za-z]:") == 0
+    if match(path, "^[A-Za-z]:") == 0
       let absolute=1
     endif
   endif
@@ -1181,37 +1177,77 @@ function! genutils#MapAppendCascaded(lhs, rhs, mapMode)
   exec a:mapMode . "oremap" a:lhs self . a:rhs
 endfunction
 
-" smartSlash simply says whether to depend on shellslash and ArgLead for
-"   determining path separator. If it shouldn't depend, it will always assume
-"   that the required pathsep is forward-slash.
 function! genutils#UserFileComplete(ArgLead, CmdLine, CursorPos, smartSlash,
       \ searchPath)
-  let glob = ''
+  return genutils#UserFileComplete2(a:ArgLead, a:CmdLine, a:CursorPos,
+        \ {'resultsAsList': 0, 'relativePaths': 1, 'smartSlash': a:smartSlash,
+        \  'searchPath': a:searchPath})
+endfunction
+
+function! genutils#UserDirComplete2(ArgLead, CmdLine, CursorPos, ...)
+  let params = a:0 ? a:1 : {}
+  return genutils#UserFileComplete2(a:ArgLead, a:CmdLine, a:CursorPos,
+        \ extend(params, {'completionTypes': ['dir']}))
+endfunction
+
+function! genutils#UserFileComplete2(ArgLead, CmdLine, CursorPos, ...)
+  let params = a:0 ? a:1 : {}
+  let smartSlash = get(params, 'smartSlash', 1)
+  let searchPath = get(params, 'searchPath', '')
+  let relativePaths = get(params, 'relativePaths', 0)
+  let completionTypes = get(params, 'completionTypes', ['file', 'dir'])
+  let anchorAtStart = get(params, 'anchorAtStart', 1)
+  let resultsAsList = get(params, 'resultsAsList', 1)
+  let includeOriginal = get(params, 'includeOriginal', 1)
+  let dedupe = get(params, 'dedupe', 0)
   let opathsep = "\\"
   let npathsep = '/'
-  if exists('+shellslash') && ! &shellslash && a:smartSlash &&
-        \ stridx(a:ArgLead, "\\") != -1
+  if exists('+shellslash') && ! &shellslash && smartSlash &&
+        \ stridx(a:ArgLead, '/') == -1
     let opathsep = '/'
     let npathsep = "\\"
   endif
-  if a:searchPath !=# ''
-    for nextPath in split(a:searchPath, genutils#CrUnProtectedCharsPattern(','))
-      let nextPath = genutils#CleanupFileName(nextPath)
-      let matches = glob(nextPath.'/'.a:ArgLead.'*')
-      if matches !~# '^\_s*$'
-        let matches = s:FixPathSep(matches, opathsep, npathsep)
-        let nextPath = substitute(nextPath, opathsep, npathsep, 'g')
-        let matches = substitute(matches, '\V'.escape(nextPath.npathsep, "\\"),
-              \ '', 'g')
-        let glob = glob . matches . "\n"
+  let matchMap = {}
+  let allMatches = []
+  let includeDirs = index(completionTypes, 'dir') != -1
+  let includeFiles = index(completionTypes, 'file') != -1
+  let _shellslash = &shellslash
+  let ArgHead = fnamemodify(a:ArgLead, ':h')
+  " Also remove any trailing slashes, for consistency.
+  let ArgHead = ArgHead == '.' ? '' :
+        \ (genutils#PathIsAbsolute(ArgHead) || ArgHead =~ '^\~' ?
+        \  substitute(genutils#CleanupFileName(ArgHead), '\(.\)[\\/]$', '\1', '') :
+        \  ArgHead)
+  let ArgTail = fnamemodify(a:ArgLead, ':t')
+  let pat = (ArgHead == '' && ArgTail == '') ? '*' :
+        \    (ArgTail == '' ? ArgHead.'/' :
+        \     (ArgHead == '' ? '' : ArgHead.'/').(anchorAtStart ? '' : '*')
+        \     .ArgTail).'*'
+  for nextPath in split(searchPath, genutils#CrUnProtectedCharsPattern(','), 1)
+    " Ignore paths if the ArgHead happens to be an absolute path.
+    let nextPath = genutils#PathIsAbsolute(ArgHead) ? '' : 
+          \ genutils#CleanupFileName(nextPath).npathsep
+    let matches = split(glob(nextPath.pat), "\n")
+    if len(matches) != 0
+      call map(matches, 'substitute(v:val, opathsep, npathsep, "g").(isdirectory(v:val) ? npathsep : "")')
+      call filter(matches, 'v:val[-1:] == npathsep ? includeDirs : includeFiles')
+      if relativePaths
+        let pathRE = '\V'.escape(substitute(nextPath, opathsep, npathsep, 'g'), "\\")
+        call map(matches, 'substitute(v:val, pathRE, "", "g")')
       endif
-    endfor
-  else
-    let glob = s:FixPathSep(glob(a:ArgLead.'*'), opathsep, npathsep)
+      if dedupe
+        call filter(matches, '!has_key(matchMap, v:val)')
+        for match in matches
+          let matchMap[match] = 1
+        endfor
+      endif
+      let allMatches += matches
+    endif
+  endfor
+  if includeOriginal
+    let allMatches += [a:ArgLead]
   endif
-  " FIXME: Need an option to control if ArgLead should also be returned or
-  " not.
-  return glob."\n".a:ArgLead
+  return resultsAsList ? allMatches : join(allMatches, "\n")
 endfunction
 
 command! -complete=file -nargs=* GUDebugEcho :echo <q-args>
@@ -1220,32 +1256,22 @@ function! genutils#UserFileExpand(fileArgs)
         \ 'GUDebugEcho ' . a:fileArgs), '^\_s\+\|\_s\+$', '', 'g')
 endfunction
 
-function! s:FixPathSep(matches, opathsep, npathsep)
-  let matches = a:matches
-  let matches = substitute(matches, a:opathsep, a:npathsep, 'g')
-  let matches = substitute(matches, "\\([^\n]\\+\\)", '\=submatch(1).'.
-        \ '(isdirectory(submatch(1)) ? a:npathsep : "")', 'g')
-  return matches
-endfunction
-
 function! genutils#GetVimCmdOutput(cmd)
   let v:errmsg = ''
   let output = ''
-  let _z = @z
   let _shortmess = &shortmess
   try
     set shortmess=
-    redir @z
+    redir => output
     silent exec a:cmd
   catch /.*/
     let v:errmsg = substitute(v:exception, '^[^:]\+:', '', '')
   finally
     redir END
     let &shortmess = _shortmess
-    if v:errmsg == ''
-      let output = @z
+    if v:errmsg != ''
+      let output = ''
     endif
-    let @z = _z
   endtry
   return output
 endfunction

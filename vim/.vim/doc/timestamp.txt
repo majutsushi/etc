@@ -16,6 +16,9 @@ change).
 All the default variables and actions can be changed by buffer / global vim
 variables. See |timestamp_examples| for two simple examples.
 
+To temporarily enable / disable time stamping on a particular file, use the
+commands |EnableTimestamp| and |DisableTimestamp|.
+
 The plugin and its documentation file can be installed as described under
 |add-global-plugin| and |add-local-help|. Do not forget to run |:helptags|.
 
@@ -210,7 +213,24 @@ NOTE: If you compiled Vim without autocommands, this plugin will not work.
 
 ------------------------------------------------------------------------------
 
-5. timestamp_modelines					*timestamp_modelines*
+5. Enabling / disabling time stamping			   *b:timestamp_disable*
+					  *DisableTimestamp* *EnableTimestamp*
+
+To temporarily disable automated time stamping, use the command >
+
+    :DisableTimestamp
+
+This will disable automated time stamping for all buffers, until you issue a >
+
+    :EnableTimestamp
+
+command. If you want to disable time stamping only on a particular buffer,
+then set the (buffer local) variable |b:timestamp_disable|. Time stamping for
+this buffer will be disabled until the variable is either set to 0 or deleted.
+
+------------------------------------------------------------------------------
+
+6. timestamp_modelines					*timestamp_modelines*
 
 The number of lines searched for the |timestamp_regexp| is controlled by the
 |timestamp_modelines| variable. By default this will be equal to the
@@ -222,7 +242,7 @@ If this is set to to '%' all lines in the file will be searched for the regexp
 |timestamp_regexp|. NOTE: This may be more than you want.
 ------------------------------------------------------------------------------
 
-6. Examples:						*timestamp_examples*
+7. Examples:						*timestamp_examples*
 
   1. No case matching, short format timestamps: >
 
@@ -244,6 +264,10 @@ If this is set to to '%' all lines in the file will be searched for the regexp
 ------------------------------------------------------------------------------
 
 7. Change History					*timestamp_history*
+
+Version 1.21:~
+  Add |DisableTimestamp|, |EnableTimestamp| and |b:timestamp_disable| to
+  enable / disable time stamping temporarily.
 
 Version 1.20:~
   Optionally ignore AM/PM in timestamp by default (some systems don't produce
@@ -364,5 +388,5 @@ This script is based on "timstamp.vim" originally written by Guido Van Hoecke
 ------------------------------------------------------------------------------
 >
  Maintainer	: Gautam Iyer <gi1242@users.sourceforge.net>
- Modified	: Thu 21 Jun 2007 04:08:38 PM CDT
+ Modified	: Wed 25 Mar 2009 03:35:53 PM PDT
  vim: set ft=help tw=78:
