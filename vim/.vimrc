@@ -376,11 +376,6 @@ set viminfo=!,'20,<500,:500,s100,h,r/tmp,r/mnt,r/media,n~/.cache/vim/viminfo
 
 " Plugin and script options {{{1
 
-" autocomplpop {{{2
-let g:AutoComplPop_NotEnableAtStartup = 1
-let g:AutoComplPop_MappingDriven = 1
-"let g:AutoComplPop_Behavior = 
-
 " CCTree {{{2
 let g:CCTreeRecursiveDepth = 2
 let g:CCTreeMinVisibleDepth = 2
