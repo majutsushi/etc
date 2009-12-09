@@ -524,6 +524,10 @@ precmd () {
         debian_chroot=$(cat /etc/debian_chroot)
     fi
 
+    # test ibam
+    # BATTSTATE="$(ibam --percentbattery)"
+    # BATTPRCNT="${BATTSTATE[(f)1][(w)-2]}"
+    # BATTTIME="${BATTSTATE[(f)2][(w)-1]}"
     if command -v acpi >/dev/null 2>&1; then
         ACPI=$(acpi -b | grep -i discharging)
         if [[ -n "$ACPI" ]]; then
