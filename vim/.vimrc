@@ -433,7 +433,7 @@ let NERDTreeHijackNetrw = 0
 
 " omnicppcomplete {{{2
 let g:OmniCpp_SelectFirstItem = 2 " select first completion item, but don't insert it
-"let g:OmniCpp_ShowPrototypeInAbbr = 1
+let g:OmniCpp_ShowPrototypeInAbbr = 1
 
 " po {{{2
 let g:po_translator = 'Jan Larres <jan@majutsushi.net>'
