@@ -662,6 +662,15 @@ function! GetTabstop()
     return str
 endfunction
 
+" InsertGuards() {{{2
+function! InsertGuards()
+    let guardname = "_" . substitute(toupper(expand("%:t")), "[\\.-]", "_", "g") . "_"
+    execute "normal! ggI#ifndef " . guardname
+    execute "normal! o#define " . guardname . " "
+    execute "normal! Go#endif /* " . guardname . " */"
+    normal! kk
+endfunction
+
 " LBDBCompleteFn() {{{2
 " from http://dollyfish.net.nz/blog/2008-04-01/mutt-and-vim-custom-autocompletion
 fun! LBDBCompleteFn(findstart, base)
