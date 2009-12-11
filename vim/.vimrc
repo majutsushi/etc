@@ -515,7 +515,7 @@ let g:Tex_ViewRule_pdf = 'evince'
 let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 
 " vimplate {{{2
-let Vimplate = "~/.vim/tools/vimplate"
+let Vimplate = globpath(&rtp, 'tools/vimplate', 1)
 
 " Functions {{{1
 
