@@ -448,6 +448,9 @@ let g:po_translator = 'Jan Larres <jan@majutsushi.net>'
 let g:po_lang_team = ''
 "let g:po_path = '.,..'
 
+" ProtoDef {{{2
+let protodefprotogetter = globpath(&rtp, 'tools/pullproto.pl', 1)
+
 " rubycomplete {{{2
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_rails = 1
