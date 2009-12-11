@@ -1090,10 +1090,6 @@ nnoremap <silent> <Leader>hl
       \   let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1) <Bar>
       \ endif<CR>
 
-" crefvim
-"map <silent> <Leader>cw <Plug>CRV_CRefVimAsk
-map <silent> <Leader>ct <Plug>CRV_CRefVimInvoke
-
 " for pupop-menu completion
 " http://www.vim.org/tips/tip.php?tip_id=1386
 "inoremap <expr> <m-'> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
