@@ -2,6 +2,7 @@ ScriptID SourceID Filename
 --------------------------
 2324 9247 :AutoInstall: textformat.vba
 1863 11881 :AutoInstall: tlib.vim
+1066 7618 :AutoInstall: cecutil.vim
 294 10110 :AutoInstall: Align.vim
 508 9865 :AutoInstall: ZoomWin.vim
 1846 7059 :AutoInstall: gitdiff.vim
