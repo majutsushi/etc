@@ -33,3 +33,4 @@ ScriptID SourceID Filename
 1785 7716 :AutoInstall: javacomplete
 1000 11573 gtk-vim-syntax.tar.gz
 1195 5847 :AutoInstall: vis.vim
+2590 11504 :AutoInstall: FSwitch

@@ -58,7 +58,15 @@ au BufNewFile *.vim Vimplate vim
 au BufNewFile *.rb Vimplate ruby
 au BufNewFile Makefile Vimplate Makefile-C
 
-au BufWritePost,FileWritePost *.c,*.cpp,*.h TlistUpdate
+" FSwitch setup
+au BufEnter *.c   let b:fswitchdst  = 'h'
+au BufEnter *.c   let b:fswitchlocs = './'
+au BufEnter *.cpp let b:fswitchdst  = 'h,hpp'
+au BufEnter *.cpp let b:fswitchlocs = './'
+au BufEnter *.h   let b:fswitchdst  = 'cpp,c'
+au BufEnter *.h   let b:fswitchlocs = './'
+
+au BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.h TlistUpdate
 "au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
 "au CursorMoved,CursorMovedI *   TlistHighlightTag
 "au CursorMoved,CursorMovedI * endif
@@ -1068,6 +1076,17 @@ nmap <silent> <leader>pl :call PreviewWord(1)<CR>
 
 nmap <silent> <F10> :NERDTreeToggle<CR>
 nnoremap <S-F10> :call ManCscopeAndTags()<CR>
+
+" FSwitch mappings
+nmap <silent> <Leader>of :FSHere<cr>
+nmap <silent> <Leader>ol :FSRight<cr>
+nmap <silent> <Leader>oL :FSSplitRight<cr>
+nmap <silent> <Leader>oh :FSLeft<cr>
+nmap <silent> <Leader>oH :FSSplitLeft<cr>
+nmap <silent> <Leader>ok :FSAbove<cr>
+nmap <silent> <Leader>oK :FSSplitAbove<cr>
+nmap <silent> <Leader>oj :FSBelow<cr>
+nmap <silent> <Leader>oJ :FSSplitBelow<cr>
 
 imap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
 imap <c-a> <esc>0i
