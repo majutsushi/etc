@@ -35,3 +35,4 @@ ScriptID SourceID Filename
 1195 5847 :AutoInstall: vis.vim
 2590 11504 :AutoInstall: FSwitch
 2624 11376 :AutoInstall: ProtoDef
+2438 1 :AutoInstall: EasyGrep

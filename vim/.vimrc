@@ -408,6 +408,24 @@ let g:devhelpAssistant = 0
 let g:devhelpSearchKey = '<F7>'
 let g:devhelpWordLength = 5
 
+" EasyGrep {{{2
+let g:EasyGrepFileAssociations = globpath(&rtp, 'plugin/EasyGrepFileAssociations', 1)
+let g:EasyGrepMode = 2
+let g:EasyGrepCommand = 0
+let g:EasyGrepRecursive = 1
+let g:EasyGrepIgnoreCase = 1
+let g:EasyGrepHidden = 0
+let g:EasyGrepAllOptionsInExplorer = 1
+let g:EasyGrepWindow = 0
+let g:EasyGrepReplaceWindowMode = 0
+let g:EasyGrepOpenWindowOnMatch = 1
+let g:EasyGrepEveryMatch = 0
+let g:EasyGrepJumpToMatch = 1
+let g:EasyGrepInvertWholeWord = 0
+let g:EasyGrepFileAssociationsInExplorer = 0
+let g:EasyGrepOptionPrefix = '<leader>vy'
+let g:EasyGrepReplaceAllPerFile = 0
+
 " enhanced-commentify {{{2
 " let g:EnhCommentifyRespectIndent = 'Yes'
 " let g:EnhCommentifyPretty = 'Yes'
@@ -996,7 +1014,7 @@ let vimrc='~/.vimrc'
 let myabbr='~/.vim/abbrevs.vim'
 nn  <leader>vs :source <C-R>=vimrc<CR><CR>
 nn  <leader>ve :edit   <C-R>=vimrc<CR><CR>
-nn  <leader>va :edit   <C-R>=myabbr<CR><CR>
+nn  <leader>vb :edit   <C-R>=myabbr<CR><CR>
 
 nmap <C-W>e :enew<CR>
 
@@ -1156,7 +1174,7 @@ nmap <silent> <C-Down> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eva
 nmap <Leader>i :%!astyle<CR>
 
 " open main viki
-nmap <Leader>vo :VikiHome<CR>
+nmap <Leader>vh :VikiHome<CR>
 
 " see functions
 noremap <space> :call ToggleFold()<CR>
