@@ -1052,6 +1052,17 @@ nmap <M-9> 9gt
 nnoremap j gj
 nnoremap k gk
 
+" emacs-like keys in command line
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-D> <Del>
+cnoremap <C-E> <End>
+cnoremap <C-F> <Right>
+cnoremap <C-N> <Down>
+cnoremap <C-P> <Up>
+"cnoremap <Esc><C-B>     <S-Left>
+"cnoremap <Esc><C-F>     <S-Right>
+
 " create an undo point after each word
 " imap <Space> <Space><C-G>u
 "inoremap <Tab>   <Tab><C-G>u
