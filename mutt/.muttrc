@@ -600,9 +600,9 @@ color sidebar_new red      default
 # =============================================================================
 # index {{{
 
-color index     green    default  '~p'    # mail to myself
+# color index     white    default  '~p'    # mail to myself
 # color index     green          default  '! ~p'  # mail not to myself
-color index     yellow    default  '~N !~D'    # new undeleted mail
+color index     green    default  '~N !~D'    # new undeleted mail
 # color index     brightyellow default '~N ~p'
 # color index     green    default  '!~N'    # read mail
 color index     cyan     default  '(~P !~D) | (~v ~(~P !~D))'    # mail from myself
