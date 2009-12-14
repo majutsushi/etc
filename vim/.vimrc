@@ -535,6 +535,11 @@ let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 " vimplate {{{2
 let Vimplate = globpath(&rtp, 'tools/vimplate', 1)
 
+" xptemplate {{{2
+let g:xptemplate_strict = 0
+let g:xptemplate_highlight='following,next'
+let g:xptemplate_vars = '$author=Jan Larres&$email=jan@majutsushi.net'
+
 " Functions {{{1
 
 " Bclose() {{{2
