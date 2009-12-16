@@ -20,9 +20,6 @@ autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 
 "au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
 
-" set the textwidth to 72 characters for replies (email&usenet)
-au BufNewFile,BufReadPost .followup,.letter,mutt-*,muttng-*,nn.*,snd.* setlocal tw=72 completefunc=LBDBCompleteFn
-
 " filetype-specific settings
 au Filetype html,xml,xsl source ~/.vim/macros/closetag.vim
 au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
@@ -445,11 +442,6 @@ let hs_highlight_boolean = 1
 let hs_highlight_types = 1
 let hs_highlight_more_types = 1
 let hs_highlight_debug = 1
-
-" mail.tgz {{{2
-let g:mail_erase_quoted_sig = 1
-let g:mail_alias_source = "MuttQuery"
-let g:mail_mutt_query_command = "lbdbq"
 
 " NERD_Tree {{{2
 "let NERDTreeCaseSensitiveSort = 1
@@ -1211,9 +1203,6 @@ map <M-,>     :bprevious!<CR>
 map <M-.>     :bnext!<CR>
 map <M-Left>  :tabprevious<CR>
 map <M-Right> :tabnext<CR>
-
-" Remove quoted signatures
-map ## :/^> -- $/,/^$/d
 
 " ;rcm = remove "control-m"s - for those mails sent from DOS:
 cmap ;rcm %s/<C-M>//g
