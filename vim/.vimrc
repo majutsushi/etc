@@ -249,7 +249,7 @@ set more
 " start a dialog when a command fails
 set confirm
 " use a visual bell instead of beeping
-set visualbell
+"set visualbell
 
 " selecting text {{{1
 
