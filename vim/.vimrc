@@ -1178,7 +1178,7 @@ xnoremap <silent> # :call VisualSearch('b')<CR>
 nmap <silent> <C-Up> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)+1)', '')<CR>
 nmap <silent> <C-Down> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)-1)', '')<CR>
 
-" indent for C programs
+" indent for C/C++ programs
 nmap <Leader>i :%!astyle<CR>
 
 " open main viki
