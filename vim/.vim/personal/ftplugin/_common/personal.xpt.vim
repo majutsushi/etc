@@ -10,7 +10,9 @@ XPTemplate priority=personal
 " XPTvar $author       you have not yet set $author variable
 " XPTvar $email        you have not yet set $email variable
 
-XPTemplateDef
-XPT yoursnippet " tips here
-bla bla
+"XPTemplateDef
+"XPT yoursnippet " tips here
+"bla bla
+
+XPTvar $SParg ''
 
