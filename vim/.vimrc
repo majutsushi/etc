@@ -1139,6 +1139,8 @@ map <m-p> :cp<cr>
 
 map <silent> <leader>g :silent !gitk<cr>
 
+nmap <silent> <leader>ga :GNOMEAlignArguments<CR>
+
 " highlight long lines
 nnoremap <silent> <Leader>hl
       \ :if exists('w:long_line_match') <Bar>
