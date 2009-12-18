@@ -36,4 +36,5 @@ ScriptID SourceID Filename
 2590 11504 :AutoInstall: FSwitch
 2624 11376 :AutoInstall: ProtoDef
 2438 11717 :AutoInstall: EasyGrep
-2611 11897 :AutoInstall: xptemplate
+2611 11899 :AutoInstall: xptemplate
+2796 11461 :AutoInstall: CheckAttach

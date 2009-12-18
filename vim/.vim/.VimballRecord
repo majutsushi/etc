@@ -9,3 +9,4 @@ utl_3_0a.vba: call delete('/home/jan/.vim/doc/utl_usr.txt')|call delete('/home/j
 Align.vba: call delete('/home/jan/.vim/plugin/AlignPlugin.vim')|call delete('/home/jan/.vim/plugin/AlignMapsPlugin.vim')|call delete('/home/jan/.vim/plugin/cecutil.vim')|call delete('/home/jan/.vim/doc/Align.txt')|call delete('/home/jan/.vim/autoload/Align.vim')|call delete('/home/jan/.vim/autoload/AlignMaps.vim')
 vis.vba: call delete('/home/jan/.vim/plugin/vis.vim')|call delete('/home/jan/.vim/plugin/cecutil.vim')|call delete('/home/jan/.vim/doc/vis.txt')
 FSwitch-0.9.2.vba: call delete('/home/jan/.vim/plugin/fswitch.vim')|call delete('/home/jan/.vim/doc/fswitch.txt')
+CheckAttach.vba: call delete('/home/jan/.vim/doc/CheckAttach.txt')|call delete('/home/jan/.vim/plugin/CheckAttach.vim')

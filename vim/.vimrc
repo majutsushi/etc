@@ -391,6 +391,9 @@ let g:CCTreeOrientation = "leftabove"
 " changelog {{{2
 let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 
+" CheckAttach {{{2
+let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
+
 " code_complete {{{2
 let s:rs = '<+'
 let s:re = '+>'
