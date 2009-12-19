@@ -1,5 +1,6 @@
 " This must be at the beginning
 set nocompatible
+let mapleader=","
 
 " Autocommands {{{1
 
@@ -535,6 +536,10 @@ let g:xptemplate_strict = 0
 let g:xptemplate_highlight='following,next'
 let g:xptemplate_vars = '$author=Jan Larres&$email=jan@majutsushi.net'
 
+" yankring {{{2
+let g:yankring_history_dir = '$HOME/.cache/vim'
+nnoremap <silent> <leader>y :YRShow<CR>
+
 " Functions {{{1
 
 " Bclose() {{{2
@@ -1007,8 +1012,6 @@ if !has("gui_running")
 endif
 
 " Mappings {{{1
-
-let mapleader=","
 
 let vimrc='~/.vimrc'
 let myabbr='~/.vim/abbrevs.vim'
