@@ -148,6 +148,9 @@ set background=dark
 " highlight all matches for the last used search pattern
 set hlsearch
 
+" methods used to suggest corrections
+set spellsuggest=best,10
+
 colorscheme desert256
 
 " multiple windows {{{1
