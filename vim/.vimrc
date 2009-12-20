@@ -202,7 +202,7 @@ set ttymouse=xterm
 
 if has("gui_running")
     " list of font names to be used in the GUI
-    set guifont=Monospace\ 8
+    set guifont=DejaVu\ Sans\ Mono\ 8
 
     " list of flags that specify how the GUI works
     set guioptions+=c
