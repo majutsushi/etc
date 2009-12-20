@@ -140,7 +140,7 @@ myManageHook = composeAll [
 --                    className ~? "DDD.*"           --> doFloat,
 --                    resource  =? "desktop_window" --> doIgnore,
                    resource  =? "Do"             --> doIgnore,
-                   resource  =? "kupfer"         --> doFloat,
+                   resource  =? "kupfer.py"      --> doFloat,
                    isFullscreen                  --> doFullFloat,
 --                    isDialog                      --> doCenterFloat
                    className =? "Iceweasel"      --> doF (W.shift "1:web")
