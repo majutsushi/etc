@@ -427,16 +427,24 @@ endfunction
 
 " Tofu {{{2
 function! s:Tofu()
+    call cursor(1,1)
     call search('^> ')
     if 1 < line(".")
         .,/^$/-1!sed -e 's/^> //' | t-prot --body -ck --max-lines=250 -l -L$XDG_CONFIG_HOME/t-prot/footers -a -A$XDG_CONFIG_HOME/t-prot/ads | sed -e 's/^/> /'
     endif
 endfunction
 
+" FormatQuotes {{{2
+function! s:FormatQuotes()
+    call cursor(1, 1)
+    call search('^> ')
+    normal gqip
+endfunction
+
 " CursorStart {{{2
 " Moves the cursor to a 'sensible' position.
 function! s:CursorStart()
-    silent normal gg
+    call cursor(1, 1)
 
     " for 'autoedit'/'fast_reply'
     if search('^From: $', 'W')
@@ -460,13 +468,15 @@ call s:QuoteEraseSig()
 " etc.) or a signature delimiter (-- ).
 silent! %s/\(^\([a-zA-z-]\+:\|--\)\)\@<!\s\+$//
 
-" Remove spaces between quotes (> > to >>).
-"silent! %s/^\(>\+\) >/\1>/g
-"silent! %s/^\(>\+\) >/\1>/g
-
 call s:Tofu()
 
-"%call s:QuoteDelEmpty()
+" Remove spaces between quotes (> > to >>).
+silent! %s/^\(>\+\) >/\1>/g
+silent! %s/^\(>\+\) >/\1>/g
+
+"call s:FormatQuotes() " doesn't work with pre-formatted text
+
+%call s:QuoteDelEmpty()
 
 call s:CursorStart()
 
