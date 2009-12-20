@@ -7,12 +7,23 @@ let mapleader=","
 " remove all autocommands to avoid sourcing them twice
 autocmd!
 
+augroup gui
+    autocmd GUIEnter * colorscheme desert
+    autocmd GUIEnter * set guifont=DejaVu\ Sans\ Mono\ 8
+    autocmd GUIEnter * set listchars=tab:»-,trail:␣,nbsp:~
+
+    autocmd GUIEnter * set guioptions+=c " use console dialogs
+    autocmd GUIEnter * set guioptions-=e " don't use gui tabs
+    autocmd GUIEnter * set guioptions-=T " don't show toolbar
+
+    " "no", "yes" or "menu"; how to use the ALT key
+"    autocmd GUIEnter * set winaltkeys=no
+augroup END
+
 "au BufWritePost ~/.vimrc so ~/.vimrc
 
-"if has("gui_running")
-    autocmd InsertLeave * set nocul
-    autocmd InsertEnter * set cul
-"endif
+autocmd InsertLeave * set nocul
+autocmd InsertEnter * set cul
 
 autocmd BufNewFile,BufReadPost * call LoadProjectConfig(expand("%:p:h"))
 
@@ -125,11 +136,7 @@ set lazyredraw
 " show <Tab> as ^I and end-of-line as $ (local to window)
 set list
 " list of strings used for list mode
-if has("gui_running")
-    set listchars=tab:»-,trail:␣,nbsp:~
-else
-    set listchars=tab:»-,trail:·,nbsp:~
-endif
+set listchars=tab:»-,trail:·,nbsp:~
 
 " show the line number for each line (local to window)
 set number
@@ -141,11 +148,7 @@ set background=dark
 " highlight all matches for the last used search pattern
 set hlsearch
 
-if has("gui_running")
-    colorscheme desert
-else
-    colorscheme desert256
-endif
+colorscheme desert256
 
 " multiple windows {{{1
 
@@ -200,20 +203,7 @@ set ttymouse=xterm
 
 " GUI {{{1
 
-if has("gui_running")
-    " list of font names to be used in the GUI
-    set guifont=DejaVu\ Sans\ Mono\ 8
-
-    " list of flags that specify how the GUI works
-    set guioptions+=c
-    set guioptions-=T
-    set guioptions-=e
-
-    " "no", "yes" or "menu"; how to use the ALT key
-    "set winaltkeys=no
-
-    hi SignColumn guibg=grey20
-endif
+" done in autocommands
 
 if exists('&macatsui')
     set nomacatsui
