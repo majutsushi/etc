@@ -266,6 +266,9 @@ set complete-=i
 "set completeopt=longest,menu,preview
 set completeopt=longest,menu
 
+" list of dictionary files for keyword completion (global or local to buffer)
+set dictionary=/usr/share/dict/words
+
 " the "~" command behaves like an operator
 set tildeop
 " When inserting a bracket, briefly jump to its match
