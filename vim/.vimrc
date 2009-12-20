@@ -1185,6 +1185,10 @@ nmap <silent> <C-Down> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eva
 " indent for C/C++ programs
 nmap <Leader>i :%!astyle<CR>
 
+" remove trailing whitespace
+nmap ,tr :%s/\s\+$//
+xmap ,tr  :s/\s\+$//
+
 " open main viki
 nmap <Leader>vh :VikiHome<CR>
 
