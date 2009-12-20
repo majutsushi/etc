@@ -68,12 +68,12 @@ au BufNewFile *.rb Vimplate ruby
 au BufNewFile Makefile Vimplate Makefile-C
 
 " FSwitch setup
-au BufEnter *.c   let b:fswitchdst  = 'h'
-au BufEnter *.c   let b:fswitchlocs = './'
-au BufEnter *.cpp let b:fswitchdst  = 'h,hpp'
-au BufEnter *.cpp let b:fswitchlocs = './'
-au BufEnter *.h   let b:fswitchdst  = 'cpp,c'
-au BufEnter *.h   let b:fswitchlocs = './'
+au BufEnter *.c        let b:fswitchdst  = 'h'
+au BufEnter *.c        let b:fswitchlocs = './'
+au BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
+au BufEnter *.cpp,*.cc let b:fswitchlocs = './'
+au BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
+au BufEnter *.h        let b:fswitchlocs = './'
 
 au BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.h TlistUpdate
 "au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
