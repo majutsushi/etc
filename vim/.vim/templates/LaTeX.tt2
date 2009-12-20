@@ -76,6 +76,8 @@
 %\renewcommand{\sfdefault}{fvs} % Bera sans
 %\renewcommand{\sfdefault}{fvm} % Bera mono
 
+%\usepackage{inconsolata} % inconsolata monospace font
+
 % use palatino and correspondig fonts
 %\usepackage[sc]{mathpazo}
 %\linespread{1.05}         % Palatino needs more leading (space between lines)
