@@ -8,16 +8,7 @@ let mapleader=","
 autocmd!
 
 augroup gui
-    autocmd GUIEnter * colorscheme desert
-    autocmd GUIEnter * set guifont=DejaVu\ Sans\ Mono\ 8
-    autocmd GUIEnter * set listchars=tab:»-,trail:␣,nbsp:~
-
-    autocmd GUIEnter * set guioptions+=c " use console dialogs
-    autocmd GUIEnter * set guioptions-=e " don't use gui tabs
-    autocmd GUIEnter * set guioptions-=T " don't show toolbar
-
-    " "no", "yes" or "menu"; how to use the ALT key
-"    autocmd GUIEnter * set winaltkeys=no
+    autocmd GUIEnter * call GuiSettings()
 augroup END
 
 "au BufWritePost ~/.vimrc so ~/.vimrc
@@ -206,7 +197,7 @@ set ttymouse=xterm
 
 " GUI {{{1
 
-" done in autocommands
+" see GuiSettings()
 
 if exists('&macatsui')
     set nomacatsui
@@ -691,6 +682,24 @@ function! GetTabstop()
     endif
     return str
 endfunction
+
+" GuiSettings() {{{2
+function! GuiSettings()
+    colorscheme desert
+    set guifont=DejaVu\ Sans\ Mono\ 8
+    set listchars=tab:»-,trail:␣,nbsp:~
+
+    set guioptions+=c " use console dialogs
+    set guioptions-=e " don't use gui tabs
+    set guioptions-=T " don't show toolbar
+
+    " "no", "yes" or "menu"; how to use the ALT key
+"   set winaltkeys=no
+endfunction
+
+if has("gui_running")
+    call GuiSettings()
+endif
 
 " InsertGuards() {{{2
 function! InsertGuards()
