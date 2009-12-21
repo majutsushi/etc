@@ -1231,7 +1231,7 @@ inoremap  
 "inoremap  
 "inoremap  
 
-inoremap  <Esc><Right>
+"inoremap  <Esc><Right>
 
 nmap <M-,>     :bprevious!<CR>
 nmap <M-.>     :bnext!<CR>
