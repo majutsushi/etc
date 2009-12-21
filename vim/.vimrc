@@ -95,6 +95,8 @@ set define=^\\(\\s*#\\s*define\\\|[a-z]*\\s*const\\s*[a-z]*\\)
 
 " tags {{{1
 
+" when completing tags in Insert mode show more info
+set showfulltag
 " use cscope for tag commands
 set cscopetag
 " give messages when adding a cscope database
@@ -119,6 +121,8 @@ set showbreak=+\
 " include "lastline" to show the last line even if it doesn't fit
 " include "uhex" to show unprintable characters as a hex number
 set display=lastline
+" characters to use for the status line, folds and filler lines
+set fillchars=
 " number of lines used for the command-line
 "set cmdheight=2
 " don't redraw while executing macros
@@ -127,7 +131,7 @@ set lazyredraw
 " show <Tab> as ^I and end-of-line as $ (local to window)
 set list
 " list of strings used for list mode
-set listchars=tab:»-,trail:·,nbsp:~
+set listchars=tab:»-,trail:·,nbsp:~,precedes:«,extends:»
 
 " show the line number for each line (local to window)
 set number
@@ -251,8 +255,10 @@ set formatoptions+=rol2n
 
 " specifies how Insert mode completion works for CTRL-N and CTRL-P
 " (local to buffer)
-set complete+=k
-set complete-=i
+set complete-=u " scan the unloaded buffers that are in the buffer list
+"set complete+=k " scan the files given with the 'dictionary' option
+set complete-=i " scan current and included files
+
 " whether to use a popup menu for Insert mode completion
 "set completeopt=longest,menu,preview
 set completeopt=longest,menu
@@ -295,6 +301,8 @@ set nofoldenable
 "set foldlevel=100
 " width of the column used to indicate folds (local to window)
 "set foldcolumn=3
+" specifies for which commands a fold will be opened
+set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
 " diff mode {{{1
 
@@ -417,6 +425,7 @@ let g:EasyGrepReplaceAllPerFile = 0
 " enhanced-commentify {{{2
 " let g:EnhCommentifyRespectIndent = 'Yes'
 " let g:EnhCommentifyPretty = 'Yes'
+let g:EnhCommentifyBindInInsert = 'No'
 let g:EnhCommentifyTraditionalMode = 'No'
 let g:EnhCommentifyFirstLineMode = 'Yes'
 
@@ -687,7 +696,7 @@ endfunction
 function! GuiSettings()
     colorscheme desert
     set guifont=DejaVu\ Sans\ Mono\ 8
-    set listchars=tab:»-,trail:␣,nbsp:~
+    set listchars=tab:»-,trail:␣,nbsp:~,precedes:«,extends:»
 
     set guioptions+=c " use console dialogs
     set guioptions-=e " don't use gui tabs
