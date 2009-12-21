@@ -1089,6 +1089,9 @@ cnoremap <C-P> <Up>
 "inoremap <Tab>   <Tab><C-G>u
 imap <CR>    <CR><C-G>u
 
+" Swap two words
+nmap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
+
 nmap <silent> <leader>b <Plug>SelectBuf
 " needed to keep SelectBuf from complaining about existing maps
 imap <silent> <S-F1> <ESC><Plug>SelectBuf
