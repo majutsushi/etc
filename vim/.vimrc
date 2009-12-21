@@ -507,6 +507,10 @@ let g:deplatePrg = "deplate -x -X "
 let g:vikiNameSuffix=".viki"
 let g:vikiHomePage = "~/projects/viki/Main.viki"
 
+" vimfootnotes {{{2
+imap Ǣf <Plug>AddVimFootnote
+imap Ǣr <Plug>ReturnFromFootnote
+
 " vim-latexsuite {{{2
 " default format for .tex filetype recognition
 let g:tex_flavor = "latex"
@@ -1029,9 +1033,9 @@ endif
 
 let vimrc='~/.vimrc'
 let myabbr='~/.vim/abbrevs.vim'
-nn  <leader>vs :source <C-R>=vimrc<CR><CR>
-nn  <leader>ve :edit   <C-R>=vimrc<CR><CR>
-nn  <leader>vb :edit   <C-R>=myabbr<CR><CR>
+nnoremap <leader>vs :source <C-R>=vimrc<CR><CR>
+nnoremap <leader>ve :edit   <C-R>=vimrc<CR><CR>
+nnoremap <leader>vb :edit   <C-R>=myabbr<CR><CR>
 
 nmap <C-W>e :enew<CR>
 
@@ -1110,12 +1114,12 @@ set pastetoggle=<F4>
 
 " remove search highlighting
 "map <silent> <F5> :silent nohl<cr>
-map <silent> <M-/> :silent nohl<cr>
+nmap <silent> <leader>n :silent nohl<cr>
 
 " delete buffer and close window
-map <F8>  :bd<C-M>
+nmap <F8>  :bd<C-M>
 " delete buffer, but keep window
-map <S-F8> :call Bclose()<cr>
+nmap <S-F8> :call Bclose()<cr>
 
 nmap <silent> <F9>  :Tlist<CR>
 "nmap <silent> <C-F9> :call PreviewWord(0)<CR>
@@ -1141,20 +1145,18 @@ imap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
 imap <c-a> <esc>0i
 
 " Switch to current dir
-map <silent> <leader>cd :cd %:p:h<cr>
+nmap <silent> <leader>cd :cd %:p:h<cr>
+nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
+
 
 " quickfix
-map <leader>cn :cnext<cr>
-map <leader>cp :cprevious<cr>
-map <leader>co :botright copen<cr>
-map <leader>cc :cclose<cr>
-map <leader>cl :clist<cr>
+nmap <leader>cn :cnext<cr>
+nmap <leader>cp :cprevious<cr>
+nmap <leader>co :botright copen<cr>
+nmap <leader>cc :cclose<cr>
+nmap <leader>cl :clist<cr>
 
-" cycle fast through errors ...
-map <m-n> :cn<cr>
-map <m-p> :cp<cr>
-
-map <silent> <leader>g :silent !gitk<cr>
+nmap <silent> <leader>g :silent !gitk<cr>
 
 nmap <silent> <leader>ga :GNOMEAlignArguments<CR>
 
@@ -1190,7 +1192,7 @@ xnoremap §2 <esc>`>a]<esc>`<i[<esc>
 xnoremap §3 <esc>`>a}<esc>`<i{<esc>
 
 " Fast open a buffer by searching for a name
-map <c-q> :b 
+nmap <c-q> :b 
 
 " Search for the current selection
 xnoremap <silent> * :call VisualSearch('f')<CR>
@@ -1225,10 +1227,10 @@ inoremap  
 
 inoremap  <Esc><Right>
 
-map <M-,>     :bprevious!<CR>
-map <M-.>     :bnext!<CR>
-map <M-Left>  :tabprevious<CR>
-map <M-Right> :tabnext<CR>
+nmap <M-,>     :bprevious!<CR>
+nmap <M-.>     :bnext!<CR>
+nmap <M-Left>  :tabprevious<CR>
+nmap <M-Right> :tabnext<CR>
 
 " ;rcm = remove "control-m"s - for those mails sent from DOS:
 cmap ;rcm %s/<C-M>//g
