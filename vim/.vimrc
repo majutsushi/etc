@@ -449,6 +449,8 @@ let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
 let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$']
 let NERDTreeHijackNetrw = 0
 
+nmap <silent> <F10> :NERDTreeToggle<CR>
+
 " omnicppcomplete {{{2
 let g:OmniCpp_SelectFirstItem = 2 " select first completion item, but don't insert it
 let g:OmniCpp_ShowPrototypeInAbbr = 1
@@ -481,6 +483,8 @@ let Tlist_Sort_Type = "name"
 "let g:tlist_tex_settings = 'tex;c:chapters;s:sections;u:subsections;b:subsubsections;p:parts;P:paragraphs;G:subparagraphs;i:includes'
 let tlist_tex_settings   = 'latex;s:sections;g:graphics;l:labels;r:refs;p:pagerefs'
 
+nmap <silent> <F9> :Tlist<CR>
+
 " timestamp {{{2
 let g:timestamp_modelines = 20
 let g:timestamp_rep = '%Y-%m-%d %H:%M:%S %z %Z'
@@ -506,6 +510,9 @@ let g:vikiMapQParaKeys = ""
 let g:deplatePrg = "deplate -x -X "
 let g:vikiNameSuffix=".viki"
 let g:vikiHomePage = "~/projects/viki/Main.viki"
+
+" open main viki
+nmap <Leader>vh :VikiHome<CR>
 
 " vimfootnotes {{{2
 imap Ǣf <Plug>AddVimFootnote
@@ -563,7 +570,7 @@ function! Bclose()
     endif
 endfunction
 
-" DiffOrig {{{2
+" DiffOrig() {{{2
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
@@ -986,7 +993,6 @@ function! GPicker()
     let l:filet = substitute(l:filet, '\n', "", "g")
     execute "edit " . fnameescape(l:filet)
 endfunction
-map ,e :call GPicker()<CR>
 
 " Abbrevs {{{1
 source ~/.vim/abbrevs.vim
@@ -1031,33 +1037,24 @@ endif
 
 " Mappings {{{1
 
-let vimrc='~/.vimrc'
-let myabbr='~/.vim/abbrevs.vim'
-nnoremap <leader>vs :source <C-R>=vimrc<CR><CR>
-nnoremap <leader>ve :edit   <C-R>=vimrc<CR><CR>
-nnoremap <leader>vb :edit   <C-R>=myabbr<CR><CR>
+" Buffers/Files {{{2
 
-nmap <C-W>e :enew<CR>
+nmap <silent> <leader>b <Plug>SelectBuf
+" needed to keep SelectBuf from complaining about existing maps
+imap <silent> <S-F1> <ESC><Plug>SelectBuf
 
-" Control-Space for omnicomplete
-inoremap <C-Space> <C-X><C-O>
+" Fast open a buffer by searching for a name
+nmap <c-q> :b 
 
-" create undo break points
-inoremap <C-U> <C-G>u<C-U>
+nmap <M-,>     :bprevious!<CR>
+nmap <M-.>     :bnext!<CR>
+nmap <M-Left>  :tabprevious<CR>
+nmap <M-Right> :tabnext<CR>
 
-" make some jumps more intuitive
-nnoremap ][ ]]
-nnoremap ]] ][
-
-" copy to/from the x cut-buffer
-nmap <S-Insert> "+gP
-xmap <S-Insert> "-d"+P
-imap <S-Insert> <C-R>+
-cmap <S-Insert> <C-R>+
-imap <C-Insert> <C-O>"+y
-xmap <C-Insert> "+y
-xmap <S-Del> "+d
-imap <C-Del> <C-O>daw
+" delete buffer and close window
+nmap   <F8> :bd<C-M>
+" delete buffer, but keep window
+nmap <S-F8> :call Bclose()<cr>
 
 " change tabs fast
 nmap <M-1> 1gt
@@ -1070,71 +1067,7 @@ nmap <M-7> 7gt
 nmap <M-8> 8gt
 nmap <M-9> 9gt
 
-nnoremap j gj
-nnoremap k gk
-
-" emacs-like keys in command line
-cnoremap <C-A> <Home>
-cnoremap <C-B> <Left>
-cnoremap <C-D> <Del>
-cnoremap <C-E> <End>
-cnoremap <C-F> <Right>
-cnoremap <C-N> <Down>
-cnoremap <C-P> <Up>
-"cnoremap <Esc><C-B>     <S-Left>
-"cnoremap <Esc><C-F>     <S-Right>
-
-" create an undo point after each word
-" imap <Space> <Space><C-G>u
-"inoremap <Tab>   <Tab><C-G>u
-imap <CR>    <CR><C-G>u
-
-" Swap two words
-nmap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
-
-nmap <silent> <leader>b <Plug>SelectBuf
-" needed to keep SelectBuf from complaining about existing maps
-imap <silent> <S-F1> <ESC><Plug>SelectBuf
-
-" have \tl ("toggle list") toggle list on/off and report the change:
-nnoremap \tl :set invlist list?<CR>
-nmap <F2> \tl
-nmap <S-F2> :call ToggleExpandTab()<CR>
-
-" have \tf ("toggle format") toggle the automatic insertion of line breaks
-" during typing and report the change:
-nnoremap \tf :if &fo =~ 't' <Bar> set fo-=t <Bar> else <Bar> set fo+=t <Bar>
-   \ endif <Bar> set fo?<CR>
-nmap <F3> \tf
-imap <F3> <C-O>\tf
-
-" have \tp ("toggle paste") toggle paste on/off and report the change, and
-" where possible also have <F4> do this both in normal and insert mode:
-nnoremap \tp :set invpaste paste?<CR>
-nmap <F4> \tp
-imap <F4> <C-O>\tp
-set pastetoggle=<F4>
-
-" remove search highlighting
-"map <silent> <F5> :silent nohl<cr>
-nmap <silent> <leader>n :silent nohl<cr>
-
-" delete buffer and close window
-nmap <F8>  :bd<C-M>
-" delete buffer, but keep window
-nmap <S-F8> :call Bclose()<cr>
-
-" set text wrapping toggles
-nmap <silent> <leader>w :set invwrap wrap?<CR>
-
-nmap <silent> <F9>  :Tlist<CR>
-"nmap <silent> <C-F9> :call PreviewWord(0)<CR>
-"nmap <silent> <S-F9> :call PreviewWord(1)<CR>
-nmap <silent> <leader>pw :call PreviewWord(0)<CR>
-nmap <silent> <leader>pl :call PreviewWord(1)<CR>
-
-nmap <silent> <F10> :NERDTreeToggle<CR>
-nnoremap <S-F10> :call ManCscopeAndTags()<CR>
+nmap <C-W>e :enew<CR>
 
 " FSwitch mappings
 nmap <silent> <Leader>of :FSHere<cr>
@@ -1147,35 +1080,18 @@ nmap <silent> <Leader>oK :FSSplitAbove<cr>
 nmap <silent> <Leader>oj :FSBelow<cr>
 nmap <silent> <Leader>oJ :FSSplitBelow<cr>
 
-imap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
-imap <c-a> <esc>0i
+nmap <leader>e :call GPicker()<CR>
 
-" Switch to current dir
-nmap <silent> <leader>cd :cd %:p:h<cr>
-nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
+let vimrc='~/.vimrc'
+let myabbr='~/.vim/abbrevs.vim'
+nnoremap <leader>vs :source <C-R>=vimrc<CR><CR>
+nnoremap <leader>ve :edit   <C-R>=vimrc<CR><CR>
+nnoremap <leader>vb :edit   <C-R>=myabbr<CR><CR>
 
+" Text manipulation {{{2
 
-" quickfix
-nmap <leader>cn :cnext<cr>
-nmap <leader>cp :cprevious<cr>
-nmap <leader>co :botright copen<cr>
-nmap <leader>cc :cclose<cr>
-nmap <leader>cl :clist<cr>
-
-nmap <silent> <leader>g :silent !gitk<cr>
-
-nmap <silent> <leader>ga :GNOMEAlignArguments<CR>
-
-" highlight long lines
-nnoremap <silent> <Leader>hl
-      \ :if exists('w:long_line_match') <Bar>
-      \   silent! call matchdelete(w:long_line_match) <Bar>
-      \   unlet w:long_line_match <Bar>
-      \ elseif &textwidth > 0 <Bar>
-      \   let w:long_line_match = matchadd('ErrorMsg', '\%>'.&tw.'v.\+', -1) <Bar>
-      \ else <Bar>
-      \   let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1) <Bar>
-      \ endif<CR>
+" Control-Space for omnicomplete
+inoremap <C-Space> <C-X><C-O>
 
 " for pupop-menu completion
 " http://www.vim.org/tips/tip.php?tip_id=1386
@@ -1190,6 +1106,46 @@ inoremap <expr> <Up>       pumvisible()?"\<C-P>":"\<Up>"
 inoremap <expr> <PageDown> pumvisible()?"\<PageDown>\<C-P>\<C-N>":"\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible()?"\<PageUp>\<C-P>\<C-N>":"\<PageUp>"
 
+" insert mode completion
+inoremap  
+inoremap  
+"inoremap  
+"inoremap  
+
+" create undo break points
+inoremap <C-U> <C-G>u<C-U>
+
+" create an undo point after each word
+" imap <Space> <Space><C-G>u
+"inoremap <Tab>   <Tab><C-G>u
+imap <CR>    <CR><C-G>u
+
+" Swap two words
+nmap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
+
+" have Y behave analogously to D and C rather than to dd and cc (which is
+" already done by yy):
+nnoremap Y y$
+
+" toggle paste
+nmap <F3> :set invpaste paste?<CR>
+imap <F3> <C-O>:set invpaste paste?<CR>
+set pastetoggle=<F3>
+
+nmap <S-F2> :call ToggleExpandTab()<CR>
+
+" copy to/from the x cut-buffer
+nmap <S-Insert> "+gP
+xmap <S-Insert> "-d"+P
+imap <S-Insert> <C-R>+
+cmap <S-Insert> <C-R>+
+imap <C-Insert> <C-O>"+y
+xmap <C-Insert> "+y
+xmap <S-Del>    "+d
+imap <C-Del>    <C-O>daw
+
+nmap <silent> <leader>ga :GNOMEAlignArguments<CR>
+
 " Parenthesis/bracket expanding
 xnoremap §§ <esc>`>a"<esc>`<i"<esc>
 xnoremap §q <esc>`>a'<esc>`<i'<esc>
@@ -1197,48 +1153,97 @@ xnoremap §1 <esc>`>a)<esc>`<i(<esc>
 xnoremap §2 <esc>`>a]<esc>`<i[<esc>
 xnoremap §3 <esc>`>a}<esc>`<i{<esc>
 
-" Fast open a buffer by searching for a name
-nmap <c-q> :b 
+" remove trailing whitespace
+nmap <leader>tr :%s/\s\+$//
+xmap <leader>tr  :s/\s\+$//
+
+" indent for C/C++ programs
+nmap <leader>i :%!astyle<CR>
+
+" Moving around {{{2
+
+" make some jumps more intuitive
+nnoremap ][ ]]
+nnoremap ]] ][
+
+" move into wrapped lines
+nnoremap j gj
+nnoremap k gk
+
+" emacs-like c-a/c-e movement
+imap        <c-a> <esc>0i
+imap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
 
 " Search for the current selection
 xnoremap <silent> * :call VisualSearch('f')<CR>
 xnoremap <silent> # :call VisualSearch('b')<CR>
 
+" quickfix
+nmap <leader>cn :cnext<cr>
+nmap <leader>cp :cprevious<cr>
+nmap <leader>co :botright copen<cr>
+nmap <leader>cc :cclose<cr>
+nmap <leader>cl :clist<cr>
+
+" Display {{{2
+
+" toggle folds
+nnoremap <space> :call ToggleFold()<CR>
+
+" toggle showing 'listchars'
+nmap <F2> :set invlist list?<CR>
+
+" remove search highlighting
+nmap <silent> <leader>n :silent nohl<cr>
+
+" toggle text wrapping
+nmap <silent> <leader>w :set invwrap wrap?<CR>
+
+" preview tag definitions
+nmap <silent> <leader>pw :call PreviewWord(0)<CR>
+nmap <silent> <leader>pl :call PreviewWord(1)<CR>
+
+" highlight long lines
+nnoremap <silent> <Leader>hl
+      \ :if exists('w:long_line_match') <Bar>
+      \   silent! call matchdelete(w:long_line_match) <Bar>
+      \   unlet w:long_line_match <Bar>
+      \ elseif &textwidth > 0 <Bar>
+      \   let w:long_line_match = matchadd('ErrorMsg', '\%>'.&tw.'v.\+', -1) <Bar>
+      \ else <Bar>
+      \   let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1) <Bar>
+      \ endif<CR>
+
 " change font size with c-up/down
 nmap <silent> <C-Up> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)+1)', '')<CR>
 nmap <silent> <C-Down> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)-1)', '')<CR>
 
-" indent for C/C++ programs
-nmap <Leader>i :%!astyle<CR>
+" Command line {{{2
 
-" remove trailing whitespace
-nmap ,tr :%s/\s\+$//
-xmap ,tr  :s/\s\+$//
-
-" open main viki
-nmap <Leader>vh :VikiHome<CR>
-
-" see functions
-noremap <space> :call ToggleFold()<CR>
-
-" have Y behave analogously to D and C rather than to dd and cc (which is
-" already done by yy):
-noremap Y y$
-
-" insert mode completion
-inoremap  
-inoremap  
-"inoremap  
-"inoremap  
-
-"inoremap  <Esc><Right>
-
-nmap <M-,>     :bprevious!<CR>
-nmap <M-.>     :bnext!<CR>
-nmap <M-Left>  :tabprevious<CR>
-nmap <M-Right> :tabnext<CR>
+" emacs-like keys in command line
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-D> <Del>
+cnoremap <C-E> <End>
+cnoremap <C-F> <Right>
+cnoremap <C-N> <Down>
+cnoremap <C-P> <Up>
+"cnoremap <Esc><C-B>     <S-Left>
+"cnoremap <Esc><C-F>     <S-Right>
 
 " ;rcm = remove "control-m"s - for those mails sent from DOS:
 cmap ;rcm %s/<C-M>//g
+
+" Misc {{{2
+
+" Switch to current dir
+nmap <silent> <leader>cd :cd %:p:h<cr>
+nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
+
+nnoremap <S-F10> :call ManCscopeAndTags()<CR>
+
+nmap <silent> <leader>gk :silent !gitk<cr>
+
+"inoremap  <Esc><Right>
 
 " vim:tw=78 expandtab comments=\:\" foldmethod=marker foldenable
