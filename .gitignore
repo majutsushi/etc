@@ -3,6 +3,7 @@
 
 mutt/.mutt/smtp-*
 mutt/.mutt/imap-*
+vim/.vim/doc/tags-ja
 vim/.vim/systags
 vim/.vim/.netrwhist
 vim/.vim/cache
