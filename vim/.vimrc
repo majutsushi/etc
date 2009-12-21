@@ -1,7 +1,8 @@
 " This must be at the beginning
 set nocompatible
 let mapleader=","
-set runtimepath+=$HOME/.vim/xpt
+set runtimepath+=~/src/vim-latex/vimfiles
+set runtimepath+=~/.vim/xpt
 
 " Autocommands {{{1
 

@@ -1,1 +1,0 @@
-../../../../src/vim-latex/vimfiles/plugin/SyntaxFolds.vim
