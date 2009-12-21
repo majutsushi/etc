@@ -1124,6 +1124,9 @@ nmap <F8>  :bd<C-M>
 " delete buffer, but keep window
 nmap <S-F8> :call Bclose()<cr>
 
+" set text wrapping toggles
+nmap <silent> <leader>w :set invwrap wrap?<CR>
+
 nmap <silent> <F9>  :Tlist<CR>
 "nmap <silent> <C-F9> :call PreviewWord(0)<CR>
 "nmap <silent> <S-F9> :call PreviewWord(1)<CR>
