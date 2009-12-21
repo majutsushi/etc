@@ -4,565 +4,6 @@ let mapleader=","
 set runtimepath+=~/src/vim-latex/vimfiles
 set runtimepath+=~/.vim/xpt
 
-" Autocommands {{{1
-
-" remove all autocommands to avoid sourcing them twice
-autocmd!
-
-augroup gui
-    autocmd GUIEnter * call GuiSettings()
-augroup END
-
-"au BufWritePost ~/.vimrc so ~/.vimrc
-
-autocmd InsertLeave * set nocul
-autocmd InsertEnter * set cul
-
-autocmd BufNewFile,BufReadPost * call LoadProjectConfig(expand("%:p:h"))
-
-" create undo break point
-autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
-
-"au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
-
-" filetype-specific settings
-au Filetype html,xml,xsl source ~/.vim/macros/closetag.vim
-au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
-au FileType tex let b:vikiFamily="LaTeX"
-au FileType viki compiler deplate
-au FileType gtkrc setlocal tabstop=2 shiftwidth=2
-au FileType haskell compiler ghc
-au FileType mkd setlocal ai formatoptions=tcroqn2 comments=n:>
-au FileType ruby setlocal omnifunc=rubycomplete#Complete
-au FileType gitcommit DiffGitCached | wincmd p
-au FileType python setlocal foldmethod=indent
-au FileType python setlocal omnifunc=pythoncomplete#Complete
-
-augroup cfile
-    "au FileType c setlocal path+=/usr/include,/usr/include/sys,/usr/include/linux
-    au FileType c,cpp setlocal foldmethod=syntax
-    au FileType c,cpp setlocal tags+=~/.vim/systags/systags
-    au FileType c,cpp setlocal cinoptions=t0,(0,)50
-augroup END
-
-augroup java
-    au FileType java compiler javac
-    au FileType java setlocal omnifunc=javacomplete#Complete
-    au FileType java setlocal completefunc=javacomplete#CompleteParamsInfo
-"    au FileType java setlocal cinoptions=t0,(0,j1,)50 " see after/indent/java.vim
-augroup END
-
-" setup templates
-au BufNewFile *.tex Vimplate LaTeX
-au BufNewFile *.sh Vimplate shell
-au BufNewFile *.c Vimplate c
-au BufNewFile *.vim Vimplate vim
-au BufNewFile *.rb Vimplate ruby
-au BufNewFile Makefile Vimplate Makefile-C
-
-" FSwitch setup
-au BufEnter *.c        let b:fswitchdst  = 'h'
-au BufEnter *.c        let b:fswitchlocs = './'
-au BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
-au BufEnter *.cpp,*.cc let b:fswitchlocs = './'
-au BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
-au BufEnter *.h        let b:fswitchlocs = './'
-
-au BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.h TlistUpdate
-"au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
-"au CursorMoved,CursorMovedI *   TlistHighlightTag
-"au CursorMoved,CursorMovedI * endif
-
-au BufWritePost,FileWritePost *.sh silent !chmod u+x %
-
-" important {{{1
-set cpoptions+=$
-
-" moving around, searching and patterns {{{1
-
-" list of flags specifying which commands wrap to another line (local to window)
-set whichwrap=<,>,b,s,[,]
-" change to directory of file in buffer
-"set autochdir
-
-" show match for partly typed search command
-set incsearch
-" ignore case when using a search pattern
-set ignorecase
-" override 'ignorecase' when pattern has upper case characters
-set smartcase
-
-" pattern for a macro definition line (global or local to buffer)
-set define=^\\(\\s*#\\s*define\\\|[a-z]*\\s*const\\s*[a-z]*\\)
-
-" tags {{{1
-
-" when completing tags in Insert mode show more info
-set showfulltag
-" use cscope for tag commands
-set cscopetag
-" give messages when adding a cscope database
-set cscopeverbose
-" When to open a quickfix window for cscope
-set cscopequickfix=s-,c-,d-,i-,t-,e-
-
-" displaying text {{{1
-
-" number of screen lines to show around the cursor
-set scrolloff=5
-
-" long lines wrap
-set wrap
-" wrap long lines at a character in 'breakat' (local to window)
-set linebreak
-" which characters might cause a line break
-"set breakat=\ ^I
-" string to put before wrapped screen lines
-set showbreak=+\ 
-
-" include "lastline" to show the last line even if it doesn't fit
-" include "uhex" to show unprintable characters as a hex number
-set display=lastline
-" characters to use for the status line, folds and filler lines
-set fillchars=
-" number of lines used for the command-line
-"set cmdheight=2
-" don't redraw while executing macros
-set lazyredraw
-
-" show <Tab> as ^I and end-of-line as $ (local to window)
-set list
-" list of strings used for list mode
-set listchars=tab:»-,trail:·,nbsp:~,precedes:«,extends:»
-
-" show the line number for each line (local to window)
-set number
-
-" syntax, highlighting and spelling {{{1
-
-" "dark" or "light"; the background color brightness
-set background=dark
-" highlight all matches for the last used search pattern
-set hlsearch
-
-" methods used to suggest corrections
-set spellsuggest=best,10
-
-colorscheme desert256
-
-" multiple windows {{{1
-
-" 0, 1 or 2; when to use a status line for the last window
-set laststatus=2
-" alternate format to be used for a status line
-set statusline=%!GenerateStatusline()
-" default height for the preview window
-set previewheight=9
-" don't unload a buffer when no longer shown in a window
-set hidden
-" "useopen" and/or "split"; which window to use when jumping to a buffer
-set switchbuf=useopen " or usetab
-" a new window is put below the current one
-"set splitbelow
-
-" multiple tab pages {{{1
-
-if exists("+showtabline")
-    " 0, 1 or 2; when to use a tab pages line
-    set showtabline=1
-    " custom tab pages line
-    set tabline=%!MyTabLine()
-endif
-
-" terminal {{{1
-
-" terminal connection is fast
-set ttyfast
-" show info in the window title
-set title
-
-if (&term =~ "xterm")
-    set t_Co=256
-endif
-
-" http://ft.bewatermyfriend.org/comp/vim/vimrc.html
-if (&term =~ '^screen')
-    set t_ts=k
-    set t_fs=\
-    autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
-endif
-
-" using the mouse {{{1
-
-" list of flags for using the mouse
-set mouse=a
-" "extend", "popup" or "popup_setpos"; what the right mouse button is used for
-set mousemodel=popup
-" "xterm", "xterm2", "dec" or "netterm"; type of mouse
-set ttymouse=xterm
-
-" GUI {{{1
-
-" see GuiSettings()
-
-if exists('&macatsui')
-    set nomacatsui
-endif
-
-" printing {{{1
-
-" list of items that control the format of :hardcopy output
-set printoptions=number:y,paper:A4,left:5pc,right:5pc,top:5pc,bottom:5pc
-" name of the font to be used for :hardcopy
-set printfont=Monospace\ 8
-
-" expression used to print the PostScript file for :hardcopy
-set printexpr=PrintFile(v:fname_in)
-function! PrintFile(fname)
-"    call system("lp " . (&printdevice == '' ? '' : ' -s -d' . &printdevice) . ' ' . a:fname)
-    call system("evince " . a:fname)
-    call delete(a:fname)
-    return v:shell_error
-endfunc
-
-" messages and info {{{1
-
-" list of flags to make messages shorter
-set shortmess=atI
-" show (partial) command keys in the status line
-set showcmd
-" display the current mode in the status line
-set showmode
-" show cursor position below each window
-set ruler
-" pause listings when the screen is full
-set more
-" start a dialog when a command fails
-set confirm
-" use a visual bell instead of beeping
-"set visualbell
-
-" selecting text {{{1
-
-" editing text {{{1
-
-" maximum number of changes that can be undone
-set undolevels=1000
-" line length above which to break a line (local to buffer)
-set textwidth=78
-" specifies what <BS>, CTRL-W, etc. can do in Insert mode
-set backspace=indent,eol,start
-" list of flags that tell how automatic formatting works (local to buffer)
-set formatoptions+=rol2n
-
-" specifies how Insert mode completion works for CTRL-N and CTRL-P
-" (local to buffer)
-set complete-=u " scan the unloaded buffers that are in the buffer list
-"set complete+=k " scan the files given with the 'dictionary' option
-set complete-=i " scan current and included files
-
-" whether to use a popup menu for Insert mode completion
-"set completeopt=longest,menu,preview
-set completeopt=longest,menu
-
-" list of dictionary files for keyword completion (global or local to buffer)
-set dictionary=/usr/share/dict/words
-
-" the "~" command behaves like an operator
-set tildeop
-" When inserting a bracket, briefly jump to its match
-set showmatch
-" use two spaces after '.' when joining a line
-set nojoinspaces
-
-" tabs and indenting {{{1
-
-" number of spaces a <Tab> in the text stands for (local to buffer)
-set tabstop=8     " should always be 8
-" number of spaces used for each step of (auto)indent (local to buffer)
-set shiftwidth=4
-" a <Tab> in an indent inserts 'shiftwidth' spaces
-"set smarttab      " shiftwidth at start of line, tabstop/sts elsewhere
-" if non-zero, number of spaces to insert for a <Tab> (local to buffer)
-set softtabstop=4 " WARNING: mixes spaces and tabs if >0 and noexpandtab!
-" round to 'shiftwidth' for "<<" and ">>"
-set shiftround
-" expand <Tab> to spaces in Insert mode (local to buffer)
-set expandtab     " WARNING: don't unset if ts != sw
-
-" automatically set the indent of a new line (local to buffer)
-set autoindent
-" do clever autoindenting (local to buffer)
-set smartindent
-
-" folding {{{1
-
-" set to display all folds open (local to window)
-set nofoldenable
-" folds with a level higher than this number will be closed (local to window)
-"set foldlevel=100
-" width of the column used to indicate folds (local to window)
-"set foldcolumn=3
-" specifies for which commands a fold will be opened
-set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
-
-" diff mode {{{1
-
-" options for using diff mode
-set diffopt=filler,vertical
-
-" reading and writing files {{{1
-
-" enable using settings from modelines when reading a file (local to buffer)
-set modeline
-" number of lines to check for modelines
-set modelines=5
-" list of file formats to look for when editing a file
-set fileformats=unix,dos,mac
-
-" keep a backup after overwriting a file
-"set backup
-" list of directories to put backup files in
-"set backupdir= " where to put backup files
-
-" automatically read a file when it was modified outside of Vim
-" (global or local to buffer)
-set autoread
-
-" keep oldest version of a file; specifies file name extension
-"set patchmode=.orig
-
-" the swap file {{{1
-
-" list of directories for the swap file
-"set directory=
-" number of characters typed to cause a swap file update
-set updatecount=100
-" time in msec after which the swap file will be updated
-set updatetime=2000
-
-" command line editing {{{1
-
-" how many command lines are remembered
-set history=100
-
-" specifies how command line completion works
-set wildmode=list:longest,full
-" list of file name extensions that have a lower priority
-set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm
-" list of file name extensions added when searching for a file (local to buffer)
-set suffixesadd=.rb
-" list of patterns to ignore files for file name completion
-set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.out,*.class
-" command-line completion shows a list of matches
-"set wildmenu
-
-" running make and jumping to errors {{{1
-
-" program used for the ":grep" command (global or local to buffer)
-set grepprg=ack-grep
-
-" multi-byte characters {{{1
-
-" character encoding used in Vim: "latin1", "utf-8" "euc-jp", "big5", etc.
-set encoding=utf-8
-" automatically detected character encodings
-set fileencodings=ucs-bom,utf-8,default,latin1
-
-" various {{{1
-
-filetype plugin indent on
-syntax enable
-
-" when to use virtual editing: "block", "insert" and/or "all"
-set virtualedit=all
-" list that specifies what to write in the viminfo file
-set viminfo=!,'20,<500,:500,s100,h,r/tmp,r/mnt,r/media,n~/.cache/vim/viminfo
-
-" Plugin and script options {{{1
-
-" CCTree {{{2
-let g:CCTreeRecursiveDepth = 2
-let g:CCTreeMinVisibleDepth = 2
-let g:CCTreeOrientation = "leftabove"
-
-" changelog {{{2
-let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
-
-" CheckAttach {{{2
-let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
-
-" code_complete {{{2
-let s:rs = '<+'
-let s:re = '+>'
-
-" detectindent {{{2
-let g:detectindent_preferred_expandtab = 1
-let g:detectindent_preferred_indent = 4
-
-" devhelp {{{2
-let g:devhelpSearch = 1
-let g:devhelpAssistant = 0
-let g:devhelpSearchKey = '<F7>'
-let g:devhelpWordLength = 5
-
-" EasyGrep {{{2
-let g:EasyGrepFileAssociations = globpath(&rtp, 'plugin/EasyGrepFileAssociations', 1)
-let g:EasyGrepMode = 2
-let g:EasyGrepCommand = 0
-let g:EasyGrepRecursive = 1
-let g:EasyGrepIgnoreCase = 1
-let g:EasyGrepHidden = 0
-let g:EasyGrepAllOptionsInExplorer = 1
-let g:EasyGrepWindow = 0
-let g:EasyGrepReplaceWindowMode = 0
-let g:EasyGrepOpenWindowOnMatch = 1
-let g:EasyGrepEveryMatch = 0
-let g:EasyGrepJumpToMatch = 1
-let g:EasyGrepInvertWholeWord = 0
-let g:EasyGrepFileAssociationsInExplorer = 0
-let g:EasyGrepOptionPrefix = '<leader>vy'
-let g:EasyGrepReplaceAllPerFile = 0
-
-" enhanced-commentify {{{2
-" let g:EnhCommentifyRespectIndent = 'Yes'
-" let g:EnhCommentifyPretty = 'Yes'
-let g:EnhCommentifyBindInInsert = 'No'
-let g:EnhCommentifyTraditionalMode = 'No'
-let g:EnhCommentifyFirstLineMode = 'Yes'
-
-" FuzzyFinder {{{2
-let g:fuf_infoFile             = '~/.cache/vim/vim-fuf'
-let g:fuf_tag_cache_dir        = '~/.cache/vim/vim-fuf-cache/tag'
-let g:fuf_taggedfile_cache_dir = '~/.cache/vim/vim-fuf-cache/taggedfile'
-let g:fuf_help_cache_dir       = '~/.cache/vim/vim-fuf-cache/help'
-
-nmap <leader>fb :FufBuffer<CR>
-nmap <leader>ff :FufFile<CR>
-nmap <leader>fd :FufDir<CR>
-nmap <leader>fm :FufMruFile<CR>
-nmap <leader>ft :FufTag<CR>
-
-" git {{{2
-"let g:git_diff_spawn_mode = 1
-
-" haskellmode {{{2
-let g:haddock_browser="/usr/bin/gnome-www-browser"
-let g:haddock_docdir="/usr/share/doc/ghc6-doc/libraries/"
-let g:haddock_indexfiledir="~/.vim/cache/"
-
-"let hs_highlight_delimiters = 1
-let hs_highlight_boolean = 1
-let hs_highlight_types = 1
-let hs_highlight_more_types = 1
-let hs_highlight_debug = 1
-
-" NERD_Tree {{{2
-"let NERDTreeCaseSensitiveSort = 1
-let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
-let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$']
-let NERDTreeHijackNetrw = 0
-
-nmap <silent> <F10> :NERDTreeToggle<CR>
-
-" omnicppcomplete {{{2
-let g:OmniCpp_SelectFirstItem = 2 " select first completion item, but don't insert it
-let g:OmniCpp_ShowPrototypeInAbbr = 1
-
-" po {{{2
-let g:po_translator = 'Jan Larres <jan@majutsushi.net>'
-let g:po_lang_team = ''
-"let g:po_path = '.,..'
-
-" ProtoDef {{{2
-let protodefprotogetter = globpath(&rtp, 'tools/pullproto.pl', 1)
-
-" rubycomplete {{{2
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_rails = 1
-
-" selectbuf {{{2
-let g:selBufAlwaysShowDetails = 1
-let g:selBufLauncher = "!see"
-
-" taglist {{{2
-"let Tlist_File_Fold_Auto_Close = 1
-"let Tlist_Display_Prototype = 1
-let Tlist_Show_One_File = 1
-"let Tlist_Auto_Highlight_Tag = 0
-let Tlist_Enable_Fold_Column = 0
-let Tlist_Use_Right_Window = 1
-let Tlist_Inc_Winwidth = 0 " to prevent problems with project.vim
-let Tlist_Sort_Type = "name"
-"let g:tlist_tex_settings = 'tex;c:chapters;s:sections;u:subsections;b:subsubsections;p:parts;P:paragraphs;G:subparagraphs;i:includes'
-let tlist_tex_settings   = 'latex;s:sections;g:graphics;l:labels;r:refs;p:pagerefs'
-
-nmap <silent> <F9> :Tlist<CR>
-
-" timestamp {{{2
-let g:timestamp_modelines = 20
-let g:timestamp_rep = '%Y-%m-%d %H:%M:%S %z %Z'
-"let g:timestamp_regexp = '\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}  ?%(\a+)?|TIMESTAMP'
-let g:timestamp_regexp = '\v\C%(<Last changed\s*:\s+)@<=\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [+-]\d{4} \a+|TIMESTAMP'
-
-" TOhtml syntax script {{{2
-let html_use_css = 1
-let html_number_lines = 0
-let use_xhtml = 1
-let html_ignore_folding = 1
-
-" Viki {{{2
-let g:vikiLowerCharacters = "a-zäöüßáàéèíìóòçñ"
-let g:vikiUpperCharacters = "A-ZÄÖÜ"
-let g:vikiUseParentSuffix = 1
-let g:vikiOpenUrlWith_http = "silent !firefox %{URL}"
-let g:vikiOpenFileWith_html  = "silent !firefox %{FILE}"
-let g:vikiOpenFileWith_ANY   = "silent !start %{FILE}"
-let g:vikiMapQParaKeys = ""
-" we want to allow deplate to execute ruby code and external helper 
-" application
-let g:deplatePrg = "deplate -x -X "
-let g:vikiNameSuffix=".viki"
-let g:vikiHomePage = "~/projects/viki/Main.viki"
-
-" open main viki
-nmap <Leader>vh :VikiHome<CR>
-
-" vimfootnotes {{{2
-imap Ǣf         <Plug>AddVimFootnote
-imap Ǣr         <Plug>ReturnFromFootnote
-nmap <leader>fa <Plug>AddVimFootnote
-nmap <leader>fr <Plug>ReturnFromFootnote
-
-" vim-latexsuite {{{2
-" default format for .tex filetype recognition
-let g:tex_flavor = "latex"
-let g:Tex_DefaultTargetFormat = "pdf"
-let g:Tex_IgnoredWarnings = 
-            \'Underfull'."\n".
-            \'Overfull'."\n".
-            \'specifier changed to'."\n".
-            \'You have requested'."\n".
-            \'Missing number, treated as zero.'."\n".
-            \'There were undefined references'."\n".
-            \'Citation %.%# undefined'."\n".
-            \'LaTeX Font Warning'
-"let g:Tex_ViewRule_pdf = 'xpdf -remote TexServer'
-let g:Tex_ViewRule_pdf = 'evince'
-let g:Tex_MultipleCompileFormats = 'dvi,pdf'
-
-" vimplate {{{2
-let Vimplate = globpath(&rtp, 'tools/vimplate', 1)
-
-" xptemplate {{{2
-let g:xptemplate_strict = 0
-let g:xptemplate_highlight='following,next'
-let g:xptemplate_vars = '$author=Jan Larres&$email=jan@majutsushi.net'
-
-" yankring {{{2
-let g:yankring_history_dir = '$HOME/.cache/vim'
-nnoremap <silent> <leader>y :YRShow<CR>
-
 " Functions {{{1
 
 " Bclose() {{{2
@@ -732,10 +173,6 @@ function! GuiSettings()
     " "no", "yes" or "menu"; how to use the ALT key
 "   set winaltkeys=no
 endfunction
-
-if has("gui_running")
-    call GuiSettings()
-endif
 
 " InsertGuards() {{{2
 function! InsertGuards()
@@ -1010,6 +447,496 @@ function! GPicker()
     execute "edit " . fnameescape(l:filet)
 endfunction
 
+" important {{{1
+set cpoptions+=$
+
+" moving around, searching and patterns {{{1
+
+" list of flags specifying which commands wrap to another line (local to window)
+set whichwrap=<,>,b,s,[,]
+" change to directory of file in buffer
+"set autochdir
+
+" show match for partly typed search command
+set incsearch
+" ignore case when using a search pattern
+set ignorecase
+" override 'ignorecase' when pattern has upper case characters
+set smartcase
+
+" pattern for a macro definition line (global or local to buffer)
+set define=^\\(\\s*#\\s*define\\\|[a-z]*\\s*const\\s*[a-z]*\\)
+
+" tags {{{1
+
+" when completing tags in Insert mode show more info
+set showfulltag
+" use cscope for tag commands
+set cscopetag
+" give messages when adding a cscope database
+set cscopeverbose
+" When to open a quickfix window for cscope
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+" displaying text {{{1
+
+" number of screen lines to show around the cursor
+set scrolloff=5
+
+" long lines wrap
+set wrap
+" wrap long lines at a character in 'breakat' (local to window)
+set linebreak
+" which characters might cause a line break
+"set breakat=\ ^I
+" string to put before wrapped screen lines
+set showbreak=+\ 
+
+" include "lastline" to show the last line even if it doesn't fit
+" include "uhex" to show unprintable characters as a hex number
+set display=lastline
+" characters to use for the status line, folds and filler lines
+set fillchars=
+" number of lines used for the command-line
+"set cmdheight=2
+" don't redraw while executing macros
+set lazyredraw
+
+" show <Tab> as ^I and end-of-line as $ (local to window)
+set list
+" list of strings used for list mode
+set listchars=tab:»-,trail:·,nbsp:~,precedes:«,extends:»
+
+" show the line number for each line (local to window)
+set number
+
+" syntax, highlighting and spelling {{{1
+
+" "dark" or "light"; the background color brightness
+set background=dark
+" highlight all matches for the last used search pattern
+set hlsearch
+
+" methods used to suggest corrections
+set spellsuggest=best,10
+
+colorscheme desert256
+
+" multiple windows {{{1
+
+" 0, 1 or 2; when to use a status line for the last window
+set laststatus=2
+" alternate format to be used for a status line
+set statusline=%!GenerateStatusline()
+" default height for the preview window
+set previewheight=9
+" don't unload a buffer when no longer shown in a window
+set hidden
+" "useopen" and/or "split"; which window to use when jumping to a buffer
+set switchbuf=useopen " or usetab
+" a new window is put below the current one
+"set splitbelow
+
+" multiple tab pages {{{1
+
+if exists("+showtabline")
+    " 0, 1 or 2; when to use a tab pages line
+    set showtabline=1
+    " custom tab pages line
+    set tabline=%!MyTabLine()
+endif
+
+" terminal {{{1
+
+" terminal connection is fast
+set ttyfast
+" show info in the window title
+set title
+
+if (&term =~ "xterm")
+    set t_Co=256
+endif
+
+" http://ft.bewatermyfriend.org/comp/vim/vimrc.html
+if (&term =~ '^screen')
+    set t_ts=k
+    set t_fs=\
+    autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
+endif
+
+" using the mouse {{{1
+
+" list of flags for using the mouse
+set mouse=a
+" "extend", "popup" or "popup_setpos"; what the right mouse button is used for
+set mousemodel=popup
+" "xterm", "xterm2", "dec" or "netterm"; type of mouse
+set ttymouse=xterm
+
+" GUI {{{1
+
+if has("gui_running")
+    call GuiSettings()
+endif
+
+if exists('&macatsui')
+    set nomacatsui
+endif
+
+" printing {{{1
+
+" list of items that control the format of :hardcopy output
+set printoptions=number:y,paper:A4,left:5pc,right:5pc,top:5pc,bottom:5pc
+" name of the font to be used for :hardcopy
+set printfont=Monospace\ 8
+
+" expression used to print the PostScript file for :hardcopy
+set printexpr=PrintFile(v:fname_in)
+function! PrintFile(fname)
+"    call system("lp " . (&printdevice == '' ? '' : ' -s -d' . &printdevice) . ' ' . a:fname)
+    call system("evince " . a:fname)
+    call delete(a:fname)
+    return v:shell_error
+endfunc
+
+" messages and info {{{1
+
+" list of flags to make messages shorter
+set shortmess=atI
+" show (partial) command keys in the status line
+set showcmd
+" display the current mode in the status line
+set showmode
+" show cursor position below each window
+set ruler
+" pause listings when the screen is full
+set more
+" start a dialog when a command fails
+set confirm
+" use a visual bell instead of beeping
+"set visualbell
+
+" selecting text {{{1
+
+" editing text {{{1
+
+" maximum number of changes that can be undone
+set undolevels=1000
+" line length above which to break a line (local to buffer)
+set textwidth=78
+" specifies what <BS>, CTRL-W, etc. can do in Insert mode
+set backspace=indent,eol,start
+" list of flags that tell how automatic formatting works (local to buffer)
+set formatoptions+=rol2n
+
+" specifies how Insert mode completion works for CTRL-N and CTRL-P
+" (local to buffer)
+set complete-=u " scan the unloaded buffers that are in the buffer list
+"set complete+=k " scan the files given with the 'dictionary' option
+set complete-=i " scan current and included files
+
+" whether to use a popup menu for Insert mode completion
+"set completeopt=longest,menu,preview
+set completeopt=longest,menu
+
+" list of dictionary files for keyword completion (global or local to buffer)
+set dictionary=/usr/share/dict/words
+
+" the "~" command behaves like an operator
+set tildeop
+" When inserting a bracket, briefly jump to its match
+set showmatch
+" use two spaces after '.' when joining a line
+set nojoinspaces
+
+" tabs and indenting {{{1
+
+" number of spaces a <Tab> in the text stands for (local to buffer)
+set tabstop=8     " should always be 8
+" number of spaces used for each step of (auto)indent (local to buffer)
+set shiftwidth=4
+" a <Tab> in an indent inserts 'shiftwidth' spaces
+"set smarttab      " shiftwidth at start of line, tabstop/sts elsewhere
+" if non-zero, number of spaces to insert for a <Tab> (local to buffer)
+set softtabstop=4 " WARNING: mixes spaces and tabs if >0 and noexpandtab!
+" round to 'shiftwidth' for "<<" and ">>"
+set shiftround
+" expand <Tab> to spaces in Insert mode (local to buffer)
+set expandtab     " WARNING: don't unset if ts != sw
+
+" automatically set the indent of a new line (local to buffer)
+set autoindent
+" do clever autoindenting (local to buffer)
+set smartindent
+
+" folding {{{1
+
+" set to display all folds open (local to window)
+set nofoldenable
+" folds with a level higher than this number will be closed (local to window)
+"set foldlevel=100
+" width of the column used to indicate folds (local to window)
+"set foldcolumn=3
+" specifies for which commands a fold will be opened
+set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
+
+" diff mode {{{1
+
+" options for using diff mode
+set diffopt=filler,vertical
+
+" reading and writing files {{{1
+
+" enable using settings from modelines when reading a file (local to buffer)
+set modeline
+" number of lines to check for modelines
+set modelines=5
+" list of file formats to look for when editing a file
+set fileformats=unix,dos,mac
+
+" keep a backup after overwriting a file
+"set backup
+" list of directories to put backup files in
+"set backupdir= " where to put backup files
+
+" automatically read a file when it was modified outside of Vim
+" (global or local to buffer)
+set autoread
+
+" keep oldest version of a file; specifies file name extension
+"set patchmode=.orig
+
+" the swap file {{{1
+
+" list of directories for the swap file
+"set directory=
+" number of characters typed to cause a swap file update
+set updatecount=100
+" time in msec after which the swap file will be updated
+set updatetime=2000
+
+" command line editing {{{1
+
+" how many command lines are remembered
+set history=100
+
+" specifies how command line completion works
+set wildmode=list:longest,full
+" list of file name extensions that have a lower priority
+set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm
+" list of file name extensions added when searching for a file (local to buffer)
+set suffixesadd=.rb
+" list of patterns to ignore files for file name completion
+set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.out,*.class
+" command-line completion shows a list of matches
+"set wildmenu
+
+" running make and jumping to errors {{{1
+
+" program used for the ":grep" command (global or local to buffer)
+set grepprg=ack-grep
+
+" multi-byte characters {{{1
+
+" character encoding used in Vim: "latin1", "utf-8" "euc-jp", "big5", etc.
+set encoding=utf-8
+" automatically detected character encodings
+set fileencodings=ucs-bom,utf-8,default,latin1
+
+" various {{{1
+
+filetype plugin indent on
+syntax enable
+
+" when to use virtual editing: "block", "insert" and/or "all"
+set virtualedit=all
+" list that specifies what to write in the viminfo file
+set viminfo=!,'20,<500,:500,s100,h,r/tmp,r/mnt,r/media,n~/.cache/vim/viminfo
+
+" Plugin and script options {{{1
+
+" CCTree {{{2
+let g:CCTreeRecursiveDepth = 2
+let g:CCTreeMinVisibleDepth = 2
+let g:CCTreeOrientation = "leftabove"
+
+" changelog {{{2
+let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
+
+" CheckAttach {{{2
+let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
+
+" code_complete {{{2
+let s:rs = '<+'
+let s:re = '+>'
+
+" detectindent {{{2
+let g:detectindent_preferred_expandtab = 1
+let g:detectindent_preferred_indent = 4
+
+" devhelp {{{2
+let g:devhelpSearch = 1
+let g:devhelpAssistant = 0
+let g:devhelpSearchKey = '<F7>'
+let g:devhelpWordLength = 5
+
+" EasyGrep {{{2
+let g:EasyGrepFileAssociations = globpath(&rtp, 'plugin/EasyGrepFileAssociations', 1)
+let g:EasyGrepMode = 2
+let g:EasyGrepCommand = 0
+let g:EasyGrepRecursive = 1
+let g:EasyGrepIgnoreCase = 1
+let g:EasyGrepHidden = 0
+let g:EasyGrepAllOptionsInExplorer = 1
+let g:EasyGrepWindow = 0
+let g:EasyGrepReplaceWindowMode = 0
+let g:EasyGrepOpenWindowOnMatch = 1
+let g:EasyGrepEveryMatch = 0
+let g:EasyGrepJumpToMatch = 1
+let g:EasyGrepInvertWholeWord = 0
+let g:EasyGrepFileAssociationsInExplorer = 0
+let g:EasyGrepOptionPrefix = '<leader>vy'
+let g:EasyGrepReplaceAllPerFile = 0
+
+" enhanced-commentify {{{2
+" let g:EnhCommentifyRespectIndent = 'Yes'
+" let g:EnhCommentifyPretty = 'Yes'
+let g:EnhCommentifyBindInInsert = 'No'
+let g:EnhCommentifyTraditionalMode = 'No'
+let g:EnhCommentifyFirstLineMode = 'Yes'
+
+" FuzzyFinder {{{2
+let g:fuf_infoFile             = '~/.cache/vim/vim-fuf'
+let g:fuf_tag_cache_dir        = '~/.cache/vim/vim-fuf-cache/tag'
+let g:fuf_taggedfile_cache_dir = '~/.cache/vim/vim-fuf-cache/taggedfile'
+let g:fuf_help_cache_dir       = '~/.cache/vim/vim-fuf-cache/help'
+
+nmap <leader>fb :FufBuffer<CR>
+nmap <leader>ff :FufFile<CR>
+nmap <leader>fd :FufDir<CR>
+nmap <leader>fm :FufMruFile<CR>
+nmap <leader>ft :FufTag<CR>
+
+" git {{{2
+"let g:git_diff_spawn_mode = 1
+
+" haskellmode {{{2
+let g:haddock_browser="/usr/bin/gnome-www-browser"
+let g:haddock_docdir="/usr/share/doc/ghc6-doc/libraries/"
+let g:haddock_indexfiledir="~/.vim/cache/"
+
+"let hs_highlight_delimiters = 1
+let hs_highlight_boolean = 1
+let hs_highlight_types = 1
+let hs_highlight_more_types = 1
+let hs_highlight_debug = 1
+
+" NERD_Tree {{{2
+"let NERDTreeCaseSensitiveSort = 1
+let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
+let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$']
+let NERDTreeHijackNetrw = 0
+
+nmap <silent> <F10> :NERDTreeToggle<CR>
+
+" omnicppcomplete {{{2
+let g:OmniCpp_SelectFirstItem = 2 " select first completion item, but don't insert it
+let g:OmniCpp_ShowPrototypeInAbbr = 1
+
+" po {{{2
+let g:po_translator = 'Jan Larres <jan@majutsushi.net>'
+let g:po_lang_team = ''
+"let g:po_path = '.,..'
+
+" ProtoDef {{{2
+let protodefprotogetter = globpath(&rtp, 'tools/pullproto.pl', 1)
+
+" rubycomplete {{{2
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_rails = 1
+
+" selectbuf {{{2
+let g:selBufAlwaysShowDetails = 1
+let g:selBufLauncher = "!see"
+
+" taglist {{{2
+"let Tlist_File_Fold_Auto_Close = 1
+"let Tlist_Display_Prototype = 1
+let Tlist_Show_One_File = 1
+"let Tlist_Auto_Highlight_Tag = 0
+let Tlist_Enable_Fold_Column = 0
+let Tlist_Use_Right_Window = 1
+let Tlist_Inc_Winwidth = 0 " to prevent problems with project.vim
+let Tlist_Sort_Type = "name"
+"let g:tlist_tex_settings = 'tex;c:chapters;s:sections;u:subsections;b:subsubsections;p:parts;P:paragraphs;G:subparagraphs;i:includes'
+let tlist_tex_settings   = 'latex;s:sections;g:graphics;l:labels;r:refs;p:pagerefs'
+
+nmap <silent> <F9> :Tlist<CR>
+
+" timestamp {{{2
+let g:timestamp_modelines = 20
+let g:timestamp_rep = '%Y-%m-%d %H:%M:%S %z %Z'
+"let g:timestamp_regexp = '\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}  ?%(\a+)?|TIMESTAMP'
+let g:timestamp_regexp = '\v\C%(<Last changed\s*:\s+)@<=\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [+-]\d{4} \a+|TIMESTAMP'
+
+" TOhtml syntax script {{{2
+let html_use_css = 1
+let html_number_lines = 0
+let use_xhtml = 1
+let html_ignore_folding = 1
+
+" Viki {{{2
+let g:vikiLowerCharacters = "a-zäöüßáàéèíìóòçñ"
+let g:vikiUpperCharacters = "A-ZÄÖÜ"
+let g:vikiUseParentSuffix = 1
+let g:vikiOpenUrlWith_http = "silent !firefox %{URL}"
+let g:vikiOpenFileWith_html  = "silent !firefox %{FILE}"
+let g:vikiOpenFileWith_ANY   = "silent !start %{FILE}"
+let g:vikiMapQParaKeys = ""
+" we want to allow deplate to execute ruby code and external helper 
+" application
+let g:deplatePrg = "deplate -x -X "
+let g:vikiNameSuffix=".viki"
+let g:vikiHomePage = "~/projects/viki/Main.viki"
+
+" open main viki
+nmap <Leader>vh :VikiHome<CR>
+
+" vimfootnotes {{{2
+imap Ǣf         <Plug>AddVimFootnote
+imap Ǣr         <Plug>ReturnFromFootnote
+nmap <leader>fa <Plug>AddVimFootnote
+nmap <leader>fr <Plug>ReturnFromFootnote
+
+" vim-latexsuite {{{2
+" default format for .tex filetype recognition
+let g:tex_flavor = "latex"
+let g:Tex_DefaultTargetFormat = "pdf"
+let g:Tex_IgnoredWarnings = 
+            \'Underfull'."\n".
+            \'Overfull'."\n".
+            \'specifier changed to'."\n".
+            \'You have requested'."\n".
+            \'Missing number, treated as zero.'."\n".
+            \'There were undefined references'."\n".
+            \'Citation %.%# undefined'."\n".
+            \'LaTeX Font Warning'
+"let g:Tex_ViewRule_pdf = 'xpdf -remote TexServer'
+let g:Tex_ViewRule_pdf = 'evince'
+let g:Tex_MultipleCompileFormats = 'dvi,pdf'
+
+" vimplate {{{2
+let Vimplate = globpath(&rtp, 'tools/vimplate', 1)
+
+" xptemplate {{{2
+let g:xptemplate_strict = 0
+let g:xptemplate_highlight='following,next'
+let g:xptemplate_vars = '$author=Jan Larres&$email=jan@majutsushi.net'
+
+" yankring {{{2
+let g:yankring_history_dir = '$HOME/.cache/vim'
+nnoremap <silent> <leader>y :YRShow<CR>
+
 " Abbrevs {{{1
 source ~/.vim/abbrevs.vim
 
@@ -1050,6 +977,75 @@ if !has("gui_running")
         set <S-F2>=[1;2Q
     endif
 endif
+
+" Autocommands {{{1
+
+" remove all autocommands to avoid sourcing them twice
+autocmd!
+
+autocmd GUIEnter * call GuiSettings()
+
+"au BufWritePost ~/.vimrc so ~/.vimrc
+
+autocmd InsertLeave * set nocul
+autocmd InsertEnter * set cul
+
+autocmd BufNewFile,BufReadPost * call LoadProjectConfig(expand("%:p:h"))
+
+" create undo break point
+autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
+
+"au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
+
+" filetype-specific settings
+au Filetype html,xml,xsl source ~/.vim/macros/closetag.vim
+au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
+au FileType tex let b:vikiFamily="LaTeX"
+au FileType viki compiler deplate
+au FileType gtkrc setlocal tabstop=2 shiftwidth=2
+au FileType haskell compiler ghc
+au FileType mkd setlocal ai formatoptions=tcroqn2 comments=n:>
+au FileType ruby setlocal omnifunc=rubycomplete#Complete
+au FileType gitcommit DiffGitCached | wincmd p
+au FileType python setlocal foldmethod=indent
+au FileType python setlocal omnifunc=pythoncomplete#Complete
+
+augroup cfile
+    "au FileType c setlocal path+=/usr/include,/usr/include/sys,/usr/include/linux
+    au FileType c,cpp setlocal foldmethod=syntax
+    au FileType c,cpp setlocal tags+=~/.vim/systags/systags
+    au FileType c,cpp setlocal cinoptions=t0,(0,)50
+augroup END
+
+augroup java
+    au FileType java compiler javac
+    au FileType java setlocal omnifunc=javacomplete#Complete
+    au FileType java setlocal completefunc=javacomplete#CompleteParamsInfo
+"    au FileType java setlocal cinoptions=t0,(0,j1,)50 " see after/indent/java.vim
+augroup END
+
+" setup templates
+au BufNewFile *.tex Vimplate LaTeX
+au BufNewFile *.sh Vimplate shell
+au BufNewFile *.c Vimplate c
+au BufNewFile *.vim Vimplate vim
+au BufNewFile *.rb Vimplate ruby
+au BufNewFile Makefile Vimplate Makefile-C
+
+" FSwitch setup
+au BufEnter *.c        let b:fswitchdst  = 'h'
+au BufEnter *.c        let b:fswitchlocs = './'
+au BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
+au BufEnter *.cpp,*.cc let b:fswitchlocs = './'
+au BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
+au BufEnter *.h        let b:fswitchlocs = './'
+
+au BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.h TlistUpdate
+"au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
+"au CursorMoved,CursorMovedI *   TlistHighlightTag
+"au CursorMoved,CursorMovedI * endif
+
+au BufWritePost,FileWritePost *.sh silent !chmod u+x %
 
 " Mappings {{{1
 
@@ -1262,4 +1258,5 @@ nmap <silent> <leader>gk :silent !gitk<cr>
 
 "inoremap  <Esc><Right>
 
+" Modeline {{{1
 " vim:tw=78 expandtab comments=\:\" foldmethod=marker foldenable
