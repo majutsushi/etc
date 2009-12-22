@@ -822,7 +822,7 @@ syntax enable
 " when to use virtual editing: "block", "insert" and/or "all"
 set virtualedit=all
 " list that specifies what to write in the viminfo file
-set viminfo=!,'20,<500,:500,s100,h,r/tmp,r/mnt,r/media,n~/.cache/vim/viminfo
+set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.cache/vim/viminfo
 
 " Plugin and script options {{{1
 
