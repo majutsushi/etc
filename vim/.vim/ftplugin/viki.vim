@@ -2,8 +2,8 @@
 " @Author:      Tom Link (micathom AT gmail com?subject=vim)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     12-Jän-2004.
-" @Last Change: 2009-02-15.
-" @Revision: 405
+" @Last Change: 2009-11-08.
+" @Revision: 413
 
 " if !g:vikiEnabled
 "     finish
@@ -35,6 +35,8 @@ setlocal expandtab
 " setlocal iskeyword+=#,{
 setlocal iskeyword+={
 setlocal iskeyword-=_
+" setlocal ballooneval
+" setlocal balloonexpr=viki#BalloonExp
 
 let &include='\(^\s*#INC.\{-}\(\sfile=\|:\)\)'
 " let &include='\(^\s*#INC.\{-}\(\sfile=\|:\)\|\[\[\)'
@@ -118,13 +120,15 @@ function! s:VikiFolds() "{{{3
 endf
 
 function! s:SetMaxLevel() "{{{3
-    let pos = getpos('.')
+    " let pos = getpos('.')
+    let view = winsaveview()
     " TLogVAR b:vikiHeadingStart
     let vikiHeadingRx = '\V\^'. b:vikiHeadingStart .'\+\ze\s'
     let b:vikiHeadingMaxLevel = 0
     exec 'keepjumps g/'. vikiHeadingRx .'/let l = matchend(getline("."), vikiHeadingRx) | if l > b:vikiHeadingMaxLevel | let b:vikiHeadingMaxLevel = l | endif'
     " TLogVAR b:vikiHeadingMaxLevel
-    call setpos('.', pos)
+    " call setpos('.', pos)
+    call winrestview(view)
 endf
 
 if g:vikiFoldMethodVersion == 5
@@ -243,7 +247,8 @@ elseif g:vikiFoldMethodVersion == 2
 else
 
     function! VikiFoldLevel(lnum) "{{{3
-        let lc = getpos('.')
+        " let lc = getpos('.')
+        let view = winsaveview()
         " TLogVAR lc
         let w0 = line('w0')
         let lr = &lazyredraw
@@ -335,7 +340,8 @@ else
         finally
             exec 'norm! '. w0 .'zt'
             " TLogVAR lc
-            call setpos('.', lc)
+            " call setpos('.', lc)
+            call winrestview(view)
             let &lazyredraw = lr
         endtry
     endfun
@@ -365,13 +371,15 @@ else
         if a:once && b:vikiHeadingMaxLevel == 0
             return
         endif
-        let pos = getpos('.')
+        " let pos = getpos('.')
+        let view = winsaveview()
         " TLogVAR pos
         try
             silent! keepjumps exec 'g/\V\^'. b:vikiHeadingStart .'\+\s/call s:SetHeadingMaxLevelAtCurrentLine(line(".")'
         finally
             " TLogVAR pos
-            call setpos('.', pos)
+            " call setpos('.', pos)
+            call winrestview(view)
         endtry
     endf
 
@@ -383,7 +391,8 @@ else
     endf
 
     function! s:SearchHead(lnum, top) "{{{3
-        let pos = getpos('.')
+        " let pos = getpos('.')
+        let view = winsaveview()
         " TLogVAR pos
         try
             exec a:lnum
@@ -395,7 +404,8 @@ else
             return [0, 0]
         finally
             " TLogVAR pos
-            call setpos('.', pos)
+            " call setpos('.', pos)
+            call winrestview(view)
         endtry
     endf
 

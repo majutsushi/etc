@@ -1,10 +1,10 @@
 " var.vim
-" @Author:      Thomas Link (micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-30.
-" @Last Change: 2007-09-11.
-" @Revision:    0.0.21
+" @Last Change: 2009-02-15.
+" @Revision:    0.0.23
 
 if &cp || exists("loaded_tlib_var_autoload")
     finish
@@ -54,7 +54,7 @@ endf
 "   let g:foo = 1
 "   let b:foo = 2
 "   let w:foo = 3
-"   echo tlib#var#Get('foo', 'vg')  => 1
+"   echo tlib#var#Get('foo', 'bg')  => 1
 "   echo tlib#var#Get('foo', 'bg')  => 2
 "   echo tlib#var#Get('foo', 'wbg') => 3
 function! tlib#var#Get(var, namespace, ...) "{{{3

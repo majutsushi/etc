@@ -1,10 +1,10 @@
 " dir.vim
-" @Author:      Thomas Link (micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-30.
-" @Last Change: 2007-11-01.
-" @Revision:    0.0.28
+" @Last Change: 2009-08-04.
+" @Revision:    0.0.32
 
 if &cp || exists("loaded_tlib_dir_autoload")
     finish
@@ -29,7 +29,7 @@ endf
 "   => 'foo/bar'
 function! tlib#dir#PlainName(dirname) "{{{3
     let dirname = a:dirname
-    while dirname[-1 : -1] == g:tlib_filename_sep
+    while index(['/', '\'], dirname[-1 : -1]) != -1
         let dirname = dirname[0 : -2]
     endwh
     return dirname
@@ -59,7 +59,7 @@ function! tlib#dir#CD(dir, ...) "{{{3
     let cmd = locally ? 'lcd ' : 'cd '
     " let cwd = getcwd()
     let cmd .= tlib#arg#Ex(a:dir)
-    " TLogVAR cmd
+    " TLogVAR a:dir, locally, cmd
     exec cmd
     " return cwd
     return getcwd()

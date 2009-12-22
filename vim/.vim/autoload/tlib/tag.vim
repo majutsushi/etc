@@ -1,10 +1,10 @@
 " tag.vim
-" @Author:      Thomas Link (mailto:micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (mailto:micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-11-01.
-" @Last Change: 2007-11-11.
-" @Revision:    0.0.44
+" @Last Change: 2009-04-11.
+" @Revision:    0.0.48
 
 if &cp || exists("loaded_tlib_tag_autoload")
     finish
@@ -95,6 +95,7 @@ function! tlib#tag#Collect(constraints, ...) "{{{3
             endif
         endif
     endfor
+    " TLogVAR tags
     return tags
 endf
 

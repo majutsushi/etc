@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-09-03.
-" @Last Change: 2009-02-15.
-" @Revision:    0.0.111
+" @Last Change: 2009-11-08.
+" @Revision:    0.0.122
 
 if &cp || exists("loaded_viki_viki")
     finish
@@ -447,6 +447,9 @@ function! viki_viki#CompleteExtendedNameDef(def) "{{{3
         " TLogVAR v_dest
         if v_dest != g:vikiDefNil
             let v_dest = viki#ExpandSimpleName('', v_dest, useSuffix)
+            if !viki#IsSpecialProtocol(v_dest)
+                let v_dest = tlib#url#Decode(v_dest)
+            endif
             " TLogVAR v_dest
         endif
     else
@@ -461,10 +464,15 @@ function! viki_viki#CompleteExtendedNameDef(def) "{{{3
             let v_dest = expand("%:p:h") .g:vikiDirSeparator. v_dest
             let v_dest = viki#CanonicFilename(v_dest)
         endif
-        if v_dest != '' && v_dest != g:vikiSelfRef && !viki#IsSpecial(v_dest)
-            let mod = viki#ExtendedModifier(v_part)
-            if fnamemodify(v_dest, ':e') == '' && mod !~# '!'
-                let v_dest = viki#WithSuffix(v_dest)
+        if v_dest != '' && v_dest != g:vikiSelfRef
+            if !viki#IsSpecial(v_dest)
+                let mod = viki#ExtendedModifier(v_part)
+                if fnamemodify(v_dest, ':e') == '' && mod !~# '!'
+                    let v_dest = viki#WithSuffix(v_dest)
+                endif
+            endif
+            if !viki#IsSpecialProtocol(v_dest)
+                let v_dest = tlib#url#Decode(v_dest)
             endif
         endif
     endif

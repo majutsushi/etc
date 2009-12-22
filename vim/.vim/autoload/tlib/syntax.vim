@@ -1,10 +1,10 @@
 " syntax.vim
-" @Author:      Thomas Link (mailto:micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (mailto:micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-11-19.
-" @Last Change: 2007-11-19.
-" @Revision:    0.0.9
+" @Last Change: 2009-02-15.
+" @Revision:    0.0.11
 
 if &cp || exists("loaded_tlib_syntax_autoload")
     finish
@@ -23,7 +23,7 @@ function! tlib#syntax#Collect() "{{{3
         elseif line =~ '^\w'
             let ml = matchlist(line, '^\(\w\+\)\s\+\(xxx\s\+\(.*\)\|\(cluster.*\)\)$')
             if empty(ml)
-                echoerr 'Internal error: '. line
+                echoerr 'Internal error: '. string(line)
             else
                 let [m_0, syn, m_1, m_def1, m_def2; m_rest] = ml
                 let acc[syn] = [empty(m_def1) ? m_def2 : m_def1]

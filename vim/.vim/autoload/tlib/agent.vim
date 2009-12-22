@@ -1,10 +1,10 @@
 " agent.vim
-" @Author:      Thomas Link (micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-24.
-" @Last Change: 2007-10-05.
-" @Revision:    0.1.137
+" @Last Change: 2009-08-04.
+" @Revision:    0.1.172
 
 if &cp || exists("loaded_tlib_agent_autoload") "{{{2
     finish
@@ -18,7 +18,7 @@ let loaded_tlib_agent_autoload = 1
 
 function! tlib#agent#Exit(world, selected) "{{{3
     call a:world.CloseScratch()
-    let a:world.state = 'exit escape'
+    let a:world.state = 'exit empty escape'
     let a:world.list = []
     " let a:world.base = []
     call a:world.ResetSelected()
@@ -110,11 +110,15 @@ endf
 
 
 function! tlib#agent#Input(world, selected) "{{{3
-    let flt0 = a:world.filter[0][0]
+    let flt0 = a:world.CleanFilter(a:world.filter[0][0])
     let flt1 = input('Filter: ', flt0)
     echo
-    if flt1 != flt0 && !empty(flt1)
-        let a:world.filter[0][0] = flt1
+    if flt1 != flt0
+        if empty(flt1)
+            call getchar(0)
+        else
+            call a:world.SetFrontFilter(flt1)
+        endif
     endif
     let a:world.state = 'display'
     return a:world
@@ -146,7 +150,9 @@ endf
 
 " Suspend lets you temporarily leave the input loop of 
 " |tlib#input#List|. You can resume editing the list by pressing <c-z>, 
-" <m-z>. <cr>, <space>, or <LeftMouse> in the suspended window.
+" <m-z>. <space>, <c-LeftMouse> or <MiddleMouse> in the suspended window.
+" <cr> and <LeftMouse> will immediatly select the item under the cursor.
+" < will select the item but the window will remain opened.
 function! tlib#agent#Suspend(world, selected) "{{{3
     if a:world.allow_suspend
         " TAssert IsNotEmpty(a:world.scratch)
@@ -154,9 +160,13 @@ function! tlib#agent#Suspend(world, selected) "{{{3
         let br = tlib#buffer#Set(a:world.scratch)
         " TLogVAR br, a:world.bufnr, a:world.scratch
         " TLogDBG bufnr('%')
-        let b:tlib_suspend = ['<m-z>', '<c-z>', '<cr>', '<space>', '<LeftMouse>']
-        for m in b:tlib_suspend
-            exec 'noremap <buffer> '. m .' :call tlib#input#Resume("world")<cr>'
+        let b:tlib_suspend = {
+                    \ '<m-z>': 0, '<c-z>': 0, '<space>': 0, 
+                    \ '<cr>': 1, 
+                    \ '<LeftMouse>': 1, '<c-LeftMouse>': 0, '<MiddleMouse>': 0,
+                    \ '<': 2}
+        for [m, pick] in items(b:tlib_suspend)
+            exec 'noremap <buffer> '. m .' :call tlib#input#Resume("world", '. pick .')<cr>'
         endfor
         let b:tlib_world = a:world
         exec br
@@ -261,6 +271,13 @@ function! tlib#agent#SelectAll(world, selected) "{{{3
 endf
 
 
+function! tlib#agent#ToggleStickyList(world, selected) "{{{3
+    let a:world.sticky = !a:world.sticky
+    let a:world.state = 'display keepcursor'
+    return a:world
+endf
+
+
 
 " EditList related {{{1
 
@@ -280,6 +297,7 @@ function! tlib#agent#EditItem(world, selected) "{{{3
 endf
 
 
+" Insert a new item below the current one.
 function! tlib#agent#NewItem(world, selected) "{{{3
     let basepi = a:world.GetBaseIdx(a:world.prefidx)
     let item = input('New item: ')
@@ -345,10 +363,13 @@ endf
 " Files related {{{1
 
 function! tlib#agent#ViewFile(world, selected) "{{{3
-    let back = a:world.SwitchWindow('win')
-    call tlib#file#With('edit', 'buffer', a:selected, a:world)
-    exec back
-    let a:world.state = 'display'
+    if !empty(a:selected)
+        let back = a:world.SwitchWindow('win')
+        " TLogVAR back
+        call tlib#file#With('edit', 'buffer', a:selected, a:world)
+        exec back
+        let a:world.state = 'display'
+    endif
     return a:world
 endf
 
@@ -413,7 +434,7 @@ function! tlib#agent#PreviewLine(world, selected) "{{{3
     let l = a:selected[0]
     let ww = winnr()
     exec a:world.win_wnr .'wincmd w'
-    call tlib#buffer#ViewLine(l)
+    call tlib#buffer#ViewLine(l, 1)
     exec ww .'wincmd w'
     let a:world.state = 'redisplay'
     return a:world
@@ -424,12 +445,26 @@ endf
 " suspend the input-evaluation loop.
 function! tlib#agent#GotoLine(world, selected) "{{{3
     if !empty(a:selected)
+
+        " let l = a:selected[0]
+        " " TLogVAR l
+        " let back = a:world.SwitchWindow('win')
+        " " TLogVAR back
+        " " if a:world.win_wnr != winnr()
+        " "     let world = tlib#agent#Suspend(a:world, a:selected)
+        " "     exec a:world.win_wnr .'wincmd w'
+        " " endif
+        " call tlib#buffer#ViewLine(l)
+        " exec back
+        " let a:world.state = 'display'
+
         let l = a:selected[0]
         if a:world.win_wnr != winnr()
             let world = tlib#agent#Suspend(a:world, a:selected)
             exec a:world.win_wnr .'wincmd w'
         endif
-        call tlib#buffer#ViewLine(l)
+        call tlib#buffer#ViewLine(l, 1)
+        
     endif
     return a:world
 endf
@@ -440,12 +475,14 @@ function! tlib#agent#DoAtLine(world, selected) "{{{3
         let cmd = input('Command: ', '', 'command')
         if !empty(cmd)
             call a:world.SwitchWindow('win')
-            let pos = getpos('.')
+            " let pos = getpos('.')
+            let view = winsaveview()
             for l in a:selected
                 call tlib#buffer#ViewLine(l, '')
                 exec cmd
             endfor
-            call setpos('.', pos)
+            " call setpos('.', pos)
+            call winrestview(view)
         endif
     endif
     call a:world.ResetSelected()

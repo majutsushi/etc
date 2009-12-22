@@ -1,10 +1,10 @@
 " Test.vim -- A test class
-" @Author:      Thomas Link (micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     http://members.a1.net/t.link/
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-05-01.
-" @Last Change: 2007-09-11.
-" @Revision:    0.1.8
+" @Last Change: 2009-02-15.
+" @Revision:    0.1.9
 
 " :enddoc:
 

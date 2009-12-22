@@ -1,10 +1,10 @@
 " time.vim
-" @Author:      Thomas Link (mailto:micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (mailto:micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-10-17.
-" @Last Change: 2007-10-17.
-" @Revision:    0.0.27
+" @Last Change: 2009-02-22.
+" @Revision:    0.0.29
 
 if &cp || exists("loaded_tlib_time_autoload")
     finish
@@ -31,7 +31,7 @@ function! tlib#time#Diff(a, b, ...) "{{{3
     let [bs, bm] = a:b
     let rv = 0 + (as - bs)
     if resolution > 0
-        let rv .= repeat('0', resolution))
+        let rv .= repeat('0', resolution)
         let am = am[0 : resolution - 1]
         let bm = bm[0 : resolution - 1]
         let rv += (am - bm)

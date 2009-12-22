@@ -1,21 +1,26 @@
 " tlib.vim -- Some utility functions
-" @Author:      Thomas Link (micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-04-10.
-" @Last Change: 2007-11-19.
-" @Revision:    0.21.444
+" @Last Change: 2009-12-21.
+" @Revision:    592
 " GetLatestVimScripts: 1863 1 tlib.vim
 "
 " Please see also ../test/tlib.vim for usage examples.
 "
-" TODO:
-" - tlib#cache#Purge(): delete old cache files (for the moment use find)
-" - tlib#file#Relative(): currently relies on cwd to be set
-" - tlib#input#EditList(): Disable selection by index number
-" - tlib#input#List(): Some kind of command line to edit some 
-"   preferences on the fly
-" - tlib#input#List(): Make commands accessible via popup-menu
+" TODO: tlib#input#List(): RightMouse -> Make commands accessible via 
+" popup-menu
+" TODO: List isn't updated on some occassions (eg tselectfiles + pick 
+" file per mouse) when resetting the state from an post-process agent
+" TODO: tlib#agent#SwitchLayout(): switch between horizontal and 
+" vertical layout for the list
+" TODO: tlib#cache#Purge(): delete old cache files (for the moment use 
+" find)
+" TODO: tlib#file#Relative(): currently relies on cwd to be set
+" TODO: tlib#input#EditList(): Disable selection by index number
+" TODO: tlib#input#List(): Some kind of command line to edit some 
+" preferences (sort etc.) on the fly
 
 if &cp || exists("loaded_tlib")
     finish
@@ -24,12 +29,33 @@ if v:version < 700 "{{{2
     echoerr "tlib requires Vim >= 7"
     finish
 endif
-let loaded_tlib = 21
+let loaded_tlib = 35
 let s:save_cpo = &cpo
 set cpo&vim
 
 
-" Commands {{{1
+" Init~ {{{1
+" call tlib#autocmdgroup#Init()
+
+
+" Commands~ {{{1
+
+" :display: TRequire NAME [VERSION [FILE]]
+" Make a certain vim file is loaded.
+"
+" Conventions: If FILE isn't defined, plugin/NAME.vim is loaded. The 
+" file must provide a variable loaded_{NAME} that represents the version 
+" number.
+command! -nargs=+ TRequire let s:require = [<f-args>]
+            \ | if !exists('loaded_'. get(s:require, 0))
+                \ | exec 'runtime '. get(s:require, 2, 'plugin/'. get(s:require, 0) .'.vim')
+                \ | if !exists('loaded_'. get(s:require, 0)) || loaded_{get(s:require, 0)} < get(s:require, 1, loaded_{get(s:require, 0)})
+                    \ | echoerr 'Require '.  get(s:require, 0) .' >= '. get(s:require, 1, 'any version will do')
+                    \ | finish
+                    \ | endif
+                \ | endif | unlet s:require
+
+
 " :display: :TLet VAR = VALUE
 " Set a variable only if it doesn't already exist.
 " EXAMPLES: >
@@ -73,7 +99,7 @@ command! -nargs=+ TKeyArg exec tlib#arg#Key([<args>])
 
 
 " :display: TBrowseOutput COMMAND
-" Every wondered how to effciently browse the output of a command 
+" Ever wondered how to effciently browse the output of a command 
 " without redirecting it to a file? This command takes a command as 
 " argument and presents the output via |tlib#input#List()| so that you 
 " can easily search for a keyword (e.g. the name of a variable or 
@@ -88,7 +114,7 @@ command! -nargs=1 -complete=command TBrowseOutput call tlib#cmd#BrowseOutput(<q-
 
 
 
-" Variables {{{1
+" Variables~ {{{1
 
 " When 1, automatically select a the last remaining item after applying 
 " any filters.
@@ -122,6 +148,14 @@ TLet g:tlib_inputlist_livesearch_threshold = 500
 " disk when doing this.
 TLet g:tlib_inputlist_filename_indicators = 0
 
+" Can be "cnf" or "fuzzy".
+"   cnf   :: substrings
+"   fuzzy :: match characters
+TLet g:tlib_inputlist_match = 'cnf'
+
+" If non null, display only a short info about the filter.
+TLet g:tlib_inputlist_shortmessage = 0
+
 " Extra tags for |tlib#tag#Retrieve()| (see there). Can also be buffer-local.
 TLet g:tlib_tags_extra = ''
 
@@ -138,10 +172,19 @@ TLet g:tlib_tag_substitute = {
             \ ],
             \ }
 
+" " Alternative rx for keywords, in case 'iskeyword' is inadequate for 
+" " the purposes of tlib but you don't want to change it's value.
+" TLet g:tlib_keyword_rx = {
+"             \ 'vim': '\(\w\|#\)',
+"             \ }
+
 TLet g:tlib_filename_sep = '/'
 " TLet g:tlib_filename_sep = exists('+shellslash') && !&shellslash ? '\' : '/'   " {{{2
 
-" The cache directory. If empty, use |tlib#dir#MyRuntime|.'/cache'
+" The cache directory. If empty, use |tlib#dir#MyRuntime|.'/cache'.
+" You might want to delete old files from this directory from time to 
+" time with a command like: >
+"   find ~/vimfiles/cache/ -atime +31 -type f -print -delete
 TLet g:tlib_cache = ''
 
 " Where to display the line when using |tlib#buffer#ViewLine|.
@@ -244,9 +287,11 @@ TLet g:tlib_handlers_EditList = [
             \ ]
 
 
-augroup TLib
-    autocmd!
-augroup END
+
+" " TEST:
+" TRequire tselectbuffer 6
+" echo loaded_tselectbuffer
+
 
 
 let &cpo = s:save_cpo
@@ -428,7 +473,6 @@ FIX:
     the list for the first time.
 
 0.20
-CHANGES:
 - The arguments of tlib#tag#Collect() have changed.
 - tlib#input#List(): The view can be "suspended" on initial display.
 - tlib#input#List(): Follow/trace cursor functionality
@@ -436,4 +480,86 @@ CHANGES:
 0.21
 - tlib#buffer#InsertText(): Respect tabs and (experimental) formatoptions+=or
 - tlib/syntax.vim: Syntax-related functions
+
+0.22
+- FIX: very magic mode for tlib#rx#Escape() (thanks A Politz)
+- FIX: tlib#arg#Ex: escape "!"
+
+0.23
+- Respect the setting of g:tlib_inputlist_filename_indicators
+- tlib#input#List(): Reset syntax on resume; option to make list window "sticky"
+- tlib#agent#ToggleStickyList()
+- Simplified tlib#url#Decode()
+- tlib#arg#Ex(): use fnameescape() if available
+
+0.24
+- s:prototype.SetInitialFilter: accept list as argument
+- Maintain buffer MRU if required
+
+0.25
+- NEW: tlib#notify#TrimMessage(): trim message to prevent "Press ENTER" 
+messages (contributed by Erik Falor)
+- NEW: tlib#notify#Echo()
+- FIX: World.CloseScratch(): Set window
+- FIX: tlib#input#ListW(): Set initial_display = 1 on reset
+
+0.26
+- NEW: tlib#normal#WithRegister()
+- FIX: Try not to change numbered registers
+
+0.27
+- FIX: Cosmetic bug, wrong packaging (thanks Nathan Neff)
+- Meaning of World#filter_format changed; new World#filter_options 
+- Filtering didn't work as advertised
+- tlib#string#Count()
+
+0.28
+- tlib#input#List():
+-- Improved handling of sticky lists; <cr> and <Leftmouse> resume a 
+suspended list and immediately selects the item under the cursor
+-- Experimental "seq" matching style: the conjunctions are sequentially 
+ordered, they are combined with "OR" (disjunctions), the regexp is 
+'magic', and "." is expanded to '.\{-}'
+-- Experimental "cnfd" matching style: Same as cnf but with an "elastic" 
+dot "." that matches '\.\{-}'
+-- Filtering acts as if &ic=1 && $sc=1
+-- Weighting is done by the filter
+- tlib#agent#Input(): Consume <esc> when aborting input()
+- INCOMPATIBLE CHANGE: Changed eligible values of g:tlib_inputlist_match 
+to "cnf", "cnfd", "seq" and "fuzzy"
+- NEW: tlib#buffer#KeepCursorPosition()
+- tlib#buffer#InsertText(): Take care of the extra line when appending 
+text to an empty buffer.
+
+0.29
+- tlib#string#Strip(): Strip also control characters (newlines etc.)
+- tlib#rx#Suffixes(): 'suffixes' as Regexp
+- World#RestoreOrigin(): Don't assume &splitbelow
+
+0.30
+- World#RestoreOrigin(): Don't assume &splitright
+
+0.31
+- :TRequire command
+-tlib#input#List: For i-type list views, make sure agents are called 
+with the base indices.
+
+0.32
+- tlib#agent#Exit: explicitly return empty value (as a consequence, 
+pressing <esc> when browsing an index-list, returns 0 and not "")
+- tlib#signs
+- tlib#input#List: set local statusline
+
+0.33
+- Don't reset statusline
+- Don't use fnamemodify() to split filenames (for performance reasons)
+- scratch: Set ft after setting up scratch options
+- tlib#map#PumAccept(key)
+
+0.34
+- tlib#buffer#HighlightLine(line): call tlib#autocmdgroup#Init() 
+(reported by Sergey Khorev)
+
+0.35
+- tlib#input#EditList(): return the list if the user presses esc
 

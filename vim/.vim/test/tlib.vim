@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2006-12-17.
-" @Last Change: 2007-08-27.
-" @Revision:    116
+" @Last Change: 2008-11-23.
+" @Revision:    129
 
 if !exists("loaded_tassert")
     echoerr 'tAssert (vimscript #1730) is required'
@@ -191,7 +191,20 @@ for c in split('^$.*+\()|{}[]~', '\zs')
 endfor
 
 
+" Encode, decode
+TAssert IsEqual(tlib#url#Decode('http://example.com/foo+bar%25bar'), 'http://example.com/foo bar%bar')
+TAssert IsEqual(tlib#url#Decode('Hello%20World.%20%20Good%2c%20bye.'), 'Hello World.  Good, bye.')
+
+TAssert IsEqual(tlib#url#Encode('foo bar%bar'), 'foo+bar%%bar')
+TAssert IsEqual(tlib#url#Encode('Hello World. Good, bye.'), 'Hello+World.+Good%2c+bye.')
+
 TAssertEnd test test1 testc testworld
+
+
+TAssert IsEqual(tlib#string#Count("fooo", "o"), 3)
+TAssert IsEqual(tlib#string#Count("***", "\\*"), 3)
+TAssert IsEqual(tlib#string#Count("***foo", "\\*"), 3)
+TAssert IsEqual(tlib#string#Count("foo***", "\\*"), 3)
 
 
 finish "{{{1

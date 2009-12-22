@@ -2,17 +2,17 @@
 " @Author:      Tom Link (micathom AT gmail com?subject=vim)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     08-Dec-2003.
-" @Last Change: 2009-03-20.
-" @Revision:    2627
+" @Last Change: 2009-12-14.
+" @Revision:    2638
 "
 " GetLatestVimScripts: 861 1 viki.vim
 "
 " Short Description:
-" This plugin adds wiki-like hypertext capabilities to any document.  Just 
-" type :VikiMinorMode and all wiki names will be highlighted. If you press 
-" <c-cr> (or <LocalLeader>vf) when the cursor is over a wiki name, you 
-" jump to (or create) the referred page. When invoked via :set ft=viki, 
-" additional highlighting is provided.
+" This plugin adds wiki-like hypertext capabilities to any document.  
+" Just type :VikiMinorMode and all wiki names will be highlighted. If 
+" you press <c-cr> (or <LocalLeader>vf) when the cursor is over a wiki 
+" name, you jump to (or create) the referred page. When invoked via :set 
+" ft=viki, additional highlighting is provided.
 "
 " Requirements:
 " - tlib.vim (vimscript #1863)
@@ -21,27 +21,26 @@
 " - imaps.vim (vimscript #244 or #475 for |:VimQuote|)
 " - kpsewhich (not a vim plugin :-) for vikiLaTeX
 "
-" TODO:
-" - File names containing # (the # is interpreted as URL component)
-" - Per Interviki simple name patterns
-" - Allow Wiki links like ::Word or even ::word (not in minor mode due 
-"   possible conflict with various programming languages?)
-" - :VikiRename command: rename links/files (requires a cross-plattform grep 
-"   or similar; or one could a global register)
-" - don't know how to deal with viki names that span several lines (e.g.  in 
-"   LaTeX mode)
+" TODO: File names containing # (the # is interpreted as URL component)
+" TODO: Per Interviki simple name patterns
+" TODO: Allow Wiki links like ::Word or even ::word (not in minor mode 
+" due possible conflict with various programming languages?)
+" TODO: :VikiRename command: rename links/files (requires a 
+" cross-plattform grep or similar; or one could a global register)
+" TODO: don't know how to deal with viki names that span several lines 
+" (e.g.  in LaTeX mode)
 
 if &cp || exists("loaded_viki") "{{{2
     finish
 endif
-if !exists('g:loaded_tlib') || g:loaded_tlib < 15
+if !exists('g:loaded_tlib') || g:loaded_tlib < 32
     runtime plugin/02tlib.vim
-    if !exists('g:loaded_tlib') || g:loaded_tlib < 15
-        echoerr 'tlib >= 0.15 is required'
+    if !exists('g:loaded_tlib') || g:loaded_tlib < 32
+        echoerr 'tlib >= 0.32 is required'
         finish
     endif
 endif
-let loaded_viki = 311
+let loaded_viki = 313
 
 " This is what we consider nil, in the absence of nil in vimscript
 let g:vikiDefNil  = ''
@@ -154,6 +153,7 @@ if !exists("g:vikiSpecialFiles") "{{{2
                 \ 'wmv',
                 \ 'xhtml',
                 \ 'xls',
+                \ 'xmind',
                 \ ]
 endif
 
@@ -1036,5 +1036,18 @@ exists.
 - Default values for g:vikiOpenUrlWith_ANY and g:vikiOpenFileWith_ANY on 
 Macs (thanks mboniou)
 - Correct default value for g:vikiOpenFileWith_ANY @ Windows
+
+3.12
+- Extended viki links: decode %HH in local filenames (this may cause 
+problems with file names containing an unencoded %)
+- Require tlib 0.32
+- viki#ExecExternal(): Escape !
+- special file: xmind
+
+3.13
+- Make regexp for inexistent links case sensitive
+- viki#HomePage()
+- viki#GetInterVikis()
+
 
 " vim: ff=unix

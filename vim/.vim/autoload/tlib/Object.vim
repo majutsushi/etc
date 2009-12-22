@@ -1,10 +1,10 @@
 " Object.vim -- Prototype objects?
-" @Author:      Thomas Link (micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     http://members.a1.net/t.link/
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-05-01.
-" @Last Change: 2007-09-11.
-" @Revision:    0.1.116
+" @Last Change: 2009-02-15.
+" @Revision:    0.1.121
 
 " :filedoc:
 " Provides a prototype plus some OO-like methods.
@@ -68,6 +68,7 @@ function! s:prototype.New(...) dict "{{{3
     let s:id_counter += 1
     let object._id = s:id_counter
     if a:0 >= 1 && !empty(a:1)
+        " call object.Extend(deepcopy(a:1))
         call object.Extend(a:1)
     endif
     return object
@@ -146,13 +147,16 @@ function! s:prototype.Super(method, arglist) dict "{{{3
 endf
 
 
-function! s:prototype.Methods() dict "{{{3
+function! s:prototype.Methods(...) dict "{{{3
+    TVarArg ['pattern', '\d\+']
     let o = items(self)
     call filter(o, 'type(v:val[1]) == 2 && string(v:val[1]) =~ "^function(''\\d\\+'')"')
     let acc = {}
     for e in o
-        let id = matchstr(string(e[1]), '\d\+')
-        let acc[id] = e[0]
+        let id = matchstr(string(e[1]), pattern)
+        if !empty(id)
+            let acc[id] = e[0]
+        endif
     endfor
     return acc
 endf

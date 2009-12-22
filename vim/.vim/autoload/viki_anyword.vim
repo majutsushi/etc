@@ -2,8 +2,8 @@
 " @Author:      Tom Link (mailto:micathom AT gmail com?subject=vim-vikiAnyWord)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     04-Apr-2005.
-" @Last Change: 2009-02-15.
-" @Revision:    0.36
+" @Last Change: 2009-11-01.
+" @Revision:    0.37
 
 if &cp || exists('loaded_viki_anyword')
     finish
@@ -88,7 +88,7 @@ endf
 function! viki_anyword#Find(flag, ...) "{{{3
     let rx = viki#RxFromCollection(b:vikiNamesOk)
     let i  = a:0 >= 1 ? a:1 : 0
-    call viki#Find(a:flag, i, rx)
+    call viki_viki#Find(a:flag, i, rx)
 endfun
 
 

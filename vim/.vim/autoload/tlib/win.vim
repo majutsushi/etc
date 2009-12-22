@@ -1,10 +1,10 @@
 " win.vim
-" @Author:      Thomas Link (micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-08-24.
-" @Last Change: 2007-09-12.
-" @Revision:    0.0.35
+" @Last Change: 2009-08-04.
+" @Revision:    0.0.51
 
 if &cp || exists("loaded_tlib_win_autoload")
     finish
@@ -15,10 +15,14 @@ let loaded_tlib_win_autoload = 1
 " Return vim code to jump back to the original window.
 function! tlib#win#Set(winnr) "{{{3
     if a:winnr > 0
+        " TLogVAR a:winnr
         " TLogDBG winnr()
+        " TLogDBG string(tlib#win#List())
         if winnr() != a:winnr && winbufnr(a:winnr) != -1
             let rv = winnr().'wincmd w'
             exec a:winnr .'wincmd w'
+            " TLogVAR rv
+            " TLogDBG string(tlib#win#List())
             return rv
         endif
     endif
@@ -32,22 +36,27 @@ function! tlib#win#GetLayout(...) "{{{3
     let views = {}
     if save_view
         let winnr = winnr()
-        for w in range(1, winnr('$'))
-            call tlib#win#Set(w)
-            let views[w] = winsaveview()
-        endfor
+        windo let views[winnr()] = winsaveview()
+        " for w in range(1, winnr('$'))
+        "     call tlib#win#Set(w)
+        "     let views[w] = winsaveview()
+        " endfor
         call tlib#win#Set(winnr)
     endif
-    return {'winnr': winnr('$'), 'winrestcmd': winrestcmd(), 'views': views, 'cmdheight': &cmdheight}
+    return {'winnr': winnr('$'), 'winrestcmd': winrestcmd(), 'views': views, 'cmdheight': &cmdheight, 'guioptions': &guioptions}
 endf
 
 
 function! tlib#win#SetLayout(layout) "{{{3
     if a:layout.winnr == winnr('$')
+        " TLogVAR a:layout.winrestcmd
+        " TLogDBG string(tlib#win#List())
         exec a:layout.winrestcmd
         if !empty(a:layout.views)
             let winnr = winnr()
+            " TLogVAR winnr
             for [w, v] in items(a:layout.views)
+                " TLogVAR w, v
                 call tlib#win#Set(w)
                 call winrestview(v)
             endfor
@@ -56,9 +65,19 @@ function! tlib#win#SetLayout(layout) "{{{3
         if a:layout.cmdheight != &cmdheight
             let &cmdheight = a:layout.cmdheight
         endif
+        " TLogDBG string(tlib#win#List())
         return 1
     endif
     return 0
+endf
+
+
+function! tlib#win#List() "{{{3
+    let wl = {}
+    for wn in range(1, winnr('$'))
+        let wl[wn] = bufname(winbufnr(wn))
+    endfor
+    return wl
 endf
 
 

@@ -905,6 +905,12 @@ Etc:
     If non-zero, highligh links to existent or inexistent files in different 
     colours.
 
+- g:vikiCacheInexistent                             *g:vikiCacheInexistent*
+    Default: 0
+    If non-zero, save patterns for |g:vikiMarkInexistent| for later re-use 
+    using |tlib#cache#Filename()|. You might want to delete old files from the 
+    |g:tlib_cache| directory from time to time.
+
 - b:vikiInverseFold                                 *b:vikiInverseFold*
     Default: 0 == OFF
     If set, the section headings' levels are folded in reversed order so that 

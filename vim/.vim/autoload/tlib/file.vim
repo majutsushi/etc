@@ -1,10 +1,10 @@
 " file.vim
-" @Author:      Thomas Link (micathom AT gmail com?subject=[vim])
+" @Author:      Tom Link (micathom AT gmail com?subject=[vim])
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-30.
-" @Last Change: 2007-11-01.
-" @Revision:    0.0.51
+" @Last Change: 2009-03-13.
+" @Revision:    0.0.67
 
 if &cp || exists("loaded_tlib_file_autoload")
     finish
@@ -36,14 +36,20 @@ function! tlib#file#Split(filename) "{{{3
 endf
 
 
+" :display: tlib#file#Join(filename_parts, ?strip_slashes=0)
 " EXAMPLES: >
 "   tlib#file#Join(['foo', 'bar', 'filename.txt'])
 "   => 'foo/bar/filename.txt'
-function! tlib#file#Join(filename_parts) "{{{3
-    " let rx    = tlib#rx#Escape(g:tlib_filename_sep) .'$'
-    " let parts = map(copy(a:filename_parts), 'substitute(v:val, rx, "", "")')
-    " return join(parts, g:tlib_filename_sep)
-    return join(a:filename_parts, g:tlib_filename_sep)
+function! tlib#file#Join(filename_parts, ...) "{{{3
+    TVarArg 'strip_slashes'
+    if strip_slashes
+        " let rx    = tlib#rx#Escape(g:tlib_filename_sep) .'$'
+        let rx    = '[/\\]$'
+        let parts = map(copy(a:filename_parts), 'substitute(v:val, rx, "", "")')
+        return join(parts, g:tlib_filename_sep)
+    else
+        return join(a:filename_parts, g:tlib_filename_sep)
+    endif
 endf
 
 
@@ -117,5 +123,4 @@ function! tlib#file#With(fcmd, bcmd, files, ...) "{{{3
         endif
     endfor
 endf
-
 
