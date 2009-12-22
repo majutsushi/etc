@@ -889,6 +889,11 @@ let g:fuf_tag_cache_dir        = '~/.cache/vim/vim-fuf-cache/tag'
 let g:fuf_taggedfile_cache_dir = '~/.cache/vim/vim-fuf-cache/taggedfile'
 let g:fuf_help_cache_dir       = '~/.cache/vim/vim-fuf-cache/help'
 
+" a leading space allows a recursive search
+let g:fuf_abbrevMap = {
+    \   "^ " : [ "**/", ],
+    \ }
+
 nmap <leader>fb :FufBuffer<CR>
 nmap <leader>ff :FufFile<CR>
 nmap <leader>fd :FufDir<CR>
