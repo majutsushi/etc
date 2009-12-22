@@ -1,8 +1,15 @@
-" This must be at the beginning
+" Important stuff at the beginning {{{1
 set nocompatible
 let mapleader=","
-set runtimepath+=~/src/vim-latex/vimfiles
-set runtimepath+=~/.vim/xpt
+set runtimepath=$HOME/.vim
+set runtimepath+=/var/lib/vim/addons
+set runtimepath+=$VIM/vimfiles
+set runtimepath+=$VIMRUNTIME
+set runtimepath+=$VIM/vimfiles/after
+set runtimepath+=/var/lib/vim/addons/after
+set runtimepath+=$HOME/src/vim-latex/vimfiles
+set runtimepath+=$HOME/.vim/xpt
+set runtimepath+=$HOME/.vim/after
 
 " Autocommands {{{1
 
