@@ -4,6 +4,75 @@ let mapleader=","
 set runtimepath+=~/src/vim-latex/vimfiles
 set runtimepath+=~/.vim/xpt
 
+" Autocommands {{{1
+
+" remove all autocommands to avoid sourcing them twice
+autocmd!
+
+autocmd GUIEnter * call GuiSettings()
+
+"au BufWritePost ~/.vimrc so ~/.vimrc
+
+autocmd InsertLeave * set nocul
+autocmd InsertEnter * set cul
+
+autocmd BufNewFile,BufReadPost * call LoadProjectConfig(expand("%:p:h"))
+
+" create undo break point
+autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
+
+"au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
+
+" filetype-specific settings
+au Filetype html,xml,xsl source ~/.vim/macros/closetag.vim
+au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
+au FileType tex let b:vikiFamily="LaTeX"
+au FileType viki compiler deplate
+au FileType gtkrc setlocal tabstop=2 shiftwidth=2
+au FileType haskell compiler ghc
+au FileType mkd setlocal ai formatoptions=tcroqn2 comments=n:>
+au FileType ruby setlocal omnifunc=rubycomplete#Complete
+au FileType gitcommit DiffGitCached | wincmd p
+au FileType python setlocal foldmethod=indent
+au FileType python setlocal omnifunc=pythoncomplete#Complete
+
+augroup cfile
+    "au FileType c setlocal path+=/usr/include,/usr/include/sys,/usr/include/linux
+    au FileType c,cpp setlocal foldmethod=syntax
+    au FileType c,cpp setlocal tags+=~/.vim/systags/systags
+    au FileType c,cpp setlocal cinoptions=t0,(0,)50
+augroup END
+
+augroup java
+    au FileType java compiler javac
+    au FileType java setlocal omnifunc=javacomplete#Complete
+    au FileType java setlocal completefunc=javacomplete#CompleteParamsInfo
+"    au FileType java setlocal cinoptions=t0,(0,j1,)50 " see after/indent/java.vim
+augroup END
+
+" setup templates
+au BufNewFile *.tex Vimplate LaTeX
+au BufNewFile *.sh Vimplate shell
+au BufNewFile *.c Vimplate c
+au BufNewFile *.vim Vimplate vim
+au BufNewFile *.rb Vimplate ruby
+au BufNewFile Makefile Vimplate Makefile-C
+
+" FSwitch setup
+au BufEnter *.c        let b:fswitchdst  = 'h'
+au BufEnter *.c        let b:fswitchlocs = './'
+au BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
+au BufEnter *.cpp,*.cc let b:fswitchlocs = './'
+au BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
+au BufEnter *.h        let b:fswitchlocs = './'
+
+au BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.h TlistUpdate
+"au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
+"au CursorMoved,CursorMovedI *   TlistHighlightTag
+"au CursorMoved,CursorMovedI * endif
+
+au BufWritePost,FileWritePost *.sh silent !chmod u+x %
+
 " Functions {{{1
 
 " Bclose() {{{2
@@ -447,10 +516,12 @@ function! GPicker()
     execute "edit " . fnameescape(l:filet)
 endfunction
 
-" important {{{1
+" Options {{{1
+
+" important {{{2
 set cpoptions+=$
 
-" moving around, searching and patterns {{{1
+" moving around, searching and patterns {{{2
 
 " list of flags specifying which commands wrap to another line (local to window)
 set whichwrap=<,>,b,s,[,]
@@ -467,7 +538,7 @@ set smartcase
 " pattern for a macro definition line (global or local to buffer)
 set define=^\\(\\s*#\\s*define\\\|[a-z]*\\s*const\\s*[a-z]*\\)
 
-" tags {{{1
+" tags {{{2
 
 " when completing tags in Insert mode show more info
 set showfulltag
@@ -478,7 +549,7 @@ set cscopeverbose
 " When to open a quickfix window for cscope
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 
-" displaying text {{{1
+" displaying text {{{2
 
 " number of screen lines to show around the cursor
 set scrolloff=5
@@ -510,7 +581,7 @@ set listchars=tab:»-,trail:·,nbsp:~,precedes:«,extends:»
 " show the line number for each line (local to window)
 set number
 
-" syntax, highlighting and spelling {{{1
+" syntax, highlighting and spelling {{{2
 
 " "dark" or "light"; the background color brightness
 set background=dark
@@ -522,7 +593,7 @@ set spellsuggest=best,10
 
 colorscheme desert256
 
-" multiple windows {{{1
+" multiple windows {{{2
 
 " 0, 1 or 2; when to use a status line for the last window
 set laststatus=2
@@ -537,7 +608,7 @@ set switchbuf=useopen " or usetab
 " a new window is put below the current one
 "set splitbelow
 
-" multiple tab pages {{{1
+" multiple tab pages {{{2
 
 if exists("+showtabline")
     " 0, 1 or 2; when to use a tab pages line
@@ -546,7 +617,7 @@ if exists("+showtabline")
     set tabline=%!MyTabLine()
 endif
 
-" terminal {{{1
+" terminal {{{2
 
 " terminal connection is fast
 set ttyfast
@@ -564,7 +635,7 @@ if (&term =~ '^screen')
     autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
 endif
 
-" using the mouse {{{1
+" using the mouse {{{2
 
 " list of flags for using the mouse
 set mouse=a
@@ -573,7 +644,7 @@ set mousemodel=popup
 " "xterm", "xterm2", "dec" or "netterm"; type of mouse
 set ttymouse=xterm
 
-" GUI {{{1
+" GUI {{{2
 
 if has("gui_running")
     call GuiSettings()
@@ -583,7 +654,7 @@ if exists('&macatsui')
     set nomacatsui
 endif
 
-" printing {{{1
+" printing {{{2
 
 " list of items that control the format of :hardcopy output
 set printoptions=number:y,paper:A4,left:5pc,right:5pc,top:5pc,bottom:5pc
@@ -599,7 +670,7 @@ function! PrintFile(fname)
     return v:shell_error
 endfunc
 
-" messages and info {{{1
+" messages and info {{{2
 
 " list of flags to make messages shorter
 set shortmess=atI
@@ -616,9 +687,9 @@ set confirm
 " use a visual bell instead of beeping
 "set visualbell
 
-" selecting text {{{1
+" selecting text {{{2
 
-" editing text {{{1
+" editing text {{{2
 
 " maximum number of changes that can be undone
 set undolevels=1000
@@ -649,7 +720,7 @@ set showmatch
 " use two spaces after '.' when joining a line
 set nojoinspaces
 
-" tabs and indenting {{{1
+" tabs and indenting {{{2
 
 " number of spaces a <Tab> in the text stands for (local to buffer)
 set tabstop=8     " should always be 8
@@ -669,7 +740,7 @@ set autoindent
 " do clever autoindenting (local to buffer)
 set smartindent
 
-" folding {{{1
+" folding {{{2
 
 " set to display all folds open (local to window)
 set nofoldenable
@@ -680,12 +751,12 @@ set nofoldenable
 " specifies for which commands a fold will be opened
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
 
-" diff mode {{{1
+" diff mode {{{2
 
 " options for using diff mode
 set diffopt=filler,vertical
 
-" reading and writing files {{{1
+" reading and writing files {{{2
 
 " enable using settings from modelines when reading a file (local to buffer)
 set modeline
@@ -706,7 +777,7 @@ set autoread
 " keep oldest version of a file; specifies file name extension
 "set patchmode=.orig
 
-" the swap file {{{1
+" the swap file {{{2
 
 " list of directories for the swap file
 "set directory=
@@ -715,7 +786,7 @@ set updatecount=100
 " time in msec after which the swap file will be updated
 set updatetime=2000
 
-" command line editing {{{1
+" command line editing {{{2
 
 " how many command lines are remembered
 set history=100
@@ -731,19 +802,19 @@ set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*
 " command-line completion shows a list of matches
 "set wildmenu
 
-" running make and jumping to errors {{{1
+" running make and jumping to errors {{{2
 
 " program used for the ":grep" command (global or local to buffer)
 set grepprg=ack-grep
 
-" multi-byte characters {{{1
+" multi-byte characters {{{2
 
 " character encoding used in Vim: "latin1", "utf-8" "euc-jp", "big5", etc.
 set encoding=utf-8
 " automatically detected character encodings
 set fileencodings=ucs-bom,utf-8,default,latin1
 
-" various {{{1
+" various {{{2
 
 filetype plugin indent on
 syntax enable
@@ -977,75 +1048,6 @@ if !has("gui_running")
         set <S-F2>=[1;2Q
     endif
 endif
-
-" Autocommands {{{1
-
-" remove all autocommands to avoid sourcing them twice
-autocmd!
-
-autocmd GUIEnter * call GuiSettings()
-
-"au BufWritePost ~/.vimrc so ~/.vimrc
-
-autocmd InsertLeave * set nocul
-autocmd InsertEnter * set cul
-
-autocmd BufNewFile,BufReadPost * call LoadProjectConfig(expand("%:p:h"))
-
-" create undo break point
-autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
-
-"au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
-
-" filetype-specific settings
-au Filetype html,xml,xsl source ~/.vim/macros/closetag.vim
-au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
-au FileType tex let b:vikiFamily="LaTeX"
-au FileType viki compiler deplate
-au FileType gtkrc setlocal tabstop=2 shiftwidth=2
-au FileType haskell compiler ghc
-au FileType mkd setlocal ai formatoptions=tcroqn2 comments=n:>
-au FileType ruby setlocal omnifunc=rubycomplete#Complete
-au FileType gitcommit DiffGitCached | wincmd p
-au FileType python setlocal foldmethod=indent
-au FileType python setlocal omnifunc=pythoncomplete#Complete
-
-augroup cfile
-    "au FileType c setlocal path+=/usr/include,/usr/include/sys,/usr/include/linux
-    au FileType c,cpp setlocal foldmethod=syntax
-    au FileType c,cpp setlocal tags+=~/.vim/systags/systags
-    au FileType c,cpp setlocal cinoptions=t0,(0,)50
-augroup END
-
-augroup java
-    au FileType java compiler javac
-    au FileType java setlocal omnifunc=javacomplete#Complete
-    au FileType java setlocal completefunc=javacomplete#CompleteParamsInfo
-"    au FileType java setlocal cinoptions=t0,(0,j1,)50 " see after/indent/java.vim
-augroup END
-
-" setup templates
-au BufNewFile *.tex Vimplate LaTeX
-au BufNewFile *.sh Vimplate shell
-au BufNewFile *.c Vimplate c
-au BufNewFile *.vim Vimplate vim
-au BufNewFile *.rb Vimplate ruby
-au BufNewFile Makefile Vimplate Makefile-C
-
-" FSwitch setup
-au BufEnter *.c        let b:fswitchdst  = 'h'
-au BufEnter *.c        let b:fswitchlocs = './'
-au BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
-au BufEnter *.cpp,*.cc let b:fswitchlocs = './'
-au BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
-au BufEnter *.h        let b:fswitchlocs = './'
-
-au BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.h TlistUpdate
-"au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
-"au CursorMoved,CursorMovedI *   TlistHighlightTag
-"au CursorMoved,CursorMovedI * endif
-
-au BufWritePost,FileWritePost *.sh silent !chmod u+x %
 
 " Mappings {{{1
 
