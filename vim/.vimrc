@@ -823,6 +823,10 @@ set fileencodings=ucs-bom,utf-8,default,latin1
 filetype plugin indent on
 syntax enable
 
+let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : 'fg' }
+" must come after terminal color configuration
+colorscheme desert
+
 " when to use virtual editing: "block", "insert" and/or "all"
 set virtualedit=all
 " list that specifies what to write in the viminfo file
@@ -844,12 +848,6 @@ let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
 " code_complete {{{2
 let s:rs = '<+'
 let s:re = '+>'
-
-" CSApprox {{{2
-let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : 'fg' }
-
-" must come after terminal color configuration
-colorscheme desert
 
 " detectindent {{{2
 let g:detectindent_preferred_expandtab = 1
