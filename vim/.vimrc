@@ -239,7 +239,6 @@ endfunction
 " GuiSettings() {{{2
 function! GuiSettings()
     set guifont=DejaVu\ Sans\ Mono\ 8
-    set listchars=tab:»-,trail:␣,nbsp:~,precedes:«,extends:»
 
     set guioptions+=c " use console dialogs
     set guioptions-=e " don't use gui tabs
@@ -582,7 +581,8 @@ set lazyredraw
 " show <Tab> as ^I and end-of-line as $ (local to window)
 set list
 " list of strings used for list mode
-set listchars=tab:»-,trail:·,nbsp:~,precedes:«,extends:»
+set listchars=tab:»-,trail:·,nbsp:×,precedes:«,extends:»
+"set listchars=tab:»-,trail:␣,nbsp:×,precedes:«,extends:»
 
 " show the line number for each line (local to window)
 set number
