@@ -238,7 +238,6 @@ endfunction
 
 " GuiSettings() {{{2
 function! GuiSettings()
-    colorscheme desert
     set guifont=DejaVu\ Sans\ Mono\ 8
     set listchars=tab:»-,trail:␣,nbsp:~,precedes:«,extends:»
 
@@ -598,8 +597,6 @@ set hlsearch
 " methods used to suggest corrections
 set spellsuggest=best,10
 
-colorscheme desert256
-
 " multiple windows {{{2
 
 " 0, 1 or 2; when to use a status line for the last window
@@ -847,6 +844,12 @@ let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
 " code_complete {{{2
 let s:rs = '<+'
 let s:re = '+>'
+
+" CSApprox {{{2
+let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : 'fg' }
+
+" must come after terminal color configuration
+colorscheme desert
 
 " detectindent {{{2
 let g:detectindent_preferred_expandtab = 1
