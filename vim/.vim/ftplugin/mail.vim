@@ -460,15 +460,13 @@ endfunction
 setlocal tw=72
 setlocal completefunc=LBDBCompleteFn
 
-nohlsearch
-
 call s:QuoteEraseSig()
+
+call s:Tofu()
 
 " Replace trailing spaces except after mail headers (To:,
 " etc.) or a signature delimiter (-- ).
 silent! %s/\(^\([a-zA-z-]\+:\|--\)\)\@<!\s\+$//
-
-call s:Tofu()
 
 " Remove spaces between quotes (> > to >>).
 silent! %s/^\(>\+\) >/\1>/g
@@ -476,8 +474,10 @@ silent! %s/^\(>\+\) >/\1>/g
 
 "call s:FormatQuotes() " doesn't work with pre-formatted text
 
-%call s:QuoteDelEmpty()
+"%call s:QuoteDelEmpty()
 
 call s:CursorStart()
+
+nohlsearch
 
 " vim:tw=78 foldmethod=marker foldenable
