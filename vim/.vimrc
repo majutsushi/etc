@@ -1212,6 +1212,32 @@ nmap <leader>co :botright copen<cr>
 nmap <leader>cc :cclose<cr>
 nmap <leader>cl :clist<cr>
 
+" search for visually selected text
+xnoremap <silent> * :<C-U>
+              \let old_reg=getreg('"')<bar>
+              \let old_regmode=getregtype('"')<cr>
+              \gvy/<C-R><C-R>=substitute(
+              \escape(@", '\\/.*$^~[]'), '\n', '\\n', 'g')<cr><cr>
+              \:call setreg('"', old_reg, old_regmode)<cr>
+xnoremap <silent> # :<C-U>
+              \let old_reg=getreg('"')<bar>
+              \let old_regmode=getregtype('"')<cr>
+              \gvy?<C-R><C-R>=substitute(
+              \escape(@", '\\/.*$^~[]'), '\n', '\\n', 'g')<cr><cr>
+              \:call setreg('"', old_reg, old_regmode)<cr>
+xnoremap <silent> g* :<C-U>
+              \let old_reg=getreg('"')<bar>
+              \let old_regmode=getregtype('"')<cr>
+              \gvy/<C-R><C-R>=substitute(
+              \escape(@", '\\/.*$^~[]'), '\_s\+', '\\_s\\+', 'g')<cr><cr>
+              \:call setreg('"', old_reg, old_regmode)<cr>
+xnoremap <silent> # :<C-U>
+              \let old_reg=getreg('"')<bar>
+              \let old_regmode=getregtype('"')<cr>
+              \gvy?<C-R><C-R>=substitute(
+              \escape(@", '\\/.*$^~[]'), '\_s\+', '\\_s\\+', 'g')<cr><cr>
+              \:call setreg('"', old_reg, old_regmode)<cr>
+
 " Display {{{2
 
 " toggle folds
