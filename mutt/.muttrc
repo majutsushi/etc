@@ -205,7 +205,7 @@ unset write_bcc         # send Bcc: line to $sendmail
 # =============================================================================
 # replying {{{
 
-  set attribution="* %n (%a) wrote:"
+  set attribution="%n (%a):"
   set fast_reply        # ignored if $autoedit
 unset header            # quote full header on reply
   set honor_followup_to=yes   # Ask whether to honor Mail-Followup-To header
