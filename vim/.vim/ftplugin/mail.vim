@@ -430,7 +430,7 @@ function! s:Tofu()
     call cursor(1,1)
     call search('^> ')
     if 1 < line(".")
-        .,/^$/-1!sed -e 's/^> //' | t-prot --body -ck --max-lines=250 -l -L$XDG_CONFIG_HOME/t-prot/footers -a -A$XDG_CONFIG_HOME/t-prot/ads | sed -e 's/^/> /'
+        .,/\v(^$)|(%$)/!sed -e 's/^> //' | t-prot --body -ck --max-lines=250 -l -L$XDG_CONFIG_HOME/t-prot/footers -a -A$XDG_CONFIG_HOME/t-prot/ads | sed -e 's/^/> /'
     endif
 endfunction
 
