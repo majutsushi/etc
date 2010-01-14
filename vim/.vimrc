@@ -754,6 +754,8 @@ set nofoldenable
 "set foldcolumn=3
 " specifies for which commands a fold will be opened
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
+" maximum fold depth for when 'foldmethod is "indent" or "syntax" (local to window)
+set foldnestmax=1
 
 " diff mode {{{2
 
