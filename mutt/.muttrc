@@ -456,6 +456,8 @@ bind pager   p          previous-undeleted
 bind pager   n          next-undeleted
 bind pager  ' '         next-unread
 bind pager   \n         next-new
+bind pager   <up>       previous-line
+bind pager   <down>     next-line
 
 # syncing
 bind index   x          sync-mailbox
