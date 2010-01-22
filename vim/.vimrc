@@ -518,14 +518,6 @@ function! VisualSearch(direction) range
     let @" = l:saved_reg
 endfunction
 
-" GPicker() {{{2
-function! GPicker()
-    let l:filet = system("gpicker .")
-    let l:filet = substitute(l:filet, '\"', "", "g")
-    let l:filet = substitute(l:filet, '\n', "", "g")
-    execute "edit " . fnameescape(l:filet)
-endfunction
-
 " Options {{{1
 
 " important {{{2
@@ -1113,8 +1105,6 @@ nmap <silent> <Leader>ok :FSAbove<cr>
 nmap <silent> <Leader>oK :FSSplitAbove<cr>
 nmap <silent> <Leader>oj :FSBelow<cr>
 nmap <silent> <Leader>oJ :FSSplitBelow<cr>
-
-nmap <leader>e :call GPicker()<CR>
 
 let vimrc='~/.vimrc'
 let myabbr='~/.vim/abbrevs.vim'
