@@ -184,6 +184,8 @@ alias lsw='ls -ld *(R,W,X.^ND/)'       # world-{readable,writable,executable} fi
 alias lsd='ls -d *(/)'                 # only show directories
 alias lse='ls -d *(/^F)'               # only show empty directories
 
+alias t='tree -F'
+
 if [[ $UID == 0 ]]; then
     INTERACTIVE="-i"
 fi
