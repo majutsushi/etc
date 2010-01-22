@@ -636,6 +636,9 @@ if (&term =~ '^screen')
     autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
 endif
 
+" disable visual bell
+set t_vb=
+
 " using the mouse {{{2
 
 " list of flags for using the mouse
