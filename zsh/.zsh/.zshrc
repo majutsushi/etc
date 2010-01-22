@@ -581,8 +581,8 @@ prompt_set_line_1 () {
     local left_side=$left_left$left_dir$left_right
     local right_side="---$BATTERY($C_F_CYAN%D{%H:%M:%S}$C_F_DEFAULT)]$C_DEFAULT"
 
-    local left_side_width=${#${(S%%)left_side//\%\{*\%\}/}}
-    local right_side_width=${#${(S%%)right_side//\%\{*\%\}/}}
+    local left_side_width=${(m)#${(S%%)left_side//\%\{*\%\}/}}
+    local right_side_width=${(m)#${(S%%)right_side//\%\{*\%\}/}}
 
     local padding_size=$(( COLUMNS - left_side_width - right_side_width ))
 
@@ -592,8 +592,8 @@ prompt_set_line_1 () {
         prompt_line_1="$left_side$padding$right_side"
         return
     else
-        local left_left_width=${#${(S%%)left_left//\%\{*\%\}/}}
-        local left_right_width=${#${(S%%)left_right//\%\{*\%\}/}}
+        local left_left_width=${(m)#${(S%%)left_left//\%\{*\%\}/}}
+        local left_right_width=${(m)#${(S%%)left_right//\%\{*\%\}/}}
         local rest_size=$(( left_left_width + left_right_width + right_side_width ))
         local max_size=$(( COLUMNS - rest_size ))
         prompt_line_1="$left_left%$max_size<...<${left_dir}%<<$left_right$right_side"
