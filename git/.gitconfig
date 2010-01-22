@@ -27,6 +27,10 @@
 	diff = auto
 	branch = auto
 	interactive = auto
+
+[diff]
+	tool = vimdiff
+
 [merge]
 	tool = vimdiff
 [core]
