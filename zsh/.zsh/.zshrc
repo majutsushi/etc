@@ -501,13 +501,6 @@ fi
 
 precmd () {
 
-    # Work around ion/xterm resize bug.
-#     if [[ "$SHLVL" -ge 1 ]]; then
-#         if [[ -x $(which resize 2>/dev/null) ]]; then
-#             eval $(resize -u)
-#         fi
-#     fi
-
     # handle deleted and then recreated directories
     if ! [[ . -ef $PWD ]]; then
          OLDOLDPWD="${OLDPWD}"
@@ -557,10 +550,11 @@ precmd () {
 #     ┌─[x]──────────────────────────────────────────────────────[x]─┐
 #     └─[x]─── COMMANDS                                       ───[x]─┘
 
-    generate_path_info
+    vcs_info
     prompt_set_line_1
     prompt_set_line_2
 
+    RPS1="${vcs_info_msg_1_:+${C_BOLD}<${C_F_RED}${vcs_info_msg_1_}${C_F_DEFAULT}>${C_DEFAULT}}"
     # adjust title of xterm
     # see http://www.faqs.org/docs/Linux-mini/Xterm-Title.html
     case $TERM in (xterm*|rxvt*|screen*)
@@ -576,71 +570,13 @@ precmd () {
     fi
 }
 
-generate_path_info () {
-# git stuff from http://blog.madism.org/index.php/2008/05/07/173-git-prompt
-# and http://madduck.net/blog/2008.05.07:adding-vcs-information-to-the-zsh-prompt/
-    local git_dir branch completepath rprompt_tmp
-
-    if git_dir=$(git rev-parse --git-dir 2> /dev/null); then
-        if [[ -d "$git_dir/rebase-apply" ]]; then
-            if [[ -f "$git_dir/rebase-apply/rebasing" ]]; then
-                rprompt_tmp="rebase"
-            elif [[ -f "$git_dir/rebase-apply/applying" ]]; then
-                rprompt_tmp="am"
-            else
-                rprompt_tmp="am/rebase"
-            fi
-            branch="$(git symbolic-ref HEAD 2>/dev/null)"
-        elif [[ -f "$git_dir/rebase-merge/interactive" ]]; then
-            rprompt_tmp="rebase -i"
-            branch="$(cat "$git_dir/rebase-merge/head-name")"
-        elif [[ -d "$git_dir/rebase-merge" ]]; then
-            rprompt_tmp="rebase -m"
-            branch="$(cat "$git_dir/rebase-merge/head-name")"
-        elif [[ -f "$git_dir/MERGE_HEAD" ]]; then
-            rprompt_tmp="merge"
-            branch="$(git symbolic-ref HEAD 2>/dev/null)"
-        else
-            [[ -f "$git_dir/BISECT_LOG" ]] && rprompt_tmp="bisect"
-            branch="$(git symbolic-ref HEAD 2>/dev/null)" || \
-                branch="$(git describe --exact-match HEAD 2>/dev/null)" || \
-                branch="$(cut -c1-7 "$git_dir/HEAD")..."
-        fi
-
-        local relroot="$(git rev-parse --show-cdup 2>/dev/null)"
-        if [ -n "$relroot" ]; then
-            local left="$(readlink -f $relroot)"
-        else
-            local left="$PWD"
-        fi
-
-        middle="${C_F_DEFAULT}[$C_F_YELLOW${branch#refs/heads/}${C_F_DEFAULT}]$C_F_GREEN"
-        local right="$(git rev-parse --show-prefix)"
-        if [ -n "$right" ]; then
-            right="/${right%/}"
-        fi
-
-        completepath="$left$middle$right"
-        completepath="${completepath/#${HOME}/~}"
-
-        if [ -n "$rprompt_tmp" ]; then
-            rprompt_tmp="${C_BOLD}<${C_F_RED}${rprompt_tmp}${C_F_DEFAULT}>${C_DEFAULT}"
-        fi
-    else
-        completepath="%~"
-        rprompt_tmp=""
-    fi
-
-    CPATH=$completepath
-    RPS1="$rprompt_tmp"
-}
-
 prompt_set_line_1 () {
 
 #     local left_left="${C_BOLD}[($C_F_GREEN"
 #     local left_left="${C_BOLD}${C_F_RED}┌${C_F_DEFAULT}($C_F_GREEN"
     local left_left="${PR_SET_CHARSET}${C_BOLD}${C_F_RED}${PR_SHIFT_IN}${PR_ULCORNER}${PR_SHIFT_OUT}${C_F_DEFAULT}($C_F_GREEN"
-    local left_dir="$CPATH"
+#     local left_dir="$CPATH"
+    local left_dir="${${vcs_info_msg_0_/#${HOME}/~}%%/.}"
     local left_right="$C_F_DEFAULT$WPERM)"
     local left_side=$left_left$left_dir$left_right
     local right_side="---$BATTERY($C_F_CYAN%D{%H:%M:%S}$C_F_DEFAULT)]$C_DEFAULT"
@@ -707,6 +643,13 @@ setprompt () {
     if [[ $UID == 0 ]]; then
         C_ROOT=$C_F_RED
     fi
+
+    autoload -Uz vcs_info
+
+    zstyle ':vcs_info:*' enable git hg
+    zstyle ':vcs_info:*' nvcsformats   '%~'
+    zstyle ':vcs_info:*' formats       '%R'${C_F_DEFAULT}'['${C_F_YELLOW}'%s'${C_F_DEFAULT}':'${C_F_YELLOW}'%b'${C_F_DEFAULT}']'${C_F_GREEN}'/%S'
+    zstyle ':vcs_info:*' actionformats '%R'${C_F_DEFAULT}'['${C_F_YELLOW}'%s'${C_F_DEFAULT}':'${C_F_YELLOW}'%b'${C_F_DEFAULT}']'${C_F_GREEN}'/%S' '%a'
 
     if [[ "$TERM" != "dumb" ]]; then
         PS1='$prompt_line_1$prompt_newline$prompt_line_2'
