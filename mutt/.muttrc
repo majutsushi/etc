@@ -500,8 +500,8 @@ macro index  ,p         "<pipe-message>procmail\n<delete-message><next-unread>" 
 macro pager  ,p         "<pipe-message>procmail\n<delete-message><next-unread>" "Pipe message through procmail"
 
 # search mail with maildir-utils
-macro index  ,mf        "<shell-escape>rm -rf ~/.mu/results; mu-find --output=links --linkdir=~/.mu/results " "mu-find"
-macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu-find results"
+macro index  ,mf        "<shell-escape>mu find --clearlinks --linksdir=~/.mu/results " "mu find"
+macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu find results"
 
 macro index  \eR        "|~/bin/remember-mail\n"
 
