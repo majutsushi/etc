@@ -22,6 +22,7 @@
 	lol = log --oneline --graph --decorate
 
 [color]
+	ui = auto
 	status = auto
 	diff = auto
 	branch = auto
