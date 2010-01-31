@@ -226,7 +226,7 @@ alias  stat='command stat'
 alias zstat='builtin stat'
 
 # cleaning up
-alias texclean='rm -f *.toc *.aux *.log *.out *.cp *.fn *.tp *.vr *.pg *.ky'
+alias texclean='rm -f *.toc *.aux *.log *.out *.cp *.fn *.tp *.vr *.pg *.ky *.bbl *.blg'
 
 # ignore ~/.ssh/known_hosts entries
 alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
