@@ -57,7 +57,7 @@ set generate_message_id 0
 
 % If non-zero, slrn reads the active file on each startup.  You might want to
 % use this if your network connection is fast or the server has few groups.
-%set read_active 0
+set read_active 0
 
 % The following variables are only meaningful when using spool mode:
 
@@ -134,11 +134,11 @@ set Xbrowser "firefox '%s' &"
 
 % Filename where articles / email you sent are archived.
 % Note: If these are unset, slrn does not keep a copy of outgoing messages.
-set save_posts "News/My_Posts"
-set save_replies "News/My_Replies"
+set save_posts "News/sent"
+set save_replies "News/sent"
 
 % File where failed posts are appended.  Use "" to disable saving.
-set failed_posts_file "dead.letter"
+set failed_posts_file "News/dead.letter"
 
 % Name of score file.
 set scorefile "News/Score"
@@ -164,8 +164,8 @@ set postpone_directory "News/postponed"
 % format specifiers are recognized:
 %  %d:date, %D:date (formatted), %r:real name, %R:first name,
 %  %f:email address, %s:subject, %m:msgid, %n:newsgroups, %%: percent
-set followup_string "On %D, %r <%f> wrote:"
-set reply_string "In %n, you wrote:"
+set followup_string "%r <%f>:"
+set reply_string "%r <%f> [%n]:"
 
 % Custom headers to add to *new* posts
 %set custom_headers "Mail-Copies-To: nobody"
@@ -221,7 +221,7 @@ set sorting_method 11
 % You can also match all headers starting with a given string and exclude
 % specific headers by preceding them with "!" (e.g. use "X-,!X-Trace:" to
 % display all the "X-"headers except "X-Trace:").
-visible_headers "Date:,From:,Newsgroups:,Followup-To:,Reply-To:,Subject:"
+visible_headers "Date:,From:,Newsgroups:,Followup-To:,Reply-To:,Subject:,user-agent:,x-agent:,x-mailer:,x-newsreader:"
 
 % If non-zero, #v+ and #v- will be interpreted as markers of verbatim lines.
 %set process_verbatim_marks 1
@@ -266,6 +266,39 @@ set highlight_unread_subjects 1
 % color terminals:
 %set use_blink 1
 
+set overview_date_format "%d/%m/%y %H:%M"
+
+% header_display_format
+%
+%  -  right justify
+%
+%  %  percent character
+%  B  body status for true offline reading: 'H' means no body
+%     (header only), 'M' means body is marked for download
+%  C  prints `C' if current thread is collapsed
+%  D  date (as defined by overview_date_format)
+%  F  flags (read/unread, `*' and `#' tags, header number)
+%  G  GroupLens score
+%  P  prints `P' if current article has a parent (inside threads)
+%  S  score
+%  T  thread tree
+%  b  article size (usually in kilobyte)
+%  c  number of messages in current subthread
+%  d  date
+%  f  from header
+%  l  article length (number of lines)
+%  n  server number
+%  r  author's real name
+%  s  subject
+%  t  number of messages in thread plus tree
+%
+%  %?<descriptor>?<optional string>?
+%  %?<descriptor>?<string if true>&<string if false>?
+%
+%header_display_format 0 "%F%B%-5S%G%-5l:[%12r]%t%s"
+header_display_format 0 "%F%B %D %20r%t%s %-5g%-5l"
+%header_display_format 4 "%F%B%-5S [%10r]:%t%49s %-19g[%17d]"
+
 % This color object is only used when highlight_unread_subjects is set to 2
 % (see the reference manual for details):
 color unread_subject	"white"		"black"	"bold"
@@ -277,7 +310,7 @@ color author		"magenta"	"black"
 color boldtext		"brightblue"	"black"	"bold"
 color box		"black"		"white"
 color cursor		"brightgreen"	"black"
-color date		"lightgray"	"black"  
+color date		"brown"		"black"
 color description	"lightgray"	"black"
 color error		"red"		"black"	"blink"
 color frame		"yellow"	"blue"
@@ -296,14 +329,14 @@ color menu_press	"lightgray"	"yellow"
 color message		"lightgray"	"black"
 color normal		"lightgray"	"black"
 color pgpsignature	"lightgray"	"black"
-color quotes		"red"		"black"
-color quotes1		"magenta"	"black"
-color quotes2		"brown"		"black"
-color quotes3		"brown"		"black"
-color quotes4		"brown"		"black"
+color quotes		"cyan"		"black"
+color quotes1		"brown"		"black"
+color quotes2		"red"		"black"
+color quotes3		"green"		"black"
+color quotes4		"cyan"		"black"
 color quotes5		"brown"		"black"
-color quotes6		"brown"		"black"
-color quotes7		"brown"		"black"
+color quotes6		"red"		"black"
+color quotes7		"green"		"black"
 color response_char	"green"		"black"	"bold"
 color signature		"red"		"black"
 color selection		"yellow"	"blue"	"bold"
