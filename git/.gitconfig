@@ -35,7 +35,7 @@
 	tool = vimdiff
 
 [core]
-	excludesfile = /home/jan/.gitignore
+	excludesfile = ~/.gitignore
 	fsyncobjectfiles = true
 
 [web]
