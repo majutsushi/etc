@@ -1248,7 +1248,7 @@ nnoremap <space> :call ToggleFold()<CR>
 nmap <F2> :set invlist list?<CR>
 
 " remove search highlighting
-nmap <silent> <leader>n :silent nohl<cr>
+nnoremap <silent> <C-L> :silent nohl<CR><C-L>
 
 " toggle text wrapping
 nmap <silent> <leader>w :set invwrap wrap?<CR>
