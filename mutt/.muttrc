@@ -587,6 +587,11 @@ bind query <space> tag-entry
 ###############################################################################
 # Colors {{{
 
+# source `case $TERM in\
+#              *256color) echo '~/.mutt/colors256-dark'; break ;;\
+#              *)        echo '~/.mutt/konsole-color'; break ;;\
+#         esac`
+
 # =============================================================================
 # general {{{
 
@@ -667,6 +672,14 @@ color quoted4   cyan        default
 color quoted5   yellow      default
 color quoted6   red         default
 color quoted7   green       default
+
+# diffs
+color body brightred default "^-(--)?[^-].*"
+color body brightgreen default "^[+].*"
+color body brightblue default "^!.*"
+color body brightwhite default "^diff .*"
+color body brightwhite default "^index [a-f0-9].*"
+color body brightyellow default "^@@ .*"
 
 color attachment white      magenta
 color signature brightred   default
