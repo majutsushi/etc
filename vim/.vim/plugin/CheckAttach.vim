@@ -1,8 +1,8 @@
 " Vim plugin for checking attachments with mutt
 " Maintainer:  Christian Brabandt <cb@256bit.org>
-" Last Change: 2009 Oct 1
-" Version:     0.3
-" GetLatestVimScripts: 2796 2 :AutoInstall: CheckAttach.vim
+" Last Change: 2010 Jan, 26
+" Version:     0.4
+" GetLatestVimScripts: 2796 3 :AutoInstall: CheckAttach.vim
 
 " Exit quickly when:
 " - this plugin was already loaded (or disabled)
@@ -16,17 +16,28 @@ let g:loaded_checkattach = 1
 " enable Autocommand for attachment checking
 let s:load_autocmd=1
 
+" List of highlighted matches
+let s:matchid=[]
+
+" For which filetypes to check for attachments
+" Define as comma separated list. If you want additional filetypes
+" besides mail, use attach_check_ft to specify all filetypes
+let s:filetype=(exists("attach_check_ft") ? attach_check_ft : 'mail')
+
 " On which keywords to trigger, comma separated list of keywords
 let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
 
 fu! <SID>AutoCmd()
-    if !empty("s:load_autocmd") && s:load_autocmd && &ft == 'mail'
+
+    if !empty("s:load_autocmd") && s:load_autocmd 
 	augroup CheckAttach  
-	    au! BufWriteCmd mutt* :call <SID>CheckAttach() 
+	    au! BufWriteCmd * :call <SID>CheckAttach() 
 	augroup END
     else
-	silent! au! CheckAttach BufWriteCmd mutt*
+	silent! au! CheckAttach BufWriteCmd *
 	silent! augroup! CheckAttach
+        call map(s:matchid, 'matchdelete(v:val)')
+	let s:matchid=[]
     endif
 endfu
 
@@ -39,7 +50,7 @@ endfu
 " This function checks your mail for the words specified in
 " check, and if it find them, you'll be asked to attach
 " a file.
-fu! <SID>CheckAttach()
+fu! <SID>CheckAttach()"{{{
     if exists("g:attach_check_keywords")
        let s:attach_check = g:attach_check_keywords
     endif
@@ -53,6 +64,7 @@ fu! <SID>CheckAttach()
     let val = join(split(escape(s:attach_check,' \.+*'), ','),'\|')
     1
     if search('\%('.val.'\)','W')
+	call add(s:matchid,matchadd('WarningMsg', '\%('.val.'\)'))
         let ans=input("Attach file: (leave empty to abbort): ", "", "file")
         while (ans != '') && (ans != 'n')
                 let list = split(expand(glob(ans)), "\n")
@@ -66,17 +78,18 @@ fu! <SID>CheckAttach()
     endif
     :call <SID>WriteBuf(v:cmdbang)
     call setpos('.', oldPos)
-endfu
+endfu"}}}
 
 " Define commands that will disable and enable the plugin.
-command! DisableCheckAttach let s:load_autocmd=0 | :call <SID>AutoCmd()
-command! EnableCheckAttach let s:load_autocmd=1 | :call <SID>AutoCmd() 
+command! DisableCheckAttach let s:load_autocmd=0 | :call <SID>CheckFT()
+command! EnableCheckAttach let s:load_autocmd=1 | :call <SID>CheckFT()
 
 " Enable autocommand when loading file
-:call <SID>AutoCmd()
+":call <SID>AutoCmd()
 
-augroup CheckAttach
-    au!
-    au FileType * if expand("<amatch>") =~ 'mail' | :call <SID>AutoCmd() | endif
-augroup END
-
+fu! <SID>CheckFT()
+    let s:filetype=(exists("attach_check_ft") ? attach_check_ft : 'mail')
+    let s:check_filetype=join(split(escape(s:filetype, '\\*?'),','),'\|')
+    "au FileType * if expand("<amatch>") =~ 'mail' | :call <SID>AutoCmd() | endif
+    if &ft =~ s:check_filetype | :call <SID>AutoCmd() | endif
+endfun

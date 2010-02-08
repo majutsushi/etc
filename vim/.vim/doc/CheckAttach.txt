@@ -1,4 +1,4 @@
-*CheckAttach.txt*  Check for attachments when using mutt - Vers 0.3   Oct 1, 2009
+*CheckAttach.txt*  Check for attachments when using mutt - Vers 0.4  Jan 26, 2010
 
 Author:  Christian Brabandt <cb@256bit.org>
 Copyright: (c) 2009 by Christian Brabandt 		    *CheckAttach-copyright*
@@ -28,7 +28,8 @@ embarassing.
 
 Therefore this plugin checks for the presence of keywords which indicate that
 an attachment should be attached. If if finds these keywords, the plugin will
-ask you for the files to attach, whenever you save your mail.
+highlight the keywords and ask you for the files to attach, whenever you save
+your mail.
 
 This looks like this:
 Attach file: (leave empty to abbort):
@@ -51,7 +52,21 @@ g:attach_check_keywords variable. By default this variable is specified as:
 let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
 so that it can handle German and English. If you would like to add the keyword
 foobar, use this command:
+
 let g:attach_check_keywords .=',foobar'
+
+NOTE: The comma is important. It is used to seperate the different keywords
+and needs to be included.
+
+By default this plugin only works with mail filetypes. So it shouldn't
+interfere, when you are writing C-Code or wrinting a report. You can however
+define for which filetypes this plugin will be enabled. This is done by
+specifying attach_check_ft as comma separated list for all filetypes that
+you'll want to be checked. If attach_check_ft is not defined, it is set to
+the default filetype 'mail'. So to add a new filetype, do something like this
+in your .vimrc:
+
+let g:attach_check_ft='mail,foobar'
 
                                          *EnableCheckAttach* *DisableCheckAttach*
 You can disable the plugin by issuing the command 
@@ -65,6 +80,9 @@ only if you use :w it will.
 
 ==============================================================================
 2. CheckAttach History					    *CheckAttach-history*
+    0.4: Jan  26, 2010     Highlight matching keywords,
+                           use g:attach_check_ft to specify for which filetypes
+			   to enable the plugin
     0.3: Oct   1, 2009     Fixed Copyright statement, 
                            enabled GetLatestScripts
     0.2: Sept 29, 2009     Added Documentation
