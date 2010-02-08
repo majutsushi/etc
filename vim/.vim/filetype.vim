@@ -8,5 +8,6 @@ augroup filetypedetect
     au BufNewFile,BufReadPost *.mkd     setfiletype mkd
     au BufNewFile,BufReadPost *.tt2     setfiletype tt2
     au BufNewFile,BufReadPost *.gnuplot setfiletype gnuplot
+    au BufNewFile,BufReadPost *.gle     setfiletype gle
 augroup END
 
