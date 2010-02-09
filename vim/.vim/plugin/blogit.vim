@@ -20,6 +20,9 @@
 " Version:      1.4.3
 " Last Change:  2010 January 01
 
+if &cp || exists("loaded_blogit")
+    finish
+endif
 
 runtime! passwords.vim
 command! -bang -nargs=* Blogit exec('py blogit.command("<bang>", <f-args>)')

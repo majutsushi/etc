@@ -836,6 +836,11 @@ set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.cache/vim/viminfo
 
 " Plugin and script options {{{1
 
+" Blogit {{{2
+if !has("python")
+    let loaded_blogit = 1
+end
+
 " CCTree {{{2
 let g:CCTreeRecursiveDepth = 2
 let g:CCTreeMinVisibleDepth = 2
