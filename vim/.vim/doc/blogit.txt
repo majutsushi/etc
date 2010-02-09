@@ -13,30 +13,30 @@ B. Links                |blogit-links|
 
 
 :Blogit ls                          *:Blogit-ls*
-        Lists all articles in the blog.
+        List all articles in the blog.
 
 :Blogit new                         *:Blogit-new*
-        Opens page to write new article.
+        Open buffer to write new article.
 
 :Blogit this                        *:Blogit-this*
-        Make current buffer a blog post.
+        Create blog post from current buffer.
 
 :Blogit edit {id}                   *:Blogit-edit*
-        Opens the post {id} for edition.
+        Open the post {id} for edition.
 
 :Blogit page {id}                   *:Blogit-page*
-        Opens the page {id} for edition.  If {id} is 'new' or 'this' it haves
-        like those commands for posts.  An example for a common page is the
+        Open the page {id} for edition.  If {id} is 'new' or 'this', it behaves
+        like those commands for posts.  An example of a common page is the
         about page.
 
 :Blogit commit                      *:Blogit-commit*
-        Saves the article to the blog.
+        Save or update the article to the blog.
 
 :Blogit push                        *:Blogit-push*
         Publish article.
 
 :Blogit unpush                      *:Blogit-unpush*
-        Unpublish article.
+        Unpublish article (save as draft).
 
 :Blogit rm {id}                     *:Blogit-rm*
         Remove an article.
@@ -45,7 +45,7 @@ B. Links                |blogit-links|
         Show tags and categories list.
 
 :Blogit preview                     *:Blogit-preview*
-        Preview current post locally.
+        Preview article in browser.
 
 :Blogit help                        *:Blogit-help*
         Display help.
@@ -57,7 +57,7 @@ standard library.
 ==============================================================================
 2. Configuration                    *blogit-configuration*
 
-Create a file called passwords.vim somewhere in your "runtimepath"
+Create a file called passwords.vim somewhere in your $VIMRUNTIME
 (preferred location is "~/.vim/"). Don't forget to set the permissions so
 only you can read it. This file should include:
 >
@@ -83,10 +83,11 @@ name of your choice (e.g. "your_blog_name") and use:
 to switch which is used by default. If a blog post/comment/list is open in
 the current buffer that is used instead. To explicitly select which blog
 should be used with the commands ls, new, this and edit add your_blog_name
-as and aditional argument, e.g.:
+as an aditional argument, e.g.:
 >
     Blogit edit 42 your_blog_name
 <
+
 ==============================================================================
 3. Usage                            *blogit-usage*
 
@@ -97,7 +98,7 @@ gf or <enter> in the |:Blogit-ls| buffer edits the blog post in the
 current line.
 
 Categories and tags can be omni completed via |compl-function| (usually
-CTRL-X_CTRL-U). The list of them is gotten automatically on first
+CTRL-X_CTRL-U). The list is automatically fetched with the first
 ":Blogit edit" and can be updated with ":Blogit tags".
 
 To use tags your WordPress needs to have the UTW-RPC (see: |UTWRPC-url|)
@@ -106,7 +107,7 @@ plugin installed (WordPress.com does).
 ==============================================================================
 A. License                          *blogit-license*
 
-Copyright (C) 2009 Romain Bignon
+Copyright (C) 2009-2010 Romain Bignon
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -124,8 +125,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 Maintainer:   Romain Bignon         *blogit-author*
 Contributor:  Adam Schmalhofer
 URL:          http://symlink.me/wiki/blogit
-Version:      1.4.2
-Last Change:  2009 October 28
+Version:      1.4.3
+Last Change:  2010 January 01
 
 ==============================================================================
 B. Links                            *blogit-links*

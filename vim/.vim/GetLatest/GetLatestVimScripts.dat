@@ -41,3 +41,4 @@ ScriptID SourceID Filename
 1234 12258 :AutoInstall: yankring.vim
 1984 11852 :AutoInstall: FuzzyFinder
 2390 10336 :AutoInstall: CSApprox
+2582 1 :AutoInstall: blogit.vim
