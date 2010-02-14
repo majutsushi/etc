@@ -959,8 +959,10 @@ let Tlist_Enable_Fold_Column = 0
 let Tlist_Use_Right_Window = 1
 let Tlist_Inc_Winwidth = 0 " to prevent problems with project.vim
 let Tlist_Sort_Type = "name"
+let tlist_c_settings = 'c;d:macros;p:prototypes;v:variables;t:typedefs;m:members;g:enums;s:structs;u:unions;f:functions'
+let tlist_cpp_settings = 'c++;d:macros;n:namespace;p:prototypes;v:variables;t:typedefs;c:class;m:members;g:enums;s:structs;u:unions;f:functions'
 "let g:tlist_tex_settings = 'tex;c:chapters;s:sections;u:subsections;b:subsubsections;p:parts;P:paragraphs;G:subparagraphs;i:includes'
-let tlist_tex_settings   = 'latex;s:sections;g:graphics;l:labels;r:refs;p:pagerefs'
+let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels;r:refs;p:pagerefs'
 
 nmap <silent> <F9> :Tlist<CR>
 
