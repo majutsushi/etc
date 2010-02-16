@@ -743,7 +743,8 @@ set expandtab     " WARNING: don't unset if ts != sw
 " automatically set the indent of a new line (local to buffer)
 set autoindent
 " do clever autoindenting (local to buffer)
-set smartindent
+" more or less deprecated in favor of cindent and indentexpr
+"set smartindent
 
 " folding {{{2
 
