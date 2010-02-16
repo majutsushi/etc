@@ -1,5 +1,6 @@
 " Important stuff at the beginning {{{1
 set nocompatible
+set encoding=utf-8
 let mapleader=","
 set runtimepath=$HOME/.vim
 set runtimepath+=$HOME/src/vim-latex/vimfiles
@@ -815,8 +816,6 @@ set grepprg=ack-grep
 
 " multi-byte characters {{{2
 
-" character encoding used in Vim: "latin1", "utf-8" "euc-jp", "big5", etc.
-set encoding=utf-8
 " automatically detected character encodings
 set fileencodings=ucs-bom,utf-8,default,latin1
 
