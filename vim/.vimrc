@@ -595,6 +595,8 @@ set hlsearch
 " methods used to suggest corrections
 set spellsuggest=best,10
 
+let g:tex_comment_nospell = 1
+
 " multiple windows {{{2
 
 " 0, 1 or 2; when to use a status line for the last window
