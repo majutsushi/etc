@@ -1,6 +1,8 @@
 *.pyc
 *.hi
 
+emacs/.emacs.d/auto-save-list/
+emacs/.emacs.d/session.*
 mutt/.mutt/smtp-*
 mutt/.mutt/imap-*
 vim/.vim/doc/tags-ja
