@@ -459,6 +459,10 @@ bind pager   \n         next-new
 bind pager   <up>       previous-line
 bind pager   <down>     next-line
 
+# saving
+macro index  \Cs        "<pipe-message>cat > ~/"
+macro pager  \Cs        "<pipe-message>cat > ~/"
+
 # syncing
 bind index   x          sync-mailbox
 bind index   X          imap-fetch-mail
