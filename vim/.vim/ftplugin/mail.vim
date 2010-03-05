@@ -478,6 +478,8 @@ silent! %s/^\(>\+\) >/\1>/g
 
 call s:CursorStart()
 
+silent! EnableCheckAttach
+
 nohlsearch
 
 " vim:tw=78 foldmethod=marker foldenable
