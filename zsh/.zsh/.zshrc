@@ -448,6 +448,8 @@ setopt function_argzero     # set $0 to name of current function or script
 
 # ctrl-s will no longer freeze the terminal.
 setopt no_flow_control
+stty ixoff
+stty -ixon
 
 # REPORTTIME=5                # report about cpu-/system-/user-time of command
                             # if running longer than 5 secondes
