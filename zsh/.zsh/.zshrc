@@ -1116,6 +1116,48 @@ urlencode() {
     print ${(j::)input/(#b)([^A-Za-z0-9_.!~*\'\(\)-])/%$(([##16]#match))}
 }
 
+# backup important dirs
+rs-important() {
+    if [[ -z $1 ]]; then
+        echo "usage: rs-important dest-dir"
+        return 1
+    fi
+
+    rsync -vaxEHAX \
+        --delete \
+        --delete-excluded \
+        --ignore-errors \
+        --progress \
+        --exclude=/.local/share/Trash/** \
+        $HOME/.etc \
+        $HOME/.mozilla \
+        $HOME/.config \
+        $HOME/.local \
+        $HOME/.evolution \
+        $HOME/.fceultra \
+        $HOME/.fceux \
+        $HOME/.gnome2 \
+        $HOME/.gnupg \
+        $HOME/.liferea_1.6 \
+        $HOME/.offlineimap \
+        $HOME/.openttd \
+        $HOME/.purple \
+        $HOME/.scummvm \
+        $HOME/.ssh \
+        $HOME/.zsnes \
+        $HOME/.forward \
+        $HOME/.netrc \
+        $HOME/.offlineimaprc \
+        $HOME/.scummvmrc \
+        $HOME/Photos \
+        $HOME/bin \
+        $HOME/games \
+        $HOME/projects \
+        $HOME/src \
+        $HOME/work \
+        $1
+}
+
 # get specific git commitdiff
 git-get-diff() {
     if [[ -z $GITTREE ]] ; then
