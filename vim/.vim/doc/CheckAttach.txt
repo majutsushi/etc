@@ -1,4 +1,4 @@
-*CheckAttach.txt*  Check for attachments when using mutt - Vers 0.4  Jan 26, 2010
+*CheckAttach.txt*  Check attachments when using mutt - Vers 0.5  Mar 02, 2010
 
 Author:  Christian Brabandt <cb@256bit.org>
 Copyright: (c) 2009 by Christian Brabandt 		    *CheckAttach-copyright*
@@ -80,6 +80,7 @@ only if you use :w it will.
 
 ==============================================================================
 2. CheckAttach History					    *CheckAttach-history*
+    0.5: Mar  02, 2010     Search without matching case
     0.4: Jan  26, 2010     Highlight matching keywords,
                            use g:attach_check_ft to specify for which filetypes
 			   to enable the plugin

@@ -3,13 +3,9 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-30.
-" @Last Change: 2009-12-07.
-" @Revision:    0.0.287
+" @Last Change: 2010-01-05.
+" @Revision:    0.0.288
 
-if &cp || exists("loaded_tlib_buffer_autoload")
-    finish
-endif
-let loaded_tlib_buffer_autoload = 1
 
 let s:bmru = []
 

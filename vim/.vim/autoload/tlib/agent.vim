@@ -3,16 +3,13 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-24.
-" @Last Change: 2009-08-04.
-" @Revision:    0.1.172
+" @Last Change: 2010-01-05.
+" @Revision:    0.1.174
 
-if &cp || exists("loaded_tlib_agent_autoload") "{{{2
-    finish
-endif
-let loaded_tlib_agent_autoload = 1
 
 " :filedoc:
 " Various agents for use as key handlers in tlib#input#List()
+
 
 " General {{{1
 

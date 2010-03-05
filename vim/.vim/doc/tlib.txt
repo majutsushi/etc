@@ -57,21 +57,6 @@ Contents~
         g:tlib_scroll_lines ..................... |g:tlib_scroll_lines|
         g:tlib_keyagents_InputList_m ............ |g:tlib_keyagents_InputList_m|
         g:tlib_handlers_EditList ................ |g:tlib_handlers_EditList|
-        tlib#Filter_cnf#New ..................... |tlib#Filter_cnf#New()|
-        tlib#Filter_cnfd#New .................... |tlib#Filter_cnfd#New()|
-        tlib#Filter_fuzzy#New ................... |tlib#Filter_fuzzy#New()|
-        tlib#Filter_seq#New ..................... |tlib#Filter_seq#New()|
-        tlib#Object#New ......................... |tlib#Object#New()|
-        prototype.New
-        prototype.Inherit
-        prototype.Extend
-        prototype.IsA
-        prototype.IsRelated
-        prototype.RespondTo
-        prototype.Super
-        prototype.Methods
-        tlib#World#New .......................... |tlib#World#New()|
-        prototype.Reset
         tlib#agent#Exit ......................... |tlib#agent#Exit()|
         tlib#agent#CopyItems .................... |tlib#agent#CopyItems()|
         tlib#agent#PageUp ....................... |tlib#agent#PageUp()|
@@ -159,6 +144,10 @@ Contents~
         tlib#file#Join .......................... |tlib#file#Join()|
         tlib#file#Relative ...................... |tlib#file#Relative()|
         tlib#file#With .......................... |tlib#file#With()|
+        tlib#Filter_cnf#New ..................... |tlib#Filter_cnf#New()|
+        tlib#Filter_cnfd#New .................... |tlib#Filter_cnfd#New()|
+        tlib#Filter_fuzzy#New ................... |tlib#Filter_fuzzy#New()|
+        tlib#Filter_seq#New ..................... |tlib#Filter_seq#New()|
         tlib#hook#Run ........................... |tlib#hook#Run()|
         tlib#input#List ......................... |tlib#input#List()|
         tlib#input#ListD ........................ |tlib#input#ListD()|
@@ -182,7 +171,17 @@ Contents~
         tlib#normal#WithRegister ................ |tlib#normal#WithRegister()|
         tlib#notify#Echo ........................ |tlib#notify#Echo()|
         tlib#notify#TrimMessage ................. |tlib#notify#TrimMessage()|
-        tlib#paragraph#Delete ................... |tlib#paragraph#Delete()|
+        tlib#Object#New ......................... |tlib#Object#New()|
+        prototype.New
+        prototype.Inherit
+        prototype.Extend
+        prototype.IsA
+        prototype.IsRelated
+        prototype.RespondTo
+        prototype.Super
+        prototype.Methods
+        tlib#paragraph#GetMetric ................ |tlib#paragraph#GetMetric()|
+        tlib#paragraph#Move ..................... |tlib#paragraph#Move()|
         tlib#progressbar#Init ................... |tlib#progressbar#Init()|
         tlib#progressbar#Display ................ |tlib#progressbar#Display()|
         tlib#progressbar#Restore ................ |tlib#progressbar#Restore()|
@@ -210,6 +209,10 @@ Contents~
         tlib#tag#Retrieve ....................... |tlib#tag#Retrieve()|
         tlib#tag#Collect ........................ |tlib#tag#Collect()|
         tlib#tag#Format ......................... |tlib#tag#Format()|
+        tlib#textobjects#StandardParagraph ...... |standard-paragraph|
+        tlib#textobjects#Init ................... |tlib#textobjects#Init()|
+        v_sp .................................... |v_sp|
+        o_sp .................................... |o_sp|
         tlib#time#MSecs ......................... |tlib#time#MSecs()|
         tlib#time#Now ........................... |tlib#time#Now()|
         tlib#time#Diff .......................... |tlib#time#Diff()|
@@ -232,6 +235,8 @@ Contents~
         tlib#win#SetLayout ...................... |tlib#win#SetLayout()|
         tlib#win#List ........................... |tlib#win#List()|
         tlib#win#Width .......................... |tlib#win#Width()|
+        tlib#World#New .......................... |tlib#World#New()|
+        prototype.Reset
 
 
 ========================================================================
@@ -412,132 +417,6 @@ g:tlib_keyagents_InputList_m
 
                                                     *g:tlib_handlers_EditList*
 g:tlib_handlers_EditList
-
-
-========================================================================
-autoload/tlib/Filter_cnf.vim~
-
-                                                    *tlib#Filter_cnf#New()*
-tlib#Filter_cnf#New(...)
-    The search pattern for |tlib#input#List()| is in conjunctive normal 
-    form: (P1 OR P2 ...) AND (P3 OR P4 ...) ...
-    The pattern is a '/\V' very no-'/magic' regexp pattern.
-    
-    This is also the base class for other filters.
-
-
-========================================================================
-autoload/tlib/Filter_cnfd.vim~
-
-                                                    *tlib#Filter_cnfd#New()*
-tlib#Filter_cnfd#New(...)
-    The same as |tlib#FilterCNF#New()| but a dot is expanded to '\.\{-}'. 
-    As a consequence, patterns cannot match dots.
-    The pattern is a '/\V' very no-'/magic' regexp pattern.
-
-
-========================================================================
-autoload/tlib/Filter_fuzzy.vim~
-
-                                                    *tlib#Filter_fuzzy#New()*
-tlib#Filter_fuzzy#New(...)
-    Support for "fuzzy" pattern matching in |tlib#input#List()|. 
-    Characters are interpreted as if connected with '.\{-}'.
-
-
-========================================================================
-autoload/tlib/Filter_seq.vim~
-
-                                                    *tlib#Filter_seq#New()*
-tlib#Filter_seq#New(...)
-    The search pattern for |tlib#input#List()| is interpreted as a 
-    disjunction of 'magic' regular expressions with the exception of a dot 
-    ".", which is interpreted as ".\{-}".
-    The pattern is a '/magic' regexp pattern.
-
-
-========================================================================
-autoload/tlib/Object.vim~
-Provides a prototype plus some OO-like methods.
-
-                                                    *tlib#Object#New()*
-tlib#Object#New(?fields={})
-    This function creates a prototype that provides some kind of 
-    inheritance mechanism and a way to call parent/super's methods.
-    
-    The usage demonstrated in the following example works best, when every 
-    class/prototype is defined in a file of its own.
-    
-    The reason for why there is a dedicated constructor function is that 
-    this layout facilitates the use of templates and that methods are 
-    hidden from the user. Other solutions are possible.
-    
-    EXAMPLES: >
-        let s:prototype = tlib#Object#New({
-                    \ '_class': ['FooBar'],
-                    \ 'foo': 1, 
-                    \ 'bar': 2, 
-                    \ })
-        " Constructor
-        function! FooBar(...)
-            let object = s:prototype.New(a:0 >= 1 ? a:1 : {})
-            return object
-        endf
-        function! s:prototype.babble() {
-          echo "I think, therefore I am ". (self.foo * self.bar) ." months old."
-        }
-    
-<     This could now be used like this: >
-        let myfoo = FooBar({'foo': 3})
-        call myfoo.babble()
-        => I think, therefore I am 6 months old.
-        echo myfoo.IsA('FooBar')
-        => 1
-        echo myfoo.IsA('object')
-        => 1
-        echo myfoo.IsA('Foo')
-        => 0
-        echo myfoo.RespondTo('babble')
-        => 1
-        echo myfoo.RespondTo('speak')
-        => 0
-<
-
-
-prototype.New
-
-
-prototype.Inherit
-
-
-prototype.Extend
-
-
-prototype.IsA
-
-
-prototype.IsRelated
-
-
-prototype.RespondTo
-
-
-prototype.Super
-
-
-prototype.Methods
-
-
-========================================================================
-autoload/tlib/World.vim~
-A prototype used by |tlib#input#List|.
-Inherits from |tlib#Object#New|.
-
-                                                    *tlib#World#New()*
-tlib#World#New(...)
-
-
-prototype.Reset
 
 
 ========================================================================
@@ -926,6 +805,48 @@ tlib#file#With(fcmd, bcmd, files, ?world={})
 
 
 ========================================================================
+autoload/tlib/Filter_cnf.vim~
+
+                                                    *tlib#Filter_cnf#New()*
+tlib#Filter_cnf#New(...)
+    The search pattern for |tlib#input#List()| is in conjunctive normal 
+    form: (P1 OR P2 ...) AND (P3 OR P4 ...) ...
+    The pattern is a '/\V' very no-'/magic' regexp pattern.
+    
+    This is also the base class for other filters.
+
+
+========================================================================
+autoload/tlib/Filter_cnfd.vim~
+
+                                                    *tlib#Filter_cnfd#New()*
+tlib#Filter_cnfd#New(...)
+    The same as |tlib#FilterCNF#New()| but a dot is expanded to '\.\{-}'. 
+    As a consequence, patterns cannot match dots.
+    The pattern is a '/\V' very no-'/magic' regexp pattern.
+
+
+========================================================================
+autoload/tlib/Filter_fuzzy.vim~
+
+                                                    *tlib#Filter_fuzzy#New()*
+tlib#Filter_fuzzy#New(...)
+    Support for "fuzzy" pattern matching in |tlib#input#List()|. 
+    Characters are interpreted as if connected with '.\{-}'.
+
+
+========================================================================
+autoload/tlib/Filter_seq.vim~
+
+                                                    *tlib#Filter_seq#New()*
+tlib#Filter_seq#New(...)
+    The search pattern for |tlib#input#List()| is interpreted as a 
+    disjunction of 'magic' regular expressions with the exception of a dot 
+    ".", which is interpreted as ".\{-}".
+    The pattern is a '/magic' regexp pattern.
+
+
+========================================================================
 autoload/tlib/hook.vim~
 
                                                     *tlib#hook#Run()*
@@ -1141,16 +1062,86 @@ tlib#notify#TrimMessage(message)
 
 
 ========================================================================
+autoload/tlib/Object.vim~
+Provides a prototype plus some OO-like methods.
+
+                                                    *tlib#Object#New()*
+tlib#Object#New(?fields={})
+    This function creates a prototype that provides some kind of 
+    inheritance mechanism and a way to call parent/super's methods.
+    
+    The usage demonstrated in the following example works best, when every 
+    class/prototype is defined in a file of its own.
+    
+    The reason for why there is a dedicated constructor function is that 
+    this layout facilitates the use of templates and that methods are 
+    hidden from the user. Other solutions are possible.
+    
+    EXAMPLES: >
+        let s:prototype = tlib#Object#New({
+                    \ '_class': ['FooBar'],
+                    \ 'foo': 1, 
+                    \ 'bar': 2, 
+                    \ })
+        " Constructor
+        function! FooBar(...)
+            let object = s:prototype.New(a:0 >= 1 ? a:1 : {})
+            return object
+        endf
+        function! s:prototype.babble() {
+          echo "I think, therefore I am ". (self.foo * self.bar) ." months old."
+        }
+    
+<     This could now be used like this: >
+        let myfoo = FooBar({'foo': 3})
+        call myfoo.babble()
+        => I think, therefore I am 6 months old.
+        echo myfoo.IsA('FooBar')
+        => 1
+        echo myfoo.IsA('object')
+        => 1
+        echo myfoo.IsA('Foo')
+        => 0
+        echo myfoo.RespondTo('babble')
+        => 1
+        echo myfoo.RespondTo('speak')
+        => 0
+<
+
+
+prototype.New
+
+
+prototype.Inherit
+
+
+prototype.Extend
+
+
+prototype.IsA
+
+
+prototype.IsRelated
+
+
+prototype.RespondTo
+
+
+prototype.Super
+
+
+prototype.Methods
+
+
+========================================================================
 autoload/tlib/paragraph.vim~
 
-                                                    *tlib#paragraph#Delete()*
-tlib#paragraph#Delete(?register="")
-    Almost the same as dap but behaves differently when the cursor is on a 
-    blank line or when the paragraph's last line is the last line in the 
-    file.
-    
-    This function assumes that a paragraph is a block of text followed by 
-    blank lines or the end of file.
+                                                    *tlib#paragraph#GetMetric()*
+tlib#paragraph#GetMetric()
+    Return an object describing an |paragraph|.
+
+                                                    *tlib#paragraph#Move()*
+tlib#paragraph#Move(direction, count)
 
 
 ========================================================================
@@ -1330,6 +1321,33 @@ tlib#tag#Format(tag)
 
 
 ========================================================================
+autoload/tlib/textobjects.vim~
+
+                                                    *standard-paragraph*
+tlib#textobjects#StandardParagraph()
+    Select a "Standard Paragraph", i.e. a text block followed by blank 
+    lines. Other than |ap|, the last paragraph in a document is handled 
+    just the same.
+    
+    The |text-object| can be accessed as "sp". Example: >
+    
+      vsp ... select the current standard paragraph
+    
+    Return 1, if the paragraph is the last one in the document.
+<
+
+                                                    *tlib#textobjects#Init()*
+tlib#textobjects#Init()
+
+                                                    *v_sp*
+v_sp ... <Esc>:call tlib#textobjects#StandardParagraph()<CR>
+    sp ... Standard paragraph (for use as |text-objects|).
+
+                                                    *o_sp*
+o_sp ... :<C-u>normal Vsp<CR>
+
+
+========================================================================
 autoload/tlib/time.vim~
 
                                                     *tlib#time#MSecs()*
@@ -1448,6 +1466,18 @@ tlib#win#List()
 
                                                     *tlib#win#Width()*
 tlib#win#Width(wnr)
+
+
+========================================================================
+autoload/tlib/World.vim~
+A prototype used by |tlib#input#List|.
+Inherits from |tlib#Object#New|.
+
+                                                    *tlib#World#New()*
+tlib#World#New(...)
+
+
+prototype.Reset
 
 
 

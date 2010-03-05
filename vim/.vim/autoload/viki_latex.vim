@@ -2,13 +2,11 @@
 " @Author:      Tom Link (micathom AT gmail com?subject=vim)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     28-Jän-2004.
-" @Last Change: 2009-02-15.
-" @Revision:    0.196
+" @Last Change: 2010-01-03.
+" @Revision:    0.198
 
-if &cp || exists('loaded_viki_latex')
-    finish
-endif
-let loaded_viki_latex = 1
+" call tlog#Log('Load: '. expand('<sfile>')) " vimtlib-sfile
+
 
 function! viki_latex#SetupBuffer(state, ...)
     let noMatch = ""

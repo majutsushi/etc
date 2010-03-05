@@ -3,42 +3,83 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2009-10-26.
-" @Last Change: 2009-10-26.
-" @Revision:    0.0.12
+" @Last Change: 2010-01-09.
+" @Revision:    58
 
 let s:save_cpo = &cpo
 set cpo&vim
 
 
-" :def: function! tlib#paragraph#Delete(?register="")
-" Almost the same as dap but behaves differently when the cursor is on a 
-" blank line or when the paragraph's last line is the last line in the 
-" file.
-"
-" This function assumes that a paragraph is a block of text followed by 
-" blank lines or the end of file.
-function! tlib#paragraph#Delete(...) "{{{3
-    TVarArg 'register'
-    if empty(register)
-        let prefix = ''
-    else
-        let prefix = '"'. register
-    endif
-    let lineno = line('.')
-    let lastno  = line('$')
-    let hastext = getline(lineno) =~ '\S'
-    if line("'}") == lastno
-        if lineno == lastno
-            silent norm! {j0
+" Return an object describing an |paragraph|.
+function! tlib#paragraph#GetMetric() "{{{3
+    let sp = {'text_start': line("'{") + 1}
+    if line("'}") == line("$")
+        let sp.last = 1
+        let sp.text_end = line("'}")
+        if line("'{") == 1
+            let sp.ws_start = 0
+            let sp.ws_end = 0
+            let sp.top = sp.text_start
+            let sp.bottom = sp.text_end
         else
-            silent norm! }{j0
+            let sp.ws_start = prevnonblank(line("'{")) + 1
+            let sp.ws_end = line("'{")
+            let sp.top = sp.ws_start
+            let sp.bottom = sp.text_end
         endif
-        exec 'silent norm! '. prefix .'dG'
-    elseif hastext
-        silent norm! dap
-    else 
-        silent norm! {j0dap
+    else
+        let sp.last = 0
+        let sp.text_end = line("'}") - 1
+        let sp.ws_start = line("'}")
+        for i in range(line("'}"), line('$'))
+            if getline(i) =~ '\w'
+                let sp.ws_end = i - 1
+                break
+            elseif i == line("$")
+                let sp.ws_end = i
+            endif
+        endfor
+        let sp.top = sp.text_start
+        let sp.bottom = sp.ws_end
     endif
+    return sp
+endf
+
+
+function! tlib#paragraph#Move(direction, count)
+    " TLogVAR a:direction, a:count
+    let mycount = empty(a:count) ? 1 : a:count
+    for i in range(1, mycount)
+        let para = tlib#paragraph#GetMetric()
+        " TLogVAR para
+        let text = getline(para.text_start, para.text_end)
+        let ws = getline(para.ws_start, para.ws_end)
+        " TLogVAR text, ws
+        exec para.top .','. para.bottom .'delete'
+        if a:direction == "Down"
+            let other = tlib#paragraph#GetMetric()
+            let target = other.bottom + 1
+            if other.last
+                let lines = ws + text
+                let pos = target + len(ws)
+            else
+                let lines = text + ws
+                let pos = target
+            endif
+        elseif a:direction == "Up"
+            if !para.last
+                norm! {
+            endif
+            let other = tlib#paragraph#GetMetric()
+            let target = other.text_start
+            let lines = text + ws
+            let pos = target
+        endif
+        " TLogVAR other, target
+        " TLogVAR lines
+        call append(target - 1, lines)
+        exec pos
+    endfor
 endf
 
 

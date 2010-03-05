@@ -2,13 +2,11 @@
 " @Author:      Tom Link (mailto:micathom AT gmail com?subject=vim-vikiAnyWord)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     04-Apr-2005.
-" @Last Change: 2009-11-01.
-" @Revision:    0.37
+" @Last Change: 2010-01-03.
+" @Revision:    0.39
 
-if &cp || exists('loaded_viki_anyword')
-    finish
-endif
-let loaded_viki_anyword = 1
+" call tlog#Log('Load: '. expand('<sfile>')) " vimtlib-sfile
+
 
 """" Any Word {{{1
 function! viki_anyword#MinorMode(state) "{{{3

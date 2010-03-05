@@ -3,13 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-30.
-" @Last Change: 2009-02-15.
-" @Revision:    0.0.26
-
-if &cp || exists("loaded_tlib_url_autoload")
-    finish
-endif
-let loaded_tlib_url_autoload = 1
+" @Last Change: 2010-01-04.
+" @Revision:    0.0.27
 
 
 " TODO: These functions could use printf() now.

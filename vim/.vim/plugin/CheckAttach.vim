@@ -1,8 +1,8 @@
 " Vim plugin for checking attachments with mutt
 " Maintainer:  Christian Brabandt <cb@256bit.org>
-" Last Change: 2010 Jan, 26
-" Version:     0.4
-" GetLatestVimScripts: 2796 3 :AutoInstall: CheckAttach.vim
+" Last Change: 2010 Mar, 02
+" Version:     0.5
+" GetLatestVimScripts: 2796 4 :AutoInstall: CheckAttach.vim
 
 " Exit quickly when:
 " - this plugin was already loaded (or disabled)
@@ -25,7 +25,7 @@ let s:matchid=[]
 let s:filetype=(exists("attach_check_ft") ? attach_check_ft : 'mail')
 
 " On which keywords to trigger, comma separated list of keywords
-let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
+let g:attach_check_keywords = 'attach,attachment,angehängt,Anhang'
 
 fu! <SID>AutoCmd()
 
@@ -63,7 +63,7 @@ fu! <SID>CheckAttach()"{{{
     let ans=1
     let val = join(split(escape(s:attach_check,' \.+*'), ','),'\|')
     1
-    if search('\%('.val.'\)','W')
+    if search('\c\%('.val.'\)','W')
 	call add(s:matchid,matchadd('WarningMsg', '\%('.val.'\)'))
         let ans=input("Attach file: (leave empty to abbort): ", "", "file")
         while (ans != '') && (ans != 'n')
