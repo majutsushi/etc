@@ -1209,4 +1209,4 @@ if [[ "$TERM" != screen* ]] && [[ "$TERM" != "rxvt" ]]; then
 fi
 # }}}
 
-# vim:foldmethod=marker
+# vim: foldenable foldmethod=marker
