@@ -1127,6 +1127,7 @@ rs-important() {
         --delete \
         --delete-excluded \
         --ignore-errors \
+        --modify-window=1 \
         --progress \
         --exclude=/.local/share/Trash/** \
         $HOME/.etc \
