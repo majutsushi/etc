@@ -6,6 +6,7 @@
 % Created:      [% date('%Y-%m-%d %H:%M:%S %z %Z') %]
 % Last changed: [% date('%Y-%m-%d %H:%M:%S %z %Z') %]
 
+% Class {{{1
 \documentclass[
     12pt,
 %    a4paper,
@@ -22,26 +23,28 @@
 ]{[% class %]}
 % \documentclass[fontsize=12pt,paper=a4]{scrlttr2}
 
-% --- LANGUAGE/ENCODING ---
+% Packages {{{1
+
+% Language/Encoding {{{2
 \usepackage[utf8]{inputenc}
 \usepackage[british]{babel}
 
 
-% --- PAGE LAYOUT ---
+% Page Layout {{{2
 \usepackage{geometry}
 \geometry{a4paper}
 %\geometry{margins=2in}
 %\geometry{landscape}
 
 
-% --- LINE SPACING ---
+% Line Spacing {{{2
 \usepackage{setspace}
 %\singlespacing
 %\onehalfspacing
 %\doublespacing
 
 
-% --- FONTS ---
+% Fonts {{{2
 \usepackage[T1]{fontenc}
 %\usepackage{lmodern}
 %\usepackage{textcomp}
@@ -64,7 +67,7 @@
 %\usepackage{eulervm}
 
 
-% --- HEADERS/FOOTERS
+% Headers/Footers {{{2
 %\usepackage{fancyhdr} % Must (should?) be after geometry
 %\pagestyle{fancy} % options: empty, plain, fancy
 %\renewcommand{\headrulewidth}{0pt}
@@ -72,12 +75,12 @@
 %\lfoot{}\cfoot{\thepage}\rfoot{}
 
 
-% --- FIGURES/FLOATS ---
+% Figures/Floats {{{2
 \usepackage{float}
 \usepackage{stfloats}
 \usepackage{subfig}
 \usepackage{boxedminipage}
-\usepackage{ccaption}
+%\usepackage{ccaption} % doesn't work with subfig
 
 % don't reset counters at chapter start
 %\usepackage{remreset}
@@ -88,21 +91,39 @@
 %\renewcommand{\thetable}{\arabic{table}}
 %\makeatother
 
+% two column float page must be 90% full
+%\renewcommand\dblfloatpagefraction{0.90}
+% two column top float can cover up to 80% of page
+%\renewcommand\dbltopfraction{0.80}
+% float page must be 90% full
+%\renewcommand\floatpagefraction{0.90}
+% top float can cover up to 80% of page
+%\renewcommand\topfraction{0.80}
+% bottom float can cover up to 80% of page
+%\renewcommand\bottomfraction{0.80}
+% at least 10% of a normal page must contain text
+%\renewcommand\textfraction{0.1}
 
-% --- IMAGES/GRAPHS/COLOR ---
+% separation between floats and text
+%\setlength\dbltextfloatsep{9pt plus 5pt minus 3pt }
+% separation between two column floats and text
+%\setlength\textfloatsep{10pt plus 4pt minus 3pt}
+
+
+% Images/Graphs/Color {{{2
 \usepackage{graphicx}
 \usepackage{color}
 %\usepackage{tikz}
 %\usepackage{pgfplots}
 
 
-% --- TABLES ---
+% Tables {{{2
 \usepackage{booktabs}
 \usepackage{multicol}
 \usepackage{multirow}
 
 
-% --- VERBATIM ---
+% Verbatim {{{2
 \usepackage{fancyvrb}
 \DefineVerbatimEnvironment{Code}{Verbatim}{gobble=4,numbers=left,frame=none}
 %frame=none|leftline|topline|bottomline|lines|single
@@ -111,7 +132,7 @@
 \usepackage{alltt}
 
 
-% --- MATHEMATICS ---
+% Mathematics {{{2
 \usepackage{amsmath,amsfonts,amstext,amssymb,amsbsy,amsopn,amsthm,eucal}
 %\usepackage{mathtools}
 %\usepackage{breqn}
@@ -119,7 +140,7 @@
 %\usepackage{dsfont}
 
 
-% --- REFS ---
+% Refs {{{2
 \usepackage[
 %    bookmarks=true,          % show bookmarks bar?
 %    unicode=false,           % non-Latin characters in Acrobat’s bookmarks
@@ -156,7 +177,7 @@
 \usepackage[capitalise]{cleveref} % must be loaded after other ref packages!
 
 
-% --- MISC ---
+% Misc {{{2
 \usepackage{microtype}
 
 \usepackage{fixltx2e}
@@ -168,40 +189,22 @@
 %\usepackage{layout} % shows layout of document, use with \layout
 %\usepackage{lipsum}
 
+% don't hyphenate so much - default = 200, max (never hyphenate) = 10,000
+%\hyphenpenalty=800
+
+% }}}1
 
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{<#1>}}}
 \newcommand{\janmn}{\email{jan@majutsushi.net}}
 
 
-% don't hyphenate so much - default = 200, max (never hyphenate) = 10,000
-%\hyphenpenalty=800
-
-% two column float page must be 90% full
-%\renewcommand\dblfloatpagefraction{0.90}
-% two column top float can cover up to 80% of page
-%\renewcommand\dbltopfraction{0.80}
-% float page must be 90% full
-%\renewcommand\floatpagefraction{0.90}
-% top float can cover up to 80% of page
-%\renewcommand\topfraction{0.80}
-% bottom float can cover up to 80% of page
-%\renewcommand\bottomfraction{0.80}
-% at least 10% of a normal page must contain text
-%\renewcommand\textfraction{0.1}
-
-% separation between floats and text
-%\setlength\dbltextfloatsep{9pt plus 5pt minus 3pt }
-% separation between two column floats and text
-%\setlength\textfloatsep{10pt plus 4pt minus 3pt}
-
-
 \author{[% user.firstname %]~[% user.lastname %]\\\janmn}
-% \author{[% user.firstname %]~[% user.lastname %]}
+%\author{[% user.firstname %]~[% user.lastname %]}
 \title{[% title %]}
 
 
 \begin{document}
-%\maketitle
+\maketitle
 
 %\tableofcontents
 %\clearpage
@@ -221,4 +224,4 @@
 
 \end{document}
 
-% vim: spell spelllang=en_nz
+% vim: spell spelllang=en_nz foldenable foldmethod=marker
