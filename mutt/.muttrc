@@ -426,15 +426,15 @@ unset save_empty        # remove mailbox when last message is removed.
 
 # Bindings for editing and reloading the .muttrc
 #macro generic   ,ve   "!screen -t muttrc vi ~/.muttrc\r"
-macro generic   ,vu   ":source ~/.muttrc\r" "Source muttrc"
+macro generic   ,vu   "<enter-command>source ~/.muttrc\r" "Source muttrc"
 #macro generic   ,va   "!screen -t aliases vi ~/.mutt/aliases\r"
 
 macro index,pager i   "<sync-mailbox><change-folder>?<toggle-mailboxes>" "Go to mailbox list"
 bind browser i        exit
 
 # toggle TOFU protection with ESC-0 (off) and ESC-1 (on)
-macro generic \e0 ":unset display_filter\n" "Turn TOFU protection off"
-macro generic \e1 ":set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L$XDG_CONFIG_HOME/t-prot/footers -A$XDG_CONFIG_HOME/t-prot/ads'\n" "Turn TOFU protection on"
+macro generic \e0 "<enter-command>unset display_filter\n" "Turn TOFU protection off"
+macro generic \e1 "<enter-command>set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L$XDG_CONFIG_HOME/t-prot/footers -A$XDG_CONFIG_HOME/t-prot/ads'\n" "Turn TOFU protection on"
 
 # }}}
 # =============================================================================
@@ -460,8 +460,8 @@ bind pager   <up>       previous-line
 bind pager   <down>     next-line
 
 # saving
-macro index  \Cs        "<pipe-message>cat > ~/"
-macro pager  \Cs        "<pipe-message>cat > ~/"
+macro index  \Cs        "<pipe-message>cat > ~/" "Save message to a file"
+macro pager  \Cs        "<pipe-message>cat > ~/" "Save message to a file"
 
 # syncing
 bind index   x          sync-mailbox
@@ -469,29 +469,29 @@ bind index   X          imap-fetch-mail
 bind pager   X          imap-fetch-mail
 
 # deleting
-macro index  d          "<delete-message><next-undeleted>"
-macro pager  d          "<delete-message><next-undeleted>"
+macro index  d          "<delete-message><next-undeleted>" "Delete message"
+macro pager  d          "<delete-message><next-undeleted>" "Delete message"
 
 # printing
-macro index '\p'        "<display-toggle-weed> <print-message> <display-toggle-weed> <exit>"
-macro pager '\p'        "<display-toggle-weed> <print-message> <display-toggle-weed>"
+macro index ',P'        "<display-toggle-weed><print-message><display-toggle-weed><exit>" "Print message"
+macro pager ',P'        "<display-toggle-weed><print-message><display-toggle-weed>" "Print message"
 
 # threads
 macro index  \CR        "<read-thread><collapse-thread><next-unread><current-middle>" "Mark the current thread as read"
 macro pager  \CR        "<read-thread><collapse-thread><next-unread><display-message>" "Mark the current thread as read"
-macro index '{'         "<collapse-thread>"
+macro index '{'         "<collapse-thread>" "Collapse current thread"
 
 # quickly change to important folders
-macro index  I          "c!\n" "Go to Inbox"
-macro pager  I          "c!\n" "Go to Inbox"
-macro index  ,S         "c<\n" "Go to 'sent' folder"
-macro pager  ,S         "c<\n" "Go to 'sent' folder"
-macro index  ,A         "c=.archive\n" "Go to 'archive' folder"
-macro pager  ,A         "c=.archive\n" "Go to 'archive' folder"
-macro index  ,W         "c=.0WAITING\n" "Go to 'waiting' folder"
-macro pager  ,W         "c=.0WAITING\n" "Go to 'waiting' folder"
-macro index  ,F         "c=.0FOLLOWUP\n" "Go to 'followup' folder"
-macro pager  ,F         "c=.0FOLLOWUP\n" "Go to 'followup' folder"
+macro index  I          "<change-folder>!\n" "Go to Inbox"
+macro pager  I          "<change-folder>!\n" "Go to Inbox"
+macro index  ,S         "<change-folder><\n" "Go to 'sent' folder"
+macro pager  ,S         "<change-folder><\n" "Go to 'sent' folder"
+macro index  ,A         "<change-folder>=.archive\n" "Go to 'archive' folder"
+macro pager  ,A         "<change-folder>=.archive\n" "Go to 'archive' folder"
+macro index  ,W         "<change-folder>=.0WAITING\n" "Go to 'waiting' folder"
+macro pager  ,W         "<change-folder>=.0WAITING\n" "Go to 'waiting' folder"
+macro index  ,F         "<change-folder>=.0FOLLOWUP\n" "Go to 'followup' folder"
+macro pager  ,F         "<change-folder>=.0FOLLOWUP\n" "Go to 'followup' folder"
 
 # quickly file mail
 macro index  ,a         "<save-message>=.archive\n<next-unread>" "Move message to folder 'archive'"
@@ -508,20 +508,20 @@ macro index  ,mf        "<shell-escape>mu find --clearlinks --linksdir=~/.mu/res
 macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu find results"
 
 # remember in org-mode
-macro index  \eR        "|~/bin/remember-mail\n"
-macro pager  \eR        "|~/bin/remember-mail\n"
+macro index  \eR        "<pipe-message>~/bin/remember-mail\n" "Remember message in org-mode"
+macro pager  \eR        "<pipe-message>~/bin/remember-mail\n" "Remember message in org-mode"
 
 # X-Label patch
 ifdef edit-label bind index,pager y edit-label
 
 # spam handlers
-macro index  S          "|/usr/bin/sa-learn --spam --no-sync --single\r" "Classify as Spam"
-macro index  H          "|/usr/bin/sa-learn --ham  --no-sync --single\r" "Classify as Ham"
-macro index  P          "!/usr/bin/sa-learn --sync\r" "Sync Spamassassin-db"
+macro index  S          "<pipe-message>/usr/bin/sa-learn --spam --no-sync --single\n" "Classify as Spam"
+macro index  H          "<pipe-message>/usr/bin/sa-learn --ham  --no-sync --single\n" "Classify as Ham"
+macro index  P          "<shell-escape>/usr/bin/sa-learn --sync\n" "Sync Spamassassin-db"
 
 # limit mails
-macro index  ,la        "l~A\n<collapse-all>" "Limit to all messages"
-macro index  ,ll        "l~F | ~O | ~N\n" "Limit to new, old and flagged messages"
+macro index  ,la        "<limit>~A\n<collapse-all>" "Limit to all messages"
+macro index  ,ll        "<limit>~F | ~O | ~N\n" "Limit to new, old and flagged messages"
 
 # abook
 #macro index  A          |'abook --add-email'\n
@@ -530,12 +530,12 @@ macro index  ,ll        "l~F | ~O | ~N\n" "Limit to new, old and flagged message
 #macro pager  B          "!abook"
 
 # gpg
-macro pager  J          "!gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
-macro pager  K          "!gpg --lsign-key " "Sign PGP Key"
+macro pager  J          "<shell-escape>gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
+macro pager  K          "<shell-escape>gpg --lsign-key " "Sign PGP Key"
 
 # same in pager mode - ugly but what the hell...
-macro pager \e0         ":unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
-macro pager \e1         ":set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L$XDG_CONFIG_HOME/t-prot/footers -A$XDG_CONFIG_HOME/t-prot/ads'; exec exit\n:exec display-message\n" "Turn TOFU protection on"
+macro pager \e0         "<enter-command>unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
+macro pager \e1         "<enter-command>set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L$XDG_CONFIG_HOME/t-prot/footers -A$XDG_CONFIG_HOME/t-prot/ads'; exec exit\n:exec display-message\n" "Turn TOFU protection on"
 
 # }}}
 # =============================================================================
@@ -543,7 +543,9 @@ macro pager \e1         ":set display_filter='t-prot -cmekatl --max-lines=250 --
 
 bind compose   <enter>  send-message
 bind compose   <return> send-message
-bind compose   v   view-attach
+bind compose   v        view-attach
+
+macro compose  ,w       "<edit-fcc>=.0WAITING\n" "Save message in WAITING folder"
 
 macro compose \es "Fgpg --clearsign\ny" "clearsign with GnuPG"
 macro compose \ee "Fgpg --encrypt --armor\ny" "encrypt with GnuPG"
@@ -569,15 +571,15 @@ bind attach ' ' select-entry
 # sidebar {{{
 
 bind index \Cp sidebar-prev
-bind index \Cn sidebar-next
-bind index \Co sidebar-open
 bind pager \Cp sidebar-prev
+bind index \Cn sidebar-next
 bind pager \Cn sidebar-next
+bind index \Co sidebar-open
 bind pager \Co sidebar-open
 
-macro index   B ':toggle sidebar_visible'
-macro pager   B ':toggle sidebar_visible'
-macro compose B ':toggle sidebar_visible'
+macro index   B "<enter-command>toggle sidebar_visible\n"
+macro pager   B "<enter-command>toggle sidebar_visible\n"
+macro compose B "<enter-command>toggle sidebar_visible\n"
 
 # }}}
 # =============================================================================
