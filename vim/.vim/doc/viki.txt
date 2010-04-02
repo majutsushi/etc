@@ -433,13 +433,31 @@ Descriptions: (indented)~
 
                                                     *viki-tasks*
 Tasks: (indented)~
-emacs-planer compatible mode: >
+Viki supports some markup for task/priority lists. Basic syntax: >
+
+    #C9 DATE TAGS CONTACTS MESSAGE
+
+where:
+
+    C        ... category (a single upper case letter)
+    9        ... priority (a number from 0 to 9)
+    DATE     ... a date or date range formatted as YEAR-MONTH-DAY or 
+                 YEAR-MONTH-DAY..YEAR-MONTH-DAY
+    TAGS     ... a list of tags formatted as :tag1 :tag2
+    CONTACTS ... a list of tags formatted as @contact1 @contact2
+    MESSAGE  ... some text
+
+Examples: >
 
     #A1 _           Important task
     #A2 x           Less important task (done)
     #A2 90%         Less important task (mostly completed)
     #B2 2005-10-30  Less important task with deadline
     #B2 x2005-10-25 Less important task (completed)
+    #X2 2005-10-25  Task (completed)
+    #A2 2005-10-25..2005-11-25 Task with date range
+    #A2 2005-10-25 :garden Task with a tag
+    #A2 2005-10-25 :garden @Anne Task with a tag & contact
 
 You can switch category, priority, and date: >
 

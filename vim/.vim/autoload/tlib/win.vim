@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-08-24.
-" @Last Change: 2009-08-04.
-" @Revision:    0.0.51
+" @Last Change: 2010-03-27.
+" @Revision:    0.0.52
 
 if &cp || exists("loaded_tlib_win_autoload")
     finish
@@ -125,5 +125,12 @@ endf
 
 function! tlib#win#Width(wnr) "{{{3
     return winwidth(a:wnr) - &fdc
+endf
+
+
+function! tlib#win#WinDo(ex) "{{{3
+    let w = winnr()
+    exec 'windo '. a:ex
+    exec w .'wincmd w'
 endf
 

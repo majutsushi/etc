@@ -2,8 +2,8 @@
 " @Author:      Tom Link (micathom AT gmail com?subject=vim)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     08-Dec-2003.
-" @Last Change: 2010-02-20.
-" @Revision:    2678
+" @Last Change: 2010-03-31.
+" @Revision:    2689
 "
 " GetLatestVimScripts: 861 1 viki.vim
 "
@@ -40,7 +40,7 @@ if !exists('g:loaded_tlib') || g:loaded_tlib < 32
         finish
     endif
 endif
-let loaded_viki = 316
+let loaded_viki = 317
 
 
 " Configuration {{{1
@@ -63,23 +63,6 @@ endif
 " Make submenus for N letters of the interviki names.
 if !exists('g:vikiMenuLevel')
     let g:vikiMenuLevel = 1   "{{{2
-endif
-
-" Consider fold levels bigger that this as text body, levels smaller 
-" than this as headings
-" This variable is only used if g:vikiFoldMethodVersion is 1.
-if !exists("g:vikiFoldBodyLevel")   | let g:vikiFoldBodyLevel = 6        | endif "{{{2
-
-" Choose folding method version
-if !exists("g:vikiFoldMethodVersion") | let g:vikiFoldMethodVersion = 4  | endif "{{{2
-
-" What is considered for folding.
-" This variable is only used if g:vikiFoldMethodVersion is 1.
-if !exists("g:vikiFolds")           | let g:vikiFolds = 'hf'             | endif "{{{2
-
-" Context lines for folds
-if !exists("g:vikiFoldsContext") "{{{2
-    let g:vikiFoldsContext = [2, 2, 2, 2]
 endif
 
 " if !exists("g:vikiBasicSyntax")     | let g:vikiBasicSyntax = 0          | endif "{{{2
@@ -718,6 +701,16 @@ VikiDefine()) in order to reduce startup time
 
 3.16
 - FIX: Handling of cursor positions (reported by Marko Mahnic)
+
+3.17
+- FIX: g:vikiOpenUrlWith_ANY for Windows
+- Moved definition of fold related variables to ftplugin/viki.vim
+- viki_viki: Anchors in URLs can start with an upper case character
+- viki#RestoreCursorPosition(): use winrestview() (reported by Marko Mahnic)
+
+3.18
+- g:vikiFoldMethodVersion defaults to 7 (a simpler method that relies on "=" though)
+- Syntax for tasks lists
 
 
 " vim: ff=unix

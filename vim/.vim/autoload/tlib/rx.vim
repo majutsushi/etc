@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-07-20.
-" @Last Change: 2009-02-15.
-" @Revision:    0.0.26
+" @Last Change: 2010-02-26.
+" @Revision:    0.0.28
 
 if &cp || exists("loaded_tlib_rx_autoload")
     finish
@@ -39,9 +39,9 @@ endf
 function! tlib#rx#EscapeReplace(text, ...) "{{{3
     TVarArg ['magic', 'm']
     if magic ==# 'm' || magic ==# 'v'
-        return escape(a:text, '&~')
+        return escape(a:text, '\&~')
     elseif magic ==# 'M' || magic ==# 'V'
-        return a:text
+        return escape(a:text, '\')
     else
         echoerr 'magic must be one of: m, v, M, V'
     endif

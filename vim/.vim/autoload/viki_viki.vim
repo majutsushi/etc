@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-09-03.
-" @Last Change: 2010-01-03.
-" @Revision:    0.0.124
+" @Last Change: 2010-02-28.
+" @Revision:    0.0.127
 
 let s:save_cpo = &cpo
 set cpo&vim
@@ -128,10 +128,14 @@ function! viki_viki#SetupBuffer(state, ...) "{{{3
    
     if viki#IsSupportedType("u") && !(dontSetup =~# "u")
         let urlChars = 'A-Za-z0-9.,:%?=&_~@$/|+-'
+        " let b:vikiUrlRx = '\<\(\('.b:vikiSpecialProtocols.'\):['. urlChars .']\+\)'.
+        "             \ '\(#\('. b:vikiAnchorNameRx .'\)\)\?'. b:vikiUrlRestRx
+        " let b:vikiUrlSimpleRx = '\<\('. b:vikiSpecialProtocols .'\):['. urlChars .']\+'.
+        "             \ '\(#'. b:vikiAnchorNameRx .'\)\?'. b:vikiUrlRestRx
         let b:vikiUrlRx = '\<\(\('.b:vikiSpecialProtocols.'\):['. urlChars .']\+\)'.
-                    \ '\(#\('. b:vikiAnchorNameRx .'\)\)\?'. b:vikiUrlRestRx
+                    \ '\(#\(['. b:vikiLowerCharacters . b:vikiUpperCharacters .'_0-9%]\+\)\)\?'. b:vikiUrlRestRx
         let b:vikiUrlSimpleRx = '\<\('. b:vikiSpecialProtocols .'\):['. urlChars .']\+'.
-                    \ '\(#'. b:vikiAnchorNameRx .'\)\?'. b:vikiUrlRestRx
+                    \ '\(#['. b:vikiLowerCharacters . b:vikiUpperCharacters .'_0-9%]\+\)\?'. b:vikiUrlRestRx
         let b:vikiUrlNameIdx   = 0
         let b:vikiUrlDestIdx   = 1
         let b:vikiUrlAnchorIdx = 4

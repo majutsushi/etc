@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-08-23.
-" @Last Change: 2009-02-15.
-" @Revision:    0.0.21
+" @Last Change: 2010-03-29.
+" @Revision:    0.0.27
 
 if &cp || exists("loaded_tlib_cmd_autoload")
     finish
@@ -49,8 +49,16 @@ endf
 
 " Print the time in seconds a command takes.
 function! tlib#cmd#Time(cmd) "{{{3
-    let start = localtime()
-    exec a:cmd
-    echom 'Time: '. (localtime() - start) .'s: '. a:cmd
+    if has('reltime')
+        let start = tlib#time#Now()
+        exec a:cmd
+        let end = tlib#time#Now()
+        let diff = string(tlib#time#Diff(end, start)) .'ms'
+    else
+        let start = localtime()
+        exec a:cmd
+        let diff = (localtime() - start) .'s'
+    endif
+    echom 'Time: '. diff .': '. a:cmd
 endf
 

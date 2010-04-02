@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-24.
-" @Last Change: 2010-01-05.
-" @Revision:    0.1.174
+" @Last Change: 2010-03-27.
+" @Revision:    0.1.178
 
 
 " :filedoc:
@@ -157,6 +157,8 @@ function! tlib#agent#Suspend(world, selected) "{{{3
         let br = tlib#buffer#Set(a:world.scratch)
         " TLogVAR br, a:world.bufnr, a:world.scratch
         " TLogDBG bufnr('%')
+        call tlib#autocmdgroup#Init()
+        autocmd TLib InsertEnter,InsertChange <buffer> call tlib#input#Resume("world", 0)
         let b:tlib_suspend = {
                     \ '<m-z>': 0, '<c-z>': 0, '<space>': 0, 
                     \ '<cr>': 1, 

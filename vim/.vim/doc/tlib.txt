@@ -34,6 +34,7 @@ Contents~
         :TVarArg ................................ |:TVarArg|
         :TKeyArg ................................ |:TKeyArg|
         :TBrowseOutput .......................... |:TBrowseOutput|
+        :TTimeCommand ........................... |:TTimeCommand|
         g:tlib_pick_last_item ................... |g:tlib_pick_last_item|
         g:tlib_sortprefs_threshold .............. |g:tlib_sortprefs_threshold|
         g:tlib_scratch_pos ...................... |g:tlib_scratch_pos|
@@ -132,6 +133,8 @@ Contents~
         tlib#cmd#UseVertical .................... |tlib#cmd#UseVertical()|
         tlib#cmd#Time ........................... |tlib#cmd#Time()|
         tlib#comments#Comments .................. |tlib#comments#Comments()|
+        tlib#date#DiffInDays .................... |tlib#date#DiffInDays()|
+        tlib#date#SecondsSince1970 .............. |tlib#date#SecondsSince1970()|
         tlib#dir#CanonicName .................... |tlib#dir#CanonicName()|
         tlib#dir#PlainName ...................... |tlib#dir#PlainName()|
         tlib#dir#Ensure ......................... |tlib#dir#Ensure()|
@@ -235,6 +238,7 @@ Contents~
         tlib#win#SetLayout ...................... |tlib#win#SetLayout()|
         tlib#win#List ........................... |tlib#win#List()|
         tlib#win#Width .......................... |tlib#win#Width()|
+        tlib#win#WinDo .......................... |tlib#win#WinDo()|
         tlib#World#New .......................... |tlib#World#New()|
         prototype.Reset
 
@@ -308,6 +312,10 @@ TBrowseOutput COMMAND
       TBrowseOutput 20verb TeaseTheCulprit
 <
 
+                                                    *:TTimeCommand*
+TTimeCommand CMD
+    Time the execution time of CMD.
+
                                                     *g:tlib_pick_last_item*
 g:tlib_pick_last_item          (default: 1)
     When 1, automatically select a the last remaining item after applying 
@@ -335,7 +343,7 @@ g:tlib_inputlist_higroup       (default: 'IncSearch')
     The highlight group to use for showing matches in the input list window.
 
                                                     *g:tlib_inputlist_livesearch_threshold*
-g:tlib_inputlist_livesearch_threshold (default: 500)
+g:tlib_inputlist_livesearch_threshold (default: 1000)
     If a list contains more items, don't do an incremental "live search", 
     but use |input()| the quere the user for a filter. This is useful on 
     slower machines or with very long lists.
@@ -470,7 +478,7 @@ tlib#agent#Suspend(world, selected)
     |tlib#input#List|. You can resume editing the list by pressing <c-z>, 
     <m-z>. <space>, <c-LeftMouse> or <MiddleMouse> in the suspended window.
     <cr> and <LeftMouse> will immediatly select the item under the cursor.
-<     will select the item but the window will remain opened.
+    < will select the item but the window will remain opened.
 
                                                     *tlib#agent#Help()*
 tlib#agent#Help(world, selected)
@@ -630,7 +638,7 @@ tlib#buffer#ViewLine(line, ?position='z')
     See also |g:tlib_viewline_position|.
 
                                                     *tlib#buffer#HighlightLine()*
-tlib#buffer#HighlightLine(line)
+tlib#buffer#HighlightLine(...)
 
                                                     *tlib#buffer#DeleteRange()*
 tlib#buffer#DeleteRange(line1, line2)
@@ -732,6 +740,17 @@ autoload/tlib/comments.vim~
                                                     *tlib#comments#Comments()*
 tlib#comments#Comments(...)
     function! tlib#comments#Comments(?rx='')
+
+
+========================================================================
+autoload/tlib/date.vim~
+
+                                                    *tlib#date#DiffInDays()*
+tlib#date#DiffInDays(date1, ?date2=localtime(), ?allow_zero=0)
+
+                                                    *tlib#date#SecondsSince1970()*
+tlib#date#SecondsSince1970(date, ...)
+    tlib#date#SecondsSince1970(date, ?daysshift=0, ?allow_zero=0)
 
 
 ========================================================================
@@ -1092,7 +1111,7 @@ tlib#Object#New(?fields={})
           echo "I think, therefore I am ". (self.foo * self.bar) ." months old."
         }
     
-<     This could now be used like this: >
+<   This could now be used like this: >
         let myfoo = FooBar({'foo': 3})
         call myfoo.babble()
         => I think, therefore I am 6 months old.
@@ -1300,14 +1319,14 @@ tlib#tag#Retrieve(rx, ?extra_tags=0)
              ctags -R --fields=+iaSm --extra=+q ${JAVA_HOME}/src
              head -n 6 tags > tags0
              grep access:public tags >> tags0
-<        2. Say 'tags' included project specific tags files. In 
+<      2. Say 'tags' included project specific tags files. In 
          ~/vimfiles/after/ftplugin/java.vim insert: >
              let b:tlib_tags_extra = $JAVA_HOME .'/tags0'
-<        3. When this function is invoked as >
+<      3. When this function is invoked as >
              echo tlib#tag#Retrieve('print')
-<        It will return only project-local tags. If it is invoked as >
+<      It will return only project-local tags. If it is invoked as >
              echo tlib#tag#Retrieve('print', 1)
-<        tags from the JDK will be included.
+<      tags from the JDK will be included.
 
                                                     *tlib#tag#Collect()*
 tlib#tag#Collect(constraints, ?use_extra=1, ?match_front=1)
@@ -1333,8 +1352,7 @@ tlib#textobjects#StandardParagraph()
     
       vsp ... select the current standard paragraph
     
-    Return 1, if the paragraph is the last one in the document.
-<
+<   Return 1, if the paragraph is the last one in the document.
 
                                                     *tlib#textobjects#Init()*
 tlib#textobjects#Init()
@@ -1466,6 +1484,9 @@ tlib#win#List()
 
                                                     *tlib#win#Width()*
 tlib#win#Width(wnr)
+
+                                                    *tlib#win#WinDo()*
+tlib#win#WinDo(ex)
 
 
 ========================================================================

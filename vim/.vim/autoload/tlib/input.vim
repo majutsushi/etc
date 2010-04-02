@@ -4,8 +4,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-30.
-" @Last Change: 2010-02-06.
-" @Revision:    0.0.686
+" @Last Change: 2010-03-27.
+" @Revision:    0.0.704
 
 
 " :filedoc:
@@ -93,8 +93,9 @@ function! tlib#input#List(type, ...) "{{{3
         let filter                 = tlib#list#Find(handlers, 'has_key(v:val, "filter")', '', 'v:val.filter')
         if !empty(filter)
             " let world.initial_filter = [[''], [filter]]
-            let world.initial_filter = [[filter]]
+            " let world.initial_filter = [[filter]]
             " TLogVAR world.initial_filter
+            call world.SetInitialFilter(filter)
         endif
     endif
     return tlib#input#ListW(world)
@@ -292,7 +293,11 @@ function! tlib#input#ListW(world, ...) "{{{3
                         let world.initial_display = 0
                         " TLogDBG 9
                     endif
-                    let world.state = ''
+                    if world.state =~ '\<hibernate\>'
+                        let world.state = 'suspend'
+                    else
+                        let world.state = ''
+                    endif
                 else
                     " if world.state == 'scroll'
                     "     let world.prefidx = world.offset
@@ -490,6 +495,7 @@ function! tlib#input#ListW(world, ...) "{{{3
         " TLogVAR world.state
         " TLogDBG string(tlib#win#List())
         if world.state !~ '\<suspend\>'
+            " redraw
             " TLogVAR world.sticky
             if world.sticky
                 " TLogDBG "sticky"
@@ -513,7 +519,7 @@ function! tlib#input#ListW(world, ...) "{{{3
         "     call getchar(0)
         " endfor
         echo
-        " redraw
+        redraw!
     endtry
 endf
 
@@ -537,6 +543,9 @@ function! s:Init(world, cmd) "{{{3
         let a:world.initialized = 1
         call a:world.SetOrigin(1)
         call a:world.Reset(1)
+        if !empty(a:cmd)
+            let a:world.state .= ' '. a:cmd
+        endif
     endif
     " TLogVAR a:world.state, a:world.sticky
 endf
@@ -581,6 +590,8 @@ function! tlib#input#Resume(name, pick) "{{{3
         endfor
         unlet b:tlib_suspend
     endif
+    call tlib#autocmdgroup#Init()
+    autocmd! TLib InsertEnter,InsertChange <buffer>
     let b:tlib_{a:name}.state = 'display'
     " call tlib#input#List('resume '. a:name)
     let cmd = 'resume '. a:name

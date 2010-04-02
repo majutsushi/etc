@@ -3,8 +3,8 @@
 " @Website:     http://members.a1.net/t.link/
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-05-01.
-" @Last Change: 2010-02-06.
-" @Revision:    0.1.812
+" @Last Change: 2010-03-28.
+" @Revision:    0.1.834
 
 " :filedoc:
 " A prototype used by |tlib#input#List|.
@@ -589,6 +589,7 @@ function! s:prototype.UseInputListScratch() dict "{{{3
     " hi def link InputlListIndex Special
     " let b:tlibDisplayListMarks = {}
     let b:tlibDisplayListMarks = []
+    let b:tlibDisplayListWorld = self
     call tlib#hook#Run('tlib_UseInputListScratch', self)
     return scratch
 endf
@@ -693,14 +694,20 @@ endf
 " :nodoc:
 function! s:prototype.Resize(hsize, vsize) dict "{{{3
     " TLogVAR self.scratch_vertical, a:hsize, a:vsize
+    let world_resize = ''
     if self.scratch_vertical
         if a:vsize
-            exec 'vert resize '. eval(a:vsize)
+            let world_resize = 'vert resize '. a:vsize
         endif
     else
         if a:hsize
-            exec 'resize '. eval(a:hsize)
+            let world_resize = 'resize '. a:hsize
         endif
+    endif
+    if !empty(world_resize)
+        " TLogVAR world_resize
+        exec world_resize
+        redraw!
     endif
 endf
 
@@ -716,7 +723,7 @@ function! s:prototype.DisplayList(query, ...) dict "{{{3
     " TLogVAR self.scratch
     " TAssert IsNotEmpty(self.scratch)
     if self.state == 'scroll'
-        exec 'norm! '. self.offset .'zt'
+        call self.ScrollToOffset()
     elseif self.state == 'help'
         call self.DisplayHelp()
     else
@@ -727,12 +734,13 @@ function! s:prototype.DisplayList(query, ...) dict "{{{3
         let x  = self.index_width + 1
         " TLogVAR ll
         if self.state =~ '\<display\>'
-            let resize = get(self, 'resize', 0)
-            " TLogVAR resize
+            let resize0 = get(self, 'resize', 0)
+            let resize = empty(resize0) ? 0 : eval(resize0)
+            " TLogVAR resize0, resize
             let resize = resize == 0 ? ll : min([ll, resize])
             let resize = min([resize, (&lines * g:tlib_inputlist_pct / 100)])
             " TLogVAR resize, ll, &lines
-            call self.Resize(resize, get(self, 'resize_vertical', 0))
+            call self.Resize(resize, eval(get(self, 'resize_vertical', 0)))
             call tlib#normal#WithRegister('gg"tdG', 't')
             let w = winwidth(0) - &fdc
             " let w = winwidth(0) - &fdc - 1
@@ -759,17 +767,7 @@ function! s:prototype.DisplayList(query, ...) dict "{{{3
         call self.SetOffset()
         call self.SetStatusline(a:query)
         " TLogVAR self.offset
-        " TLogDBG winheight('.')
-        " if self.prefidx > winheight(0)
-        " let lt = len(list) - winheight('.') + 1
-        " if self.offset > lt
-        "     exec 'norm! '. lt .'zt'
-        " else
-        exec 'norm! '. self.offset .'zt'
-        " endif
-        " else
-        "     norm! 1zt
-        " endif
+        call self.ScrollToOffset()
         let rx0 = self.GetRx0()
         " TLogVAR rx0
         if !empty(g:tlib_inputlist_higroup)
@@ -800,6 +798,13 @@ function! s:prototype.SetStatusline(query) dict "{{{3
     " let &l:statusline = query
     echo
     echo echo
+endf
+
+
+" :nodoc:
+function! s:prototype.ScrollToOffset() dict "{{{3
+    " TLogVAR self.scratch_vertical, self.llen, winheight(0)
+    exec 'norm! '. self.offset .'zt'
 endf
 
 

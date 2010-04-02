@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2008-11-25.
-" @Last Change: 2009-02-15.
-" @Revision:    0.0.57
+" @Last Change: 2010-03-22.
+" @Revision:    0.0.66
 
 let s:save_cpo = &cpo
 set cpo&vim
@@ -32,15 +32,26 @@ function! s:prototype.AssessName(world, name) dict "{{{3
         " if flt =~# '\u' && a:name =~# flt
         "     let xa += 5
         " endif
-        if a:name =~ '\^'. flt .'\|'. flt .'\$'
+
+        if a:name =~ '\^'. flt
             let xa += 4
-        elseif a:name =~ '\<'. flt .'\|'. flt .'\>'
+        elseif a:name =~ '\<'. flt
             let xa += 3
-        " elseif a:name =~ flt .'\>'
+        " elseif a:name =~ '[[:punct:][:space:][:digit:]]'. flt
         "     let xa += 2
         elseif a:name =~ '\A'. flt .'\|'. flt .'\A'
             let xa += 1
         endif
+
+        " if a:name =~ '\^'. flt .'\|'. flt .'\$'
+        "     let xa += 4
+        " elseif a:name =~ '\<'. flt .'\|'. flt .'\>'
+        "     let xa += 3
+        " " elseif a:name =~ flt .'\>'
+        " "     let xa += 2
+        " elseif a:name =~ '\A'. flt .'\|'. flt .'\A'
+        "     let xa += 1
+        " endif
         " if flt[0] =~# '\u' && matchstr(a:name, '\V\.\ze'. flt) =~# '\U'
         "     let xa += 1
         " endif

@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-07-18.
-" @Last Change: 2009-10-24.
-" @Revision:    0.0.145
+" @Last Change: 2010-03-12.
+" @Revision:    0.0.154
 
 if &cp || exists("loaded_tlib_scratch_autoload")
     finish
@@ -33,7 +33,8 @@ function! tlib#scratch#UseScratch(...) "{{{3
         let ft = '*'
     else
         let bn = bufnr(id)
-        let wpos = g:tlib_scratch_pos
+        let wpos = get(keyargs, 'scratch_pos', g:tlib_scratch_pos)
+        " TLogVAR keyargs.scratch_vertical
         if get(keyargs, 'scratch_vertical')
             let wpos .= ' vertical'
         endif

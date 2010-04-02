@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-30.
-" @Last Change: 2010-01-05.
-" @Revision:    0.0.288
+" @Last Change: 2010-03-29.
+" @Revision:    0.0.315
 
 
 let s:bmru = []
@@ -135,11 +135,11 @@ function! tlib#buffer#GetList(...)
         endif
     endif
     let buffer_nr = map(copy(buffer_list), 'matchstr(v:val, ''\s*\zs\d\+\ze'')')
-    " TLogVAR buffer_list
+    " TLogVAR buffer_list, buffer_nr
     if show_number
-        call map(buffer_list, 'matchstr(v:val, ''\s*\d\+.\{-}\ze\s\+line \d\+\s*$'')')
+        call map(buffer_list, 'matchstr(v:val, ''^\s*\d\+.\{-}\ze\s\+\S\+ \d\+\s*$'')')
     else
-        call map(buffer_list, 'matchstr(v:val, ''\s*\d\+\zs.\{-}\ze\s\+line \d\+\s*$'')')
+        call map(buffer_list, 'matchstr(v:val, ''^\s*\d\+\zs.\{-}\ze\s\+\S\+ \d\+\s*$'')')
     endif
     " TLogVAR buffer_list
     " call map(buffer_list, 'matchstr(v:val, ''^.\{-}\ze\s\+line \d\+\s*$'')')
@@ -174,11 +174,22 @@ function! tlib#buffer#ViewLine(line, ...) "{{{3
 endf
 
 
-function! tlib#buffer#HighlightLine(line) "{{{3
+function! s:UndoHighlightLine() "{{{3
+    3match none
+    autocmd! TLib CursorMoved,CursorMovedI <buffer>
+    autocmd! TLib CursorHold,CursorHoldI <buffer>
+    autocmd! TLib BufLeave,BufWinLeave,WinLeave,BufHidden <buffer>
+endf
+
+
+function! tlib#buffer#HighlightLine(...) "{{{3
+    TVarArg ['line', line('.')]
     " exec '3match MatchParen /^\%'. a:line .'l.*/'
-    exec '3match Search /^\%'. a:line .'l.*/'
+    exec '3match Search /^\%'. line .'l.*/'
     call tlib#autocmdgroup#Init()
-    autocmd TLib CursorHold,CursorHoldI,CursorMoved,CursorMovedI * 3match none
+    exec 'autocmd TLib CursorMoved,CursorMovedI <buffer> if line(".") != '. line .' | call s:UndoHighlightLine() | endif'
+    autocmd TLib CursorHold,CursorHoldI <buffer> call s:UndoHighlightLine()
+    autocmd TLib BufLeave,BufWinLeave,WinLeave,BufHidden <buffer> call s:UndoHighlightLine()
 endf
 
 

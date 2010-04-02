@@ -2,8 +2,8 @@
 " @Author:      Tom Link (micathom AT gmail com?subject=vim)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     30-Dez-2003.
-" @Last Change: 2009-02-15.
-" @Revision: 0.864
+" @Last Change: 2010-03-25.
+" @Revision: 0.938
 
 if !g:vikiEnabled
     finish
@@ -57,7 +57,7 @@ else
     syn cluster vikiTextstyles contains=vikiBold,vikiTypewriter,vikiEscapedChar
 endif
 
-syn cluster vikiText contains=@vikiTextstyles,@vikiHyperLinks,vikiMarkers
+syn cluster vikiText contains=@vikiTextstyles,@vikiHyperLinks,vikiMarkers,vikiSymbols
 
 " exe 'syn match vikiComment /\V\^\[[:blank:]]\*'. escape(b:vikiCommentStart, '\/') .'\.\*/ contains=@vikiText'
 " syn match vikiComment /^[[:blank:]]*%.*$/ contains=@vikiText
@@ -79,27 +79,6 @@ if g:vikiFancyHeadings
 else
     exe 'syn region vikiHeading start=/\V\^'. escape(b:vikiHeadingStart, '\/') .'\+\[[:blank:]]\+/ end=/\n/ contains=@vikiText'
 endif
-
-syn match vikiList /^[[:blank:]]\+\([-+*#?@]\|[0-9#]\+\.\|[a-zA-Z?]\.\)\ze[[:blank:]]/
-syn match vikiDescription /^[[:blank:]]\+\(\\\n\|.\)\{-1,}[[:blank:]]::\ze[[:blank:]]/ contains=@vikiHyperLinks,vikiEscapedChar,vikiComment
-
-" \( \+#\S\+\)\?
-syn match vikiPriorityListTodoGen /^[[:blank:]]\+\zs#\(T: \+.\{-}\u.\{-}:\|\d*\u\d*\( \+\(_\|[0-9%-]\+\)\)\?\)\( \+\[[^[].\{-}\]\)\?\ze /
-syn match vikiPriorityListTodoA /^[[:blank:]]\+\zs#\(T: \+.\{-}A.\{-}:\|\d*A\d*\( \+\(_\|[0-9%-]\+\)\)\?\)\( \+\[[^[].\{-}\]\)\?\ze /
-syn match vikiPriorityListTodoB /^[[:blank:]]\+\zs#\(T: \+.\{-}B.\{-}:\|\d*B\d*\( \+\(_\|[0-9%-]\+\)\)\?\)\( \+\[[^[].\{-}\]\)\?\ze /
-syn match vikiPriorityListTodoC /^[[:blank:]]\+\zs#\(T: \+.\{-}C.\{-}:\|\d*C\d*\( \+\(_\|[0-9%-]\+\)\)\?\)\( \+\[[^[].\{-}\]\)\?\ze /
-syn match vikiPriorityListTodoD /^[[:blank:]]\+\zs#\(T: \+.\{-}D.\{-}:\|\d*D\d*\( \+\(_\|[0-9%-]\+\)\)\?\)\( \+\[[^[].\{-}\]\)\?\ze /
-syn match vikiPriorityListTodoE /^[[:blank:]]\+\zs#\(T: \+.\{-}E.\{-}:\|\d*E\d*\( \+\(_\|[0-9%-]\+\)\)\?\)\( \+\[[^[].\{-}\]\)\?\ze /
-syn match vikiPriorityListTodoF /^[[:blank:]]\+\zs#\(T: \+.\{-}F.\{-}:\|\d*F\d*\( \+\(_\|[0-9%-]\+\)\)\?\)\( \+\[[^[].\{-}\]\)\?\ze /
-
-syn match vikiPriorityListDoneGen /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}\u.\{-}:\|\(T: \+\)\?\d*\u\d* \+x[0-9%-]*\):\? .*/
-syn match vikiPriorityListDoneX /^[[:blank:]]\+\zs#X\d\?\s.*/
-syn match vikiPriorityListDoneA /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}A.\{-}:\|\(T: \+\)\?\d*A\d* \+x[0-9%-]*\):\? .*/
-syn match vikiPriorityListDoneB /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}B.\{-}:\|\(T: \+\)\?\d*B\d* \+x[0-9%-]*\):\? .*/
-syn match vikiPriorityListDoneC /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}C.\{-}:\|\(T: \+\)\?\d*C\d* \+x[0-9%-]*\):\? .*/
-syn match vikiPriorityListDoneD /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}D.\{-}:\|\(T: \+\)\?\d*D\d* \+x[0-9%-]*\):\? .*/
-syn match vikiPriorityListDoneE /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}E.\{-}:\|\(T: \+\)\?\d*E\d* \+x[0-9%-]*\):\? .*/
-syn match vikiPriorityListDoneF /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}F.\{-}:\|\(T: \+\)\?\d*F\d* \+x[0-9%-]*\):\? .*/
 
 syn match vikiTableRowSep /||\?/ contained containedin=vikiTableRow,vikiTableHead
 syn region vikiTableHead start=/^[[:blank:]]*|| / skip=/\\\n/ end=/\(^\| \)||[[:blank:]]*$/
@@ -181,6 +160,37 @@ syn region vikiTexMathMacro matchgroup=vikiMacroDelim
             \ start=/{\(math\>\|\$\)\([^:{}]*:\)\?/ end=/}/ 
             \ transparent contains=vikiMacroNames,@texmathMath
 
+syn match vikiList /^[[:blank:]]\+\([-+*#?@]\|[0-9#]\+\.\|[a-zA-Z?]\.\)\ze[[:blank:]]/
+syn match vikiDescription /^[[:blank:]]\+\(\\\n\|.\)\{-1,}[[:blank:]]::\ze[[:blank:]]/ contains=@vikiHyperLinks,vikiEscapedChar,vikiComment
+
+syn match vikiPriorityListTodo0 /#\(T: \+.\{-}\u.\{-}:\|\d*\u\d*\)/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine nextgroup=vikiProgress,vikiTag,vikiContact
+syn match vikiPriorityListTodoA /#\(T: \+.\{-}A.\{-}:\|\d*A\d*\)/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine nextgroup=vikiProgress,vikiTag,vikiContact
+syn match vikiPriorityListTodoB /#\(T: \+.\{-}B.\{-}:\|\d*B\d*\)/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine nextgroup=vikiProgress,vikiTag,vikiContact
+syn match vikiPriorityListTodoC /#\(T: \+.\{-}C.\{-}:\|\d*C\d*\)/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine nextgroup=vikiProgress,vikiTag,vikiContact
+syn match vikiPriorityListTodoD /#\(T: \+.\{-}D.\{-}:\|\d*D\d*\)/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine nextgroup=vikiProgress,vikiTag,vikiContact
+syn match vikiPriorityListTodoE /#\(T: \+.\{-}E.\{-}:\|\d*E\d*\)/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine nextgroup=vikiProgress,vikiTag,vikiContact
+syn match vikiPriorityListTodoF /#\(T: \+.\{-}F.\{-}:\|\d*F\d*\)/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine nextgroup=vikiProgress,vikiTag,vikiContact
+
+syn cluster vikiPriorityListTodo contains=vikiPriorityListTodoA,vikiPriorityListTodoB,vikiPriorityListTodoC,vikiPriorityListTodoD,vikiPriorityListTodoE,vikiPriorityListTodoF,vikiPriorityListTodo0
+
+syn match vikiProgress /\s\+\(_\|\([0-9%-]\+\|\.\.\)\{1,3}\)/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine nextgroup=vikiTag,vikiContact
+
+" syn match vikiTag /\s\+\[[^[].\{-}\]/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine
+syn match vikiTag /\(\s\+\(:[^[:punct:][:space:]]\+\)\+\)\+/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine nextgroup=vikiTag,vikiContact
+
+syn match vikiContact /\s\+@[^[:punct:][:space:]]\+/ contained containedin=vikiPriorityListTodoGen,vikiPriorityListTodoGenInLine nextgroup=vikiContact
+
+syn match vikiPriorityListTodoGen /^[[:blank:]]\+\zs#\(T: \+.\{-}\u.\{-}:\|\d*\u\d*\(\s\+\(_\|\([0-9%-]\+\|\.\.\)\{1,3}\)\)\?\)\(\s\+\(:[^[:punct:][:space:]]\+\)\+\)*\(\s\+@[^[:punct:][:space:]]\+\)*\ze[[:punct:][:space:]]/ contains=vikiContact,vikiTag,@vikiPriorityListTodo,@vikiText
+" syn match vikiPriorityListTodoGenInLine /#\(T: \+.\{-}\u.\{-}:\|\d*\u\d*\)\(\s\+\(:[^[:punct:][:space:]]\+\)\+\)*\(\s\+@[^[:punct:][:space:]]\+\)*\ze[[:punct:][:space:]]/ contains=vikiContact,vikiTag,vikiPriorityListTodoA,vikiPriorityListTodoB,vikiPriorityListTodoC,vikiPriorityListTodoD,vikiPriorityListTodoE,vikiPriorityListTodoF,vikiPriorityListTodo0,@vikiText contained
+
+syn match vikiPriorityListDoneGen /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}\u.\{-}:\|\(T: \+\)\?\d*\u\d* \+x[0-9%-]*\):\? .*/
+syn match vikiPriorityListDoneX /^[[:blank:]]\+\zs#X\d\?\s.*/
+" syn match vikiPriorityListDoneA /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}A.\{-}:\|\(T: \+\)\?\d*A\d* \+x[0-9%-]*\):\? .*/
+" syn match vikiPriorityListDoneB /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}B.\{-}:\|\(T: \+\)\?\d*B\d* \+x[0-9%-]*\):\? .*/
+" syn match vikiPriorityListDoneC /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}C.\{-}:\|\(T: \+\)\?\d*C\d* \+x[0-9%-]*\):\? .*/
+" syn match vikiPriorityListDoneD /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}D.\{-}:\|\(T: \+\)\?\d*D\d* \+x[0-9%-]*\):\? .*/
+" syn match vikiPriorityListDoneE /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}E.\{-}:\|\(T: \+\)\?\d*E\d* \+x[0-9%-]*\):\? .*/
+" syn match vikiPriorityListDoneF /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}F.\{-}:\|\(T: \+\)\?\d*F\d* \+x[0-9%-]*\):\? .*/
 
 syntax sync minlines=2
 " syntax sync maxlines=50
@@ -247,13 +257,16 @@ if version >= 508 || !exists("did_viki_syntax_inits")
   endif
   
   let vikiPriorityListTodo = ' term=bold,underline cterm=bold gui=bold guifg=Black ctermfg=Black '
-  exec 'hi vikiPriorityListTodoGen'. vikiPriorityListTodo  .'ctermbg=LightRed guibg=LightRed'
+  exec 'hi vikiPriorityListTodo0'. vikiPriorityListTodo  .'ctermbg=LightRed guibg=LightRed'
   exec 'hi vikiPriorityListTodoA'. vikiPriorityListTodo  .'ctermbg=Red guibg=Red'
   exec 'hi vikiPriorityListTodoB'. vikiPriorityListTodo  .'ctermbg=Brown guibg=Orange'
   exec 'hi vikiPriorityListTodoC'. vikiPriorityListTodo  .'ctermbg=Yellow guibg=Yellow'
   exec 'hi vikiPriorityListTodoD'. vikiPriorityListTodo  .'ctermbg=LightMagenta guibg=LightMagenta'
   exec 'hi vikiPriorityListTodoE'. vikiPriorityListTodo  .'ctermbg=LightYellow guibg=LightYellow'
   exec 'hi vikiPriorityListTodoF'. vikiPriorityListTodo  .'ctermbg=LightGreen guibg=LightGreen'
+  HiLink vikiContact Special
+  HiLink vikiTag Title
+  HiLink vikiProgress WarningMsg
  
   " let vikiPriorityListDone = ' guifg='. s:cm1 .'Gray '
   " exec 'hi vikiPriorityListDoneA'. vikiPriorityListDone

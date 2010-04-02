@@ -3,24 +3,11 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-04-10.
-" @Last Change: 2010-01-24.
-" @Revision:    603
+" @Last Change: 2010-03-29.
+" @Revision:    615
 " GetLatestVimScripts: 1863 1 tlib.vim
 "
 " Please see also ../test/tlib.vim for usage examples.
-"
-" TODO: tlib#input#List(): RightMouse -> Make commands accessible via 
-" popup-menu
-" TODO: List isn't updated on some occassions (eg tselectfiles + pick 
-" file per mouse) when resetting the state from an post-process agent
-" TODO: tlib#agent#SwitchLayout(): switch between horizontal and 
-" vertical layout for the list
-" TODO: tlib#cache#Purge(): delete old cache files (for the moment use 
-" find)
-" TODO: tlib#file#Relative(): currently relies on cwd to be set
-" TODO: tlib#input#EditList(): Disable selection by index number
-" TODO: tlib#input#List(): Some kind of command line to edit some 
-" preferences (sort etc.) on the fly
 
 if &cp || exists("loaded_tlib")
     finish
@@ -29,7 +16,7 @@ if v:version < 700 "{{{2
     echoerr "tlib requires Vim >= 7"
     finish
 endif
-let loaded_tlib = 36
+let loaded_tlib = 37
 
 let s:save_cpo = &cpo
 set cpo&vim
@@ -114,6 +101,11 @@ command! -nargs=+ TKeyArg exec tlib#arg#Key([<args>])
 command! -nargs=1 -complete=command TBrowseOutput call tlib#cmd#BrowseOutput(<q-args>)
 
 
+" :display: TTimeCommand CMD
+" Time the execution time of CMD.
+command! -nargs=1 -complete=command TTimeCommand call tlib#cmd#Time(<q-args>)
+
+
 
 " Variables~ {{{1
 
@@ -141,7 +133,7 @@ TLet g:tlib_inputlist_higroup = 'IncSearch'
 " If a list contains more items, don't do an incremental "live search", 
 " but use |input()| the quere the user for a filter. This is useful on 
 " slower machines or with very long lists.
-TLet g:tlib_inputlist_livesearch_threshold = 500
+TLet g:tlib_inputlist_livesearch_threshold = 1000
 
 " If true, show some indicators about the status of a filename (eg 
 " buflisted(), bufloaded() etc.).
@@ -209,16 +201,6 @@ TLet g:tlib_inputlist_not = '-'
 " Format: [KEY] = BASE ... the number is calculated as KEY - BASE.
 " :nodefault:
 TLet g:tlib_numeric_chars = {
-            \ 48: 48,
-            \ 49: 48,
-            \ 50: 48,
-            \ 51: 48,
-            \ 52: 48,
-            \ 53: 48,
-            \ 54: 48,
-            \ 55: 48,
-            \ 56: 48,
-            \ 57: 48,
             \ 176: 176,
             \ 177: 176,
             \ 178: 176,
@@ -230,6 +212,16 @@ TLet g:tlib_numeric_chars = {
             \ 184: 176,
             \ 185: 176,
             \}
+            " \ 48: 48,
+            " \ 49: 48,
+            " \ 50: 48,
+            " \ 51: 48,
+            " \ 52: 48,
+            " \ 53: 48,
+            " \ 54: 48,
+            " \ 55: 48,
+            " \ 56: 48,
+            " \ 57: 48,
 
 " :nodefault:
 TLet g:tlib_keyagents_InputList_s = {
@@ -570,4 +562,12 @@ pressing <esc> when browsing an index-list, returns 0 and not "")
 - New: tlib#paragraph#Define(), tlib#textobjects#StandardParagraph()
 - Try to speed up list display (a rewrite of World.DisplayList() etc. is 
 required)
+
+0.37
+- g:tlib_inputlist_livesearch_threshold defaults to 1000
+- tlib#World: optional scratch_pos field
+- tlib#input#List: By default <m-NUMBER> selects by number but NUMBER is 
+interpreted as string
+- tlib#date
+- TTimeCommand
 
