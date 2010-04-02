@@ -193,7 +193,7 @@
 % don't hyphenate so much - default = 200, max (never hyphenate) = 10,000
 %\hyphenpenalty=800
 
-% }}}1
+% Header {{{1
 
 \newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{<#1>}}}
 \newcommand{\janmn}{\email{jan@majutsushi.net}}
@@ -203,6 +203,7 @@
 %\author{[% user.firstname %]~[% user.lastname %]}
 \title{[% title %]}
 
+% Document {{{1
 
 \begin{document}
 \maketitle
@@ -218,6 +219,8 @@
 
 <+CURSOR+>
 
+
+% Backmatter {{{1
 
 %\bibliographystyle{alpha}
 %\bibliographystyle{acm}
