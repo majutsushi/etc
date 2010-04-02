@@ -65,7 +65,17 @@ XSET what*|post=ExpandIfNotEmpty( ' & ', 'what*' )
 ..XPT
 
 XPT section hint=section{..}
-\section{`sectionTitle~}
+\section{`sectionTitle~} %{{{2
+\label{sec:`sectionLabel~}
+..XPT
+
+XPT subsection hint=subsection{..}
+\subsection{`sectionTitle~} %{{{3
+\label{sec:`sectionLabel~}
+..XPT
+
+XPT subsubsection hint=subsubsection{..}
+\subsubsection{`sectionTitle~} %{{{4
 \label{sec:`sectionLabel~}
 ..XPT
 
