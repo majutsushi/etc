@@ -1023,6 +1023,10 @@ let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 " vimplate {{{2
 let Vimplate = globpath(&rtp, 'tools/vimplate', 1)
 
+" voom {{{2
+let g:voom_tab_key = '<C-Tab>'
+let g:voom_verify_oop = 1
+
 " xptemplate {{{2
 let g:xptemplate_strict = 0
 let g:xptemplate_highlight='following,next'
