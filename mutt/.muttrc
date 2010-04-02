@@ -197,7 +197,7 @@ unset force_name        # outgoing mail to be saved in folder of "login name"
   set postpone=ask-no   # ask for postponing when doing an Abort.
 unset save_name         # Fcc, if ~/Mail/<to> exists.
 #   set send_charset="us-ascii:iso-8859-1:iso-8859-15:iso-2022-jp:utf-8"
-  set send_charset="us-ascii:iso-8859-15:utf-8"
+  set send_charset="us-ascii:utf-8"
   set use_8bitmime      # run sendmail 8.8.x with -B8BITMIME to enable 8bit
 unset write_bcc         # send Bcc: line to $sendmail
 
