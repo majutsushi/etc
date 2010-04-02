@@ -47,21 +47,22 @@
 % Fonts {{{2
 \usepackage[T1]{fontenc}
 %\usepackage{lmodern}
-%\usepackage{textcomp}
+\usepackage{textcomp}
 \usepackage{latexsym}
 
-% use garamond font
+% use garamond and corresponding fonts
 %\usepackage[urw-garamond]{mathdesign}
-%\renewcommand{\sfdefault}{fvs} % Bera sans
-%\renewcommand{\sfdefault}{fvm} % Bera mono
-
-%\usepackage{inconsolata} % inconsolata monospace font
+%\usepackage[scaled]{berasans}
+%\usepackage[scaled]{beramono}
 
 % use palatino and corresponding fonts
 %\usepackage[sc]{mathpazo}
 %\linespread{1.05}         % Palatino needs more leading (space between lines)
 %\usepackage[scaled]{berasans}
 %\usepackage[scaled]{beramono}
+
+% inconsolata monospace font
+%\usepackage{inconsolata}
 
 % euler math font
 %\usepackage{eulervm}
