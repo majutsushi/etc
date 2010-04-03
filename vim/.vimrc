@@ -31,6 +31,12 @@ autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 
 "au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
 
+" When switching buffers, preserve window view.
+if v:version >= 700
+  au BufLeave * let b:winview = winsaveview()
+  au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+endif
+
 " filetype-specific settings
 au Filetype html,xml,xsl source ~/.vim/macros/closetag.vim
 au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
