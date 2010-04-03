@@ -302,7 +302,7 @@ unset mark_old          # mark new articles as old, when leaving mbox
   set mh_purge          # remove messages marked as deleted from MH folders.
   set narrow_tree
   set read_inc=20
-unset resolve           # go to next undeleted message after modifying actual
+  set resolve           # go to next undeleted message after modifying current
 unset reverse_alias     # use realname from reverse alias lookup
   set status_chars="-*%A" # status of mbox (unchanged, changed, readonly, attach)
   set status_format="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---"
@@ -469,16 +469,16 @@ bind index   X          imap-fetch-mail
 bind pager   X          imap-fetch-mail
 
 # deleting
-macro index  d          "<delete-message><next-undeleted>" "Delete message"
-macro pager  d          "<delete-message><next-undeleted>" "Delete message"
+# macro index  d          "<delete-message><next-undeleted>" "Delete message"
+# macro pager  d          "<delete-message><next-undeleted>" "Delete message"
 
 # printing
-macro index ',P'        "<display-toggle-weed><print-message><display-toggle-weed><exit>" "Print message"
-macro pager ',P'        "<display-toggle-weed><print-message><display-toggle-weed>" "Print message"
+macro index  ,P         "<display-toggle-weed><print-message><display-toggle-weed><exit>" "Print message"
+macro pager  ,P         "<display-toggle-weed><print-message><display-toggle-weed>" "Print message"
 
 # threads
-macro index  \CR        "<read-thread><collapse-thread><next-unread><current-middle>" "Mark the current thread as read"
-macro pager  \CR        "<read-thread><collapse-thread><next-unread><display-message>" "Mark the current thread as read"
+macro index  \CR        "<enter-command>unset resolve<enter><read-thread><collapse-thread><next-unread><current-middle><enter-command>set resolve<enter>" "Mark the current thread as read"
+macro pager  \CR        "<enter-command>unset resolve<enter><read-thread><collapse-thread><next-unread><display-message><enter-command>set resolve<enter>" "Mark the current thread as read"
 macro index '{'         "<collapse-thread>" "Collapse current thread"
 
 # quickly change to important folders
@@ -494,14 +494,14 @@ macro index  ,F         "<change-folder>=.0FOLLOWUP\n" "Go to 'followup' folder"
 macro pager  ,F         "<change-folder>=.0FOLLOWUP\n" "Go to 'followup' folder"
 
 # quickly file mail
-macro index  ,a         "<save-message>=.archive\n<next-unread>" "Move message to folder 'archive'"
-macro pager  ,a         "<save-message>=.archive\n<next-unread>" "Move message to folder 'archive'"
-macro index  ,w         "<save-message>=.0WAITING\n<next-unread>" "Move message to folder '0WAITING'"
-macro pager  ,w         "<save-message>=.0WAITING\n<next-unread>" "Move message to folder '0WAITING'"
-macro index  ,f         "<save-message>=.0FOLLOWUP\n<next-unread>" "Move message to folder '0FOLLOWUP'"
-macro pager  ,f         "<save-message>=.0FOLLOWUP\n<next-unread>" "Move message to folder '0FOLLOWUP'"
-macro index  ,p         "<pipe-message>procmail\n<delete-message><next-unread>" "Pipe message through procmail"
-macro pager  ,p         "<pipe-message>procmail\n<delete-message><next-unread>" "Pipe message through procmail"
+macro index  ,a         "<save-message>=.archive\n" "Move message to folder 'archive'"
+macro pager  ,a         "<save-message>=.archive\n" "Move message to folder 'archive'"
+macro index  ,w         "<save-message>=.0WAITING\n" "Move message to folder '0WAITING'"
+macro pager  ,w         "<save-message>=.0WAITING\n" "Move message to folder '0WAITING'"
+macro index  ,f         "<save-message>=.0FOLLOWUP\n" "Move message to folder '0FOLLOWUP'"
+macro pager  ,f         "<save-message>=.0FOLLOWUP\n" "Move message to folder '0FOLLOWUP'"
+macro index  ,p         "<pipe-message>procmail\n<delete-message>" "Pipe message through procmail"
+macro pager  ,p         "<pipe-message>procmail\n<delete-message>" "Pipe message through procmail"
 
 # search mail with maildir-utils
 macro index  ,mf        "<shell-escape>mu find --clearlinks --linksdir=~/.mu/results " "mu find"
