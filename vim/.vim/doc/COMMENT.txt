@@ -1,0 +1,120 @@
+*COMMENT.txt* - Comment Out a Block of C/C++ source using an #if 0 block
+
+Author: Jeff Crawford <j_crawfd@yahoo.ca>
+
+==============================================================================
+1. Contents         *COMMENT-contents*
+
+	1. Contents...........................................: |COMMENT-contents|
+	2. COMMENT -- Getting Started.........................: |COMMENT-install|
+	3. COMMENT Usage......................................: |COMMENT|
+	4. COMMENT Examples...................................: |COMMENT-examples|
+
+==============================================================================
+2. COMMENT - Getting Started                *COMMENT-start* *COMMENT-install*
+
+To install COMMENT.vim unzip COMMENT.zip in your ~/.vim directory.  This will
+install COMMENT.vim to the plugin directory and COMMENT.txt to the doc
+directory.  Open a vim window and run :helptags ~/.vim/doc. Type :help COMMENT
+for usage.
+
+==============================================================================
+3. COMMENT - Usage                                  *COMMENT* *COMMENT-usage*
+
+This script is used to help assist programmers when coding.  It can be used
+to comment out a block of code with an '#if 0 #endif' block for
+experimentation or other purposes.  
+
+Usage is as follows:
+
+Select the block of code you want to comment out (in visual mode) and type
+<M-i>.
+
+This will add an '#if 0' line at the beginning of the block before the first
+selected line, and and '#endif' after the last line in the selection.
+
+e.g.)
+
+#if 0
+<code block>
+#endif
+
+To remove the '#if 0' block visually select the '#if 0' line and invoke the function
+again. The '#if 0' and corresponding '#endif' will be removed.
+
+'#if 0' blocks can be nested and '#if 0 #else #endif' blocks are specially
+handled (see examples below).
+
+==============================================================================
+4. COMMENT - Examples                                        *COMMENT-example*
+
+Example 1. Single code block. *COMMENT-example1*
+
+Visually select the block of code <code block> and hit <M-i>. The block will
+now appear as follows:
+
+#if 0
+<code block>
+#endif
+
+using the above example, place the cursor anywhere
+on the #if 0 line and invoke the function. The code block is restored and 
+the #if 0 and #endif are gone.
+
+Example 2. Remove from '#if 0 #else #endif' *COMMENT-example2*
+
+Here is a more advance example, suppose you have the
+following:
+
+#if 0
+<code block>
+#else
+<code block>
+#endif
+
+if you invoke the command on the #if 0 the #else
+it will automatically be converted to #if 0 and the code
+block above will be restored, like so:
+
+<code block>
+#if 0
+<code block>
+#endif
+
+Example 3. Nested blocks of '#if 0' *COMMENT-example3*
+
+Also works with nested #if 0 #endif blocks:
+
+Suppose you have a large chunk of code that already
+has some #if 0 blocks.  No problem, select all you want
+including the nested comment blocks and invoke the function,
+when you want to remove the comment the proper #endif
+is matched and removed.
+
+<code block1>
+#if 0
+<code block2>
+#endif
+<code block3>
+<code block4>
+
+Select all up to code block3 and invoke the function,
+we get:
+
+#if 0
+<code block1>
+#if 0
+<code block2>
+#endif
+<code block3>
+#endif
+<code block4>
+
+Move to the first #if 0 and invoke the function, voila
+you should be back to square one again.
+
+Hope you all like it.
+Have fun.
+
+==============================================================================
+vim:tw=78:ts=4:ft=help

@@ -864,6 +864,9 @@ let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
 let s:rs = '<+'
 let s:re = '+>'
 
+" COMMENT {{{2
+xmap <unique> <leader>cx <Plug>PComment
+
 " detectindent {{{2
 let g:detectindent_preferred_expandtab = 1
 let g:detectindent_preferred_indent = 4
