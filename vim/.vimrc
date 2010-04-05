@@ -633,6 +633,8 @@ endif
 set ttyfast
 " show info in the window title
 set title
+" string to restore the title to when exiting Vim
+let &titleold=fnamemodify(&shell, ":t")
 
 if (&term =~ "xterm")
     set t_Co=256
