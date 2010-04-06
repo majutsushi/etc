@@ -1209,6 +1209,14 @@ xmap <leader>tr  :s/\s\+$//
 " indent for C/C++ programs
 nmap <leader>i :%!astyle<CR>
 
+" Ctrl-K comma colon (in Insert mode): UTF-8 single-codepoint ellipsis "..."
+" disregard error if (for instance) not in UTF-8
+if has("digraphs")
+    silent! dig ,:  8230 " HORIZONTAL ELLIPSIS
+    silent! dig qi 64259 " LATIN SMALL LIGATURE FFI
+    silent! dig ql 64260 " LATIN SMALL LIGATURE FFL
+endif
+
 " Moving around {{{2
 
 " make some jumps more intuitive
