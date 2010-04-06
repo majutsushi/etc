@@ -52,16 +52,30 @@ XPT array hint=begin{array}{..}...\ end{array}
 \end{array}
 ..XPT
 
-XPT table hint=begin{tabular}{..}...\ end{tabular}
-XSET hline..|post=\hline
+XPT table hint=begin{table}\ ..\ end{table}
 XSET what*|post=ExpandIfNotEmpty( ' & ', 'what*' )
-\begin{tabular}{`kind~|r|c|l|~}
-    `hline..~
-    `what*~ \\\\` `...1~
-    `hline..~
-    `what*~ \\\\` `...1~
-\end{tabular}
+\begin{table}
+    \centering
+    %\footnotesize
+    \begin{tabular}{`kind~rcl~}
+        \toprule
+        `what*~ \\\\` `...1~
+        `what*~ \\\\` `...1~
+        \bottomrule
+    \end{tabular}
+    \caption{`caption~}
+    \label{tab:`label~}
+\end{table}
+..XPT
 
+XPT tabular hint=begin{tabular}{..}...\ end{tabular}
+XSET what*|post=ExpandIfNotEmpty( ' & ', 'what*' )
+\begin{tabular}{`kind~rcl~}
+    \toprule
+    `what*~ \\\\` `...1~
+    `what*~ \\\\` `...1~
+    \bottomrule
+\end{tabular}
 ..XPT
 
 XPT section hint=section{..}
