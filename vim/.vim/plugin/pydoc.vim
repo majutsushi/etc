@@ -95,8 +95,8 @@ endfunction
 
 
 "mappings
-au FileType python,man map <buffer> <leader>pw :call ShowPyDoc('<C-R><C-W>', 1)<CR>
-au FileType python,man map <buffer> <leader>pW :call ShowPyDoc('<C-R><C-A>', 1)<CR>
+au FileType python,man map <buffer> <leader>pd :call ShowPyDoc('<C-R><C-W>', 1)<CR>
+au FileType python,man map <buffer> <leader>pD :call ShowPyDoc('<C-R><C-A>', 1)<CR>
 au FileType python,man map <buffer> <leader>pk :call ShowPyDoc('<C-R><C-W>', 0)<CR>
 au FileType python,man map <buffer> <leader>pK :call ShowPyDoc('<C-R><C-A>', 0)<CR>
 
