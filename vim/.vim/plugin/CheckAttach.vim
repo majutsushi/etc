@@ -1,8 +1,8 @@
 " Vim plugin for checking attachments with mutt
 " Maintainer:  Christian Brabandt <cb@256bit.org>
-" Last Change: 2010 Mar, 02
-" Version:     0.5
-" GetLatestVimScripts: 2796 4 :AutoInstall: CheckAttach.vim
+" Last Change: Wed, 05 May 2010 21:34:24 +0200
+" Version:     0.7
+" GetLatestVimScripts: 2796 6 :AutoInstall: CheckAttach.vim
 
 " Exit quickly when:
 " - this plugin was already loaded (or disabled)
@@ -91,5 +91,11 @@ fu! <SID>CheckFT()
     let s:filetype=(exists("attach_check_ft") ? attach_check_ft : 'mail')
     let s:check_filetype=join(split(escape(s:filetype, '\\*?'),','),'\|')
     "au FileType * if expand("<amatch>") =~ 'mail' | :call <SID>AutoCmd() | endif
+    " Force filetype detection, in case &ft is empty yet.
+    if empty(&ft)
+        filetype detect
+    endif
     if &ft =~ s:check_filetype | :call <SID>AutoCmd() | endif
 endfun
+
+call <sid>CheckFT()

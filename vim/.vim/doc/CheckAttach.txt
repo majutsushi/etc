@@ -1,14 +1,15 @@
 *CheckAttach.txt*  Check attachments when using mutt - Vers 0.5  Mar 02, 2010
 
 Author:  Christian Brabandt <cb@256bit.org>
-Copyright: (c) 2009 by Christian Brabandt 		    *CheckAttach-copyright*
+Version: 0.7 Wed, 05 May 2010 21:34:24 +0200
+Copyright: (c) 2009 by Christian Brabandt               *CheckAttach-copyright*
            The VIM LICENSE applies to CheckAttach.vim and CheckAttach.txt
            (see |copyright|) except use CheckAttach instead of "Vim".
-	   NO WARRANTY, EXPRESS OR IMPLIED.  USE AT-YOUR-OWN-RISK.
+           NO WARRANTY, EXPRESS OR IMPLIED.  USE AT-YOUR-OWN-RISK.
 
 
 ==============================================================================
-                                                                  *CheckAttach*
+                                                                 *CheckAttach*
 1. Functionality
 
 When using mutt as your mail user agent, you can specify which files to attach
@@ -68,7 +69,7 @@ in your .vimrc:
 
 let g:attach_check_ft='mail,foobar'
 
-                                         *EnableCheckAttach* *DisableCheckAttach*
+                                      *EnableCheckAttach* *DisableCheckAttach*
 You can disable the plugin by issuing the command 
 :DisableCheckAttach
 Enabling the attachment check is then again enabled by issuing
@@ -79,15 +80,21 @@ only if you use :w it will.
 
 
 ==============================================================================
-2. CheckAttach History					    *CheckAttach-history*
+2. CheckAttach History                                   *CheckAttach-history*
+    0.7: May  05, 2010     Force checking the filetype
+    0.6: May  05, 2010     Force filetype detection, which did prevent
+                             of the plugin to be working correctly
+                           Created a public github repository at
+                             http://github.com/chrisbra/CheckAttach
+                           Small changes to the documentation
     0.5: Mar  02, 2010     Search without matching case
     0.4: Jan  26, 2010     Highlight matching keywords,
                            use g:attach_check_ft to specify for which filetypes
-			   to enable the plugin
+                           to enable the plugin
     0.3: Oct   1, 2009     Fixed Copyright statement, 
                            enabled GetLatestScripts
     0.2: Sept 29, 2009     Added Documentation
-    0.1: Sept 29, 2009	   First working version, using simple commands
+    0.1: Sept 29, 2009     First working version, using simple commands
 
 ==============================================================================
-vim:tw=78:ts=8:ft=help
+vim:tw=78:ts=8:ft=help:et
