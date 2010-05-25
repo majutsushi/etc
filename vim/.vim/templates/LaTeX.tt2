@@ -126,8 +126,10 @@
 
 % Verbatim {{{2
 \usepackage{fancyvrb}
-\DefineVerbatimEnvironment{Code}{Verbatim}{gobble=4,numbers=left,frame=none}
-%frame=none|leftline|topline|bottomline|lines|single
+% default and for \VerbatimInput{file}
+\fvset{numbers=left,frame=none}
+% frame=none|leftline|topline|bottomline|lines|single
+\DefineVerbatimEnvironment{Code}{Verbatim}{gobble=4}
 
 \usepackage{verbatim}
 \usepackage{alltt}
