@@ -1321,6 +1321,9 @@ cmap ;rcm %s/<C-M>//g
 
 " Misc {{{2
 
+" run current file as a script
+nmap <leader>e :execute "Shell " . expand("%:p")<CR>
+
 " Switch to current dir
 nmap <silent> <leader>cd :cd %:p:h<cr>
 nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
