@@ -1141,6 +1141,7 @@ rs-important() {
         --modify-window=1 \
         --progress \
         --exclude=/.local/share/Trash/** \
+        --exclude=/.local/share/gvfs-metadata/** \
         $HOME/.etc \
         $HOME/.mozilla \
         $HOME/.config \
@@ -1167,7 +1168,7 @@ rs-important() {
         $HOME/projects \
         $HOME/src \
         $HOME/work \
-        $1
+        $1 2>! $HOME/projects/rs-important.log
 }
 
 # get specific git commitdiff
