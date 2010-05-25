@@ -431,6 +431,7 @@ function! s:RunShellCommand(cmdline)
     botright new
     setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
     setlocal nowrap
+    nmap <buffer> q :close<cr>
 "    call setline(1,a:cmdline)
 "    call setline(2,substitute(a:cmdline,'.','=','g'))
     if v:version >= 702
