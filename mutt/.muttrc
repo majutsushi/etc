@@ -359,7 +359,7 @@ alternative_order text/plain text/html  # I like plaintext more than html.
 #   set sidebar_boundary="._-"
 # unset sidebar_newmail_only
 # unset sidebar_shorten_hierarchy
-  set sidebar_sort
+unset sidebar_sort
   set sidebar_shortpath
   set sidebar_visible
   set sidebar_width=40
@@ -486,20 +486,20 @@ macro index  I          "<change-folder>!\n" "Go to Inbox"
 macro pager  I          "<change-folder>!\n" "Go to Inbox"
 macro index  ,S         "<change-folder><\n" "Go to 'sent' folder"
 macro pager  ,S         "<change-folder><\n" "Go to 'sent' folder"
-macro index  ,A         "<change-folder>=.archive\n" "Go to 'archive' folder"
-macro pager  ,A         "<change-folder>=.archive\n" "Go to 'archive' folder"
-macro index  ,W         "<change-folder>=.0WAITING\n" "Go to 'waiting' folder"
-macro pager  ,W         "<change-folder>=.0WAITING\n" "Go to 'waiting' folder"
-macro index  ,F         "<change-folder>=.0FOLLOWUP\n" "Go to 'followup' folder"
-macro pager  ,F         "<change-folder>=.0FOLLOWUP\n" "Go to 'followup' folder"
+macro index  ,A         "<change-folder>=.Archive\n" "Go to 'Archive' folder"
+macro pager  ,A         "<change-folder>=.Archive\n" "Go to 'Archive' folder"
+macro index  ,W         "<change-folder>=.Waiting\n" "Go to 'Waiting' folder"
+macro pager  ,W         "<change-folder>=.Waiting\n" "Go to 'Waiting' folder"
+macro index  ,T         "<change-folder>=.Todo\n" "Go to 'Todo' folder"
+macro pager  ,T         "<change-folder>=.Todo\n" "Go to 'Todo' folder"
 
 # quickly file mail
-macro index  ,a         "<save-message>=.archive\n" "Move message to folder 'archive'"
-macro pager  ,a         "<save-message>=.archive\n" "Move message to folder 'archive'"
-macro index  ,w         "<save-message>=.0WAITING\n" "Move message to folder '0WAITING'"
-macro pager  ,w         "<save-message>=.0WAITING\n" "Move message to folder '0WAITING'"
-macro index  ,f         "<save-message>=.0FOLLOWUP\n" "Move message to folder '0FOLLOWUP'"
-macro pager  ,f         "<save-message>=.0FOLLOWUP\n" "Move message to folder '0FOLLOWUP'"
+macro index  ,a         "<save-message>=.Archive\n" "Move message to folder 'Archive'"
+macro pager  ,a         "<save-message>=.Archive\n" "Move message to folder 'Archive'"
+macro index  ,w         "<save-message>=.Waiting\n" "Move message to folder 'Waiting'"
+macro pager  ,w         "<save-message>=.Waiting\n" "Move message to folder 'Waiting'"
+macro index  ,t         "<save-message>=.Todo\n" "Move message to folder 'Todo'"
+macro pager  ,t         "<save-message>=.Todo\n" "Move message to folder 'Todo'"
 macro index  ,p         "<pipe-message>procmail\n<delete-message>" "Pipe message through procmail"
 macro pager  ,p         "<pipe-message>procmail\n<delete-message>" "Pipe message through procmail"
 
@@ -545,7 +545,7 @@ bind compose   <enter>  send-message
 bind compose   <return> send-message
 bind compose   v        view-attach
 
-macro compose  ,w       "<edit-fcc>=.0WAITING\n" "Save message in WAITING folder"
+macro compose  ,w       "<edit-fcc>=.Waiting\n" "Save message in 'Waiting' folder"
 
 macro compose \es "Fgpg --clearsign\ny" "clearsign with GnuPG"
 macro compose \ee "Fgpg --encrypt --armor\ny" "encrypt with GnuPG"
