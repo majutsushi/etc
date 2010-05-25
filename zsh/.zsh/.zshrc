@@ -955,7 +955,18 @@ pdf2pdf() {
         echo "Usage: $0 input.pdf output.pdf"
         return 1
     else
-        gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -sOutputFile=$2 $1
+        gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$2 $1
+    fi
+}
+
+pdf2pdfembfonts() {
+    if [[ $# != 1 ]]; then
+        echo "Usage: $0 input.pdf"
+        return 1
+    else
+        tmpname=$(mktemp)
+        gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dNOPLATFONTS -dPDFSETTINGS=/prepress -sOutputFile=$tmpname $1
+        mv $tmpname $1
     fi
 }
 
