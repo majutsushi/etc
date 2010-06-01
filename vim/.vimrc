@@ -474,7 +474,7 @@ command! -range=% -nargs=0 Space2Tab exec "<line1>,<line2>s/^\\( \\{".&ts."\\}\\
 " ToggleExpandTab() {{{2
 function! ToggleExpandTab()
     if &sts == 4
-        setlocal softtabstop=0
+        setlocal softtabstop=8
         setlocal shiftwidth=8
         setlocal noexpandtab
     else
