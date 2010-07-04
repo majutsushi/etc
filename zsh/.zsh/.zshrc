@@ -203,10 +203,15 @@ alias t='tree -F'
 if [[ $UID == 0 ]]; then
     INTERACTIVE="-i"
 fi
-alias cp="nocorrect cp --preserve=timestamps $INTERACTIVE" # no spelling correction on cp
-alias mv="nocorrect mv $INTERACTIVE"                       # no spelling correction on mv
-alias rm="nocorrect rm --one-file-system $INTERACTIVE"     # no spelling correction on rm
-alias mkdir="nocorrect mkdir"                              # no spelling correction on mkdir
+alias cp="nocorrect cp $INTERACTIVE" # no spelling correction on cp
+alias mv="nocorrect mv $INTERACTIVE" # no spelling correction on mv
+alias rm="nocorrect rm $INTERACTIVE" # no spelling correction on rm
+alias mkdir="nocorrect mkdir"        # no spelling correction on mkdir
+
+if islinux; then
+    alias cp="cp --preserve=timestamps"
+    alias rm="rm --one-file-system"
+fi
 
 # defaults for some programs
 alias grep='grep -E --color=auto'
