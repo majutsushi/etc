@@ -1227,6 +1227,9 @@ nnoremap ]] ][
 " move into wrapped lines
 nnoremap j gj
 nnoremap k gk
+"nnoremap $ g$   " conflicts with virtualedit
+nnoremap 0 g0
+nnoremap ^ g^
 
 " emacs-like c-a/c-e movement
 imap        <c-a> <esc>0i
