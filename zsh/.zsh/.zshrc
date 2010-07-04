@@ -4,6 +4,10 @@
 # check for version/system {{{
 # check for versions (compatibility reasons)
 
+islinux() {
+    [[ $OSTYPE == linux* ]] && return 0
+    return 1
+}
 ismac() {
     [[ $OSTYPE == darwin* ]] && return 0
     return 1
