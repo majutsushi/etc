@@ -573,11 +573,12 @@ precmd () {
 #     ┌─[x]──────────────────────────────────────────────────────[x]─┐
 #     └─[x]─── COMMANDS                                       ───[x]─┘
 
-    vcs_info
+    is438 && vcs_info
     prompt_set_line_1
     prompt_set_line_2
 
-    RPS1="${vcs_info_msg_1_:+${C_BOLD}<${C_F_RED}${vcs_info_msg_1_}${C_F_DEFAULT}>${C_DEFAULT}}"
+    is438 && RPS1="${vcs_info_msg_1_:+${C_BOLD}<${C_F_RED}${vcs_info_msg_1_}${C_F_DEFAULT}>${C_DEFAULT}}"
+
     # adjust title of xterm
     # see http://www.faqs.org/docs/Linux-mini/Xterm-Title.html
     case $TERM in (xterm*|rxvt*|screen*)
@@ -599,13 +600,23 @@ prompt_set_line_1 () {
 #     local left_left="${C_BOLD}${C_F_RED}┌${C_F_DEFAULT}($C_F_GREEN"
     local left_left="${PR_SET_CHARSET}${C_BOLD}${C_F_RED}${PR_SHIFT_IN}${PR_ULCORNER}${PR_SHIFT_OUT}${C_F_DEFAULT}($C_F_GREEN"
 #     local left_dir="$CPATH"
-    local left_dir="${${vcs_info_msg_0_/#${HOME}/~}%%/.}"
+    if is438; then
+        local left_dir="${${vcs_info_msg_0_/#${HOME}/~}%%/.}"
+    else
+        local left_dir="%~"
+    fi
     local left_right="$C_F_DEFAULT$WPERM)"
     local left_side=$left_left$left_dir$left_right
     local right_side="---$BATTERY($C_F_CYAN%D{%H:%M:%S}$C_F_DEFAULT)]$C_DEFAULT"
 
-    local left_side_width=${(m)#${(S%%)left_side//\%\{*\%\}/}}
-    local right_side_width=${(m)#${(S%%)right_side//\%\{*\%\}/}}
+    if is43; then
+        local left_side_width=${(m)#${(S%%)left_side//\%\{*\%\}/}}
+        local right_side_width=${(m)#${(S%%)right_side//\%\{*\%\}/}}
+    else
+        # no multibyte (m flag) support in < 4.3
+        local left_side_width=${#${(S%%)left_side//\%\{*\%\}/}}
+        local right_side_width=${#${(S%%)right_side//\%\{*\%\}/}}
+    fi
 
     local padding_size=$(( COLUMNS - left_side_width - right_side_width ))
 
