@@ -569,7 +569,7 @@ set linebreak
 " which characters might cause a line break
 "set breakat=\ ^I
 " string to put before wrapped screen lines
-set showbreak=+\ 
+set showbreak=…
 
 " include "lastline" to show the last line even if it doesn't fit
 " include "uhex" to show unprintable characters as a hex number
