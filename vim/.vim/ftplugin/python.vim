@@ -2,7 +2,7 @@
 " Author       : Jan Larres <jan@majutsushi.net>
 " Website      : http://majutsushi.net
 " Created      : 2010-04-08 20:28:40 +1200 NZST
-" Last changed : 2010-05-06 21:07:31 +1200 NZST
+" Last changed : 2010-06-04 00:11:47 +1200 NZST
 
 setlocal foldmethod=indent
 setlocal omnifunc=pythoncomplete#Complete
@@ -15,6 +15,7 @@ setlocal efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 
 "map <buffer> <leader>e :!python2.6 %<CR>
 
+if has("+python")
 python << EOF
 import os
 import sys
@@ -23,3 +24,4 @@ for p in sys.path:
     if os.path.isdir(p):
         vim.command(r"setlocal path+=%s" % (p.replace(" ", r"\ ")))
 EOF
+endif
