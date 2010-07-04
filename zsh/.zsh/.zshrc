@@ -45,18 +45,21 @@ fi
 
 path=(
     /usr/local/games
-    /var/lib/gems/1.8/bin
     /usr/local/{,s}bin
     /{,s}bin
     /usr/{,s}bin
     /usr/games
 )
 
-if [[ -d $HOME/apps/loopo ]] ; then
+if [[ -d /var/lib/gems/1.8/bin ]]; then
+    path=( /var/lib/gems/1.8/bin $path )
+fi
+
+if [[ -d $HOME/apps/loopo ]]; then
     path=( $HOME/apps/loopo/loopobin/bin $path )
 fi
 
-if [[ -d /opt/intel ]] ; then
+if [[ -d /opt/intel ]]; then
     source /opt/intel/cc/10.0.023/bin/iccvars.sh
     source /opt/intel/idb/10.0.023/bin/idbvars.sh
 fi
