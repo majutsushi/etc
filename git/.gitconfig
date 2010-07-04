@@ -4,8 +4,10 @@
 
 [giggle]
 	compact-mode = false
-	main-window-geometry = 1083x696+84+47
+	main-window-geometry = 1280x761+0+25
 	main-window-maximized = false
+	history-view-vpane-position = 397
+	main-window-view = HistoryView
 
 [gui]
 	fontdiff = -family fixed -size 8 -weight normal -slant roman -underline 0 -overstrike 0
@@ -19,7 +21,8 @@
 	slog = log --stat
 	wdiff = diff --color-words
 	wshow = show --color-words
-	lol = log --oneline --graph --decorate
+	lol = log --pretty=oneline --graph --decorate --abbrev-commit
+	lola = log --pretty=oneline --graph --decorate --abbrev-commit --all
 
 [color]
 	ui = auto
@@ -50,3 +53,5 @@
 
 [url "ssh://[login]@git.gnome.org/git/"]
 	insteadof = gnome:
+
+# vim: noexpandtab sw=8 sts=8
