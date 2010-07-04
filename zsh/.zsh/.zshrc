@@ -225,6 +225,7 @@ alias j='jobs -l'
 alias pa='ps aux | less'
 alias pu='ps ux | less'
 alias le='/usr/share/vim/vimcurrent/macros/less.sh'
+alias vi='vim'
 
 # shortcuts
 alias rd='rmdir'
