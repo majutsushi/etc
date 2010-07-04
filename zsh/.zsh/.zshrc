@@ -64,6 +64,14 @@ if [[ -d /opt/intel ]]; then
     source /opt/intel/idb/10.0.023/bin/idbvars.sh
 fi
 
+if [[ -d /usr/pkg/bin ]]; then
+    path=( /usr/pkg/bin $path )
+fi
+
+if [[ -d /usr/X11R6/bin ]]; then
+    path=( /usr/X11R6/bin $path )
+fi
+
 # make sure $HOME/bin has the highest priority
 path=( ${HOME}/bin $path )
 
@@ -1219,11 +1227,18 @@ mmake() {
     [[ ! -d ~/.errorlogs ]] && mkdir ~/.errorlogs
     =make -n install > ~/.errorlogs/${PWD##*/}-makelog
 }
+
+# for ecs systems
+if [[ -d /etc/pkgs/ ]]; then
+    need () { . "/etc/pkgs/$1.sh"; }
+fi
+
 # }}}
 
 # screen {{{
 # 'rxvt' is needed for dvtm
-if [[ "$TERM" != screen* ]] && [[ "$TERM" != "rxvt" ]]; then
+if [[ "$TERM" != screen* ]] && [[ "$TERM" != "rxvt" ]] &&
+   [[ -n "${HOST%%*ecs.vuw.ac.nz}" ]]; then
     screen -m
 fi
 # }}}
