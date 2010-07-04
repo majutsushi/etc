@@ -1322,6 +1322,9 @@ cnoremap <C-P> <Up>
 " ;rcm = remove "control-m"s - for those mails sent from DOS:
 cmap ;rcm %s/<C-M>//g
 
+" expand %% to current directory
+cabbrev <expr> %% expand('%:~:h')
+
 " Misc {{{2
 
 " run current file as a script
