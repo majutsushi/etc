@@ -19,19 +19,18 @@ issolaris() {
 
 issolaris && return 0
 
-if autoload is-at-least && is-at-least 2>/dev/null ; then
-    is42() { is-at-least 4.2 }
-    is43() { is-at-least 4.3 }
-else
-    is42(){
-        [[ $ZSH_VERSION == 4.<2->* ]] && return 0
-        return 1
-    }
-    is43(){
-        [[ $ZSH_VERSION == 4.<3->* ]] && return 0
-        return 1
-    }
-fi
+is42(){
+    [[ $ZSH_VERSION == 4.<2->* || $ZSH_VERSION == <5->* ]] && return 0
+    return 1
+}
+is43(){
+    [[ $ZSH_VERSION == 4.<3->* || $ZSH_VERSION == <5->* ]] && return 0
+    return 1
+}
+is438(){
+    [[ $ZSH_VERSION == 4.3.<8->* || $ZSH_VERSION == <5->* ]] && return 0
+    return 1
+}
 
 if ismac; then
     [[ -r /sw/bin/init.sh ]] && . /sw/bin/init.sh
