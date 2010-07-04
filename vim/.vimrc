@@ -1037,6 +1037,7 @@ let Vimplate = globpath(&rtp, 'tools/vimplate', 1)
 " voom {{{2
 let g:voom_tab_key = '<C-Tab>'
 let g:voom_verify_oop = 1
+let g:voom_user_command = "runtime! voom_addons/*.vim"
 
 " xptemplate {{{2
 let g:xptemplate_key = '<Tab>'
