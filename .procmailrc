@@ -144,9 +144,9 @@ LOGFILE=$MAILDIR/procmail_log
 
 # Rest
 
-:0
-* ^From:.*domainbox
-.DomainBOX/
+# :0
+# * ^From:.*domainbox
+# .DomainBOX/
 
 :0
 $DEFAULT
