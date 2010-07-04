@@ -4,10 +4,12 @@ set encoding=utf-8
 let mapleader=","
 set runtimepath=$HOME/.vim
 set runtimepath+=$HOME/src/vim-latex/vimfiles
-set runtimepath+=$HOME/.vim/xpt
+"set runtimepath+=$HOME/.vim/xpt
+set runtimepath+=$HOME/src/xptemplate/dist
 set runtimepath+=/var/lib/vim/addons
 set runtimepath+=$VIM/vimfiles
 set runtimepath+=$VIMRUNTIME
+set runtimepath+=$HOME/.vim/xptpersonal
 set runtimepath+=$VIM/vimfiles/after
 set runtimepath+=/var/lib/vim/addons/after
 set runtimepath+=$HOME/.vim/after
@@ -862,8 +864,7 @@ let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
 
 " code_complete {{{2
-let s:rs = '<+'
-let s:re = '+>'
+let g:completekey = "<c-tab>"
 
 " COMMENT {{{2
 xmap <unique> <leader>cx <Plug>PComment
@@ -1038,6 +1039,12 @@ let g:voom_tab_key = '<C-Tab>'
 let g:voom_verify_oop = 1
 
 " xptemplate {{{2
+let g:xptemplate_key = '<Tab>'
+let g:xptemplate_always_show_pum = 1
+"let g:xptemplate_brace_complete = '([{'
+let g:xptemplate_brace_complete = ''
+let g:xptemplate_minimal_prefix = 1
+let g:xptemplate_pum_tab_nav = 1
 let g:xptemplate_strict = 0
 let g:xptemplate_highlight='following,next'
 let g:xptemplate_vars = '$author=Jan Larres&$email=jan@majutsushi.net'
