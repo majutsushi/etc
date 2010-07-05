@@ -479,6 +479,8 @@ macro pager  ,P         "<display-toggle-weed><print-message><display-toggle-wee
 # threads
 macro index  \CR        "<enter-command>unset resolve<enter><read-thread><collapse-thread><next-unread><current-middle><enter-command>set resolve<enter>" "Mark the current thread as read"
 macro pager  \CR        "<enter-command>unset resolve<enter><read-thread><collapse-thread><next-unread><display-message><enter-command>set resolve<enter>" "Mark the current thread as read"
+macro index  \er        "<enter-command>unset resolve<enter><read-subthread><next-unread><current-middle><enter-command>set resolve<enter><display-message>" "Mark the current subthread as read"
+macro pager  \er        "<enter-command>unset resolve<enter><read-subthread><next-unread><current-middle><enter-command>set resolve<enter><display-message>" "Mark the current subthread as read"
 macro index '{'         "<collapse-thread>" "Collapse current thread"
 
 # quickly change to important folders
