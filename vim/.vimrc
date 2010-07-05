@@ -303,8 +303,8 @@ function! LoadProjectConfig(filepath)
     endif
 endfunction
 
-" ManCscopeAndTags() {{{2
-function! ManCscopeAndTags()
+" GenCscopeAndTags() {{{2
+function! GenCscopeAndTags()
     execute '!cscope -Rqbc'
     " see ~/.ctags
     " add --extra=+q here to avoid double entries in taglist
@@ -1341,7 +1341,7 @@ nmap <leader>e :execute "Shell " . expand("%:p")<CR>
 nmap <silent> <leader>cd :cd %:p:h<cr>
 nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
 
-nnoremap <S-F10> :call ManCscopeAndTags()<CR>
+nnoremap <S-F10> :call GenCscopeAndTags()<CR>
 
 nmap <silent> <leader>gk :silent !gitk<cr>
 
