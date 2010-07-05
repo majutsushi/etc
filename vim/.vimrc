@@ -504,27 +504,6 @@ fun! ToggleFold()
     echo
 endfun
 
-" VisualSearch() {{{2
-" From an idea by Michael Naumann
-function! VisualSearch(direction) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
-
-    let l:pattern = escape(@", '\\/.*$^~[]')
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-    if a:direction == 'b'
-        execute "normal ?" . l:pattern . "^M"
-    elseif a:direction == 'gv'
-        execute "grep " . l:pattern
-    elseif a:direction == 'f'
-        execute "normal /" . l:pattern . "^M"
-    endif
-
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
-
 " Options {{{1
 
 " important {{{2
@@ -1242,11 +1221,6 @@ nnoremap ^ g^
 imap        <c-a> <esc>0i
 imap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
 
-" Search for the current selection
-xnoremap <silent> * :call VisualSearch('f')<CR>
-xnoremap <silent> # :call VisualSearch('b')<CR>
-xnoremap <silent> gv :call VisualSearch('gv')<CR>
-
 " quickfix
 nmap <leader>cn :cnext<cr>
 nmap <leader>cp :cprevious<cr>
@@ -1273,7 +1247,7 @@ xnoremap <silent> g* :<C-U>
               \gvy/<C-R><C-R>=substitute(
               \escape(@", '\\/.*$^~[]'), '\_s\+', '\\_s\\+', 'g')<cr><cr>
               \:call setreg('"', old_reg, old_regmode)<cr>
-xnoremap <silent> # :<C-U>
+xnoremap <silent> g# :<C-U>
               \let old_reg=getreg('"')<bar>
               \let old_regmode=getregtype('"')<cr>
               \gvy?<C-R><C-R>=substitute(
