@@ -107,6 +107,31 @@ endif
 
 " Functions {{{1
 
+" LBDBCompleteFn {{{2
+" from http://dollyfish.net.nz/blog/2008-04-01/mutt-and-vim-custom-autocompletion
+function! LBDBCompleteFn(findstart, base)
+    if a:findstart
+        " locate the start of the word
+        let line = getline('.')
+        let start = col('.') - 1
+        while start > 0 && line[start - 1] =~ '[^:,]'
+          let start -= 1
+        endwhile
+        while start < col('.') && line[start] =~ '[:, ]'
+            let start += 1
+        endwhile
+        return start
+    else
+        let res = []
+        let query = substitute(a:base, '"', '', 'g')
+        let query = substitute(query, '\s*<.*>\s*', '', 'g')
+        for m in LbdbQuery(query)
+            call add(res, printf('%s <%s>', m[0], m[1]))
+        endfor
+        return res
+    endif
+endfunction
+
 " QuoteEraseSig {{{2
 " This routine will try and remove 'quoted' signatures.
 "
