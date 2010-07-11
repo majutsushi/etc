@@ -9,7 +9,7 @@ source ~/.mutt/lists
 ###############################################################################
 # Server/Folder options {{{
 
-source ~/.mutt/smtp-majutsushi.net
+# source ~/.mutt/smtp-majutsushi.net
 # source ~/.mutt/imap-urd
 # source ~/.mutt/imap-majutsushi.net
 source ~/.mutt/maildir
@@ -43,9 +43,12 @@ source ~/.mutt/maildir
 #  set message_cachedir="~/.cache/mutt_body/" # body caching
 unset keep_flagged
   set mbox_type=Maildir
+
   set preconnect=""
-  set sendmail="/usr/sbin/sendmail -oem -oi"
+#   set sendmail="/usr/bin/msmtp"
+  set sendmail="~/bin/msmtp-save.sh"
   set sendmail_wait=0
+  set use_envelope_from
   set ssl_ca_certificates_file=/etc/ssl/certs/ca-certificates.crt
   set ssl_force_tls
   set ssl_starttls
@@ -61,7 +64,6 @@ unset keep_flagged
 ###############################################################################
 # Identity options {{{
 
-unset use_envelope_from
   set from="jan@majutsushi.net"           # takes value from $EMAIL
   set hostname="majutsushi.net"
   set realname="Jan Larres"
