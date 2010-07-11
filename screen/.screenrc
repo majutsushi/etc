@@ -707,7 +707,7 @@ bind \# colon "number "
 #   bindkey "^[[d" prev
 
 # shift-tab for cycling
-  bindkey "^[[Z" next
+#   bindkey "^[[Z" next
 
   bindkey "^[," prev
   bindkey "^[." next
