@@ -92,39 +92,105 @@ have() {
 
 # }}}
 
-# variables {{{
+# options {{{
 
-path=(
-    /usr/local/games
-    /usr/local/{,s}bin
-    /{,s}bin
-    /usr/{,s}bin
-    /usr/games
-)
+umask 022
 
-if [[ -d /var/lib/gems/1.8/bin ]]; then
-    path=( /var/lib/gems/1.8/bin $path )
-fi
+setopt append_history       # append history list to the history file
+                            # (important for multiple parallel zsh sessions!)
+setopt share_history        # import new commands from the history file
+                            # also in other zsh-session
+setopt extended_history     # save each command's beginning timestamp
+                            # and the duration to the history file
+setopt histignorealldups    # If  a  new  command  line being added to the history
+                            # list duplicates an older one, the older command
+                            # is removed from the list
+setopt histignorespace      # remove command lines from the history list when
+                            # the first character on the line is a space
+setopt auto_cd              # if a command is issued that can't be executed as a
+                            # normal command, and the command is the name of a
+                            # directory, perform the cd command to that directory
+setopt extended_glob        # in order to use #, ~ and ^ for filename generation
+                            # grep word *~(*.gz|*.bz|*.bz2|*.zip|*.Z) ->
+                            # -> searches for word not in compressed files
+                            # don't forget to quote '^', '~' and '#'!
+setopt notify               # report the status of backgrounds jobs immediately
+setopt nohup                # and don't kill them, either
+setopt hash_list_all        # Whenever a command completion is attempted, make sure \
+                            # the entire command path is hashed first.
+setopt completeinword       # not just at the end
+# setopt printexitvalue       # alert me if something failed
+setopt auto_pushd           # make cd push the old directory onto the directory stack.
+setopt pushd_minus
+setopt pushd_ignore_dups
+setopt nonomatch            # try to avoid the 'zsh: no matches found...'
+setopt nobeep               # avoid "beep"ing
+setopt interactivecomments
+setopt noclobber            # warn when overwriting files with output redirection
+                            # '>!'/'>|' and '>>!'/'>>|' to force
+setopt function_argzero     # set $0 to name of current function or script
 
-if [[ -d $HOME/apps/loopo ]]; then
-    path=( $HOME/apps/loopo/loopobin/bin $path )
-fi
+# ctrl-s will no longer freeze the terminal.
+setopt no_flow_control
+stty ixoff
+stty -ixon
+
+# REPORTTIME=5                # report about cpu-/system-/user-time of command
+                            # if running longer than 5 secondes
+watch=(notme root)          # watch for everyone but me and root
+
+# define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
+#  WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>' # the default
+#  WORDCHARS=.
+#  WORDCHARS='*?_[]~=&;!#$%^(){}'
+#  WORDCHARS='${WORDCHARS:s@/@}'
+
+# only slash should be considered as a word separator:
+slash-backward-kill-word() {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    # zle backward-word
+    zle backward-kill-word
+}
+zle -N slash-backward-kill-word
+# press esc-w (meta-w) to delete a word until its last '/' (not the same as ctrl-w!)
+bindkey '\ew' slash-backward-kill-word
+
+# }}}
+
+# path settings {{{
+
+prepend_to_path() {
+    if [[ -d "$1" ]]; then
+        dir=$(readlink -f "$1")
+        path=( $dir $path )
+    fi
+}
+
+append_to_path() {
+    if [[ -d "$1" ]]; then
+        dir=$(readlink -f "$1")
+        path=( $path $dir )
+    fi
+}
+
+# remove '.' from PATH if present
+path=( ${path//(#s)\.(#e)} )
+
+append_to_path /usr/local/sbin
+append_to_path /sbin
+append_to_path /usr/sbin
 
 if [[ -d /opt/intel ]]; then
     source /opt/intel/cc/10.0.023/bin/iccvars.sh
     source /opt/intel/idb/10.0.023/bin/idbvars.sh
 fi
 
-if [[ -d /usr/pkg/bin ]]; then
-    path=( /usr/pkg/bin $path )
-fi
-
-if [[ -d /usr/X11R6/bin ]]; then
-    path=( /usr/X11R6/bin $path )
-fi
+prepend_to_path "/var/lib/gems/1.8/bin/"
+# prepend_to_path "/usr/X11R6/bin"
+# prepend_to_path "/usr/pkg/bin"
 
 # make sure $HOME/bin has the highest priority
-path=( ${HOME}/bin $path )
+prepend_to_path $HOME/bin
 
 export PATH
 
@@ -132,6 +198,10 @@ export PATH
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
+
+# }}}
+
+# variables {{{
 
 export TIMEFMT="%*E real  %*U user  %*S system  %P  %J"
 
@@ -479,71 +549,6 @@ bindkey "^Xs" sudo-command-line
 
 # }}}
 
-# options {{{
-
-umask 022
-
-setopt append_history       # append history list to the history file
-                            # (important for multiple parallel zsh sessions!)
-setopt share_history        # import new commands from the history file
-                            # also in other zsh-session
-setopt extended_history     # save each command's beginning timestamp
-                            # and the duration to the history file
-setopt histignorealldups    # If  a  new  command  line being added to the history
-                            # list duplicates an older one, the older command
-                            # is removed from the list
-setopt histignorespace      # remove command lines from the history list when
-                            # the first character on the line is a space
-setopt auto_cd              # if a command is issued that can't be executed as a
-                            # normal command, and the command is the name of a
-                            # directory, perform the cd command to that directory
-setopt extended_glob        # in order to use #, ~ and ^ for filename generation
-                            # grep word *~(*.gz|*.bz|*.bz2|*.zip|*.Z) ->
-                            # -> searches for word not in compressed files
-                            # don't forget to quote '^', '~' and '#'!
-setopt notify               # report the status of backgrounds jobs immediately
-setopt nohup                # and don't kill them, either
-setopt hash_list_all        # Whenever a command completion is attempted, make sure \
-                            # the entire command path is hashed first.
-setopt completeinword       # not just at the end
-# setopt printexitvalue       # alert me if something failed
-setopt auto_pushd           # make cd push the old directory onto the directory stack.
-setopt pushd_minus
-setopt pushd_ignore_dups
-setopt nonomatch            # try to avoid the 'zsh: no matches found...'
-setopt nobeep               # avoid "beep"ing
-setopt interactivecomments
-setopt noclobber            # warn when overwriting files with output redirection
-                            # '>!'/'>|' and '>>!'/'>>|' to force
-setopt function_argzero     # set $0 to name of current function or script
-
-# ctrl-s will no longer freeze the terminal.
-setopt no_flow_control
-stty ixoff
-stty -ixon
-
-# REPORTTIME=5                # report about cpu-/system-/user-time of command
-                            # if running longer than 5 secondes
-watch=(notme root)          # watch for everyone but me and root
-
-# define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
-#  WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>' # the default
-#  WORDCHARS=.
-#  WORDCHARS='*?_[]~=&;!#$%^(){}'
-#  WORDCHARS='${WORDCHARS:s@/@}'
-
-# only slash should be considered as a word separator:
-slash-backward-kill-word() {
-    local WORDCHARS="${WORDCHARS:s@/@}"
-    # zle backward-word
-    zle backward-kill-word
-}
-zle -N slash-backward-kill-word
-# press esc-w (meta-w) to delete a word until its last '/' (not the same as ctrl-w!)
-bindkey '\ew' slash-backward-kill-word
-
-# }}}
-
 # history {{{
 HISTFILE=$XDG_CACHE_HOME/zsh/history
 HISTSIZE=5000
@@ -882,6 +887,7 @@ compdef _gnu_generic tail head feh cp mv df stow uname ipacsum fetchipac
 # }}}
 
 # functions {{{
+
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 compdef _functions freload
 
