@@ -1322,8 +1322,7 @@ fi
 
 # screen {{{
 # 'rxvt' is needed for dvtm
-if [[ "$TERM" != screen* ]] && [[ "$TERM" != "rxvt" ]] &&
-   [[ -n "${HOST%%*ecs.vuw.ac.nz}" ]]; then
+if [[ "$TERM" != screen* ]] && [[ "$TERM" != "rxvt" ]] && ! isecs; then
     screen -m
 fi
 # }}}
