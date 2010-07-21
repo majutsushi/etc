@@ -17,6 +17,11 @@ issolaris() {
     return 1
 }
 
+isecs() {
+   [[ -z "${HOST%%*ecs.vuw.ac.nz}" ]] && return 0
+   return 1
+}
+
 issolaris && return 0
 
 is42(){
