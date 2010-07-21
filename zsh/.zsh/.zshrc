@@ -294,6 +294,7 @@ export NNTPSERVER=news.gmane.org
 
 # aliases {{{
 
+have gls        && alias ls=gls
 have gdircolors && alias dircolors=gdircolors
 have gmake      && alias make=gmake
 have gfind      && alias find=gfind
