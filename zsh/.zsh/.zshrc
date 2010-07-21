@@ -294,14 +294,21 @@ export NNTPSERVER=news.gmane.org
 
 # aliases {{{
 
+have gdircolors && alias dircolors=gdircolors
+have gls        && alias ls=gls
+have gmake      && alias make=gmake
+have gfind      && alias find=gfind
+have glocate    && alias locate=glocate
+have gsed       && alias sed=gsed
+
 typeset -a _ls_opts; _ls_opts=(-F)
 # if ls --help 2>/dev/null |grep -- --color= >/dev/null \
-if command ls --color=auto >/dev/null 2>&1 \
+if ls --color=auto >/dev/null 2>&1 \
     && [[ "$TERM" != "dumb" ]]; then
     [[ -f ~/.dir_colors ]] && eval "$(dircolors -b ~/.dir_colors)"
     _ls_opts+="--color=auto"
 fi
-if command ls --group-directories-first >/dev/null 2>&1; then
+if ls --group-directories-first >/dev/null 2>&1; then
     _ls_opts+=--group-directories-first
 fi
 if ismac; then
@@ -356,7 +363,7 @@ alias g="grep"
 # programming
 alias CO="./configure"
 alias CH="./configure --help"
-alias make='colormake'
+have colormake && alias make='colormake'
 alias ddiff='diff -Naurd -x *.swp -x *.o -x *.so -x cscope.* -x tags -x .git -x .svn -x CVS'
 
 # net
