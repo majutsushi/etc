@@ -295,7 +295,6 @@ export NNTPSERVER=news.gmane.org
 # aliases {{{
 
 have gdircolors && alias dircolors=gdircolors
-have gls        && alias ls=gls
 have gmake      && alias make=gmake
 have gfind      && alias find=gfind
 have glocate    && alias locate=glocate
@@ -314,7 +313,11 @@ fi
 if ismac; then
     _ls_opts+="-G"
 fi
-alias ls="LC_COLLATE=POSIX ls $_ls_opts"
+if have gls; then
+    alias ls="LC_COLLATE=POSIX gls $_ls_opts"
+else
+    alias ls="LC_COLLATE=POSIX ls $_ls_opts"
+fi
 alias ll="ls -l"
 alias l="ls -lA"
 alias lad='ls -d .*(/)'                # only show dot-directories
