@@ -190,7 +190,8 @@ prepend_to_path "/var/lib/gems/1.8/bin/"
 # prepend_to_path "/usr/pkg/bin"
 
 # make sure $HOME/bin has the highest priority
-prepend_to_path $HOME/bin
+# don't use prepend_to_path to preserve $HOME value
+path=( $HOME/bin $path )
 
 export PATH
 
