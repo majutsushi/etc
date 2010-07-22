@@ -218,7 +218,7 @@ unset metoo             # should we keep ourselves in group replies?
   set post_indent_string=""
 unset reply_self        # if unset, a reply to yourself implies reply to other
   set reply_to=ask-yes  # Use or ignore Reply-To.
-unset reverse_name      # Set "From" to address, where replied mail was sent to
+  set reverse_name      # Set "From" to address where replied mail was sent to
   set reverse_realname  # if unset, use $realname in $reverse_name
 
 # }}}
