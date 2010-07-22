@@ -424,7 +424,7 @@ unset save_empty        # remove mailbox when last message is removed.
 # Searching {{{
 
   set default_hook="~f %s | ~t %s"
-  set simple_search="~f %s | ~C %s | ~s %s"   # default pattern (Fr|To|Cc|Su)
+  set simple_search="~f %s | ~C %s | ~s %s | ~y %s"   # default pattern (Fr|To|Cc|Su|Label)
   set thorough_search   # MIME decode before searching.
   set wrap_search       # Wrap search to top/bottom.
 
