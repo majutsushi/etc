@@ -75,7 +75,7 @@ URxvt.scrollTtyOutput: false
 URxvt.saveLines: 8192
 
 URxvt.visualBell: true
-URxvt.urgentOnBell: false
+URxvt.urgentOnBell: true
 URxvt.utmpInhibit: true
 
 URxvt.modifier: alt
