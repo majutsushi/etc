@@ -186,8 +186,8 @@
 # caption always '%{= kw}%?%-Lw%?%{= wb}%n*%f %t%?(%u)%?%{= kw}%?%+Lw%?'
 # caption always '%{= Kw}%?%-Lw%?%45L>%{+b}%{.r}[%{.w}%n*%f %t%?(%u)%?%{.r}]%{-b}%{.w}%?%+Lw%?%<'
 
-# caption always '%{= Kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= Kw}%?%+Lw%?%<'
-caption always '%{= dw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= dw}%?%+Lw%?%<'
+caption always '%{= Kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= Kw}%?%+Lw%?%<'
+# caption always '%{= dw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= dw}%?%+Lw%?%<'
 
 # ===============================================================
 #
