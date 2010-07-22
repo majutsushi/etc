@@ -10,6 +10,7 @@ source ~/.mutt/lists
 # Server/Folder options {{{
 
 # source ~/.mutt/smtp-majutsushi.net
+# source "gpg -d .muttrc.secure.gpg|"
 # source ~/.mutt/imap-urd
 # source ~/.mutt/imap-majutsushi.net
 source ~/.mutt/maildir
