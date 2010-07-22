@@ -527,6 +527,14 @@ macro pager  \eR        "<pipe-message>~/bin/remember-mail\n" "Remember message 
 # X-Label patch
 ifdef edit-label bind index,pager y edit-label
 
+# labels
+set my_vi=$editor
+macro index y "<enter-command>set editor=\"~/bin/editlabel append\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Append label"
+macro pager y "<enter-command>set editor=\"~/bin/editlabel append\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Append label"
+macro index Y "<enter-command>set editor=\"~/bin/editlabel menu\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Edit labels"
+macro pager Y "<enter-command>set editor=\"~/bin/editlabel menu\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Edit labels"
+macro index \Cy "<limit>~y " "Limit view to label"
+
 # spam handlers
 macro index  S          "<pipe-message>/usr/bin/sa-learn --spam --no-sync --single\n" "Classify as Spam"
 macro index  H          "<pipe-message>/usr/bin/sa-learn --ham  --no-sync --single\n" "Classify as Ham"
