@@ -1138,6 +1138,8 @@ nmap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
 " already done by yy):
 nnoremap Y y$
 
+inoremap <C-D> <Del>
+
 " toggle paste
 nmap <F3> :set invpaste paste?<CR>
 imap <F3> <C-O>:set invpaste paste?<CR>
@@ -1165,11 +1167,15 @@ xnoremap §2 <esc>`>a]<esc>`<i[<esc>
 xnoremap §3 <esc>`>a}<esc>`<i{<esc>
 
 " remove trailing whitespace
-nmap <leader>tr :%s/\s\+$//
-xmap <leader>tr  :s/\s\+$//
+nmap <leader>tr :%s/\s\+$//<CR>
+xmap <leader>tr  :s/\s\+$//<CR>
 
 " indent for C/C++ programs
 nmap <leader>i :%!astyle<CR>
+
+" re-select selection after changing indent
+xmap > >gv
+xmap < <gv
 
 " Ctrl-K comma colon (in Insert mode): UTF-8 single-codepoint ellipsis "..."
 " disregard error if (for instance) not in UTF-8
@@ -1236,6 +1242,8 @@ nnoremap <space> :call ToggleFold()<CR>
 
 " toggle showing 'listchars'
 nmap <F2> :set invlist list?<CR>
+imap <F2> <C-O><F2>
+xmap <F2> <Esc><F2>gv
 
 " remove search highlighting
 nnoremap <silent> <C-L> :silent nohl<CR><C-L>
@@ -1282,6 +1290,9 @@ cmap ;rcm %s/<C-M>//g
 cabbrev <expr> %% expand('%:~:h')
 
 " Misc {{{2
+
+" for quick macro playback
+nnoremap Q @q
 
 " run current file as a script
 nmap <leader>e :execute "Shell " . expand("%:p")<CR>
