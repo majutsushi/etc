@@ -71,7 +71,7 @@ unset keep_flagged
   set use_from          # generate a "From:" header (unless my_hdr From:)
 
 # alternative mail addresses
-alternates (((jan(\.larres)?)|lists|majutsushi).*@majutsushi.net|jan.larres@gmail.com|jan.larres@gmx.net|larres(01)?@[a-z.]*uni-passau.de)
+alternates (((jan(\.larres)?)|lists|majutsushi)@majutsushi.net|jan\.larres@gmail\.com|jan\.larres@gmx\.net|larres(01)?@[a-z.]*uni-passau\.de)
 
 # }}}
 ###############################################################################
