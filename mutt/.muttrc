@@ -300,7 +300,7 @@ unset confirmappend     # prompt for confirm when appending message to ex. mbox
   set delete=yes        # ask for confirmation when deleting messages?
   set delete_untag      # untag messages when marking them for deletion.
 #   set index_format="%4C %?H?%-12.12H&%Z %[%d/%m/%y]? %-17.17F %?M?(#%03M)&(%4c)? %s"
-  set index_format="%4C %Z %[%d/%m/%y] %[%H:%M] %-20.20F %?M?%3M&   ? %?Y?[%Y] ?%s%*  %c"
+  set index_format="%4C %Z %[%d/%m/%y] %[%H:%M] %-20.20F %?M?%3M&   ? %?Y?{%Y} ?%s%*  %?X?[%X]? %c"
 unset mark_old          # mark new articles as old, when leaving mbox
   set mh_purge          # remove messages marked as deleted from MH folders.
   set narrow_tree
@@ -372,6 +372,14 @@ unset sidebar_sort
 # attachments {{{
 
   set attach_format="%u%D%I %t%4n %T%.40d%> [%.7m/%.10M, %.6e%?C?, %C?, %s] "
+
+attachments +A */.*
+attachments -A text/x-vcard
+attachments -A application/pgp.*
+attachments -A application/x-pkcs7-.*
+attachments -A message/external-body
+attachments +I text/plain
+attachments -I message/external-body
 
 # }}}
 # =============================================================================
