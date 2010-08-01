@@ -379,6 +379,9 @@ attachments -A application/pgp.*
 attachments -A application/x-pkcs7-.*
 attachments -A message/external-body
 attachments +I text/plain
+attachments +I text/rtf
+attachments +I application/.*
+attachments +I image/.*
 attachments -I message/external-body
 
 # }}}
