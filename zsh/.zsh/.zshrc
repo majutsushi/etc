@@ -292,6 +292,7 @@ export GPG_TTY=$(tty)
   hash -d tt=/usr/share/doc/texttools-doc
   hash -d www=/var/www
   hash -d vuw=~/work/university/VUW/Classes
+  hash -d thesis=~/work/university/VUW/Thesis
   hash -d win="/mnt/winxp/Documents and Settings/Jan/Desktop/share"
 # }}}
 
