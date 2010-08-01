@@ -624,105 +624,101 @@ bind query <space> tag-entry
 #              *)        echo '~/.mutt/konsole-color'; break ;;\
 #         esac`
 
+set my_white      = color231
+set my_background = color236
+set my_yellow     = color220
+set my_green      = color120
+set my_red        = color167
+set my_cyan       = color116
+
 # =============================================================================
 # general {{{
 
-color normal    white      default  # normal message text
-color status    white      blue     # status lines
-color indicator black      yellow   # current line in index etc
-color message   white      blue     # info messages
-color error     red        default
+color normal    $my_white  $my_background  # normal message text
+color status    color16    color145        # status lines
+color indicator $my_white  color241        # current line in index etc
+color message   $my_white  $my_background  # info messages
+color error     $my_white  color196        # error messages
 
 # color sidebar     white    default
-color sidebar_new red      default
+color sidebar_new $my_red   $my_background
 
 # }}}
 # =============================================================================
 # index {{{
 
-# color index     white    default  '~p'    # mail to myself
-# color index     green          default  '! ~p'  # mail not to myself
-color index     green    default  '~N !~D'    # new undeleted mail
-# color index     brightyellow default '~N ~p'
-# color index     green    default  '!~N'    # read mail
-color index     cyan     default  '(~P !~D) | (~v ~(~P !~D))'    # mail from myself
+color index     color113    $my_background  '~N !~D'    # new undeleted mail
+color index     $my_cyan    $my_background  '(~P !~D) | (~v ~(~P !~D))'    # mail from myself
 
-color index     brightblack    default     "=s '*****SPAM*****'"
-color index     brightblack    default     "=s '*** GMX Spamverdacht ***'"
+color index     color241    $my_background  "=s '*****SPAM*****'"
+color index     color241    $my_background  "=s '*** GMX Spamverdacht ***'"
 # color index     brightblack    default     "~h '^X-Spam-Status:.*score=[34].'"
 # color index     brightred      default     "~h '^X-Spam-Status:.*score=[56].'"
 
-color index     red            default  '(~F !~D) | (~v ~(~F !~D))'  # Flagged
-color index     blue           default  ~T      # Tagged
-color index     magenta        default  ~D      # Deleted
+color index     color196    $my_background  '(~F !~D) | (~v ~(~F !~D))'  # Flagged
+color index     color222    color64   ~T      # Tagged
+color index     $my_red    $my_background  ~D      # Deleted
 # color index brightblack default '~d>1w'
 
-color tree      brightmagenta  default  # thread arrows
+color tree      bright$my_yellow    $my_background  # thread arrows
 
 # }}}
 # =============================================================================
 # message headers {{{
 
-color hdrdefault cyan       default
-color header     yellow     default  "^from"
-color header     green      default  "^from:"
-color header     green      default  "^reply-to:"
-color header     green      default  "^to:"
-color header     green      default  "^cc:"
-color header     green      default  "^date:"
-color header     yellow     default  "^newsgroups:"
-color header     brightcyan default  "^subject:"
-color header     red        default  "^x-spam-rule:"
-color header     yellow     default  "^x-mailer:"
-color header     yellow     default  "^message-id:"
-color header     yellow     default  "^Organization:"
-color header     yellow     default  "^Organisation:"
-color header     yellow     default  "^User-Agent:"
-color header     yellow     default  "^X-Message-Flag:"
-color header     yellow     default  "^X-Spam-Status:"
-color header     yellow     default  "^X-SpamProbe:"
-color header     red        default  "^X-SpamProbe: SPAM"
+color hdrdefault $my_cyan    $my_background
+color header     $my_yellow  $my_background  "^from:"
+color header     $my_yellow  $my_background  "^reply-to:"
+color header     $my_yellow  $my_background  "^to:"
+color header     $my_yellow  $my_background  "^cc:"
+color header     $my_yellow  $my_background  "^date:"
+color header     $my_red     $my_background  "^subject:"
+color header     $my_green   $my_background  "^newsgroups:"
+color header     $my_green   $my_background  "^x-mailer:"
+color header     $my_green   $my_background  "^message-id:"
+color header     $my_green   $my_background  "^Organization:"
+color header     $my_green   $my_background  "^Organisation:"
+color header     $my_green   $my_background  "^User-Agent:"
+color header     $my_green   $my_background  "^X-Message-Flag:"
+color header     $my_green   $my_background  "^X-Spam-Status:"
 
 # }}}
 # =============================================================================
 # message bodies {{{
 
-color body      yellow      default  " [;:]-?[)/(|]"  # colorise smileys
+color body      $my_yellow      $my_background  " [;:]-?[)/(|]"  # colorise smileys
 # color body      brightblue  default  "\\b[^ ]+://[^] >\")]*"
-color body      brightblue  default  "((ftp|http|https)://|(file|news):|www\\.)[-a-z0-9_.:]*[a-z0-9](/[^][{} \t\n\r\"<>()]*[^][{} \t\n\r\"<>().,:!])?/?"
-# color body      brightblue  default  "(http|https|ftp|news|telnet|finger)://[^ ]*"
-# color body      cyan        default  "ftp://[^ ]*"
-color body      brightgreen default  "[[:alnum:]][-+.#_[:alnum:]]*@[-+.[:alnum:]]*[[:alnum:]]"
-color body      cyan        default  "<URL:[^ ]*>"
+color body      bright$my_cyan  $my_background  "((ftp|http|https)://|(file|news):|www\\.)[-a-z0-9_.:]*[a-z0-9](/[^][{} \t\n\r\"<>()]*[^][{} \t\n\r\"<>().,:!])?/?"
+color body      brightcolor113 $my_background  "[[:alnum:]][-+.#_[:alnum:]]*@[-+.[:alnum:]]*[[:alnum:]]"
 
 #  Coloring quoted text - coloring the first 8 levels:
-color quoted    cyan        default
-color quoted1   yellow      default
-color quoted2   red         default
-color quoted3   green       default
-color quoted4   cyan        default
-color quoted5   yellow      default
-color quoted6   red         default
-color quoted7   green       default
+color quoted    $my_cyan    $my_background
+color quoted1   $my_yellow  $my_background
+color quoted2   $my_red     $my_background
+color quoted3   $my_green   $my_background
+color quoted4   $my_cyan    $my_background
+color quoted5   $my_yellow  $my_background
+color quoted6   $my_red     $my_background
+color quoted7   $my_green   $my_background
 
 # diffs
-color body brightred default "^-(--)?[^-].*"
-color body brightgreen default "^[+].*"
-color body brightblue default "^!.*"
-color body brightwhite default "^diff .*"
-color body brightwhite default "^index [a-f0-9].*"
-color body brightyellow default "^@@ .*"
+color body $my_red         $my_background "^-(--)?[^-].*"
+color body $my_green       $my_background "^[+].*"
+color body $my_cyan        $my_background "^!.*"
+color body brightcolor143  $my_background "^diff .*"
+color body $my_white       $my_background "^index [a-f0-9].*"
+color body $my_yellow      $my_background "^@@ .*"
 
-color attachment white      magenta
-color signature brightred   default
-color tilde     blue        default
-color markers   red         default  # wrap markers
+color attachment $my_white  color241
+color signature  $my_red    $my_background
+color tilde      color152   color239
+color markers    color152   color239  # wrap markers
 # color bold      green       default
 # color underline yellow      default
 
 # highlight TOFU protection:
-color body	brightmagenta		black	"^\\[---.*"
-color body	green			black	"^#v[-+]"
+color body color152   color239       "^\\[---.*"
+color body $my_green  $my_background "^#v[-+]"
 
 # }}}
 # =============================================================================
