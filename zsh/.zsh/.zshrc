@@ -37,6 +37,11 @@ is438(){
     return 1
 }
 
+has_vcsinfo() {
+    [[ -n $VCS_INFO_backends ]] && return 0
+    return 1
+}
+
 if ismac; then
     [[ -r /sw/bin/init.sh ]] && . /sw/bin/init.sh
     export TERM=xterm-color
@@ -196,6 +201,10 @@ path=( $HOME/bin $path )
 export PATH
 
 # cdpath=(.. ~)
+
+fpath=($ZDOTDIR/func $fpath)
+fpath=($ZDOTDIR/func/VCS_Info $fpath)
+fpath=($ZDOTDIR/func/VCS_Info/Backends $fpath)
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
@@ -559,6 +568,9 @@ _sudo-command-line() {
 zle -N sudo-command-line _sudo-command-line
 bindkey "^Xs" sudo-command-line
 
+autoload -Uz vcs_info
+vcs_info 2>/dev/null
+
 # }}}
 
 # mime setup {{{
@@ -650,11 +662,11 @@ precmd () {
 #     ┌─[x]──────────────────────────────────────────────────────[x]─┐
 #     └─[x]─── COMMANDS                                       ───[x]─┘
 
-    is438 && vcs_info
+    has_vcsinfo && vcs_info
     prompt_set_line_1
     prompt_set_line_2
 
-    is438 && RPS1="${vcs_info_msg_1_:+${C_BOLD}<${C_F_RED}${vcs_info_msg_1_}${C_F_DEFAULT}>${C_DEFAULT}}"
+    has_vcsinfo && RPS1="${vcs_info_msg_1_:+${C_BOLD}<${C_F_RED}${vcs_info_msg_1_}${C_F_DEFAULT}>${C_DEFAULT}}"
 
     # adjust title of xterm
     # see http://www.faqs.org/docs/Linux-mini/Xterm-Title.html
@@ -677,7 +689,7 @@ prompt_set_line_1 () {
 #     local left_left="${C_BOLD}${C_F_RED}┌${C_F_DEFAULT}($C_F_GREEN"
     local left_left="${PR_SET_CHARSET}${C_BOLD}${C_F_RED}${PR_SHIFT_IN}${PR_ULCORNER}${PR_SHIFT_OUT}${C_F_DEFAULT}($C_F_GREEN"
 #     local left_dir="$CPATH"
-    if is438; then
+    if has_vcsinfo; then
         local left_dir="${${vcs_info_msg_0_/#${HOME}/~}%%/.}"
     else
         local left_dir="%~"
