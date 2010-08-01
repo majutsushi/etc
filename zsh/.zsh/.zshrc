@@ -753,9 +753,13 @@ setprompt () {
     autoload -Uz vcs_info
 
     zstyle ':vcs_info:*' enable git hg
+    zstyle ':vcs_info:*' check-for-changes true
+#     zstyle ':vcs_info:*' get-revision true
     zstyle ':vcs_info:*' nvcsformats   '%~'
-    zstyle ':vcs_info:*' formats       '%R'${C_F_DEFAULT}'['${C_F_YELLOW}'%s'${C_F_DEFAULT}':'${C_F_YELLOW}'%b'${C_F_DEFAULT}']'${C_F_GREEN}'/%S'
-    zstyle ':vcs_info:*' actionformats '%R'${C_F_DEFAULT}'['${C_F_YELLOW}'%s'${C_F_DEFAULT}':'${C_F_YELLOW}'%b'${C_F_DEFAULT}']'${C_F_GREEN}'/%S' '%a'
+    zstyle ':vcs_info:*' formats       '%R'${C_F_DEFAULT}'['${C_F_YELLOW}'%s'${C_F_DEFAULT}':'${C_F_YELLOW}'%b'${C_F_DEFAULT}'%c%u]'${C_F_GREEN}'/%S'
+    zstyle ':vcs_info:*' actionformats '%R'${C_F_DEFAULT}'['${C_F_YELLOW}'%s'${C_F_DEFAULT}':'${C_F_YELLOW}'%b'${C_F_DEFAULT}'%c%u]'${C_F_GREEN}'/%S' '%a'
+    zstyle ':vcs_info:*' stagedstr     ${C_F_CYAN}'!'${C_F_DEFAULT}
+    zstyle ':vcs_info:*' unstagedstr   ${C_F_CYAN}'?'${C_F_DEFAULT}
 
     if [[ "$TERM" != "dumb" ]]; then
         PS1='$prompt_line_1$prompt_newline$prompt_line_2'
