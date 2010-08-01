@@ -54,9 +54,9 @@
 " Level Colors {{{1
 " colors for outline levels 1-9
 hi def link OL1 Normal
-hi def link OL2 Constant
+hi def link OL2 Identifier
 hi def link OL3 Special
-hi def link OL4 Identifier
+hi def link OL4 Constant
 hi def link OL5 Normal
 hi def link OL6 Constant
 hi def link OL7 Special
