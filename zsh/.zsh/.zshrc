@@ -270,6 +270,8 @@ export TERMINFO=$HOME/.terminfo
 
 export NNTPSERVER=news.gmane.org
 
+export GPG_TTY=$(tty)
+
 # proxy for Uni Passau Network
 # export http_proxy=http://www-cache.rz.uni-passau.de:3128
 # export HTTP_PROXY=http://www-cache.rz.uni-passau.de:3128
