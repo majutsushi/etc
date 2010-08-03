@@ -246,7 +246,7 @@ unset mime_forward_decode     # decode messages when forwarding with MIME
 # general {{{
 
 unset arrow_cursor      # "->" as cursor (faster on slow networks).
-  set beep              # beep on certain user errors and other errors
+unset beep              # beep on certain user errors and other errors
 unset beep_new          # beep on new mail
 #  set charset="iso-8859-15"
   set charset="utf-8"
