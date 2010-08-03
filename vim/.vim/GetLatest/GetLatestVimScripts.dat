@@ -28,7 +28,7 @@ ScriptID SourceID Filename
 293 9060 :AutoInstall: utl.vim
 431 1263 :AutoInstall: vimfootnotes.vim
 1311 4504 vimplate
-2657 13082 VOOF
+2657 13454 VOOF
 1520 7722 omnicppcomplete
 1785 7716 :AutoInstall: javacomplete
 1000 11573 gtk-vim-syntax.tar.gz
@@ -42,3 +42,5 @@ ScriptID SourceID Filename
 2390 10336 :AutoInstall: CSApprox
 2582 12000 :AutoInstall: blogit.vim
 910 13092 :AutoInstall: pydoc.vim
+661 12200 :AutoInstall: gnupg
+2611 13402 :AutoInstall: xpt.tgz
