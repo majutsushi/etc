@@ -254,7 +254,7 @@ unset beep_new          # beep on new mail
   set escape="~"
   set help              # show help in first line of the display
   set history=50
-  set locale="de_DE"
+  set locale="en_NZ"
   set mail_check=5
   set menu_scroll       # scroll on last line of menu (set) or do a nextpage?
 unset meta_key          # Don't interpret Alt-x as ESC x
