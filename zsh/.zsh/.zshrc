@@ -985,14 +985,11 @@ fi
 # grep for running process, like: 'psgrep vim'
 psgrep() {
     if [[ -z "$1" ]] ; then
-        echo "any - grep for process(es) by keyword" >&2
-        echo "Usage: any <keyword>" >&2 ; return 1
+        echo "psgrep - grep for process(es) by keyword" >&2
+        echo "Usage: psgrep <keyword>" >&2 ; return 1
     else
-        local STRING=$1
-        local LENGTH=$(expr length $STRING)
-        local FIRSCHAR=$(echo $(expr substr $STRING 1 1))
-        local REST=$(echo $(expr substr $STRING 2 $LENGTH))
-        ps xauwww| grep "[$FIRSCHAR]$REST"
+        ps xauwww | head -n1
+        ps xauwww | grep -v "grep.*$1" | grep $1
     fi
 }
 
