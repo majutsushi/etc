@@ -690,7 +690,8 @@ prompt_set_line_1 () {
     local left_left="${PR_SET_CHARSET}${C_BOLD}${C_F_RED}${PR_SHIFT_IN}${PR_ULCORNER}${PR_SHIFT_OUT}${C_F_DEFAULT}($C_F_GREEN"
 #     local left_dir="$CPATH"
     if has_vcsinfo; then
-        local left_dir="${${vcs_info_msg_0_/#${HOME}/~}%%/.}"
+        # use readlink for symlinked home dirs
+        local left_dir="${${${vcs_info_msg_0_/#${HOME}/~}/#$(readlink -f ${HOME})/~}%%/.}"
     else
         local left_dir="%~"
     fi
