@@ -438,7 +438,7 @@ alias javabug="sudo sed -i 's/XINERAMA/FAKEEXTN/g' /usr/lib/jvm/java-6-sun/jre/l
 # alias alert='notify-send -i gnome-terminal "[$?] $(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/;\s*alert$//'\'')"'
 # alias alert='notify-send -i gnome-terminal "[$?] $(fc -ln | tail -n1 |sed -e '\''s/;\s*alert$//'\'')"'
 # alias alert="notify-send -i gnome-terminal \"[$?] !#\""
-alert() { notify-send -i gnome-terminal "[$?] !#" }
+alert() { notify-send -i gnome-terminal "[$?] command finished" }
 
 # switch terminal encoding (rxvt-unicode only)
 alias eucjp="printf '\33]701;%s\007' ja_JP.EUC-JP; export LANG=ja_JP.EUC-JP"
