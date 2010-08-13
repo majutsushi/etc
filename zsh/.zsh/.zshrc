@@ -193,6 +193,7 @@ fi
 prepend_to_path "/var/lib/gems/1.8/bin/"
 # prepend_to_path "/usr/X11R6/bin"
 # prepend_to_path "/usr/pkg/bin"
+prepend_to_path $HOME/usr/bin
 
 # make sure $HOME/bin has the highest priority
 # don't use prepend_to_path to preserve $HOME value
