@@ -590,7 +590,7 @@ set title
 " string to restore the title to when exiting Vim
 let &titleold=fnamemodify(&shell, ":t")
 
-if (&term =~ "xterm")
+if (&term =~ "xterm" || &term =~ "screen-256color")
     set t_Co=256
 endif
 
