@@ -33,6 +33,7 @@
 (setq remember-handler-functions '(org-remember-handler))
 (add-hook 'remember-mode-hook 'org-remember-apply-template)
 (define-key global-map "\C-cr" 'org-remember)
+(define-key global-map "\C-cc" 'org-capture)
 
 ;; mutt stuff: http://upsilon.cc/~zack/blog/posts/2010/02/integrating_Mutt_with_Org-mode/
 ;; ensure that emacsclient will show just the note to be edited when invoked
@@ -59,6 +60,15 @@
 ;      ("Private" ?p "\n* %^{topic} %T \n%i%?\n" "C:/charles/gtd/privnotes.org")
 ;      ("WordofDay" ?w "\n* %^{topic} \n%i%?\n" "C:/charles/gtd/wotd.org")
       ))
+
+(setq org-capture-templates
+      '(("t" "Todo" entry
+         (file+headline "~/projects/org/inbox.org" "Inbox")
+         "* TODO %^{Brief Description} %^g\n%?  Added: %U")
+        ("m" "Mail" entry
+         (file+headline "~/projects/org/inbox.org" "Inbox")
+         "* %?\n  Source: %u, %c\n  %i"))
+      )
 
 (setq org-agenda-exporter-settings
       '((ps-number-of-columns 1)
