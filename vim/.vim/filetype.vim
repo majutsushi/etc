@@ -9,5 +9,6 @@ augroup filetypedetect
     au BufNewFile,BufReadPost *.tt2     setfiletype tt2
     au BufNewFile,BufReadPost *.gnuplot setfiletype gnuplot
     au BufNewFile,BufReadPost *.gle     setfiletype gle
+    au BufNewFile,BufReadPost *.otl.gpg setfiletype vo_base
 augroup END
 

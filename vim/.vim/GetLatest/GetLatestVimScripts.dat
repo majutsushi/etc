@@ -37,10 +37,11 @@ ScriptID SourceID Filename
 2624 11376 :AutoInstall: ProtoDef
 2438 11717 :AutoInstall: EasyGrep
 2796 12956 :AutoInstall: CheckAttach.vim
-1234 12258 :AutoInstall: yankring.vim
+1234 13554 :AutoInstall: yankring.vim
 1984 11852 :AutoInstall: FuzzyFinder
 2390 10336 :AutoInstall: CSApprox
 2582 12000 :AutoInstall: blogit.vim
 910 13092 :AutoInstall: pydoc.vim
 661 12200 :AutoInstall: gnupg
 2611 13402 :AutoInstall: xpt.tgz
+2771 13071 :AutoInstall: Conque Shell
