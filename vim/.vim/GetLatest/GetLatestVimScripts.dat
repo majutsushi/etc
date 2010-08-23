@@ -45,3 +45,4 @@ ScriptID SourceID Filename
 661 12200 :AutoInstall: gnupg
 2611 13402 :AutoInstall: xpt.tgz
 2771 13071 :AutoInstall: Conque Shell
+2628 13467 :AutoInstall: Vim-R-plugin2
