@@ -779,6 +779,14 @@ set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*
 " program used for the ":grep" command (global or local to buffer)
 set grepprg=ack-grep
 
+" language specific {{{2
+
+" Avoid command-line redraw on every entered character by turning off Arabic
+" shaping (which is implemented poorly).
+if has('arabic')
+    set noarabicshape
+endif
+
 " multi-byte characters {{{2
 
 " automatically detected character encodings
