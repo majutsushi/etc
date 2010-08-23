@@ -1018,7 +1018,7 @@ nnoremap <silent> <leader>y :YRShow<CR>
 " Abbrevs {{{1
 source ~/.vim/abbrevs.vim
 
-" Terminal keycodes {{{1
+" Terminal stuff {{{1
 
 if !has("gui_running")
     if &term == "rxvt-unicode" || &term == "screen-256color-bce"
@@ -1054,6 +1054,22 @@ if !has("gui_running")
         set <S-F1>=[1;2P
         set <S-F2>=[1;2Q
     endif
+endif
+
+" Change color of cursor in terminal:
+" - yellow in normal mode.
+" - red in insert mode.
+" Tip found there:
+"   http://forums.macosxhints.com/archive/index.php/t-49708.html
+" It works at least with: xterm gnome-terminal terminator
+" xfce4-terminal rxvt eterm
+" But does nothing with: konsole, screen
+if version >= 700
+  if &term =~ "xterm\\|rxvt"
+    let &t_SI = "\033]12;red\007"
+    let &t_EI = "\033]12;yellow\007"
+    au! VimLeave * :sil !echo -ne "\033]12;red\007"
+  endif
 endif
 
 " Mappings {{{1
