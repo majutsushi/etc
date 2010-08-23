@@ -179,7 +179,7 @@ unset hidden_host       # when set, skip the host name part of hostname
 unset sig_dashes        # Don't prepend "-- \n" to the signature
 unset sig_on_top
   set signature=""
-unset text_flowed
+unset text_flowed       # use format=flowed; if set, unset encode_from
 unset use_domain        # add $hostname to all addresses without @host
   set user_agent        # Create User-Agent: Mutt/<Version> header.
 
