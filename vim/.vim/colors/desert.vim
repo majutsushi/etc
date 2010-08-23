@@ -55,6 +55,8 @@ hi WarningMsg	guifg=salmon
 "hi Scrollbar
 "hi Tooltip
 hi SignColumn	guibg=grey15
+hi clear ColorColumn
+hi link ColorColumn CursorLine
 
 " syntax highlighting groups
 hi Comment	guifg=SkyBlue
