@@ -916,6 +916,14 @@ let g:po_lang_team = ''
 " ProtoDef {{{2
 let protodefprotogetter = globpath(&rtp, 'tools/pullproto.pl', 1)
 
+" r-plugin {{{2
+if executable('urxvt')
+    let vimrplugin_term_cmd = "urxvt -title R -e"
+else
+    let vimrplugin_term = "uxterm"
+endif
+
+
 " rubycomplete {{{2
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_rails = 1
