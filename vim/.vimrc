@@ -667,7 +667,7 @@ set textwidth=78
 " specifies what <BS>, CTRL-W, etc. can do in Insert mode
 set backspace=indent,eol,start
 " list of flags that tell how automatic formatting works (local to buffer)
-set formatoptions+=rol2n
+set formatoptions+=rl2n
 
 " specifies how Insert mode completion works for CTRL-N and CTRL-P
 " (local to buffer)
