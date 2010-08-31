@@ -43,6 +43,6 @@ ScriptID SourceID Filename
 2582 12000 :AutoInstall: blogit.vim
 910 13092 :AutoInstall: pydoc.vim
 661 12200 :AutoInstall: gnupg
-2611 13402 :AutoInstall: xpt.tgz
 2771 13071 :AutoInstall: Conque Shell
-2628 13467 :AutoInstall: Vim-R-plugin2
+2628 13672 :AutoInstall: Vim-R-plugin2
+3223 13730 :AutoInstall: LanguageTool

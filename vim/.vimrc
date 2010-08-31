@@ -896,6 +896,11 @@ let hs_highlight_types = 1
 let hs_highlight_more_types = 1
 let hs_highlight_debug = 1
 
+" LanguageTool {{{2
+let g:languagetool_jar = "~/lib/LanguageTool/LanguageTool.jar"
+let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES"
+let g:languagetool_win_height = "15"
+
 " NERD_Tree {{{2
 "let NERDTreeCaseSensitiveSort = 1
 let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
