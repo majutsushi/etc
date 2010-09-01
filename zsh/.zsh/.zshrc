@@ -164,40 +164,52 @@ bindkey '\ew' slash-backward-kill-word
 
 # path settings {{{
 
-prepend_to_path() {
-    if [[ -d "$1" ]]; then
-        dir=$(readlink -f "$1")
-        path=( $dir $path )
+# some ideas from http://www.memoryhole.net/kyle/2008/03/my_bashrc.html
+
+add_to_path() {
+    pos=$1
+    oldpath=$2
+    dir=$3
+
+    if [[ -n "$dir" && "$dir" != "." && -d "$dir" && -x "$dir" ]]; then
+        dir=$(readlink -f "$dir")
+
+        if [[ -z $(eval "echo \"\$$oldpath\"") ]]; then
+            eval "$oldpath=$dir"
+        else
+            case $pos in
+                pre)  eval "$oldpath=$dir:\$$oldpath" ;;
+                post) eval "$oldpath=\$$oldpath:$dir" ;;
+            esac
+        fi
     fi
 }
 
-append_to_path() {
-    if [[ -d "$1" ]]; then
-        dir=$(readlink -f "$1")
-        path=( $path $dir )
-    fi
+verify_path() {
+    TMPPATH=
+    for i in $path; do
+        add_to_path post TMPPATH $i
+    done
+    PATH=$TMPPATH
+    unset TMPPATH
 }
-
-# remove '.' from PATH if present
-path=( ${path//(#s)\.(#e)} )
-
-append_to_path /usr/local/sbin
-append_to_path /sbin
-append_to_path /usr/sbin
 
 if [[ -d /opt/intel ]]; then
     source /opt/intel/cc/10.0.023/bin/iccvars.sh
     source /opt/intel/idb/10.0.023/bin/idbvars.sh
 fi
 
-prepend_to_path "/var/lib/gems/1.8/bin/"
-# prepend_to_path "/usr/X11R6/bin"
-# prepend_to_path "/usr/pkg/bin"
-prepend_to_path $HOME/usr/bin
+verify_path
+
+add_to_path post PATH /usr/local/sbin
+add_to_path post PATH /sbin
+add_to_path post PATH /usr/sbin
+
+add_to_path pre PATH "/var/lib/gems/1.8/bin/"
+add_to_path pre PATH $HOME/usr/bin
 
 # make sure $HOME/bin has the highest priority
-# don't use prepend_to_path to preserve $HOME value
-path=( $HOME/bin $path )
+add_to_path pre PATH $HOME/bin
 
 export PATH
 
