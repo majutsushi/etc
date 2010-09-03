@@ -35,6 +35,7 @@ set realname "Jan Larres"
 %       NNTPSERVER environment variable for this.
 server "news.gmane.org" ".jnewsrc-gmane"
 server "news.mixmin.net" ".jnewsrc-mixmin"
+server "news.mozilla.org" ".jnewsrc-mozilla"
 
 % If a server requires authentication, add a nnrpaccess line for it.
 % If you leave username and/or password empty, slrn will prompt for it.
