@@ -876,6 +876,11 @@ zstyle ':completion:correct:'          prompt 'correct to: %e'
 # Ignore completion functions for commands you don't have:
 zstyle ':completion::(^approximate*):*:functions' ignored-patterns '_*'
 
+# kill completion
+zstyle ':completion:*:kill:*:processes'   command 'ps xwww -o pid,%cpu,tty,time,command'
+zstyle ':completion:*:kill:*'             force-list always
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+
 zstyle ':completion:*:*:(^rm):*:*' ignored-patterns '*(.o|~)' '#*#(D)'
 
 # complete manual by their section
