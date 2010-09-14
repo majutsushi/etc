@@ -13,6 +13,10 @@ set runtimepath+=$VIM/vimfiles/after
 set runtimepath+=/var/lib/vim/addons/after
 set runtimepath+=$HOME/.vim/after
 
+if !isdirectory($HOME . "/.cache/vim") && exists("*mkdir")
+    call mkdir($HOME . "/.cache/vim")
+endif
+
 " Autocommands {{{1
 
 " remove all autocommands to avoid sourcing them twice
