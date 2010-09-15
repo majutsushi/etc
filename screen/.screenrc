@@ -133,7 +133,7 @@
 # shell:  Default process started in screen's windows.
 # Makes it possible to use a different shell inside screen
 # than is set as the default login shell.  Halleluja! :-)
-# shell                 zsh
+  shell                 zsh
 # shell                 bash
 # shell                 ksh
 #
