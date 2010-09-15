@@ -2,13 +2,18 @@
 set nocompatible
 set encoding=utf-8
 let mapleader=","
+
 set runtimepath=$HOME/.vim
 set runtimepath+=$HOME/src/xptemplate/dist
 set runtimepath+=$HOME/src/vim-latex/vimfiles
 set runtimepath+=/var/lib/vim/addons
 set runtimepath+=$VIM/vimfiles
 set runtimepath+=$VIMRUNTIME
-set runtimepath+=$HOME/.vim/xptpersonal
+
+if isdirectory($HOME . "/src/xptemplate")
+    set runtimepath+=$HOME/.vim/xptpersonal
+endif
+
 set runtimepath+=$VIM/vimfiles/after
 set runtimepath+=/var/lib/vim/addons/after
 set runtimepath+=$HOME/.vim/after
