@@ -22,6 +22,19 @@ if !isdirectory($HOME . "/.cache/vim") && exists("*mkdir")
     call mkdir($HOME . "/.cache/vim")
 endif
 
+" search for exuberant ctags
+if executable('exuberant-ctags')
+    let ctagsbin = 'exuberant-ctags'
+elseif executable('exctags')
+    let ctagsbin = 'exctags'
+elseif executable('ctags')
+    let ctagsbin = 'ctags'
+elseif executable('ctags.exe')
+    let ctagsbin = 'ctags.exe'
+elseif executable('tags')
+    let ctagsbin = 'tags'
+endif
+
 " Autocommands {{{1
 
 " remove all autocommands to avoid sourcing them twice
@@ -292,7 +305,7 @@ function! GenCscopeAndTags()
     execute '!cscope -Rqbc'
     " see ~/.ctags
     " add --extra=+q here to avoid double entries in taglist
-    execute '!ctags -R --extra=+q'
+    execute '!' . ctagsbin . ' -R --extra=+q'
     if cscope_connection(2, "cscope.out") == 0
         execute 'cs add cscope.out'
     else
@@ -928,7 +941,8 @@ let g:po_lang_team = ''
 "let g:po_path = '.,..'
 
 " ProtoDef {{{2
-let protodefprotogetter = globpath(&rtp, 'tools/pullproto.pl', 1)
+let g:protodefprotogetter = globpath(&rtp, 'tools/pullproto.pl', 1)
+let g:protodefctagsexe = ctagsbin
 
 " r-plugin {{{2
 if executable('urxvt')
