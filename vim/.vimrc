@@ -24,15 +24,15 @@ endif
 
 " search for exuberant ctags
 if executable('exuberant-ctags')
-    let ctagsbin = 'exuberant-ctags'
+    let g:ctagsbin = 'exuberant-ctags'
 elseif executable('exctags')
-    let ctagsbin = 'exctags'
+    let g:ctagsbin = 'exctags'
 elseif executable('ctags')
-    let ctagsbin = 'ctags'
+    let g:ctagsbin = 'ctags'
 elseif executable('ctags.exe')
-    let ctagsbin = 'ctags.exe'
+    let g:ctagsbin = 'ctags.exe'
 elseif executable('tags')
-    let ctagsbin = 'tags'
+    let g:ctagsbin = 'tags'
 endif
 
 " Autocommands {{{1
@@ -306,10 +306,10 @@ function! GenCscopeAndTags()
     " add --extra=+q here to avoid double entries in taglist
     if filereadable(cscope.files)
         execute '!cscope -qbc'
-        execute '!' . ctagsbin . ' --extra=+q -L cscope.files'
+        execute '!' . g:ctagsbin . ' --extra=+q -L cscope.files'
     else
         execute '!cscope -Rqbc'
-        execute '!' . ctagsbin . ' -R --extra=+q'
+        execute '!' . g:ctagsbin . ' -R --extra=+q'
     endif
     if cscope_connection(2, "cscope.out") == 0
         execute 'cs add cscope.out'
@@ -947,7 +947,7 @@ let g:po_lang_team = ''
 
 " ProtoDef {{{2
 let g:protodefprotogetter = globpath(&rtp, 'tools/pullproto.pl', 1)
-let g:protodefctagsexe = ctagsbin
+let g:protodefctagsexe = g:ctagsbin
 
 " r-plugin {{{2
 if executable('urxvt')
