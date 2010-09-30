@@ -302,10 +302,15 @@ endfunction
 
 " GenCscopeAndTags() {{{2
 function! GenCscopeAndTags()
-    execute '!cscope -Rqbc'
     " see ~/.ctags
     " add --extra=+q here to avoid double entries in taglist
-    execute '!' . ctagsbin . ' -R --extra=+q'
+    if filereadable(cscope.files)
+        execute '!cscope -qbc'
+        execute '!' . ctagsbin . ' --extra=+q -L cscope.files'
+    else
+        execute '!cscope -Rqbc'
+        execute '!' . ctagsbin . ' -R --extra=+q'
+    endif
     if cscope_connection(2, "cscope.out") == 0
         execute 'cs add cscope.out'
     else
