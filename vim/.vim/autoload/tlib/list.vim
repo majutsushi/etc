@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-30.
-" @Last Change: 2009-08-09.
-" @Revision:    0.0.32
+" @Last Change: 2010-04-03.
+" @Revision:    0.0.34
 
 if &cp || exists("loaded_tlib_list_autoload")
     finish
@@ -146,22 +146,23 @@ endf
 
 function! tlib#list#Uniq(list, ...) "{{{3
     TVarArg ['get_value', '']
-    let s:uniq_values = []
+    let s:uniq_values = {}
     if empty(get_value)
         call filter(a:list, 's:UniqValue(v:val)')
     else
         call filter(a:list, 's:UniqValue(eval(printf(get_value, string(v:val))))')
     endif
+    unlet s:uniq_values
     return a:list
 endf
 
 
 function! s:UniqValue(value) "{{{3
-    if index(s:uniq_values, a:value) == -1
-        call add(s:uniq_values, a:value)
-        return 1
-    else
+    if get(s:uniq_values, a:value, 0)
         return 0
+    else
+        let s:uniq_values[a:value] = 1
+        return 1
     endif
 endf
 

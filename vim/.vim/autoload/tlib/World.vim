@@ -1,10 +1,10 @@
 " World.vim -- The World prototype for tlib#input#List()
 " @Author:      Tom Link (micathom AT gmail com?subject=[vim])
-" @Website:     http://members.a1.net/t.link/
+" @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-05-01.
-" @Last Change: 2010-03-28.
-" @Revision:    0.1.834
+" @Last Change: 2010-09-22.
+" @Revision:    0.1.886
 
 " :filedoc:
 " A prototype used by |tlib#input#List|.
@@ -18,6 +18,7 @@ let s:prototype = tlib#Object#New({
             \ 'base': [], 
             \ 'bufnr': -1,
             \ 'display_format': '',
+            \ 'fileencoding': &fileencoding,
             \ 'fmt_display': {},
             \ 'fmt_filter': {},
             \ 'filetype': '',
@@ -25,6 +26,7 @@ let s:prototype = tlib#Object#New({
             \ 'filter_format': '',
             \ 'filter_options': '',
             \ 'follow_cursor': '',
+            \ 'has_menu': 0,
             \ 'index_table': [],
             \ 'initial_filter': [['']],
             \ 'initial_index': 1,
@@ -57,6 +59,9 @@ let s:prototype = tlib#Object#New({
             \ 'timeout_resolution': 2,
             \ 'type': '', 
             \ 'win_wnr': -1,
+            \ 'win_height': -1,
+            \ 'win_width': -1,
+            \ 'win_pct': 25,
             \ })
             " \ 'handlers': [],
             " \ 'filter_options': '\c',
@@ -317,6 +322,14 @@ endf
 
 
 " :nodoc:
+function! s:prototype.GetLineIdx(lnum) dict "{{{3
+    let line = getline(a:lnum)
+    let prefidx = substitute(matchstr(line, '^\d\+\ze[*:]'), '^0\+', '', '')
+    return prefidx
+endf
+
+
+" :nodoc:
 function! s:prototype.SetPrefIdx() dict "{{{3
     " let pref = sort(range(1, self.llen), 'self.SortPrefs')
     " let self.prefidx = get(pref, 0, self.initial_index)
@@ -438,6 +451,7 @@ function! s:prototype.SetMatchMode(match_mode) dict "{{{3
         unlet self.matcher
         try
             let self.matcher = tlib#Filter_{a:match_mode}#New()
+            call self.matcher.Init(self)
         catch /^Vim\%((\a\+)\)\=:E117/
             throw 'tlib: Unknown mode for tlib_inputlist_match: '. a:match_mode
         endtry
@@ -698,17 +712,37 @@ function! s:prototype.Resize(hsize, vsize) dict "{{{3
     if self.scratch_vertical
         if a:vsize
             let world_resize = 'vert resize '. a:vsize
+            " let w:winresize = {'v': a:vsize}
+            setlocal winfixwidth
         endif
     else
         if a:hsize
             let world_resize = 'resize '. a:hsize
+            " let w:winresize = {'h': a:hsize}
+            setlocal winfixheight
         endif
     endif
     if !empty(world_resize)
         " TLogVAR world_resize
         exec world_resize
-        redraw!
+        " redraw!
     endif
+endf
+
+
+" :nodoc:
+function! s:prototype.GetResize(size) dict "{{{3
+    let resize0 = get(self, 'resize', 0)
+    let resize = empty(resize0) ? 0 : eval(resize0)
+    " TLogVAR resize0, resize
+    let resize = resize == 0 ? a:size : min([a:size, resize])
+    " let min = self.scratch_vertical ? &cols : &lines
+    let min1 = (self.scratch_vertical ? self.win_width : self.win_height) * g:tlib_inputlist_pct
+    let min2 = (self.scratch_vertical ? &columns : &lines) * self.win_pct
+    let min = max([min1, min2])
+    let resize = min([resize, (min / 100)])
+    " TLogVAR resize, a:size, min, min1, min2
+    return resize
 endf
 
 
@@ -734,13 +768,7 @@ function! s:prototype.DisplayList(query, ...) dict "{{{3
         let x  = self.index_width + 1
         " TLogVAR ll
         if self.state =~ '\<display\>'
-            let resize0 = get(self, 'resize', 0)
-            let resize = empty(resize0) ? 0 : eval(resize0)
-            " TLogVAR resize0, resize
-            let resize = resize == 0 ? ll : min([ll, resize])
-            let resize = min([resize, (&lines * g:tlib_inputlist_pct / 100)])
-            " TLogVAR resize, ll, &lines
-            call self.Resize(resize, eval(get(self, 'resize_vertical', 0)))
+            call self.Resize(self.GetResize(ll), eval(get(self, 'resize_vertical', 0)))
             call tlib#normal#WithRegister('gg"tdG', 't')
             let w = winwidth(0) - &fdc
             " let w = winwidth(0) - &fdc - 1
@@ -770,11 +798,11 @@ function! s:prototype.DisplayList(query, ...) dict "{{{3
         call self.ScrollToOffset()
         let rx0 = self.GetRx0()
         " TLogVAR rx0
-        if !empty(g:tlib_inputlist_higroup)
+        if !empty(self.matcher.highlight)
             if empty(rx0)
                 match none
             elseif self.IsValidFilter()
-                exec 'match '. g:tlib_inputlist_higroup .' /\c'. escape(rx0, '/') .'/'
+                exec 'match '. self.matcher.highlight .' /\c'. escape(rx0, '/') .'/'
             endif
         endif
     endif
@@ -896,6 +924,9 @@ function! s:prototype.SetOrigin(...) dict "{{{3
     " TLogDBG winnr()
     " TLogDBG winnr('$')
     let self.win_wnr = winnr()
+    let self.win_height = winheight(self.win_wnr)
+    let self.win_width = winwidth(self.win_wnr)
+    " TLogVAR self.win_wnr, self.win_height, self.win_width
     let self.bufnr   = bufnr('%')
     let self.cursor  = getpos('.')
     if winview

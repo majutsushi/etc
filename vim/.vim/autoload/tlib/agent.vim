@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-06-24.
-" @Last Change: 2010-03-27.
-" @Revision:    0.1.178
+" @Last Change: 2010-09-16.
+" @Revision:    0.1.181
 
 
 " :filedoc:
@@ -162,7 +162,7 @@ function! tlib#agent#Suspend(world, selected) "{{{3
         let b:tlib_suspend = {
                     \ '<m-z>': 0, '<c-z>': 0, '<space>': 0, 
                     \ '<cr>': 1, 
-                    \ '<LeftMouse>': 1, '<c-LeftMouse>': 0, '<MiddleMouse>': 0,
+                    \ '<LeftMouse>': 1, '<MiddleMouse>': 0, '<RightMouse>': 0, '<c-LeftMouse>': 0,
                     \ '<': 2}
         for [m, pick] in items(b:tlib_suspend)
             exec 'noremap <buffer> '. m .' :call tlib#input#Resume("world", '. pick .')<cr>'
@@ -365,7 +365,14 @@ function! tlib#agent#ViewFile(world, selected) "{{{3
     if !empty(a:selected)
         let back = a:world.SwitchWindow('win')
         " TLogVAR back
-        call tlib#file#With('edit', 'buffer', a:selected, a:world)
+        if !&hidden && &l:modified
+            let cmd0 = 'split'
+            let cmd1 = 'sbuffer'
+        else
+            let cmd0 = 'edit'
+            let cmd1 = 'buffer'
+        endif
+        call tlib#file#With(cmd0, cmd1, a:selected, a:world)
         exec back
         let a:world.state = 'display'
     endif

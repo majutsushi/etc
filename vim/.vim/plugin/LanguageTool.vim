@@ -2,8 +2,8 @@
 " Maintainer:   Dominique Pellé <dominique.pelle@gmail.com>
 " Screenshots:  http://dominique.pelle.free.fr/pic/LanguageToolVimPlugin_en.png
 "               http://dominique.pelle.free.fr/pic/LanguageToolVimPlugin_fr.png
-" Last Change:  2010/08/30
-" Version:      1.8
+" Last Change:  2010/09/20
+" Version:      1.13
 "
 " Long Description:
 "
@@ -88,6 +88,24 @@ if &cp || exists("g:loaded_languagetool")
 endif
 let g:loaded_languagetool = "1"
 
+" Return a regular expression used to highlight a grammatical error
+" at line a:line in text.  The error starts at character a:start in
+" context a:context and its length in context is a:len.
+function s:LanguageToolHighlightRegex(line, context, start, len)
+  let l:start_idx = byteidx(a:context, a:start)
+  let l:end_idx   = byteidx(a:context, a:start + a:len) - 1
+
+  " The substitute allows to match errors which span multiple lines.
+  " The part after \ze gives a bit of context to avoid spurious
+  " highlighting when the text of the error is present multiple
+  " times in the line.
+  return '\V'
+  \     . '\%' . a:line . 'l'
+  \     . substitute(escape(a:context[l:start_idx : l:end_idx], "'\\"), ' ', '\\_\\s', 'g')
+  \     . '\ze'
+  \     . substitute(escape(a:context[l:end_idx + 1: l:end_idx + 5], "'\\"), ' ', '\\_\\s', 'g')
+endfunction
+
 " Set up configuration.
 " Returns 0 if success, < 0 in case of error.
 function s:LanguageToolSetUp()
@@ -149,14 +167,11 @@ function <sid>JumpToCurrentError(mouse)
     " The line number is correct but the column number given by LanguageTool is
     " sometimes incorrect. See opened ticket:
     " http://sourceforge.net/tracker/?func=detail&aid=3054895&group_id=110216&atid=655717
-    " So finding the column is done using patten matching with information
+    " So finding the column is done using pattern matching with information
     " in error context.
     let l:context = l:error[7][byteidx(l:error[7], l:error[8])
-    \                         :byteidx(l:error[7], l:error[8] + l:error[9] - 1)]
-
-    " This substitute allows matching when error spans multiple lines.
-    let l:re = '\V' . substitute(escape(l:context, "'\\"), ' ', '\\_\\s', 'g')
-
+    \                         :byteidx(l:error[7], l:error[8] + l:error[9]) - 1]
+    let l:re = s:LanguageToolHighlightRegex(l:error[0], l:error[7], l:error[8], l:error[9])
     echo 'Jump to error ' . l:error_idx . '/' . len(s:errors)
     \ . ' (' . l:rule . ') ...' . l:context . '... @ '
     \ . l:line . 'L ' . l:col . 'C'
@@ -219,17 +234,23 @@ function s:LanguageToolCheck(line1, line2)
     let l:l  = getline('.')
     " The fromx and tox given by LanguageTool are not reliable.
     " They are even sometimes negative!
-    let l:l1 = matchlist(l:l,  'fromy=\"\(\d\+\)\" '
-    \ .                        'fromx=\"\(-\?\d\+\)\" '
-    \ .                          'toy=\"\(\d\+\)\" '
-    \ .                          'tox=\"\(-\?\d\+\)\" ')
-    let l:l2 = matchlist(l:l, 'ruleId=\"\(\w\+\)\" '
-    \ .                          'msg=\"\(.*\)\" '
-    \ .                 'replacements=\"\(.*\)\" '
-    \ .                      'context=\"\(.*\)\" '
-    \ .                'contextoffset=\"\(\d\+\)\" '
-    \ .                  'errorlength=\"\(\d\+\)\"')
-    let l:error = l:l1[1:4] + l:l2[1:6]
+    let l:l1 = matchlist(l:l, 'fromy=\"\(\d\+\)\"\s\+'
+    \ .                       'fromx=\"\(-\?\d\+\)\"\s\+'
+    \ .                         'toy=\"\(\d\+\)\"\s\+'
+    \ .                         'tox=\"\(-\?\d\+\)\"\s\+'
+    \ .                      'ruleId=\"\([^"]*\)\"')
+
+    " From LanguageTool-1.0 to LanguageTool-1.1 (currently in beta version),
+    " subId=(...) was introduced in XML output. It is ignored for now in
+    " this plugin but it may be used later.  Plugin should be able to parse
+    " XML from both LanguageTool-1.0 and LanguageTool-1.1.
+    let l:l2 = matchlist(l:l, 'msg=\"\([^"]*\)\"\s\+'
+    \ .              'replacements=\"\([^"]*\)\"\s\+'
+    \ .                   'context=\"\([^"]*\)\"\s\+'
+    \ .             'contextoffset=\"\(\d\+\)\"\s\+'
+    \ .               'errorlength=\"\(\d\+\)\"')
+
+    let l:error = l:l1[1:5] + l:l2[1:6]
 
     " Make line/column number start at 1 rather than 0.
     " Make also line number absolute as in buffer.
@@ -287,14 +308,16 @@ function s:LanguageToolCheck(line1, line2)
       \ . '\%'  . line('$') . 'l\%9c'
       \ . '.\{' . (4 + l:error[8]) . '}\zs'
       \ . '.\{' .     (l:error[9]) . "}'"
-      call append('$', 'Correction: ' . l:error[6])
+      if len(l:error[6]) > 0
+        call append('$', 'Correction: ' . l:error[6])
+      endif
       call append('$', '')
       let l:i += 1
     endfor
     exe "norm z" . s:languagetool_win_height . "\<CR>"
     0
-    map <silent> <buffer> <CR> :call <sid>JumpToCurrentError(0)<CR>
-    map <silent> <LeftMouse>   :call <sid>JumpToCurrentError(1)<CR>
+    map <silent> <buffer> <CR>          :call <sid>JumpToCurrentError(0)<CR>
+    map <silent> <LeftMouse> <LeftMouse>:call <sid>JumpToCurrentError(1)<CR>
     redraw
     echo 'Press <Enter> or click on error in scratch buffer '
     \ .  'to jump its location'
@@ -309,11 +332,7 @@ function s:LanguageToolCheck(line1, line2)
   " Also highlight errors in original buffer and populate location list.
   setlocal errorformat=%f:%l:%c:%m
   for l:error in s:errors
-    let l:re = l:error[7][byteidx(l:error[7], l:error[8])
-    \                    :byteidx(l:error[7], l:error[8] + l:error[9] - 1)]
-    " This substitute allows matching when error spans multiple lines.
-    let l:re = '\%' . l:error[0] . 'l\V'
-    \ . substitute(escape(l:re, "'\\"), ' ', '\\_\\s', 'g')
+    let l:re = s:LanguageToolHighlightRegex(l:error[0], l:error[7], l:error[8], l:error[9])
     exe "syn match LanguageToolError '" . l:re . "'"
     laddexpr expand('%') . ':'
     \ . l:error[0] . ':' . l:error[1] . ':'

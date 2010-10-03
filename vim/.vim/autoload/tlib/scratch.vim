@@ -3,8 +3,8 @@
 " @Website:     http://www.vim.org/account/profile.php?user_id=4037
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-07-18.
-" @Last Change: 2010-03-12.
-" @Revision:    0.0.154
+" @Last Change: 2010-05-19.
+" @Revision:    0.0.157
 
 if &cp || exists("loaded_tlib_scratch_autoload")
     finish
@@ -84,7 +84,7 @@ function! tlib#scratch#CloseScratch(keyargs, ...) "{{{3
     let scratch = get(a:keyargs, 'scratch', '')
     " TLogVAR scratch, reset_scratch
     " TLogDBG string(tlib#win#List())
-    if !empty(scratch)
+    if !empty(scratch) && winnr('$') > 1
         let wn = bufwinnr(scratch)
         " TLogVAR wn
         try
