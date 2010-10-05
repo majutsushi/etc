@@ -55,9 +55,15 @@ autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 "au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
 
 " When switching buffers, preserve window view.
+function! IsNotSpecialBuf(buf)
+    return ((&buftype != "quickfix") &&
+          \ !&previewwindow &&
+          \ (bufname(a:buf) !~ "NERD_tree") &&
+          \ (bufname(a:buf) !~ "__Tag_List__"))
+endfunction
 if v:version >= 700
-  au BufLeave * let b:winview = winsaveview()
-  au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+    au BufLeave * if(IsNotSpecialBuf("%")) | let b:winview = winsaveview() | endif
+    au BufEnter * if(exists('b:winview') && IsNotSpecialBuf("%")) | call winrestview(b:winview) | endif
 endif
 
 " filetype-specific settings
