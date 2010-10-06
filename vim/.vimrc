@@ -539,7 +539,7 @@ set define=^\\(\\s*#\\s*define\\\|[a-z]*\\s*const\\s*[a-z]*\\)
 " when completing tags in Insert mode show more info
 set showfulltag
 " use cscope for tag commands
-set cscopetag
+set nocscopetag
 " give messages when adding a cscope database
 set cscopeverbose
 " When to open a quickfix window for cscope
