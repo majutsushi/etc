@@ -955,6 +955,10 @@ let g:po_lang_team = ''
 let g:protodefprotogetter = globpath(&rtp, 'tools/pullproto.pl', 1)
 let g:protodefctagsexe = g:ctagsbin
 
+" Quickfixsigns {{{2
+let g:quickfixsigns_classes = ['qfl', 'loc', 'marks', 'vcsdiff']
+let g:quickfixsigns_blacklist_buffer = '\v(^__.*__$)|(^NERD_tree.*)|(^$)'
+
 " r-plugin {{{2
 if executable('urxvt')
     let vimrplugin_term_cmd = "urxvt -title R -e"
