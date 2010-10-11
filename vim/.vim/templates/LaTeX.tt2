@@ -33,7 +33,7 @@
 % Page Layout {{{2
 \usepackage{geometry}
 \geometry{a4paper}
-%\geometry{margins=2in}
+%\geometry{margin=2in}
 %\geometry{landscape}
 
 
