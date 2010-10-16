@@ -523,6 +523,9 @@ macro pager  ,p         "<pipe-message>procmail\n<delete-message>" "Pipe message
 macro index  ,mf        "<shell-escape>mu find --clearlinks --linksdir=~/.mu/results " "mu find"
 macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu find results"
 
+# add sender to evolution address book
+macro index,pager  A    "<pipe-message>~/src/add-to-eds/add-to-eds<return>" "Add the sender address to evolution address book"
+
 # capture in org-mode
 macro index  \eR        "<pipe-message>~/bin/remember-mail\n" "Capture message in org-mode"
 macro pager  \eR        "<pipe-message>~/bin/remember-mail\n" "Capture message in org-mode"
