@@ -498,26 +498,17 @@ macro pager  \er        "<enter-command>unset resolve<enter><read-subthread><nex
 macro index '{'         "<collapse-thread>" "Collapse current thread"
 
 # quickly change to important folders
-macro index  I          "<change-folder>!\n" "Go to Inbox"
-macro pager  I          "<change-folder>!\n" "Go to Inbox"
-macro index  ,S         "<change-folder><\n" "Go to 'sent' folder"
-macro pager  ,S         "<change-folder><\n" "Go to 'sent' folder"
-macro index  ,A         "<change-folder>=.Archive\n" "Go to 'Archive' folder"
-macro pager  ,A         "<change-folder>=.Archive\n" "Go to 'Archive' folder"
-macro index  ,W         "<change-folder>=.Waiting\n" "Go to 'Waiting' folder"
-macro pager  ,W         "<change-folder>=.Waiting\n" "Go to 'Waiting' folder"
-macro index  ,T         "<change-folder>=.Todo\n" "Go to 'Todo' folder"
-macro pager  ,T         "<change-folder>=.Todo\n" "Go to 'Todo' folder"
+macro index,pager  I    "<change-folder>!\n" "Go to Inbox"
+macro index,pager  ,S   "<change-folder><\n" "Go to 'sent' folder"
+macro index,pager  ,A   "<change-folder>=.Archive\n" "Go to 'Archive' folder"
+macro index,pager  ,W   "<change-folder>=.Waiting\n" "Go to 'Waiting' folder"
+macro index,pager  ,T   "<change-folder>=.Todo\n" "Go to 'Todo' folder"
 
 # quickly file mail
-macro index  ,a         "<save-message>=.Archive\n" "Move message to folder 'Archive'"
-macro pager  ,a         "<save-message>=.Archive\n" "Move message to folder 'Archive'"
-macro index  ,w         "<save-message>=.Waiting\n" "Move message to folder 'Waiting'"
-macro pager  ,w         "<save-message>=.Waiting\n" "Move message to folder 'Waiting'"
-macro index  ,t         "<save-message>=.Todo\n" "Move message to folder 'Todo'"
-macro pager  ,t         "<save-message>=.Todo\n" "Move message to folder 'Todo'"
-macro index  ,p         "<pipe-message>procmail\n<delete-message>" "Pipe message through procmail"
-macro pager  ,p         "<pipe-message>procmail\n<delete-message>" "Pipe message through procmail"
+macro index,pager  ,a   "<save-message>=.Archive\n" "Move message to folder 'Archive'"
+macro index,pager  ,w   "<save-message>=.Waiting\n" "Move message to folder 'Waiting'"
+macro index,pager  ,t   "<save-message>=.Todo\n" "Move message to folder 'Todo'"
+macro index,pager  ,p   "<pipe-message>procmail\n<delete-message>" "Pipe message through procmail"
 
 # search mail with maildir-utils
 macro index  ,mf        "<shell-escape>mu find --clearlinks --linksdir=~/.mu/results " "mu find"
@@ -527,8 +518,7 @@ macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu fi
 macro index,pager  A    "<pipe-message>~/src/add-to-eds/add-to-eds<return>" "Add the sender address to evolution address book"
 
 # capture in org-mode
-macro index  \eR        "<pipe-message>~/bin/remember-mail\n" "Capture message in org-mode"
-macro pager  \eR        "<pipe-message>~/bin/remember-mail\n" "Capture message in org-mode"
+macro index,pager  \eR  "<pipe-message>~/bin/remember-mail\n" "Capture message in org-mode"
 
 # X-Label patch
 ifdef edit-label bind index,pager y edit-label
