@@ -3,20 +3,9 @@ set nocompatible
 set encoding=utf-8
 let mapleader=","
 
-set runtimepath=$HOME/.vim
-set runtimepath+=$HOME/src/xptemplate/dist
-set runtimepath+=$HOME/src/vim-latex/vimfiles
-set runtimepath+=/var/lib/vim/addons
-set runtimepath+=$VIM/vimfiles
-set runtimepath+=$VIMRUNTIME
-
-if isdirectory($HOME . "/src/xptemplate")
-    set runtimepath+=$HOME/.vim/xptpersonal
-endif
-
-set runtimepath+=$VIM/vimfiles/after
-set runtimepath+=/var/lib/vim/addons/after
-set runtimepath+=$HOME/.vim/after
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+set runtimepath+=$HOME/.vim/xptpersonal
 
 if !isdirectory($HOME . "/.cache/vim") && exists("*mkdir")
     call mkdir($HOME . "/.cache/vim")
@@ -67,7 +56,7 @@ if v:version >= 700
 endif
 
 " filetype-specific settings
-au Filetype html,xml,xsl source ~/.vim/macros/closetag.vim
+au Filetype html,xml,xsl source ~/.vim/bundle/closetag/closetag.vim
 au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
 au FileType tex let b:vikiFamily="LaTeX"
 au FileType viki compiler deplate
@@ -962,7 +951,7 @@ let g:po_lang_team = ''
 "let g:po_path = '.,..'
 
 " ProtoDef {{{2
-let g:protodefprotogetter = globpath(&rtp, 'tools/pullproto.pl', 1)
+let g:protodefprotogetter = globpath(&rtp, 'pullproto.pl', 1)
 let g:protodefctagsexe = g:ctagsbin
 
 " Quickfixsigns {{{2
@@ -1054,7 +1043,7 @@ let g:Tex_ViewRule_pdf = 'evince'
 let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 
 " vimplate {{{2
-let Vimplate = globpath(&rtp, 'tools/vimplate', 1)
+let Vimplate = globpath(&rtp, 'vimplate', 1)
 
 " voom {{{2
 let g:voom_tab_key = '<C-Tab>'

@@ -1,49 +1,37 @@
 ScriptID SourceID Filename
 --------------------------
-2324 9247 :AutoInstall: textformat.vba
-1863 13973 :AutoInstall: tlib.vim
-1066 7618 :AutoInstall: cecutil.vim
-294 10110 :AutoInstall: Align.vim
-508 9865 :AutoInstall: ZoomWin.vim
-1846 7059 :AutoInstall: gitdiff.vim
-1624 10260 :AutoInstall: pastie.vim
-2584 13975 :AutoInstall: quickfixsigns.vim
-1697 12566 :AutoInstall: surround.vim
-2324 9247 :AutoInstall: TextFormat
-861 12755 :AutoInstall: viki.vim
+2324 9247 textformat.vba
+294 10110 Align.vim
+508 9865 ZoomWin.vim
 23 8319 EnhCommentify.vim
-1658 11834 :AutoInstall: NERD_tree.zip
-31 7218 :AutoInstall: a.vim
-2368 13250 :AutoInstall: cctree.vim
-#1764 10778 :AutoInstall: code_complete.vim send fixes to author
-197 11399 :AutoInstall: genutils
-1757 7393 :AutoInstall: lbdbq.vim
-953 6162 :AutoInstall: multiselect
-2136 8206 :AutoInstall: repeat.vim
-107 7232 :AutoInstall: SelectBuf
-1601 5923 :AutoInstall: smooth_scroll.vim
-1697 12566 :AutoInstall: surround.zip
-273 7701 :AutoInstall: taglist.vim
+2368 13250 cctree.vim
+#1764 10778 code_complete.vim send fixes to author
+197 11399 genutils
+1757 7393 lbdbq.vim
+953 6162 multiselect
+107 7232 SelectBuf
+1601 5923 smooth_scroll.vim
+273 7701 taglist.vim
 923 10283 timestamp.vim
-293 9060 :AutoInstall: utl.vim
-431 1263 :AutoInstall: vimfootnotes.vim
+293 9060 utl.vim
+431 1263 vimfootnotes.vim
 1311 4504 vimplate
-2657 13879 VOOF
+2657 13879 VOOM
 1520 7722 omnicppcomplete
-1785 7716 :AutoInstall: javacomplete
 1000 11573 gtk-vim-syntax.tar.gz
-1195 5847 :AutoInstall: vis.vim
-2590 11504 :AutoInstall: FSwitch
-2624 11376 :AutoInstall: ProtoDef
-2438 11717 :AutoInstall: EasyGrep
-2796 12956 :AutoInstall: CheckAttach.vim
-1234 13554 :AutoInstall: yankring.vim
-1984 13961 :AutoInstall: FuzzyFinder
-2390 10336 :AutoInstall: CSApprox
-2582 12000 :AutoInstall: blogit.vim
-910 13092 :AutoInstall: pydoc.vim
-661 12200 :AutoInstall: gnupg
-2771 13071 :AutoInstall: Conque Shell
-2628 13892 :AutoInstall: Vim-R-plugin2
-3223 13878 :AutoInstall: LanguageTool
-3252 13948 :AutoInstall: L9
+1195 5847 vis.vim
+2590 14047 FSwitch
+2624 14048 ProtoDef
+2438 11717 EasyGrep
+1234 13554 yankring.vim
+1984 13961 FuzzyFinder
+2390 10336 CSApprox
+910 13092 pydoc.vim
+661 12200 gnupg
+2771 14041 conque
+2628 14066 Vim-R-plugin2
+3223 13878 LanguageTool
+3252 13948 L9
+920 10281 tex_autoclose.vim
+13 4318 closetag.vim
+2224 8628 stl.vim

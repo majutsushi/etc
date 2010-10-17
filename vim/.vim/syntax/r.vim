@@ -3,7 +3,7 @@
 " Maintainer:	      Jakson Aquino <jalvesaq@gmail.com>
 " Former Maintainers: Vaidotas Zemlys <zemlys@gmail.com>
 " 		      Tom Payne <tom@tompayne.org>
-" Last Change:	      Tue Sep 14, 2010  09:45PM
+" Last Change:	      Wed Sep 29, 2010  09:31AM
 " Filenames:	      *.R *.r *.Rhistory *.Rt
 " 
 " NOTE: The highlighting of R functions is defined in the
@@ -101,9 +101,7 @@ syn match rBraceError "[)}]" contained
 syn match rCurlyError "[)\]]" contained
 syn match rParenError "[\]}]" contained
 
-runtime r-plugin/functions.vim
-
-" Reclassifying functions that may add new functions and objects:
+" Functions that may add new objects
 syn keyword rPreProc     library require attach detach source
 
 " Type
@@ -122,7 +120,6 @@ hi def link rDelimiter   Delimiter
 hi def link rDollar      SpecialChar
 hi def link rError       Error
 hi def link rFloat       Float
-hi def link rFunction    Function
 hi def link rInteger     Number
 hi def link rNumber      Number
 hi def link rOperator    Operator

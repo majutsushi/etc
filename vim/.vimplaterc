@@ -4,7 +4,7 @@
 # you can use $Config::opt instead command options:
 #   -user=<user> -dir=<dir>
 $Config::opt = {
-                  dir  => "$ENV{'HOME'}/.vim/templates",
+                  dir  => "$ENV{'HOME'}/.vim/bundle/vimplate/templates",
                   user => 'jan',
 };
 

@@ -1,0 +1,30 @@
+[submodule "vim/.vim/bundle/pathogen"]
+	path = vim/.vim/bundle/pathogen
+	url = http://github.com/tpope/vim-pathogen.git
+[submodule "vim/.vim/bundle/nerdtree"]
+	path = vim/.vim/bundle/nerdtree
+	url = http://github.com/scrooloose/nerdtree.git
+[submodule "vim/.vim/bundle/quickfixsigns"]
+	path = vim/.vim/bundle/quickfixsigns
+	url = http://github.com/tomtom/quickfixsigns_vim.git
+[submodule "vim/.vim/bundle/tlib"]
+	path = vim/.vim/bundle/tlib
+	url = http://github.com/tomtom/tlib_vim.git
+[submodule "vim/.vim/bundle/tregisters"]
+	path = vim/.vim/bundle/tregisters
+	url = http://github.com/tomtom/tregisters_vim.git
+[submodule "vim/.vim/bundle/checkattach"]
+	path = vim/.vim/bundle/checkattach
+	url = http://github.com/chrisbra/CheckAttach.git
+[submodule "vim/.vim/bundle/blogit"]
+	path = vim/.vim/bundle/blogit
+	url = http://git.symlink.me/pub/romain/blogit.git
+[submodule "vim/.vim/bundle/surround"]
+	path = vim/.vim/bundle/surround
+	url = http://github.com/tpope/vim-surround.git
+[submodule "vim/.vim/bundle/viki"]
+	path = vim/.vim/bundle/viki
+	url = http://github.com/tomtom/viki_vim.git
+[submodule "vim/.vim/bundle/repeat"]
+	path = vim/.vim/bundle/repeat
+	url = http://github.com/tpope/vim-repeat.git

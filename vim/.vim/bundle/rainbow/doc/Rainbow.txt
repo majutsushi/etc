@@ -1,0 +1,80 @@
+*rainbow.txt*	The Rainbow Tool			Nov 01, 2009
+
+Author:    Charles E. Campbell, Jr.  <NdrOchip@ScampbellPfamily.AbizM>
+           (remove NOSPAM from Campbell's email first)
+Copyright: (c) 2004-2009 by Charles E. Campbell, Jr.	*Rainbow-copyright*
+           The VIM LICENSE applies to Rainbow.vim, RainbowPlugin.vim, and
+	   Rainbow.txt (see |copyright|) except use "Rainbow" instead of
+	   "Vim".
+	   NO WARRANTY, EXPRESS OR IMPLIED.  USE AT-YOUR-OWN-RISK.
+
+==============================================================================
+1. Contents					*rainbow* *rainbow-contents* {{{1
+
+	1. Contents.....................................: |rainbow-contents|
+	2. Usage........................................: |rainbow-usage|
+	3. History......................................: |rainbow-history|
+
+==============================================================================
+2. Usage						*rainbow-usage*   {{{1
+
+INSTALL
+	vim rainbow.vba.gz
+	:so %
+	:q
+
+MANUAL							*:Rainbow*
+	:Rainbow~
+	This command will enable rainbow highlighting for C and C++.
+	One may also pass the desired set of delimiters to be
+	rainbow'd via this command: >
+		:Rainbow {[(
+		:Rainbow {(
+		:Rainbow {[
+		:Rainbow [(
+		:Rainbow {
+		:Rainbow [
+		:Rainbow (
+<
+	These forms of the :Rainbow command alter the g:hlrainbow
+	variable value.
+
+							*:Rainbow!*
+	:Rainbow!~
+	This command will disable rainbow highlighting for C and C++.
+
+	This plugin provides a "rainbow" of colors for matching brackets
+	( [] () {} ) depending upon their nesting level; it is intended to
+	provide support the C and C++ languages.
+
+							*g:hlrainbow*
+	g:hlrainbow~
+	This global variable holds characters such as "(){}[]"; by default
+	it holds "{(".  It enables rainbow highlighting as follows:
+	  "(" or ")":  ( and ) rainbow highlighting
+	  "{" or "}":  { and } rainbow highlighting
+	  "[" or "]":  [ and ] rainbow highlighting
+
+
+==============================================================================
+3. History						*rainbow-history* {{{1
+
+ v2	Oct 20, 2009	* supports Rainbow command to turn rainbow
+			  highlighting on/off.
+			* (Greg Klein) pointed out that "contained" seemed to
+			  be missing from the cParenXX definitions.
+			* I've commented out the cCppParen definitions,
+			  letting cParenXX work.  I noticed a problem with
+			  these: (the following closing parenthesis got
+			  highlighted as an error)
+			    int f(int x,
+			          int y)
+			  and I'm afraid I don't remember why there was
+			  a separate set of definitions for C++.  If anyone
+			  sees a problem -- please give me an example (short
+			  is good)
+	Nov 01, 2009	* :Rainbow {[( and variants supported.
+
+==============================================================================
+Modelines: {{{1
+vim:tw=78:ts=8:ft=help:fdm=marker:

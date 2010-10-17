@@ -1,0 +1,350 @@
+*vimplate*   vimplate - vim template   (example for C++, Perl, LaTeX and make)
+
+Author:      Urs Stotz <stotz@gmx.ch>
+Last change: 2005 August 20
+
+==============================================================================
+1. Contents                                              *vimplate-contents*
+===========
+ 1. Contents.................: |vimplate-contents|
+ 2. Description..............: |vimplate-description|
+ 3. Usage....................: |vimplate-usage|
+ 4. Subroutines..............: |vimplate-subroutines|
+ 5. Example..................: |vimplate-example|
+ 6. Requirements.............: |vimplate-requirements|
+ 7. Documentation............: |vimplate-documentation|
+
+==============================================================================
+2. Description                                        *vimplate-description*
+==============
+Vimplate provides an extensible and powerful template processing system.
+It is based on Perl and Template-Toolkit.
+You can create templates for program code, makefiles, letters, html pages,
+latex etc. As example vimplate contains templates for C++, LaTeX, Perl
+and Makefile.
+With vimplate you can write templates which interact with the user.
+For themes are the functions choice() and input().
+You can choose different locale for the function date() and locale().
+You can write your own perl code directly in the templates.
+
+In case you find my template useful,
+or have suggestions for improvements, please let me know.
+
+If you write a new template,
+and  would like me to add it to the vimplate package
+please send it to: stotz@gmx.ch
+
+==============================================================================
+3. Usage                                                    *vimplate-usage*
+========
+Usage:
+  :Vimplate <template> [options]
+    choice <template> whit <TAB> (command line completion is supported).
+    With <TAB> all templates are listed.
+    [options]
+      -user|u=<username>
+        Use the information form user <username> while parsing templates.
+      -dir|d=<templatedir>
+        Search templatefiles in <templatedir>.
+
+==============================================================================
+4. Subroutines                                         *vimplate-subroutines*
+==============
+  locale()                  for locale please see: man locale
+  [% loc=locale() %]        get the current locale
+                              and write it to the variable loc
+  [% locale('C') %]         set global the current locale to C
+  [% locale('de_DE') %]     set global the current locale to de_DE
+  date()                    for date please see: man date
+  [% date('%c') %]          print the current date
+                              with the current locale setting
+  [% date('de_DE', '%c') %] print the current date with the locale de_DE
+  input()
+  [% var=input() %]         read input from user
+                              and write it to the variable var
+  choice()
+  [% day=choice('day:', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa') %]
+                            let the user choice between different values
+                            and write it to the variable day
+
+  please try :Vimplate Test
+
+==============================================================================
+5. Example                                                *vimplate-example*
+==========
+
+Example:
+  the template letter.tt:
+    ________________________________________________________
+    [%
+       sex=choice('sex: ', 'female', 'male')
+       name=input('name: ')
+       location=input('your location: ')
+    -%]
+                       [% ucfirst(location) %], [% date('C', '%b %d, %Y') %]
+
+    Dear [% IF sex=='female'; 'Ms'; ELSE; 'Mr'; END %] [% ucfirst(name) %]
+
+    ...
+
+    Sincerely
+
+    [% user.firstname %] [% user.lastname %]
+    ________________________________________________________
+
+  run vim:
+    :Vimplate letter
+    sex: 
+      0) female
+      1) male
+    0
+    name: Meier
+    your location: Olten
+
+  your input was: 
+    :Vimplate letter<CR>0<CR>Meier<CR>Olten<CR>
+
+  this will produce this letter:
+    ________________________________________________________
+                                      Olten, Jul 11, 2005
+
+    Dear Ms Meier
+
+    ...
+
+    Sincerely
+
+    Urs Stotz
+    ________________________________________________________
+
+Example:
+  the template hpp-default.tt:
+    ________________________________________________________
+    [% classname=input('Class name: ')
+       doxygen=choice('with Doxygen comments: ', 'no', 'yes')
+    -%]
+    #ifndef [% uc(classname) %]_HPP
+    #define [% uc(classname) %]_HPP
+
+    [% IF doxygen=='yes' -%]
+    /**
+     * @brief [% classname %] ... short description ...
+     * @author [% user.firstname %] [% user.lastname %] <[% user.mail %]>
+     * @date [% date('%Y-%m-%d') %]
+     * ... description ...
+     */
+
+    [% END -%]
+    class [% classname %]
+    {
+      public:
+    [% IF doxygen=='yes' -%]
+
+        /**
+         * Default constructor
+         */
+    [% END -%]
+        [% classname %]();
+    [% IF doxygen=='yes' -%]
+
+        /**
+         * Copy constructor
+         * @param other reference on object to copy
+         */
+    [% END -%]
+        [% classname %](const [% classname %]& other);
+    [% IF doxygen=='yes' -%]
+
+        /** 
+         * Assignment operator
+         * @param other reference on object to copy
+         * @return reference on initialisated object
+         */
+    [% END -%]
+        [% classname %]& operator=(const [% classname %]& other);
+    [% IF doxygen=='yes' -%]
+    
+        /**
+         * Destructor
+         */
+    [% END -%]
+        virtual ~[% classname %]();
+    
+      private:
+    [% IF doxygen=='yes' -%]
+    
+        /**
+         * Base initialisation should be called
+         * at beginning of each constructor
+         */
+    [% END -%]
+        void init();
+    [% IF doxygen=='yes' -%]
+
+    /**
+     * Method to copy each member (deep copy)
+     * @param other reference on object to copy
+     */
+    [% END -%]
+        void init(const [% classname %]& other);
+    };
+
+    #endif /* #ifndef [% uc(classname) %]_HPP */
+    ________________________________________________________
+
+  run vim:
+    :Vimplate hpp-default
+    Class name: Parent
+    with Doxygen comments: 
+      0) no
+      1) yes
+    1
+
+  your input was: 
+    :Vimplate hpp-default<CR>Parent<CR>1<CR>
+
+  this will produce this c++ include file:
+    ________________________________________________________
+    #ifndef PARENT_HPP
+    #define PARENT_HPP
+
+    /**
+     * @brief Parent ... short description ...
+     * @author Urs Stotz <stotz@gmx.ch>
+     * @date 2005-07-18
+     * ... description ...
+     */
+
+    class Parent
+    {
+      public:
+
+        /**
+         * Default constructor
+         */
+        Parent();
+
+        /**
+         * Copy constructor
+         * @param other reference on object to copy
+         */
+        Parent(const Parent& other);
+
+        /** 
+         * Assignment operator
+         * @param other reference on object to copy
+         * @return reference on initialisated object
+         */
+        Parent& operator=(const Parent& other);
+
+        /**
+         * Destructor
+         */
+        virtual ~Parent();
+
+      private:
+
+        /**
+         * Base initialisation should be called
+         * at beginning of each constructor
+         */
+        void init();
+
+        /**
+         * Method to copy each member (deep copy)
+         * @param other reference on object to copy
+         */
+        void init(const Parent& other);
+    };
+
+    #endif /* #ifndef PARENT_HPP */
+    ________________________________________________________
+
+==============================================================================
+6. Requirements                                      *vimplate-requirements*
+===============
+  Perl
+    http://www.perl.org
+    Windows users:
+      http://www.activestate.com/Products/ActivePerl
+  Template-Toolkit
+    http://search.cpan.org/~abw/Template-Toolkit-2.14
+    or apt-get install libtemplate-perl
+    or perl -MCPAN -e"install Template"
+    Windows users:
+      ppm install
+        http://openinteract.sourceforge.net/ppmpackages/AppConfig.ppd
+      ppm install
+        http://openinteract.sourceforge.net/ppmpackages/Template-Toolkit.ppd
+
+==============================================================================
+7. Documentation                                    *vimplate-documentation*
+================
+Documentation:
+  - http://www.template-toolkit.org/docs.html
+  - http://perldoc.perl.org/perl.html
+
+Todo:
+  - better exception handling
+  - write more templates
+
+License:
+  This program is free software; you can redistribute it and/or modify it
+  under the terms of the GNU General Public License, version 2, as published
+  by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+  or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+  for more details.
+
+  A copy of the GNU GPL is available as /usr/share/common-licenses/GPL-2
+  on Debian systems, or on the World Wide Web at
+  http://www.gnu.org/copyleft/gpl.html
+  You can also obtain it by writing to the Free Software Foundation, Inc.,
+  59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+
+Copyright:
+  Copyright (c) 2005, Urs Stotz <stotz@gmx.ch>
+
+Version:
+  vimplate 0.2.3
+
+==============================================================================
+8. Installation                                      *vimplate-installation*
+===============
+Depends:
+  Perl:
+    http://www.perl.org
+  Template-Toolkit:
+    http://search.cpan.org/~abw/Template-Toolkit-2.14
+
+Suggests:
+  TT2 syntax:
+    http://www.vim.org/scripts/script.php?script_id=830
+
+Installation steps:
+  1. change to your $HOME/.vim directory
+       (on windows: set the variable HOME 
+         set HOME=c:\vim)
+  2. untar vimplate.tar.gz: gzip -dc vimplate.tar.gz |tar xpvf -
+  3. move the vimplate into your preferred directory
+      for example in $HOME/bin or /usr/local/bin
+  4. move the directory Template with the example templates
+      to the place that you prefer
+  5. edit your $HOME/.vimrc and set the variable Vimplate to
+      to the place where vimplate is located
+      for example let Vimplate = "$HOME/bin/vimplate"
+        (on windows: let Vimplate = "$HOME/bin/vimplate.cmd" )
+  6. run vimplate to create your configuration file $HOME/.vimplaterc
+      for example $HOME/bin/vimplate -createconfig
+        (on windows: $HOME/bin/vimplate.cmd -createconfig" )
+  7. edit your $HOME/.vimplaterc
+       (on windows: $HOME/_vimplaterc)
+  8. change to the $HOME/.vim/doc directory,
+      start Vim and run the ":helptags ." command to process the
+      taglist help file. (see: |helptags| )
+  9. happy vimplating
+==============================================================================
+
+vim:tw=78:ts=2:ft=help
