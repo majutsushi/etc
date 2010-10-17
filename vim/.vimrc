@@ -64,7 +64,6 @@ au FileType gtkrc setlocal tabstop=2 shiftwidth=2
 au FileType haskell compiler ghc
 au FileType mkd setlocal ai formatoptions=tcroqn2 comments=n:>
 au FileType ruby setlocal omnifunc=rubycomplete#Complete
-au FileType gitcommit DiffGitCached | wincmd p
 
 augroup cfile
     "au FileType c setlocal path+=/usr/include,/usr/include/sys,/usr/include/linux
