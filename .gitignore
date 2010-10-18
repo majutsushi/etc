@@ -7,13 +7,14 @@ emacs/.emacs.d/auto-save-list/
 emacs/.emacs.d/session.*
 mutt/.mutt/smtp-*
 mutt/.mutt/imap-*
-vim/.vim/doc/tags-ja
 vim/.vim/systags
 vim/.vim/.netrwhist
 vim/.vim/cache
 vim/.vim/spell
 vim/.vim/GetLatest/Installed
 vim/.vim/passwords.vim
+vim/.vim/bundle/xptemplate
+vim/.vim/bundle/vim-latex
 xmonad/history
 xmonad/xmonad-i386-linux
 xmonad/xmonad.errors
