@@ -16,9 +16,6 @@
 [submodule "vim/.vim/bundle/checkattach"]
 	path = vim/.vim/bundle/checkattach
 	url = http://github.com/chrisbra/CheckAttach.git
-[submodule "vim/.vim/bundle/blogit"]
-	path = vim/.vim/bundle/blogit
-	url = http://git.symlink.me/pub/romain/blogit.git
 [submodule "vim/.vim/bundle/surround"]
 	path = vim/.vim/bundle/surround
 	url = http://github.com/tpope/vim-surround.git
