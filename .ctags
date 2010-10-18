@@ -2,7 +2,7 @@
 --c-kinds=+p
 --c++-kinds=+p
 --fields=+iaS
--I __THROW,__NTH,__wur,__warnattr,__nonnull,__attribute_malloc__,__attribute_pure__,__attribute_used__,__attribute_noinline__,__attribute_deprecated__,__attribute_format_arg__,__attribute_format_strfmon__,__attribute_warn_unused_result__,__always_inline,__extern_inline,__extension__,__restrict
+-I __THROW,__NTH,__wur,__warnattr,__nonnull,__attribute_malloc__,__attribute_pure__,__attribute_used__,__attribute_noinline__,__attribute_deprecated__,__attribute_format_arg__,__attribute_format_strfmon__,__attribute_warn_unused_result__,__always_inline,__extern_inline,__extension__,__restrict,PR_IMPLEMENT
 
 --langdef=latex
 --langmap=latex:.tex
