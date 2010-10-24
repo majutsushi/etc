@@ -963,7 +963,8 @@ if executable('urxvt')
 else
     let vimrplugin_term = "uxterm"
 endif
-
+let vimrplugin_conqueplugin = 0
+let vimrplugin_conquevsplit = 1
 
 " rubycomplete {{{2
 let g:rubycomplete_buffer_loading = 1
