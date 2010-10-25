@@ -939,6 +939,7 @@ let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$']
 let NERDTreeHijackNetrw = 0
 
 nmap <silent> <F10> :NERDTreeToggle<CR>
+nmap <silent> <leader>nf :NERDTreeFind<CR>
 
 " omnicppcomplete {{{2
 let g:OmniCpp_SelectFirstItem = 2 " select first completion item, but don't insert it
