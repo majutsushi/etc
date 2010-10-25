@@ -1248,6 +1248,9 @@ xmap <leader>tr  :s/\s\+$//<CR>
 " indent for C/C++ programs
 nmap <leader>i :%!astyle<CR>
 
+"align map for assignments in R scripts
+xmap <leader>ar :Align <-<CR>
+
 " re-select selection after changing indent
 xmap > >gv
 xmap < <gv
