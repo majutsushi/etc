@@ -216,8 +216,8 @@ sub listTemplates {
   opendir(DIR, $Config::opt->{dir});
   my ($file, @files);
   FILE: foreach $file (readdir(DIR)) {
-    next FILE if ($file!~/\.tt$/);
-    $file=~s/\.tt//;
+    next FILE if ($file!~/\.tt2$/);
+    $file=~s/\.tt2//;
     push @files, $file;
   }
   close DIR;
@@ -325,10 +325,10 @@ if ( defined $opt{template} ) {
     },
   };
 
-  $tt->process( $opt{template} . '.tt', $ttvar, $opt{out} );
+  $tt->process( $opt{template} . '.tt2', $ttvar, $opt{out} );
   if ( $EVAL_ERROR =~ /file error - .*: not found/ ) {
     $tt->process( 
-      $ttvar->{'choice'}("choice: ", listTemplates()) . '.tt', $ttvar, $opt{out}
+      $ttvar->{'choice'}("choice: ", listTemplates()) . '.tt2', $ttvar, $opt{out}
     );
   }
   if ($EVAL_ERROR) {
