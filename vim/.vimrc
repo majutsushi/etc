@@ -1373,6 +1373,15 @@ nmap <F2> :set invlist list?<CR>
 imap <F2> <C-O><F2>
 xmap <F2> <Esc><F2>gv
 
+nmap <silent> zi
+    \ :if &foldenable <Bar>
+    \     setlocal nofoldenable <Bar>
+    \     setlocal foldcolumn=0 <Bar>
+    \ else <Bar>
+    \     setlocal foldenable <Bar>
+    \     setlocal foldcolumn=3 <Bar>
+    \ endif<CR>
+
 " remove search highlighting
 nnoremap <silent> <C-L> :silent nohl<CR><C-L>
 
@@ -1436,4 +1445,4 @@ nmap <silent> <leader>gk :silent !gitk<cr>
 "inoremap  <Esc><Right>
 
 " Modeline {{{1
-" vim:tw=78 expandtab comments=\:\" foldmethod=marker foldenable
+" vim:tw=78 expandtab comments=\:\" foldmethod=marker foldenable foldcolumn=3
