@@ -35,7 +35,7 @@ hi Cursor	guibg=khaki guifg=slategrey
 hi VertSplit	guibg=#c2bfa5 guifg=grey50 gui=none
 "hi Folded	guibg=grey30 guifg=gold
 hi Folded	guibg=grey20 guifg=gold
-hi FoldColumn	guibg=grey30 guifg=tan
+hi FoldColumn	guibg=grey20 guifg=tan
 hi IncSearch	guifg=slategrey guibg=khaki
 "hi LineNr
 hi ModeMsg	guifg=goldenrod
@@ -54,7 +54,7 @@ hi WarningMsg	guifg=salmon
 "hi Menu
 "hi Scrollbar
 "hi Tooltip
-hi SignColumn	guibg=grey15
+hi SignColumn	guibg=grey20
 hi clear ColorColumn
 hi link ColorColumn CursorLine
 
