@@ -960,6 +960,9 @@ nmap <leader>ft :FufTag<CR>
 " git {{{2
 "let g:git_diff_spawn_mode = 1
 
+" Gundo {{{2
+nnoremap <leader>u :GundoToggle<CR>
+
 " haskellmode {{{2
 let g:haddock_browser="/usr/bin/gnome-www-browser"
 let g:haddock_docdir="/usr/share/doc/ghc6-doc/libraries/"
