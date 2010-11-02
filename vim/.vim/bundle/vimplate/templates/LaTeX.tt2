@@ -37,35 +37,50 @@
 %\geometry{landscape}
 
 
-% Line Spacing {{{2
-\usepackage{setspace}
-%\singlespacing
-%\onehalfspacing
-%\doublespacing
-
-
 % Fonts {{{2
 \usepackage[T1]{fontenc}
-%\usepackage{lmodern}
+\usepackage{lmodern}
 \usepackage{textcomp}
 \usepackage{latexsym}
+\usepackage[overload]{textcase} % provide improved \MakeUppercase and \MakeLowercase
 
 % use garamond and corresponding fonts
+% garamond doesn't have old-style figures and real small caps!
 %\usepackage[urw-garamond]{mathdesign}
 %\usepackage[scaled]{berasans}
 %\usepackage[scaled]{beramono}
 
 % use palatino and corresponding fonts
-%\usepackage[sc]{mathpazo}
+%\usepackage[sc,osf]{mathpazo}
 %\linespread{1.05}         % Palatino needs more leading (space between lines)
 %\usepackage[scaled]{berasans}
 %\usepackage[scaled]{beramono}
+%to use lining figures:
+%\fontfamily{pplx}\selectfont
+
+%\usepackage[fulloldstylenums]{kpfonts}
+%\usepackage[scaled]{beramono}
+
+%\usepackage[osf]{libertine}
+%\usepackage[scaled]{beramono}
+%to use lining figures:
+%\fontfamily{fxl}\selectfont
 
 % inconsolata monospace font
 %\usepackage{inconsolata}
 
 % euler math font
 %\usepackage{eulervm}
+
+
+% Title/Section Layout {{{2
+%\usepackage{titlesec}
+
+% Line Spacing {{{2
+\usepackage{setspace}
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
 
 
 % Headers/Footers {{{2
@@ -75,6 +90,7 @@
 %\lhead{}\chead{}\rhead{}
 %\lfoot{}\cfoot{\thepage}\rfoot{}
 
+%\usepackage{scrpage2} % better than fancyhdr for KOMA classes
 
 % Figures/Floats {{{2
 \usepackage{float}
