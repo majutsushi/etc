@@ -940,22 +940,6 @@ let g:EnhCommentifyBindInInsert = 'No'
 let g:EnhCommentifyTraditionalMode = 'No'
 let g:EnhCommentifyFirstLineMode = 'Yes'
 
-" FuzzyFinder {{{2
-let g:fuf_infoFile             = '~/.cache/vim/vim-fuf'
-let g:fuf_tag_cache_dir        = '~/.cache/vim/vim-fuf-cache/tag'
-let g:fuf_taggedfile_cache_dir = '~/.cache/vim/vim-fuf-cache/taggedfile'
-let g:fuf_help_cache_dir       = '~/.cache/vim/vim-fuf-cache/help'
-
-" a leading space allows a recursive search
-let g:fuf_abbrevMap = {
-    \   "^ " : [ "**/", ],
-    \ }
-
-nmap <leader>fb :FufBuffer<CR>
-nmap <leader>ff :FufFile<CR>
-nmap <leader>fd :FufDir<CR>
-nmap <leader>fm :FufMruFile<CR>
-nmap <leader>ft :FufTag<CR>
 
 " git {{{2
 "let g:git_diff_spawn_mode = 1
