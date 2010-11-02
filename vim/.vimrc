@@ -1041,6 +1041,7 @@ let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels;r:refs;p:pagerefs
 nmap <silent> <F9> :Tlist<CR>
 
 " timestamp {{{2
+let loaded_timestamp = 1
 let g:timestamp_modelines = 20
 let g:timestamp_rep = '%Y-%m-%d %H:%M:%S %z %Z'
 "let g:timestamp_regexp = '\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}  ?%(\a+)?|TIMESTAMP'
