@@ -134,6 +134,48 @@ if !exists(":DiffOrig")
                 \ | wincmd p | diffthis
 endif
 
+" GenerateFoldText() {{{2
+" adjusted from http://vim.wikia.com/wiki/Customize_text_for_closed_folds
+function! GenerateFoldText()
+    let line = getline(v:foldstart)
+    if match(line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$') == 0
+        let initial = substitute(line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '')
+        let linenum = v:foldstart + 1
+        while linenum < v:foldend
+            let line = getline(linenum)
+            let comment_content = substitute(line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g')
+            if comment_content != ''
+                break
+            endif
+            let linenum = linenum + 1
+        endwhile
+        let sub = initial . ' ' . comment_content
+    else
+"        if &foldmethod == "marker"
+"            let sub = v:folddashes . ' ' . line
+"        else
+            let sub = line
+"        endif
+        let startbrace = substitute(line, '^.*{[ \t]*$', '{', 'g')
+        if startbrace == '{'
+            let line = getline(v:foldend)
+            let endbrace = substitute(line, '^[ \t]*}\(.*\)$', '}', 'g')
+            if endbrace == '}'
+                let sub = sub . substitute(line, '^[ \t]*}\(.*\)$', '...}\1', 'g')
+            endif
+        endif
+    endif
+    let n = v:foldend - v:foldstart + 1
+    let info = " " . n . " lines " . v:folddashes . '|'
+    let sub = sub . "                                                                                                                  "
+    let num_w = getwinvar(0, '&number') * getwinvar(0, '&numberwidth')
+    let fold_w = getwinvar(0, '&foldcolumn')
+    let sign_w = empty(quickfixsigns#marks#GetList()) ? 0 : 2
+    let len = min([winwidth(0) - num_w - fold_w - sign_w - 1, 100])
+    let sub = strpart(sub, 0, len - strlen(info))
+    return sub . info
+endfunction
+
 " GenerateStatusline() {{{2
 " some code taken from
 " http://cream.cvs.sourceforge.net/cream/cream/cream-statusline.vim?revision=1.38&view=markup
@@ -258,67 +300,12 @@ function! GetTabstop()
     return str
 endfunction
 
-" GuiSettings() {{{2
-function! GuiSettings()
-    set guifont=DejaVu\ Sans\ Mono\ 8
-
-    set guioptions+=c " use console dialogs
-    set guioptions-=e " don't use gui tabs
-    set guioptions-=T " don't show toolbar
-
-    " "no", "yes" or "menu"; how to use the ALT key
-"   set winaltkeys=no
-endfunction
-
-" InsertGuards() {{{2
-function! InsertGuards()
-    let guardname = "_" . substitute(toupper(expand("%:t")), "[\\.-]", "_", "g") . "_"
-    execute "normal! ggI#ifndef " . guardname
-    execute "normal! o#define " . guardname . " "
-    execute "normal! Go#endif /* " . guardname . " */"
-    normal! kk
-endfunction
-
-" LoadProjectConfig() {{{2
-function! LoadProjectConfig(filepath)
-    let l:cwd = getcwd()
-    if a:filepath =~ "^" . l:cwd
-        if filereadable('project_config.vim')
-"            exe 'sandbox source project_config.vim'
-            exe 'source project_config.vim'
-        endif
-    endif
-    if filereadable(a:filepath . '/project_config.vim')
-"        exe 'sandbox source %:h/project_config.vim'
-        exe 'source ' . a:filepath . '/project_config.vim'
-    endif
-endfunction
-
-" GenCscopeAndTags() {{{2
-function! GenCscopeAndTags()
-    " see ~/.ctags
-    " add --extra=+q here to avoid double entries in taglist
-    if filereadable("cscope.files")
-        execute '!cscope -qbc'
-        execute '!' . g:ctagsbin . ' --extra=+q -L cscope.files'
-    else
-        execute '!cscope -Rqbc'
-        execute '!' . g:ctagsbin . ' -R --extra=+q'
-    endif
-    if cscope_connection(2, "cscope.out") == 0
-        execute 'cs add cscope.out'
-    else
-        execute 'cs reset'
-    endif
-    execute 'CCTreeLoadDB cscope.out'
-endfunction
-
-" MyTabLine() {{{2
+" GenerateTabLine() {{{2
 if exists("+guioptions")
      set go-=e
 endif
 if exists("+showtabline")
-    function! MyTabLine()
+    function! GenerateTabLine()
         let s = ''
         let t = tabpagenr()
         let i = 1
@@ -358,6 +345,61 @@ if exists("+showtabline")
     endfunction
 "    set stal=2
 endif
+
+" GenCscopeAndTags() {{{2
+function! GenCscopeAndTags()
+    " see ~/.ctags
+    " add --extra=+q here to avoid double entries in taglist
+    if filereadable("cscope.files")
+        execute '!cscope -qbc'
+        execute '!' . g:ctagsbin . ' --extra=+q -L cscope.files'
+    else
+        execute '!cscope -Rqbc'
+        execute '!' . g:ctagsbin . ' -R --extra=+q'
+    endif
+    if cscope_connection(2, "cscope.out") == 0
+        execute 'cs add cscope.out'
+    else
+        execute 'cs reset'
+    endif
+"    execute 'CCTreeLoadDB cscope.out'
+endfunction
+
+" GuiSettings() {{{2
+function! GuiSettings()
+    set guifont=DejaVu\ Sans\ Mono\ 8
+
+    set guioptions+=c " use console dialogs
+    set guioptions-=e " don't use gui tabs
+    set guioptions-=T " don't show toolbar
+
+    " "no", "yes" or "menu"; how to use the ALT key
+"   set winaltkeys=no
+endfunction
+
+" InsertGuards() {{{2
+function! InsertGuards()
+    let guardname = "_" . substitute(toupper(expand("%:t")), "[\\.-]", "_", "g") . "_"
+    execute "normal! ggI#ifndef " . guardname
+    execute "normal! o#define " . guardname . " "
+    execute "normal! Go#endif /* " . guardname . " */"
+    normal! kk
+endfunction
+
+" LoadProjectConfig() {{{2
+function! LoadProjectConfig(filepath)
+    let l:cwd = getcwd()
+    if a:filepath =~ "^" . l:cwd
+        if filereadable('project_config.vim')
+"            exe 'sandbox source project_config.vim'
+            exe 'source project_config.vim'
+        endif
+    endif
+    if filereadable(a:filepath . '/project_config.vim')
+"        exe 'sandbox source %:h/project_config.vim'
+        exe 'source ' . a:filepath . '/project_config.vim'
+    endif
+endfunction
 
 " PreviewWord() {{{2
 function! PreviewWord(local)
@@ -609,7 +651,7 @@ if exists("+showtabline")
     " 0, 1 or 2; when to use a tab pages line
     set showtabline=1
     " custom tab pages line
-    set tabline=%!MyTabLine()
+    set tabline=%!GenerateTabLine()
 endif
 
 " terminal {{{2
@@ -749,6 +791,8 @@ set nofoldenable
 "set foldlevel=100
 " width of the column used to indicate folds (local to window)
 "set foldcolumn=3
+" expression used to display the text of a closed fold
+set foldtext=GenerateFoldText()
 " specifies for which commands a fold will be opened
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
 " maximum fold depth for when 'foldmethod is "indent" or "syntax" (local to window)
