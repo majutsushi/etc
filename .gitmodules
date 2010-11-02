@@ -31,3 +31,6 @@
 [submodule "vim/.vim/bundle/histwin"]
 	path = vim/.vim/bundle/histwin
 	url = http://github.com/chrisbra/histwin.vim.git
+[submodule "vim/.vim/bundle/command-t"]
+	path = vim/.vim/bundle/command-t
+	url = http://github.com/wincent/Command-T.git
