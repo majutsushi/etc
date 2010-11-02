@@ -352,8 +352,8 @@ unignore x-label:
 unhdr_order *
 hdr_order Date: From: Reply-To: To: Cc: Subject: X-Label: X-Newsreader: X-Mailer: Organization: Organisation: User-Agent: X-Fnord: X-Message-Flag: Newsgroups: X-Spam-Status:
 
-# this is cool, dual text/html mails have only the text part shown
-alternative_order text/plain text/html  # I like plaintext more than html.
+# put multipart/mixed in front for Apple Mail messages with attachments
+alternative_order multipart/mixed text/plain text/html
 
 # }}}
 # =============================================================================
