@@ -681,7 +681,7 @@ color header     $my_green   $my_background  "^X-Spam-Status:"
 
 color body      $my_yellow      $my_background  " [;:]-?[)/(|]"  # colorise smileys
 # color body      brightblue  default  "\\b[^ ]+://[^] >\")]*"
-color body      bright$my_cyan  $my_background  "((ftp|http|https)://|(file|news):|www\\.)[-a-z0-9_.:]*[a-z0-9](/[^][{} \t\n\r\"<>()]*[^][{} \t\n\r\"<>().,:!])?/?"
+color body      bright$my_cyan  $my_background  "((ftp|http|https)://|(file|news):|www\\.)[-a-z0-9_.:@]*[a-z0-9](/[^][{} \t\n\r\"<>()]*[^][{} \t\n\r\"<>().,:!])?/?"
 color body      brightcolor113 $my_background  "[[:alnum:]][-+.#_[:alnum:]]*@[-+.[:alnum:]]*[[:alnum:]]"
 
 #  Coloring quoted text - coloring the first 8 levels:
