@@ -1101,6 +1101,40 @@ let g:yankring_history_dir = '$HOME/.cache/vim'
 nnoremap <silent> <leader>y :YRShow<CR>
 
 " Abbrevs {{{1
+func! Eatchar(pat)
+    let c = nr2char(getchar(0))
+    return (c =~ a:pat) ? '' : c
+endfunc
+
+iab _me Jan Larres
+iab _mail jan@majutsushi.net
+iab _www http://majutsushi.net
+
+" Correcting those typos.
+iab alos also
+iab aslo also
+iab charcter character
+iab charcters characters
+iab exmaple example
+iab shoudl should
+iab seperate separate
+iab teh the
+
+iab _ae ä
+iab _ue ü
+iab _oe ö
+iab _ss ß
+
+iab _mfg  Mit freundlichen Grüßen
+iab _mfgl Mit freundlichen Grüßen,Jan Larres<C-R>=Eatchar('\s')<CR>
+iab _vg Viele Grüße
+
+iab _time <C-R>=strftime("%H:%M")<CR>
+" Example: 14:28
+
+iab _date <C-R>=strftime("%a %d %b %Y %T %Z")<CR>
+" Example: Di 06 Jun 2006 21:27:59 CEST
+
 source ~/.vim/abbrevs.vim
 
 " Terminal stuff {{{1
