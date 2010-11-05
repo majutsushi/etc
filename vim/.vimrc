@@ -1135,7 +1135,9 @@ iab _time <C-R>=strftime("%H:%M")<CR>
 iab _date <C-R>=strftime("%a %d %b %Y %T %Z")<CR>
 " Example: Di 06 Jun 2006 21:27:59 CEST
 
-source ~/.vim/abbrevs.vim
+if filereadable('~/.vim/abbrevs.vim')
+    source ~/.vim/abbrevs.vim
+endif
 
 " Terminal stuff {{{1
 
