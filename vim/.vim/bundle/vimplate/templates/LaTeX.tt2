@@ -76,6 +76,11 @@
 % Title/Section Layout {{{2
 %\usepackage{titlesec}
 
+%\usepackage{sectsty}
+%\makeatletter
+%\def\@seccntformat#1{\protect\makebox[0pt][r]{\csname the#1\endcsname\hspace{12pt}}}
+%\makeatother
+
 % Line Spacing {{{2
 \usepackage{setspace}
 %\singlespacing
