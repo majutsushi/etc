@@ -187,6 +187,10 @@ calling the function:
 							*protodef-changes*
 A. Change History~
 
+0.9.5
+	- Fixed up a regular expression so it matches pointers and references
+	  better (pointers and references attached to the name instead of the
+	  type, which is hideous).  (Paolo Capriotti)
 0.9.4
 	- Made sure that we need at least 7.0 (Timon Kelter)
 	- Introduced the disable_protodef_sorting variable.

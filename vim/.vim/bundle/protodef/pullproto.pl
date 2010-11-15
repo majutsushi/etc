@@ -77,11 +77,11 @@ while (<STDIN>)
     }
     else
     {
-		my @a = $content =~ m/(const)?\s*(unsigned)?\s*(\S+)\s*(\Q$function\E$matched?)\s*(\([^\)]*\)[^;]*);/m; # (Matt Spear) added \Q\E and $matched
-        my $str = join(" ", @a);
-		($pre, $fname, $post) = $str =~ m/(.*\s)(\Q$function\E$matched?)\s(.*)/s; # (Matt Spear) added \Q\E and $matched
-        $pre =~ s/\s+/ /g;
-        $pre =~ s/^\s+//g;
+        # Paolo Capriotti - Simplify function regexp and fix bug for pointer and reference return types
+        my @a = $content =~ m/((const)?\s*(unsigned)?\s*\S+\s*[\*&]?)(\Q$function\E$matched?)\s*(\([^\)]*\)[^;]*);/m; # (Matt Spear) added \Q\E and $matched
+        $pre = @a[0];
+        $fname = @a[3];
+        $post = @a[4];
     }
     print "==\n";
     if ($class ne "")

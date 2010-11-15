@@ -13,7 +13,7 @@
 " 	           No warranty, express or implied.
 " 	           Use At-Your-Own-Risk!
 "
-" Version:     0.9.4
+" Version:     0.9.5
 " ============================================================================
 
 if exists("g:disable_protodef")

@@ -7,7 +7,7 @@ Author:      Dan Price   vim@danprice.fastmail.net       *EasyGrep_Author*
 
 Goal:        To be an easy to use, powerful find and     |EasyGrep_Motivation|
              replace tool for users of all skill levels.
-Version:     0.96                                        |EasyGrep_History|
+Version:     0.98                                        |EasyGrep_History|
 
 License:     Public domain, no restrictions whatsoever   |EasyGrep_License|
 Contribute:  Please report any bugs or suggestions       |EasyGrep_Bugs|
@@ -188,6 +188,7 @@ e.g.
     -R   Perform a recursive search
     -i   Perform a case-insensitive search
     -I   Perform a case-sensitive search
+    -m   Specify the number of matches to get
 
 :Replace [target] [replacement]
 :Replace /[target]/[replacement]/
@@ -202,9 +203,6 @@ e.g.
     work well when edits are made between a call to Replace and a call to
     ReplaceUndo.
 
-    Note: currently implemented ReplaceUndo will fail to restore replacements
-    that make use of backreferences.|EasyGrep_Bugs|
-
 :GrepOptions
     Open the options explorer to set options.
 
@@ -212,6 +210,16 @@ e.g.
 For each of the search and replace commands, searching with regular
 expressions is supported.  Note that regular expressions are handled as
 indicated by the 'magic' option (see ":help 'magic'").
+
+:FilterErrorlist [args]
+    Removes entries from the error list according to whether or not they match
+    a set of specified patterns.  The default behaviour is to save all entries
+    that match one of the patterns and remove those that do not.
+
+    The Above command can additionally accept command switches:
+    -v   Switch the criteria for matching; remove entries matching one of the
+         specified patterns instead of saving them
+    -l   Remove entries from the location list
 
 
 ==============================================================================
@@ -238,6 +246,8 @@ Options Summary                                      *EasyGrep_OptionsSummary*
 |EasyGrepAllOptionsInExplorer|        How many options to show in the explorer
 ------------------------------------------------------------------------------
 |EasyGrepWindow|                      Quickfix or location list
+------------------------------------------------------------------------------
+|EasyGrepWindowPosition|              Where the error list window is opened
 ------------------------------------------------------------------------------
 |EasyGrepOpenWindowOnMatch|           Open grep window on successful match
 ------------------------------------------------------------------------------
@@ -337,6 +347,11 @@ Specifies the window to use for matches.
 0 - quickfix
 1 - location list
 
+*EasyGrepWindowPosition*
+Specifies where the error list window is opened.  The value of this option
+must match one of Vim's splitting positional window commands, such as topleft
+or botright.
+
 *EasyGrepOpenWindowOnMatch*
 Specifies whether to open the with matches after a search.
 
@@ -405,12 +420,11 @@ Show search progress?
 ------------------------------------------------------------------------------
 Allow entries in the file associations list to be regular expressions
 ------------------------------------------------------------------------------
-Idea: create capability to include paths other than the active directory (and
-below) in a search.  e.g.  ../../include, $INCLUDE, etc.
+create capability to include paths other than the active directories in a
+search.  e.g.  ../../include, $INCLUDE, etc.
 ------------------------------------------------------------------------------
-Idea: set file/directory exclusions
+set file/directory exclusions
 ------------------------------------------------------------------------------
-
 
 ==============================================================================
   Bugs                                                         *EasyGrep_Bugs*
@@ -418,18 +432,6 @@ Idea: set file/directory exclusions
 
 If you discover any bugs not listed here, please contact the |EasyGrep_Author|
 
-------------------------------------------------------------------------------
-ReplaceUndo can't correctly restore replacements that use numbered
-sub-expressions
-------------------------------------------------------------------------------
-ReplaceUndo can't currently replace the text accurately in all cases if case
-insensitivity is turned on
-------------------------------------------------------------------------------
-Increase the granularity of the match inside of a Replace call so that you can
-individually decide per line
-------------------------------------------------------------------------------
-Cursorline doesn't always follow to the line at which the replacement is going
-to happen
 ------------------------------------------------------------------------------
 Successive warning messages can hide a previous message
 ------------------------------------------------------------------------------
@@ -440,6 +442,10 @@ Report that a swap file can't be opened
 Don't warn when the current file will actually be searched because recursion
 is on and it is below the current directory
 ------------------------------------------------------------------------------
+Patterns with backslashes in them require double-backslash to be searched from
+the command line.  This behaviour matches the builtin / command but it may be
+unintuitive.
+------------------------------------------------------------------------------
 
 
 
@@ -447,6 +453,33 @@ is on and it is below the current directory
   History                                                   *EasyGrep_History*
 ==============================================================================
 
+  0.98
+      Highlight: The Replace and ReplaceUndo commands were reimplemented.  The
+          granularity of matches inside of a Replace call were improved so that
+          you can now decide replacements individually per line.
+          Additionally, Complex operations such as replacing x[i][j][k] with
+          x(i,j,k) and following it up with a ReplaceUndo are now possible.
+
+          e.g.
+          :Replace /x\[\([^]]\+\)\]\[\([^]]\+\)\]\[\([^]]\+\)\]/x(\1,\2,\3)/
+          :ReplaceUndo
+
+          Please report any regressions with either of these functions.
+
+      Feature: Added count command line option (-m 4 or -4)
+      Feature: Improved Grep options window keybindings; searching within the
+          options explorer window is now possible
+      Feature: Expanded searches to include all of the active buffers'
+          directories
+      Bugfix:  Fixed recursive operation and expanded search from reporting
+          duplicate results
+      Bugfix:  Fixed <C-e> and <C-y> in replace mode
+      Feature: Added EasyGrepWindowPosition for specifying where the error
+          list window will be opened
+      Feature: Added FilterErrorlist command for filtering the results within
+          the quickfix or location list windows
+      Feature: Improved printout when no matches are found
+      Feature: Improved searching when an entire line is selected
   0.96
       Feature: Expanded upon the list of file associations
       Feature: Expanded searches to the current buffer's directory
@@ -466,8 +499,8 @@ is on and it is below the current directory
       g:EasyGrepOptionPrefix, which allows the option prefix to be changed.
       Bugfix:  The tracked extension would sometimes fail to be updated when
       switching between buffers
-	  Documentation: Split the documentation into its own file; greatly
-	  expanded upon its contents
+      Documentation: Split the documentation into its own file; greatly
+      expanded upon its contents
       Change: Activating a mode that is already activated will no longer
       deactivate it
       Change: GrepOptions no longer accepts an argument; use user mode instead
