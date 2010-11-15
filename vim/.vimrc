@@ -967,6 +967,9 @@ let g:languagetool_jar = "~/lib/LanguageTool/LanguageTool.jar"
 let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES"
 let g:languagetool_win_height = "15"
 
+" Latex Box {{{2
+let g:LatexBox_completion_close_braces = 0
+
 " NERD_Tree {{{2
 "let NERDTreeCaseSensitiveSort = 1
 let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
