@@ -52,7 +52,8 @@ function! IsNotSpecialBuf(buf)
     return ((&buftype != "quickfix") &&
           \ !&previewwindow &&
           \ (bufname(a:buf) !~ "NERD_tree") &&
-          \ (bufname(a:buf) !~ "__Tag_List__"))
+          \ (bufname(a:buf) !~ "__Tag_List__") &&
+          \ (bufname(a:buf) !~ "fugitive*"))
 endfunction
 if v:version >= 700
     au BufLeave * if(IsNotSpecialBuf("%")) | let b:winview = winsaveview() | endif
