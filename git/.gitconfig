@@ -10,8 +10,7 @@
 	main-window-view = HistoryView
 
 [gui]
-	fontdiff = -family fixed -size 8 -weight normal -slant roman -underline 0 -overstrike 0
-	fontui = -family fixed -size 8 -weight bold -slant roman -underline 0 -overstrike 0
+	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 
 [alias]
 	st = status
