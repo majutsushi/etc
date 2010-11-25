@@ -3,6 +3,10 @@ set nocompatible
 set encoding=utf-8
 let mapleader=","
 
+let g:pathogen_disabled = []
+if v:version < 703
+    let g:pathogen_disabled += ['gundo']
+endif
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 set runtimepath+=$HOME/.vim/xptpersonal
