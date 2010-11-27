@@ -970,6 +970,8 @@ let g:languagetool_win_height = "15"
 
 " Latex Box {{{2
 let g:LatexBox_completion_close_braces = 0
+"let g:LatexBox_latexmk_options = "-pvc"
+let g:LatexBox_autojump = 1
 
 " NERD_Tree {{{2
 "let NERDTreeCaseSensitiveSort = 1
