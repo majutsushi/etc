@@ -139,6 +139,44 @@ if !exists(":DiffOrig")
                 \ | wincmd p | diffthis
 endif
 
+" FindAutocmdTouching() {{{2
+" Find autocmds that set certain parameters
+" From https://groups.google.com/group/vim_use/msg/91d0d2bd87ce59e1
+function! FindAutocmdTouching(...)
+    " capture the text of existing autocmds
+    redir => aucmds
+    silent! au
+    redir END
+    let found = {}
+    let evt = 'unknown'
+    for line in split(aucmds, '\n')
+        " lines starting with non-whitespace are event names
+        if line =~ '^\S'
+            let evt = line
+            continue
+        endif
+        " add an entry if the line matches any of the passed patterns
+        if len(filter(copy(a:000), 'line =~ v:val'))
+            let found[evt] = get(found, evt, []) + [line]
+        endif
+    endfor
+
+    " print a small report of what was found
+    if len(found)
+        for [k, v] in items(found)
+            echo "autocmd" k
+            for line in v
+                echo line
+            endfor
+        endfor
+    else
+        echo "None found"
+    endif
+endfun
+
+" check for the two variants of 'spellcapcheck'
+"call FindAutocmdTouching('spellcapcheck','spc')
+
 " GenerateFoldText() {{{2
 " adjusted from http://vim.wikia.com/wiki/Customize_text_for_closed_folds
 function! GenerateFoldText()
