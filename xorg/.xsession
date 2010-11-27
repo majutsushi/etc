@@ -10,6 +10,8 @@ if test -z "$WINDOWMANAGER"; then
     #WINDOWMANAGER=fluxbox
 fi
 
+xrandr --output LVDS1 --set "scaling mode" "Full aspect"
+
 #. $HOME/.bashrc
 
 # =--> Set Xft DPI to match my X settings
@@ -25,6 +27,8 @@ fi
 # Pointer appearance
 #   - xcb does not support Xcursor yet
 /usr/bin/xsetroot -cursor_name left_ptr
+
+feh --bg-fill $HOME/media/desk/wallpaper/patterns/mypattern_1280x800.png
 
 #export JAVA_HOME=/opt/java
 #export PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
@@ -44,9 +48,41 @@ fi
 #xrdb -merge .Xresources
 #imwheel -b 006700
 #test -f /#avfs-on
+
+## test for an existing bus daemon, just to be safe
+if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
+    ## if not found, launch a new one
+    eval `dbus-launch --sh-syntax --exit-with-session`
+    echo "D-Bus per-session daemon address is: $DBUS_SESSION_BUS_ADDRESS"
+fi
+
 gnome-settings-daemon &
 gnome-power-manager &
+/usr/lib/gnome-volume-manager/gnome-volume-manager --sm-disable &
+/usr/lib/gnome-disk-utility/gdu-notification-daemon &
+/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+gnome-keyring-daemon --start --components=pkcs11 &
+gnome-keyring-daemon --start --components=secrets &
+gnome-keyring-daemon --start --components=ssh &
+#/usr/lib/evolution/2.30/evolution-alarm-notify &
+gnome-screensaver &
+
+/usr/lib/cdemu-daemon/cdemu-daemon.session &
+gpomme &
+smart-notifier &
+xcompmgr -n &
 kupfer --no-splash &
+
+#gnome-volume-control-applet &
+#alarm-clock-applet &
+bluetooth-applet &
+kerneloops-applet &
+parcellite &
+wicd-gtk &
+system-config-printer-applet &
+
+/home/jan/bin/touchpad.sh &
+#xdg-user-dirs-gtk-update
 
 #
 # finally start the window manager
