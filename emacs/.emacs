@@ -97,18 +97,18 @@
 (setq org-remember-templates
      '(
 ;      ("Todo" ?t "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" "~/projects/org/gtd.org" "Tasks")
-      ("Todo" ?t "* TODO %^{Brief Description} %^g\n%?  Added: %U" "~/projects/org/inbox.org" "Inbox")
-      ("Mail" ?m "* %?\n  Source: %u, %c\n  %i" "~/projects/org/inbox.org" "Inbox")
+      ("Todo" ?t "* TODO %^{Brief Description} %^g\n%?  Added: %U" "~/projects/org/gtd.org" "Inbox")
+      ("Mail" ?m "* %?\n  Source: %u, %c\n  %i" "~/projects/org/gtd.org" "Inbox")
 ;      ("Private" ?p "\n* %^{topic} %T \n%i%?\n" "C:/charles/gtd/privnotes.org")
 ;      ("WordofDay" ?w "\n* %^{topic} \n%i%?\n" "C:/charles/gtd/wotd.org")
       ))
 
 (setq org-capture-templates
       '(("t" "Todo" entry
-         (file+headline "~/projects/org/inbox.org" "Inbox")
+         (file+headline "~/projects/org/gtd.org" "Inbox")
          "* TODO %^{Brief Description} %^g\n%?  Added: %U")
         ("m" "Mail" entry
-         (file+headline "~/projects/org/inbox.org" "Inbox")
+         (file+headline "~/projects/org/gtd.org" "Inbox")
          "* %?\n  Source: %u, %c\n  %i"))
       )
 
