@@ -222,6 +222,8 @@ fpath=($ZDOTDIR/func/VCS_Info/Backends $fpath)
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
 
+add_to_path post LD_LIBRARY_PATH $HOME/lib
+
 export XDG_DATA_HOME=$HOME/.local/share
 # export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
 export XDG_CONFIG_HOME=$HOME/.config
@@ -230,8 +232,6 @@ export XDG_CACHE_HOME=$HOME/.cache
 
 # make sure the cache dir exists
 [[ ! -d $XDG_CACHE_HOME/zsh ]] && mkdir $XDG_CACHE_HOME/zsh
-
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
 
 # }}}
 
