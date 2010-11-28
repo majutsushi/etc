@@ -4,6 +4,8 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CONFIG_DIRS=/etc/xdg
 export XDG_CACHE_HOME=$HOME/.cache
 
+export LD_LIBRARY_PATH=$HOME/lib
+
 export PATH=$HOME/bin:/usr/games:/var/lib/gems/1.8/bin:$PATH
 # export SDL_AUDIODRIVER=dsp
 # export http_proxy=www-cache.rz.uni-passau.de:3128
