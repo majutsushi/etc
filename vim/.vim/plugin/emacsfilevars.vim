@@ -12,15 +12,15 @@ endif
 
 let loaded_emacsfilevars = 1
 
-if !exists("b:emacs_no_mode")
-    let b:emacs_no_mode = 0
-endif
-
 if !exists("g:emacs_no_mode")
     let g:emacs_no_mode = 0
 endif
 
 function ReadEmacsFileVars()
+    if !exists("b:emacs_no_mode")
+        let b:emacs_no_mode = 0
+    endif
+
     let l:modeMappings = { 'C++': 'cpp',
                          \ 'c++': 'cpp'}
     let l:boolMappings = { 'nil'  : 0,
