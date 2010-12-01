@@ -12,6 +12,14 @@ endif
 
 let loaded_emacsfilevars = 1
 
+if !exists("b:emacs_no_mode")
+    let b:emacs_no_mode = 0
+endif
+
+if !exists("g:emacs_no_mode")
+    let g:emacs_no_mode = 0
+endif
+
 function ReadEmacsFileVars()
     let l:modeMappings = { 'C++': 'cpp',
                          \ 'c++': 'cpp'}
@@ -38,8 +46,10 @@ function ReadEmacsFileVars()
                 let l:value    = substitute(l:varsplit[1], '\s*\(.*\)\s*', '\1', '')
 
                 if l:key ==? 'mode'
-                    if has_key(l:modeMappings, l:value)
-                        exec "set ft=" . l:modeMappings[l:value]
+                    if !b:emacs_no_mode && !g:emacs_no_mode
+                        if has_key(l:modeMappings, l:value)
+                            exec "set ft=" . l:modeMappings[l:value]
+                        endif
                     endif
                 elseif l:key ==? 'tab-width'
                     exec "setlocal tabstop=" . l:value
