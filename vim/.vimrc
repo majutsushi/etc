@@ -40,7 +40,7 @@ autocmd GUIEnter * call GuiSettings()
 autocmd InsertLeave * set nocul
 autocmd InsertEnter * set cul
 
-autocmd BufNewFile,BufReadPost * call LoadProjectConfig(expand("%:p:h"))
+autocmd BufNewFile,BufReadPre * call LoadProjectConfig(expand("%:p:h"))
 
 " create undo break point
 autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
