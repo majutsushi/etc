@@ -1,4 +1,0 @@
-$cfg{'sigmatch'} = '^/u2/huggie/\.sigs/(bc-.*|blackcat.*)$';
-$cfg{'sigdir'} = "~/.sigs";
-$cfg{'tagdir'}="~/.tags/";
-

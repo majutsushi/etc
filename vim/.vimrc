@@ -107,6 +107,9 @@ au BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.h TlistUpdate
 
 au BufWritePost,FileWritePost *.sh silent !chmod u+x %
 
+au BufNewFile,BufReadPost *.mutt/fortunes* setlocal textwidth=76
+au BufWritePost           *.mutt/fortunes* silent !strfile <afile> >/dev/null
+
 " Functions {{{1
 
 " Bclose() {{{2

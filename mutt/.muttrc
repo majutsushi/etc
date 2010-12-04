@@ -164,9 +164,7 @@ unset smime_is_default
 unset askbcc            # ask to fill out Bcc on mesg-send?
 unset askcc             # ask to fill out CC on mesg-send?
 unset autoedit          # start editor without asking for to, subject,...
-  set editor="~/bin/runhtag"
-#   set editor="vim '+:5'"
-#   set editor="vim '+/^$'"
+  set editor="vim"
   set edit_headers      # put headers in editor when composing messages
   set followup_to       # Add Mail-Followup-To header.
   set hdrs              # nohdrs implies not to write my_hdr into mail.
@@ -176,9 +174,9 @@ unset hidden_host       # when set, skip the host name part of hostname
 #   set query_command="~/bin/mutt-evo-query.rb '%s'"
   set query_command="lbdbq '%s'"
   set recall=ask-no     # ask for using postponed message.
-unset sig_dashes        # Don't prepend "-- \n" to the signature
+  set sig_dashes        # Prepend "-- \n" to the signature
 unset sig_on_top
-  set signature=""
+  set signature="~/.mutt/sig.sh|"
 unset text_flowed       # use format=flowed; if set, unset encode_from
 unset use_domain        # add $hostname to all addresses without @host
   set user_agent        # Create User-Agent: Mutt/<Version> header.
