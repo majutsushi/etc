@@ -115,7 +115,7 @@
 # ===============================================================
 # VARIABLES - Number values
 # ===============================================================
-  defscrollback         1000            # default: 100
+  defscrollback         10000           # default: 100
 # msgminwait            3               # default: 1
   silencewait           15              # default: 30
 #
