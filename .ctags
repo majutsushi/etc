@@ -26,3 +26,11 @@
 --regex-latex=/\\label[[:space:]]*\{([^}]+)\}/\1/l,label/
 --regex-latex=/\\ref[[:space:]]*\{([^}]+)\}/\1/r,ref/
 --regex-latex=/\\pageref[[:space:]]*\{([^}]+)\}/\1/p,pageref/
+
+--langdef=xpidl
+--langmap=xpidl:.idl
+--regex-xpidl=/^[[:blank:]]*interface[[:space:]]+([a-zA-Z0-9_]+);$/\1/p,prototype/
+--regex-xpidl=/^[[:blank:]]*interface[[:space:]]+([a-zA-Z0-9_]+)[[:space:]]+(:[[:space:]]*[^{]+[[:space:]]*)?/\1/i,interface/
+--regex-xpidl=/^.*[[:blank:]]+attribute[[:space:]]+([a-zA-Z0-9_]+)[[:space:]]+([a-zA-Z0-9_]+);/\2/a,attribute/
+--regex-xpidl=/^.*native[[:blank:]]+([a-zA-Z0-9_]+)\(/\1/t,type/
+--regex-xpidl=/^.*(void|boolean|octet|short|long|long[[:blank:]]+long|unsigned[[:blank:]]+short|unsigned[[:blank:]]+long|unsigned[[:blank:]]+long[[:blank:]]+long|float|double|char|wchar|string|wstring|nsrefcnt)[[:blank:]]+([a-zA-Z0-9_]+)\(/\2/o,operation/

@@ -1072,6 +1072,7 @@ let tlist_c_settings = 'c;d:macros;p:prototypes;v:variables;t:typedefs;m:members
 let tlist_cpp_settings = 'c++;d:macros;n:namespace;p:prototypes;v:variables;t:typedefs;c:class;m:members;g:enums;s:structs;u:unions;f:functions'
 "let g:tlist_tex_settings = 'tex;c:chapters;s:sections;u:subsections;b:subsubsections;p:parts;P:paragraphs;G:subparagraphs;i:includes'
 let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels;r:refs;p:pagerefs'
+let tlist_idl_settings = 'xpidl;p:prototypes;i:interfaces;a:attributes;t:types;o:operations'
 
 nmap <silent> <F9> :Tlist<CR>
 
