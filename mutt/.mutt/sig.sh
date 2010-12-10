@@ -7,19 +7,25 @@
 FORTUNES="$HOME/.mutt/fortunes-en $HOME/.mutt/fortunes-de"
 KEYID=00A0FD5F
 
-ANSWER="n"
-while [[ "$ANSWER" != "y" ]]; do
+ANSWER="y"
+
+function get_fortune {
     FORTUNE="$(fortune $FORTUNES)"
 
     echo >&2
     echo "$FORTUNE" >&2
 
     echo >&2
-    echo -n "OK? (y/N)" >&2
+    echo -n "OK? (Y/n)" >&2
 
     read ANSWER
+}
+
+get_fortune
+
+while [[ "$ANSWER" == "n" ]]; do
+    get_fortune
 done
 
-echo "OpenPGP key ID: $KEYID"
+echo "-[ OpenPGP key ID: ${KEYID} ]-"
 echo "$FORTUNE"
-
