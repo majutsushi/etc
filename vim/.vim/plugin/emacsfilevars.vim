@@ -37,7 +37,7 @@ function ReadEmacsFileVars()
         let l:line = getline(i)
 
         if l:line =~ '-\*-.\+-\*-'
-            let l:lineContent = substitute(l:line, '.*-\*-\(.\+\)-\*-.*', '\1', '')
+            let l:lineContent = substitute(l:line, '.*-\*-\s*\(.\{-}\)\s*-\*-.*', '\1', '')
             let l:vars        = split(l:lineContent, ';')
 
             for l:var in l:vars
