@@ -552,6 +552,19 @@ macro pager  K          "<shell-escape>gpg --lsign-key " "Sign PGP Key"
 macro pager \e0         "<enter-command>unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
 macro pager \e1         "<enter-command>set display_filter='t-prot -cmekatl --max-lines=250 --bigq --pgp-move-vrf -Mmutt -L$XDG_CONFIG_HOME/t-prot/footers -A$XDG_CONFIG_HOME/t-prot/ads'; exec exit\n:exec display-message\n" "Turn TOFU protection on"
 
+# call viewhtmlmsg from macro
+macro index,pager <F7> "\
+<enter-command> set my_wait_key=\$wait_key wait_key=no<enter>\
+<pipe-message>viewhtmlmsg<enter>\
+<enter-command> set wait_key=\$my_wait_key &my_wait_key<enter>\
+" "view HTML in browser"
+
+macro index,pager <F8> "\
+<enter-command> set my_wait_key=\$wait_key wait_key=no<enter>\
+<pipe-message>viewhtmlmsg -s<enter>\
+<enter-command> set wait_key=\$my_wait_key &my_wait_key<enter>\
+" "view HTML (safe) in browser"
+
 # }}}
 # =============================================================================
 # compose {{{
