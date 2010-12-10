@@ -244,10 +244,10 @@ unset mime_forward_decode     # decode messages when forwarding with MIME
 # general {{{
 
 unset arrow_cursor      # "->" as cursor (faster on slow networks).
+  set assumed_charset="windows-1252"
 unset beep              # beep on certain user errors and other errors
 unset beep_new          # beep on new mail
-#  set charset="iso-8859-15"
-  set charset="utf-8"
+#   set charset="utf-8"   # shouldn't need setting
   set check_new         # search for new messages in maildir/MH folders.
   set escape="~"
   set help              # show help in first line of the display
@@ -720,8 +720,8 @@ color body $my_green  $my_background "^#v[-+]"
 
 #save-hook .* =INBOX.lists.%B
 
-charset-hook us-ascii ISO-8859-15
-charset-hook unknown-8bit ISO-8859-15
+# charset-hook us-ascii ISO-8859-15
+# charset-hook unknown-8bit ISO-8859-15
 
 folder-hook .            set timeout=30
 folder-hook .            set sort=threads sort_aux=date-sent
