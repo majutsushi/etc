@@ -469,6 +469,8 @@ bind pager         n          next-undeleted
 bind pager         \n         next-new
 bind pager         <up>       previous-line
 bind pager         <down>     next-line
+bind index,pager   \Cd        half-down
+bind index,pager   \Cu        half-up
 
 # saving
 macro index,pager  \Cs        "<pipe-message>cat > ~/" "Save message to a file"
