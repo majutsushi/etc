@@ -673,6 +673,9 @@ bind R screen -t 'root' sux -
 
 bind \# colon "number "
 
+# retrieve urls from current screen
+bind ^b eval "hardcopy /tmp/screen.dump" "exec screen -X screen urlview /tmp/screen.dump"
+
 #
 # ===============================================================
 # BIND Examples:
