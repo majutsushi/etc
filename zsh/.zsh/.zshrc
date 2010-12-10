@@ -206,6 +206,7 @@ add_to_path post PATH /sbin
 add_to_path post PATH /usr/sbin
 
 add_to_path pre PATH "/var/lib/gems/1.8/bin/"
+add_to_path pre PATH $HOME/.local/bin
 add_to_path pre PATH $HOME/usr/bin
 
 # make sure $HOME/bin has the highest priority
