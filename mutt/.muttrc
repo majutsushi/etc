@@ -459,40 +459,32 @@ bind browser x          check-new
 # index & pager {{{
 
 # movement
-bind index  ' '         next-unread
-bind index   <pagedown> next-page
-bind index   <pageup>   previous-page
-bind pager   j          next-line
-bind pager   k          previous-line
-bind pager   p          previous-undeleted
-bind pager   n          next-undeleted
-bind pager  ' '         next-unread
-bind pager   \n         next-new
-bind pager   <up>       previous-line
-bind pager   <down>     next-line
+bind index,pager  ' '         next-unread
+bind index         <pagedown> next-page
+bind index         <pageup>   previous-page
+bind pager         j          next-line
+bind pager         k          previous-line
+bind pager         p          previous-undeleted
+bind pager         n          next-undeleted
+bind pager         \n         next-new
+bind pager         <up>       previous-line
+bind pager         <down>     next-line
 
 # saving
-macro index  \Cs        "<pipe-message>cat > ~/" "Save message to a file"
-macro pager  \Cs        "<pipe-message>cat > ~/" "Save message to a file"
+macro index,pager  \Cs        "<pipe-message>cat > ~/" "Save message to a file"
 
 # syncing
-bind index   x          sync-mailbox
-bind index   X          imap-fetch-mail
-bind pager   X          imap-fetch-mail
-
-# deleting
-# macro index  d          "<delete-message><next-undeleted>" "Delete message"
-# macro pager  d          "<delete-message><next-undeleted>" "Delete message"
+bind index         x    sync-mailbox
+bind index,pager   X    imap-fetch-mail
 
 # printing
 macro index  ,P         "<display-toggle-weed><print-message><display-toggle-weed><exit>" "Print message"
 macro pager  ,P         "<display-toggle-weed><print-message><display-toggle-weed>" "Print message"
 
 # threads
-macro index  \CR        "<enter-command>unset resolve<enter><read-thread><collapse-thread><next-unread><current-middle><enter-command>set resolve<enter>" "Mark the current thread as read"
-macro pager  \CR        "<enter-command>unset resolve<enter><read-thread><collapse-thread><next-unread><display-message><enter-command>set resolve<enter>" "Mark the current thread as read"
-macro index  \er        "<enter-command>unset resolve<enter><read-subthread><next-unread><current-middle><enter-command>set resolve<enter><display-message>" "Mark the current subthread as read"
-macro pager  \er        "<enter-command>unset resolve<enter><read-subthread><next-unread><current-middle><enter-command>set resolve<enter><display-message>" "Mark the current subthread as read"
+macro index        \CR  "<enter-command>unset resolve<enter><read-thread><collapse-thread><next-unread><current-middle><enter-command>set resolve<enter>" "Mark the current thread as read"
+macro pager        \CR  "<enter-command>unset resolve<enter><read-thread><collapse-thread><next-unread><display-message><enter-command>set resolve<enter>" "Mark the current thread as read"
+macro index,pager  \er  "<enter-command>unset resolve<enter><read-subthread><next-unread><current-middle><enter-command>set resolve<enter><display-message>" "Mark the current subthread as read"
 macro index '{'         "<collapse-thread>" "Collapse current thread"
 
 # quickly change to important folders
