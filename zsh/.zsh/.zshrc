@@ -224,6 +224,7 @@ fpath=($ZDOTDIR/func/VCS_Info/Backends $fpath)
 typeset -U path cdpath fpath manpath
 
 add_to_path post LD_LIBRARY_PATH $HOME/lib
+export LD_LIBRARY_PATH
 
 export XDG_DATA_HOME=$HOME/.local/share
 # export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
