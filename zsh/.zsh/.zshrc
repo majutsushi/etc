@@ -299,6 +299,10 @@ export NNTPSERVER=news.gmane.org
 
 export GPG_TTY=$(tty)
 
+# for java; XToolkit is the new one, but it doesn't work everywhere
+# export AWT_TOOLKIT=XToolkit
+# export AWT_TOOLKIT=MToolkit
+
 # proxy for Uni Passau Network
 # export http_proxy=http://www-cache.rz.uni-passau.de:3128
 # export HTTP_PROXY=http://www-cache.rz.uni-passau.de:3128
