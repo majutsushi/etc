@@ -42,6 +42,8 @@ autocmd InsertEnter * set cul
 
 autocmd BufNewFile,BufReadPre * call LoadProjectConfig(expand("%:p:h"))
 
+autocmd BufWritePre,FileWritePre * call AutoMkDir()
+
 " create undo break point
 autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 
@@ -111,6 +113,16 @@ au BufNewFile,BufReadPost *.mutt/fortunes* setlocal textwidth=76
 au BufWritePost           *.mutt/fortunes* silent !strfile <afile> >/dev/null
 
 " Functions {{{1
+
+" AutoMkDir() {{{2
+" Automatically create dir to write file to if it doesn't exist
+function! AutoMkDir()
+    let l:dir = expand("<afile>:p:h")
+
+    if !isdirectory(l:dir)
+        call mkdir(l:dir, "p")
+    endif
+endfunction
 
 " Bclose() {{{2
 " delete buffer without closing window
@@ -1510,7 +1522,6 @@ nmap <leader>e :execute "Shell " . expand("%:p")<CR>
 
 " Switch to current dir
 nmap <silent> <leader>cd :cd %:p:h<cr>
-nmap <silent> <leader>md :!mkdir -p %:p:h<CR>
 
 nnoremap <S-F10> :call GenCscopeAndTags()<CR>
 
