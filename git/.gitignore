@@ -9,3 +9,7 @@ cscope.*
 config.log
 config.status
 *.pyc
+*.gcov
+*.gcda
+*.gcno
+gmon.out
