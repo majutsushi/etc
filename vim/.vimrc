@@ -40,7 +40,7 @@ autocmd GUIEnter * call GuiSettings()
 autocmd InsertLeave * set nocul
 autocmd InsertEnter * set cul
 
-autocmd BufNewFile,BufReadPre * call LoadProjectConfig(expand("%:p:h"))
+autocmd BufNewFile,BufReadPre * call LoadProjectConfigs()
 
 autocmd BufWritePre,FileWritePre * call AutoMkDir()
 
@@ -444,19 +444,13 @@ function! InsertGuards()
     normal! kk
 endfunction
 
-" LoadProjectConfig() {{{2
-function! LoadProjectConfig(filepath)
-    let l:cwd = getcwd()
-    if a:filepath =~ "^" . l:cwd
-        if filereadable('project_config.vim')
-"            exe 'sandbox source project_config.vim'
-            exe 'source project_config.vim'
-        endif
-    endif
-    if filereadable(a:filepath . '/project_config.vim')
-"        exe 'sandbox source %:h/project_config.vim'
-        exe 'source ' . a:filepath . '/project_config.vim'
-    endif
+" LoadProjectConfigs() {{{2
+function! LoadProjectConfigs()
+    let configs = reverse(findfile('project_config.vim', '.;', -1))
+    for config in configs
+"        execute 'sandbox source ' . config
+        execute 'source ' . config
+    endfor
 endfunction
 
 " PreviewWord() {{{2
