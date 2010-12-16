@@ -1032,8 +1032,13 @@ nmap <silent> <F10> :NERDTreeToggle<CR>
 nmap <silent> <leader>nf :NERDTreeFind<CR>
 
 " omnicppcomplete {{{2
-let g:OmniCpp_SelectFirstItem = 2 " select first completion item, but don't insert it
-let g:OmniCpp_ShowPrototypeInAbbr = 1
+let g:OmniCpp_MayCompleteDot = 1 " autocomplete with .
+let g:OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
+let g:OmniCpp_MayCompleteScope = 1 " autocomplete with ::
+let g:OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
+let g:OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
+let g:OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup window
+let g:OmniCpp_LocalSearchDecl = 1 " don't require special style of function opening braces
 
 " po {{{2
 let g:po_translator = 'Jan Larres <jan@majutsushi.net>'
