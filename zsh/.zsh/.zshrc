@@ -295,6 +295,10 @@ export RI="-f ansi"
 
 export TERMINFO=$HOME/.terminfo
 
+export CCACHE_DIR=$XDG_CACHE_HOME/ccache
+export CCACHE_COMPRESS=1
+export CCACHE_HASHDIR=1
+
 export NNTPSERVER=news.gmane.org
 
 export GPG_TTY=$(tty)
