@@ -1004,15 +1004,6 @@ edfunc() {
 }
 compdef _functions edfunc
 
-# use it e.g. via 'Restart apache2'
-if [[ -d /etc/init.d ]] ; then
-    for i in Start Restart Stop Force-Reload Reload ; do
-        eval "$i() { $SUDO /etc/init.d/\$1 ${i:l} \$2 ; }"
-    done
-    # now the completion for this:
-    compctl -g "$(echo /etc/init.d/*(:t))" Start Restart Stop Force-Reload Reload
-fi
-
 # grep for running process, like: 'psgrep vim'
 psgrep() {
     if [[ -z "$1" ]] ; then
@@ -1036,10 +1027,6 @@ psgrep() {
 bk()      { cp -r -b ${1} ${1}_$(date --iso-8601=m) }
 disassemble(){ gcc -pipe -S -o - -O -g $* | as -aldh -o /dev/null }
 mdiff()   { diff -udrP "$1" "$2" > diff.$(date "+%Y-%m-%d")."$1" }
-netcraft(){ ${=BROWSER} "http://toolbar.netcraft.com/site_report?url=$1" }
-oleo()    { ${=BROWSER} "http://dict.leo.org/?search=$*" }
-swiki()   { ${=BROWSER} http://de.wikipedia.org/wiki/Spezial:Search/${(C)1} }
-wodeb ()  { ${=BROWSER} "http://packages.debian.org/cgi-bin/search_contents.pl?word=$1&version=${2:-unstable}" }
 vman()    { man $* | vim --cmd 'let no_plugin_maps = 1' -c 'runtime! macros/less.vim' -c 'set ft=man nolist' - }
 2html()   { gvim -f -n +"syntax on" +"run! syntax/2html.vim" +"wq" +"q" $1 }
 sshot()   { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desk/screenshots/' }
@@ -1066,29 +1053,8 @@ upload() {
     done
 }
 
-uploadshot() {
-    for i in $@; do
-        local target=${i%png}jpg
-        convert $i $target
-        scp -p $target cip:public_html/shots/
-        rm $target
-    done
-}
-
 wp() {
     dig +short txt ${1// /_}.wp.dg.cx
-}
-
-flv2ogg() {
-#    ffmpeg -i $1 -ab 56 -ar 22050 -b 500 ${1%flv}mpg
-    ffmpeg2theora --audiobitrate 56 --samplerate 22050 --videobitrate 500 --sync $1
-}
-
-wma2ogg() {
-    for i in "$@"; do
-        mplayer -vo null -vc dummy -af resample=44100 -ao pcm:waveheader:file=temp.wav "$i" && oggenc -o "${i%.wma}".ogg temp.wav
-    done
-    rm temp.wav
 }
 
 mkvrepack() {
@@ -1098,21 +1064,7 @@ mkvrepack() {
     MP4Box -fps 29.970628 -add "${name}".264 "${name}".mp4 && rm "${name}".264
 }
 
-gensystags() {
-    echo "Generating vim systags"
-    ctags -f ~/.vim/systags/systags --recurse --verbose --totals=yes --extra=+q /usr/include
-}
-
-pdf2pdf() {
-    if [[ $# != 2 ]]; then
-        echo "Usage: $0 input.pdf output.pdf"
-        return 1
-    else
-        gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$2 $1
-    fi
-}
-
-pdf2pdfembfonts() {
+pdfembedfonts() {
     if [[ $# != 1 ]]; then
         echo "Usage: $0 input.pdf"
         return 1
@@ -1133,14 +1085,6 @@ zza() {
 doc() { cd /usr/share/doc/$1 && ll }
 _doc() { _files -W /usr/share/doc -/ }
 compdef _doc doc
-
-# create pdf file from source code
-makereadable() {
-    output=$1
-    shift
-    a2ps --medium A4dj -E -o $output $*
-    ps2pdf $output
-}
 
 # zsh with perl-regex - use it e.g. via:
 # regcheck '\s\d\.\d{3}\.\d{3} Euro' ' 1.000.000 Euro'
@@ -1179,13 +1123,7 @@ purge() {
     fi
 }
 
-# Some quick Perl-hacks aka /useful/ oneliner
 getlinks ()   { perl -ne 'while ( m/"((www|ftp|http):\/\/.*?)"/gc ) { print $1, "\n"; }' $* }
-gethrefs ()   { perl -ne 'while ( m/href="([^"]*)"/gc ) { print $1, "\n"; }' $* }
-getanames ()  { perl -ne 'while ( m/a name="([^"]*)"/gc ) { print $1, "\n"; }' $* }
-getforms ()   { perl -ne 'while ( m:(\</?(input|form|select|option).*?\>):gic ) { print $1, "\n"; }' $* }
-getstrings () { perl -ne 'while ( m/"(.*?)"/gc ) { print $1, "\n"; }' $*}
-getanchors () { perl -ne 'while ( m/«([^«»\n]+)»/gc ) { print $1, "\n"; }' $* }
 
 # plap foo -- list all occurrences of program in the current PATH
 plap() {
@@ -1218,26 +1156,13 @@ selhist() {
 # mkdir && cd
 mcd() { mkdir -p "$@"; cd "$@" }
 
-#   findsuid() {
-#     print 'Output will be written to ~/suid_* ...'
-#     $SUDO find / -type f \( -perm -4000 -o -perm -2000 \) -ls > ~/suid_suidfiles.$(date "+%Y-%m-%d").out 2>&1
-#     $SUDO find / -type d \( -perm -4000 -o -perm -2000 \) -ls > ~/suid_suiddirs.$(date "+%Y-%m-%d").out 2>&1
-#     $SUDO find / -type f \( -perm -2 -o -perm -20 \) -ls > ~/suid_writefiles.$(date "+%Y-%m-%d").out 2>&1
-#     $SUDO find / -type d \( -perm -2 -o -perm -20 \) -ls > ~/suid_writedirs.$(date "+%Y-%m-%d").out 2>&1
-#     print 'Finished'
-#   }
-
-# % slow_print `cat /etc/passwd`
-slow_print() {
-    while [[ "$1" != "" ]]; do
-        for ((i = 1; i <= ${#1}; i++)) {
-            print -n "${1[i]}"
-            sleep 0.08
-        }
-        print -n " "
-        shift
-    done
-    print ""
+findsuid() {
+    print 'Output will be written to ~/suid_* ...'
+    $SUDO find / -type f \( -perm -4000 -o -perm -2000 \) -ls > ~/suid_suidfiles.$(date "+%Y-%m-%d").out 2>&1
+    $SUDO find / -type d \( -perm -4000 -o -perm -2000 \) -ls > ~/suid_suiddirs.$(date "+%Y-%m-%d").out 2>&1
+    $SUDO find / -type f \( -perm -2 -o -perm -20 \) -ls > ~/suid_writefiles.$(date "+%Y-%m-%d").out 2>&1
+    $SUDO find / -type d \( -perm -2 -o -perm -20 \) -ls > ~/suid_writedirs.$(date "+%Y-%m-%d").out 2>&1
+    print 'Finished'
 }
 
 # display system state
@@ -1250,34 +1175,6 @@ status() {
     print "System: $(cat /etc/[A-Za-z]*[_-][rv]e[lr]*)"
     print "Uptime:$(uptime)"
     print ""
-}
-
-# Make an audio CD from all mp3 files
-#   mkaudiocd() {
-#         cd ~/ripps
-#         for i in *.[Mm][Pp]3; do mv "$i" $(echo $i | tr '[A-Z]' '[a-z]'); done
-#         for i in *.mp3; do mv "$i" $(echo $i | tr ' ' '_'); done
-#         for i in *.mp3; do mpg123 -w $(basename $i .mp3).wav $i; done
-#         normalize -m *.wav
-#         for i in *.wav; do sox $i.wav -r 44100 $i.wav resample; done
-#   }
-
-# Create an ISO image. You are prompted for volume name, filename and directory
-mkiso() {
-    echo " * Volume name "
-    read volume
-    echo " * ISO Name (ie. tmp.iso)"
-    read iso
-    echo " * Directory or File"
-    read files
-    mkisofs -o ~/$iso -A $volume -allow-multidot -J -R -iso-level 3 -V $volume -R $files
-}
-
-# RFC 2396 URL encoding in Z-Shell
-urlencode() {
-    setopt localoptions extendedglob
-    input=( ${(s::)1} )
-    print ${(j::)input/(#b)([^A-Za-z0-9_.!~*\'\(\)-])/%$(([##16]#match))}
 }
 
 # backup important dirs
@@ -1322,42 +1219,6 @@ rs-important() {
         $HOME/src \
         $HOME/work \
         $1 2>! $HOME/projects/rs-important.log
-}
-
-# get specific git commitdiff
-git-get-diff() {
-    if [[ -z $GITTREE ]] ; then
-        GITTREE='linux/kernel/git/torvalds/linux-2.6.git'
-    fi
-    if ! [[ -z $1 ]] ; then
-        ${=BROWSER} "http://kernel.org/git/?p=$GITTREE;a=commitdiff;h=$1"
-    else
-        echo "Usage: git-get-diff <commit>"
-    fi
-}
-
-# get specific git commit
-git-get-commit() {
-    if [[ -z $GITTREE ]] ; then
-        GITTREE='linux/kernel/git/torvalds/linux-2.6.git'
-    fi
-    if ! [[ -z $1 ]] ; then
-        ${=BROWSER} "http://kernel.org/git/?p=$GITTREE;a=commit;h=$1"
-    else
-        echo "Usage: git-get-commit <commit>"
-    fi
-}
-
-# get specific git diff
-git-get-plaindiff() {
-    if [[ -z $GITTREE ]] ; then
-        GITTREE='linux/kernel/git/torvalds/linux-2.6.git'
-    fi
-    if ! [[ -z $1 ]] ; then
-        wget "http://kernel.org/git/?p=$GITTREE;a=commitdiff_plain;h=$1" -O $1.diff
-    else
-        echo 'Usage: git-get-plaindiff '
-    fi
 }
 
 # log 'make install' output
