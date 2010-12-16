@@ -1233,6 +1233,26 @@ if [[ -d /etc/pkgs/ ]]; then
     need () { . "/etc/pkgs/$1.sh"; }
 fi
 
+find-moz-files() {
+    local file=cscope.files
+
+    if [[ -n "$1" ]]; then
+        local objdir=$1
+    else
+        local objdir=objdir-ff
+    fi
+
+    find . \( -path './objdir*' -prune \) -o \
+           \( -name '*.c' -o -name '*.cpp' -o -name '*.cc' -o -name '*.h' -o -name '*.idl' \) \
+           \! -path '*tests/*' \! -path '*/testsuite/*' \
+           -print >! $file
+
+    if [[ -d $objdir ]]; then
+        find ./$objdir -path '*/_xpidlgen/*' -name '*.h' \
+                       -print >> $file
+    fi
+}
+
 # }}}
 
 # screen {{{
