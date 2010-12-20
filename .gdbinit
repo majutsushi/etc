@@ -72,3 +72,98 @@ def ps
     pu $str.mData $str.mLength
   end
 end
+
+# Define a "pa" command to display the string value for an nsIAtom
+def pa
+  set $atom = $arg0
+  if (sizeof(*((&*$atom)->mString)) == 2)
+    pu (&*$atom)->mString
+  end
+end
+
+# define a "pxul" command to display the type of a XUL element from
+# an nsXULDocument* pointer.
+def pxul
+  set $p = $arg0
+  print $p->mNodeInfo.mRawPtr->mInner.mName->mStaticAtom->mString
+end
+
+# define a "prefcnt" command to display the refcount of an XPCOM obj
+def prefcnt
+  set $p = $arg0
+  print ((nsPurpleBufferEntry*)$p->mRefCnt.mTagged)->mRefCnt
+end
+
+##
+## nsTArray
+##
+define ptarray
+        if $argc == 0
+                help ptarray
+        else
+                set $size = $arg0.mHdr->mLength
+                set $capacity = $arg0.mHdr->mCapacity
+                set $size_max = $size - 1
+                set $elts = $arg0.Elements()
+        end
+        if $argc == 1
+                set $i = 0
+                while $i < $size
+                        printf "elem[%u]: ", $i
+                        p *($elts + $i)
+                        set $i++
+                end
+        end
+        if $argc == 2
+                set $idx = $arg1
+                if $idx < 0 || $idx > $size_max
+                        printf "idx1, idx2 are not in acceptable range: [0..%u].\n", $size_max
+                else
+                        printf "elem[%u]: ", $idx
+                        p *($elts + $idx)
+                end
+        end
+        if $argc == 3
+          set $start_idx = $arg1
+          set $stop_idx = $arg2
+          if $start_idx > $stop_idx
+            set $tmp_idx = $start_idx
+            set $start_idx = $stop_idx
+            set $stop_idx = $tmp_idx
+          end
+          if $start_idx < 0 || $stop_idx < 0 || $start_idx > $size_max || $stop_idx > $size_max
+            printf "idx1, idx2 are not in acceptable range: [0..%u].\n", $size_max
+          else
+            set $i = $start_idx
+                while $i <= $stop_idx
+                        printf "elem[%u]: ", $i
+                        p *($elts + $i)
+                        set $i++
+                end
+          end
+        end
+        if $argc > 0
+                printf "nsTArray length = %u\n", $size
+                printf "nsTArray capacity = %u\n", $capacity
+                printf "Element "
+                whatis *$elts
+        end
+end
+
+document ptarray
+        Prints nsTArray information.
+        Syntax: ptarray   
+        Note: idx, idx1 and idx2 must be in acceptable range [0...size()-1].
+        Examples:
+        ptarray a - Prints tarray content, size, capacity and T typedef
+        ptarray a 0 - Prints element[idx] from tarray
+        ptarray a 1 2 - Prints elements in range [idx1..idx2] from tarray
+end
+
+def js
+  call DumpJSStack()
+end
+
+def ft
+  call nsFrame::DumpFrameTree($arg0)
+end
