@@ -406,7 +406,8 @@ alias g="grep"
 # programming
 alias CO="./configure"
 alias CH="./configure --help"
-have colormake && alias make='colormake'
+# have colormake && alias make='colormake'
+have colordiff && alias diff='colordiff'
 alias ddiff='diff -Naurd -x *.swp -x *.o -x *.so -x cscope.* -x tags -x .git -x .svn -x CVS'
 
 # net
