@@ -599,9 +599,7 @@ bind pager \Cn sidebar-next
 bind index \Co sidebar-open
 bind pager \Co sidebar-open
 
-macro index   B "<enter-command>toggle sidebar_visible\n"
-macro pager   B "<enter-command>toggle sidebar_visible\n"
-macro compose B "<enter-command>toggle sidebar_visible\n"
+macro index,pager,compose B "<enter-command>toggle sidebar_visible\n" "Toggle sidebar"
 
 # }}}
 # =============================================================================
