@@ -1321,17 +1321,15 @@ nnoremap <leader>vb :edit   <C-R>=myabbr<CR><CR>
 imap <C-Space> <C-X><C-O>
 
 " for pupop-menu completion
-" http://www.vim.org/tips/tip.php?tip_id=1386
-"inoremap <expr> <m-'> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
-"inoremap <expr> <c-n> pumvisible() ? "\<lt>c-n>" : "\<lt>c-n>\<lt>c-r>=pumvisible() ? \"\\<lt>down>\" : \"\"\<lt>cr>"
-"inoremap <expr> <m-;> pumvisible() ? "\<lt>c-n>" : "\<lt>c-x>\<lt>c-o>\<lt>c-n>\<lt>c-p>\<lt>c-r>=pumvisible() ? \"\\<lt>down>\" : \"\"\<lt>cr>"
-" http://www.vim.org/tips/tip.php?tip_id=1228
-inoremap <expr> <Esc>      pumvisible()?"\<C-E>":"\<Esc>"
-inoremap <expr> <CR>       pumvisible()?"\<C-Y>":"\<CR>"
-inoremap <expr> <Down>     pumvisible()?"\<C-N>":"\<Down>"
-inoremap <expr> <Up>       pumvisible()?"\<C-P>":"\<Up>"
-inoremap <expr> <PageDown> pumvisible()?"\<PageDown>\<C-P>\<C-N>":"\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible()?"\<PageUp>\<C-P>\<C-N>":"\<PageUp>"
+" http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
+inoremap <expr> <C-n>      pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" http://vim.wikia.com/wiki/Improve_completion_popup_menu
+inoremap <expr> <Esc>      pumvisible() ? "\<C-E>" : "\<Esc>"
+inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"
+"inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
+"inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
+inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
+inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>"   : "\<PageUp>"
 
 " insert mode completion
 inoremap  
