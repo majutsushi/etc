@@ -1273,41 +1273,41 @@ nmap <silent> <leader>b <Plug>SelectBuf
 imap <silent> <S-F1> <ESC><Plug>SelectBuf
 
 " Fast open a buffer by searching for a name
-nmap <c-q> :b 
+nnoremap <c-q> :b 
 
-nmap <M-,>     :bprevious!<CR>
-nmap <M-.>     :bnext!<CR>
-nmap <M-Left>  :tabprevious<CR>
-nmap <M-Right> :tabnext<CR>
+nnoremap <M-,>     :bprevious!<CR>
+nnoremap <M-.>     :bnext!<CR>
+nnoremap <M-Left>  :tabprevious<CR>
+nnoremap <M-Right> :tabnext<CR>
 
 " delete buffer and close window
-nmap   <F8> :bd<C-M>
+nnoremap   <F8> :bd<cr>
 " delete buffer, but keep window
-nmap <S-F8> :call Bclose()<cr>
+nnoremap <S-F8> :call Bclose()<cr>
 
 " change tabs fast
-nmap <M-1> 1gt
-nmap <M-2> 2gt
-nmap <M-3> 3gt
-nmap <M-4> 4gt
-nmap <M-5> 5gt
-nmap <M-6> 6gt
-nmap <M-7> 7gt
-nmap <M-8> 8gt
-nmap <M-9> 9gt
+nnoremap <M-1> 1gt
+nnoremap <M-2> 2gt
+nnoremap <M-3> 3gt
+nnoremap <M-4> 4gt
+nnoremap <M-5> 5gt
+nnoremap <M-6> 6gt
+nnoremap <M-7> 7gt
+nnoremap <M-8> 8gt
+nnoremap <M-9> 9gt
 
-nmap <C-W>e :enew<CR>
+nnoremap <C-W>e :enew<CR>
 
 " FSwitch mappings
-nmap <silent> <Leader>of :FSHere<cr>
-nmap <silent> <Leader>ol :FSRight<cr>
-nmap <silent> <Leader>oL :FSSplitRight<cr>
-nmap <silent> <Leader>oh :FSLeft<cr>
-nmap <silent> <Leader>oH :FSSplitLeft<cr>
-nmap <silent> <Leader>ok :FSAbove<cr>
-nmap <silent> <Leader>oK :FSSplitAbove<cr>
-nmap <silent> <Leader>oj :FSBelow<cr>
-nmap <silent> <Leader>oJ :FSSplitBelow<cr>
+nnoremap <silent> <Leader>of :FSHere<cr>
+nnoremap <silent> <Leader>ol :FSRight<cr>
+nnoremap <silent> <Leader>oL :FSSplitRight<cr>
+nnoremap <silent> <Leader>oh :FSLeft<cr>
+nnoremap <silent> <Leader>oH :FSSplitLeft<cr>
+nnoremap <silent> <Leader>ok :FSAbove<cr>
+nnoremap <silent> <Leader>oK :FSSplitAbove<cr>
+nnoremap <silent> <Leader>oj :FSBelow<cr>
+nnoremap <silent> <Leader>oJ :FSSplitBelow<cr>
 
 let vimrc='~/.vimrc'
 let myabbr='~/.vim/abbrevs.vim'
@@ -1318,7 +1318,7 @@ nnoremap <leader>vb :edit   <C-R>=myabbr<CR><CR>
 " Text manipulation {{{2
 
 " Control-Space for omnicomplete
-inoremap <C-Space> <C-X><C-O>
+imap <C-Space> <C-X><C-O>
 
 " for pupop-menu completion
 " http://www.vim.org/tips/tip.php?tip_id=1386
@@ -1345,10 +1345,10 @@ inoremap <C-U> <C-G>u<C-U>
 " create an undo point after each word
 " imap <Space> <Space><C-G>u
 "inoremap <Tab>   <Tab><C-G>u
-imap <CR>    <CR><C-G>u
+"inoremap <CR>    <CR><C-G>u
 
 " Swap two words
-nmap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
+nnoremap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
 
 " have Y behave analogously to D and C rather than to dd and cc (which is
 " already done by yy):
@@ -1357,23 +1357,23 @@ nnoremap Y y$
 inoremap <C-D> <Del>
 
 " toggle paste
-nmap <F3> :set invpaste paste?<CR>
-imap <F3> <C-O>:set invpaste paste?<CR>
+nnoremap <F3> :set invpaste paste?<CR>
+inoremap <F3> <C-O>:set invpaste paste?<CR>
 set pastetoggle=<F3>
 
-nmap <S-F2> :call ToggleExpandTab()<CR>
+nnoremap <S-F2> :call ToggleExpandTab()<CR>
 
 " copy to/from the x cut-buffer
-nmap <S-Insert> "+gP
-xmap <S-Insert> "-d"+P
-imap <S-Insert> <C-R>+
-cmap <S-Insert> <C-R>+
-imap <C-Insert> <C-O>"+y
-xmap <C-Insert> "+y
-xmap <S-Del>    "+d
-imap <C-Del>    <C-O>daw
+nnoremap <S-Insert> "+gP
+xnoremap <S-Insert> "-d"+P
+inoremap <S-Insert> <C-R>+
+cnoremap <S-Insert> <C-R>+
+inoremap <C-Insert> <C-O>"+y
+xnoremap <C-Insert> "+y
+xnoremap <S-Del>    "+d
+inoremap <C-Del>    <C-O>daw
 
-nmap <silent> <leader>ga :GNOMEAlignArguments<CR>
+nnoremap <silent> <leader>ga :GNOMEAlignArguments<CR>
 
 " Parenthesis/bracket expanding
 xnoremap §§ <esc>`>a"<esc>`<i"<esc>
@@ -1383,18 +1383,18 @@ xnoremap §2 <esc>`>a]<esc>`<i[<esc>
 xnoremap §3 <esc>`>a}<esc>`<i{<esc>
 
 " remove trailing whitespace
-nmap <leader>tr :%s/\s\+$//<CR>
-xmap <leader>tr  :s/\s\+$//<CR>
+nnoremap <leader>tr :%s/\s\+$//<CR>
+xnoremap <leader>tr  :s/\s\+$//<CR>
 
 " indent for C/C++ programs
-nmap <leader>i :%!astyle<CR>
+nnoremap <leader>i :%!astyle<CR>
 
 "align map for assignments in R scripts
-xmap <leader>ar :Align <-<CR>
+xnoremap <leader>ar :Align <-<CR>
 
 " re-select selection after changing indent
-xmap > >gv
-xmap < <gv
+xnoremap > >gv
+xnoremap < <gv
 
 " Ctrl-K comma colon (in Insert mode): UTF-8 single-codepoint ellipsis "..."
 " disregard error if (for instance) not in UTF-8
@@ -1418,15 +1418,15 @@ nnoremap 0 g0
 nnoremap ^ g^
 
 " emacs-like c-a/c-e movement
-imap        <c-a> <esc>0i
-imap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
+inoremap        <c-a> <esc>0i
+inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
 
 " quickfix
-nmap <leader>cn :cnext<cr>
-nmap <leader>cp :cprevious<cr>
-nmap <leader>co :botright copen<cr>
-nmap <leader>cc :cclose<cr>
-nmap <leader>cl :clist<cr>
+nnoremap <leader>cn :cnext<cr>
+nnoremap <leader>cp :cprevious<cr>
+nnoremap <leader>co :botright copen<cr>
+nnoremap <leader>cc :cclose<cr>
+nnoremap <leader>cl :clist<cr>
 
 " search for visually selected text
 xnoremap <silent> * :<C-U>
@@ -1460,11 +1460,11 @@ xnoremap <silent> g# :<C-U>
 nnoremap <space> :call ToggleFold()<CR>
 
 " toggle showing 'listchars'
-nmap <F2> :set invlist list?<CR>
+nnoremap <F2> :set invlist list?<CR>
 imap <F2> <C-O><F2>
 xmap <F2> <Esc><F2>gv
 
-nmap <silent> zi
+nnoremap <silent> zi
     \ :if &foldenable <Bar>
     \     setlocal nofoldenable <Bar>
     \     setlocal foldcolumn=0 <Bar>
@@ -1477,11 +1477,11 @@ nmap <silent> zi
 nnoremap <silent> <C-L> :silent nohl<CR><C-L>
 
 " toggle text wrapping
-nmap <silent> <leader>w :set invwrap wrap?<CR>
+nnoremap <silent> <leader>w :set invwrap wrap?<CR>
 
 " preview tag definitions
-nmap <silent> <leader>pw :call PreviewWord(0)<CR>
-nmap <silent> <leader>pl :call PreviewWord(1)<CR>
+nnoremap <silent> <leader>pw :call PreviewWord(0)<CR>
+nnoremap <silent> <leader>pl :call PreviewWord(1)<CR>
 
 " highlight long lines
 nnoremap <silent> <Leader>hl
@@ -1495,8 +1495,8 @@ nnoremap <silent> <Leader>hl
       \ endif<CR>
 
 " change font size with c-up/down
-nmap <silent> <C-Up> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)+1)', '')<CR>
-nmap <silent> <C-Down> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)-1)', '')<CR>
+nnoremap <silent> <C-Up> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)+1)', '')<CR>
+nnoremap <silent> <C-Down> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)-1)', '')<CR>
 
 " Command line {{{2
 
@@ -1512,7 +1512,7 @@ cnoremap <C-P> <Up>
 "cnoremap <Esc><C-F>     <S-Right>
 
 " ;rcm = remove "control-m"s - for those mails sent from DOS:
-cmap ;rcm %s/<C-M>//g
+cnoremap ;rcm %s/<C-M>//g
 
 " expand %% to current directory
 cabbrev <expr> %% expand('%:~:h')
@@ -1523,14 +1523,14 @@ cabbrev <expr> %% expand('%:~:h')
 nnoremap Q @q
 
 " run current file as a script
-nmap <leader>e :execute "Shell " . expand("%:p")<CR>
+nnoremap <leader>e :execute "Shell " . expand("%:p")<CR>
 
 " Switch to current dir
-nmap <silent> <leader>cd :cd %:p:h<cr>
+nnoremap <silent> <leader>cd :cd %:p:h<cr>
 
 nnoremap <S-F10> :call GenCscopeAndTags()<CR>
 
-nmap <silent> <leader>gk :silent !gitk<cr>
+nnoremap <silent> <leader>gk :silent !gitk<cr>
 
 "inoremap  <Esc><Right>
 
