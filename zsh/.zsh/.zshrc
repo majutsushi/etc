@@ -1197,6 +1197,7 @@ rs-important() {
         $HOME/.etc \
         $HOME/.mozilla \
         $HOME/.config \
+        $HOME/.lbdb \
         $HOME/.local \
         $HOME/.evolution \
         $HOME/.fceultra \
@@ -1221,6 +1222,8 @@ rs-important() {
         $HOME/src \
         $HOME/work \
         $1 2>! $HOME/projects/rs-important.log
+
+    cp $HOME/projects/rs-important.log $1/projects/
 }
 
 # log 'make install' output
