@@ -339,6 +339,7 @@ have gmake      && alias make=gmake
 have gfind      && alias find=gfind
 have glocate    && alias locate=glocate
 have gsed       && alias sed=gsed
+have gawk       && alias awk=gawk
 
 typeset -a _ls_opts; _ls_opts=(-F)
 # if ls --help 2>/dev/null |grep -- --color= >/dev/null \
