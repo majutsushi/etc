@@ -659,27 +659,6 @@ precmd () {
         debian_chroot=$(cat /etc/debian_chroot)
     fi
 
-    # test ibam
-    # BATTSTATE="$(ibam --percentbattery)"
-    # BATTPRCNT="${BATTSTATE[(f)1][(w)-2]}"
-    # BATTTIME="${BATTSTATE[(f)2][(w)-1]}"
-    if command -v acpi >/dev/null 2>&1; then
-        ACPI=$(acpi -b | grep -i discharging)
-        if [[ -n "$ACPI" ]]; then
-            PERCENT=$(echo $ACPI | cut -d',' -f 2 | tr -d " %")
-            # PERCENT=${(s|,|)=${(s| |)ACPI}[4]}
-            if [[ ${PERCENT} -gt 50 ]]; then
-                BATTERY="($C_F_GREEN${PERCENT}%%$C_F_DEFAULT)"
-            elif [[ ${PERCENT} -gt 15 ]]; then
-                BATTERY="($C_F_YELLOW${PERCENT}%%$C_F_DEFAULT)"
-            else
-                BATTERY="($C_F_RED${PERCENT}%%$C_F_DEFAULT)"
-            fi
-        else
-            BATTERY=""
-        fi
-    fi
-
     # test if we have writing permission for the current directory
     if [[ -w "$(pwd)" ]]; then
         WPERM=
@@ -725,7 +704,7 @@ prompt_set_line_1 () {
     fi
     local left_right="$C_F_DEFAULT$WPERM)"
     local left_side=$left_left$left_dir$left_right
-    local right_side="---$BATTERY($C_F_CYAN%D{%H:%M:%S}$C_F_DEFAULT)]$C_DEFAULT"
+    local right_side="---($C_F_CYAN%D{%H:%M:%S}$C_F_DEFAULT)]$C_DEFAULT"
 
     if is43; then
         local left_side_width=${(m)#${(S%%)left_side//\%\{*\%\}/}}
