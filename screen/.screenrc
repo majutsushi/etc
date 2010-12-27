@@ -186,7 +186,7 @@
 # caption always '%{= kw}%?%-Lw%?%{= wb}%n*%f %t%?(%u)%?%{= kw}%?%+Lw%?'
 # caption always '%{= Kw}%?%-Lw%?%45L>%{+b}%{.r}[%{.w}%n*%f %t%?(%u)%?%{.r}]%{-b}%{.w}%?%+Lw%?%<'
 
-caption always '%{= Kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= Kw}%?%+Lw%?%<'
+caption always '%{= Kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= Kw}%?%+Lw%? %=%{= wk}%2`%{-}%<'
 # caption always '%{= dw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= dw}%?%+Lw%?%<'
 
 # ===============================================================
@@ -225,15 +225,17 @@ caption always '%{= Kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= Kw}%?%+Lw%?%<'
 
 #   w/o battery
 #   hardstatus alwayslastline "%L>%{= kw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-029=%< %{.y}%2` %{.g}%Y-%m-%d %c:%s"
-  hardstatus alwayslastline "%L>%{= dw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-029=%< %{.y}%2` %{.g}%Y-%m-%d %c:%s"
+#   hardstatus alwayslastline "%L>%{= dw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-029=%< %{.y}%2` %{.g}%Y-%m-%d %c:%s"
 #   w/ battery
-#   hardstatus alwayslastline "%L>%{= kw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-033=%< %{.r}%3` %{.y}%2` %{.g}%Y-%m-%d %c:%s"
+  hardstatus alwayslastline "%L>%1`%{= Kw} %{+b}$LOGNAME%{.y}@%{.w}%H%{-b} %= %5`%3`%4`%{.w}%Y-%m-%d %c:%s"
 #   hardstatus alwayslastline "%L>%{= kw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-033L=%?%-029=%:%<%?%{.r}%3` %{.y}%2` %{.g}%Y-%m-%d %c:%s"
 
 # ideas: # http://blog.dustinkirkland.com/2008/12/ubuntu-server-includes-window-manager.html
-#   backtick 1 3600 3600 screen-utils.sh -r
-  backtick 2 5 5 screen-utils.sh -c
-  backtick 3 5 5 screen-utils.sh -b
+  backtick 1 9999999 9999999 screen-utils.sh -l  # logo
+  backtick 2 9999999 9999999 screen-utils.sh -r  # uname
+  backtick 3 59      59      screen-utils.sh -cc # number of cpus
+  backtick 4 5       5       screen-utils.sh -cf # cpu frequency
+  backtick 5 0       0       screen-utils.sh -b  # battery
 #
 # 2003-03-26
 # use the hardstatus line to show the
