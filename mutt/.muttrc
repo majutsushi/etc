@@ -422,6 +422,28 @@ unset save_empty        # remove mailbox when last message is removed.
 
 # }}}
 ###############################################################################
+# Groups {{{
+
+group -group sent -addr `cat ~/.lbdb/m_inmail.list | cut -f 1 | tr '\n' ' '`
+group -group evo  -addr `. /usr/lib/lbdb/m_evolution && m_evolution_query @ | cut -f 1 | tr '\n' ' '`
+group -group mutt -addr `. /usr/lib/lbdb/m_muttalias && m_muttalias_query @ | cut -f 1 | tr '\n' ' '`
+
+# }}}
+###############################################################################
+# Mailing lists {{{
+
+## "lists" adds a list of mailing lists addresses
+## so mutt knows about these for showing them in the folder index
+## and to allow replying to them with the command "list-reply".
+## The first part of the address (up to the @) should be used here.
+unlists *
+lists -group ml `cd ~/Maildir && echo .lists.* | sed 's/_/\./g' | sed 's/\.lists\.//g'`
+
+unsubscribe *
+subscribe `cd ~/Maildir && echo .lists.* | sed 's/_/\./g' | sed 's/\.lists\.//g'`
+
+# }}}
+###############################################################################
 # Searching {{{
 
   set default_hook="~f %s | ~t %s"
@@ -643,17 +665,22 @@ color sidebar_new $my_red   $my_background
 # =============================================================================
 # index {{{
 
-color index     color113    $my_background  '~N !~D'    # new undeleted mail
-color index     $my_cyan    $my_background  '(~P !~D) | (~v ~(~P !~D))'    # mail from myself
+# color index     color113        $my_background  ~N    # new mail
+color index     bright$my_white $my_background  ~N    # new mail
 
-color index     color241    $my_background  "=s '*****SPAM*****'"
-color index     color241    $my_background  "=s '*** GMX Spamverdacht ***'"
-# color index     brightblack    default     "~h '^X-Spam-Status:.*score=[34].'"
-# color index     brightred      default     "~h '^X-Spam-Status:.*score=[56].'"
+color index     color113        $my_background  '!~N (%f sent | %f evo | %f mutt) !%C ml'
+color index     brightcolor113  $my_background  ' ~N (%f sent | %f evo | %f mutt) !%C ml'
 
-color index     color196    $my_background  '(~F !~D) | (~v ~(~F !~D))'  # Flagged
-color index     color222    color64   ~T      # Tagged
-color index     $my_red    $my_background  ~D      # Deleted
+color index     $my_cyan        $my_background  '(~P !~D) | (~v ~(~P !~D))'    # mail from myself
+
+color index     color241        $my_background  '=s "*****SPAM*****"'
+color index     color241        $my_background  '=s "*** GMX Spamverdacht ***"'
+# color index     brightblack     default         "~h '^X-Spam-Status:.*score=[34].'"
+# color index     brightred       default         "~h '^X-Spam-Status:.*score=[56].'"
+
+color index     color196        $my_background  '(~F !~D) | (~v ~(~F !~D))'  # Flagged
+color index     color222        color64         ~T      # Tagged
+color index     $my_red         $my_background  ~D      # Deleted
 # color index brightblack default '~d>1w'
 
 color tree      bright$my_yellow    $my_background  # thread arrows
@@ -682,7 +709,7 @@ color header     $my_green   $my_background  "^X-Spam-Status:"
 # =============================================================================
 # message bodies {{{
 
-color body      $my_yellow      $my_background  " [;:]-?[)/(|]"  # colorise smileys
+color body      $my_yellow      $my_background  " [;:]-?[)/(|DpP]"  # colorise smileys
 # color body      brightblue  default  "\\b[^ ]+://[^] >\")]*"
 color body      bright$my_cyan  $my_background  "((ftp|http|https)://|(file|news):|www\\.)[-a-z0-9_.:@]*[a-z0-9](/[^][{} \t\n\r\"<>()]*[^][{} \t\n\r\"<>().,:!])?/?"
 color body      brightcolor113 $my_background  "[[:alnum:]][-+.#_[:alnum:]]*@[-+.[:alnum:]]*[[:alnum:]]"
@@ -744,20 +771,6 @@ folder-hook <            set sort=reverse-date
 folder-hook tnt@a-n-t_de unset crypt_autosign
 folder-hook lists        my_hdr From: Jan Larres <lists@majutsushi.net>
 # folder-hook lists        my_hdr Reply-To: Jan Larres <jan@majutsushi.net>
-
-# }}}
-###############################################################################
-# Mailing lists {{{
-
-## "lists" adds a list of mailing lists addresses
-## so mutt knows about these for showing them in the folder index
-## and to allow replying to them with the command "list-reply".
-## The first part of the address (up to the @) should be used here.
-unlists *
-lists `cd ~/Maildir && echo .lists.* | sed 's/_/\./g' | sed 's/\.lists\.//g'`
-
-unsubscribe *
-subscribe `cd ~/Maildir && echo .lists.* | sed 's/_/\./g' | sed 's/\.lists\.//g'`
 
 # }}}
 ###############################################################################
