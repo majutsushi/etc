@@ -4,48 +4,6 @@ MAILDIR=$HOME/Maildir
 DEFAULT=$HOME/Maildir/
 LOGFILE=$MAILDIR/procmail_log
 
-:0fw
-* < 256000
-* ! ^X-Spam-Flag: YES
-| spamc
-
-:0
-* ^X-Spam-Level: \*\*\*\*\*\*\*\*\*\*
-/dev/null
-
-:0
-* ^X-Spam-Status: Yes
-.spam/
-
-#:0 Whc: msgid.lock
-#| formail -D 16384 msgid.cache
-#:0 a:
-#misc/duplicates
-
-# Work around procmail bug: any output on stderr will cause the "F" in "From"
-# to be dropped.  This will re-add it.
-:0 H
-* ! ^From[ ]
-* ^rom[ ]
-{
-   LOG="*** Dropped F off From_ header! Fixing up.
-"
-
-  :0 fhw
-  | sed -e 's/^rom /From /'
-}
-
-# Add Content-Type header if it is missing
-:0 H
-* ! ^Content-Type:
-{
-   LOG="*** Added Content-Type: header
-"
-
-  :0 fhw
-  | formail -a "Content-Type: text/plain; charset=iso-8859-1"
-}
-
 # Insert line count for imap/maildir
 :0Bfh
 * H ?? ! ^Lines:
@@ -56,31 +14,31 @@ LOGFILE=$MAILDIR/procmail_log
 # Correct wrong sig-dashes, ie add a space for lines with only "--" in them:
 # from: ^--$
 # to:   ^-- $
-:0 fBw
-* ^--$
-| sed -e 's/^--$/-- /'
+# :0 fBw
+# * ^--$
+# | sed -e 's/^--$/-- /'
 
 # preconverts all plain-text mail arriving in certain encoded
 # MIME formats into a more compact 8-bit format which can be
 # used and displayed more easily by most programs.
 # NOTE: mimencode from the metamail package has to be installed
-:0
-* ^Content-Type: *text/plain
-{
-    :0 fbw
-    * ^Content-Transfer-Encoding: *quoted-printable
-    | mimencode -u -q
+# :0
+# * ^Content-Type: *text/plain
+# {
+#     :0 fbw
+#     * ^Content-Transfer-Encoding: *quoted-printable
+#     | mimencode -u -q
 
-    :0 afhw
-    | formail -I "Content-Transfer-Encoding: 8bit"
+#     :0 afhw
+#     | formail -I "Content-Transfer-Encoding: 8bit"
 
-    :0 fbw
-    * ^Content-Transfer-Encoding: *base64
-    | mimencode -u -b
+#     :0 fbw
+#     * ^Content-Transfer-Encoding: *base64
+#     | mimencode -u -b
 
-    :0 afhw
-    | formail -I "Content-Transfer-Encoding: 8bit"
-}
+#     :0 afhw
+#     | formail -I "Content-Transfer-Encoding: 8bit"
+# }
 
 # Convert old-style PGP messages to MIME
 :0
@@ -144,9 +102,18 @@ LOGFILE=$MAILDIR/procmail_log
 
 # Rest
 
-# :0
-# * ^From:.*domainbox
-# .DomainBOX/
+:0fw: spamassassin.lock
+* < 256000
+* ! ^X-Spam-Flag: YES
+| spamc
+
+:0
+* ^X-Spam-Level: \*\*\*\*\*\*\*\*\*\*
+/dev/null
+
+:0
+* ^X-Spam-Status: Yes
+.spam/
 
 :0
 $DEFAULT
