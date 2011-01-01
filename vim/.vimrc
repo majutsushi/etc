@@ -773,7 +773,7 @@ endfunc
 " messages and info {{{2
 
 " list of flags to make messages shorter
-set shortmess=atI
+set shortmess=aoOtI
 " show (partial) command keys in the status line
 set showcmd
 " display the current mode in the status line
