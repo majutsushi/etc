@@ -1,4 +1,23 @@
 #!/bin/bash
+# lots of code and ideas from https://launchpad.net/byobu
+# and thus licenced under the GPLv3
+
+battery=1
+cpucount=1
+cpufreq=1
+cputemp=1
+disk=1
+loadavg=0
+logo=1
+memusage=1
+network=0
+uname=1
+MP="/"
+#NETDEV=eth0
+
+if [[ -r $HOME/.etc/screen/statusrc ]]; then
+    . $HOME/.etc/screen/statusrc
+fi
 
 ESC="\005"
 color() {
@@ -75,20 +94,105 @@ print_cpufreq() {
             freq=$(echo "$freq" "$count" | awk '{printf "%.1f\n", $1/$2/1000}')
         fi
     fi
-    printf "$(color b y K)%s$(color -)$(color y k)%s$(color -) " "$freq" "GHz"
+    printf "$(color b c W)%s$(color -)$(color c W)%s$(color -) " "$freq" "GHz"
 }
 
-case $1 in
-    -r) uname -srm
-        ;;
-    -c) grep -m 1 "^cpu MHz" /proc/cpuinfo | sed "s/^.*: //" | sed "s/\..*$/ MHz/"
-        ;;
-    -cc) print_cpucount
-        ;;
-    -cf) print_cpufreq
-        ;;
-    -b) print_battery
-        ;;
-    -l) print_logo
-        ;;
-esac
+print_cputemp() {
+    if [ -r "/sys/class/hwmon/hwmon0/device/temp2_input" ]; then
+        temp=$(cat /sys/class/hwmon/hwmon0/device/temp2_input | awk '{ printf "%.1f", $1 / 1000 }')
+        printf "$(color b k Y)%s$(color -)$(color k Y)\260C$(color -) " "$temp"
+    fi
+}
+
+print_disk() {
+    [[ -z "$MP" ]] && MP="/"
+    disk=$(df -h -P "$MP" 2>/dev/null || df -h "$MP")
+    disk=$(echo "$disk" | tail -n 1 | awk '{print $4 " " $5}' | sed "s/\([^0-9\. ]\)/ \1/g" | awk '{printf "%d%sB,%d%%", $1, $2, $3}')
+    printf "$(color M W)%s$(color -) " "$disk" | sed "s/\([0-9]\+\)/$(color -)$(color b M W)\1$(color -)$(color M W)/g"
+}
+
+print_loadavg() {
+    printf "$(color Y k)%s$(color -) " $(awk '{print $1}' /proc/loadavg)
+}
+
+print_totalmem() {
+    mem=$(grep -m1 MemTotal /proc/meminfo  | awk '{print $2}')
+    if [ $mem -ge 1048576 ]; then
+        mem=$(echo "$mem" | awk '{ printf "%.1f", $1 / 1048576 }')
+        unit="GB"
+    elif [ $mem -ge 1024 ]; then
+        mem=$(echo "$mem" | awk '{ printf "%.0f", $1 / 1024 }')
+        unit="MB"
+    else
+        mem="$mem"
+        unit="KB"
+    fi
+    printf "$(color b g W)%s$(color -)$(color g W)$unit,$(color -)" "$mem"
+}
+
+print_memusage() {
+    print_totalmem
+
+    if command -v free >/dev/null 2>&1; then
+        f=$(free | awk '/buffers\/cache:/ {printf "%.0f", 100*$3/($3 + $4)}')
+        printf "$(color b g W)%s$(color -)$(color g W)%%$(color -) " "$f"
+    fi
+}
+
+print_uname() {
+    uname -srm
+}
+
+print_network() {
+    [[ ! -d /proc/net ]] && exit 0
+
+    if [[ -n "$NETDEV" ]]; then
+        interface="$NETDEV"
+    else
+        interface=$(tail -n1 /proc/net/route  | awk '{print $1}')
+    fi
+
+    t2=$(date +%s)
+    for i in down up; do
+        cache="$HOME/.cache/screen/network_$i"
+        t1=$(stat -c %Y "$cache" 2>/dev/null) || t1=0
+
+        if [ $t2 -le $t1 ]; then
+            rate=0
+        else
+            x1=$(cat "$cache" 2>/dev/null) || tx1=0
+
+            if [ "$i" = "up" ]; then
+                symbol="^"
+                x2=$(grep -m1 "\b$interface:" /proc/net/dev | sed "s/^.*://" | awk '{print $9}')
+            else
+                symbol="v"
+                x2=$(grep -m1 "\b$interface:" /proc/net/dev | sed "s/^.*://" | awk '{print $1}')
+            fi
+
+            echo "$x2" > "$cache"
+
+            rate=$(echo "$t1" "$t2" "$x1" "$x2" | awk '{printf "%.0f", ($4 - $3) / ($2 - $1) / 1024 }')
+
+            if [ "$rate" -lt 0 ]; then
+                rate=0
+            fi
+
+            if [ "$rate" -gt 1048576 ]; then
+                rate=$(echo "$rate" | awk '{printf "%.1f", $1/1048576}')
+                unit="GB/s"
+            elif [ "$rate" -gt 1024 ]; then
+                rate=$(echo "$rate" | awk '{printf "%.1f", $1/1024}')
+                unit="MB/s"
+            else
+                unit="kB/s"
+            fi
+        fi
+        printf "$symbol$(color b m w)$rate$(color -)$(color m w)$unit$(color -) "
+    done
+}
+
+eval x="\$$1" || exit 1
+if [[ "$x" = "1" ]]; then
+    print_${1}
+fi

@@ -11,6 +11,7 @@ mutt/.mutt/aliases
 mutt/.mutt/certificates
 mutt/.mutt/lists
 mutt/.mutt/*.dat
+screen/statusrc
 vim/.vim/abbrevs.vim
 vim/.vim/systags
 vim/.vim/.netrwhist

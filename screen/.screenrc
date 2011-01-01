@@ -143,9 +143,6 @@
 # VARIABLES - Strings
 # ===============================================================
 #
-# some notes on COLOR before explaining its use in
-# the commands caption, hardstatus, and sorendition.
-#
 # COLOR:  colors codes are combinations of
 # [attribute modifier] [color description]
 # the manual talks of "attribute/color modifiers".
@@ -164,89 +161,30 @@
 # 9 transparent       y    yellow          u    underline
 #
 # note: "dim" is not mentioned in the manual.
-#
+
+  backtick  1 9999999 9999999 screen-utils.sh logo
+  backtick  2 9999999 9999999 screen-utils.sh uname
+  backtick  3 43      43      screen-utils.sh cpucount
+  backtick  4 2       2       screen-utils.sh cpufreq
+  backtick  5 7       7       screen-utils.sh cputemp
+  backtick  6 0       0       screen-utils.sh battery
+  backtick  7 17      17      screen-utils.sh disk
+  backtick  8 2       2       screen-utils.sh loadavg
+  backtick  9 13      13      screen-utils.sh memusage
+  backtick 10 3       3       screen-utils.sh network
+
 # ===========================================
 # CAPTION - shows a "caption" for the window.
 # ===========================================
-# a "caption" is another line which can show information -
-# in addition to the hardstatus line.
-#
-# use caption to show window list:
-# caption always "%{= kc}%?%-Lw%?%{= kY}%n*%f %t%?(%u)%?%{= kc}%?%+Lw%?"
-#
-# caption always '%{= wb}%50=%n%f %t%{= wb}'
-# this basically just shows the current window number and title
-# on its own; the "%50=" displays it in the middle of the line.
-#
-# caption always "%>%{wk}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%?%<"
-# caption always "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
-# caption always "%?%F%{.RW}%?%3n %t%? [%h]%?"
-# caption always "%{rk}%H %{gk}%c %{yk}%M%d %{wk}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%?"
-# caption always '%{= Wk}%{= Wk}%?%-Lw%?%{= yk}%n %t%{= Wk} %?%+Lw%?%?%= %{= Wk}'
-# caption always '%{= kw}%?%-Lw%?%{= wb}%n*%f %t%?(%u)%?%{= kw}%?%+Lw%?'
-# caption always '%{= Kw}%?%-Lw%?%45L>%{+b}%{.r}[%{.w}%n*%f %t%?(%u)%?%{.r}]%{-b}%{.w}%?%+Lw%?%<'
 
-caption always '%{= Kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= Kw}%?%+Lw%? %=%{= wk}%2`%{-}%<'
-# caption always '%{= dw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= dw}%?%+Lw%?%<'
+  caption always '%{= kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= kw}%?%+Lw%? %=%{= wk}%2`%{-}%<'
 
-# ===============================================================
-#
 # ===============================
 # Hardstatus Line and sorendition
 # ===============================
-# hardstatus: Always show the window list in the last line:
-# hardstatus alwayslastline "%w"
-# hardstatus alwayslastline "%H %w"
-#
-# use 'L' between '%' and 'w' to show the flags, too1
-# hardstatus alwayslastline "%H %Lw"
-#
-# example by Adam Spiers <gnu-screen@adamspiers.org> :
-# *without* colors:
-# hardstatus alwayslastline "%?%-Lw%?%n*%f %t%?(%u)%?%?%+Lw%?"
-# *with* colors:
-# hardstatus alwayslastline "%?%{yk}%-Lw%?%{wb}%n*%f %t%?(%u)%?%?%{yk}%+Lw%?"
-#
-# This will show the current time and today's date in YYmmdd, too:
-# hardstatus alwayslastline " %c | %Y%m%d |  %w"
-#
-# This will show today's date in mmdd and the current time, too:
-# hardstatus alwayslastline " %m%d %c |  %w"
-#
-# combining all of these gives:
-# hardstatus alwayslastline "%{rw}%H%{wk}|%c|%M%d|%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%?"
-#
-# this uses a black background foreverything execpt for
-# the current window which is show on a white background.
-# hostname in red, clock in green, date in yellow:
-#   hardstatus alwayslastline "%{rk}%H %{gk}%c %{yk}%M%d %{wk}%?%-Lw%?%{bw}%n*%f %t%?(%u)%?%{wk}%?%+Lw%?"
-#   hardstatus alwayslastline "%{= kC}%H %{= kr}%1`%= %{= kB}%2` %{= ky}%Y-%m-%d %{= kg}%c:%s"
-#   hardstatus alwayslastline "%{= kw}%{+b}%h%{-b} %{.r}%= %{.y}%2` %{.g}%Y-%m-%d %c:%s"
 
-#   w/o battery
-#   hardstatus alwayslastline "%L>%{= kw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-029=%< %{.y}%2` %{.g}%Y-%m-%d %c:%s"
-#   hardstatus alwayslastline "%L>%{= dw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-029=%< %{.y}%2` %{.g}%Y-%m-%d %c:%s"
-#   w/ battery
-  hardstatus alwayslastline "%L>%1`%{= Kw} %{+b}$LOGNAME%{.y}@%{.w}%H%{-b} %= %5`%3`%4`%{.w}%Y-%m-%d %c:%s"
-#   hardstatus alwayslastline "%L>%{= kw}%{+b}$LOGNAME%{.y}@%{.w}%H%{-b} (%h) %-033L=%?%-029=%:%<%?%{.r}%3` %{.y}%2` %{.g}%Y-%m-%d %c:%s"
+  hardstatus alwayslastline "%L>%1`%{= kw} %{+b}$LOGNAME%{.y}@%{.w}%H%{-b} %= %5`%6`%10`%8`%3`%4`%9`%7`%{.w}%Y-%m-%d %c:%s"
 
-# ideas: # http://blog.dustinkirkland.com/2008/12/ubuntu-server-includes-window-manager.html
-  backtick 1 9999999 9999999 screen-utils.sh -l  # logo
-  backtick 2 9999999 9999999 screen-utils.sh -r  # uname
-  backtick 3 59      59      screen-utils.sh -cc # number of cpus
-  backtick 4 5       5       screen-utils.sh -cf # cpu frequency
-  backtick 5 0       0       screen-utils.sh -b  # battery
-#
-# 2003-03-26
-# use the hardstatus line to show the
-# latest news of the IT ticker at heise.de:
-# backtick 1 127 0 heise
-# hardstatus alwayslastline "%{bw}%1`%= "
-#
-# note: the use of ANSI color sequences is deprecated.
-# please upgrade to screen 3.9.13 so you can make use
-# of the fairly simple color descriptions:
-#
 # "sorendition": set the colors for
 # the "messages" and "text marking"
 # (ie text you mark in copy mode):
