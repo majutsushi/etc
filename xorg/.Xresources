@@ -98,6 +98,38 @@ URxvt.selection-pastebin.url: http://majutsushi.net/stuff/%
 !URxvt.keysym.F3: \033[13~
 !URxvt.keysym.F4: \033[14~
 
+xterm*foreground: gray90
+xterm*background: black
+
+! Black
+xterm*color0:  #2E3436
+xterm*color8:  #555753
+! Red
+xterm*color1:  #cc0000
+xterm*color9:  #ef2929
+! Green
+xterm*color2:  #4E9A06
+xterm*color10: #8AE234
+! Yellow
+xterm*color3:  #C4A000
+xterm*color11: #FCE94F
+! Blue
+xterm*color4:  #3465a4
+xterm*color12: #729fcf
+! Magenta
+xterm*color5:  #75507B
+xterm*color13: #AD7FA8
+! Cyan
+xterm*color6:  #06989A
+xterm*color14: #34E2E2
+! White
+xterm*color7:  #D3D7CF
+xterm*color15: #EEEEEC
+
+xterm*geometry:   100x50
+xterm*visualBell: true
+xterm*metaSendsEscape: true
+
 yeahconsole.term: urxvt
 yeahconsole.screenWidth: 600
 yeahconsole.consoleHeight: 50
@@ -108,4 +140,3 @@ yeahconsole.toggleKey: Control+F1
 
 KDrill*kdictfile: /usr/share/edict/kanjidic
 !KDrill*edictfile: /usr/share/edict/edict
-
