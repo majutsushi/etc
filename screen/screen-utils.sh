@@ -140,7 +140,7 @@ print_memusage() {
     fi
 
     if [ -n "$f" ]; then
-        printf "$(color b g W),%s$(color -)$(color g W)%%$(color -) " "$f"
+        printf "$(color g W),$(color -)$(color b g W)%s$(color -)$(color g W)%%$(color -) " "$f"
     else
         printf " "
     fi
