@@ -127,7 +127,7 @@ print_totalmem() {
         mem="$mem"
         unit="KB"
     fi
-    printf "$(color b g W)%s$(color -)$(color g W)$unit,$(color -)" "$mem"
+    printf "$(color b g W)%s$(color -)$(color g W)$unit$(color -)" "$mem"
 }
 
 print_memusage() {
@@ -135,7 +135,14 @@ print_memusage() {
 
     if command -v free >/dev/null 2>&1; then
         f=$(free | awk '/buffers\/cache:/ {printf "%.0f", 100*$3/($3 + $4)}')
-        printf "$(color b g W)%s$(color -)$(color g W)%%$(color -) " "$f"
+    elif grep -q -s "Mem:" /proc/meminfo; then
+        f=$(grep "Mem:" /proc/meminfo | awk '{printf "%.0f", $3/$2 * 100}')
+    fi
+
+    if [ -n "$f" ]; then
+        printf "$(color b g W),%s$(color -)$(color g W)%%$(color -) " "$f"
+    else
+        printf " "
     fi
 }
 
