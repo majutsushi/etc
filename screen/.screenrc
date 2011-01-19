@@ -162,6 +162,7 @@
 #
 # note: "dim" is not mentioned in the manual.
 
+  backtick  0 30      30      screen-utils.sh sessionname
   backtick  1 9999999 9999999 screen-utils.sh logo
   backtick  2 9999999 9999999 screen-utils.sh uname
   backtick  3 43      43      screen-utils.sh cpucount
@@ -177,7 +178,7 @@
 # CAPTION - shows a "caption" for the window.
 # ===========================================
 
-  caption always '%{= kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= kw}%?%+Lw%? %=%{= wk}%2`%{-}%<'
+  caption always '%{= kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= kw}%?%+Lw%? %=%0`%{= wk}%2`%{-}%<'
 
 # ===============================
 # Hardstatus Line and sorendition

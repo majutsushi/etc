@@ -2,6 +2,7 @@
 # lots of code and ideas from https://launchpad.net/byobu
 # and thus licenced under the GPLv3
 
+sessionname=1
 battery=1
 cpucount=1
 cpufreq=1
@@ -37,6 +38,12 @@ color() {
             fi
         ;;
     esac
+}
+
+print_sessionname() {
+    FULLNAME=$(screen -ls | grep --color=no -o "$PPID[^[:space:]]*")
+    NAME=$(echo $FULLNAME | awk -F '.' '{ print $2 }')
+    printf "$(color b k W)$NAME$(color -) "
 }
 
 print_battery() {
