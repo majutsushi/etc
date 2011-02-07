@@ -1078,6 +1078,30 @@ let g:rubycomplete_rails = 1
 let g:selBufAlwaysShowDetails = 1
 let g:selBufLauncher = "!see"
 
+" Tagbar {{{2
+let g:tagbar_type_tex = {
+    \ 'ctagstype' : 'latex',
+    \ 'kinds'     : [
+        \ 's:sections',
+        \ 'g:graphics',
+        \ 'l:labels',
+        \ 'r:refs',
+        \ 'p:pagerefs'
+    \ ]
+\ }
+let g:tagbar_type_idl = {
+    \ 'ctagstype' : 'xpidl',
+    \ 'kinds'     : [
+        \ 'p:prototypes',
+        \ 'i:interfaces',
+        \ 'a:attributes',
+        \ 't:types',
+        \ 'o:operations'
+    \ ]
+\ }
+
+nmap <silent> <F9> :TagbarToggle<CR>
+
 " taglist {{{2
 "let Tlist_File_Fold_Auto_Close = 1
 "let Tlist_Display_Prototype = 1
@@ -1093,7 +1117,7 @@ let tlist_cpp_settings = 'c++;d:macros;n:namespace;p:prototypes;v:variables;t:ty
 let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels;r:refs;p:pagerefs'
 let tlist_idl_settings = 'xpidl;p:prototypes;i:interfaces;a:attributes;t:types;o:operations'
 
-nmap <silent> <F9> :Tlist<CR>
+"nmap <silent> <F9> :Tlist<CR>
 
 " timestamp {{{2
 let loaded_timestamp = 1
