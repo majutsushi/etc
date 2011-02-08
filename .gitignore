@@ -22,6 +22,7 @@ vim/.vim/passwords.vim
 vim/.vim/bundle/xptemplate
 vim/.vim/bundle/vim-latex
 vim/.vim/bundle/latex-box
+vim/.vim/bundle/tagbar
 xmonad/history
 xmonad/xmonad-i386-linux
 xmonad/xmonad.errors
