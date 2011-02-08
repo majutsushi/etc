@@ -1511,7 +1511,7 @@ nnoremap <silent> zi
     \     setlocal foldcolumn=0 <Bar>
     \ else <Bar>
     \     setlocal foldenable <Bar>
-    \     setlocal foldcolumn=3 <Bar>
+    \     setlocal foldcolumn=1 <Bar>
     \ endif<CR>
 
 " remove search highlighting
