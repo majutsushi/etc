@@ -962,6 +962,9 @@ let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
 " code_complete {{{2
 let g:completekey = "<c-tab>"
 
+" command-t {{{2
+let g:CommandTMaxFiles = 100000
+
 " COMMENT {{{2
 xmap <unique> <leader>cx <Plug>PComment
 
