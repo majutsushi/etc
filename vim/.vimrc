@@ -1237,39 +1237,49 @@ endif
 " Terminal stuff {{{1
 
 if !has("gui_running")
-    if &term == "rxvt-unicode" || &term == "screen-256color-bce"
-        set t_ku=OA
-        set t_kd=OB
-        set t_kr=OC
-        set t_kl=OD
-        map [23~ <S-F1>
-        map [24~ <S-F2>
-        map [25~ <S-F3>
-        map [26~ <S-F4>
-        map [28~ <S-F5>
-        map [29~ <S-F6>
-        map [31~ <S-F7>
-        map [32~ <S-F8>
-        map [33~ <S-F9>
-        map [34~ <S-F10>
-        map [23$ <S-F11>
-        map [24$ <S-F12>
-"        set <S-F1>=[23~
-"        set <S-F2>=[24~
-"        set <S-F3>=[25~
-"        set <S-F4>=[26~
-"        set <S-F5>=[28~
-"        set <S-F6>=[29~
-"        set <S-F7>=[31~
-"        set <S-F8>=[32~
-"        set <S-F9>=[33~
-"        set <S-F10>=[34~
-"        set <S-F11>=[23$
-"        set <S-F12>=[24$
-    elseif &term == "xterm"
-        set <S-F1>=[1;2P
-        set <S-F2>=[1;2Q
-    endif
+    set t_ku=OA
+    set t_kd=OB
+    set t_kr=OC
+    set t_kl=OD
+    " rxvt-unicode
+    map [23~ <S-F1>
+    map [24~ <S-F2>
+    map [25~ <S-F3>
+    map [26~ <S-F4>
+    map [28~ <S-F5>
+    map [29~ <S-F6>
+    map [31~ <S-F7>
+    map [32~ <S-F8>
+    map [33~ <S-F9>
+    map [34~ <S-F10>
+    map [23$ <S-F11>
+    map [24$ <S-F12>
+    " xterm
+    map [1;2P  <S-F1>
+    map [1;2Q  <S-F2>
+    map [1;2R  <S-F3>
+    map [1;2S  <S-F4>
+    map [15;2~ <S-F5>
+    map [17;2~ <S-F6>
+    map [18;2~ <S-F7>
+    map [19;2~ <S-F8>
+    map [20;2~ <S-F9>
+    map [21;2~ <S-F10>
+    map [23;2~ <S-F11>
+    map [24;2~ <S-F12>
+    " gnome-terminal
+    map O1;2P  <S-F2>
+    map O1;2Q  <S-F2>
+    map O1;2R  <S-F3>
+    map O1;2S  <S-F4>
+    map [15;2~ <S-F5>
+    map [17;2~ <S-F6>
+    map [18;2~ <S-F7>
+    map [19;2~ <S-F8>
+    map [20;2~ <S-F9>
+    map [21;2~ <S-F10>
+    map [23;2~ <S-F11>
+    map [24;2~ <S-F12>
 endif
 
 " Change color of cursor in terminal:
