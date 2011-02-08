@@ -1240,10 +1240,10 @@ endif
 " Terminal stuff {{{1
 
 if !has("gui_running")
-    set t_ku=OA
-    set t_kd=OB
-    set t_kr=OC
-    set t_kl=OD
+    imap A <Up>
+    imap B <Down>
+    imap C <Right>
+    imap D <Left>
     " rxvt-unicode
     map [23~ <S-F1>
     map [24~ <S-F2>
