@@ -1291,11 +1291,14 @@ endif
 " xfce4-terminal rxvt eterm
 " But does nothing with: konsole, screen
 if version >= 700
-  if &term =~ "xterm\\|rxvt"
-    let &t_SI = "\033]12;red\007"
-    let &t_EI = "\033]12;yellow\007"
-    au! VimLeave * :sil !echo -ne "\033]12;red\007"
-  endif
+    if &term =~ 'xterm\|rxvt\|screen'
+        silent! !echo -ne "\033]12;yellow\007"
+        let &t_SI = "\033]12;red\007"
+        let &t_EI = "\033]12;yellow\007"
+"        let &t_EI = "\033]112;\007"
+"        let &t_SI = "\033[4 q"
+"        let &t_EI = "\033[1 q"
+    endif
 endif
 
 " Mappings {{{1
