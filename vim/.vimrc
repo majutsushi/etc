@@ -1160,7 +1160,10 @@ nmap <leader>fr <Plug>ReturnFromFootnote
 
 " vim-latexsuite {{{2
 " default format for .tex filetype recognition
+
+" see ft-tex-plugin
 let g:tex_flavor = "latex"
+
 let g:Tex_DefaultTargetFormat = "pdf"
 let g:Tex_IgnoredWarnings = 
             \'Underfull'."\n".
