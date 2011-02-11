@@ -1355,7 +1355,7 @@ nnoremap <leader>vb :edit   <C-R>=myabbr<CR><CR>
 " Control-Space for omnicomplete
 imap <C-Space> <C-X><C-O>
 
-" for pupop-menu completion
+" for popup-menu completion
 " http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
 inoremap <expr> <C-n>      pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 " http://vim.wikia.com/wiki/Improve_completion_popup_menu
@@ -1457,7 +1457,8 @@ inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
 " quickfix
 nnoremap <leader>cn :cnext<cr>
 nnoremap <leader>cp :cprevious<cr>
-nnoremap <leader>co :botright copen<cr>
+nnoremap <expr> <leader>co &lines / 4 < 10 ? ':botright copen 10<cr>'
+                                         \ : ':botright copen <C-r>=&lines / 4<cr><cr>'
 nnoremap <leader>cc :cclose<cr>
 nnoremap <leader>cl :clist<cr>
 
