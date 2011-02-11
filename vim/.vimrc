@@ -234,7 +234,7 @@ function! GenerateFoldText()
     let sub = sub . "                                                                                                                  "
     let num_w = getwinvar(0, '&number') * getwinvar(0, '&numberwidth')
     let fold_w = getwinvar(0, '&foldcolumn')
-    let sign_w = empty(quickfixsigns#marks#GetList()) ? 0 : 2
+    let sign_w = empty(quickfixsigns#marks#GetList('%')) ? 0 : 2
     let len = min([winwidth(0) - num_w - fold_w - sign_w - 1, 100])
     let sub = strpart(sub, 0, len - strlen(info))
     return sub . info
@@ -1059,7 +1059,7 @@ let g:protodefprotogetter = globpath(&rtp, 'pullproto.pl', 1)
 let g:protodefctagsexe = g:ctagsbin
 
 " Quickfixsigns {{{2
-let g:quickfixsigns_classes = ['qfl', 'loc', 'marks', 'vcsdiff']
+let g:quickfixsigns_classes = ['qfl', 'loc', 'marks']
 let g:quickfixsigns_blacklist_buffer = '\v(^__.*__$)|(^NERD_tree.*)|(^$)'
 " exclude 'p' and 'l' because of xptemplate
 let g:quickfixsigns#marks#marks = split('abcdefghijkmnoqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>''^.', '\zs')
@@ -1568,4 +1568,4 @@ nnoremap <silent> <leader>gk :silent !gitk<cr>
 "inoremap  <Esc><Right>
 
 " Modeline {{{1
-" vim:tw=78 expandtab comments=\:\" foldmethod=marker foldenable foldcolumn=3
+" vim:tw=78 expandtab comments=\:\" foldmethod=marker foldenable foldcolumn=1
