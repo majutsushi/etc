@@ -1197,6 +1197,7 @@ rs-important() {
         $HOME/Photos \
         $HOME/bin \
         $HOME/games \
+        $HOME/media \
         $HOME/projects \
         $HOME/src \
         $HOME/work \
