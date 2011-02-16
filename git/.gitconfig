@@ -2,13 +2,6 @@
 	name = Jan Larres
 	email = jan@majutsushi.net
 
-[giggle]
-	compact-mode = false
-	main-window-geometry = 1280x761+0+25
-	main-window-maximized = false
-	history-view-vpane-position = 397
-	main-window-view = HistoryView
-
 [gui]
 	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 
