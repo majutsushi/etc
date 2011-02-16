@@ -1091,7 +1091,8 @@ let g:tagbar_type_tex = {
         \ 'l:labels',
         \ 'r:refs',
         \ 'p:pagerefs'
-    \ ]
+    \ ],
+    \ 'sort' : 0
 \ }
 let g:tagbar_type_idl = {
     \ 'ctagstype' : 'xpidl',
