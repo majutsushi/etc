@@ -61,6 +61,7 @@ function! IsNotSpecialBuf(buf)
           \ !&previewwindow &&
           \ (bufname(a:buf) !~ "NERD_tree") &&
           \ (bufname(a:buf) !~ "__Tag_List__") &&
+          \ (bufname(a:buf) !~ "__Tagbar__") &&
           \ (bufname(a:buf) !~ "fugitive*"))
 endfunction
 if v:version >= 700
