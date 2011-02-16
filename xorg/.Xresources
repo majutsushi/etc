@@ -85,7 +85,7 @@ URxvt.utmpInhibit: true
 URxvt.modifier: alt
 
 URxvt.perl-ext-common: default,matcher,xim-onthespot,selection-pastebin
-URxvt.urlLauncher: gnome-open
+URxvt.urlLauncher: firefox
 URxvt.keysym.C-M-e: perl:selection-pastebin:remote-pastebin
 URxvt.selection-pastebin.cmd: pub %
 URxvt.selection-pastebin.url: http://majutsushi.net/stuff/%
