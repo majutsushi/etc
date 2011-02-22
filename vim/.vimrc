@@ -1105,7 +1105,8 @@ let g:tagbar_type_idl = {
     \ ]
 \ }
 
-nmap <silent> <F9> :TagbarToggle<CR>
+nmap <silent>   <F9> :TagbarOpenAutoClose<CR>
+nmap <silent> <S-F9> :TagbarToggle<CR>
 
 " taglist {{{2
 "let Tlist_File_Fold_Auto_Close = 1
