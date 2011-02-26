@@ -16,8 +16,8 @@ if !isdirectory($HOME . "/.cache/vim") && exists("*mkdir")
 endif
 
 " search for exuberant ctags
-if executable('exuberant-ctags')
-    let g:ctagsbin = 'exuberant-ctags'
+if executable('ctags-exuberant')
+    let g:ctagsbin = 'ctags-exuberant'
 elseif executable('exctags')
     let g:ctagsbin = 'exctags'
 elseif executable('ctags')
@@ -417,10 +417,10 @@ function! GenCscopeAndTags()
     " add --extra=+q here to avoid double entries in taglist
     if filereadable("cscope.files")
         execute '!cscope -qbc'
-        execute '!' . g:ctagsbin . ' --extra=+q -L cscope.files'
+        execute '!' . g:ctagsbin . ' -L cscope.files'
     else
         execute '!cscope -Rqbc'
-        execute '!' . g:ctagsbin . ' -R --extra=+q'
+        execute '!' . g:ctagsbin . ' -R'
     endif
     if cscope_connection(2, "cscope.out") == 0
         execute 'cs add cscope.out'
