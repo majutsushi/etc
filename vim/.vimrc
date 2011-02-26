@@ -48,7 +48,7 @@ autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:las
 
 autocmd BufNewFile,BufReadPre * call LoadProjectConfigs()
 
-autocmd BufWritePre,FileWritePre * call AutoMkDir()
+autocmd BufNewFile * call AutoMkDir()
 
 " create undo break point
 autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
@@ -124,10 +124,21 @@ au BufWritePost           *.mutt/fortunes* silent !strfile <afile> >/dev/null
 " AutoMkDir() {{{2
 " Automatically create dir to write file to if it doesn't exist
 function! AutoMkDir()
-    let l:dir = expand("<afile>:p:h")
+    let required_dir = expand("<afile>:p:h")
+    if !isdirectory(required_dir)
+        if confirm("Directory '" . required_dir . "' doesn't exist.", "&Abort\n&Create it") != 2
+            bdelete
+            return
+        endif
 
-    if !isdirectory(l:dir)
-        call mkdir(l:dir, "p")
+        try
+            call mkdir(required_dir, 'p')
+        catch
+            if confirm("Can't create '" . required_dir . "'", "&Abort\n&Continue anyway") != 2
+                bdelete
+                return
+            endif
+        endtry
     endif
 endfunction
 
