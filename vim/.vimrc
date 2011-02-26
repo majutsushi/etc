@@ -1071,7 +1071,7 @@ let g:protodefprotogetter = globpath(&rtp, 'pullproto.pl', 1)
 let g:protodefctagsexe = g:ctagsbin
 
 " Quickfixsigns {{{2
-let g:quickfixsigns_classes = ['qfl', 'loc', 'marks']
+let g:quickfixsigns_classes = ['qfl', 'loc', 'marks', 'vcsdiff', 'breakpoints']
 let g:quickfixsigns_blacklist_buffer = '\v(^__.*__$)|(^NERD_tree.*)|(^$)'
 " exclude 'p' and 'l' because of xptemplate
 let g:quickfixsigns#marks#marks = split('abcdefghijkmnoqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>''^.', '\zs')
