@@ -1557,7 +1557,7 @@ cabbrev <expr> %% expand('%:~:h')
 " Misc {{{2
 
 " for quick macro playback
-nnoremap Q @q
+"nnoremap Q @q
 
 " run current file as a script
 nnoremap <leader>e :execute "Shell " . expand("%:p")<CR>
