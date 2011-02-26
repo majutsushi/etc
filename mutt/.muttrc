@@ -725,7 +725,10 @@ color quoted6   $my_red     $my_background
 color quoted7   $my_green   $my_background
 
 # diffs
-color body $my_red         $my_background "^-(--)?[^-].*"
+color body $my_red         $my_background "^---[^-].*"
+color body $my_red         $my_background "^-(  | ?	).*"
+color body $my_red         $my_background "^-[^ ].*"
+color body $my_red         $my_background "^- ?$"
 color body $my_green       $my_background "^[+].*"
 color body $my_cyan        $my_background "^!.*"
 color body brightcolor143  $my_background "^diff .*"
