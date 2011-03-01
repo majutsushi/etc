@@ -1,14 +1,33 @@
-.*.sw?
+# backup files
 *~
+
+# object files
 *.[ao]
 *.so
+
+# vim swap files
+.*.sw?
+
+# tags
 tags
 cscope.*
+
+# TeX stuff
 *.aux
+*.bbl
+*.blg
+*.toc
+
 *.pdf
+
+# configure stuff
 config.log
 config.status
+
+# byte-compiled files
 *.pyc
+
+# gcov stuff
 *.gcov
 *.gcda
 *.gcno
