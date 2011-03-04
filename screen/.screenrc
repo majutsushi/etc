@@ -162,17 +162,17 @@
 #
 # note: "dim" is not mentioned in the manual.
 
-  backtick  0 30      30      screen-utils.sh sessionname
-  backtick  1 9999999 9999999 screen-utils.sh logo
-  backtick  2 9999999 9999999 screen-utils.sh uname
-  backtick  3 43      43      screen-utils.sh cpucount
-  backtick  4 2       2       screen-utils.sh cpufreq
-  backtick  5 7       7       screen-utils.sh cputemp
-  backtick  6 0       0       screen-utils.sh battery
-  backtick  7 17      17      screen-utils.sh disk
-  backtick  8 2       2       screen-utils.sh loadavg
-  backtick  9 13      13      screen-utils.sh memusage
-  backtick 10 3       3       screen-utils.sh network
+  backtick  0 30      30      $HOME/.etc/screen/screen-utils.sh sessionname
+  backtick  1 9999999 9999999 $HOME/.etc/screen/screen-utils.sh logo
+  backtick  2 9999999 9999999 $HOME/.etc/screen/screen-utils.sh uname
+  backtick  3 43      43      $HOME/.etc/screen/screen-utils.sh cpucount
+  backtick  4 2       2       $HOME/.etc/screen/screen-utils.sh cpufreq
+  backtick  5 7       7       $HOME/.etc/screen/screen-utils.sh cputemp
+  backtick  6 0       0       $HOME/.etc/screen/screen-utils.sh battery
+  backtick  7 17      17      $HOME/.etc/screen/screen-utils.sh disk
+  backtick  8 2       2       $HOME/.etc/screen/screen-utils.sh loadavg
+  backtick  9 13      13      $HOME/.etc/screen/screen-utils.sh memusage
+  backtick 10 3       3       $HOME/.etc/screen/screen-utils.sh network
 
 # ===========================================
 # CAPTION - shows a "caption" for the window.
