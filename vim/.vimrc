@@ -811,6 +811,8 @@ set textwidth=78
 set backspace=indent,eol,start
 " list of flags that tell how automatic formatting works (local to buffer)
 set formatoptions+=rl2n
+" pattern to recognize a numbered list (local to buffer)
+let &formatlistpat = '^\s*\(\d\|\a\)\+[\]:.)}\t ]\s*'
 
 " specifies how Insert mode completion works for CTRL-N and CTRL-P
 " (local to buffer)
