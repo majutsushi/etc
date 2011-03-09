@@ -17,6 +17,8 @@ cscope.*
 *.bbl
 *.blg
 *.toc
+*.fdb_latexmk
+*.out
 
 *.pdf
 
