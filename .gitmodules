@@ -106,3 +106,9 @@
 [submodule "vim/.vim/bundle/protodef"]
 	path = vim/.vim/bundle/protodef
 	url = https://github.com/ewiplayer/vim-protodef.git
+[submodule "vim/.vim/bundle/indexedsearch"]
+	path = vim/.vim/bundle/indexedsearch
+	url = https://github.com/vim-scripts/IndexedSearch.git
+[submodule "vim/.vim/bundle/markdown"]
+	path = vim/.vim/bundle/markdown
+	url = https://github.com/tpope/vim-markdown
