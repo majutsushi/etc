@@ -1006,7 +1006,7 @@ let g:devhelpSearchKey = '<F7>'
 let g:devhelpWordLength = 5
 
 " EasyGrep {{{2
-let g:EasyGrepFileAssociations = globpath(&rtp, 'plugin/EasyGrepFileAssociations', 1)
+let g:EasyGrepFileAssociations = expand('~/.vim/bundle/easygrep/plugin/EasyGrepFileAssociations')
 let g:EasyGrepMode = 2
 let g:EasyGrepCommand = 0
 let g:EasyGrepRecursive = 1
