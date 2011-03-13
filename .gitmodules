@@ -100,3 +100,9 @@
 [submodule "vim/.vim/bundle/comment"]
 	path = vim/.vim/bundle/comment
 	url = https://github.com/vim-scripts/COMMENT.vim--Crawford.git
+[submodule "vim/.vim/bundle/fswitch"]
+	path = vim/.vim/bundle/fswitch
+	url = https://github.com/ewiplayer/vim-fswitch.git
+[submodule "vim/.vim/bundle/protodef"]
+	path = vim/.vim/bundle/protodef
+	url = https://github.com/ewiplayer/vim-protodef.git
