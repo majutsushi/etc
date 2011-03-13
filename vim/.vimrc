@@ -72,7 +72,6 @@ if v:version >= 700
 endif
 
 " filetype-specific settings
-au Filetype html,xml,xsl source ~/.vim/bundle/closetag/closetag.vim
 au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
 au FileType tex let b:vikiFamily="LaTeX"
 au FileType viki compiler deplate
@@ -978,11 +977,6 @@ set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.cache/vim/viminfo
 
 " Plugin and script options {{{1
 
-" Blogit {{{2
-if !has("python")
-    let loaded_blogit = 1
-end
-
 " CCTree {{{2
 let g:CCTreeRecursiveDepth = 2
 let g:CCTreeMinVisibleDepth = 2
@@ -1002,10 +996,6 @@ let g:CommandTMaxFiles = 100000
 
 " COMMENT {{{2
 xmap <unique> <leader>cx <Plug>PComment
-
-" detectindent {{{2
-let g:detectindent_preferred_expandtab = 1
-let g:detectindent_preferred_indent = 4
 
 " devhelp {{{2
 let g:devhelpSearch = 1
@@ -1039,22 +1029,8 @@ let g:EnhCommentifyTraditionalMode = 'No'
 let g:EnhCommentifyFirstLineMode = 'Yes'
 
 
-" git {{{2
-"let g:git_diff_spawn_mode = 1
-
 " Gundo {{{2
 nnoremap <leader>u :GundoToggle<CR>
-
-" haskellmode {{{2
-let g:haddock_browser="/usr/bin/gnome-www-browser"
-let g:haddock_docdir="/usr/share/doc/ghc6-doc/libraries/"
-let g:haddock_indexfiledir="~/.vim/cache/"
-
-"let hs_highlight_delimiters = 1
-let hs_highlight_boolean = 1
-let hs_highlight_types = 1
-let hs_highlight_more_types = 1
-let hs_highlight_debug = 1
 
 " LanguageTool {{{2
 let g:languagetool_jar = "~/lib/LanguageTool/LanguageTool.jar"
@@ -1062,6 +1038,9 @@ let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES"
 let g:languagetool_win_height = "15"
 
 " Latex Box {{{2
+" see ft-tex-plugin
+let g:tex_flavor = "latex"
+
 let g:LatexBox_completion_close_braces = 0
 "let g:LatexBox_latexmk_options = "-pvc"
 let g:LatexBox_autojump = 1
@@ -1083,11 +1062,6 @@ let g:OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
 let g:OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
 let g:OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup window
 let g:OmniCpp_LocalSearchDecl = 1 " don't require special style of function opening braces
-
-" po {{{2
-let g:po_translator = 'Jan Larres <jan@majutsushi.net>'
-let g:po_lang_team = ''
-"let g:po_path = '.,..'
 
 " ProtoDef {{{2
 let g:protodefprotogetter = globpath(&rtp, 'pullproto.pl', 1)
@@ -1187,26 +1161,6 @@ imap Ǣf         <Plug>AddVimFootnote
 imap Ǣr         <Plug>ReturnFromFootnote
 nmap <leader>fa <Plug>AddVimFootnote
 nmap <leader>fr <Plug>ReturnFromFootnote
-
-" vim-latexsuite {{{2
-" default format for .tex filetype recognition
-
-" see ft-tex-plugin
-let g:tex_flavor = "latex"
-
-let g:Tex_DefaultTargetFormat = "pdf"
-let g:Tex_IgnoredWarnings = 
-            \'Underfull'."\n".
-            \'Overfull'."\n".
-            \'specifier changed to'."\n".
-            \'You have requested'."\n".
-            \'Missing number, treated as zero.'."\n".
-            \'There were undefined references'."\n".
-            \'Citation %.%# undefined'."\n".
-            \'LaTeX Font Warning'
-"let g:Tex_ViewRule_pdf = 'xpdf -remote TexServer'
-let g:Tex_ViewRule_pdf = 'evince'
-let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 
 " vimplate {{{2
 let Vimplate = globpath(&rtp, 'vimplate', 1)
