@@ -50,6 +50,8 @@ autocmd BufNewFile,BufReadPre * call LoadProjectConfigs()
 
 autocmd BufNewFile * call AutoMkDir()
 
+autocmd BufWritePre * call Timestamp()
+
 " create undo break point
 autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 
@@ -589,6 +591,25 @@ nmap <leader>ss :call SynStack()<CR>
 " Tab2Space/Space2Tab {{{2
 command! -range=% -nargs=0 Tab2Space exec "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', "repeat(' ', ".&ts."), 'g')"
 command! -range=% -nargs=0 Space2Tab exec "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0), ' \\{".&ts."\\}', '\\t', 'g')"
+
+" Timestamp() {{{2
+function! Timestamp()
+    let matchpat = '\v\C%(<Last changed\s*:\s+)\zs\d{4}-\d{2}-\d{2} (\d{2}):\d{2}:\d{2} [+-]\d{4} \a+|TIMESTAMP'
+    let replpat  = '%Y-%m-%d %H:%M:%S %z %Z'
+
+    for linenr in range(1, 20)
+        let line   = getline(linenr)
+        let matchl = matchlist(line, matchpat)
+        if !empty(matchl)
+            let hour = strftime('%H')
+            if matchl[1] != hour
+                let repl    = strftime(replpat)
+                let newline = substitute(line, matchpat, repl, '')
+                keepjumps call setline(linenr, newline)
+            endif
+        endif
+    endfor
+endfunction
 
 " ToggleExpandTab() {{{2
 function! ToggleExpandTab()
@@ -1137,13 +1158,6 @@ let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels;r:refs;p:pagerefs
 let tlist_idl_settings = 'xpidl;p:prototypes;i:interfaces;a:attributes;t:types;o:operations'
 
 "nmap <silent> <F9> :Tlist<CR>
-
-" timestamp {{{2
-let loaded_timestamp = 1
-let g:timestamp_modelines = 20
-let g:timestamp_rep = '%Y-%m-%d %H:%M:%S %z %Z'
-"let g:timestamp_regexp = '\v\C%(<%(Last %([cC]hanged?|modified)|Modified)\s*:\s+)@<=\a+ \d{2} \a+ \d{4} \d{2}:\d{2}:\d{2}  ?%(\a+)?|TIMESTAMP'
-let g:timestamp_regexp = '\v\C%(<Last changed\s*:\s+)@<=\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} [+-]\d{4} \a+|TIMESTAMP'
 
 " TOhtml syntax script {{{2
 let html_use_css = 1
