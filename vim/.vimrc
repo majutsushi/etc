@@ -8,7 +8,7 @@ if v:version < 703
     let g:pathogen_disabled += ['gundo']
 endif
 call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+"call pathogen#helptags()
 set runtimepath+=$HOME/.vim/xptpersonal
 
 if !isdirectory($HOME . "/.cache/vim") && exists("*mkdir")
