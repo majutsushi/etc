@@ -77,7 +77,6 @@ au FileType tex let b:vikiFamily="LaTeX"
 au FileType viki compiler deplate
 au FileType gtkrc setlocal tabstop=2 shiftwidth=2
 au FileType haskell compiler ghc
-au FileType mkd setlocal ai formatoptions=tcroqn2 comments=n:>
 au FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 augroup cfile
@@ -109,11 +108,6 @@ au BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
 au BufEnter *.cpp,*.cc let b:fswitchlocs = './'
 au BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
 au BufEnter *.h        let b:fswitchlocs = './'
-
-au BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.h TlistUpdate
-"au CursorMoved,CursorMovedI * if bufwinnr(g:TagList_title) != -1
-"au CursorMoved,CursorMovedI *   TlistHighlightTag
-"au CursorMoved,CursorMovedI * endif
 
 " automatically give executable permissions if file begins with #! and contains" '/bin/' in the path
 " From https://github.com/mitechie/pyvim/blob/master/.vimrc
@@ -148,21 +142,21 @@ endfunction
 " Bclose() {{{2
 " delete buffer without closing window
 function! Bclose()
-    let l:currentBufNum = bufnr("%")
-    let l:alternateBufNum = bufnr("#")
+    let curbufnr = bufnr("%")
+    let altbufnr = bufnr("#")
 
-    if buflisted(l:alternateBufNum)
+    if buflisted(altbufnr)
         buffer #
     else
         bnext
     endif
 
-    if bufnr("%") == l:currentBufNum
+    if bufnr("%") == curbufnr
         new
     endif
 
-    if buflisted(l:currentBufNum)
-        execute("bdelete! ".l:currentBufNum)
+    if buflisted(curbufnr)
+        execute("bdelete! " . curbufnr)
     endif
 endfunction
 
@@ -171,8 +165,7 @@ endfunction
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
-    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-                \ | wincmd p | diffthis
+    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
 
 " FindAutocmdTouching() {{{2
@@ -259,16 +252,12 @@ endfunction
 " some code taken from
 " http://cream.cvs.sourceforge.net/cream/cream/cream-statusline.vim?revision=1.38&view=markup
 function! GenerateStatusline()
-"    let filestate = "%1*%f %2*%{GetState()}%*%w"
     let filestate = "%1*%{GetFileName()} %2*%{GetState()}%*%w"
-"    let filestate = "%f%m%r%h%w"
     let fileinfo = "%3*|%{GetFileformat()}:%{GetFileencoding()}:%{GetFiletype()}%{GetSpellLang()}|%*"
     let curdir = "%<%{GetCurDir()}"
     let tabinfo = "%3*|%1*%{GetExpandTab()}%3*:%{&tabstop}:%{&softtabstop}:%{&shiftwidth}|%*"
-"    let tabinfo = "[%{GetExpandTab()}:%{GetTabstop()}]"
     let charinfo = "%3*U+%04B|%*"
     let lineinfo = "%(%3*%05(%l%),%03(%c%V%)%*%)\ %1*%p%%"
-"    let lineinfo = "%(%3*%l,%c%V%*%)\ %1*%p%%"
 
     return filestate .
          \ fileinfo .
@@ -364,11 +353,10 @@ endfunction
 
 " GetTabstop() {{{3
 function! GetTabstop()
-    " show by Vim option, not Cream global (modelines)
     let str = "" . &tabstop
     " show softtabstop or shiftwidth if not equal tabstop
-    if   (&softtabstop && (&softtabstop != &tabstop))
-    \ || (&shiftwidth  && (&shiftwidth  != &tabstop))
+    if (&softtabstop && (&softtabstop != &tabstop)) ||
+     \ (&shiftwidth  && (&shiftwidth  != &tabstop))
         if &softtabstop
             let str = str . ":sts" . &softtabstop
         endif
@@ -428,7 +416,6 @@ endif
 " GenCscopeAndTags() {{{2
 function! GenCscopeAndTags()
     " see ~/.ctags
-    " add --extra=+q here to avoid double entries in taglist
     if filereadable("cscope.files")
         execute '!cscope -qbc'
         execute '!' . g:ctagsbin . ' -L cscope.files'
@@ -937,11 +924,11 @@ set history=100
 " specifies how command line completion works
 set wildmode=list:longest,full
 " list of file name extensions that have a lower priority
-set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm
+set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm,.out
 " list of file name extensions added when searching for a file (local to buffer)
 set suffixesadd=.rb
 " list of patterns to ignore files for file name completion
-set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.out,*.class
+set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.class
 " command-line completion shows a list of matches
 "set wildmenu
 
@@ -976,6 +963,9 @@ colorscheme desert
 set virtualedit=all
 " list that specifies what to write in the viminfo file
 set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.cache/vim/viminfo
+
+" see ft-tex-plugin
+let g:tex_flavor = "latex"
 
 " Plugin and script options {{{1
 
@@ -1040,9 +1030,6 @@ let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES"
 let g:languagetool_win_height = "15"
 
 " Latex Box {{{2
-" see ft-tex-plugin
-let g:tex_flavor = "latex"
-
 let g:LatexBox_completion_close_braces = 0
 "let g:LatexBox_latexmk_options = "-pvc"
 let g:LatexBox_autojump = 1
@@ -1066,7 +1053,7 @@ let g:OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters
 let g:OmniCpp_LocalSearchDecl = 1 " don't require special style of function opening braces
 
 " ProtoDef {{{2
-let g:protodefprotogetter = globpath(&rtp, 'pullproto.pl', 1)
+let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
 let g:protodefctagsexe = g:ctagsbin
 
 " Quickfixsigns {{{2
@@ -1165,7 +1152,7 @@ nmap <leader>fa <Plug>AddVimFootnote
 nmap <leader>fr <Plug>ReturnFromFootnote
 
 " vimplate {{{2
-let Vimplate = globpath(&rtp, 'vimplate', 1)
+let Vimplate = expand('~/.vim/bundle/vimplate/vimplate')
 
 " voom {{{2
 let g:voom_tab_key = '<C-Tab>'
