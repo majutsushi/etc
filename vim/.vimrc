@@ -115,7 +115,9 @@ au BufWritePost,FileWritePost *.c,*.cc,*.cpp,*.h TlistUpdate
 "au CursorMoved,CursorMovedI *   TlistHighlightTag
 "au CursorMoved,CursorMovedI * endif
 
-au BufWritePost,FileWritePost *.sh silent !chmod u+x %
+" automatically give executable permissions if file begins with #! and contains" '/bin/' in the path
+" From https://github.com/mitechie/pyvim/blob/master/.vimrc
+au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | silent !chmod u+x <afile> | endif | endif
 
 au BufNewFile,BufReadPost *.mutt/fortunes* setlocal textwidth=76
 au BufWritePost           *.mutt/fortunes* silent !strfile <afile> >/dev/null
@@ -995,7 +997,7 @@ let g:completekey = "<c-tab>"
 let g:CommandTMaxFiles = 100000
 
 " COMMENT {{{2
-xmap <unique> <leader>cx <Plug>PComment
+xmap <leader>cx <Plug>PComment
 
 " devhelp {{{2
 let g:devhelpSearch = 1
@@ -1328,11 +1330,9 @@ nnoremap <silent> <Leader>oK :FSSplitAbove<cr>
 nnoremap <silent> <Leader>oj :FSBelow<cr>
 nnoremap <silent> <Leader>oJ :FSSplitBelow<cr>
 
-let vimrc='~/.vimrc'
-let myabbr='~/.vim/abbrevs.vim'
-nnoremap <leader>vs :source <C-R>=vimrc<CR><CR>
-nnoremap <leader>ve :edit   <C-R>=vimrc<CR><CR>
-nnoremap <leader>vb :edit   <C-R>=myabbr<CR><CR>
+nnoremap <leader>vs :source ~/.vimrc<CR>:filetype detect<CR>:echo 'vimrc reloaded'<CR>
+nnoremap <leader>ve :edit   ~/.vimrc<CR>
+nnoremap <leader>vb :edit   ~/.vim/abbrevs.vim<CR>
 
 " Text manipulation {{{2
 
@@ -1491,6 +1491,9 @@ nnoremap <silent> zi
     \     setlocal foldcolumn=1 <Bar>
     \ endif<CR>
 
+" toggle spelling
+nnoremap <leader>sp :set spell! spelllang=en_nz spell?<CR>
+
 " remove search highlighting
 nnoremap <silent> <C-L> :silent nohl<CR><C-L>
 
@@ -1528,6 +1531,10 @@ cnoremap <C-N> <Down>
 cnoremap <C-P> <Up>
 "cnoremap <Esc><C-B>     <S-Left>
 "cnoremap <Esc><C-F>     <S-Right>
+
+" for when we forget to use sudo to open/edit a file
+" From https://github.com/mitechie/pyvim/blob/master/.vimrc
+cmap w!! w !sudo tee % >/dev/null
 
 " ;rcm = remove "control-m"s - for those mails sent from DOS:
 cnoremap ;rcm %s/<C-M>//g
