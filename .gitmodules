@@ -73,12 +73,6 @@
 [submodule "vim/.vim/bundle/vis"]
 	path = vim/.vim/bundle/vis
 	url = https://github.com/vim-scripts/vis.git
-[submodule "vim/.vim/bundle/fswitch"]
-	path = vim/.vim/bundle/fswitch
-	url = https://github.com/vim-scripts/FSwitch.git
-[submodule "vim/.vim/bundle/protodef"]
-	path = vim/.vim/bundle/protodef
-	url = https://github.com/vim-scripts/ProtoDef.git
 [submodule "vim/.vim/bundle/easygrep"]
 	path = vim/.vim/bundle/easygrep
 	url = https://github.com/vim-scripts/EasyGrep.git
