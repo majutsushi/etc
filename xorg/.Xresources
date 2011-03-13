@@ -62,6 +62,40 @@ URxvt.color14:     #34E2E2
 URxvt.color7:      #D3D7CF
 URxvt.color15:     #EEEEEC
 
+! molokai colours
+!urxvt.foreground:        white
+!urxvt.background:        black
+!urxvt.cursorColor:       #ff9900
+!urxvt.cursorColor2:      #000000
+!urxvt.colorBD:           #ffffff
+!urxvt.colorIT:           #bbbbbb
+!urxvt.colorUL:           #ff9900
+!urxvt.underlineColor:    #999999
+!*color0:     #262729
+!*color8:     #554444
+
+!*color1:    #F92672
+!*color9:    #FF669D
+
+!*color2:    #A6E22E
+!*color10:   #BEED5F
+
+!*color3:    #FD971F
+!*color11:   #FD971F
+
+!*color4 : #4682B4
+!*color12: #4682B4
+
+!*color5 : #AE81FF
+!*color13: #AE81FF
+
+!*color6 : #89b6e2
+!*color14: #46a4ff
+
+!*color7 : #FFFFFF
+!*color15: #FFFFF
+
+
 URxvt.cursorColor: yellow
 URxvt.underlineColor: yellow
 URxvt.fading: 50
