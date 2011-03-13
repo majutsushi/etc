@@ -1,6 +1,4 @@
 ScriptID SourceID Filename
 --------------------------
-923 10283 timestamp.vim
 1311 4504 vimplate
 1520 7722 omnicppcomplete
-910 14691 pydoc.vim
