@@ -111,7 +111,7 @@ au BufEnter *.h        let b:fswitchlocs = './'
 
 " automatically give executable permissions if file begins with #! and contains" '/bin/' in the path
 " From https://github.com/mitechie/pyvim/blob/master/.vimrc
-au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | silent !chmod u+x <afile> | endif | endif
+au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 'silent !chmod u+x <afile>' | endif | endif
 
 au BufNewFile,BufReadPost *.mutt/fortunes* setlocal textwidth=76
 au BufWritePost           *.mutt/fortunes* silent !strfile <afile> >/dev/null
