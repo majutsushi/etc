@@ -112,3 +112,6 @@
 [submodule "vim/.vim/bundle/markdown"]
 	path = vim/.vim/bundle/markdown
 	url = https://github.com/tpope/vim-markdown
+[submodule "vim/.vim/bundle/xptemplate"]
+	path = vim/.vim/bundle/xptemplate
+	url = https://github.com/drmingdrmer/xptemplate-dist.git
