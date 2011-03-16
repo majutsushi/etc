@@ -76,7 +76,11 @@ print_logo() {
         if grep -i debian /etc/issue >/dev/null; then
             printf "$(color k R)@$(color -)"
         elif grep -i ubuntu /etc/issue >/dev/null; then
-            printf "$(color b k r)%s$(color -)$(color k y)%s$(color -)$(color b k Y)%s$(color -)" "\\" "o" "/" || printf "\\o/"
+            printf "$(color b k r)%s$(color -)$(color k y)%s$(color -)$(color b k Y)%s$(color -)" "\\" "o" "/"
+        elif grep -i arch /etc/issue >/dev/null; then
+            printf "$(color b w b) A $(color -)"
+        else
+            printf "$(color b d r)?$(color -)"
         fi
     elif uname -s | grep -i netbsd >/dev/null; then
         printf "$(color k K)\\$(color -)$(color k R)~$(color -)"
