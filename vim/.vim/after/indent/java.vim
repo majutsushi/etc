@@ -1,1 +1,1 @@
-set cinoptions=t0,(0,j1,)50
+set cinoptions+=t0,(0,j1,)50

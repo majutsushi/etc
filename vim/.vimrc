@@ -79,20 +79,6 @@ au FileType gtkrc setlocal tabstop=2 shiftwidth=2
 au FileType haskell compiler ghc
 au FileType ruby setlocal omnifunc=rubycomplete#Complete
 
-augroup cfile
-    "au FileType c setlocal path+=/usr/include,/usr/include/sys,/usr/include/linux
-    au FileType c,cpp setlocal foldmethod=syntax
-    au FileType c,cpp setlocal tags+=~/.vim/tags/systags
-    au FileType c,cpp setlocal cinoptions=t0,(0,)50
-augroup END
-
-augroup java
-    au FileType java compiler javac
-    au FileType java setlocal omnifunc=javacomplete#Complete
-    au FileType java setlocal completefunc=javacomplete#CompleteParamsInfo
-"    au FileType java setlocal cinoptions=t0,(0,j1,)50 " see after/indent/java.vim
-augroup END
-
 " setup templates
 au BufNewFile *.tex Vimplate LaTeX
 au BufNewFile *.sh Vimplate shell
