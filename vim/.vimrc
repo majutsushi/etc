@@ -1489,8 +1489,8 @@ nnoremap <silent> <Leader>hl
       \ endif<CR>
 
 " change font size with c-up/down
-nnoremap <silent> <C-Up> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)+1)', '')<CR>
-nnoremap <silent> <C-Down> * :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)-1)', '')<CR>
+nnoremap <silent> <C-Up>   :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)+1)', '')<CR>:set guifont?<CR>
+nnoremap <silent> <C-Down> :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)-1)', '')<CR>:set guifont?<CR>
 
 " Command line {{{2
 
