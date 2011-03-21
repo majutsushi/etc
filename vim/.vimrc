@@ -1023,7 +1023,8 @@ let g:LatexBox_autojump = 1
 " NERD_Tree {{{2
 "let NERDTreeCaseSensitiveSort = 1
 let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
-let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$']
+let NERDTreeIgnore = ['\~$', '\.o$', '\.swp$',
+            \ '\.bbl$', '\.blg$', '\.fdb_latexmk$', '\.log$', '\.out$', '\.pdf$']
 let NERDTreeHijackNetrw = 0
 
 nmap <silent> <F10> :NERDTreeToggle<CR>
