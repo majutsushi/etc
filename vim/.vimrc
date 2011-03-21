@@ -48,7 +48,7 @@ autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:las
 
 autocmd BufNewFile,BufReadPre * call LoadProjectConfigs()
 
-autocmd BufNewFile * call AutoMkDir()
+autocmd BufNewFile,BufWritePre * call AutoMkDir()
 
 autocmd BufWritePre * call Timestamp()
 
@@ -1047,7 +1047,7 @@ let g:protodefctagsexe = g:ctagsbin
 let g:quickfixsigns_classes = ['qfl', 'loc', 'marks', 'vcsdiff', 'breakpoints']
 let g:quickfixsigns_blacklist_buffer = '\v(^__.*__$)|(^NERD_tree.*)|(^$)'
 " exclude 'p' and 'l' because of xptemplate
-let g:quickfixsigns#marks#marks = split('abcdefghijkmnoqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>''^.', '\zs')
+let g:quickfixsigns#marks#marks = split('abcdefghijkmnoqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', '\zs')
 
 " r-plugin {{{2
 if executable('urxvt')
@@ -1148,7 +1148,7 @@ let g:voom_user_command = "runtime! voom_addons/*.vim"
 
 " xptemplate {{{2
 let g:xptemplate_key = '<Tab>'
-let g:xptemplate_always_show_pum = 1
+let g:xptemplate_always_show_pum = 0
 "let g:xptemplate_brace_complete = '([{'
 let g:xptemplate_brace_complete = ''
 let g:xptemplate_minimal_prefix = 1
