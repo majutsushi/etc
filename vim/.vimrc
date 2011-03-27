@@ -1068,14 +1068,15 @@ let g:selBufAlwaysShowDetails = 1
 let g:selBufLauncher = "!see"
 
 " Tagbar {{{2
+let g:tagbar_compact = 1
 let g:tagbar_type_tex = {
     \ 'ctagstype' : 'latex',
     \ 'kinds'     : [
         \ 's:sections',
         \ 'g:graphics',
         \ 'l:labels',
-        \ 'r:refs',
-        \ 'p:pagerefs'
+        \ 'r:refs:1',
+        \ 'p:pagerefs:1'
     \ ],
     \ 'sort' : 0
 \ }
