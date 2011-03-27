@@ -581,6 +581,7 @@ function! Timestamp()
                 let newline = substitute(line, matchpat, repl, '')
                 keepjumps call setline(linenr, newline)
             endif
+            break
         endif
     endfor
 endfunction
