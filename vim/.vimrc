@@ -1040,6 +1040,10 @@ let g:OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
 let g:OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup window
 let g:OmniCpp_LocalSearchDecl = 1 " don't require special style of function opening braces
 
+" PreciseJump {{{2
+let g:PreciseJump_target_keys = 'abcdefghijklmnopqrstuwxz123456789[];''\,./ABCDEFGHIJKLMNOPQRSTUWXZ{}:"|<>?!@#$%^&*()_+'
+let g:PreciseJump_I_am_brave  = 1
+
 " ProtoDef {{{2
 let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
 let g:protodefctagsexe = g:ctagsbin

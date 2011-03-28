@@ -115,3 +115,6 @@
 [submodule "vim/.vim/bundle/xptemplate"]
 	path = vim/.vim/bundle/xptemplate
 	url = https://github.com/drmingdrmer/xptemplate-dist.git
+[submodule "vim/.vim/bundle/precisejump"]
+	path = vim/.vim/bundle/precisejump
+	url = https://github.com/vim-scripts/PreciseJump.git
