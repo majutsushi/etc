@@ -1062,7 +1062,7 @@ let g:OmniCpp_LocalSearchDecl = 1 " don't require special style of function open
 
 " PreciseJump {{{2
 let g:PreciseJump_target_keys = 'abcdefghijklmnopqrstuwxz123456789[];''\,./ABCDEFGHIJKLMNOPQRSTUWXZ{}:"|<>?!@#$%^&*()_+'
-let g:PreciseJump_I_am_brave  = 1
+"let g:PreciseJump_I_am_brave  = 1
 
 " ProtoDef {{{2
 let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
