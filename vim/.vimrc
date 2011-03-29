@@ -238,30 +238,54 @@ endfunction
 " some code taken from
 " http://cream.cvs.sourceforge.net/cream/cream/cream-statusline.vim?revision=1.38&view=markup
 function! GenerateStatusline()
-    let filestate = "%1*%{GetFileName()} %2*%{GetState()}%*%w"
-    let fileinfo = "%3*|%{GetFileformat()}:%{GetFileencoding()}:%{GetFiletype()}%{GetSpellLang()}|%*"
-    let curdir = "%<%{GetCurDir()}"
-    let tabinfo = "%3*|%1*%{GetExpandTab()}%3*:%{&tabstop}:%{&softtabstop}:%{&shiftwidth}|%*"
-    let charinfo = "%3*U+%04B|%*"
-    let lineinfo = "%(%3*%05(%l%),%03(%c%V%)%*%)\ %1*%p%%"
+    " file name and state
+    let rv  = '%1*%{GetFileName()}'
+    let rv .= ' '
+    let rv .= '%2*%{GetState()}%*%w'
 
-    return filestate .
-         \ fileinfo .
-         \ curdir .
-         \ "%=" .
-         \ tabinfo .
-         \ charinfo .
-         \ lineinfo
+    " file properties
+    let rv .= '%3*|'
+    let rv .= '%{GetFiletype()}'
+    let rv .= '%{GetFileformat(1)}%#error#%{GetFileformat(0)}%3*'
+    let rv .= '%{GetFileencoding(1)}%#error#%{GetFileencoding(0)}%3*'
+    let rv .= '%{GetSpellLang()}'
+    let rv .= '|%*'
+
+    " truncate here
+    let rv .= '%<'
+
+    " current directory
+    let rv .= '%{GetCurDir()}'
+
+    " align right
+    let rv .= '%='
+
+    " tab/indent settings
+    let rv .= '%3*|'
+    let rv .= '%1*%{GetExpandTab()}'
+    let rv .= '%3*'
+    let rv .= ':%{&tabstop}'
+    let rv .= ':%{&softtabstop}'
+    let rv .= ':%{&shiftwidth}'
+    let rv .= '|%*'
+
+    " unicode codepoint
+    let rv .= '%3*U+%04B|%*'
+
+    " position
+    let rv .= '%(%3*%05(%l%),%03(%c%V%)%*%) %1*%p%%'
+
+    return rv
 endfunction
 
 " GetFileName() {{{3
 function! GetFileName()
-    if &buftype == "help"
+    if &buftype == 'help'
         return expand('%:p:t')
-    elseif &buftype == "quickfix"
-        return "[Quickfix List]"
-    elseif bufname('%') == ""
-        return "[No Name]"
+    elseif &buftype == 'quickfix'
+        return '[Quickfix List]'
+    elseif bufname('%') == ''
+        return '[No Name]'
     else
         return expand('%:p:~:.')
     endif
@@ -269,9 +293,9 @@ endfunction
 
 " GetState() {{{3
 function! GetState()
-    if &buftype == "help"
+    if &buftype == 'help'
         return 'H'
-    elseif &readonly || &buftype == "nowrite" || &modifiable == 0
+    elseif &readonly || &buftype == 'nowrite' || &modifiable == 0
         return '-'
     elseif &modified != 0
         return '*'
@@ -280,74 +304,70 @@ function! GetState()
     endif
 endfunction
 
-" GetFileformat() {{{3
-function! GetFileformat()
-    if &fileformat == ""
-        return "--"
+" GetFiletype() {{{3
+function! GetFiletype()
+    if &filetype == ''
+        return '--'
     else
-        return &fileformat
+        return &filetype
+    endif
+endfunction
+
+" GetFileformat() {{{3
+function! GetFileformat(colon)
+    if &fileformat == '' || &fileformat == 'unix'
+        return ''
+    else
+        return a:colon ? ':' : &fileformat
     endif
 endfunction
 
 " GetFileencoding() {{{3
-function! GetFileencoding()
-    if &fileencoding == ""
-        if &encoding != ""
-            return &encoding
-        else
-            return "--"
-        endif
+function! GetFileencoding(colon)
+    if empty(&fileencoding) || &fileencoding == 'utf-8'
+        return ''
     else
-        return &fileencoding
-    endif
-endfunction
-
-" GetFiletype() {{{3
-function! GetFiletype()
-    if &filetype == ""
-        return "--"
-    else
-        return &filetype
+        return a:colon ? ':' : &fileencoding
     endif
 endfunction
 
 " GetSpellLang() {{{3
 function! GetSpellLang()
     if &spell == 0
-        return ""
-    elseif &spelllang == ""
-        return ":--"
+        return ''
+    elseif &spelllang == ''
+        return ':--'
     else
-        return ":" . &spelllang
+        return ':' . &spelllang
     endif
 endfunction
 
 " GetExpandTab() {{{3
 function! GetExpandTab()
     if &expandtab
-        return "S"
+        return 'S'
     else
-        return "T"
+        return 'T'
     endif
 endfunction
 
 " GetCurDir() {{{3
 function! GetCurDir()
-    let curdir = fnamemodify(getcwd(), ":~")
+    let curdir = fnamemodify(getcwd(), ':~')
     return curdir
 endfunction
 
 " GetTabstop() {{{3
 function! GetTabstop()
-    let str = "" . &tabstop
+    let str = '' . &tabstop
     " show softtabstop or shiftwidth if not equal tabstop
     if (&softtabstop && (&softtabstop != &tabstop)) ||
      \ (&shiftwidth  && (&shiftwidth  != &tabstop))
         if &softtabstop
-            let str = str . ":sts" . &softtabstop
+            let str = str . ':sts' . &softtabstop
         endif
         if &shiftwidth != &tabstop
-            let str = str . ":sw" . &shiftwidth
+            let str = str . ':sw' . &shiftwidth
         endif
     endif
     return str
