@@ -82,6 +82,15 @@ if v:version >= 700
     au BufEnter * if(exists('b:winview') && IsNotSpecialBuf("%")) | call winrestview(b:winview) | endif
 endif
 
+function! s:SetupHelpWindow()
+    " Set custom statusline
+    let b:stl = "#[Branch] HELP#[BranchS] [>] #[FileName] %<%t #[FunctionName] %=#[LinePercentS][<<]#[LinePercent] %p%%"
+
+    nnoremap <buffer> <Space> <C-]> " Space selects subject
+    nnoremap <buffer> <BS>    <C-T> " Backspace to go back
+endfunction
+au FileType help if &buftype == 'help' | call <SID>SetupHelpWindow() | endif
+
 " filetype-specific settings
 au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
 au FileType tex let b:vikiFamily="LaTeX"
@@ -112,6 +121,246 @@ au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 's
 
 au BufNewFile,BufReadPost *.mutt/fortunes* setlocal textwidth=76
 au BufWritePost           *.mutt/fortunes* silent !strfile <afile> >/dev/null
+
+" Statusline {{{1
+" Adapted from https://github.com/Lokaltog/sync/blob/master/vim/vimrc
+
+" s:StatusLine() {{{2
+function! s:StatusLine(new_stl, type, current)
+    let current = (a:current ? "" : "NC")
+    let type    = a:type
+    let new_stl = a:new_stl
+
+    " Prepare current buffer specific text
+    " Syntax: <CUR> ... </CUR>
+    let new_stl = substitute(new_stl, '<CUR>\(.\{-,}\)</CUR>', (a:current ? '\1' : ''), 'g')
+
+    " Prepare statusline colors
+    " Syntax: #[ ... ]
+    let new_stl = substitute(new_stl, '#\[\(\w\+\)\]',
+                           \ '%#StatusLine' . type . '\1' . current . '#', 'g')
+
+    " Prepare statusline arrows
+    " Syntax: [>] [>>] [<] [<<]
+    let new_stl = substitute(new_stl, '\[>\]',  '|', 'g')
+    let new_stl = substitute(new_stl, '\[>>\]', '',  'g')
+    let new_stl = substitute(new_stl, '\[<\]',  '|', 'g')
+    let new_stl = substitute(new_stl, '\[<<\]', '',  'g')
+
+    if &l:statusline ==# new_stl
+        " Statusline already set, nothing to do
+        return
+    endif
+
+    if empty(&l:statusline)
+        " No statusline is set, use new_stl
+        let &l:statusline = new_stl
+    else
+        " Check if a custom statusline is set
+        let plain_stl = substitute(&l:statusline, '%#StatusLine\w\+#', '', 'g')
+
+        if &l:statusline ==# plain_stl
+            " A custom statusline is set, don't modify
+            return
+        endif
+
+        " No custom statusline is set, use new_stl
+        let &l:statusline = new_stl
+    endif
+endfunction
+
+" s:StatusLineColors() {{{2
+function! s:StatusLineColors(colors)
+    for type in keys(a:colors)
+        for name in keys(a:colors[type])
+            let colors = {'c': a:colors[type][name][0], 'nc': a:colors[type][name][1]}
+            let type = (type == 'NONE' ? '' : type)
+            let name = (name == 'NONE' ? '' : name)
+
+            if exists("colors['c'][0]")
+                exec 'hi StatusLine' . type . name .
+                   \ ' guibg=' . colors['c'][0] .
+                   \ ' guifg=' . colors['c'][1] .
+                   \ ' gui='   . colors['c'][2]
+            endif
+
+            if exists("colors['nc'][0]")
+                exec 'hi StatusLine' . type . name . 'NC' .
+                   \ ' guibg=' . colors['nc'][0] .
+                   \ ' guifg=' . colors['nc'][1] .
+                   \ ' gui='   . colors['nc'][2]
+            endif
+        endfor
+    endfor
+endfunction
+
+" Helper functions {{{2
+" GetFileName() {{{3
+function! GetFileName()
+    if &buftype == 'help'
+        return expand('%:p:t')
+    elseif &buftype == 'quickfix'
+        return '[Quickfix List]'
+    elseif bufname('%') == ''
+        return '[No Name]'
+    else
+        return expand('%:p:~:.')
+    endif
+endfunction
+
+" GetState() {{{3
+function! GetState()
+    if &buftype == 'help'
+        return 'H'
+    elseif &readonly || &buftype == 'nowrite' || &modifiable == 0
+        return '-'
+    elseif &modified != 0
+        return '*'
+    else
+        return ''
+    endif
+endfunction
+
+" GetFileformat() {{{3
+function! GetFileFormat()
+    if &fileformat == '' || &fileformat == 'unix'
+        return ''
+    else
+        return &fileformat
+    endif
+endfunction
+
+" GetFileencoding() {{{3
+function! GetFileEncoding()
+    if empty(&fileencoding) || &fileencoding == 'utf-8'
+        return ''
+    else
+        return &fileencoding
+    endif
+endfunction
+
+" Default statusline {{{2
+let g:default_stl  = ""
+
+let g:default_stl .= "<CUR>#[Mode] "
+let g:default_stl .= "%{&paste ? 'PASTE [>] ' : ''}"
+let g:default_stl .= "%{substitute(mode(), '', '^V', 'g')}"
+let g:default_stl .= " #[ModeS][>>]</CUR>"
+
+" File name
+let g:default_stl .= "#[FileName] %{GetFileName()} "
+
+let g:default_stl .= "#[ModFlag]%(%{GetState()} %)#[BufFlag]%w"
+let g:default_stl .= "#[FileNameS][>>]" " Separator
+
+" File type
+let g:default_stl .= "<CUR>%(#[FileType] %{!empty(&ft) ? &ft : '--'}#[BranchS]%)</CUR>"
+
+" Spellcheck language
+let g:default_stl .= "<CUR>%(#[FileType]%{&spell ? ':' . &spelllang : ''}#[BranchS]%)</CUR>"
+
+" Git branch
+let g:default_stl .= "#[Branch]%("
+let g:default_stl .= "%{substitute(fugitive#statusline(), '\\[GIT(\\([a-z0-9\\-_\\./:]\\+\\))\\]', '<CUR>:</CUR>\\1', 'gi')}"
+let g:default_stl .= "%) "
+
+" Syntastic
+"let g:default_stl .= "<CUR>%(#[BranchS][>] #[Error]%{substitute(SyntasticStatuslineFlag(), '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', '[>][>][>] SYNTAX \\1 \\2 [>][>][>]', 'i')} %)</CUR>"
+"let g:default_stl .= "<CUR>%(#[BranchS][>] #[Error]%{substitute('[Syntax: line:42 (99)]', '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', 'SYNTAX \\1 \\2', 'i')} %)</CUR>"
+
+" Padding/HL group
+let g:default_stl .= "#[FunctionName] "
+
+" Function name
+"let g:default_stl .= "<CUR>%(%{cfi#format('%s', '')} %)</CUR>"
+
+" Truncate here
+let g:default_stl .= "%<"
+
+" Current directory
+let g:default_stl .= "%{fnamemodify(getcwd(), ':~')}"
+
+" Right align rest
+let g:default_stl .= "%= "
+
+" File format
+let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileFormat()} %)</CUR>'
+
+" File encoding
+let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileEncoding()} %)</CUR>'
+
+" Tabstop/indent settings
+let g:default_stl .= "#[ExpandTab] %{&expandtab ? 'S' : 'T'}"
+let g:default_stl .= "#[LineColumn]:%{&tabstop}:%{&softtabstop}:%{&shiftwidth}"
+
+" Unicode codepoint
+let g:default_stl .= '<CUR>#[LineNumber] U+%04B</CUR>'
+
+" Line/column/virtual column, Line percentage
+let g:default_stl .= "#[LineNumber] %04(%l%)#[LineColumn]:%03(%c%V%) "
+
+" Line/column/virtual column, Line percentage
+let g:default_stl .= "#[LinePercent] %p%%"
+
+" Current syntax group
+let g:default_stl .= "%{exists('g:synid') && g:synid ? '[<] '.synIDattr(synID(line('.'), col('.'), 1), 'name').' ' : ''}"
+
+" Colour definitions {{{2
+let s:statuscolors = {
+    \ 'NONE': {
+        \ 'NONE'         : [[ '#303030', '#ffffff', 'bold'], [ '#080808', '#808080', 'none']]
+    \ },
+    \ 'Normal': {
+        \ 'Mode'         : [[ '#ffaf00', '#262626', 'bold'], [                             ]],
+        \ 'ModeS'        : [[ '#ffaf00', '#585858', 'bold'], [                             ]],
+        \ 'FileName'     : [[ '#c2bfa5', '#000000', 'bold'], [ '#1c1c1c', '#808080', 'none']],
+        \ 'FileNameS'    : [[ '#c2bfa5', '#303030', 'bold'], [ '#1c1c1c', '#080808', 'none']],
+        \ 'ModFlag'      : [[ '#c2bfa5', '#ff0000', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
+        \ 'BufFlag'      : [[ '#c2bfa5', '#000000', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
+        \ 'FileType'     : [[ '#585858', '#bcbcbc', 'none'], [ '#080808', '#4e4e4e', 'none']],
+        \ 'Branch'       : [[ '#585858', '#bcbcbc', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
+        \ 'BranchS'      : [[ '#585858', '#949494', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
+        \ 'Error'        : [[ '#585858', '#ff5f00', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
+        \ 'FunctionName' : [[ '#1c1c1c', '#9e9e9e', 'none'], [ '#080808', '#4e4e4e', 'none']],
+        \ 'FileFormat'   : [[ '#1c1c1c', '#bcbcbc', 'bold'], [ '#080808', '#4e4e4e', 'none']],
+        \ 'FileEncoding' : [[ '#1c1c1c', '#bcbcbc', 'bold'], [ '#080808', '#4e4e4e', 'none']],
+        \ 'Separator'    : [[ '#1c1c1c', '#6c6c6c', 'none'], [ '#080808', '#4e4e4e', 'none']],
+        \ 'ExpandTab'    : [[ '#585858', '#eeeeee', 'bold'], [ '#1c1c1c', '#808080', 'none']],
+        \ 'LineNumber'   : [[ '#585858', '#bcbcbc', 'bold'], [ '#1c1c1c', '#808080', 'none']],
+        \ 'LineColumn'   : [[ '#585858', '#bcbcbc', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
+        \ 'LinePercent'  : [[ '#c2bfa5', '#303030', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']]
+    \ },
+    \ 'Insert': {
+        \ 'Mode'         : [[ '#afd7ff', '#005f5f', 'bold'], [                             ]],
+        \ 'ModeS'        : [[ '#afd7ff', '#0087af', 'bold'], [                             ]],
+        \ 'FileName'     : [[ '#0087af', '#ffffff', 'bold'], [                             ]],
+        \ 'FileNameS'    : [[ '#0087af', '#005f87', 'bold'], [                             ]],
+        \ 'ModFlag'      : [[ '#0087af', '#ff0000', 'bold'], [                             ]],
+        \ 'BufFlag'      : [[ '#0087af', '#5fafff', 'none'], [                             ]],
+        \ 'FileType'     : [[ '#0087af', '#5fd7ff', 'none'], [                             ]],
+        \ 'Branch'       : [[ '#0087af', '#87d7ff', 'none'], [                             ]],
+        \ 'BranchS'      : [[ '#0087af', '#87d7ff', 'none'], [                             ]],
+        \ 'Error'        : [[ '#0087af', '#ff5f00', 'bold'], [                             ]],
+        \ 'FunctionName' : [[ '#005f87', '#87d7ff', 'none'], [                             ]],
+        \ 'FileFormat'   : [[ '#005f87', '#5fafff', 'bold'], [                             ]],
+        \ 'FileEncoding' : [[ '#005f87', '#5fafff', 'bold'], [                             ]],
+        \ 'Separator'    : [[ '#005f87', '#00afaf', 'none'], [                             ]],
+        \ 'ExpandTab'    : [[ '#0087af', '#87d7ff', 'bold'], [                             ]],
+        \ 'LineNumber'   : [[ '#0087af', '#87d7ff', 'bold'], [                             ]],
+        \ 'LineColumn'   : [[ '#0087af', '#87d7ff', 'none'], [                             ]],
+        \ 'LinePercent'  : [[ '#87d7ff', '#005f5f', 'bold'], [                             ]]
+    \ }
+\ }
+" Autocommands {{{2
+augroup StatusLineHighlight
+    autocmd!
+
+    au ColorScheme * call <SID>StatusLineColors(s:statuscolors)
+
+    au BufEnter,BufWinEnter,WinEnter,CmdwinEnter,CursorHold,BufWritePost,InsertLeave * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Normal', 1)
+    au BufLeave,BufWinLeave,WinLeave,CmdwinLeave * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Normal', 0)
+    au InsertEnter,CursorHoldI * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Insert', 1)
+augroup END
 
 " Functions {{{1
 
@@ -243,145 +492,6 @@ function! GenerateFoldText()
     let len = min([winwidth(0) - num_w - fold_w - sign_w - 1, 100])
     let sub = strpart(sub, 0, len - strlen(info))
     return sub . info
-endfunction
-
-" GenerateStatusline() {{{2
-" some code taken from
-" http://cream.cvs.sourceforge.net/cream/cream/cream-statusline.vim?revision=1.38&view=markup
-function! GenerateStatusline()
-    " file name and state
-    let rv  = '%1*%{GetFileName()}'
-    let rv .= ' '
-    let rv .= '%2*%{GetState()}%*%w'
-
-    " file properties
-    let rv .= '%3*|'
-    let rv .= '%{GetFiletype()}'
-    let rv .= '%{GetFileformat(1)}%#error#%{GetFileformat(0)}%3*'
-    let rv .= '%{GetFileencoding(1)}%#error#%{GetFileencoding(0)}%3*'
-    let rv .= '%{GetSpellLang()}'
-    let rv .= '|%*'
-
-    " truncate here
-    let rv .= '%<'
-
-    " current directory
-    let rv .= '%{GetCurDir()}'
-
-    " align right
-    let rv .= '%='
-
-    " tab/indent settings
-    let rv .= '%3*|'
-    let rv .= '%1*%{GetExpandTab()}'
-    let rv .= '%3*'
-    let rv .= ':%{&tabstop}'
-    let rv .= ':%{&softtabstop}'
-    let rv .= ':%{&shiftwidth}'
-    let rv .= '|%*'
-
-    " unicode codepoint
-    let rv .= '%3*U+%04B|%*'
-
-    " position
-    let rv .= '%(%3*%05(%l%),%03(%c%V%)%*%) %1*%p%%'
-
-    return rv
-endfunction
-
-" GetFileName() {{{3
-function! GetFileName()
-    if &buftype == 'help'
-        return expand('%:p:t')
-    elseif &buftype == 'quickfix'
-        return '[Quickfix List]'
-    elseif bufname('%') == ''
-        return '[No Name]'
-    else
-        return expand('%:p:~:.')
-    endif
-endfunction
-
-" GetState() {{{3
-function! GetState()
-    if &buftype == 'help'
-        return 'H'
-    elseif &readonly || &buftype == 'nowrite' || &modifiable == 0
-        return '-'
-    elseif &modified != 0
-        return '*'
-    else
-        return ''
-    endif
-endfunction
-
-" GetFiletype() {{{3
-function! GetFiletype()
-    if &filetype == ''
-        return '--'
-    else
-        return &filetype
-    endif
-endfunction
-
-" GetFileformat() {{{3
-function! GetFileformat(colon)
-    if &fileformat == '' || &fileformat == 'unix'
-        return ''
-    else
-        return a:colon ? ':' : &fileformat
-    endif
-endfunction
-
-" GetFileencoding() {{{3
-function! GetFileencoding(colon)
-    if empty(&fileencoding) || &fileencoding == 'utf-8'
-        return ''
-    else
-        return a:colon ? ':' : &fileencoding
-    endif
-endfunction
-
-" GetSpellLang() {{{3
-function! GetSpellLang()
-    if &spell == 0
-        return ''
-    elseif &spelllang == ''
-        return ':--'
-    else
-        return ':' . &spelllang
-    endif
-endfunction
-
-" GetExpandTab() {{{3
-function! GetExpandTab()
-    if &expandtab
-        return 'S'
-    else
-        return 'T'
-    endif
-endfunction
-
-" GetCurDir() {{{3
-function! GetCurDir()
-    let curdir = fnamemodify(getcwd(), ':~')
-    return curdir
-endfunction
-
-" GetTabstop() {{{3
-function! GetTabstop()
-    let str = '' . &tabstop
-    " show softtabstop or shiftwidth if not equal tabstop
-    if (&softtabstop && (&softtabstop != &tabstop)) ||
-     \ (&shiftwidth  && (&shiftwidth  != &tabstop))
-        if &softtabstop
-            let str = str . ':sts' . &softtabstop
-        endif
-        if &shiftwidth != &tabstop
-            let str = str . ':sw' . &shiftwidth
-        endif
-    endif
-    return str
 endfunction
 
 " GenerateTabLine() {{{2
@@ -732,7 +842,7 @@ let g:tex_comment_nospell = 1
 " 0, 1 or 2; when to use a status line for the last window
 set laststatus=2
 " alternate format to be used for a status line
-set statusline=%!GenerateStatusline()
+"set statusline=%!GenerateStatusline()
 " default height for the preview window
 set previewheight=9
 " don't unload a buffer when no longer shown in a window
