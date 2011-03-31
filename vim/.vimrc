@@ -760,6 +760,9 @@ fun! ToggleFold()
     echo
 endfun
 
+" sudo write {{{2
+command! -bar -nargs=0 W  silent! exec "write !sudo tee % >/dev/null"  | silent! edit!
+
 " Options {{{1
 
 " important {{{2
@@ -1653,10 +1656,6 @@ cnoremap <C-N> <Down>
 cnoremap <C-P> <Up>
 "cnoremap <Esc><C-B>     <S-Left>
 "cnoremap <Esc><C-F>     <S-Right>
-
-" for when we forget to use sudo to open/edit a file
-" From https://github.com/mitechie/pyvim/blob/master/.vimrc
-cmap w!! w !sudo tee % >/dev/null
 
 " ;rcm = remove "control-m"s - for those mails sent from DOS:
 cnoremap ;rcm %s/<C-M>//g
