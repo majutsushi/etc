@@ -1099,6 +1099,9 @@ set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.cache/vim/viminfo
 " see ft-tex-plugin
 let g:tex_flavor = "latex"
 
+" Highlight conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
 " Plugin and script options {{{1
 
 " CCTree {{{2
