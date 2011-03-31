@@ -469,11 +469,12 @@ function! GenerateFoldText()
         endwhile
         let sub = initial . ' ' . comment_content
     else
-"        if &foldmethod == "marker"
-"            let sub = v:folddashes . ' ' . line
-"        else
-            let sub = line
-"        endif
+        let sub = line
+
+        " Foldtext can't display tabs so replace them with spaces
+        let indent = indent(v:foldstart)
+        let sub = substitute(sub, '^\t\+', repeat(' ', indent), '')
+
         let startbrace = substitute(line, '^.*{[ \t]*$', '{', 'g')
         if startbrace == '{'
             let line = getline(v:foldend)
