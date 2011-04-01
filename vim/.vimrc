@@ -1099,6 +1099,8 @@ set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.cache/vim/viminfo
 " see ft-tex-plugin
 let g:tex_flavor = "latex"
 
+let g:python_highlight_all = 1
+
 " Highlight conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
