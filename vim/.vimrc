@@ -84,7 +84,7 @@ endif
 
 function! s:SetupHelpWindow()
     " Set custom statusline
-    let b:stl = "#[Branch] HELP#[BranchS] [>] #[FileName] %<%t #[FunctionName] %=#[LinePercentS][<<]#[LinePercent] %p%%"
+    let b:stl = "#[Branch] HELP #[FileName] %<%t #[FunctionName] %=#[LinePercentS][<<]#[LinePercent] %p%%"
 
     nnoremap <buffer> <Space> <C-]> " Space selects subject
     nnoremap <buffer> <BS>    <C-T> " Backspace to go back
