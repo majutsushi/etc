@@ -118,3 +118,6 @@
 [submodule "vim/.vim/bundle/precisejump"]
 	path = vim/.vim/bundle/precisejump
 	url = https://github.com/vim-scripts/PreciseJump.git
+[submodule "vim/.vim/bundle/current-func-info"]
+	path = vim/.vim/bundle/current-func-info
+	url = https://github.com/tyru/current-func-info.vim.git

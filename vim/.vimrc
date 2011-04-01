@@ -271,11 +271,11 @@ let g:default_stl .= "%) "
 " Padding/HL group
 let g:default_stl .= "#[FunctionName] "
 
-" Function name
-"let g:default_stl .= "<CUR>%(%{cfi#format('%s', '')} %)</CUR>"
-
 " Truncate here
 let g:default_stl .= "%<"
+
+" Function name
+let g:default_stl .= "<CUR>%(%{cfi#format('%s() |', '')} %)</CUR>"
 
 " Current directory
 let g:default_stl .= "%{fnamemodify(getcwd(), ':~')}"
