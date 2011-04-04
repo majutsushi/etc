@@ -57,16 +57,16 @@ autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 
 "au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
 
-augroup fastescape
-    autocmd!
+"augroup fastescape
+"    autocmd!
 
-    set notimeout
-    set ttimeout
-    set timeoutlen=10
+"    set notimeout
+"    set ttimeout
+"    set timeoutlen=10
 
-    au InsertEnter * set timeout
-    au InsertLeave * set notimeout
-augroup END
+"    au InsertEnter * set timeout
+"    au InsertLeave * set notimeout
+"augroup END
 
 " When switching buffers, preserve window view.
 function! IsNotSpecialBuf(buf)
