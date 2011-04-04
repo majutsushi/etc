@@ -398,6 +398,7 @@ alias pa='ps aux | less'
 alias pu='ps ux | less'
 alias le='/usr/share/vim/vimcurrent/macros/less.sh'
 alias vi='vim'
+alias jsonpp='python -mjson.tool'
 
 # shortcuts
 alias rd='rmdir'
