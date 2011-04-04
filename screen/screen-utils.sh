@@ -41,7 +41,7 @@ color() {
 }
 
 print_sessionname() {
-    FULLNAME=$(screen -ls | grep --color=no -o "$PPID[^[:space:]]*")
+    FULLNAME=$(screen -ls | grep --color=no -o "${PPID}[^[:space:]]*")
     NAME=$(echo $FULLNAME | awk -F '.' '{ print $2 }')
     printf "$(color b k W)$NAME$(color -) "
 }
