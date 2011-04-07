@@ -32,8 +32,12 @@ function! `name^`$SPfun^(`:_args:^)
     `cursor^
 endfunction
 
+..XPT
+
 XPT member wrap " tips
 " `name^`$SPfun^() {{{`2^
 function! `name^`$SPfun^(`:_args:^) dict
     `cursor^
 endfunction
+
+..XPT
