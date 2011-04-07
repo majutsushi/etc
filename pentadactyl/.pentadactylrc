@@ -1,0 +1,8 @@
+"1.0b6 (created: 2011/03/09 09:25:18)
+
+loadplugins '\.(js|penta)$'
+group user
+set guioptions=bCrsT
+set hintkeys=asdfg;lkjh
+
+" vim: set ft=pentadactyl:
