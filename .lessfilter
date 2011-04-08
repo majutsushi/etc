@@ -1,13 +1,31 @@
-#!/bin/sh
+#!/bin/bash
+
+declare -A filemaps
+
+filemaps[text/x-c]=c
+filemaps[text/x-perl]=perl
+filemaps[text/x-python]=python
+filemaps[text/x-shellscript]=sh
+filemaps[text/x-diff]=diff
 
 hl() {
     highlight --out-format=xterm256 --style=molokai -l "$1"
 }
 
-case `echo "$1" | tr '[:upper:]' '[:lower:]'` in
-    *.c|*.cpp|*.h|*.py|*.sh|*.pl)
-        if [ -x "`which highlight`" ]; then
-            hl "$1"
-        fi
-        ;;
-esac
+hl2() {
+    highlight --out-format=xterm256 --style=molokai --syntax=$1 -l "$2"
+}
+
+MIMETYPE=$(file --mime-type -b "$1")
+
+if [[ -x "$(which highlight)" ]]; then
+    if [[ "${filemaps[$MIMETYPE]}" != "" ]]; then
+        hl2 ${filemaps[$MIMETYPE]} "$1"
+    else
+        case `echo "$1" | tr '[:upper:]' '[:lower:]'` in
+            *.patch|*.r)
+                hl "$1"
+                ;;
+        esac
+    fi
+fi
