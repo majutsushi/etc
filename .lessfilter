@@ -19,13 +19,13 @@ hl2() {
 MIMETYPE=$(file --mime-type -b "$1")
 
 if [[ -x "$(which highlight)" ]]; then
-    if [[ "${filemaps[$MIMETYPE]}" != "" ]]; then
-        hl2 ${filemaps[$MIMETYPE]} "$1"
-    else
-        case `echo "$1" | tr '[:upper:]' '[:lower:]'` in
-            *.patch|*.r)
-                hl "$1"
-                ;;
-        esac
-    fi
+    case `echo "$1" | tr '[:upper:]' '[:lower:]'` in
+        *.c|*.cpp|*.h|*.py|*.sh|*.pl|*.patch|*.r|*.css)
+            hl "$1"
+            ;;
+        *)
+            if [[ "${filemaps[$MIMETYPE]}" != "" ]]; then
+                hl2 ${filemaps[$MIMETYPE]} "$1"
+            fi
+    esac
 fi
