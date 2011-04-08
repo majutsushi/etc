@@ -1015,11 +1015,11 @@ sshot()   { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desk/screenshots
 
 # http://ft.bewatermyfriend.org/comp/zsh/zfunct.html
 hl() {
-    if [[ -z ${2} ]] || (( ${#argv} > 2 )) ; then
-        printf 'usage: hl <syntax> <file>\n'
-        return 1
-    fi
-    highlight --xterm256 --syntax $1 --style darkness $2 | less
+#     if [[ -z ${2} ]] || (( ${#argv} > 2 )) ; then
+#         printf 'usage: hl <syntax> <file>\n'
+#         return 1
+#     fi
+    highlight --out-format=xterm256 --style=molokai "$1" | less
 }
 
 # upload()  { scp -p $1 cip:public_html/$2 }
