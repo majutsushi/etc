@@ -1,0 +1,13 @@
+#!/bin/sh
+
+hl() {
+    highlight --out-format=xterm256 --style=molokai -l "$1"
+}
+
+case `echo "$1" | tr '[:upper:]' '[:lower:]'` in
+    *.c|*.cpp|*.h|*.py|*.sh|*.pl)
+        if [ -x "`which highlight`" ]; then
+            hl "$1"
+        fi
+        ;;
+esac
