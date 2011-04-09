@@ -561,7 +561,11 @@ endfunction
 
 " GuiSettings() {{{2
 function! GuiSettings()
-    set guifont=DejaVu\ Sans\ Mono\ 8
+    if has('macunix')
+        set guifont=Monaco:h10
+    else
+        set guifont=DejaVu\ Sans\ Mono\ 8
+    endif
 
     set guioptions+=c " use console dialogs
     set guioptions-=e " don't use gui tabs
