@@ -42,11 +42,6 @@ has_vcsinfo() {
     return 1
 }
 
-if ismac; then
-    [[ -r /sw/bin/init.sh ]] && . /sw/bin/init.sh
-    export TERM=xterm-color
-fi
-
 # check for user, if not running as root set $SUDO to sudo
 (( EUID != 0 )) && SUDO='sudo' || SUDO=''
 
@@ -172,7 +167,9 @@ add_to_path() {
     dir=$3
 
     if [[ -n "$dir" && "$dir" != "." && -d "$dir" && -x "$dir" ]]; then
-        dir=$(readlink -f "$dir")
+        if ! ismac; then
+            dir=$(readlink -f "$dir")
+        fi
 
         if [[ -z $(eval "echo \"\$$oldpath\"") ]]; then
             eval "$oldpath=$dir"
@@ -204,6 +201,10 @@ verify_path
 add_to_path post PATH /usr/local/sbin
 add_to_path post PATH /sbin
 add_to_path post PATH /usr/sbin
+
+# Macports
+add_to_path pre PATH /opt/local/bin
+add_to_path pre PATH /opt/local/sbin
 
 add_to_path pre PATH "/var/lib/gems/1.8/bin/"
 add_to_path pre PATH $HOME/.local/bin
@@ -698,8 +699,13 @@ prompt_set_line_1 () {
     local left_left="${PR_SET_CHARSET}${C_BOLD}${C_F_RED}${PR_SHIFT_IN}${PR_ULCORNER}${PR_SHIFT_OUT}${C_F_DEFAULT}($C_F_GREEN"
 #     local left_dir="$CPATH"
     if has_vcsinfo; then
+        if ! ismac; then
+            local HOMEDIR=$(readlink -f ${HOME})
+        else
+            local HOMEDIR=${HOME}
+        fi
         # use readlink for symlinked home dirs
-        local left_dir="${${${vcs_info_msg_0_/#${HOME}/~}/#$(readlink -f ${HOME})/~}%%/.}"
+        local left_dir="${${${vcs_info_msg_0_/#${HOME}/~}/#${HOMEDIR}/~}%%/.}"
     else
         local left_dir="%~"
     fi
