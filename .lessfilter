@@ -8,15 +8,21 @@ filemaps[text/x-python]=python
 filemaps[text/x-shellscript]=sh
 filemaps[text/x-diff]=diff
 
+if [[ -f /usr/share/highlight/themes/molokai.style ]]; then
+    STYLE=molokai
+else
+    STYLE=darkness
+fi
+
 hl() {
-    highlight --out-format=xterm256 --style=molokai -l "$1"
+    highlight --out-format=xterm256 --style=$STYLE -l "$1"
 }
 
 hl2() {
-    highlight --out-format=xterm256 --style=molokai --syntax=$1 -l "$2"
+    highlight --out-format=xterm256 --style=$STYLE --syntax=$1 -l "$2"
 }
 
-MIMETYPE=$(file --mime-type -b "$1")
+MIMETYPE=$(file --mime-type -b $(readlink -f "$1"))
 
 if [[ -x "$(which highlight)" ]]; then
     case `echo "$1" | tr '[:upper:]' '[:lower:]'` in
@@ -26,6 +32,10 @@ if [[ -x "$(which highlight)" ]]; then
         *)
             if [[ "${filemaps[$MIMETYPE]}" != "" ]]; then
                 hl2 ${filemaps[$MIMETYPE]} "$1"
+            else
+                exit 1
             fi
     esac
+else
+    exit 1
 fi
