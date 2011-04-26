@@ -99,6 +99,15 @@ au FileType gtkrc setlocal tabstop=2 shiftwidth=2
 au FileType haskell compiler ghc
 au FileType ruby setlocal omnifunc=rubycomplete#Complete
 
+" Folding of (gnu)make output.
+augroup quickfix
+    au BufReadPost quickfix setlocal foldmethod=marker
+    au BufReadPost quickfix setlocal foldmarker=Entering\ directory,Leaving\ directory
+    au BufReadPost quickfix noremap <buffer> <silent> zq zM:g/error:/normal zv<CR>
+    au BufReadPost quickfix noremap <buffer> <silent> zw zq:g/warning:/normal zv<CR>
+"    au BufReadPost quickfix normal zq
+augroup END
+
 " setup templates
 au BufNewFile *.tex Vimplate LaTeX
 au BufNewFile *.sh Vimplate shell
