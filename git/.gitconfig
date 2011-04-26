@@ -9,7 +9,7 @@
 	st = status
 	ci = commit
 	co = checkout
-	rlog = log --pretty=format:\"%C(yellow)%h %C(cyan)%ci%Cgreen %cn %Cred%d %Creset%s\" --graph
+	rlog = log --pretty=format:\"%C(yellow)%h %C(cyan)%ai%Cgreen %aN %Cred%d %Creset%s\" --graph
 	slog = log --stat
 	wdiff = diff --color-words
 	wshow = show --color-words
