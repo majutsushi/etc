@@ -459,6 +459,8 @@ if [[ -r /etc/debian_version ]] ; then
 #     alias deborphan-by-size="dpkg-query -W --showformat='${Installed-Size} ${Package}\n' `deborphan -a | awk '{print $2}'` | sort -n"
 
     alias tlog="tail -f /var/log/syslog"
+    alias aptitude-just-recommended='aptitude -o "Aptitude::Pkg-Display-Limit=!?reverse-depends(~i) ~M !?essential"'
+    alias aptitude-also-via-dependency='aptitude -o "Aptitude::Pkg-Display-Limit=~i !~M ?reverse-depends(~i) !?essential"'
 fi
 
 # misc
