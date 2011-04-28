@@ -466,42 +466,44 @@ endfun
 function! GenerateFoldText()
     let line = getline(v:foldstart)
     if match(line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$') == 0
+        " Fold is a comment block starting with '/*' or '//'
+        " Use the text of the first non-empty line for the foldtext
         let initial = substitute(line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '')
         let linenum = v:foldstart + 1
         while linenum < v:foldend
-            let line = getline(linenum)
+            let line            = getline(linenum)
             let comment_content = substitute(line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g')
             if comment_content != ''
                 break
             endif
             let linenum = linenum + 1
         endwhile
-        let sub = initial . ' ' . comment_content
+        let text = initial . ' ' . comment_content
     else
-        let sub = line
+        let text = line
 
         " Foldtext can't display tabs so replace them with spaces
         let indent = indent(v:foldstart)
-        let sub = substitute(sub, '^\t\+', repeat(' ', indent), '')
+        let text   = substitute(text, '^\t\+', repeat(' ', indent), '')
 
+        " Replace content between {} with {...}
         let startbrace = substitute(line, '^.*{[ \t]*$', '{', 'g')
         if startbrace == '{'
-            let line = getline(v:foldend)
+            let line     = getline(v:foldend)
             let endbrace = substitute(line, '^[ \t]*}\(.*\)$', '}', 'g')
             if endbrace == '}'
-                let sub = sub . substitute(line, '^[ \t]*}\(.*\)$', '...}\1', 'g')
+                let text .= substitute(line, '^[ \t]*}\(.*\)$', '...}\1', 'g')
             endif
         endif
     endif
-    let n = v:foldend - v:foldstart + 1
-    let info = " " . n . " lines " . v:folddashes . '|'
-    let sub = sub . "                                                                                                                  "
-    let num_w = getwinvar(0, '&number') * getwinvar(0, '&numberwidth')
-    let fold_w = getwinvar(0, '&foldcolumn')
-    let sign_w = empty(quickfixsigns#marks#GetList('%')) ? 0 : 2
-    let len = min([winwidth(0) - num_w - fold_w - sign_w - 1, 100])
-    let sub = strpart(sub, 0, len - strlen(info))
-    return sub . info
+    let foldlen = v:foldend - v:foldstart + 1
+    let percent = printf("[%.1f", (foldlen * 1.0)/line('$') * 100) . "%] "
+    let info    = " " . foldlen . " lines " . percent . repeat('+--', v:foldlevel) . '|'
+    let text   .= repeat(' ', 100)
+    let sign_w  = empty(quickfixsigns#marks#GetList('%')) ? 0 : 2
+    let len     = min([winwidth(0) - (&number * &numberwidth) - &foldcolumn - sign_w, 100])
+    let text    = strpart(text, 0, len - strlen(info))
+    return text . info
 endfunction
 
 " GenerateTabLine() {{{2
