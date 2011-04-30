@@ -1421,14 +1421,31 @@ endif
 " But does nothing with: konsole, screen
 if version >= 700
     if &term =~ 'xterm\|rxvt\|screen'
-        silent! !echo -ne "\033]12;yellow\007"
-        let &t_SI = "\033]12;red\007"
-        let &t_EI = "\033]12;yellow\007"
+        silent! !echo -ne "]12;yellow\007"
+        let &t_SI = "]12;red\007"
+        let &t_EI = "]12;yellow\007"
 "        let &t_EI = "\033]112;\007"
 "        let &t_SI = "\033[4 q"
 "        let &t_EI = "\033[1 q"
     endif
 endif
+
+"if &term =~ 'xterm\|rxvt'
+"    :silent !echo -ne "\033]12;GoldenRod\007"
+"    set t_SI+=]12;red
+"    set t_EI+=]12;yellow
+"    autocmd VimLeave * :!echo -ne "\033]12;yellow\007"
+"elseif &term == 'linux' && !has('gui_running')
+"    set t_ve+=[?17;183;95c  " yellow
+"    au InsertEnter * set t_ve+=[?17;207;111c  " green
+"    au InsertLeave * set t_ve+=[?17;183;95c  " yellow
+"    autocmd VimLeave * set t_ve+=[?17;207;111c  " green
+"elseif &term =~ 'screen'
+"  set t_ve+=[34l
+"  au InsertEnter * set t_ve+=[34h[?25h    " cnorm
+"  au InsertLeave * set t_ve+=[34l           " cvvis
+"  autocmd VimLeave * set t_ve+=[34h[?25h
+"endif
 
 " Mappings {{{1
 
