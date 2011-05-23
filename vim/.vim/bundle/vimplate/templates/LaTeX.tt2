@@ -160,7 +160,7 @@
 \usepackage{amsmath,amsfonts,amstext,amssymb,amsbsy,amsopn,amsthm,eucal}
 %\usepackage{mathtools}
 %\usepackage{breqn}
-\usepackage{nicefrac}
+\usepackage{xfrac}
 %\usepackage{dsfont}
 
 
