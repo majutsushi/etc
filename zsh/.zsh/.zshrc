@@ -1205,6 +1205,7 @@ rs-important() {
         $HOME/.scummvmrc \
         $HOME/Photos \
         $HOME/bin \
+        $HOME/doc \
         $HOME/games \
         $HOME/media \
         $HOME/projects \
