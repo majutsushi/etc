@@ -494,6 +494,9 @@ bind pager         <down>     next-line
 bind index,pager   \Cd        half-down
 bind index,pager   \Cu        half-up
 
+# change binding because of sidebar
+bind index,pager   B          bounce-message
+
 # saving
 macro index,pager  \Cs        "<pipe-message>cat > ~/" "Save message to a file"
 
@@ -589,6 +592,9 @@ bind compose   <enter>  send-message
 bind compose   <return> send-message
 bind compose   v        view-attach
 
+# change binding because of sidebar
+bind compose   B        edit-bcc
+
 macro compose  ,w       "<edit-fcc>=.Waiting\n" "Save message in 'Waiting' folder"
 
 macro compose \es "Fgpg --clearsign\ny" "clearsign with GnuPG"
@@ -621,7 +627,8 @@ bind pager \Cn sidebar-next
 bind index \Co sidebar-open
 bind pager \Co sidebar-open
 
-macro index,pager,compose B "<enter-command>toggle sidebar_visible\n" "Toggle sidebar"
+macro index,compose b "<enter-command>toggle sidebar_visible<enter><refresh>"       "Toggle sidebar"
+macro pager         b "<enter-command>toggle sidebar_visible<enter><redraw-screen>" "Toggle sidebar"
 
 # }}}
 # =============================================================================
