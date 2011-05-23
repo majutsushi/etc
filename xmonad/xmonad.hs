@@ -144,6 +144,7 @@ myManageHook = composeAll [
 --                    resource  =? "desktop_window" --> doIgnore,
                    resource  =? "Do"             --> doIgnore,
                    resource  =? "kupfer"         --> doFloat,
+                   title     =? "Minecraft Launcher" --> doFloat,
                    isFullscreen                  --> doFullFloat,
 --                    isDialog                      --> doCenterFloat
                    className =? "Iceweasel"      --> doF (W.shift "1:web")
