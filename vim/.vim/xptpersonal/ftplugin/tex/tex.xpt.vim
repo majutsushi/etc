@@ -137,6 +137,13 @@ XPT enumerate hint=begin{enumerate}\ ...\ end{enumerate}
 \end{enumerate}
 ..XPT
 
+XPT description hint=begin{description}\ ...\ end{description}
+\begin{description}
+    \item[`name~] `desc~`...~
+    \item[`name~] `desc~`...~
+\end{description}
+..XPT
+
 XPT sqrt hint=sqrt[..]{..}
 \sqrt`n...{{~[`nth~]`}}~{`cursor~}
 ..XPT
