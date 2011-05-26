@@ -124,6 +124,9 @@ au BufEnter *.cpp,*.cc let b:fswitchlocs = './'
 au BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
 au BufEnter *.h        let b:fswitchlocs = './'
 
+" automatically delete fugitive buffers when leaving them
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
 " automatically give executable permissions if file begins with #! and contains" '/bin/' in the path
 " From https://github.com/mitechie/pyvim/blob/master/.vimrc
 au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 'silent !chmod u+x <afile>' | endif | endif
