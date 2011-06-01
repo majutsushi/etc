@@ -732,8 +732,13 @@ prompt_set_line_1 () {
         prompt_line_1="$left_side$padding$right_side"
         return
     else
-        local left_left_width=${(m)#${(S%%)left_left//\%\{*\%\}/}}
-        local left_right_width=${(m)#${(S%%)left_right//\%\{*\%\}/}}
+        if is43; then
+            local left_left_width=${(m)#${(S%%)left_left//\%\{*\%\}/}}
+            local left_right_width=${(m)#${(S%%)left_right//\%\{*\%\}/}}
+        else
+            local left_left_width=${#${(S%%)left_left//\%\{*\%\}/}}
+            local left_right_width=${#${(S%%)left_right//\%\{*\%\}/}}
+        fi
         local rest_size=$(( left_left_width + left_right_width + right_side_width ))
         local max_size=$(( COLUMNS - rest_size ))
         prompt_line_1="$left_left%$max_size<...<${left_dir}%<<$left_right$right_side"
