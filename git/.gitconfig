@@ -30,6 +30,7 @@
 
 [merge]
 	tool = vimdiff
+	conflictstyle = diff3
 
 [core]
 	excludesfile = ~/.gitignore
