@@ -1117,7 +1117,7 @@ set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm,
 " list of file name extensions added when searching for a file (local to buffer)
 set suffixesadd=.rb
 " list of patterns to ignore files for file name completion
-set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.class
+set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.class,obj*/**
 " command-line completion shows a list of matches
 "set wildmenu
 
