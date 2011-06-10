@@ -1604,8 +1604,8 @@ xnoremap §2 <esc>`>a]<esc>`<i[<esc>
 xnoremap §3 <esc>`>a}<esc>`<i{<esc>
 
 " remove trailing whitespace
-nnoremap <leader>tr :%s/\s\+$//<CR>
-xnoremap <leader>tr  :s/\s\+$//<CR>
+nnoremap <leader>rt :%s/\s\+$//<CR>
+xnoremap <leader>rt  :s/\s\+$//<CR>
 
 " indent for C/C++ programs
 nnoremap <leader>i :%!astyle<CR>
@@ -1616,6 +1616,29 @@ xnoremap <leader>ar :Align <-<CR>
 " re-select selection after changing indent
 xnoremap > >gv
 xnoremap < <gv
+
+xmap <Leader>t| <Plug>AM_t|
+xmap <Leader>t#   <Plug>AM_t#
+xmap <Leader>t,   <Plug>AM_t,
+xmap <Leader>t:   <Plug>AM_t:
+xmap <Leader>t;   <Plug>AM_t;
+xmap <Leader>t<   <Plug>AM_t<
+xmap <Leader>t=   <Plug>AM_t=
+xmap <Leader>ts,  <Plug>AM_ts,
+xmap <Leader>ts:  <Plug>AM_ts:
+xmap <Leader>ts;  <Plug>AM_ts;
+xmap <Leader>ts<  <Plug>AM_ts<
+xmap <Leader>ts=  <Plug>AM_ts=
+xmap <Leader>w=   <Plug>AM_w=
+xmap <Leader>t?   <Plug>AM_t?
+xmap <Leader>t~   <Plug>AM_t~
+xmap <Leader>t@   <Plug>AM_t@
+xmap <Leader>m=   <Plug>AM_m=
+xmap <Leader>tab  <Plug>AM_tab
+xmap <Leader>tml  <Plug>AM_tml
+xmap <Leader>tsp  <Plug>AM_tsp
+xmap <Leader>tsq  <Plug>AM_tsq
+xmap <Leader>tt   <Plug>AM_tt
 
 " Repurpose arrow keys to move lines {{{3
 " Taken from https://github.com/Lokaltog/sync/blob/master/vim/vimrc
