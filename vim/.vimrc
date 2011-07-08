@@ -273,7 +273,7 @@ let g:default_stl .= "<CUR>%(#[FileType]%{&spell ? ':' . &spelllang : ''}#[Branc
 
 " Git branch
 let g:default_stl .= "#[Branch]%("
-let g:default_stl .= "%{substitute(fugitive#statusline(), '\\[GIT(\\([a-z0-9\\-_\\./:]\\+\\))\\]', '<CUR>:</CUR>\\1', 'gi')}"
+let g:default_stl .= "%{exists('g:loaded_fugitive') ? substitute(fugitive#statusline(), '\\[GIT(\\([a-z0-9\\-_\\./:]\\+\\))\\]', '<CUR>:</CUR>\\1', 'gi') : ''}"
 let g:default_stl .= "%) "
 
 " Syntastic
