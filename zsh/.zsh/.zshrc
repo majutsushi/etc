@@ -1233,7 +1233,7 @@ if [[ -d /etc/pkgs/ ]]; then
     need () { . "/etc/pkgs/$1.sh"; }
 fi
 
-find-moz-files() {
+moz-find-files() {
     local file=cscope.files
 
     if [[ -n "$1" ]]; then
@@ -1243,7 +1243,12 @@ find-moz-files() {
     fi
 
     find . \( -path './objdir*' -prune \) -o \
-           \( -name '*.c' -o -name '*.cpp' -o -name '*.cc' -o -name '*.h' -o -name '*.idl' \) \
+           \( -name '*.c' -o \
+              -name '*.cpp' -o \
+              -name '*.cc' -o \
+              -name '*.h' -o \
+              -name '*.idl' -o \
+              -name '*.inc' \) \
            \! -path '*tests/*' \! -path '*/testsuite/*' \
            -print >! $file
 
