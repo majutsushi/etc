@@ -824,6 +824,7 @@ command! -bar -nargs=0 W  silent! exec "write !sudo tee % >/dev/null"  | silent!
 
 " important {{{2
 set cpoptions+=$
+set cpoptions-=a
 
 " moving around, searching and patterns {{{2
 
