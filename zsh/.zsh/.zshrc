@@ -373,6 +373,8 @@ alias lse='ls -d *(/^F)'               # only show empty directories
 
 alias t='tree --dirsfirst -F'
 
+alias fu='sudo $(fc -ln -1) '
+
 if [[ $UID == 0 ]]; then
     INTERACTIVE="-i"
 fi
