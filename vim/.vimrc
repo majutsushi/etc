@@ -1180,6 +1180,7 @@ let g:completekey = "<c-tab>"
 
 " command-t {{{2
 let g:CommandTMaxFiles = 100000
+let g:CommandTMatchWindowReverse = 1
 
 " COMMENT {{{2
 xmap <leader>cx <Plug>PComment
