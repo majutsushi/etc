@@ -758,6 +758,7 @@ function! SynStack()
     return
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+     \ synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
 endfunc
 nmap <leader>ss :call SynStack()<CR>
 
