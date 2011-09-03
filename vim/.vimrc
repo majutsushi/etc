@@ -1272,6 +1272,7 @@ else
 endif
 let vimrplugin_conqueplugin = 0
 let vimrplugin_conquevsplit = 1
+let vimrplugin_underscore   = 0
 
 " rubycomplete {{{2
 let g:rubycomplete_buffer_loading = 1
