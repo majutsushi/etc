@@ -1,0 +1,12 @@
+print.indent             = 4
+print.use.tab            = off
+#print.wide.equal         = on
+suppress.initial.newline = on
+delete.field             = {url}
+delete.field             = {abstract}
+delete.field             = {doi}
+delete.field             = {isbn}
+delete.field             = {issn}
+delete.field             = {note}
+rewrite.rule             = { howpublished # "^{{\(.*\)}}$" # "\"\\url{\1}\"" }
+rewrite.rule             = { howpublished # "^{\(.*\)}$"   # "\"\\url{\1}\"" }
