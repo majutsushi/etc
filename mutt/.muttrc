@@ -297,8 +297,7 @@ unset confirmappend     # prompt for confirm when appending message to ex. mbox
   set date_format="!%a, %d %b %Y %H:%M:%S %z"
   set delete=yes        # ask for confirmation when deleting messages?
   set delete_untag      # untag messages when marking them for deletion.
-#   set index_format="%4C %?H?%-12.12H&%Z %[%d/%m/%y]? %-17.17F %?M?(#%03M)&(%4c)? %s"
-  set index_format="%[%d/%m/%y] %[%H:%M] %Z %-20.20F %?M?%3M&   ? %s%*  %?Y?[%Y] ?%?X?[%X] ?%c"
+  set index_format="%Z%?X?A& ?%?M?%3M&   ? %s%*  %?y?[%y] ?%-20.20F %[%d/%m/%y] %[%H:%M]"
 unset mark_old          # mark new articles as old, when leaving mbox
   set mh_purge          # remove messages marked as deleted from MH folders.
   set narrow_tree
