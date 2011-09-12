@@ -234,6 +234,7 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 
 # make sure the cache dir exists
+[[ ! -d $XDG_CACHE_HOME ]] && mkdir $XDG_CACHE_HOME
 [[ ! -d $XDG_CACHE_HOME/zsh ]] && mkdir $XDG_CACHE_HOME/zsh
 
 # }}}
