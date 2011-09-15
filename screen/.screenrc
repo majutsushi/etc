@@ -91,11 +91,7 @@
 # TERMCAP and TERMINFO
 # ===============================================================
 #
-#
-  termcapinfo xterm|rxvt|urxvt|rxvt-unicode ti@:te@ #Scrollen per Shift+PageUp in Xterm
-#  termcapinfo rxvt ti@:te@ #Dito fuer rxvt
-#  termcapinfo urxvt ti@:te@ #rxvt-unicode nicht vergessen
-#  termcapinfo rxvt-unicode ti@:te@ #rxvt-unicode nicht vergessen
+  termcapinfo xterm|xterm-color|rxvt|urxvt|rxvt-unicode ti@:te@
 #
 # termcap  xterm        'AF=\E[3%dm:AB=\E[4%dm'
 # terminfo xterm        'AF=\E[3%p1%dm:AB=\E[4%p1%dm'
@@ -653,8 +649,12 @@ bind ^b eval "hardcopy /tmp/screen.dump" "exec screen -X screen urlview /tmp/scr
 # shift-tab for cycling
 #   bindkey "^[[Z" next
 
-  bindkey "^[," prev
   bindkey "^[." next
+  bindkey "^[," prev
+
+# OS X (iTerm)
+  bindkey "≥" next
+  bindkey "≤" prev
 
 # control-tab (doesn't work)
 #   bindkey "^[OZ" next
