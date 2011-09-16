@@ -103,10 +103,10 @@
   termcapinfo rxvt-unicode 'Co#256:XT:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
   # allow to set window title
   termcapinfo rxvt-unicode 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
-  termcapinfo xterm 'Co#256:XT:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+  termcapinfo xterm|xterm-color 'Co#256:XT:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 
   term        "screen-256color-bce"
-#   attrcolor b ".I"
+  attrcolor b ".I"
 #
 # ===============================================================
 # VARIABLES - Number values

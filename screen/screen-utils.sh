@@ -20,6 +20,11 @@ if [[ -r $HOME/.etc/screen/statusrc ]]; then
     . $HOME/.etc/screen/statusrc
 fi
 
+ismac() {
+    [[ "$(uname -s)" == "Darwin" ]] && return 0
+    return 1
+}
+
 ESC="\005"
 color() {
     case "$1" in
@@ -84,17 +89,25 @@ print_logo() {
         fi
     elif uname -s | grep -i netbsd >/dev/null; then
         printf "$(color k K)\\$(color -)$(color k R)~$(color -)"
+    elif ismac; then
+        printf "$(color b k W)i$(color -)"
     fi
 }
 
 print_cpucount() {
-    count=$(getconf _NPROCESSORS_ONLN 2>/dev/null || grep -ci "^processor" /proc/cpuinfo)
+    if ismac; then
+        count=$(sysctl hw.ncpu | awk '{ print $2 }')
+    elif command -v getconf >/dev/null 2>&1; then
+        count=$(getconf _NPROCESSORS_ONLN 2>/dev/null || grep -ci "^processor" /proc/cpuinfo)
+    fi
     [ "$count" = "1" ] || printf "%sx" "$count"
 }
 
 print_cpufreq() {
     if [ -r "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq" ]; then
         freq=$(awk '{ printf "%.1f", $1 / 1000000 }' /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq)
+    elif ismac; then
+        freq=$(system_profiler SPHardwareDataType | awk '/Processor Speed/ { print $3 }')
     else
         if egrep -q -s -i -m 1 "^cpu MHz|^clock" /proc/cpuinfo; then
             freq=$(egrep -i -m 1 "^cpu MHz|^clock" /proc/cpuinfo | awk -F"[:.]" '{ printf "%.1f", $2 / 1000 }')
@@ -117,7 +130,7 @@ print_cputemp() {
 
 print_disk() {
     [[ -z "$MP" ]] && MP="/"
-    disk=$(df -h -P "$MP" 2>/dev/null || df -h "$MP")
+    disk=$(df -P -h "$MP" 2>/dev/null || df -h "$MP")
     disk=$(echo "$disk" | tail -n 1 | awk '{print $4 " " $5}' | sed "s/\([^0-9\. ]\)/ \1/g" | awk '{printf "%d%sB,%d%%", $1, $2, $3}')
     printf "$(color M W)%s$(color -) " "$disk" | sed "s/\([0-9]\+\)/$(color -)$(color b M W)\1$(color -)$(color M W)/g"
 }
@@ -127,7 +140,11 @@ print_loadavg() {
 }
 
 print_totalmem() {
-    mem=$(grep -m1 MemTotal /proc/meminfo  | awk '{print $2}')
+    if ismac; then
+        mem=$(sysctl hw.physmem | awk '{ print $2 }')
+    else
+        mem=$(grep -m1 MemTotal /proc/meminfo  | awk '{print $2}')
+    fi
     if [ $mem -ge 1048576 ]; then
         mem=$(echo "$mem" | awk '{ printf "%.1f", $1 / 1048576 }')
         unit="GB"
@@ -148,6 +165,12 @@ print_memusage() {
         f=$(free | awk '/buffers\/cache:/ {printf "%.0f", 100*$3/($3 + $4)}')
     elif grep -q -s "Mem:" /proc/meminfo; then
         f=$(grep "Mem:" /proc/meminfo | awk '{printf "%.0f", $3/$2 * 100}')
+    elif ismac; then
+        mem=$(sysctl hw.physmem | awk '{ print $2 }')
+        pagesize=$(vm_stat | awk '/page size/ { print $8 }')
+        active=$(vm_stat | awk '/Pages active/ { print $3 }')
+        wired=$(vm_stat | awk '/Pages wired/ { print $4 }')
+        f=$(echo "100 * $pagesize * ($active + $wired) / $mem" | bc)
     fi
 
     if [ -n "$f" ]; then
