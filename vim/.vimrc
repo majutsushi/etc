@@ -1283,6 +1283,9 @@ let g:selBufAlwaysShowDetails = 1
 let g:selBufLauncher = "!see"
 
 " Tagbar {{{2
+if has('macunix')
+    let g:tagbar_ctags_bin = '/opt/local/bin/ctags'
+endif
 let g:tagbar_compact = 1
 let g:tagbar_type_tex = {
     \ 'ctagstype' : 'latex',
