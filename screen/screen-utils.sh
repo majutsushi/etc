@@ -90,7 +90,7 @@ print_logo() {
     elif uname -s | grep -i netbsd >/dev/null; then
         printf "$(color k K)\\$(color -)$(color k R)~$(color -)"
     elif ismac; then
-        printf "$(color b k W)i$(color -)"
+        printf "$(color b k K)X$(color -)"
     fi
 }
 
