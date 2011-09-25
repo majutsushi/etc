@@ -937,11 +937,22 @@ if (&term =~ "xterm" || &term =~ "screen-256color")
     set t_Co=256
 endif
 
-" http://ft.bewatermyfriend.org/comp/vim/vimrc.html
+" idea from http://ft.bewatermyfriend.org/comp/vim/vimrc.html
+function! GetScreenTitle()
+    let title = 'vim'
+    let file  = expand('%:t')
+    if !empty(file)
+        let title .= '(' . file . ')'
+    endif
+    if !empty($SSH_CLIENT)
+        let title .= '@' . substitute(system('hostname'), '\..*', '', '')
+    endif
+    return title
+endfunction
 if (&term =~ '^screen')
     set t_ts=k
     set t_fs=\
-    autocmd BufEnter * let &titlestring = "vim(" . expand("%:t") . ")"
+    autocmd BufEnter * let &titlestring = GetScreenTitle()
 endif
 
 " disable visual bell
