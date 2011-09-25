@@ -818,7 +818,7 @@ preexec () {
     # get the name of the program currently running and hostname of local machine
     # set screen window title if running in a screen
     if [[ "$TERM" == screen* ]]; then
-        local CMD="${1[(wr)^(*=*|sudo|(auto)?ssh|-*)]}${SSH_CLIENT:+@$HOST}"
+        local CMD="${1[(wr)^(*=*|sudo|(auto)?ssh|-*)]//*\//}${SSH_CLIENT:+@${HOST//.*/}}"
         echo -ne "\ek$CMD\e\\"
     fi
     # adjust title of xterm
