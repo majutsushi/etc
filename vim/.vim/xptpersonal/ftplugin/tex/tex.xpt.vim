@@ -56,6 +56,8 @@ XPT table hint=begin{table}\ ..\ end{table}
 XSET what*|post=ExpandIfNotEmpty( ' & ', 'what*' )
 \begin{table}
     \centering
+    \caption{`caption~}
+    \label{tab:`label~}
     %\footnotesize
     \begin{tabular}{`kind~rcl~}
         \toprule
@@ -63,8 +65,6 @@ XSET what*|post=ExpandIfNotEmpty( ' & ', 'what*' )
         `what*~ \\\\` `...1~
         \bottomrule
     \end{tabular}
-    \caption{`caption~}
-    \label{tab:`label~}
 \end{table}
 ..XPT
 
