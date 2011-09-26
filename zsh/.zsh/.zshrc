@@ -290,7 +290,7 @@ fi
 export SDL_AUDIODRIVER=alsa
 # export SDL_AUDIODRIVER=dsp # oss
 
-export TEXMFHOME=$HOME/.texmf
+# export TEXMFHOME=$HOME/.texmf
 
 export RUBYOPT="-w $RUBYOPT"
 export RI="-f ansi"
