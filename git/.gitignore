@@ -19,6 +19,7 @@ cscope.*
 *.toc
 *.fdb_latexmk
 *.out
+missfont.log
 
 *.pdf
 
