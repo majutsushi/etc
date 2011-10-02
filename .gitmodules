@@ -121,3 +121,6 @@
 [submodule "vim/.vim/bundle/protodef"]
 	path = vim/.vim/bundle/protodef
 	url = https://github.com/derekwyatt/vim-protodef.git
+[submodule "zsh/zsh-syntax-highlighting"]
+	path = zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
