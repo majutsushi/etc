@@ -1268,9 +1268,9 @@ moz-find-files() {
 # highlighting {{{
 
 if [[ -d $HOME/.etc/zsh/zsh-syntax-highlighting ]]; then
-    ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-
     source $HOME/.etc/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+    ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
     ZSH_HIGHLIGHT_STYLES[default]='none'
     ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red,bold'
@@ -1293,6 +1293,8 @@ if [[ -d $HOME/.etc/zsh/zsh-syntax-highlighting ]]; then
     ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=cyan'
     ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=cyan'
     ZSH_HIGHLIGHT_STYLES[assign]='none'
+
+    ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
 fi
 
 # }}}
