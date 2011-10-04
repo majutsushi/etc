@@ -139,22 +139,6 @@ stty -ixon
                             # if running longer than 5 secondes
 watch=(notme root)          # watch for everyone but me and root
 
-# define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
-#  WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>' # the default
-#  WORDCHARS=.
-#  WORDCHARS='*?_[]~=&;!#$%^(){}'
-#  WORDCHARS='${WORDCHARS:s@/@}'
-
-# only slash should be considered as a word separator:
-slash-backward-kill-word() {
-    local WORDCHARS="${WORDCHARS:s@/@}"
-    # zle backward-word
-    zle backward-kill-word
-}
-zle -N slash-backward-kill-word
-# press esc-w (meta-w) to delete a word until its last '/' (not the same as ctrl-w!)
-bindkey '\ew' slash-backward-kill-word
-
 # }}}
 
 # path settings {{{
@@ -495,11 +479,29 @@ alias normal=default
 # }}}
 
 # keybindings {{{
+
 ## keybindings (run 'bindkeys' for details, more details via man zshzle)
 # use emacs style per default:
 bindkey -e
 # use vi style:
 # bindkey -v
+
+# define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
+#  WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>' # the default
+#  WORDCHARS=.
+#  WORDCHARS='*?_[]~=&;!#$%^(){}'
+#  WORDCHARS='${WORDCHARS:s@/@}'
+
+# only slash should be considered as a word separator:
+slash-backward-kill-word() {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    # zle backward-word
+    zle backward-kill-word
+}
+zle -N slash-backward-kill-word
+# press esc-w (meta-w) to delete a word until its last '/' (not the same as ctrl-w!)
+bindkey '\ew' slash-backward-kill-word
+
 # }}}
 
 # power completion - abbreviation expansion {{{
