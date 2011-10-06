@@ -98,6 +98,7 @@ au FileType viki compiler deplate
 au FileType gtkrc setlocal tabstop=2 shiftwidth=2
 au FileType haskell compiler ghc
 au FileType ruby setlocal omnifunc=rubycomplete#Complete
+au FileType zsh au BufWritePost <buffer> silent !zsh -c "zcompile <afile>"
 
 " Folding of (gnu)make output.
 augroup quickfix
