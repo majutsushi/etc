@@ -1,6 +1,15 @@
 # zshrc, originally based on the configs from grml.org and Joey Hess
 # (http://svn.kitenet.net/trunk/home-full/.zshrc?view=markup&pathrev=11710)
 
+# setopt EXTENDED_GLOB CSH_NULL_GLOB
+# if [ -d ~/.zsh/zshrc.d ]; then
+#     for zshrc_snipplet in $(ls -1 ~/.zsh/zshrc.d/[0-9][0-9]{,$(hostname -s)}-*[^~]) ; do
+#         if [ x$zshrc_snipplet:e != xzwc ]; then
+#             source $zshrc_snipplet
+#         fi
+#     done
+# fi
+
 # check for version/system {{{
 # check for versions (compatibility reasons)
 
