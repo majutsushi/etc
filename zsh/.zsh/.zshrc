@@ -303,18 +303,50 @@ export GPG_TTY=$(tty)
 # }}}
 
 # 'hash' some often used directories {{{
-  hash -d deb=/var/cache/apt/archives
-  hash -d doc=/usr/share/doc
-  hash -d linux=/lib/modules/$(command uname -r)/build/
-  hash -d log=/var/log
-  hash -d music=/var/lib/mpd/music
-  hash -d share=/media/SHARE/share
-  hash -d src=/usr/src
-  hash -d tt=/usr/share/doc/texttools-doc
-  hash -d www=/var/www
-  hash -d vuw=~/work/university/VUW/Classes
-  hash -d thesis=~/work/university/VUW/Thesis
-  hash -d win="/mnt/winxp/Documents and Settings/Jan/Desktop/share"
+hash -d deb=/var/cache/apt/archives
+hash -d doc=/usr/share/doc
+hash -d linux=/lib/modules/$(command uname -r)/build/
+hash -d log=/var/log
+hash -d music=/var/lib/mpd/music
+hash -d share=/media/SHARE/share
+hash -d src=/usr/src
+hash -d tt=/usr/share/doc/texttools-doc
+hash -d www=/var/www
+hash -d vuw=~/work/university/VUW/Classes
+hash -d thesis=~/work/university/VUW/Thesis
+hash -d win="/mnt/winxp/Documents and Settings/Jan/Desktop/share"
+
+# zsh_directory_name() {
+#     emulate -L zsh
+#     setopt extendedglob
+#     local -a match mbegin mend
+#     if [[ $1 = d ]]; then
+#         # turn the directory into a name
+#         if [[ $2 = (#b)(/home/pws/perforce/)([^/]##)* ]]; then
+#             typeset -ga reply
+#             reply=(p:$match[2] $(( ${#match[1]} + ${#match[2]} )) )
+#         else
+#             return 1
+#         fi
+#     elif [[ $1 = n ]]; then
+#         # turn the name into a directory
+#         [[ $2 != (#b)p:(?*) ]] && return 1
+#         typeset -ga reply
+#         reply=(/home/pws/perforce/$match[1])
+#     elif [[ $1 = c ]]; then
+#         # complete names
+#         local expl
+#         local -a dirs
+#         dirs=(/home/pws/perforce/*(/:t))
+#         dirs=(p:${^dirs})
+#         _wanted dynamic-dirs expl 'dynamic directory' compadd -S\] -a dirs
+#         return
+#     else
+#         return 1
+#     fi
+#     return 0
+# }
+
 # }}}
 
 # aliases {{{
@@ -890,7 +922,7 @@ zstyle ':completion:correct:'          prompt 'correct to: %e'
 zstyle ':completion::(^approximate*):*:functions' ignored-patterns '_*'
 
 # kill completion
-zstyle ':completion:*:kill:*:processes'   command 'ps xwww -o pid,%cpu,tty,time,command'
+zstyle ':completion:*:kill:*:processes'   command 'ps xwww --forest -o pid,%cpu,tty,time,command'
 zstyle ':completion:*:kill:*'             force-list always
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 
