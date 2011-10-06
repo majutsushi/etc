@@ -12,6 +12,9 @@
 tags
 cscope.*
 
+# zsh compiled files
+*.zwc
+
 # TeX stuff
 *.aux
 *.bbl
