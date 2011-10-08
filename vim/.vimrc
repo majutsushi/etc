@@ -16,16 +16,22 @@ if !isdirectory($HOME . "/.cache/vim") && exists("*mkdir")
 endif
 
 " search for exuberant ctags
-if executable('ctags-exuberant')
+if executable(expand('~/src/ctags/ctags'))
+    let g:ctagsbin = expand('~/src/ctags/ctags')
+elseif executable('ctags-exuberant')
     let g:ctagsbin = 'ctags-exuberant'
+elseif executable('exuberant-ctags')
+    let g:ctagsbin = 'exuberant-ctags'
 elseif executable('exctags')
     let g:ctagsbin = 'exctags'
+elseif has('macunix') && executable('/usr/local/bin/ctags')
+    " Homebrew default location
+    let g:ctagsbin = '/usr/local/bin/ctags'
+elseif has('macunix') && executable('/opt/local/bin/ctags')
+    " Macports default location
+    let g:ctagsbin = '/opt/local/bin/ctags'
 elseif executable('ctags')
     let g:ctagsbin = 'ctags'
-elseif executable('ctags.exe')
-    let g:ctagsbin = 'ctags.exe'
-elseif executable('tags')
-    let g:ctagsbin = 'tags'
 endif
 
 " Autocommands {{{1
@@ -1295,9 +1301,7 @@ let g:selBufAlwaysShowDetails = 1
 let g:selBufLauncher = "!see"
 
 " Tagbar {{{2
-if has('macunix')
-    let g:tagbar_ctags_bin = '/opt/local/bin/ctags'
-endif
+let g:tagbar_ctags_bin = g:ctagsbin
 let g:tagbar_compact = 1
 let g:tagbar_type_tex = {
     \ 'ctagstype' : 'latex',
