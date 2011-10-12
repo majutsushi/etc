@@ -90,7 +90,7 @@ endif
 
 function! s:SetupHelpWindow()
     " Set custom statusline
-    let b:stl = "#[Branch] HELP #[FileName] %<%t #[FunctionName] %=#[LinePercentS][<<]#[LinePercent] %p%%"
+    let b:stl = "#[Branch] HELP #[FileName] %<%t #[FunctionName] %=#[LinePercentS]#[LinePercent] %p%%"
 
     nnoremap <buffer> <Space> <C-]> " Space selects subject
     nnoremap <buffer> <BS>    <C-T> " Backspace to go back
@@ -147,7 +147,6 @@ au BufWritePost           *.mutt/fortunes* silent !strfile <afile> >/dev/null
 " s:StatusLine() {{{2
 function! s:StatusLine(new_stl, type, current)
     let current = (a:current ? "" : "NC")
-    let type    = a:type
     let new_stl = a:new_stl
 
     " Prepare current buffer specific text
@@ -156,15 +155,9 @@ function! s:StatusLine(new_stl, type, current)
 
     " Prepare statusline colors
     " Syntax: #[ ... ]
+    let new_stl = substitute(new_stl, '#\[Mode\]', '%#StatusLineMode' . a:type . '#', 'g')
     let new_stl = substitute(new_stl, '#\[\(\w\+\)\]',
-                           \ '%#StatusLine' . type . '\1' . current . '#', 'g')
-
-    " Prepare statusline arrows
-    " Syntax: [>] [>>] [<] [<<]
-    let new_stl = substitute(new_stl, '\[>\]',  '|', 'g')
-    let new_stl = substitute(new_stl, '\[>>\]', '',  'g')
-    let new_stl = substitute(new_stl, '\[<\]',  '|', 'g')
-    let new_stl = substitute(new_stl, '\[<<\]', '',  'g')
+                           \ '%#StatusLine' . '\1' . current . '#', 'g')
 
     if &l:statusline ==# new_stl
         " Statusline already set, nothing to do
@@ -190,29 +183,46 @@ endfunction
 
 " s:StatusLineColors() {{{2
 function! s:StatusLineColors(colors)
-    for type in keys(a:colors)
-        for name in keys(a:colors[type])
-            let colors = {'c': a:colors[type][name][0], 'nc': a:colors[type][name][1]}
-            let type = (type == 'NONE' ? '' : type)
-            let name = (name == 'NONE' ? '' : name)
+    for name in keys(a:colors)
+        let colors = {'c': a:colors[name][0], 'nc': a:colors[name][1]}
+        let name = (name == 'NONE' ? '' : name)
 
-            if exists("colors['c'][0]")
-                exec 'hi StatusLine' . type . name .
-                   \ ' guibg=' . colors['c'][0] .
-                   \ ' guifg=' . colors['c'][1] .
-                   \ ' gui='   . colors['c'][2]
-            endif
+        if exists("colors['c'][0]")
+            exec 'hi StatusLine' . name .
+               \ ' guibg=' . colors['c'][0] .
+               \ ' guifg=' . colors['c'][1] .
+               \ ' gui='   . colors['c'][2]
+        endif
 
-            if exists("colors['nc'][0]")
-                exec 'hi StatusLine' . type . name . 'NC' .
-                   \ ' guibg=' . colors['nc'][0] .
-                   \ ' guifg=' . colors['nc'][1] .
-                   \ ' gui='   . colors['nc'][2]
-            endif
-        endfor
+        if exists("colors['nc'][0]")
+            exec 'hi StatusLine' . name . 'NC' .
+               \ ' guibg=' . colors['nc'][0] .
+               \ ' guifg=' . colors['nc'][1] .
+               \ ' gui='   . colors['nc'][2]
+        endif
     endfor
 endfunction
 
+" Colour definitions {{{2
+let s:statuscolors = {
+    \ 'ModeNormal'   : [[ '#4e9a06', '#ffffff', 'bold'], [                             ]],
+    \ 'ModeInsert'   : [[ '#cc0000', '#ffffff', 'bold'], [                             ]],
+    \ 'FileName'     : [[ '#c2bfa5', '#000000', 'bold'], [ '#1c1c1c', '#808080', 'none']],
+    \ 'ModFlag'      : [[ '#c2bfa5', '#cc0000', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
+    \ 'BufFlag'      : [[ '#c2bfa5', '#000000', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
+    \ 'FileType'     : [[ '#585858', '#bcbcbc', 'none'], [ '#080808', '#4e4e4e', 'none']],
+    \ 'Branch'       : [[ '#585858', '#bcbcbc', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
+    \ 'BranchS'      : [[ '#585858', '#949494', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
+    \ 'Error'        : [[ '#585858', '#ff5f00', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
+    \ 'FunctionName' : [[ '#1c1c1c', '#9e9e9e', 'none'], [ '#080808', '#4e4e4e', 'none']],
+    \ 'FileFormat'   : [[ '#1c1c1c', '#bcbcbc', 'bold'], [ '#080808', '#4e4e4e', 'none']],
+    \ 'FileEncoding' : [[ '#1c1c1c', '#bcbcbc', 'bold'], [ '#080808', '#4e4e4e', 'none']],
+    \ 'Separator'    : [[ '#1c1c1c', '#6c6c6c', 'none'], [ '#080808', '#4e4e4e', 'none']],
+    \ 'ExpandTab'    : [[ '#585858', '#eeeeee', 'bold'], [ '#1c1c1c', '#808080', 'none']],
+    \ 'LineNumber'   : [[ '#585858', '#bcbcbc', 'bold'], [ '#1c1c1c', '#808080', 'none']],
+    \ 'LineColumn'   : [[ '#585858', '#bcbcbc', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
+    \ 'LinePercent'  : [[ '#c2bfa5', '#303030', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']]
+\ }
 " Helper functions {{{2
 " GetFileName() {{{3
 function! GetFileName()
@@ -262,15 +272,14 @@ endfunction
 let g:default_stl  = ""
 
 let g:default_stl .= "<CUR>#[Mode] "
-let g:default_stl .= "%{&paste ? 'PASTE [>] ' : ''}"
-let g:default_stl .= "%{substitute(mode(), '', '^V', 'g')}"
-let g:default_stl .= " #[ModeS][>>]</CUR>"
+let g:default_stl .= "%{substitute(mode(), '', '^V', 'g')} "
+let g:default_stl .= "%{&paste ? '(paste) ' : ''}"
+let g:default_stl .= "</CUR>"
 
 " File name
 let g:default_stl .= "#[FileName] %{GetFileName()} "
 
 let g:default_stl .= "#[ModFlag]%(%{GetState()} %)#[BufFlag]%w"
-let g:default_stl .= "#[FileNameS][>>]" " Separator
 
 " File type
 let g:default_stl .= "<CUR>%(#[FileType] %{!empty(&ft) ? &ft : '--'}#[BranchS]%)</CUR>"
@@ -290,11 +299,11 @@ let g:default_stl .= "%) "
 " Padding/HL group
 let g:default_stl .= "#[FunctionName] "
 
-" Truncate here
-let g:default_stl .= "%<"
-
 " Function name
 let g:default_stl .= "<CUR>%(%{cfi#format('%s() |', '')} %)</CUR>"
+
+" Truncate here
+let g:default_stl .= "%<"
 
 " Current directory
 let g:default_stl .= "%{fnamemodify(getcwd(), ':~')}"
@@ -322,54 +331,8 @@ let g:default_stl .= "#[LineNumber] %04(%l%)#[LineColumn]:%03(%c%V%) "
 let g:default_stl .= "#[LinePercent] %p%%"
 
 " Current syntax group
-let g:default_stl .= "%{exists('g:synid') && g:synid ? '[<] '.synIDattr(synID(line('.'), col('.'), 1), 'name').' ' : ''}"
+"let g:default_stl .= "%{exists('g:synid') && g:synid ? '| '.synIDattr(synID(line('.'), col('.'), 1), 'name').' ' : ''}"
 
-" Colour definitions {{{2
-let s:statuscolors = {
-    \ 'NONE': {
-        \ 'NONE'         : [[ '#303030', '#ffffff', 'bold'], [ '#080808', '#808080', 'none']]
-    \ },
-    \ 'Normal': {
-        \ 'Mode'         : [[ '#ffaf00', '#262626', 'bold'], [                             ]],
-        \ 'ModeS'        : [[ '#ffaf00', '#585858', 'bold'], [                             ]],
-        \ 'FileName'     : [[ '#c2bfa5', '#000000', 'bold'], [ '#1c1c1c', '#808080', 'none']],
-        \ 'FileNameS'    : [[ '#c2bfa5', '#303030', 'bold'], [ '#1c1c1c', '#080808', 'none']],
-        \ 'ModFlag'      : [[ '#c2bfa5', '#ff0000', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
-        \ 'BufFlag'      : [[ '#c2bfa5', '#000000', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
-        \ 'FileType'     : [[ '#585858', '#bcbcbc', 'none'], [ '#080808', '#4e4e4e', 'none']],
-        \ 'Branch'       : [[ '#585858', '#bcbcbc', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
-        \ 'BranchS'      : [[ '#585858', '#949494', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
-        \ 'Error'        : [[ '#585858', '#ff5f00', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
-        \ 'FunctionName' : [[ '#1c1c1c', '#9e9e9e', 'none'], [ '#080808', '#4e4e4e', 'none']],
-        \ 'FileFormat'   : [[ '#1c1c1c', '#bcbcbc', 'bold'], [ '#080808', '#4e4e4e', 'none']],
-        \ 'FileEncoding' : [[ '#1c1c1c', '#bcbcbc', 'bold'], [ '#080808', '#4e4e4e', 'none']],
-        \ 'Separator'    : [[ '#1c1c1c', '#6c6c6c', 'none'], [ '#080808', '#4e4e4e', 'none']],
-        \ 'ExpandTab'    : [[ '#585858', '#eeeeee', 'bold'], [ '#1c1c1c', '#808080', 'none']],
-        \ 'LineNumber'   : [[ '#585858', '#bcbcbc', 'bold'], [ '#1c1c1c', '#808080', 'none']],
-        \ 'LineColumn'   : [[ '#585858', '#bcbcbc', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
-        \ 'LinePercent'  : [[ '#c2bfa5', '#303030', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']]
-    \ },
-    \ 'Insert': {
-        \ 'Mode'         : [[ '#afd7ff', '#005f5f', 'bold'], [                             ]],
-        \ 'ModeS'        : [[ '#afd7ff', '#0087af', 'bold'], [                             ]],
-        \ 'FileName'     : [[ '#0087af', '#ffffff', 'bold'], [                             ]],
-        \ 'FileNameS'    : [[ '#0087af', '#005f87', 'bold'], [                             ]],
-        \ 'ModFlag'      : [[ '#0087af', '#ff0000', 'bold'], [                             ]],
-        \ 'BufFlag'      : [[ '#0087af', '#5fafff', 'none'], [                             ]],
-        \ 'FileType'     : [[ '#0087af', '#5fd7ff', 'none'], [                             ]],
-        \ 'Branch'       : [[ '#0087af', '#87d7ff', 'none'], [                             ]],
-        \ 'BranchS'      : [[ '#0087af', '#87d7ff', 'none'], [                             ]],
-        \ 'Error'        : [[ '#0087af', '#ff5f00', 'bold'], [                             ]],
-        \ 'FunctionName' : [[ '#005f87', '#87d7ff', 'none'], [                             ]],
-        \ 'FileFormat'   : [[ '#005f87', '#5fafff', 'bold'], [                             ]],
-        \ 'FileEncoding' : [[ '#005f87', '#5fafff', 'bold'], [                             ]],
-        \ 'Separator'    : [[ '#005f87', '#00afaf', 'none'], [                             ]],
-        \ 'ExpandTab'    : [[ '#0087af', '#87d7ff', 'bold'], [                             ]],
-        \ 'LineNumber'   : [[ '#0087af', '#87d7ff', 'bold'], [                             ]],
-        \ 'LineColumn'   : [[ '#0087af', '#87d7ff', 'none'], [                             ]],
-        \ 'LinePercent'  : [[ '#87d7ff', '#005f5f', 'bold'], [                             ]]
-    \ }
-\ }
 " Autocommands {{{2
 augroup StatusLineHighlight
     autocmd!
