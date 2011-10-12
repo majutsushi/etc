@@ -535,10 +535,12 @@ function! GenCscopeAndTags()
         execute '!cscope -Rqbc'
         execute '!' . g:ctagsbin . ' -R'
     endif
-    if cscope_connection(2, "cscope.out") == 0
-        execute 'cs add cscope.out'
-    else
-        execute 'cs reset'
+    if filereadable('cscope.out')
+        if cscope_connection(2, "cscope.out") == 0
+            execute 'cs add cscope.out'
+        else
+            execute 'cs reset'
+        endif
     endif
 "    execute 'CCTreeLoadDB cscope.out'
 endfunction
