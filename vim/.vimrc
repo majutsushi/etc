@@ -322,7 +322,7 @@ let g:default_stl .= "#[ExpandTab] %{&expandtab ? 'S' : 'T'}"
 let g:default_stl .= "#[LineColumn]:%{&tabstop}:%{&softtabstop}:%{&shiftwidth}"
 
 " Unicode codepoint
-let g:default_stl .= '<CUR>#[LineNumber] U+%04B</CUR>'
+"let g:default_stl .= '<CUR>#[LineNumber] U+%04B</CUR>'
 
 " Line/column/virtual column, Line percentage
 let g:default_stl .= "#[LineNumber] %04(%l%)#[LineColumn]:%03(%c%V%) "
