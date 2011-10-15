@@ -213,7 +213,6 @@ let s:statuscolors = {
     \ 'FileType'     : [[ '#585858', '#bcbcbc', 'none'], [ '#080808', '#4e4e4e', 'none']],
     \ 'Branch'       : [[ '#585858', '#bcbcbc', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
     \ 'BranchS'      : [[ '#585858', '#949494', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
-    \ 'Error'        : [[ '#585858', '#ff5f00', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
     \ 'FunctionName' : [[ '#1c1c1c', '#9e9e9e', 'none'], [ '#080808', '#4e4e4e', 'none']],
     \ 'FileFormat'   : [[ '#1c1c1c', '#bcbcbc', 'bold'], [ '#080808', '#4e4e4e', 'none']],
     \ 'FileEncoding' : [[ '#1c1c1c', '#bcbcbc', 'bold'], [ '#080808', '#4e4e4e', 'none']],
@@ -221,7 +220,9 @@ let s:statuscolors = {
     \ 'ExpandTab'    : [[ '#585858', '#eeeeee', 'bold'], [ '#1c1c1c', '#808080', 'none']],
     \ 'LineNumber'   : [[ '#585858', '#bcbcbc', 'bold'], [ '#1c1c1c', '#808080', 'none']],
     \ 'LineColumn'   : [[ '#585858', '#bcbcbc', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
-    \ 'LinePercent'  : [[ '#c2bfa5', '#303030', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']]
+    \ 'LinePercent'  : [[ '#c2bfa5', '#303030', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
+    \ 'Warning'      : [[ '#cc0000', '#ffffff', 'bold'], [ '#1c1c1c', '#808080', 'none']],
+    \ 'Error'        : [[ '#585858', '#ff5f00', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']]
 \ }
 " Helper functions {{{2
 " GetFileName() {{{3
@@ -267,6 +268,41 @@ function! GetFileEncoding()
         return &fileencoding
     endif
 endfunction
+
+" StatuslineTabWarning() {{{3
+" Adapted from
+" http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
+function! StatuslineTabWarning()
+    if !exists("b:statusline_tab_warning")
+        let tabs = search('^\t', 'nw') != 0
+        let spaces = search('^ ', 'nw') != 0
+
+        if tabs && spaces
+            let b:statusline_tab_warning =  'm'
+        elseif (spaces && !&et) || (tabs && &et)
+            let b:statusline_tab_warning = '!'
+        else
+            let b:statusline_tab_warning = ''
+        endif
+    endif
+    return b:statusline_tab_warning
+endfunction
+autocmd CursorHold,BufWritePost * unlet! b:statusline_tab_warning
+
+" StatuslineTrailingSpaceWarning() {{{3
+" Adapted from
+" http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
+function! StatuslineTrailingSpaceWarning()
+    if !exists("b:statusline_trailing_space_warning")
+        if search('\s\+$', 'nw') != 0
+            let b:statusline_trailing_space_warning = 's'
+        else
+            let b:statusline_trailing_space_warning = ''
+        endif
+    endif
+    return b:statusline_trailing_space_warning
+endfunction
+autocmd CursorHold,BufWritePost * unlet! b:statusline_trailing_space_warning
 
 " Default statusline {{{2
 let g:default_stl  = ""
@@ -317,8 +353,15 @@ let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileFormat()} %)</CUR>'
 " File encoding
 let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileEncoding()} %)</CUR>'
 
-" Tabstop/indent settings
-let g:default_stl .= "#[ExpandTab] %{&expandtab ? 'S' : 'T'}"
+" Tabstop/indent/whitespace settings
+let g:default_stl .= "#[ExpandTab] "
+
+let g:default_stl .= "%(#[Warning]"
+let g:default_stl .= "%{StatuslineTrailingSpaceWarning()}"
+let g:default_stl .= "%{StatuslineTabWarning()}"
+let g:default_stl .= "#[ExpandTab] %)"
+
+let g:default_stl .= "%{&expandtab ? 'S' : 'T'}"
 let g:default_stl .= "#[LineColumn]:%{&tabstop}:%{&softtabstop}:%{&shiftwidth}"
 
 " Unicode codepoint
@@ -769,6 +812,7 @@ function! ToggleExpandTab()
         setlocal shiftwidth=4
         setlocal expandtab
     endif
+    unlet! b:statusline_tab_warning
     set expandtab?
 endfunction
 
