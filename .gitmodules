@@ -79,9 +79,6 @@
 [submodule "vim/.vim/bundle/yankring"]
 	path = vim/.vim/bundle/yankring
 	url = https://github.com/vim-scripts/YankRing.vim.git
-[submodule "vim/.vim/bundle/csapprox"]
-	path = vim/.vim/bundle/csapprox
-	url = https://github.com/vim-scripts/CSApprox.git
 [submodule "vim/.vim/bundle/conqueshell"]
 	path = vim/.vim/bundle/conqueshell
 	url = https://github.com/vim-scripts/Conque-Shell.git
@@ -124,3 +121,6 @@
 [submodule "zsh/zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "vim/.vim/bundle/csapprox"]
+	path = vim/.vim/bundle/csapprox
+	url = https://github.com/godlygeek/csapprox.git
