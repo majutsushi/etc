@@ -124,3 +124,6 @@
 [submodule "vim/.vim/bundle/csapprox"]
 	path = vim/.vim/bundle/csapprox
 	url = https://github.com/godlygeek/csapprox.git
+[submodule "vim/.vim/bundle/clang_complete"]
+	path = vim/.vim/bundle/clang_complete
+	url = https://github.com/Rip-Rip/clang_complete.git

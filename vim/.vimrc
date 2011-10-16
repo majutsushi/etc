@@ -4,6 +4,11 @@ set encoding=utf-8
 let mapleader=","
 
 let g:pathogen_disabled = []
+if has('python')
+    let g:pathogen_disabled += ['omnicppcomplete']
+else
+    let g:pathogen_disabled += ['clang_complete']
+endif
 if v:version < 703
     let g:pathogen_disabled += ['gundo']
 endif
@@ -1202,6 +1207,10 @@ let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 
 " CheckAttach {{{2
 let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
+
+" clang_complete {{{2
+"let g:clang_auto_select = 2
+let g:clang_use_library = 1
 
 " code_complete {{{2
 let g:completekey = "<c-tab>"
