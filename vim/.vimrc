@@ -300,7 +300,7 @@ autocmd CursorHold,BufWritePost * unlet! b:statusline_tab_warning
 function! StatuslineTrailingSpaceWarning()
     if !exists("b:statusline_trailing_space_warning")
         if search('\s\+$', 'nw') != 0
-            let b:statusline_trailing_space_warning = 's'
+            let b:statusline_trailing_space_warning = '·'
         else
             let b:statusline_trailing_space_warning = ''
         endif
