@@ -1053,7 +1053,7 @@ set complete-=i " scan current and included files
 
 " whether to use a popup menu for Insert mode completion
 "set completeopt=longest,menu,preview
-set completeopt=longest,menu
+set completeopt=longest,menuone
 
 " list of dictionary files for keyword completion (global or local to buffer)
 set dictionary=/usr/share/dict/words
@@ -1208,7 +1208,7 @@ let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
 
 " clang_complete {{{2
-"let g:clang_auto_select = 2
+let g:clang_auto_select = 2
 let g:clang_use_library = 1
 
 " code_complete {{{2
@@ -1585,6 +1585,7 @@ imap <C-Space> <C-X><C-O>
 
 " for popup-menu completion
 " http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
+inoremap <expr> <C-x><C-o> pumvisible() ? '<C-x><C-o>' : '<C-x><C-o><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 inoremap <expr> <C-n>      pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 " http://vim.wikia.com/wiki/Improve_completion_popup_menu
 inoremap <expr> <Esc>      pumvisible() ? "\<C-E>" : "\<Esc>"
@@ -1745,8 +1746,8 @@ function! SetArrowKeysAsTextShifters()
     " Insert mode
     inoremap        <silent> <Left>  <C-D>
     inoremap        <silent> <Right> <C-T>
-    inoremap <expr> <silent> <Up>    pumvisible() ? '<C-p>' : '<C-o>:call <SID>MoveLineUp()<CR>'
-    inoremap <expr> <silent> <Down>  pumvisible() ? '<C-n>' : '<C-o>:call <SID>MoveLineDown()<CR>'
+    inoremap <expr> <silent> <Up>    pumvisible() ? '<Up>'   : '<C-o>:call <SID>MoveLineUp()<CR>'
+    inoremap <expr> <silent> <Down>  pumvisible() ? '<Down>' : '<C-o>:call <SID>MoveLineDown()<CR>'
 endfunction
 
 call SetArrowKeysAsTextShifters()
