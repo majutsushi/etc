@@ -3,7 +3,7 @@ set nocompatible
 set encoding=utf-8
 let mapleader=","
 
-let g:pathogen_disabled = []
+let g:pathogen_disabled = ['current-func-info']
 if has('python')
     let g:pathogen_disabled += ['omnicppcomplete']
 else
@@ -340,7 +340,7 @@ let g:default_stl .= "%) "
 let g:default_stl .= "#[FunctionName] "
 
 " Function name
-let g:default_stl .= "<CUR>%(%{cfi#format('%s() |', '')} %)</CUR>"
+"let g:default_stl .= "<CUR>%(%{cfi#format('%s() |', '')} %)</CUR>"
 
 " Truncate here
 let g:default_stl .= "%<"
