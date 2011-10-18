@@ -4,7 +4,7 @@ set encoding=utf-8
 let mapleader=","
 
 let g:pathogen_disabled = ['current-func-info']
-if has('python')
+if has('python') && executable('clang')
     let g:pathogen_disabled += ['omnicppcomplete']
 else
     let g:pathogen_disabled += ['clang_complete']
