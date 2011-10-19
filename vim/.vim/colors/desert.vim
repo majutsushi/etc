@@ -113,6 +113,22 @@ hi TabLine	cterm=underline ctermfg=15 ctermbg=8 guifg=grey20 guibg=DarkGrey gui=
 hi TabLineSel	cterm=bold gui=bold
 hi TabLineFill	cterm=reverse guifg=grey40
 
+" Ubuntu colours
+"hi Pmenu	guibg=black guifg=#aea79f gui=none
+"hi PmenuSel	guibg=#5e2750 guifg=#f7f6f5
+"hi PmenuSbar	guibg=black guifg=white gui=none
+"hi PmenuThumb	guibg=#dd4814 guifg=white gui=none
+
+hi Pmenu	guibg=#1c1c1c guifg=grey80 gui=none
+hi PmenuSel	guibg=peru guifg=#f7f6f5 gui=none
+hi PmenuSbar	guibg=#1c1c1c guifg=white gui=none
+hi PmenuThumb	guibg=goldenrod guifg=white gui=none
+
+"hi Pmenu	guibg=#c2bfa5 guifg=black gui=none
+"hi PmenuSel	guibg=#4e9a06 guifg=white gui=none
+"hi PmenuSbar	guibg=#c2bfa5 guifg=white gui=none
+"hi PmenuThumb	guibg=goldenrod guifg=white gui=none
+
 hi User1	cterm=bold,reverse guibg=#c2bfa5 guifg=black   gui=bold
 hi User2	cterm=bold,reverse guibg=#c2bfa5 guifg=#990f0f gui=bold
 hi User3	cterm=bold,reverse guibg=#c2bfa5 guifg=grey40  gui=none
