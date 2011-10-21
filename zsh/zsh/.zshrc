@@ -897,7 +897,7 @@ disassemble(){ gcc -pipe -S -o - -O -g $* | as -aldh -o /dev/null }
 mdiff()   { diff -udrP "$1" "$2" > diff.$(date "+%Y-%m-%d")."$1" }
 vman()    { man $* | vim --cmd 'let no_plugin_maps = 1' -c 'runtime! macros/less.vim' -c 'set ft=man nolist' - }
 2html()   { gvim -f -n +"syntax on" +"run! syntax/2html.vim" +"wq" +"q" $1 }
-sshot()   { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desk/screenshots/' }
+sshot()   { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desktop/screenshots/' "$@" }
 
 # http://ft.bewatermyfriend.org/comp/zsh/zfunct.html
 hl() {
