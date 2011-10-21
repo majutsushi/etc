@@ -18,6 +18,7 @@
 	d = diff --patience -B -C
 	sd = diff --patience -B -C --staged
 	wd = diff --color-words --patience -B -C
+	hgp = show --format=\"From: %an <%ae>%n%s%n%b\" -U8
 
 [color]
 	ui = auto
