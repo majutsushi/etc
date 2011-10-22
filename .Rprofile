@@ -1,4 +1,12 @@
-options(tikzMetricsDictionary = "/home/test/.cache/tikzMetricsDictionary")
+# http://stackoverflow.com/questions/1189759/expert-r-users-whats-in-your-rprofile
+.First <- function() {
+#    library(graphics)
+    options("repos" = c(CRAN = "http://cran.nz.r-project.org/"))
+#    options("device" = "quartz")
+}
+
+# tikz
+options(tikzMetricsDictionary = "~/.cache/tikzMetricsDictionary")
 options(tikzDocumentDeclaration = "\\documentclass[12pt]{book}")
 options(tikzLatexPackages = c(
     "\\usepackage{tikz}",
