@@ -41,7 +41,7 @@
 
 [core]
 	excludesfile = ~/.gitignore
-	fsyncobjectfiles = true
+	fsyncobjectfiles = false
 
 [web]
 	browser = firefox
