@@ -1376,7 +1376,7 @@ let g:vikiOpenUrlWith_http = "silent !firefox %{URL}"
 let g:vikiOpenFileWith_html  = "silent !firefox %{FILE}"
 let g:vikiOpenFileWith_ANY   = "silent !start %{FILE}"
 let g:vikiMapQParaKeys = ""
-" we want to allow deplate to execute ruby code and external helper 
+" we want to allow deplate to execute ruby code and external helper
 " application
 let g:deplatePrg = "deplate -x -X "
 let g:vikiNameSuffix=".viki"
