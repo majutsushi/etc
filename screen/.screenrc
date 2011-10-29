@@ -207,6 +207,12 @@ bind ^b eval "hardcopy /tmp/screen.dump" "exec screen -X screen urlview /tmp/scr
 bind C eval writebuf "exec !!! xclip -selection clipboard -i $HOME/.cache/screen/screen-exchange"
 bind V exec !!! xclip -selection clipboard -o
 
+# split window movements
+bind h focus left
+bind j focus down
+bind k focus up
+bind l focus right
+
 # use the PgUp and PgDn keys to enter copy mode
 # and page through the window backlog:
 # bindkey -k kP copy
