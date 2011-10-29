@@ -14,8 +14,8 @@ URxvt.foreground: grey90
 
 ! for real transparency
 URxvt.depth: 32
-!URxvt.background: rgba:0000/0000/0000/dddd
-URxvt.background: rgba:0000/0000/0000/8888
+URxvt.background: rgba:0000/0000/0000/dddd
+!URxvt.background: rgba:0000/0000/0000/8888
 ! for fake transparency
 !URxvt.depth: 24
 !URxvt.inheritPixmap: true
@@ -118,11 +118,13 @@ URxvt.utmpInhibit: true
 
 URxvt.modifier: alt
 
-URxvt.perl-ext-common: default,matcher,xim-onthespot,selection-pastebin
-URxvt.urlLauncher: firefox
+URxvt.perl-lib: /home/jan/.etc/urxvt/perl
+URxvt.perl-ext-common: default,matcher,xim-onthespot,selection-pastebin,fullscreen
 URxvt.keysym.C-M-e: perl:selection-pastebin:remote-pastebin
+URxvt.urlLauncher: firefox
 URxvt.selection-pastebin.cmd: pub %
 URxvt.selection-pastebin.url: http://majutsushi.net/stuff/%
+URxvt.keysym.F11: perl:fullscreen:switch
 
 !URxvt.termName: xterm
 !URxvt.keysym.Home: \033[1~
