@@ -1618,9 +1618,6 @@ nnoremap Y y$
 
 inoremap <C-D> <Del>
 
-" toggle paste
-nnoremap <F3> :set invpaste paste?<CR>
-inoremap <F3> <C-O>:set invpaste paste?<CR>
 set pastetoggle=<F3>
 
 nnoremap <S-F2> :call ToggleExpandTab()<CR>
