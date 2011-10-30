@@ -15,11 +15,13 @@ cscope.*
 # zsh compiled files
 *.zwc
 
-# TeX stuff
+# LaTeX stuff
 *.aux
 *.bbl
 *.blg
 *.toc
+*.lof
+*.lot
 *.fdb_latexmk
 *.out
 missfont.log
