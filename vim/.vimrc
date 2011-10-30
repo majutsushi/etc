@@ -838,6 +838,17 @@ fun! ToggleFold()
     echo
 endfun
 
+" ToggleFullscreen() {{{2
+function! ToggleFullscreen()
+    if &guioptions =~ 'm'
+        set guioptions-=m
+    else
+        set guioptions+=m
+    endif
+    silent !wmctrl -r :ACTIVE: -b toggle,fullscreen,above
+endfunction
+nnoremap <silent> <F11> :call ToggleFullscreen()<CR>
+
 " sudo write {{{2
 command! -bar -nargs=0 W  silent! exec "write !sudo tee % >/dev/null"  | silent! edit!
 
