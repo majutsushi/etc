@@ -840,6 +840,10 @@ endfun
 
 " ToggleFullscreen() {{{2
 function! ToggleFullscreen()
+    if !executable('wmctrl')
+        echoerr 'wmctrl not installed!'
+        return
+    endif
     if &guioptions =~ 'm'
         set guioptions-=m
     else
