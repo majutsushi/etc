@@ -276,7 +276,7 @@ alias  stat='command stat'
 alias zstat='builtin stat'
 
 # cleaning up
-alias texclean='rm -f *.toc *.aux *.log *.out *.cp *.fn *.tp *.vr *.pg *.ky *.bbl *.blg *.fdb_latexmk'
+alias texclean='rm -f *.toc *.lof *.lot *.aux* *.log *.out *.cp *.fn *.tp *.vr *.pg *.ky *.bbl *.blg *.fdb_latexmk'
 
 # ignore ~/.ssh/known_hosts entries
 alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
@@ -338,7 +338,7 @@ alias small='echo -en "\033]50;6x10\007"'
 alias default='echo -e "\033]50;-misc-fixed-medium-r-semicondensed--13-*-*-*-*-*-iso10646-1\007"'
 alias medium='echo -en "\033]50;-misc-fixed-medium-r-normal--13-120-75-75-c-80-iso10646-1\007"'
 alias large='echo -en "\033]50;-misc-fixed-medium-*-*-*-15-*-*-*-*-*-iso10646-1\007"'
-# This is a large font that has a corresponding double-width font for 
+# This is a large font that has a corresponding double-width font for
 # CJK and other characters, useful for full-on utf-8 goodness.
 alias larger='echo -en "\033]50;-misc-fixed-medium-r-normal--18-*-*-*-*-*-iso10646-1\007"'
 alias huge='echo -en "\033]50;-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1\007"'
