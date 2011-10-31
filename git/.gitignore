@@ -17,6 +17,7 @@ cscope.*
 
 # LaTeX stuff
 *.aux
+*.auxlock
 *.bbl
 *.blg
 *.toc
