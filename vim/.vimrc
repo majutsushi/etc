@@ -603,6 +603,7 @@ function! GuiSettings()
     set guioptions+=c " use console dialogs
     set guioptions-=e " don't use gui tabs
     set guioptions-=T " don't show toolbar
+    set guioptions-=m " don't show menubar
 
     " "no", "yes" or "menu"; how to use the ALT key
 "   set winaltkeys=no
@@ -843,11 +844,6 @@ function! ToggleFullscreen()
     if !executable('wmctrl')
         echoerr 'wmctrl not installed!'
         return
-    endif
-    if &guioptions =~ 'm'
-        set guioptions-=m
-    else
-        set guioptions+=m
     endif
     silent !wmctrl -r :ACTIVE: -b toggle,fullscreen,above
 endfunction
