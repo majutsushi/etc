@@ -5,4 +5,12 @@ group user
 set guioptions=bCrsT
 set hintkeys=asdfg;lkjh
 
+highlight Hint       font-size: 12px; background: rgba(210,1,133,0.8) !important; border: 1px solid rgb(165,1,105); padding: 2px; border-radius: 3px; font-weight: bold; margin-left: -10px; color: white; line-height:1em;
+highlight HintActive background: rgba(145,197,43,0.8)    !important;
+highlight HintElem   background: rgba(255, 209, 20, 0.7) !important;
+"highlight StatusLine -moz-appearance: none !important; font-weight: bold; background: transparent !important; border: 0px !important; min-height: 22px !important; text-shadow: none !important; font: normal 16px/1 'Menlo' !important; padding: 3px 0px 3px 5px !important;
+"highlight CmdLine    padding: 1px !important; font: normal 16px 'Menlo' !important;
+"highlight CmdOutput  font: normal 14px 'Menlo' !important;
+"highlight CompItem   font: normal 14px 'Menlo' !important;
+
 " vim: set ft=pentadactyl:
