@@ -2,22 +2,25 @@
 	name = Jan Larres
 	email = jan@majutsushi.net
 
-[gui]
-	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+[core]
+	excludesfile = ~/.gitignore
+	fsyncobjectfiles = false
 
 [alias]
 	st = status
 	ci = commit
 	co = checkout
-	rlog = log --pretty=format:\"%C(yellow)%h %C(cyan)%ai%Cgreen %aN %Cred%d %Creset%s\" --graph
-	slog = log --stat
-	wdiff = diff --color-words
-	wshow = show --color-words
-	lol = log --pretty=oneline --graph --decorate --abbrev-commit
-	lola = log --pretty=oneline --graph --decorate --abbrev-commit --all
-	d = diff --patience -B -C
+
+	sl  = log --stat
+	gl  = log --graph --pretty=format:\"%C(yellow)%h%C(red)%d%Creset %s\"
+	gla = log --graph --pretty=format:\"%C(yellow)%h%C(red)%d%Creset %s\" --all
+	ll  = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ci%C(green) %cn %C(red)%d %Creset%s\"
+	lla = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ci%C(green) %cn %C(red)%d %Creset%s\" --all
+
+	d  = diff --patience -B -C
 	sd = diff --patience -B -C --staged
 	wd = diff --color-words --patience -B -C
+	ws = show --color-words
 	hgp = show --format=\"From: %an <%ae>%n%s%n%b\" -U8
 
 [color]
@@ -39,15 +42,14 @@
 	tool = vimdiff3
 	conflictstyle = diff3
 
-[core]
-	excludesfile = ~/.gitignore
-	fsyncobjectfiles = false
-
 [web]
 	browser = firefox
 
 [instaweb]
 	httpd = lighttpd
+
+[gui]
+	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 
 [cola]
 	fontui = DejaVu Sans,8,-1,5,50,0,0,0,0,0
