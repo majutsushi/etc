@@ -1135,7 +1135,7 @@ moz-find-files() {
 
 # highlighting {{{
 
-if [[ -f $HOME/.etc/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+if is43 && [[ -f $HOME/.etc/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
     source $HOME/.etc/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
     ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
