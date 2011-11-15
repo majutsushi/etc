@@ -104,6 +104,7 @@ function! s:SetupHelpWindow()
 
     nnoremap <buffer> <Space> <C-]> " Space selects subject
     nnoremap <buffer> <BS>    <C-T> " Backspace to go back
+    nnoremap <buffer> q       :q<CR>
 endfunction
 au FileType help if &buftype == 'help' | call <SID>SetupHelpWindow() | endif
 
