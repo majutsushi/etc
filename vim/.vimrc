@@ -1226,7 +1226,7 @@ let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
 
 " clang_complete {{{2
-let g:clang_auto_select = 2
+let g:clang_auto_select = 1
 let g:clang_use_library = 1
 
 " code_complete {{{2
