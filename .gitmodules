@@ -88,9 +88,6 @@
 [submodule "vim/.vim/bundle/languagetool"]
 	path = vim/.vim/bundle/languagetool
 	url = https://github.com/vim-scripts/LanguageTool.git
-[submodule "vim/.vim/bundle/tex_autoclose"]
-	path = vim/.vim/bundle/tex_autoclose
-	url = https://github.com/vim-scripts/tex_autoclose.vim.git
 [submodule "vim/.vim/bundle/stlimproved"]
 	path = vim/.vim/bundle/stlimproved
 	url = https://github.com/vim-scripts/STL-improved.git
