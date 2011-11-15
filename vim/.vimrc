@@ -3,7 +3,9 @@ set nocompatible
 set encoding=utf-8
 let mapleader=","
 
-let g:pathogen_disabled = ['current-func-info']
+let g:pathogen_disabled = []
+let g:pathogen_disabled += ['current-func-info']
+let g:pathogen_disabled += ['vim-orgmode']
 if has('python') && executable('clang')
     let g:pathogen_disabled += ['omnicppcomplete']
 else
@@ -49,6 +51,10 @@ autocmd GUIEnter * call GuiSettings()
 
 autocmd InsertLeave * set nocul
 autocmd InsertEnter * set cul
+
+" for VimOrganizer
+au! BufRead,BufWrite,BufWritePost,BufNewFile *.org
+au BufEnter *.org call org#SetOrgFileType()
 
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
@@ -1412,6 +1418,11 @@ imap Ǣf         <Plug>AddVimFootnote
 imap Ǣr         <Plug>ReturnFromFootnote
 nmap <leader>fa <Plug>AddVimFootnote
 nmap <leader>fr <Plug>ReturnFromFootnote
+
+" VimOrganizer {{{2
+let g:agenda_files = [expand('~/projects/org/gtd.org')]
+let g:org_todo_setup = 'TODO STARTED WAITING DELEGATED APPT | DONE FORWARDED CANCELLED'
+let g:org_tags_alist = '{work(w) priv(p)} vim(v) PROJECT(P) READING(r) EMAIL(m)'
 
 " vimplate {{{2
 let Vimplate = expand('~/.vim/bundle/vimplate/vimplate')

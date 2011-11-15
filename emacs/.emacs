@@ -179,6 +179,22 @@ This can be 0 for immediate, or a floating point value.")
 
 (defalias 'archive-done-tasks 'org-my-archive-done-tasks)
 
+;; Adjust org-tags from VimOrganizer-style
+(defun vimorg-tag-adjust ()
+  (interactive)
+   (while (re-search-forward "^*.*?\n[ \t]+:[^ \t]+:" nil t)
+         (if (not (string-match "\\(PROPERTIES\\|LOGBOOK\\)" (thing-at-point 'line)))
+              (join-line))))
+
+(defun vimorg-set-unmodified ()
+    (interactive)
+    (set-buffer-modified-p nil))
+
+(add-hook 'org-mode-hook
+(lambda () (interactive)(replace-regexp "\\(\\s-*\\):\\(DEADLINE\\|CLOSED\\|SCHEDULED\\|CLOCK\\|<[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\} \\)" "\\1\\2")
+                (beginning-of-buffer)(vimorg-tag-adjust)
+        (beginning-of-buffer) ))
+
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.

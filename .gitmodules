@@ -127,3 +127,18 @@
 [submodule "vim/.vim/bundle/clang_complete"]
 	path = vim/.vim/bundle/clang_complete
 	url = https://github.com/Rip-Rip/clang_complete.git
+[submodule "vim/.vim/bundle/vim-orgmode"]
+	path = vim/.vim/bundle/vim-orgmode
+	url = https://github.com/jceb/vim-orgmode.git
+[submodule "vim/.vim/bundle/utl"]
+	path = vim/.vim/bundle/utl
+	url = https://github.com/vim-scripts/utl.vim.git
+[submodule "vim/.vim/bundle/vim-speeddating"]
+	path = vim/.vim/bundle/vim-speeddating
+	url = https://github.com/tpope/vim-speeddating.git
+[submodule "vim/.vim/bundle/vimorganizer"]
+	path = vim/.vim/bundle/vimorganizer
+	url = https://github.com/hsitz/VimOrganizer.git
+[submodule "vim/.vim/bundle/calendar.vim"]
+	path = vim/.vim/bundle/calendar.vim
+	url = https://github.com/mattn/calendar-vim.git
