@@ -673,7 +673,7 @@ setprompt () {
     zstyle ':vcs_info:*' stagedstr     ${C_F_CYAN}'!'${C_F_DEFAULT}
     zstyle ':vcs_info:*' unstagedstr   ${C_F_CYAN}'?'${C_F_DEFAULT}
 
-    if [[ "$TERM" != "dumb" ]]; then
+    if [[ "$TERM" != "dumb" ]] && [[ "$TERM" != "vt100" ]]; then
         PS1='$prompt_line_1$prompt_newline$prompt_line_2'
     else
         PS1="${EXITCODE}${debian_chroot:+($debian_chroot)}%n@%m %40<...<%B%~%b%<< %# "
@@ -1169,7 +1169,8 @@ fi
 
 # screen {{{
 # 'rxvt' is needed for dvtm
-if [[ "$TERM" != screen* ]] && [[ "$TERM" != "rxvt" ]] && ! isecs; then
+if [[ "$TERM" != screen* ]] && [[ "$TERM" != "rxvt" ]] &&
+   [[ "$TERM" != "dumb" ]] && [[ "$TERM" != "vt100" ]] && ! isecs; then
     screen -m
 fi
 # }}}
