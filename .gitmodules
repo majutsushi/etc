@@ -100,9 +100,6 @@
 [submodule "vim/.vim/bundle/markdown"]
 	path = vim/.vim/bundle/markdown
 	url = https://github.com/tpope/vim-markdown
-[submodule "vim/.vim/bundle/xptemplate"]
-	path = vim/.vim/bundle/xptemplate
-	url = https://github.com/drmingdrmer/xptemplate-dist.git
 [submodule "vim/.vim/bundle/precisejump"]
 	path = vim/.vim/bundle/precisejump
 	url = https://github.com/vim-scripts/PreciseJump.git
@@ -139,3 +136,6 @@
 [submodule "vim/.vim/bundle/protodef"]
 	path = vim/.vim/bundle/protodef
 	url = https://github.com/derekwyatt/vim-protodef.git
+[submodule "vim/.vim/bundle/xptemplate"]
+	path = vim/.vim/bundle/xptemplate
+	url = https://github.com/drmingdrmer/xptemplate.git
