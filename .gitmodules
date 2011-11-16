@@ -109,12 +109,6 @@
 [submodule "vim/.vim/bundle/current-func-info"]
 	path = vim/.vim/bundle/current-func-info
 	url = https://github.com/tyru/current-func-info.vim.git
-[submodule "vim/.vim/bundle/fswitch"]
-	path = vim/.vim/bundle/fswitch
-	url = https://github.com/derekwyatt/vim-fswitch.git
-[submodule "vim/.vim/bundle/protodef"]
-	path = vim/.vim/bundle/protodef
-	url = https://github.com/derekwyatt/vim-protodef.git
 [submodule "zsh/zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
@@ -139,3 +133,9 @@
 [submodule "vim/.vim/bundle/calendar.vim"]
 	path = vim/.vim/bundle/calendar.vim
 	url = https://github.com/mattn/calendar-vim.git
+[submodule "vim/.vim/bundle/fswitch"]
+	path = vim/.vim/bundle/fswitch
+	url = https://github.com/derekwyatt/vim-fswitch.git
+[submodule "vim/.vim/bundle/protodef"]
+	path = vim/.vim/bundle/protodef
+	url = https://github.com/derekwyatt/vim-protodef.git
