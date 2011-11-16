@@ -614,6 +614,9 @@ function! GuiSettings()
 
     " "no", "yes" or "menu"; how to use the ALT key
 "   set winaltkeys=no
+
+    set lines=50
+    set columns=80
 endfunction
 
 " InsertGuards() {{{2
