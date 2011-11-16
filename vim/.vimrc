@@ -1242,6 +1242,9 @@ let g:CommandTMatchWindowReverse = 1
 " COMMENT {{{2
 xmap <leader>cx <Plug>PComment
 
+" ConqueTerm {{{2
+let g:ConqueTerm_StartMessages = 0
+
 " devhelp {{{2
 let g:devhelpSearch = 1
 let g:devhelpAssistant = 0
@@ -1337,7 +1340,7 @@ if executable('urxvt')
 else
     let vimrplugin_term = "uxterm"
 endif
-let vimrplugin_conqueplugin = 0
+let vimrplugin_conqueplugin = 1
 let vimrplugin_conquevsplit = 1
 let vimrplugin_underscore   = 0
 
