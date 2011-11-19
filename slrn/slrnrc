@@ -1,11 +1,3 @@
-% -*- slang -*-
-
-%% This is a sample startup file for the slrn newsreader and meant as a
-%% template for your personal startup file; it is not a full reference
-%% of slrn's config options -- please see the reference manual for this.
-
-%% The percent character is used for comments.
-
 %
 %% 1. Tell slrn about your identity (name, email address and such)
 %
@@ -58,7 +50,7 @@ set generate_message_id 0
 
 % If non-zero, slrn reads the active file on each startup.  You might want to
 % use this if your network connection is fast or the server has few groups.
-set read_active 0
+set read_active 1
 
 % The following variables are only meaningful when using spool mode:
 
@@ -157,6 +149,11 @@ set postpone_directory "News/postponed"
 % directory specified by the TMPDIR environment variable or /tmp.
 %set use_tmpdir 0
 
+set macro_directory ".etc/slrn/macros,/usr/share/slrn/macros/,/usr/share/slrn/slang/"
+
+interpret "slrnface.sl"
+interpret "gsort-plus.sl"
+
 %
 %% 5. Attribution lines / custom headers
 %
@@ -192,7 +189,7 @@ charset display utf8
 charset outgoing "utf8"
 
 % If non-zero, call metamail for MIME formats slrn cannot handle.
-set use_metamail 1
+set use_metamail 0
 
 %
 %% 7. Some preferences for the header window (see the manual for more)
@@ -299,6 +296,29 @@ set overview_date_format "%d/%m/%y %H:%M"
 %header_display_format 0 "%F%B%-5S%G%-5l:[%12r]%t%s"
 header_display_format 0 "%F%B %D %20r%t%s %-5g%-5l"
 %header_display_format 4 "%F%B%-5S [%10r]:%t%49s %-19g[%17d]"
+
+% group_display_format
+%
+% F  Group flag (`U' for unsubscribed, `N' for new)
+% d  Group description (needs to be downloaded once with slrn -d)
+% h  ``High water mark'' (highest article number in the group)
+% l  ``Low water mark'' (lowest article number in the group)
+% n  Group name
+% t  Total number of articles in the group (estimate)
+% u  Number of unread articles in the group
+%
+group_display_format 0 "  %F%-5u [%-6t]  %n"
+group_display_format 1 "  %F%-5u  %n%45g%d"
+group_display_format 2 "  %F%-5u  %n%50g%-8l-%h"
+
+% What to wrap when wrapping an article:
+%  0 or 4 ==> wrap body
+%  1 or 5 ==> wrap headers, body
+%  2 or 6 ==> wrap quoted text, body
+%  3 or 7 ==> wrap headers, quoted text, body
+% The higher number indicates that every article will be automatically
+% wrapped.
+set wrap_flags 7
 
 % This color object is only used when highlight_unread_subjects is set to 2
 % (see the reference manual for details):
@@ -578,6 +598,3 @@ setkey readline trim		 "<Esc>/"	% Trim whitespace
 setkey readline quoted_insert	 "^Q"		% Quoted insert
 setkey readline complete	 "<Tab>"	% Complete filename
 setkey readline cycle		 " "		% Cycle among filenames
-
-interpret /usr/share/slrn/macros/slrnface.sl
-
