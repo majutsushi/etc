@@ -62,7 +62,7 @@ au BufEnter *.org call org#SetOrgFileType()
 autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
 autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 
-autocmd BufNewFile,BufReadPre * call LoadProjectConfigs()
+autocmd BufNewFile,BufReadPost * call LoadDirLocals()
 
 autocmd BufNewFile,BufWritePre * call AutoMkDir()
 
@@ -628,9 +628,9 @@ function! InsertGuards()
     normal! kk
 endfunction
 
-" LoadProjectConfigs() {{{2
-function! LoadProjectConfigs()
-    let configs = reverse(findfile('project_config.vim', '.;', -1))
+" LoadDirLocals() {{{2
+function! LoadDirLocals()
+    let configs = reverse(findfile('.dir-locals.vim', '.;', -1))
     for config in configs
 "        execute 'sandbox source ' . config
         execute 'source ' . config
