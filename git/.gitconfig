@@ -14,9 +14,9 @@
 	sl  = log --stat
 	gl  = log --graph --pretty=format:\"%C(yellow)%h%C(red)%d%Creset %s\"
 	gla = log --graph --pretty=format:\"%C(yellow)%h%C(red)%d%Creset %s\" --all
-	ll  = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ci%C(green) %cn %C(red)%d %Creset%s\"
-	lla = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ci%C(green) %cn %C(red)%d %Creset%s\" --all
-	in = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ci%C(green) %cn %C(red)%d %Creset%s\" ..origin
+	ll  = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ci%C(green) %an %C(red)%d %Creset%s\"
+	lla = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ci%C(green) %an %C(red)%d %Creset%s\" --all
+	in = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ci%C(green) %an %C(red)%d %Creset%s\" ..origin
 
 	d  = diff --patience -B -C
 	sd = diff --patience -B -C --staged
