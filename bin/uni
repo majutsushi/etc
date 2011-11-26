@@ -1,0 +1,23 @@
+#!/usr/bin/perl
+
+binmode STDOUT, ":utf8";
+$pat = "@ARGV";
+if (ord $pat > 256) {
+    $pat = sprintf("%04x", ord $pat);
+    print "That's $pat...\n";
+    $pat = '^' . $pat;
+}
+elsif (ord $pat > 128) {        # arg in sneaky UTF-8
+    $pat = sprintf("%04x", unpack("U0U",$pat));
+    print "That's $pat...\n";
+    $pat = '^' . $pat;
+}
+
+@names = split /^/, do 'unicore/Name.pl';
+for my $line (@names) {
+    $hex = hex($line);
+    $_ = chr($hex)."\t".$line;
+    if (/$pat/io) {
+        print;
+    }
+}
