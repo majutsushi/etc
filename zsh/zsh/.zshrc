@@ -370,6 +370,9 @@ zle -N slash-backward-kill-word
 # press esc-w (meta-w) to delete a word until its last '/' (not the same as ctrl-w!)
 bindkey '\ew' slash-backward-kill-word
 
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
 # }}}
 
 # power completion - abbreviation expansion {{{
