@@ -47,7 +47,7 @@ unset keep_flagged
 
   set preconnect=""
 #   set sendmail="/usr/bin/msmtp"
-  set sendmail="~/bin/msmtp-save.sh"
+  set sendmail="~/.etc/mutt/msmtp-save.sh"
   set sendmail_wait=0
   set use_envelope_from
   set ssl_ca_certificates_file=/etc/ssl/certs/ca-certificates.crt
@@ -176,7 +176,7 @@ unset hidden_host       # when set, skip the host name part of hostname
   set recall=ask-no     # ask for using postponed message.
   set sig_dashes        # Prepend "-- \n" to the signature
 unset sig_on_top
-  set signature="~/.mutt/sig.sh|"
+  set signature="~/.etc/mutt/sig.sh|"
 unset text_flowed       # use format=flowed; if set, unset encode_from
 unset use_domain        # add $hostname to all addresses without @host
   set user_agent        # Create User-Agent: Mutt/<Version> header.
@@ -534,17 +534,17 @@ macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu fi
 macro index,pager  A    "<pipe-message>~/src/add-to-eds/add-to-eds<return>" "Add the sender address to evolution address book"
 
 # capture in org-mode
-macro index,pager  \eR  "<pipe-message>~/bin/remember-mail\n" "Capture message in org-mode"
+macro index,pager  \eR  "<pipe-message>~/.etc/mutt/remember-mail\n" "Capture message in org-mode"
 
 # X-Label patch
 ifdef edit-label bind index,pager y edit-label
 
 # labels
 set my_vi=$editor
-macro index y "<enter-command>set editor=\"~/bin/editlabel append\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Append label"
-macro pager y "<enter-command>set editor=\"~/bin/editlabel append\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Append label"
-macro index Y "<enter-command>set editor=\"~/bin/editlabel menu\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Edit labels"
-macro pager Y "<enter-command>set editor=\"~/bin/editlabel menu\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Edit labels"
+macro index y "<enter-command>set editor=\"~/.etc/mutt/editlabel append\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Append label"
+macro pager y "<enter-command>set editor=\"~/.etc/mutt/editlabel append\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Append label"
+macro index Y "<enter-command>set editor=\"~/.etc/mutt/editlabel menu\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Edit labels"
+macro pager Y "<enter-command>set editor=\"~/.etc/mutt/editlabel menu\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Edit labels"
 macro index \Cy "<limit>~y " "Limit view to label"
 
 # spam handlers
@@ -573,13 +573,13 @@ macro pager \e1         "<enter-command>set display_filter='t-prot -cmekatl --ma
 # call viewhtmlmsg from macro
 macro index,pager <F7> "\
 <enter-command> set my_wait_key=\$wait_key wait_key=no<enter>\
-<pipe-message>viewhtmlmsg<enter>\
+<pipe-message>python -c 'from muttils import viewhtmlmsgcommand; viewhtmlmsgcommand.run()'<enter>\
 <enter-command> set wait_key=\$my_wait_key &my_wait_key<enter>\
 " "view HTML in browser"
 
 macro index,pager <F8> "\
 <enter-command> set my_wait_key=\$wait_key wait_key=no<enter>\
-<pipe-message>viewhtmlmsg -s<enter>\
+<pipe-message>python -c 'from muttils import viewhtmlmsgcommand; viewhtmlmsgcommand.run()' -s <enter>\
 <enter-command> set wait_key=\$my_wait_key &my_wait_key<enter>\
 " "view HTML (safe) in browser"
 

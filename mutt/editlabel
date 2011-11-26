@@ -4,8 +4,7 @@
 # $2 is the filename
 
 # Configuration
-LFILE="$HOME/.labels"
-
+LFILE="$HOME/.etc/mutt/labels"
 
 ACTION="$1"
 FNAME="$2"
