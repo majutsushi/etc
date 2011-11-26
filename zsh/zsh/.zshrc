@@ -441,7 +441,6 @@ done
 # autoload zsh modules when they are referenced
 for opt mod in a stat \
                a zpty \
-               ap zprof \
                ap mapfile; do
     zmodload -${opt} zsh/${mod} ${mod}
 done ; unset opt mod
@@ -894,12 +893,7 @@ psgrep() {
     print 'Finished, running "swapoff -a; swapon -a" may also be useful.'
 }
 
-# functions without detailed explanation:
 bk()      { cp -r -b ${1} ${1}_$(date --iso-8601=m) }
-disassemble(){ gcc -pipe -S -o - -O -g $* | as -aldh -o /dev/null }
-mdiff()   { diff -udrP "$1" "$2" > diff.$(date "+%Y-%m-%d")."$1" }
-vman()    { man $* | vim --cmd 'let no_plugin_maps = 1' -c 'runtime! macros/less.vim' -c 'set ft=man nolist' - }
-2html()   { gvim -f -n +"syntax on" +"run! syntax/2html.vim" +"wq" +"q" $1 }
 sshot()   { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desktop/screenshots/' "$@" }
 
 # http://ft.bewatermyfriend.org/comp/zsh/zfunct.html
@@ -926,13 +920,6 @@ upload() {
 
 wp() {
     dig +short txt ${1// /_}.wp.dg.cx
-}
-
-mkvrepack() {
-    local name="${1:r}"
-    mkvextract tracks "$1" 1:"${name}".raw
-    avi2raw "${name}".raw "${name}".264 && rm "${name}".raw
-    MP4Box -fps 29.970628 -add "${name}".264 "${name}".mp4 && rm "${name}".264
 }
 
 pdfembedfonts() {
@@ -996,45 +983,8 @@ purge() {
 
 getlinks ()   { perl -ne 'while ( m/"((www|ftp|http):\/\/.*?)"/gc ) { print $1, "\n"; }' $* }
 
-# plap foo -- list all occurrences of program in the current PATH
-plap() {
-    if [[ $# == 0 ]]
-    then
-        echo "Usage:    $0 program"
-        echo "Example:  $0 zsh"
-        echo "Lists all occurrences of program in the current PATH."
-    else
-        ls -l ${^path}/*$1*(*N)
-    fi
-}
-
-# Found in the mailinglistarchive from Zsh (IIRC ~1996)
-selhist() {
-    emulate -L zsh
-    local TAB=$'\t';
-    (( $# < 1 )) && {
-        echo "Usage: $0 command"
-        return 1
-    };
-    cmd=(${(f)"$(grep -w $1 $HISTFILE | sort | uniq | pr -tn)"})
-    print -l $cmd | less -F
-    echo -n "enter number of desired command [1 - $(( ${#cmd[@]} - 1 ))]: "
-    local answer
-    read answer
-    [[ -n "$answer" ]] && print -z "${cmd[$answer]#*$TAB}"
-}
-
 # mkdir && cd
 mcd() { mkdir -p "$@"; cd "$@" }
-
-findsuid() {
-    print 'Output will be written to ~/suid_* ...'
-    $SUDO find / -type f \( -perm -4000 -o -perm -2000 \) -ls > ~/suid_suidfiles.$(date "+%Y-%m-%d").out 2>&1
-    $SUDO find / -type d \( -perm -4000 -o -perm -2000 \) -ls > ~/suid_suiddirs.$(date "+%Y-%m-%d").out 2>&1
-    $SUDO find / -type f \( -perm -2 -o -perm -20 \) -ls > ~/suid_writefiles.$(date "+%Y-%m-%d").out 2>&1
-    $SUDO find / -type d \( -perm -2 -o -perm -20 \) -ls > ~/suid_writedirs.$(date "+%Y-%m-%d").out 2>&1
-    print 'Finished'
-}
 
 # display system state
 status() {
@@ -1097,13 +1047,6 @@ rs-important() {
     cp $HOME/projects/rs-important.log $1/projects/
 }
 
-# log 'make install' output
-# http://strcat.de/blog/index.php?/archives/335-Software-sauber-deinstallieren...html
-mmake() {
-    [[ ! -d ~/.errorlogs ]] && mkdir ~/.errorlogs
-    =make -n install > ~/.errorlogs/${PWD##*/}-makelog
-}
-
 # for ecs systems
 if [[ -d /etc/pkgs/ ]]; then
     need () { . "/etc/pkgs/$1.sh"; }
@@ -1132,6 +1075,24 @@ moz-find-files() {
         find ./$objdir -path '*/_xpidlgen/*' -name '*.h' \
                        -print >> $file
     fi
+}
+
+terminal_colors() {
+    T='gYw'   # The test text
+
+    echo -e "\n                 40m     41m     42m     43m     44m     45m     46m     47m";
+
+    for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' \
+               '1;32m' '  33m' '1;33m' '  34m' '1;34m' '  35m' '1;35m' \
+               '  36m' '1;36m' '  37m' '1;37m'; do
+        FG=${FGs// /}
+        echo -en " $FGs \033[$FG  $T  "
+        for BG in 40m 41m 42m 43m 44m 45m 46m 47m; do
+            echo -en "$EINS \033[$FG\033[$BG  $T  \033[0m"
+        done
+        echo
+    done
+    echo
 }
 
 # }}}

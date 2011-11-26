@@ -1,3 +1,10 @@
+# zsh profiling {{{
+# just execute 'ZSH_PROFILE_RC=1 zsh' and run 'zprof' to get the details
+if [[ -n $ZSH_PROFILE_RC ]] ; then
+    zmodload zsh/zprof
+fi
+# }}}
+
 # check for version/system {{{
 # check for versions (compatibility reasons)
 
