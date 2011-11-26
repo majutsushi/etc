@@ -6,11 +6,10 @@ export XDG_CACHE_HOME=$HOME/.cache
 
 export LD_LIBRARY_PATH=$HOME/lib
 
-export PATH=$HOME/bin:/usr/games:/var/lib/gems/1.8/bin:$PATH
+export PATH=$HOME/bin:$HOME/.etc/bin:/usr/games:/var/lib/gems/1.8/bin:$PATH
 # export SDL_AUDIODRIVER=dsp
-# export http_proxy=www-cache.rz.uni-passau.de:3128
-#export GTK_IM_MODULE="scim"
-#export XMODIFIERS='@im=SCIM'
+# export GTK_IM_MODULE="scim"
+# export XMODIFIERS='@im=SCIM'
 
 # ulimit -c unlimited
 # unclutter &
