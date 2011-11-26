@@ -106,9 +106,7 @@ add_to_path() {
     dir=$3
 
     if [[ -n "$dir" && "$dir" != "." && -d "$dir" && -x "$dir" ]]; then
-        if ! ismac; then
-            dir=$(readlink -f "$dir")
-        fi
+        dir=$(cd "$dir" && pwd -P)
 
         if [[ -z $(eval "echo \"\$$oldpath\"") ]]; then
             eval "$oldpath=$dir"
