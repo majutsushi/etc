@@ -1,12 +1,13 @@
-%
-%% 1. Tell slrn about your identity (name, email address and such)
-%
+% Identity settings (name, email address and such) {{{1
 
 % The "From:" header will be generated from the following three variables.
 % With the example settings, it would read "John Doe <john@doe.com>"
 set username "jan"
 set hostname "majutsushi.net"
 set realname "Jan Larres"
+
+% for message-ids
+posting_host "majutsushi.net"
 
 % Set this if you want replies to your articles to go to a address different
 % from the one in "From:".
@@ -18,182 +19,90 @@ set realname "Jan Larres"
 % The name of your signature file.  If "", no signature is added.
 %set signature ".signature"
 
-%
-%% 2. Server specific settings
-%
+% Server settings {{{1
 
 % Tell slrn which newsrc file it should use for which server.
 % Note: This does *not* set the default server; you need to set the
 %       NNTPSERVER environment variable for this.
-server "news.gmane.org" ".jnewsrc-gmane"
-server "news.mixmin.net" ".jnewsrc-mixmin"
-server "news.mozilla.org" ".jnewsrc-mozilla"
-
-% If a server requires authentication, add a nnrpaccess line for it.
-% If you leave username and/or password empty, slrn will prompt for it.
-%nnrpaccess "news.doe.com" "john" "secret"
-
-% Some servers require authentication, but don't ask for it.
-% To offer your authentication data "voluntarily", set this variable to 1.
-%set force_authentication 0
+server "news.gmane.org"   "News/jnewsrc-gmane"
+server "news.mixmin.net"  "News/jnewsrc-mixmin"
+server "news.mozilla.org" "News/jnewsrc-mozilla"
 
 % This can either be set to "nntp" (read online) or "spool" (use local spool)
-%set server_object "nntp"
+set server_object "nntp"
 
 % This can be "nntp" (post directly to the server), "inews" (use external
 % program for posting) or "slrnpull" (spool message for slrnpull to send).
-%set post_object "nntp"
-
-% Set this to zero if you want to leave Message-ID generation to your server
-% or your system does not have a proper unique hostname.
-set generate_message_id 0
+set post_object "nntp"
 
 % If non-zero, slrn reads the active file on each startup.  You might want to
 % use this if your network connection is fast or the server has few groups.
 set read_active 1
 
-% The following variables are only meaningful when using spool mode:
-
-% Basic directory settings
-%set spool_inn_root "/var/lib/news"
-%set spool_root "/var/spool/news"
-%set spool_nov_root "/var/spool/news/over.view"
-
-% These are relative to spool_inn_root unless they start with "/".
-%set spool_active_file "data/active"
-%set spool_activetimes_file "data/active.times"
-%set spool_newsgroups_file "data/newsgroups"
-
-% This value is relative to the directories under spool_nov_root:
-%set spool_nov_file ".overview"
-
-% Whether to check for each article when reading an overview file (slower,
-% but may save you from lots of "article not available" errors).
-%set spool_check_up_on_nov 0
-
 set unsubscribe_new_groups 1
 
-%
-%% 3. Which external programs do you want to use?
-%
-
-% Note OS/2 and Win32 users: 
-%   To separate directories you can either use a single '/' or
-%   double '\\'. Single backslashes are not supported.  For example, use
-%   "C:\\home\\file.txt" or "C:/home/file.txt" but NOT "C:\home\file.txt"
-
-% Set your favourite editor.  Use %s for the file name and %d for the line
-% where the cursor should be placed (usually at the beginning of the body).
-%set editor_command "jed '%s' -g %d -tmp"
-set editor_command "vim +%d '%s'"
-
-% You can have separate commands for editing posts, mail, and score files.
-%set mail_editor_command "jed '%s' -g %d -tmp --mail-mode"
-set mail_editor_command "mutt -H '%s' -e 'set signature=' ; exit 127"
-%set post_editor_command "jed '%s' -g %d -tmp --mail-mode"
-%set score_editor_command "jed '%s' -g %d -tmp --score-arrange-score"
-
-% If non-zero, abort posting or email operation if the file was not modified
-% by the editor.
-set abort_unmodified_edits 1
-
-% In case we need metamail to display an article:
-%set metamail_command "metamail"
-
-% WWW browser to use. Xbrowser is used when the DISPLAY environment variable
-% is set; non_Xbrowser otherwise.
-set non_Xbrowser "links '%s'"
-set Xbrowser "firefox '%s' &"
-
-% Command to use for printing
-% Note: On Win32, this variable defines the name of the printer queue to use.
-%set printer_name "lpr -Plp"
-
-% In case you want to use another mailer than sendmail.  Be sure that it
-% implements the same interface, though!
-%set sendmail_command "/usr/lib/sendmail -oi -t -oem -odb"
-
-% Set this to one if you want the "From:" header in e-mails to be generated
-% from the hostname / username / realname variable.
-% Note: Not all MTAs are configured to allow this.
-%set generate_email_from 0
-
-%
-%% 4. Directory / file names
-%
-
-% Note: All filenames in this section are relative to HOME unless they start
-%       with a '/'.
-
-% Filename where articles / email you sent are archived.
-% Note: If these are unset, slrn does not keep a copy of outgoing messages.
-set save_posts "News/sent"
-set save_replies "News/sent"
-
-% File where failed posts are appended.  Use "" to disable saving.
-set failed_posts_file "News/dead.letter"
-
-% Name of score file.
-set scorefile "News/Score"
-
-% Name of directory where decoded files are placed.
-set decode_directory "News"
-
-% Directory where all other files are saved.
-set save_directory "News"
-
-% Directory where postponed articles are placed. Please make sure it exists.
-set postpone_directory "News/postponed"
-
-% Whether to put temporary files for postings, followups and replies in the
-% directory specified by the TMPDIR environment variable or /tmp.
-%set use_tmpdir 0
+% Macros {{{1
 
 set macro_directory ".etc/slrn/macros,/usr/share/slrn/macros/,/usr/share/slrn/slang/"
 
-interpret "slrnface.sl"
 interpret "gsort-plus.sl"
+interpret "t-prot.sl"
+interpret "notify_postponed.sl"
+interpret "metamail.sl"
+interpret "onekey-score.sl"
 
+% Interface settings {{{1
+
+% General {{{2
+
+% Set this to 0 for no-confirmation on follow, reply, quit, etc...
 %
-%% 5. Attribution lines / custom headers
+% 1     Confirm marking groups as read or un-read.
+% 2     Confirm printing an article.
+% 4     Confirm posts, followups, replies and supersedes.
+% 8     Confirm leaving a group by following a news: URL.
+% 16    Confirm quitting slrn.
 %
+set confirm_actions 27 % 1+2+8+16
 
-% This sets the attribution lines for follow-ups and replies.  The following
-% format specifiers are recognized:
-%  %d:date, %D:date (formatted), %r:real name, %R:first name,
-%  %f:email address, %s:subject, %m:msgid, %n:newsgroups, %%: percent
-set followup_string "%r <%f>:"
-set reply_string "%r <%f> [%n]:"
-
-% Custom headers to add to *new* posts
-%set custom_headers "Mail-Copies-To: nobody"
-
-% Custom headers for followup/reply/supersedes.  These can use format
-% specifiers as in the 'followup_string' variable.
-%set followup_custom_headers "Mail-Copies-To: nobody"
-%set reply_custom_headers "X-newsgroup: %n\nX-realname: %r"
-%set supersedes_custom_headers "X-Superseded-Date: %d"
-
-% This is inserted when sending email CCs of your postings.
-%set cc_post_string "[This message has also been posted to %n.]"
-
-%
-%% 6. Character mapping / MIME support
-%
+% Set to 1 to have slrn scroll by full page instead of by line.
+%set scroll_by_page 0
 
 % Character set used for the display or terminal; valid values include:
 %   utf8, iso-8859-1, ibm850, ibm852, koi8,
 charset display utf8
 
-% the character set used for outgoing articles
-charset outgoing "utf8"
-
-% If non-zero, call metamail for MIME formats slrn cannot handle.
-set use_metamail 0
-
+% Currently, the only allowed sequences for top_status_line are:
 %
-%% 7. Some preferences for the header window (see the manual for more)
+%    %%   percent character
+%    %d   current date
+%    %n   name of the current newsgroup
+%    %s   name of the current server
+%    %t   current time
+%    %v   version of slrn
 %
+set top_status_line "slrn %v (%d) %s:%n"
+
+% Draw cursor bar ala tin instead of slrn "->" cursor?
+set display_cursor_bar 1
+
+% Group display {{{2
+
+% group_display_format
+%
+% F  Group flag (`U' for unsubscribed, `N' for new)
+% d  Group description (needs to be downloaded once with slrn -d)
+% h  ``High water mark'' (highest article number in the group)
+% l  ``Low water mark'' (lowest article number in the group)
+% n  Group name
+% t  Total number of articles in the group (estimate)
+% u  Number of unread articles in the group
+%
+group_display_format 0 "  %F%-5u [%-6t]  %n"
+group_display_format 1 "  %F%-5u  %n%45g%d"
+group_display_format 2 "  %F%-5u  %n%50g%-8l-%h"
+
+% Header display {{{2
 
 % These sorting methods are available:
 % If 0, do not sort.  If 1, perform threading.  If 2, sort by subject.
@@ -208,62 +117,22 @@ set use_metamail 0
 % If 12, use the value of the custom_sort_order variable.
 set sorting_method 11
 
-% If non-zero, a header with a new subject will start a new thread.
-%set new_subject_breaks_threads 0
+% If 1, a header with a new subject will start a new thread.
+% If 2, don't put articles with same subject but without "References:" header
+% into same thread
+% If 3, enable both
+set new_subject_breaks_threads 0
 
-%
-%% 8. Some preferences for the article pager (see the manual for more)
-%
-
-% Which headers do you want to see by default?
-% You can also match all headers starting with a given string and exclude
-% specific headers by preceding them with "!" (e.g. use "X-,!X-Trace:" to
-% display all the "X-"headers except "X-Trace:").
-visible_headers "Date:,From:,Newsgroups:,Followup-To:,Reply-To:,Subject:,user-agent:,x-agent:,x-mailer:,x-newsreader:"
-
-% If non-zero, #v+ and #v- will be interpreted as markers of verbatim lines.
-%set process_verbatim_marks 1
-
-% If non-zero, hide #v+/#v- verbatim marks.
-%set hide_verbatim_marks 0
-
-% If non-zero, hide signature in articles.
-%set hide_signature 0
-
-% If non-zero, hide PGP signature in articles.
-%set hide_pgpsignature 0
-
-%
-%% 9. Display / color settings
-%
-
-% If non-zero, slrn will draw the thread tree using simple ascii characters
-%set simulate_graphic_chars 0
-
-% Enable xterm/win32 mouse support: 1 to enable, 0 to disable
-%set mouse 0
-
-% Draw cursor bar ala tin instead of slrn "->" cursor?
-set display_cursor_bar	1
-
-% Set to 1 to have slrn scroll by full page instead of by line.
-%set scroll_by_page 0
-
-% Should color be used to indicate the score of an article?
-% (0) scores do not influence colors (1) scores are colored by their value
-% (2) subjects are colored by score  (3) both are colored by score
-%set color_by_score 3
+% If non-zero, header numbers are displayed at the left margin to make article
+% selection more efficient.
+set use_header_numbers 0
 
 % If non-zero, the subjects of unread articles are highlighted
 set highlight_unread_subjects 1
 
-% If non-zero, URLs are highlighted.
-%set highlight_urls 1
-
-% Enables blinking in monochrome mode and allows bright backgrounds in some
-% color terminals:
-%set use_blink 1
-
+% This variable defines the format string for the "%D" specifier in
+% ``header_display_format''.  Its syntax is identical to the one of
+% strftime(3).
 set overview_date_format "%d/%m/%y %H:%M"
 
 % header_display_format
@@ -290,26 +159,38 @@ set overview_date_format "%d/%m/%y %H:%M"
 %  s  subject
 %  t  number of messages in thread plus tree
 %
+%  %Xg  go to column X (-X: from right)
+%
 %  %?<descriptor>?<optional string>?
 %  %?<descriptor>?<string if true>&<string if false>?
 %
 %header_display_format 0 "%F%B%-5S%G%-5l:[%12r]%t%s"
-header_display_format 0 "%F%B %D %20r%t%s %-5g%-5l"
+header_display_format 0 "%F%B %t%s%-36g %20r %-14g%D"
 %header_display_format 4 "%F%B%-5S [%10r]:%t%49s %-19g[%17d]"
 
-% group_display_format
+% When unset, the default is (the localized form of) 
+% "%p[%u/%t unread] Group: %n%-20g -- %L (%P)".
 %
-% F  Group flag (`U' for unsubscribed, `N' for new)
-% d  Group description (needs to be downloaded once with slrn -d)
-% h  ``High water mark'' (highest article number in the group)
-% l  ``Low water mark'' (lowest article number in the group)
-% n  Group name
-% t  Total number of articles in the group (estimate)
-% u  Number of unread articles in the group
+%       L   Current line (e.g. '1/74')
+%       P   Percentage of the way through the header list
+%       T   Number of articles in the current subthread
+%       h   Number of high scoring articles in the group
+%       k   Number of articles killed by the scorefile
+%       l   Number of low scoring articles
+%       n   Name of the current group
+%       p   Prints `<' if the window is panned (scrolled horizontally)
+%       r   Number of read articles in the group
+%       t   Total number of articles in the group
+%       u   Number of unread articles in the group
 %
-group_display_format 0 "  %F%-5u [%-6t]  %n"
-group_display_format 1 "  %F%-5u  %n%45g%d"
-group_display_format 2 "  %F%-5u  %n%50g%-8l-%h"
+%set header_status_line "[total: %t%?u? unread: %u?] Group: %n%-18g -- %L (%P)"
+%set header_status_line "%p[%u/%t unread - %T subthread] [%h high, %l low, %k killed] [%n]%-20g --- [%L] [%P]"
+set header_status_line "%p[%u/%t unread] [%n]%-20g -- [%L] [%P]"
+
+% Article display {{{2
+
+% If non-zero, URLs are highlighted.
+%set highlight_urls 1
 
 % What to wrap when wrapping an article:
 %  0 or 4 ==> wrap body
@@ -319,6 +200,160 @@ group_display_format 2 "  %F%-5u  %n%50g%-8l-%h"
 % The higher number indicates that every article will be automatically
 % wrapped.
 set wrap_flags 7
+
+ignore_quotes "^ *[a-zA-Z-]*>" "^ *[\]|)]" "^ *:[^-()^]"
+
+% If non-zero, #v+ and #v- will be interpreted as markers of verbatim lines.
+%set process_verbatim_marks 1
+
+% If non-zero, hide #v+/#v- verbatim marks.
+%set hide_verbatim_marks 0
+
+% If non-zero, hide signature in articles.
+%set hide_signature 0
+
+% If non-zero, hide PGP signature in articles.
+%set hide_pgpsignature 0
+
+% This variable can be used to customize the status line of the article pager.
+% escapes are from and 'header_display_format' and:
+%
+%       H   Prints `H' unless headers are hidden
+%       I   Prints `P' unless PGP signatures are hidden
+%       L   Current line (e.g. '1/18')
+%       P   Percentage of the way through the article
+%       Q   Prints `Q' unless quotes are hidden
+%       T   Prints `S' unless signatures are hidden
+%       V   Prints `V' unless verbatim text is hidden
+%       W   Prints `W' if wrapping is enabled
+%       p   Prints `<' if the window is panned (scrolled horizontally)
+%       v   Prints `v' unless verbatim marks are hidden
+%
+%set art_status_line "%p%n : %15r: %s %-18g -- %L (%P)"
+set art_status_line "%p[%n]: %s %-29g[%H%I%Q%T%V%W%p%<] --- [%L] [%P]"
+
+% Which headers do you want to see by default?
+% You can also match all headers starting with a given string and exclude
+% specific headers by preceding them with "!" (e.g. use "X-,!X-Trace:" to
+% display all the "X-"headers except "X-Trace:").
+visible_headers "Date:,From:,Newsgroups:,Followup-To:,Reply-To:,Subject:,user-agent:,x-agent:,x-mailer:,x-newsreader:"
+
+% Message composition {{{1
+
+% Set this to zero if you want to leave Message-ID generation to your server
+% or your system does not have a proper unique hostname.
+set generate_message_id 1
+
+% When posting, some newsservers suggest a Message-ID to the client; that way,
+% the client knows in advance which Message-ID the article will have and can
+% save it for later reference. If this variable is set, slrn makes use of
+% this: The server-proposed ID will be used for the posting and saved along
+% with the article in the ``save_posts'' folder.
+%
+% If both this variable and ``generate_message_id'' are set, slrn uses the
+% server's ID rather than generating its own.
+set use_recommended_msg_id 0
+
+% the character set used for outgoing articles
+charset outgoing "utf8"
+
+% Set this to one if you want the "From:" header in e-mails to be generated
+% from the hostname / username / realname variable.
+% Note: Not all MTAs are configured to allow this.
+%set generate_email_from 0
+
+% Set your favourite editor.  Use %s for the file name and %d for the line
+% where the cursor should be placed (usually at the beginning of the body).
+%set editor_command "jed '%s' -g %d -tmp"
+set editor_command "vim +%d '%s'"
+
+% You can have separate commands for editing posts, mail, and score files.
+%set mail_editor_command "jed '%s' -g %d -tmp --mail-mode"
+set mail_editor_command "mutt -H '%s'"
+%set post_editor_command "jed '%s' -g %d -tmp --mail-mode"
+set score_editor_command "vim +%d '%s'"
+
+% Set this variable if my 'mail_editor_command' is a Mail User  Agent,
+% i.e.  sends the email itself.  This makes sure it does not get sent
+% twice (both by your MUA and slrn).
+set mail_editor_is_mua 1
+
+% If non-zero, abort posting or email operation if the file was not modified
+% by the editor.
+set abort_unmodified_edits 1
+
+set followup_date_format "%Y-%m-%d"
+% This sets the attribution lines for follow-ups and replies.  The following
+% format specifiers are recognized:
+%  %d:date, %D:date (formatted), %r:real name, %R:first name,
+%  %f:email address, %s:subject, %m:msgid, %n:newsgroups, %%: percent
+set followup_string "%r <%f> wrote:"
+set reply_string "%r <%f> [%n] wrote:"
+
+% Custom headers to add to *new* posts
+%set custom_headers "Mail-Copies-To: nobody"
+
+% Custom headers for followup/reply/supersedes.  These can use format
+% specifiers as in the 'followup_string' variable.
+%set followup_custom_headers "Mail-Copies-To: nobody"
+%set reply_custom_headers "X-newsgroup: %n\nX-realname: %r"
+%set supersedes_custom_headers "X-Superseded-Date: %d"
+
+% This is inserted when sending email CCs of your postings.
+%set cc_post_string "[This message has also been posted to %n.]"
+
+% Directory / file names {{{1
+
+% Note: All filenames in this section are relative to HOME unless they start
+%       with a '/'.
+
+% Filename where articles / email you sent are archived.
+% Note: If these are unset, slrn does not keep a copy of outgoing messages.
+set save_posts "News/sent"
+set save_replies "News/sent"
+
+% File where failed posts are appended.  Use "" to disable saving.
+set failed_posts_file "News/dead.letter"
+
+% Name of score file.
+set scorefile "News/Score"
+set min_high_score  100
+set max_low_score  -30
+set kill_score     -9000
+
+% Name of directory where decoded files are placed.
+set decode_directory "News"
+
+% Directory where all other files are saved.
+set save_directory "News"
+
+% Directory where postponed articles are placed. Please make sure it exists.
+set postpone_directory "News/postponed"
+
+% External programs {{{1
+
+% WWW browser to use. Xbrowser is used when the DISPLAY environment variable
+% is set; non_Xbrowser otherwise.
+set non_Xbrowser "links '%s'"
+set Xbrowser "firefox '%s' &"
+
+% Command to use for printing
+% Note: On Win32, this variable defines the name of the printer queue to use.
+%set printer_name "lpr -Plp"
+set printer_name "muttprint"
+
+% In case you want to use another mailer than sendmail.  Be sure that it
+% implements the same interface, though!
+%set sendmail_command "/usr/lib/sendmail -oi -t -oem -odb"
+set sendmail_command "/usr/bin/msmtp"
+
+% If non-zero, call metamail for MIME formats slrn cannot handle.
+set use_metamail 0
+
+% In case we need metamail to display an article:
+set metamail_command "mimeview"
+
+% Colours {{{1
 
 % This color object is only used when highlight_unread_subjects is set to 2
 % (see the reference manual for details):
@@ -413,9 +448,8 @@ mono underlinetext	"underline"
 mono url		"bold"
 mono verbatim	        "none"
 
-%
-%% 10. Group mode key bindings
-%
+% Keybindings {{{1
+% Group mode key bindings {{{2
 
 % Cursor movement:
 setkey group line_down        "<Down>"   % Go to the next group
@@ -467,9 +501,7 @@ setkey group redraw           "^L"     % Redraw the screen
 setkey group redraw           "^R"
 setkey group help             "?"      % Display a help screen
 
-%
-%% 11. Article mode key bindings
-%
+% Article mode key bindings {{{2
 
 % General movement:
 setkey article next                    "n"  % next unread article
@@ -580,9 +612,20 @@ setkey article repeat_last_key         "."	% Repeat last key sequence
 setkey article grouplens_rate_article  "0"	% Rate article with grouplens
 setkey article evaluate_cmd            "^X<Esc>"   % Interpret line as S-Lang
 
-%
-%% Command prompt key bindings
-%
+setkey article   register_t_prot "\e6"
+setkey article unregister_t_prot "\e7"
+
+setkey article pipe_to_metamail  "m"
+
+setkey article "OneKeyScore->create_score('f', +300, 'a', 0, 1);" "^i"
+setkey article "OneKeyScore->create_score('f', -300, 'a', 0, 1);" "^o"
+%setkey article "OneKeyScore->create_score('f', -9000, 'a', 0, 1);" "^p"
+% ignore thread
+setkey article "OneKeyScore->create_score('s', -1000, 't', 14, 1);" "^K"
+% watch thread
+setkey article "OneKeyScore->create_score('s',   250, 't', 50, 1);" "^W"
+
+% Command prompt key bindings {{{2
 
 setkey readline bol		 "^A"		% Beginning of line
 setkey readline eol		 "^E"		% End of line
@@ -598,3 +641,6 @@ setkey readline trim		 "<Esc>/"	% Trim whitespace
 setkey readline quoted_insert	 "^Q"		% Quoted insert
 setkey readline complete	 "<Tab>"	% Complete filename
 setkey readline cycle		 " "		% Cycle among filenames
+
+% Modeline {{{1
+% vim: ft=slrnrc foldmethod=marker foldenable

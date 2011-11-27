@@ -1095,6 +1095,19 @@ terminal_colors() {
     echo
 }
 
+slrn() {
+    typeset -a servers
+    servers=($(sed -n -r -e 's/server "(.*)" +".*"/\1/p' $HOME/.slrnrc))
+
+    echo "Choose server:"
+    for (( i = 1; i <= ${#servers}; i += 1 )); do
+        echo "  ${i})" ${servers[$i]}
+    done
+
+    read server
+    command slrn -h ${servers[$server]}
+}
+
 # }}}
 
 # highlighting {{{
