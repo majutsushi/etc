@@ -45,11 +45,14 @@ set unsubscribe_new_groups 1
 
 set macro_directory ".etc/slrn/macros,/usr/share/slrn/macros/,/usr/share/slrn/slang/"
 
+interpret "modulepath.sl"
 interpret "gsort-plus.sl"
 interpret "t-prot.sl"
 interpret "notify_postponed.sl"
 interpret "metamail.sl"
 interpret "onekey-score.sl"
+
+include ".local/lib/python2.7/site-packages/slrnplain/sl/mime.slrnrc"
 
 % Interface settings {{{1
 
@@ -351,7 +354,8 @@ set sendmail_command "/usr/bin/msmtp"
 set use_metamail 0
 
 % In case we need metamail to display an article:
-set metamail_command "mimeview"
+%set metamail_command "cat > /tmp/slrn.mime && mimeview /tmp/slrn.mime; rm -f /tmp/slrn.mime"
+set metamail_command "~/.etc/slrn/metamutt"
 
 % Colours {{{1
 
@@ -594,7 +598,7 @@ setkey article toggle_sort             "<Esc>S"	% Select threading method
 setkey article toggle_collapse_threads "<Esc>t"	% Collapse/Uncollapse thread
 setkey article toggle_header_formats   "<Esc>a"	% Toggle header display formats
 setkey article redraw                  "^L"	% Redraw screen
-setkey article redraw                  "^R"	% Redraw screen
+%setkey article redraw                  "^R"	% Redraw screen
 setkey article help                    "?"	% Display help screen
 
 % Miscellaneous actions:
@@ -615,7 +619,7 @@ setkey article evaluate_cmd            "^X<Esc>"   % Interpret line as S-Lang
 setkey article   register_t_prot "\e6"
 setkey article unregister_t_prot "\e7"
 
-setkey article pipe_to_metamail  "m"
+setkey article pipe_to_metamail  "M"
 
 setkey article "OneKeyScore->create_score('f', +300, 'a', 0, 1);" "^i"
 setkey article "OneKeyScore->create_score('f', -300, 'a', 0, 1);" "^o"
@@ -623,7 +627,7 @@ setkey article "OneKeyScore->create_score('f', -300, 'a', 0, 1);" "^o"
 % ignore thread
 setkey article "OneKeyScore->create_score('s', -1000, 't', 14, 1);" "^K"
 % watch thread
-setkey article "OneKeyScore->create_score('s',   250, 't', 50, 1);" "^W"
+setkey article "OneKeyScore->create_score('s',   250, 't', 50, 1);" "^T"
 
 % Command prompt key bindings {{{2
 
