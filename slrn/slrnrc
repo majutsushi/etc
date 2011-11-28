@@ -46,13 +46,17 @@ set unsubscribe_new_groups 1
 set macro_directory ".etc/slrn/macros,/usr/share/slrn/macros/,/usr/share/slrn/slang/"
 
 interpret "modulepath.sl"
+
 interpret "gsort-plus.sl"
-interpret "t-prot.sl"
 interpret "notify_postponed.sl"
 interpret "metamail.sl"
 interpret "onekey-score.sl"
+interpret "savex.sl"
+interpret "view_manuals.sl"
 
 include ".local/lib/python2.7/site-packages/slrnplain/sl/mime.slrnrc"
+
+interpret "t-prot.sl"
 
 % Interface settings {{{1
 
@@ -628,6 +632,8 @@ setkey article "OneKeyScore->create_score('f', -300, 'a', 0, 1);" "^o"
 setkey article "OneKeyScore->create_score('s', -1000, 't', 14, 1);" "^K"
 % watch thread
 setkey article "OneKeyScore->create_score('s',   250, 't', 50, 1);" "^T"
+
+setkey article savex "^b"
 
 % Command prompt key bindings {{{2
 
