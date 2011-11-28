@@ -1230,6 +1230,7 @@ let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 
 " CheckAttach {{{2
 let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
+let g:checkattach_filebrowser = 'ranger'
 
 " clang_complete {{{2
 let g:clang_auto_select = 1
