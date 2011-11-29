@@ -1,0 +1,64 @@
+#!/usr/bin/env perl
+
+use Text::Bidi;
+
+# Bidirectional text display
+#
+# Chip Camden		December, 2010
+
+sub on_add_lines {
+  my ($self, $text) = @_;
+  my $vtext = $self->{bidi_enabled} ?
+    $self->{bidi}->log2vis($text) :
+    $text;
+  $self->scr_add_lines($vtext);
+  1;
+}
+
+sub on_user_command {
+  my ($self, $cmd) = @_;
+  if ($cmd =~ s/^bidi((?:\s+(?:on|off|toggle|show))+)//) {
+    my @cmds = split ' ', $1;
+    while (my $func = shift @cmds) {
+      $self->{"bidi_$func"}->();
+    }
+  }
+  ()
+}
+
+sub on_start {
+  my ($self) = @_;
+
+  ($self->{name} = __PACKAGE__) =~ s/.*:://;
+  $self->{name} =~ tr/_/-/;
+  $self->{bidi} = new Text::Bidi;
+  $self->{bidi}->set_clean(0);
+  $self->{bidi_enabled} = $self->my_resource("enabled");
+  $self->{bidi_on} = sub {$self->{bidi_enabled} = 1;};
+  $self->{bidi_off} = sub {$self->{bidi_enabled} = 0;};
+  $self->{bidi_toggle} = sub {$self->{bidi_enabled} = !$self->{bidi_enabled};};
+  $self->{bidi_show} = sub {
+    my $ena = $self->{bidi_enabled} ? "enabled" : "disabled";
+    $self->status_msg("Bidirectional text $ena");
+  };
+}
+
+sub my_resource {
+  my ($self, $name) = @_;
+  $self->x_resource ("$self->{name}.$name");
+}
+
+sub status_msg {
+  my ($self, $msg) = @_;
+  $self->{bidi_status} = $self->overlay(0,-1,length($msg),1,urxvt::OVERLAY_RSTYLE,0);
+  $self->{bidi_status}->set(0,0,$msg);
+  $self->{bidi_timer} = urxvt::timer
+                            ->new
+                            ->after (3)
+                            ->cb (sub {
+                                     $self->{bidi_status} = ();
+                                     $self->{bidi_timer} = ();
+                                   });
+}
+
+# vim:set sw=3 sts=3 et:

@@ -1537,6 +1537,10 @@ if !has("gui_running")
     map O1;2S  <S-F4>
 endif
 
+if $ORIGTERM =~ 'rxvt-unicode'
+    set termbidi
+endif
+
 " Change color of cursor in terminal:
 " - yellow in normal mode.
 " - red in insert mode.

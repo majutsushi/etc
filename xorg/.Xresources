@@ -119,17 +119,22 @@ URxvt.utmpInhibit: true
 URxvt.modifier: alt
 
 URxvt.perl-lib: /home/jan/.etc/urxvt/perl
-URxvt.perl-ext-common: default,xim-onthespot,selection-pastebin,fullscreen,url-select
+URxvt.perl-ext-common: default,xim-onthespot,selection-pastebin,fullscreen,matcher,url-picker,bidi
 
-URxvt.keysym.C-M-e: perl:selection-pastebin:remote-pastebin
+URxvt.keysym.C-M-p: perl:selection-pastebin:remote-pastebin
 URxvt.selection-pastebin.cmd: pub %
 URxvt.selection-pastebin.url: http://majutsushi.net/stuff/%
 
 URxvt.keysym.F11: perl:fullscreen:switch
 
-URxvt.keysym.M-u: perl:url-select:select_next
+!URxvt.keysym.M-u: perl:url-select:select_next
+!Ctrl-Enter
+URxvt.keysym.C-0xff0d: perl:url-picker
 URxvt.urlLauncher: firefox
 URxvt.underlineURLs: true
+
+URxvt.bidi.enabled:  1
+URxvt.keysym.C-M-b: perl:bidi toggle show
 
 !URxvt.termName: xterm
 !URxvt.keysym.Home: \033[1~

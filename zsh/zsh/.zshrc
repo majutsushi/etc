@@ -1155,6 +1155,7 @@ fi
 # 'rxvt' is needed for dvtm
 if [[ "$TERM" != screen* ]] && [[ "$TERM" != "rxvt" ]] &&
    [[ "$TERM" != "dumb" ]] && [[ "$TERM" != "vt100" ]] && ! isecs; then
+    export ORIGTERM=$TERM
     screen -m
 fi
 # }}}
