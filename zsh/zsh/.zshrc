@@ -1100,12 +1100,19 @@ slrn() {
     servers=($(sed -n -r -e 's/server "(.*)" +".*"/\1/p' $HOME/.slrnrc))
 
     echo "Choose server:"
+    echo
     for (( i = 1; i <= ${#servers}; i += 1 )); do
         echo "  ${i})" ${servers[$i]}
     done
-
+    echo
+    echo -n '> '
     read server
-    command slrn -h ${servers[$server]}
+
+    [[ -z $server ]] && return
+    [[ $server != <-> ]] && echo "Only numbers allowed!" && return
+    [[ $server -gt ${#servers} ]] && echo "Not a valid server" && return
+
+    TERM=xterm-256color command slrn -h ${servers[$server]}
 }
 
 # }}}
