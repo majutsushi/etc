@@ -29,6 +29,9 @@ if [[ -x "$(which highlight)" ]]; then
         *.c|*.cpp|*.h|*.py|*.sh|*.pl|*.patch|*.r|*.css|*.js)
             hl "$1"
             ;;
+        *.zip)
+            unzip -l "$1"
+            ;;
         *)
             if [[ "${filemaps[$MIMETYPE]}" != "" ]]; then
                 hl2 ${filemaps[$MIMETYPE]} "$1"
