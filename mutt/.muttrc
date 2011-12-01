@@ -333,7 +333,7 @@ unset prompt_after      # display prompt after exit from pager
   set tilde             # Internal Pager: ~~~~ at and of message?
   set wrapmargin=0
 
-auto_view text/html text/enriched application/x-gunzip application/postscript application/x-tar-gz application/pgp-signature #image/*
+auto_view text/html text/enriched application/pdf application/zip application/x-gunzip application/x-tar-gz application/pgp-signature #image/*
 
 # Headers to ignore/see
 # Ignore everything but the really important lines:

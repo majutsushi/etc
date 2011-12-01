@@ -1,5 +1,11 @@
-image/*; eog '%s'
-application/pdf; evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf
-application/x-pdf; evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf
-application/x-bzpdf; evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf.bz2
-application/x-gzpdf; evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf.gz
+image/*; xdg-open '%s'; test=test -n "$DISPLAY"
+application/pdf; mutt_bgrun evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf
+application/pdf; pdftotext '%s' -; nametemplate=%s.pdf
+application/x-pdf; mutt_bgrun evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf
+application/x-pdf; pdftotext '%s' -; nametemplate=%s.pdf
+application/x-bzpdf; mutt_bgrun evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf.bz2
+application/x-gzpdf; mutt_bgrun evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf.gz
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; mutt_bgrun soffice -no-oosplash --writer '%s'; edit=soffice -no-oosplash --writer '%s'; test=test -n "$DISPLAY"; description="Office Open XML Document"; nametemplate=%s.docx
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; docx2txt.pl '%s' -; nametemplate=%s.docx; copiousoutput
+application/zip; xdg-open '%s'; test=test -n "$DISPLAY"; nametemplate=%s.zip
+application/zip; unzip -l '%s'; nametemplate=%s.zip; copiousoutput
