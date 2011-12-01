@@ -56,6 +56,7 @@ interpret "metamail.sl"
 interpret "onekey-score.sl"
 interpret "savex.sl"
 interpret "view_manuals.sl"
+interpret "view_my_posts.sl"
 
 include ".local/lib/python2.7/site-packages/slrnplain/sl/mime.slrnrc"
 
