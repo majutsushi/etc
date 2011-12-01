@@ -24,9 +24,12 @@ posting_host "majutsushi.net"
 % Tell slrn which newsrc file it should use for which server.
 % Note: This does *not* set the default server; you need to set the
 %       NNTPSERVER environment variable for this.
-server "news.gmane.org"   "News/jnewsrc-gmane"
-server "news.mixmin.net"  "News/jnewsrc-mixmin"
-server "news.mozilla.org" "News/jnewsrc-mozilla"
+server "news.gmane.org"             "News/jnewsrc-gmane"
+server "news.mozilla.org"           "News/jnewsrc-mozilla"
+server "snews://news.eternal-september.org" "News/jnewsrc-et"
+%server "news.mixmin.net"            "News/jnewsrc-mixmin"
+
+include ".etc/slrn/auth.slrnrc"
 
 % This can either be set to "nntp" (read online) or "spool" (use local spool)
 set server_object "nntp"
@@ -243,7 +246,7 @@ set art_status_line "%p[%n]: %s %-29g[%H%I%Q%T%V%W%p%<] --- [%L] [%P]"
 % You can also match all headers starting with a given string and exclude
 % specific headers by preceding them with "!" (e.g. use "X-,!X-Trace:" to
 % display all the "X-"headers except "X-Trace:").
-visible_headers "Date:,From:,Newsgroups:,Followup-To:,Reply-To:,Subject:,user-agent:,x-agent:,x-mailer:,x-newsreader:"
+visible_headers "Date:,From:,Newsgroups:,Followup-To:,Reply-To:,Subject:,user-agent:,x-agent:,x-mailer:,x-newsreader:,Archived-At:"
 
 % Message composition {{{1
 
@@ -362,6 +365,13 @@ set use_metamail 0
 set metamail_command "~/.etc/slrn/metamutt"
 
 % Colours {{{1
+
+% white      = color231
+% background = color236
+% yellow     = color220
+% green      = color120
+% red        = color167
+% cyan       = color116
 
 % This color object is only used when highlight_unread_subjects is set to 2
 % (see the reference manual for details):

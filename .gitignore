@@ -13,6 +13,7 @@ mutt/.mutt/lists
 mutt/.mutt/*.dat
 pentadactyl/.pentadactyl/info/
 screen/statusrc
+slrn/auth.slrnrc
 vim/.vim/abbrevs.vim
 vim/.vim/systags
 vim/.vim/.netrwhist

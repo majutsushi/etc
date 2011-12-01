@@ -1097,12 +1097,12 @@ terminal_colors() {
 
 slrn() {
     typeset -a servers
-    servers=($(sed -n -r -e 's/server "(.*)" +".*"/\1/p' $HOME/.slrnrc))
+    servers=($(sed -n -r -e 's/^server "(.*)" +".*"$/\1/p' $HOME/.slrnrc))
 
     echo "Choose server:"
     echo
     for (( i = 1; i <= ${#servers}; i += 1 )); do
-        echo "  ${i})" ${servers[$i]}
+        echo "  ${i})" ${servers[$i]#snews://}
     done
     echo
     echo -n '> '
