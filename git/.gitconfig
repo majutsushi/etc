@@ -47,6 +47,34 @@
 	tool = vimdiff3
 	conflictstyle = diff3
 
+[tig]
+	show-rev-graph = yes
+	show-refs = yes
+	show-author = yes
+	show-date = "default"
+	author-width = 19
+	line-graphics = "utf8"
+	line-number-interval = 1
+	tab-size = 8
+	horizontal-scroll = 50%
+	split-view-height = 66%
+	commit-encoding = "UTF-8"
+	status-untracked-dirs = no
+
+[tig "color"]
+;         default     = default default  normal
+	cursor      = default white normal
+;         status      = default default  normal
+	title-focus = color16 white normal
+	title-blur  = color241 white normal
+;         delimiter
+;         line-number
+	date        = blue   default  normal
+	author      = green    default  normal
+;         mode
+	diff-header = white default normal
+	diff-chunk = yellow default normal
+
 [web]
 	browser = firefox
 

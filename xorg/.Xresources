@@ -10,58 +10,53 @@ URxvt.boldFont: -maju-terminus-bold-r-normal--12-120-72-72-c-60-iso10646-1
 !URxvt.boldItalicFont:
 
 URxvt.reverseVideo: false
-URxvt.foreground: grey90
-!URxvt.foreground: white
+!URxvt.foreground: grey90
+URxvt.foreground: white
 
 ! for real transparency
-URxvt.depth: 32
-URxvt.background: rgba:0000/0000/0000/dddd
+!URxvt.depth: 32
+!URxvt.background: rgba:0000/0000/0000/dddd
 !URxvt.background: rgba:0000/0000/0000/8888
 ! for fake transparency
-!URxvt.depth: 24
-!URxvt.background: #333333
+URxvt.depth: 24
+URxvt.background: #303030
 !URxvt.transparent: true
 !URxvt.tintColor: white
 !URxvt.shading: 15
 
-!URxvt.foreground:  #aaaaaa
-!URxvt.background:  #222222
 ! Black
-!URxvt.color0:      #000000
-!URxvt.color8:      #555753
 URxvt.color0:      #2E3436
 URxvt.color8:      #555753
+!URxvt.color8:      #626262
 ! Red
-URxvt.color1:      #cc0000
+!URxvt.color1:      #cc0000
+!URxvt.color1:      #CD5C5C
+URxvt.color1:      #D75F5F
 URxvt.color9:      #ef2929
 ! Green
-!URxvt.color2:      #15d115
-!URxvt.color10:     #34e334
-URxvt.color2:      #4E9A06
+!URxvt.color2:      #4E9A06
+URxvt.color2:      #87FF87
 URxvt.color10:     #8AE234
 ! Yellow
-!URxvt.color3:      #edd400
-!URxvt.color11:     #ffe629
-URxvt.color3:      #C4A000
+!URxvt.color3:      #C4A000
+URxvt.color3:      #FFD700
 URxvt.color11:     #FCE94F
 ! Blue
-URxvt.color4:      #3465a4
+!URxvt.color4:      #3465a4
+URxvt.color4:      #87D7D7
 URxvt.color12:     #729fcf
 ! Magenta
-!URxvt.color5:      #d345e5
-!URxvt.color13:     #ea00ff
 URxvt.color5:      #75507B
 URxvt.color13:     #AD7FA8
 ! Cyan
-!URxvt.color6:      #89b6e2
-!URxvt.color14:     #5ec8ff
 URxvt.color6:      #06989A
 URxvt.color14:     #34E2E2
 ! White
-!URxvt.color7:      #cccccc
-!URxvt.color15:     #ffffff
-URxvt.color7:      #D3D7CF
+!URxvt.color7:      #D3D7CF
+!URxvt.color7:      #AFAFAF
+URxvt.color7:      #626262
 URxvt.color15:     #EEEEEC
+!URxvt.color15:     #AFAFAF
 
 ! molokai colours
 !urxvt.foreground:        white

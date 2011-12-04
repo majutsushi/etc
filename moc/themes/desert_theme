@@ -1,0 +1,124 @@
+# Example color theme for MOC.
+# You can use a theme by copying it to ~/.moc/themes directory and using
+# Theme config option or -T command line option.
+#
+# Fill free to make your own themes and send me them. It will be included in
+# official MOC releases or on the MOC web site.
+#
+# The format of this file is:
+# Lines beginning with # are comments.
+# Blank lines are ignored.
+# Every other line is expected to be in format:
+#
+# ELEMENT = FOREGROUND_COLOR BACKGROUND_COLOR [ATTRIBUTE[,ATTRIBUTE,..]]
+#
+# or
+#
+# colordef COLOR = RED GREEN BLUE
+#
+# Where names are case insensitive.
+#
+# ELEMENT is an element of MOC interface. This can be:
+# (see below)
+#
+# FOREGOUND_COLOR and BACKGROUND_COLOR can have one of the following values:
+# black, red, green, yellow, blue, magenta, cyan, white, default (can be
+# transparent), grey (not standard, but works)
+#
+# Optional ATTRIBUTE parameters can be (from ncurses manual):
+# normal      - default (no highlight)
+# standout    - best highlighting mode of the terminal
+# underline   - underlining
+# reverse     - reverse video
+# blink       - blinking
+# dim         - half bright
+# bold        - extra bright or bold
+# protect     - protected mode
+#
+# You can specify a list of attributes separated by commas: attr1,attr2,attr3.
+# Don't use spaces anywhere in such a list.
+#
+# With colordef you can change the definition of a color. It works only if
+# your terminal supports it, if not those lines will be silently ignored.
+# COLOR must be a valid color name and the RED GREEN and BLUE are numbers
+# from 0 to 1000. Example:
+#
+# colordef red = 1000 0 0
+#
+# HINT: you have only 8 colors, but combined with attributes bold and/or
+# reversed you actually get more colors.
+#
+# If you don't specify some elements, the default values will be used.
+#
+# Here follows the default configuration:
+
+# default background for regions when nothing is displayed
+background		= default	default
+# frames for windows
+frame			= default	default
+# the title of the window (eg name of the current directory)
+window_title		= default	default
+# a directory in the menu
+directory		= blue		default	bold
+# a directory that is selected using arrows
+selected_directory	= default	white	bold
+# playlist file
+playlist		= default	default
+# see selected directory
+selected_playlist	= default	white
+# an ordinary file in the menu (mp3, ogg, ...)
+file			= default	default
+# see selected directory
+selected_file		= default	white
+# a file that is currently being played
+marked_file		= default	default	bold
+# a file that is currently being played and is also selected using arrows
+marked_selected_file	= default	white	bold
+# information shown at the right side of files
+info			= yellow	default
+# see selected directory
+selected_info		= yellow	white
+# a file (its time) that is currently being played
+marked_info		= yellow	default	bold
+# a file (its time) that is currently being played and is also selected using arrows
+marked_selected_info	= yellow	white	bold
+# the status line with a message
+status			= default	default
+# the title of the file that is currently being played
+title			= green		default	bold
+# the state: play, stop, or paused (>, [], ||)
+state			= default	default	bold
+# current time of playing
+current_time		= default	default	bold
+# the time left to the end of playing the current file
+time_left		= default	default
+# the length of the currently played file
+total_time		= white		default
+# the brackets outside the total time of a file ([10:13])
+time_total_frames	= default	default
+# the frequency and bitrate numbers
+sound_parameters	= default	default	bold
+# "KHz" and "Kbps"
+legend			= default	default
+# disabled element ([STEREO])
+disabled		= white		default
+# enabled element
+enabled			= default	default	bold
+# "empty" part of the volume bar
+empty_mixer_bar		= default	default
+# "filled" part of the volume bar
+filled_mixer_bar	= default	white	bold
+# "empty" part of the time bar
+empty_time_bar		= default	default
+# "filled" part of the time bar
+filled_time_bar		= default	yellow
+# place wher user can type a search query or a file name
+entry			= default	default
+# the title of an entry
+entry_title		= default	white
+# error message
+error			= default	red	bold
+# information message
+message			= green		default	bold
+# total time of displayed items
+plist_time		= cyan		default	bold

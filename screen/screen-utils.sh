@@ -48,7 +48,7 @@ color() {
 print_sessionname() {
     FULLNAME=$(screen -ls | grep --color=no -o "${PPID}[^[:space:]]*")
     NAME=$(echo $FULLNAME | awk -F '.' '{ print $2 }')
-    printf "$(color b k W)$NAME$(color -) "
+    printf "$(color b k w)$NAME$(color -) "
 }
 
 print_battery() {
@@ -155,7 +155,7 @@ print_totalmem() {
         mem="$mem"
         unit="KB"
     fi
-    printf "$(color b g W)%s$(color -)$(color g W)$unit$(color -)" "$mem"
+    printf "$(color b K G)%s$(color -)$(color K G)$unit$(color -)" "$mem"
 }
 
 print_memusage() {
@@ -174,7 +174,7 @@ print_memusage() {
     fi
 
     if [ -n "$f" ]; then
-        printf "$(color g W),$(color -)$(color b g W)%s$(color -)$(color g W)%%$(color -) " "$f"
+        printf "$(color K G),$(color -)$(color b K G)%s$(color -)$(color K G)%%$(color -) " "$f"
     else
         printf " "
     fi

@@ -98,13 +98,13 @@ backtick 10 3       3       $HOME/.etc/screen/screen-utils.sh network
 # CAPTION - shows a "caption" for the window.
 # ===========================================
 
-caption always '%{= kw}%?%-Lw%?%40L>%{= wb}%n*%f %t%?(%u)%?%{= kw}%?%+Lw%? %=%0`%{= wk}%2`%{-}%<'
+caption always '%{= kW}%?%-Lw%?%40L>%{= Wk}%n*%f %t%?(%u)%?%{= kW}%?%+Lw%? %=%0`%{= Wk}%2`%{-}%<'
 
 # ===============================
 # Hardstatus Line and sorendition
 # ===============================
 
-hardstatus alwayslastline "%L>%1`%{= kw} %{+b}$LOGNAME%{.y}@%{.w}%H%{-b} %= %5`%6`%10`%8`%3`%4`%9`%7`%{.w}%Y-%m-%d %c:%s"
+hardstatus alwayslastline "%L>%1`%{= kw} %{+b}$LOGNAME%{.y}@%{.w}%H%{-b} %= %5`%6`%10`%8`%3`%4`%9`%7`%{.W}%Y-%m-%d %c:%s"
 
 # "sorendition": set the colors for
 # the "messages" and "text marking"
