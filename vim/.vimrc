@@ -1817,8 +1817,8 @@ nnoremap ]] ][
 nnoremap j gj
 nnoremap k gk
 "nnoremap $ g$   " conflicts with virtualedit
-nnoremap 0 g0
-nnoremap ^ g^
+"nnoremap 0 g0
+"nnoremap ^ g^
 
 " emacs-like c-a/c-e movement
 inoremap        <c-a> <esc>0i
