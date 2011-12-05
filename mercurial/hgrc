@@ -1,0 +1,46 @@
+[ui]
+ignore = ~/.hgignore
+merge = vimdiff
+username = Jan Larres <jan@majutsushi.net>
+
+[extensions]
+hgext.bookmarks =
+hgext.churn =
+hgext.color =
+hgext.extdiff =
+hgext.fetch =
+hgext.git =
+hgext.graphlog =
+hgext.hgk =
+hgext.mq =
+hgext.pager =
+hgext.patchbomb =
+hgext.progress =
+hgext.purge =
+hgext.rebase =
+hgext.record =
+#hgext.transplant =
+hgshelve = ~/.etc/mercurial/hgext/hgshelve.py
+
+[alias]
+#qstat = stat --rev -`hg qap | wc -l | sed 's/ //g'`:.
+qdiff = diff -r qparent:qtip
+
+[email]
+method = msmtp
+
+[diff]
+git = true
+showfunc = true
+unified = 8
+
+[merge-tools]
+vimdiff.executable = vim
+vimdiff.args = -d $base $local $output $other +close +close
+
+[extdiff]
+cmd.wdiff = diff
+opts.wdiff = -p -U 8 -w -r -N
+
+[pager]
+pager = less
