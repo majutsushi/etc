@@ -30,7 +30,7 @@
 
 	; from http://www.die-welt.net/2011/12/git-rocks-even-when-it-sucks/
 	ls-big-files = "!for commit in $(git log --all --pretty=format:%H); do git ls-tree -r -l $commit; done |awk '{print $4 \" \" $5}' |sort -nu | tail -n 10"
-	purge-file = "!f() { [ -z \"$1\" ] && echo \"usage: git purge-file <file>\" && return; echo -n \"WARNING: Dangerous operation! Really purge file from history? [y/N] \"; read ans; [ \"$ans\" = \"y\" ] && git filter-branch -f --index-filter 'git rm --cached --ignore-unmatch \"$1\"' -- --all; }; f"
+	purge-file = "!f() { [ -z \"$1\" ] && echo \"usage: git purge-file <file>\" && return; echo -n \"WARNING: Dangerous operation! Really purge file from history? [y/N] \"; read ans; [ \"$ans\" = \"y\" ] && git filter-branch -f --index-filter 'git rm -r --cached --ignore-unmatch \"$1\"' -- --all; }; f"
 	; from https://gist.github.com/492227
 	lost = "!git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %C(blue)%ai%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
 
