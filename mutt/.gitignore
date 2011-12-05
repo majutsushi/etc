@@ -1,0 +1,6 @@
+mutt/smtp-*
+mutt/imap-*
+mutt/aliases
+mutt/certificates
+mutt/lists
+mutt/*.dat
