@@ -481,13 +481,14 @@ bind browser x          check-new
 
 # movement
 bind index,pager  ' '         next-unread
+bind index,pager   <tab>      next-unread-mailbox
+bind pager         \n         next-unread
 bind index         <pagedown> next-page
 bind index         <pageup>   previous-page
 bind pager         j          next-line
 bind pager         k          previous-line
 bind pager         p          previous-undeleted
 bind pager         n          next-undeleted
-bind pager         \n         next-new
 bind pager         <up>       previous-line
 bind pager         <down>     next-line
 bind index,pager   \Cd        half-down
