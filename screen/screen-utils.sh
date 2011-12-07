@@ -59,14 +59,14 @@ print_battery() {
                 percent=$(echo $ACPI | cut -d',' -f 2 | tr -d " %")
 
                 if [ "$percent" -lt 20 ]; then
-                    color="$(color R w)"
-                    bcolor="$(color b R w)"
+                    color="$(color R W)"
+                    bcolor="$(color b R W)"
                 elif [ "$percent" -lt 50 ]; then
                     color="$(color Y k)"
                     bcolor="$(color b Y K)"
                 else
-                    color="$(color G w)"
-                    bcolor="$(color b G w)"
+                    color="$(color G W)"
+                    bcolor="$(color b G W)"
                 fi
 
                 printf "$bcolor%s$(color -)$color%%$(color -) \n" "$percent"

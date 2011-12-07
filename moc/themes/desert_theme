@@ -59,9 +59,9 @@ frame			= default	default
 # the title of the window (eg name of the current directory)
 window_title		= default	default
 # a directory in the menu
-directory		= blue		default	bold
+directory		= blue		default
 # a directory that is selected using arrows
-selected_directory	= default	white	bold
+selected_directory	= default	white
 # playlist file
 playlist		= default	default
 # see selected directory
@@ -111,7 +111,7 @@ filled_mixer_bar	= default	white	bold
 # "empty" part of the time bar
 empty_time_bar		= default	default
 # "filled" part of the time bar
-filled_time_bar		= default	yellow
+filled_time_bar		= default	white
 # place wher user can type a search query or a file name
 entry			= default	default
 # the title of an entry
