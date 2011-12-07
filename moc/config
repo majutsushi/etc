@@ -182,7 +182,7 @@ ShowFormat		= yes
 
 # Show file time in menu. Possible options: yes, no, IfAvailable - show the
 # time only when it was read before (often works faster).
-ShowTime		= IfAvailable
+ShowTime		= yes
 
 # Show time played as a percentage in the time progress bar.
 #ShowTimePercent	= no
