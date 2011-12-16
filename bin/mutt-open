@@ -11,7 +11,7 @@
 
 MUTT=mutt
 MUTT_FLAGS="-R"
-HIDE_SIDEBAR_CMD="B"    # set to empty string if sidebar is not used
+HIDE_SIDEBAR_CMD="b"    # set to empty string if sidebar is not used
 
 # Sample output of 'mu find -f p m:MESSAGE-ID', which gets passed to mutt-open
 #  /home/zack/Maildir/INBOX/cur/1256673179_0.8700.usha,U=37420,FMD5=7e33429f656f1e6e9d79b29c3f82c57e:2,S

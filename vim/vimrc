@@ -1408,6 +1408,27 @@ let html_number_lines = 0
 let use_xhtml = 1
 let html_ignore_folding = 1
 
+" UTL {{{2
+let g:utl_cfg_hdl_scm_http_system = "silent !xdg-open '%u'"
+
+function! Utl_AddressScheme_mutt(uri, fragment, dispMode)
+    let delimit = stridx(a:uri, ':')
+    let mid     = strpart(a:uri, delimit + 1)
+
+    if $TERM =~# 'screen'
+        let cmd = 'screen '
+    elseif executable('urxvt')
+        let cmd = 'urxvt -e '
+    else
+        let cmd = 'xterm -e '
+    endif
+
+    let cmd .= expand('~/.etc/bin/mutt-open') . ' ' . mid
+    call system(cmd)
+
+    return []
+endfunction
+
 " Viki {{{2
 let g:vikiLowerCharacters = "a-zäöüßáàéèíìóòçñ"
 let g:vikiUpperCharacters = "A-ZÄÖÜ"
