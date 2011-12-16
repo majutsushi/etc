@@ -8,8 +8,10 @@
 (require 'redo+)
 (global-set-key (kbd "C-?") 'redo)
 
-;(require 'color-theme)
+(require 'color-theme)
 ;(setq color-theme-load-all-themes nil)
+(color-theme-initialize)
+(color-theme-calm-forest)
 
 ;(require 'color-theme-tangotango)
 
@@ -47,10 +49,12 @@
 
 ;(color-theme-tangotango)
 
-(load-file "~/.emacs.d/color-theme-colorful-obsolescence.el")
-(color-theme-colorful-obsolescence)
+;(load-file "~/.emacs.d/color-theme-colorful-obsolescence.el")
+;(color-theme-colorful-obsolescence)
 ;(load-file "~/.emacs.d/color-theme-desert.el")
 ;(color-theme-desert)
+;(require 'zenburn)
+;(zenburn)
 
 (setq initial-frame-alist
     '((top . 40) (left . 40) (width . 85) (height . 40))
