@@ -423,9 +423,8 @@ unset save_empty        # remove mailbox when last message is removed.
 ###############################################################################
 # Groups {{{
 
-group -group sent -addr `cat ~/.lbdb/m_inmail.list | cut -f 1 | tr '\n' ' '`
-group -group evo  -addr `. /usr/lib/lbdb/m_evolution && m_evolution_query @ | cut -f 1 | tr '\n' ' '`
-group -group mutt -addr `. /usr/lib/lbdb/m_muttalias && m_muttalias_query @ | cut -f 1 | tr '\n' ' '`
+group -group sent  -addr `cat ~/.lbdb/m_inmail.list | cut -f 1 | tr '\n' ' '`
+group -group abook -addr `. /usr/lib/lbdb/m_abook && m_abook_query @ | cut -f 1 | tr '\n' ' '`
 
 # }}}
 ###############################################################################
@@ -532,7 +531,7 @@ macro index  ,mf        "<shell-escape>mu find --format=links --clearlinks --lin
 macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu find results"
 
 # add sender to evolution address book
-macro index,pager  A    "<pipe-message>~/src/add-to-eds/add-to-eds<return>" "Add the sender address to evolution address book"
+# macro index,pager  A    "<pipe-message>~/src/add-to-eds/add-to-eds<return>" "Add the sender address to evolution address book"
 
 # capture in org-mode
 macro index,pager  \eR  "<pipe-message>~/.etc/mutt/remember-mail\n" "Capture message in org-mode"
@@ -558,10 +557,8 @@ macro index  ,la        "<limit>~A\n<collapse-all>" "Limit to all messages"
 macro index  ,ll        "<limit>~F | ~O | ~N\n" "Limit to new, old and flagged messages"
 
 # abook
-#macro index  A          |'abook --add-email'\n
-#macro pager  A          |'abook --add-email'\n
-#macro index  B          "!abook"
-#macro pager  B          "!abook"
+macro index,pager  A  |'abook --add-email'\n
+macro index,pager  B  "!abook<enter>"
 
 # gpg
 macro pager  J          "<shell-escape>gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
@@ -675,8 +672,8 @@ color sidebar_new $my_red   $my_background
 # color index     color113        $my_background  ~N    # new mail
 color index     bright$my_white $my_background  ~N    # new mail
 
-color index     color113        $my_background  '!~N (%f sent | %f evo | %f mutt) !%C ml'
-color index     brightcolor113  $my_background  ' ~N (%f sent | %f evo | %f mutt) !%C ml'
+color index     color113        $my_background  '!~N (%f sent | %f abook) !%C ml'
+color index     brightcolor113  $my_background  ' ~N (%f sent | %f abook) !%C ml'
 
 color index     $my_cyan        $my_background  '(~P !~D) | (~v ~(~P !~D))'    # mail from myself
 
