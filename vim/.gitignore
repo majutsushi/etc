@@ -5,5 +5,4 @@ vim/cache
 vim/spell
 vim/GetLatest/Installed
 vim/passwords.vim
-vim/bundle/latex-box
-vim/bundle/tagbar
+vim/bundle
