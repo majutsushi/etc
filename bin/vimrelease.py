@@ -12,11 +12,13 @@ import shlex
 br = mechanize.Browser()
 
 def system(cmd):
-    (stdout, stderr) = \
-        Popen(shlex.split(cmd), stdout=PIPE, stderr=PIPE).communicate()
+    p = Popen(shlex.split(cmd), stdout=PIPE, stderr=PIPE)
+    (stdout, stderr) = p.communicate()
 
-    if len(stderr) != 0:
-        print stderr,
+    if p.returncode != 0:
+        print 'Error executing', cmd, '!'
+        print stderr
+        exit()
 
     return stdout.splitlines()
 
@@ -29,6 +31,8 @@ def get_script_files():
     return [file for file in files if is_not_ignored(file)]
 
 def update_files(scrver):
+    print 'Updating version number in files to', scrver, '...',
+
     pat = re.compile(r'^(?P<text>(" )?Version:\s+)[0-9.]+$')
     files = get_script_files()
 
@@ -41,7 +45,11 @@ def update_files(scrver):
             out.close()
             os.rename(out_fname, fname)
 
+    print 'done.'
+
 def update_gh_site(scrver, scrcommfile):
+    print 'Updating website...',
+
     system('git checkout gh-pages')
     out_fname = '_posts/' + \
                 strftime('%Y-%m-%d', localtime()) + '-' + scrver + '.markdown'
@@ -57,8 +65,9 @@ def update_gh_site(scrver, scrcommfile):
 
     system('git add ' + out_fname)
     system('git commit -m "Version ' + scrver + '"')
-#    system('git push')
     system('git checkout master')
+
+    print 'done.'
 
 def login():
     print 'Logging in...',
@@ -112,8 +121,13 @@ if __name__ == '__main__':
         print 'Usage: ' + sys.argv[0] + ' scrver scrcommfile [vimver]'
         exit()
 
+    if not os.path.exists('.info'):
+        print 'No .info file found, exiting'
+        exit()
+
     scrver = sys.argv[1]
 
+    print 'Reading version comment file...'
     scrcommfile = os.path.abspath(sys.argv[2])
     with open(scrcommfile) as f:
         scrcomment = f.read()
@@ -123,15 +137,24 @@ if __name__ == '__main__':
     else:
         vimver = 7.0
 
+    print 'Reading plugin info file...'
     with open('.info') as infofile:
         info    = infofile.readlines()
         scrname = info[0].strip()
         scrid   = info[1].strip()
 
     update_files(scrver)
+    print 'Committing version', scrver, '...'
     system('git commit -a -m "Version ' + scrver + '"')
+    print 'Tagging version', scrver, '...'
+    system('git tag v' + scrver)
 
     update_gh_site(scrver, scrcommfile)
+
+    print 'Pushing changes...',
+    system('git push')
+    system('git push --tags')
+    print 'done.'
 
     vimball = make_vimball(scrname)
     login()
