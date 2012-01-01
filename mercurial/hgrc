@@ -12,6 +12,7 @@ hgext.fetch =
 hgext.git =
 hgext.graphlog =
 hgext.hgk =
+hgext.hgview =
 hgext.mq =
 hgext.pager =
 hgext.patchbomb =
