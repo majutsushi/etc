@@ -4,7 +4,7 @@
 
 " Only do this when not done yet for this buffer
 if exists("b:did_ftplugin_after")
-  finish
+    finish
 endif
 let b:did_ftplugin_after = 1
 
@@ -52,57 +52,15 @@ let s:quote_block_re = '^' . s:quote_mark_re . '\+'
 " Mappings {{{1
 
 if !exists("no_plugin_maps") && !exists("no_mail_after_maps")
+    nnoremap <script> <silent> <buffer> <LocalLeader>qmm :.,.+1call <SID>QuoteMangledMerge()<CR>
+    xnoremap <script> <silent> <buffer> <LocalLeader>qmm :call <SID>QuoteMangledMerge()<CR>
 
-    if !hasmapto('<Plug>MailQuoteFixupSpaces', 'n')
-        nmap <silent> <buffer> <unique> <LocalLeader>qfs <Plug>MailQuoteFixupSpaces
-    endif
-    nnoremap <buffer> <unique> <script> <Plug>MailQuoteFixupSpaces <SID>QuoteFixupSpaces
-    nnoremap <buffer> <SID>QuoteFixupSpaces :call <SID>QuoteFixupSpaces("inc_or_dec")<cr>
-
-    if !hasmapto('<Plug>MailQuoteFixupSpaces', 'v')
-        xmap <silent> <buffer> <unique> <LocalLeader>qfs <Plug>MailQuoteFixupSpaces
-    endif
-    vnoremap <buffer> <unique> <script> <Plug>MailQuoteFixupSpaces <SID>QuoteFixupSpaces
-    vnoremap <buffer> <SID>QuoteFixupSpaces :call <SID>QuoteFixupSpaces("visual")<cr>
-
-    " -----------------
-
-    if !hasmapto('<Plug>MailQuoteMangledMerge', 'n')
-        nmap <silent> <buffer> <unique> <LocalLeader>qmm <Plug>MailQuoteMangledMerge
-    endif
-    nnoremap <buffer> <unique> <script> <Plug>MailQuoteMangledMerge <SID>QuoteMangledMerge
-    nnoremap <buffer> <SID>QuoteMangledMerge :.,.+1call <SID>QuoteMangledMerge()<cr>
-
-    if !hasmapto('<Plug>MailQuoteMangledMerge', 'v')
-        xmap <silent> <buffer> <unique> <LocalLeader>qmm <Plug>MailQuoteMangledMerge
-    endif
-    vnoremap <buffer> <unique> <script> <Plug>MailQuoteMangledMerge <SID>QuoteMangledMerge
-    vnoremap <buffer> <SID>QuoteMangledMerge :call <SID>QuoteMangledMerge()<cr>
-
-    " -----------------
-
-    if !hasmapto('<Plug>MailQuoteDelEmpty', 'n')
-        nmap <silent> <buffer> <unique> <LocalLeader>qde <Plug>MailQuoteDelEmpty
-    endif
-    nnoremap <buffer> <unique> <script> <Plug>MailQuoteDelEmpty <SID>QuoteDelEmpty
-    nnoremap <buffer> <SID>QuoteDelEmpty :%call <SID>QuoteDelEmpty()<cr>
-
-    if !hasmapto('<Plug>MailQuoteDelEmpty', 'v')
-        xmap <silent> <buffer> <unique> <LocalLeader>qde <Plug>MailQuoteDelEmpty
-    endif
-    vnoremap <buffer> <unique> <script> <Plug>MailQuoteDelEmpty <SID>QuoteDelEmpty
-    vnoremap <buffer> <SID>QuoteDelEmpty :call <SID>QuoteDelEmpty()<CR>
-
-    " -----------------
+    nnoremap <script> <silent> <buffer> <LocalLeader>qde :%call <SID>QuoteDelEmpty()<CR>
+    xnoremap <script> <silent> <buffer> <LocalLeader>qde :call <SID>QuoteDelEmpty()<CR>
 
     " Provide a motion operator for commands (so you can delete a quote
     " segment, or format quoted segment)
-    "
-    if !hasmapto('<Plug>MailQuoteMotion', 'o')
-        omap <silent> <buffer> <unique> q <Plug>MailQuoteMotion
-    endif
-    onoremap <buffer> <unique> <script> <Plug>MailQuoteMotion <SID>QuoteMotion
-    onoremap <buffer> <script> <SID>QuoteMotion :execute "normal!" . <SID>QuoteMotion(line("."), "inc_or_dec")<cr>
+    onoremap <script> <silent> <buffer> q :execute 'normal! ' . <SID>QuoteMotion(line('.'), 'inc_or_dec')<CR>
 endif
 
 " Functions {{{1
@@ -155,12 +113,12 @@ endfunction
 "   > Yeah, believe it, brother.
 "
 function! s:QuoteEraseSig()
-    let start_location = line (".")
+    let start_location = line('.')
 
     " TODO:
     "   modify this loop so that the cursor doesn't change
     "   delete blank quoted lines before the sig
-    while 0 != search((s:quote_block_re . '\s*--\s*$'), 'w')
+    while search(s:quote_block_re . '\s*-- $', 'w') != 0
         let motion = s:QuoteMotion(line("."), "dec")
         exe "normal! d" . motion
     endwhile
@@ -204,7 +162,7 @@ endfunction
 "
 function! s:QuoteMangledMerge() range
     " make sure starting line is sensible
-    if a:firstline == line("$")
+    if a:firstline == line('$')
         return
     endif
     if a:firstline == a:lastline
@@ -212,8 +170,7 @@ function! s:QuoteMangledMerge() range
     endif
 
     " make sure we have something to work with
-    let qfirst = s:QuoteGetDpth(a:firstline)
-    if 0 == qfirst
+    if s:QuoteGetDepth(a:firstline) == 0
         return
     endif
 
@@ -222,33 +179,27 @@ function! s:QuoteMangledMerge() range
     let cur = a:firstline
     let next = cur + 1
     let lastline = a:lastline
-    while cur < line("$") && cur < lastline
-        let qlcur  = s:QuoteGetDpth(cur)
-        let qlnext = s:QuoteGetDpth(next)
+    while cur < line('$') && cur < lastline
+        let qdcur  = s:QuoteGetDepth(cur)
+        let qdnext = s:QuoteGetDepth(next)
 
         " make sure our definition of mangled isn't invalidated
-        if qlcur <= qlnext
-            let cur  = cur + 1
+        if qdcur <= qdnext
+            let cur += 1
             let next = cur + 1
             continue
         endif
 
         " remove the quotes on the merged line
-        let newline = getline(next)
-        let newline = substitute(newline, s:quote_block_re, '', '')
-
-        " we only do *basic* extra formatting
-        if -1 == match(newline, '^\s') && -1 == match(getline(cur), '\s$')
-            let newline = " " . newline
-        endif
+        call setline(next,
+                   \ substitute(getline(next), s:quote_block_re, '', ''))
 
         " merge the lines
-        call setline(cur, (getline(cur) . newline))
-        exe next . "," . next "normal! dd"
+        execute cur . ',' . next . 'join'
 
-        " we don't increase cur here b/c there might be more lines to merge
-        " into cur
-        let lastline = lastline - 1
+        " we don't increase cur here because there might be more lines to
+        " merge into cur
+        let lastline -= 1
     endwhile
 endfunction
 
@@ -263,17 +214,15 @@ endfunction
 "
 function! s:QuoteDelEmpty() range
     let empty_quote  = s:quote_block_re . '\s*$'
-    let whole_buffer = (1 == a:firstline) && (line("$") == a:lastline)
+    let whole_buffer = (a:firstline == 1) && (a:lastline == line('$'))
 
-    "
     " make sure we never operate on headers
-    "
     normal gg
-    if 0 == search('^$', 'W')
+    if search('^$', 'W') == 0
         " if there are no headers, then they aren't really a problem...
         let end_headers = a:firstline
     else
-        let end_headers = line(".")
+        let end_headers = line('.')
     endif
 
     " this checks to see if we were called on the header portion of the email.
@@ -283,88 +232,33 @@ function! s:QuoteDelEmpty() range
     " the starting position
     if a:firstline < end_headers && !whole_buffer
         " restore starting position
-        exe "normal! " . a:firstline . 'gg'
+        exe 'normal! ' . a:firstline . 'gg'
         return
     endif
 
     " start search at most sensible place
     if whole_buffer
-        exe "normal! " . end_headers . 'gg'
+        exe 'normal! ' . end_headers . 'gg'
     else
-        exe "normal! " . a:firstline . 'gg'
+        exe 'normal! ' . a:firstline . 'gg'
     endif
 
-    let line = line(".")
-    while line <= a:lastline
-        if -1 != match (getline(line), empty_quote)
+    for line in range(line('.'), a:lastline)
+        if match (getline(line), empty_quote) != -1
             let newline = substitute(getline(line), empty_quote, '', '')
             call setline(line, newline)
         endif
-        let line = line + 1
-    endwhile
+    endfor
 
     " restore starting position
-    exe "normal! " . a:firstline . 'gg'
-endfunction
-
-" QuoteFixupSpaces {{{2
-" This routine will turn all quotes that don't have spaces into ones that do.
-"
-" It is possible to specify when the quote fixation will stop.  This is
-" possible in two ways.  The first is by using a visual range of 2 or more
-" lines.  The second is by calling this routine with a range of 1 line (e.g.
-" from normal mode) and passing in an argument for QuoteLenSgmt.
-"
-function! s:QuoteFixupSpaces(chg) range
-    let line = a:firstline
-    let first_quote = '^' . s:quote_mark_re
-
-    " figure out our quote segment length
-    if a:firstline == a:lastline
-        let len = s:QuoteLenSgmt (line, a:chg)
-        if 0 == len
-            return
-        endif
-    else
-        let len = a:lastline - a:firstline + 1
-    endif
-
-    while 0 < len
-        let quote_block = matchstr(getline(line), s:quote_block_re)
-        if "" == quote_block
-            break
-        endif
-
-        " parse through all the quote_marks and add spaces as necessary
-        let new_quote_block = ""
-        let change = "no"
-        while -1 != match(quote_block, first_quote)
-            let quote_mark  = matchstr(quote_block, first_quote)
-            let quote_block = substitute(quote_block, first_quote, '', '')
-            if -1 != match(quote_mark, '\s$')
-                let new_quote_block = new_quote_block . quote_mark
-            else
-                let new_quote_block = new_quote_block . quote_mark . " "
-                let change = "yes"
-            endif
-        endwhile
-
-        " put our new quote_block in
-        if "yes" == change
-            let newline = substitute(getline(line), s:quote_block_re, '', '')
-            call setline (line, (new_quote_block . newline))
-        endif
-
-        let line = line + 1
-        let len  = len  - 1
-    endwhile
+    exe 'normal! ' . a:firstline . 'gg'
 endfunction
 
 " QuoteMotion {{{2
 " This routine will output a motion command that operatates over a quote
 " segment.  It is possible to dictate how the routine knows when a quote
 " segment stops.  This is by passing in an argument suitable for use by
-" s:QuoteGetDpth.
+" s:QuoteGetDepth.
 "
 " This makes it possible to perform vi commands on quotes.
 " E.g:
@@ -373,12 +267,12 @@ endfunction
 "
 function! s:QuoteMotion(line, chg)
     let len = s:QuoteLenSgmt(a:line, a:chg)
-    if 0 == len
+    if len == 0
         return 0
     endif
 
     " the 'V' makes the motion linewise
-    if 1 == len
+    if len == 1
         return "V" . line(".") . "G"
     else
         return "V" . (len - 1) . "j"
@@ -388,7 +282,7 @@ endfunction
 " QuoteLenSgmt {{{2
 " This tries to figure out how long a particular quote segment lasts.  It is
 " possible to dictate how the routine knows when a quote segment stops.  This
-" is done by passing in an argument suitable for use by s:QuoteGetDpth.
+" is done by passing in an argument suitable for use by s:QuoteGetDepth.
 "
 " E.g.:
 "   % ab> apple        <<< called here
@@ -401,31 +295,29 @@ endfunction
 "   will return 3 if passed
 "
 function! s:QuoteLenSgmt(start, chg)
-    let depth = s:QuoteGetDpth(a:start)
+    let depth = s:QuoteGetDepth(a:start)
 
-    let i = a:start + 1
     let len = 1
 
     " find end of quote
-    while i <= line('$')
-        if "inc_or_dec" == a:chg
-            if depth != s:QuoteGetDpth(i)
+    for i in range(a:start + 1, line('$'))
+        if a:chg == "inc_or_dec"
+            if depth != s:QuoteGetDepth(i)
                 break
             endif
-        elseif "dec" == a:chg
-            if depth > s:QuoteGetDpth(i)
+        elseif a:chg == "dec"
+            if depth > s:QuoteGetDepth(i)
                 break
             endif
         endif
 
-        let i   = i   + 1
-        let len = len + 1
-    endwhile
+        let len += 1
+    endfor
 
     return len
 endfunction
 
-" QuoteGetDpth {{{2
+" QuoteGetDepth {{{2
 " This routine will try and return the quote depth for a particular line.
 "
 " e.g.: (the return value for this routine is in ())
@@ -433,16 +325,16 @@ endfunction
 " (3) > > ab% i hate you
 " (2) > > :) I hate myself
 "
-function! s:QuoteGetDpth(line)
+function! s:QuoteGetDepth(line)
     let string = getline(a:line)
 
-    if "" == string
+    if string == ""
         return 0
     endif
 
     let quote_depth = 0
     let quote = '^' . s:quote_mark_re
-    while -1 != match(string, quote)
+    while match(string, quote) != -1
         let quote_depth = quote_depth + 1
         let string = substitute(string, quote, '', '')
     endwhile
@@ -450,8 +342,8 @@ function! s:QuoteGetDpth(line)
     return quote_depth
 endfunction
 
-" Tofu {{{2
-function! s:Tofu()
+" tprot {{{2
+function! s:tprot()
     call cursor(1,1)
     call search('^> ')
     if 1 < line(".")
@@ -482,12 +374,12 @@ endfunction
 
 " Execute everything {{{1
 
-setlocal tw=72
+setlocal textwidth=72
 setlocal completefunc=LBDBCompleteFn
 
 call s:QuoteEraseSig()
 
-call s:Tofu()
+call s:tprot()
 
 " Replace trailing spaces except after mail headers (To:,
 " etc.) or a signature delimiter (-- ).
