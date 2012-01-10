@@ -1281,6 +1281,8 @@ let g:EnhCommentifyBindInInsert = 'No'
 let g:EnhCommentifyTraditionalMode = 'No'
 let g:EnhCommentifyFirstLineMode = 'Yes'
 
+" GnuPG {{{2
+let g:GPGUsePipes = 1
 
 " Gundo {{{2
 nnoremap <leader>u :GundoToggle<CR>

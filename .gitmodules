@@ -139,3 +139,6 @@
 [submodule "vim/.vim/bundle/xptemplate"]
 	path = vim/.vim/bundle/xptemplate
 	url = https://github.com/drmingdrmer/xptemplate.git
+[submodule "vim/vim/bundle/vim-gnupg"]
+	path = vim/vim/bundle/vim-gnupg
+	url = git://gitorious.org/vim-gnupg/vim-gnupg.git
