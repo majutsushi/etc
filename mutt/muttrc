@@ -776,7 +776,8 @@ folder-hook .            my_hdr X-Operating-System: `uname -s`/`uname -r` (`unam
 folder-hook "!"$         set timeout=5
 folder-hook <            set sort=reverse-date
 folder-hook tnt@a-n-t_de unset crypt_autosign
-folder-hook lists        my_hdr From: Jan Larres <lists@majutsushi.net>
+
+send-hook   ~l           my_hdr From: Jan Larres <lists@majutsushi.net>
 # folder-hook lists        my_hdr Reply-To: Jan Larres <jan@majutsushi.net>
 
 # }}}
