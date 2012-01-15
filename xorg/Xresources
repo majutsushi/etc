@@ -52,9 +52,9 @@ URxvt.color13:     #AD7FA8
 URxvt.color6:      #06989A
 URxvt.color14:     #34E2E2
 ! White
-!URxvt.color7:      #D3D7CF
+URxvt.color7:      #D3D7CF
 !URxvt.color7:      #AFAFAF
-URxvt.color7:      #626262
+!URxvt.color7:      #626262
 URxvt.color15:     #EEEEEC
 !URxvt.color15:     #AFAFAF
 

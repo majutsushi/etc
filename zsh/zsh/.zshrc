@@ -71,13 +71,14 @@ export PAGER=${PAGER:-less}
 export LESS="-Ri-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t"
 
 # http://nion.modprobe.de/blog/archives/572-less-colors-for-man-pages.html
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;47m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
+# see 'man 5 termcap'
+export LESS_TERMCAP_md=$'\E[01;31m'  # start bold mode
+export LESS_TERMCAP_mb=$'\E[01;31m'  # start blinking
+export LESS_TERMCAP_so=$'\E[030;47m' # start standout mode
+export LESS_TERMCAP_se=$'\E[0m'      # end standout mode
+export LESS_TERMCAP_us=$'\E[01;32m'  # start underlining
+export LESS_TERMCAP_ue=$'\E[0m'      # end underlining
+export LESS_TERMCAP_me=$'\E[0m'      # end all modes
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"

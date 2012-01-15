@@ -69,7 +69,7 @@
 
 [tig "color"]
 ;         default     = default default  normal
-	cursor      = default white normal
+	cursor      = default color241 normal
 ;         status      = default default  normal
 	title-focus = color16 white normal
 	title-blur  = color241 white normal

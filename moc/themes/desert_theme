@@ -61,27 +61,27 @@ window_title		= default	default
 # a directory in the menu
 directory		= blue		default
 # a directory that is selected using arrows
-selected_directory	= default	white
+selected_directory	= black		white
 # playlist file
 playlist		= default	default
 # see selected directory
-selected_playlist	= default	white
+selected_playlist	= black		white
 # an ordinary file in the menu (mp3, ogg, ...)
 file			= default	default
 # see selected directory
-selected_file		= default	white
+selected_file		= black		white
 # a file that is currently being played
 marked_file		= default	default	bold
 # a file that is currently being played and is also selected using arrows
-marked_selected_file	= default	white	bold
+marked_selected_file	= black		white	bold
 # information shown at the right side of files
 info			= yellow	default
 # see selected directory
-selected_info		= yellow	white
+selected_info		= black		yellow
 # a file (its time) that is currently being played
 marked_info		= yellow	default	bold
 # a file (its time) that is currently being played and is also selected using arrows
-marked_selected_info	= yellow	white	bold
+marked_selected_info	= black		yellow	bold
 # the status line with a message
 status			= default	default
 # the title of the file that is currently being played
@@ -107,7 +107,7 @@ enabled			= default	default	bold
 # "empty" part of the volume bar
 empty_mixer_bar		= default	default
 # "filled" part of the volume bar
-filled_mixer_bar	= default	white	bold
+filled_mixer_bar	= default	magenta	bold
 # "empty" part of the time bar
 empty_time_bar		= default	default
 # "filled" part of the time bar
