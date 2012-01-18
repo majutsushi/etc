@@ -33,6 +33,7 @@ hi Cursor	guibg=khaki guifg=slategrey
 "hi DiffText
 "hi ErrorMsg
 hi VertSplit	guibg=#c2bfa5 guifg=grey50 gui=none
+"hi VertSplit	guibg=#1c1c1c guifg=grey50 gui=none
 "hi Folded	guibg=grey30 guifg=gold
 hi Folded	guibg=grey20 guifg=gold
 hi FoldColumn	guibg=grey20 guifg=tan
@@ -46,7 +47,8 @@ hi Search	guibg=peru guifg=wheat
 hi SpecialKey	guifg=yellowgreen
 "hi SpecialKey	guifg=grey40
 hi StatusLine	guibg=#c2bfa5 guifg=black gui=none
-hi StatusLineNC	guibg=#c2bfa5 guifg=grey50 gui=none
+"hi StatusLineNC	guibg=#c2bfa5 guifg=grey50 gui=none
+hi StatusLineNC	guibg=#1c1c1c guifg=grey50 gui=none
 hi Title	guifg=indianred
 hi Visual	gui=none guifg=khaki guibg=olivedrab
 "hi VisualNOS
