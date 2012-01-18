@@ -1,0 +1,193 @@
+autoload promptinit && promptinit
+
+if is43 ; then
+    ARROW="»"
+else
+    ARROW=">"
+fi
+
+precmd () {
+
+    # handle deleted and then recreated directories
+    if ! [[ . -ef $PWD ]]; then
+         OLDOLDPWD="${OLDPWD}"
+         if ! cd -- "${PWD}" >/dev/null 2>&1; then
+            echo "W: ${PWD} does not exist anymore"
+            return 1
+         fi
+         OLDPWD="${OLDOLDPWD}"
+    fi
+
+    JOBS="%(1j.${C_BOLD}[${C_F_CYAN}%j${C_F_DEFAULT}].)"
+    EXITCODE="%(0?..${C_BOLD}[${C_F_RED}%?${C_F_DEFAULT}])"
+
+    # set variable debian_chroot if running in a chroot with /etc/debian_chroot
+    if [[ -z "$debian_chroot" ]] && [[ -r /etc/debian_chroot ]]; then
+        debian_chroot=$(cat /etc/debian_chroot)
+    fi
+
+    # test if we have writing permission for the current directory
+    if [[ -w "$(pwd)" ]]; then
+        WPERM=
+    else
+        WPERM="$C_F_RED!$C_F_DEFAULT"
+    fi
+
+#     ┌─[x]──────────────────────────────────────────────────────[x]─┐
+#     └─[x]─── COMMANDS                                       ───[x]─┘
+
+    has_vcsinfo && vcs_info
+    prompt_set_line_1
+    prompt_set_line_2
+
+    has_vcsinfo && RPS1="${vcs_info_msg_1_:+${C_BOLD}<${C_F_RED}${vcs_info_msg_1_}${C_F_DEFAULT}>${C_DEFAULT}}"
+
+    # adjust title of xterm
+    # see http://www.faqs.org/docs/Linux-mini/Xterm-Title.html
+    case $TERM in (xterm*|rxvt*|screen*)
+        print -Pn "\e]0;%n@%m: %~\a"
+        ;;
+    esac
+    if [[ "$TERM" == screen* ]]; then
+        if [[ -n "$SSH_CLIENT" ]]; then
+            print -Pn "\ek%m\e\\"
+        else
+            echo -ne "\ekzsh\e\\"
+        fi
+    fi
+}
+
+prompt_set_line_1 () {
+
+#     local left_left="${C_BOLD}[($C_F_GREEN"
+#     local left_left="${C_BOLD}${C_F_RED}┌${C_F_DEFAULT}($C_F_GREEN"
+    local left_left="${PR_SET_CHARSET}${C_BOLD}${C_F_RED}${PR_SHIFT_IN}${PR_ULCORNER}${PR_SHIFT_OUT}${C_F_DEFAULT}($C_F_GREEN"
+#     local left_dir="$CPATH"
+    if has_vcsinfo; then
+        if ! ismac; then
+            local HOMEDIR=$(readlink -f ${HOME})
+        else
+            local HOMEDIR=${HOME}
+        fi
+        # use readlink for symlinked home dirs
+        local left_dir="${${${vcs_info_msg_0_/#${HOME}/~}/#${HOMEDIR}/~}%%/.}"
+    else
+        local left_dir="%~"
+    fi
+    local left_right="$C_F_DEFAULT$WPERM)"
+    local left_side=$left_left$left_dir$left_right
+    local right_side="---($C_F_CYAN%D{%H:%M:%S}$C_F_DEFAULT)]$C_DEFAULT"
+
+    if is43; then
+        local left_side_width=${(m)#${(S%%)left_side//\%\{*\%\}/}}
+        local right_side_width=${(m)#${(S%%)right_side//\%\{*\%\}/}}
+    else
+        # no multibyte (m flag) support in < 4.3
+        local left_side_width=${#${(S%%)left_side//\%\{*\%\}/}}
+        local right_side_width=${#${(S%%)right_side//\%\{*\%\}/}}
+    fi
+
+    local padding_size=$(( COLUMNS - left_side_width - right_side_width ))
+
+    # test if dir fits in the line, otherwise truncate it on the left
+    if (( padding_size > 0 )); then
+        local padding="${(l:${padding_size}::-:)""}"
+        prompt_line_1="$left_side$padding$right_side"
+        return
+    else
+        if is43; then
+            local left_left_width=${(m)#${(S%%)left_left//\%\{*\%\}/}}
+            local left_right_width=${(m)#${(S%%)left_right//\%\{*\%\}/}}
+        else
+            local left_left_width=${#${(S%%)left_left//\%\{*\%\}/}}
+            local left_right_width=${#${(S%%)left_right//\%\{*\%\}/}}
+        fi
+        local rest_size=$(( left_left_width + left_right_width + right_side_width ))
+        local max_size=$(( COLUMNS - rest_size ))
+        prompt_line_1="$left_left%$max_size<...<${left_dir}%<<$left_right$right_side"
+        return
+    fi
+}
+
+prompt_set_line_2 () {
+#     local p_arrow="${C_BOLD}${C_F_RED}${ARROW}${C_F_DEFAULT}"
+#     local p_arrow="${C_BOLD}${C_F_RED}└${C_F_DEFAULT}"
+    local p_arrow="${C_BOLD}${C_F_RED}${PR_SHIFT_IN}${PR_LLCORNER}${PR_SHIFT_OUT}${C_F_DEFAULT}"
+    local p_info="${JOBS}${EXITCODE}"
+    local p_user="($C_ROOT%n$C_F_YELLOW@$C_F_DEFAULT"
+    local p_host="${SSH_CLIENT:+${C_F_GREEN}}%m${C_F_DEFAULT})${C_DEFAULT}"
+    local p_rest=" %(!.#.>) "
+    prompt_line_2=${p_arrow}${p_info}${p_user}${p_host}${p_rest}
+    return
+}
+
+setprompt () {
+    setopt prompt_subst
+
+    # setup alternate character set
+    # http://aperiodic.net/phil/prompt/
+    typeset -A altchar
+    set -A altchar ${(s..)terminfo[acsc]}
+    PR_SET_CHARSET="%{$terminfo[enacs]%}"
+    PR_SHIFT_IN="%{$terminfo[smacs]%}"
+    PR_SHIFT_OUT="%{$terminfo[rmacs]%}"
+    PR_HBAR=${altchar[q]:--}
+    PR_ULCORNER=${altchar[l]:--}
+    PR_LLCORNER=${altchar[m]:--}
+    PR_LRCORNER=${altchar[j]:--}
+    PR_URCORNER=${altchar[k]:--}
+
+    # set colors
+    autoload colors && colors
+
+    C_DEFAULT="%{${reset_color}%}"
+    C_BOLD="%{${bold_color}%}"
+
+    # Foreground colors
+    for COLOR in BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE DEFAULT; do
+        eval C_F_$COLOR='%{$fg[${(L)COLOR}]%}'
+    done
+
+    if [[ $UID == 0 ]]; then
+        C_ROOT=$C_F_RED
+    fi
+
+    autoload -Uz vcs_info
+
+    zstyle ':vcs_info:*' enable git hg
+    zstyle ':vcs_info:*' check-for-changes true
+#     zstyle ':vcs_info:*' get-revision true
+    zstyle ':vcs_info:*' nvcsformats   '%~'
+    zstyle ':vcs_info:*' formats       '%R'${C_F_DEFAULT}'['${C_F_YELLOW}'%s'${C_F_DEFAULT}':'${C_F_YELLOW}'%b'${C_F_DEFAULT}'%c%u]'${C_F_GREEN}'/%S'
+    zstyle ':vcs_info:*' actionformats '%R'${C_F_DEFAULT}'['${C_F_YELLOW}'%s'${C_F_DEFAULT}':'${C_F_YELLOW}'%b'${C_F_DEFAULT}'%c%u]'${C_F_GREEN}'/%S' '%a'
+    zstyle ':vcs_info:*' stagedstr     ${C_F_CYAN}'!'${C_F_DEFAULT}
+    zstyle ':vcs_info:*' unstagedstr   ${C_F_CYAN}'?'${C_F_DEFAULT}
+
+    if [[ "$TERM" != "dumb" ]] && [[ "$TERM" != "vt100" ]]; then
+        PS1='$prompt_line_1$prompt_newline$prompt_line_2'
+    else
+        PS1="${EXITCODE}${debian_chroot:+($debian_chroot)}%n@%m %40<...<%B%~%b%<< %# "
+    fi
+
+    PS2="${C_BOLD}${C_F_RED}${ARROW}${C_DEFAULT} ${C_BOLD}%_${C_DEFAULT} %(!.#.>) "
+    PS3='?# '         # selection prompt used within a select loop.
+    PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
+}
+
+preexec () {
+    # get the name of the program currently running and hostname of local machine
+    # set screen window title if running in a screen
+    if [[ "$TERM" == screen* ]]; then
+        local CMD="${1[(wr)^(*=*|sudo|(auto)?ssh|-*)]//*\//}${SSH_CLIENT:+@${HOST//.*/}}"
+        echo -ne "\ek$CMD\e\\"
+    fi
+    # adjust title of xterm
+    case $TERM in (xterm*|rxvt*|screen*)
+        print -Pn "\e]0;%n@%m: $1\a"
+        ;;
+    esac
+}
+
+setprompt
+
+# vim: filetype=zsh

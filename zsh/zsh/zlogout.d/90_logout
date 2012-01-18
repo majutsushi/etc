@@ -1,0 +1,7 @@
+if [ "$SHLVL" -eq 1 ]; then
+    sudo -k
+    have clear_console && clear_console 2>/dev/null
+    clear
+fi
+
+# vim: filetype=zsh

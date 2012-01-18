@@ -1,0 +1,79 @@
+#!/bin/sh
+#
+# func/giturl
+#
+# A convenient way to display the gitweb URL of a commit-ish, as well as the
+# base URL and tree. Also for each argument, the tree or blob URL is printed.
+#
+# Copyright © 2010 martin f. krafft <madduck@madduck.net>
+# Released under the terms of the Artistic Licence 2.0
+# Contributions from Yaroslav O. Halchenko <debian@onerussian.com>
+#
+# Source repository: git://git.madduck.net/etc/zsh.git
+#
+
+local branch remote remote_name
+branch=$(git symbolic-ref -q HEAD); branch="${branch#refs/heads/}"
+# Obtain remote which current branch tracks, origin if not known
+remote_name=$(git config branch.$branch.remote || echo origin)
+remote=$(git config --get remote.$remote_name.url)
+
+local part gitweb_base style commitkw
+style=gitweb
+commitkw=commitdiff          # keyword for commit -- differ for github
+argssep=:                    # separator for arguments of the query
+case "$remote" in
+  madduck:pub/*|ssh://git.madduck.net/madduck/pub/*)
+    gitweb_base=http://git.madduck.net/v
+    part="${remote#madduck:pub/}"
+    part="${part#ssh://git.madduck.net/madduck/pub/}"
+    part="${part%.git}.git"
+    ;;
+  debian:*|*://git.debian.org/git/*|*://alioth.debian.org/git/*|*@git.debian.org/git/*)
+    gitweb_base=http://git.debian.org
+    part="${remote#debian:}"
+    part="${part#*://git.debian.org/git/}"
+    part="${part#*://alioth.debian.org/git/}"
+    part="${part#*@git.debian.org/git/}"
+    part="${part%.git}.git"
+    style=gitweb_old
+    ;;
+  github:*|*://github.com/*|*@github.com[/:]*)
+    gitweb_base=http://github.com
+    part="${remote#github:}"
+    part="${part#*://github.com/}"
+    part="${part#*@github.com[:/]}"
+    part="${part%.git}"
+    style=github
+    commitkw=commit
+    argssep=
+    ;;
+  *)
+    echo >&2 "E: I do not know how to translate $remote into a gitweb URL."
+    return 1
+    ;;
+esac
+
+local hash
+hash=$(git rev-parse HEAD)
+
+case "$style" in
+  gitweb|github)
+    echo "$gitweb_base/$part"
+    echo "$gitweb_base/$part/$commitkw/$hash"
+    echo "$gitweb_base/$part/tree/HEAD"
+    for i in $@; do
+      [ -f "$i" ] && echo "$gitweb_base/$part/blob/HEAD${argssep}/$i"
+      [ -d "$i" ] && echo "$gitweb_base/$part/tree/HEAD${argssep}/$i"
+    done
+    ;;
+  gitweb_old)
+    echo "$gitweb_base/?p=$part"
+    echo "$gitweb_base/?p=$part;a=commitdiff;h=$hash"
+    echo "$gitweb_base/?p=$part;a=tree;h=HEAD"
+    for i in $@; do
+      [ -f "$i" ] && echo "$gitweb_base/?p=$part;a=blob;hb=HEAD;f=$i"
+      [ -d "$i" ] && echo "$gitweb_base/?p=$part;a=tree;hb=HEAD;f=$i"
+    done
+    ;;
+esac

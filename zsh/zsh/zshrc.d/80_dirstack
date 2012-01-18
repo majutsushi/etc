@@ -1,0 +1,15 @@
+DIRSTACKSIZE=20
+
+if [[ -f $XDG_CACHE_HOME/zsh/zdirs ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
+    dirstack=( ${(uf)"$(< $XDG_CACHE_HOME/zsh/zdirs)"} )
+    # "cd -" won't work after login by just setting $OLDPWD, so
+    if [[ -d $dirstack[0] ]]; then
+        cd $dirstack[0] && cd $OLDPWD
+    fi
+fi
+
+chpwd() {
+    builtin dirs -pl >! $XDG_CACHE_HOME/zsh/zdirs
+}
+
+# vim: filetype=zsh

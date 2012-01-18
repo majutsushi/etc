@@ -1,0 +1,19 @@
+# zshrc/00_zrecompile
+#
+# recompile zsh snippets, if necessary
+#
+# Copyright © 1994–2008 martin f. krafft <madduck@madduck.net>
+# Released under the terms of the Artistic Licence 2.0
+#
+# Source repository: git://git.madduck.net/etc/zsh.git
+#
+
+zrecompile $ZDOTDIR/**/*(/N) | while read pre file post; do
+    case "$post" in
+      succeeded*) rm -f "${file%:}".old;;
+      *) :;;
+    esac
+    info "$pre ${file##$HOME/} $post"
+  done
+
+# vim:ft=zsh

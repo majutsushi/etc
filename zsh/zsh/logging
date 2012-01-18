@@ -1,0 +1,39 @@
+# logging
+#
+# Logging abilities for the shell initialisation scripts
+#
+# Copyright © 1994–2008 martin f. krafft <madduck@madduck.net>
+# Released under the terms of the Artistic Licence 2.0
+#
+# Source repository: git://git.madduck.net/etc/zsh.git
+#
+
+__log() {
+  local level; level="$1"; shift
+  echo "${level}: $@" >&2
+}
+__do_debug() {
+  [ -n "${ZDEBUG:-}" ]
+}
+error() {
+  [[ -o xtrace ]] && set +x && local __XTRACE=1
+  __log E "$@" 
+  [ "${__XTRACE:-}" ] && set -x
+}
+warn() {
+  [[ -o xtrace ]] && set +x && local __XTRACE=1
+  __log W "$@" 
+  [ "${__XTRACE:-}" ] && set -x
+}
+info() {
+  [[ -o xtrace ]] && set +x && local __XTRACE=1
+  __log I "$@" 
+  [ "${__XTRACE:-}" ] && set -x
+}
+debug() {
+  [[ -o xtrace ]] && set +x && local __XTRACE=1
+  __do_debug && __log D "$@" 
+  [ "${__XTRACE:-}" ] && set -x
+}
+
+# vim:ft=zsh

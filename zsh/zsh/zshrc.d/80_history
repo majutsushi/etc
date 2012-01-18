@@ -1,0 +1,4 @@
+HISTFILE=$XDG_CACHE_HOME/zsh/history
+HISTSIZE=5000
+SAVEHIST=10000
+# vim: filetype=zsh

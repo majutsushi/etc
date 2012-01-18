@@ -1,0 +1,28 @@
+# sourcedir
+#
+# Defines helper function to source files in a directory
+#
+# Copyright © 1994–2008 martin f. krafft <madduck@madduck.net>
+# Released under the terms of the Artistic Licence 2.0
+#
+# Source repository: git://git.madduck.net/etc/zsh.git
+#
+
+. $ZDOTDIR/logging
+
+sourcedir() {
+  if [ ! -d "$1" ]; then
+    error "no such directory: $1"
+    return 1
+  fi
+#  debug "sourcing directory ${1#$ZDOTDIR/}"
+  for f in "$1"/*(.N,@N); do
+    case "$f" in
+      *~|*.bak|*.old|*.sw?|*.zwc|*.disabled) continue;;
+    esac
+#    debug "  sourcing file $f"
+    source "$f"
+  done
+}
+
+# vim:ft=zsh

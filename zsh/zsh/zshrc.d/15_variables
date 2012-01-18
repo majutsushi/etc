@@ -1,0 +1,77 @@
+export TIMEFMT="%*E real  %*U user  %*S system  %P  %J"
+
+export EDITOR=${EDITOR:-vim}
+export MAIL=${MAIL:-/var/mail/$USER}
+
+export PAGER=${PAGER:-less}
+
+export LESS="-Ri-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t"
+
+# http://nion.modprobe.de/blog/archives/572-less-colors-for-man-pages.html
+# see 'man 5 termcap'
+export LESS_TERMCAP_md=$'\E[01;31m'  # start bold mode
+export LESS_TERMCAP_mb=$'\E[01;31m'  # start blinking
+export LESS_TERMCAP_so=$'\E[030;47m' # start standout mode
+export LESS_TERMCAP_se=$'\E[0m'      # end standout mode
+export LESS_TERMCAP_us=$'\E[01;32m'  # start underlining
+export LESS_TERMCAP_ue=$'\E[0m'      # end underlining
+export LESS_TERMCAP_me=$'\E[0m'      # end all modes
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
+
+# set default browser
+if [[ -z "$BROWSER" ]] ; then
+    if [[ -n "$DISPLAY" ]] ; then
+        export BROWSER=x-www-browser
+    else
+        export BROWSER=www-browser
+    fi
+fi
+
+export DEBEMAIL="jan@majutsushi.net"
+export DEBFULLNAME="Jan Larres"
+export BTS_CACHE=no
+
+export CVS_RSH=ssh
+export GDK_USE_XFT=1
+export QT_XFT=1
+#export GTK_IM_MODULE="scim"
+if [[ "$(hostname)" == "gally" ]]; then
+    export ALSA_OUTPUT_PORTS="65:0"
+    export SCUMMVM_PORT=$ALSA_OUTPUT_PORTS
+elif [[ "$(hostname)" == "urd" ]]; then
+    export ALSA_OUTPUT_PORTS="128:0"
+    export SCUMMVM_PORT=$ALSA_OUTPUT_PORTS
+fi
+
+export SDL_AUDIODRIVER=alsa
+# export SDL_AUDIODRIVER=dsp # oss
+
+# export TEXMFHOME=$HOME/.texmf
+
+export RUBYOPT="-w $RUBYOPT"
+export RI="-f ansi"
+
+export TERMINFO=$HOME/.terminfo
+
+export CCACHE_DIR=$XDG_CACHE_HOME/ccache
+export CCACHE_COMPRESS=1
+export CCACHE_HASHDIR=1
+
+export NNTPSERVER=news.gmane.org
+
+export GPG_TTY=$(tty)
+
+# for java; XToolkit is the new one, but it doesn't work everywhere
+# export AWT_TOOLKIT=XToolkit
+# export AWT_TOOLKIT=MToolkit
+
+# proxy for Uni Passau Network
+# export http_proxy=http://www-cache.rz.uni-passau.de:3128
+# export HTTP_PROXY=http://www-cache.rz.uni-passau.de:3128
+# export ftp_proxy=http://www-cache.rz.uni-passau.de:3128
+
+# ulimit -c unlimited
+
+# vim: filetype=zsh

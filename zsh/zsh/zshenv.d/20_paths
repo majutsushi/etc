@@ -1,0 +1,78 @@
+# some ideas from http://www.memoryhole.net/kyle/2008/03/my_bashrc.html
+
+add_to_path() {
+    pos=$1
+    oldpath=$2
+    dir=$3
+
+    if [[ -n "$dir" && "$dir" != "." && -d "$dir" && -x "$dir" ]]; then
+        dir=$(cd "$dir" && pwd -P)
+
+        if [[ -z $(eval "echo \"\$$oldpath\"") ]]; then
+            eval "$oldpath=$dir"
+        else
+            case $pos in
+                pre)  eval "$oldpath=$dir:\$$oldpath" ;;
+                post) eval "$oldpath=\$$oldpath:$dir" ;;
+            esac
+        fi
+    fi
+}
+
+verify_path() {
+    TMPPATH=
+    for i in $path; do
+        add_to_path post TMPPATH $i
+    done
+    PATH=$TMPPATH
+    unset TMPPATH
+}
+
+if [[ -d /opt/intel ]]; then
+    source /opt/intel/cc/10.0.023/bin/iccvars.sh
+    source /opt/intel/idb/10.0.023/bin/idbvars.sh
+fi
+
+verify_path
+
+add_to_path post PATH /usr/local/sbin
+add_to_path post PATH /sbin
+add_to_path post PATH /usr/sbin
+
+# Macports
+add_to_path pre PATH /opt/local/bin
+add_to_path pre PATH /opt/local/sbin
+
+add_to_path pre PATH "/var/lib/gems/1.8/bin/"
+add_to_path pre PATH $HOME/.local/bin
+add_to_path pre PATH $HOME/usr/bin
+add_to_path pre PATH $HOME/.etc/bin
+
+# make sure $HOME/bin has the highest priority
+add_to_path pre PATH $HOME/bin
+
+export PATH
+
+# cdpath=(.. ~)
+
+fpath=($ZDOTDIR/func $fpath)
+fpath=($ZDOTDIR/func/VCS_Info $fpath)
+fpath=($ZDOTDIR/func/VCS_Info/Backends $fpath)
+
+# automatically remove duplicates from these arrays
+typeset -U path cdpath fpath manpath
+
+add_to_path post LD_LIBRARY_PATH $HOME/lib
+export LD_LIBRARY_PATH
+
+export XDG_DATA_HOME=$HOME/.local/share
+# export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
+export XDG_CONFIG_HOME=$HOME/.config
+# export XDG_CONFIG_DIRS=/etc/xdg
+export XDG_CACHE_HOME=$HOME/.cache
+
+# make sure the cache dir exists
+[[ ! -d $XDG_CACHE_HOME ]] && mkdir $XDG_CACHE_HOME
+[[ ! -d $XDG_CACHE_HOME/zsh ]] && mkdir $XDG_CACHE_HOME/zsh
+
+# vim: filetype=zsh
