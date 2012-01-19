@@ -1,29 +1,14 @@
-have gls        && alias ls=gls
-have gdircolors && alias dircolors=gdircolors
-have gmake      && alias make=gmake
-have gfind      && alias find=gfind
-have glocate    && alias locate=glocate
-have gsed       && alias sed=gsed
-have gawk       && alias awk=gawk
-
 typeset -a _ls_opts; _ls_opts=(-F)
-# if ls --help 2>/dev/null |grep -- --color= >/dev/null \
-if ls --color=auto >/dev/null 2>&1 \
-    && [[ "$TERM" != "dumb" ]]; then
-    [[ -f ~/.dir_colors ]] && eval "$(dircolors -b ~/.dir_colors)"
+if [[ "$TERM" != "dumb" ]]; then
     _ls_opts+="--color=auto"
 fi
-if ls --group-directories-first >/dev/null 2>&1; then
+if command ls --group-directories-first >/dev/null 2>&1; then
     _ls_opts+=--group-directories-first
 fi
 if ismac; then
     _ls_opts+="-G"
 fi
-if have gls; then
-    alias ls="LC_COLLATE=POSIX gls $_ls_opts"
-else
-    alias ls="LC_COLLATE=POSIX ls $_ls_opts"
-fi
+alias ls="LC_COLLATE=POSIX ls $_ls_opts"
 alias ll="ls -l"
 alias l="ls -lA"
 alias lad='ls -d .*(/)'                # only show dot-directories
@@ -39,18 +24,19 @@ alias t='tree --dirsfirst -F'
 
 alias fu='sudo $(fc -ln -1) '
 
-if [[ $UID == 0 ]]; then
+if is_root; then
     INTERACTIVE="-i"
 fi
-alias cp="nocorrect cp $INTERACTIVE" # no spelling correction on cp
-alias mv="nocorrect mv $INTERACTIVE" # no spelling correction on mv
-alias rm="nocorrect rm $INTERACTIVE" # no spelling correction on rm
-alias mkdir="nocorrect mkdir"        # no spelling correction on mkdir
-
 if islinux; then
-    alias cp="cp --preserve=timestamps"
-    alias rm="rm --one-file-system"
+    alias cp="nocorrect cp --preserve=timestamps $INTERACTIVE"
+    alias rm="nocorrect rm --one-file-system $INTERACTIVE"
+else
+    alias cp="nocorrect cp $INTERACTIVE"
+    alias rm="nocorrect rm $INTERACTIVE"
 fi
+alias mv="nocorrect mv $INTERACTIVE"
+alias mkdir="nocorrect mkdir"
+
 
 # defaults for some programs
 alias grep='grep -E --color=auto'
@@ -60,17 +46,13 @@ alias mtr="mtr -t"
 # general
 alias a='ack-grep'
 alias da='du -sch'
+alias g="grep"
 alias j='jobs -l'
+alias jsonpp='python -mjson.tool'
+alias le='/usr/share/vim/vimcurrent/macros/less.sh'
 alias pa='ps aux | less'
 alias pu='ps ux | less'
-alias le='/usr/share/vim/vimcurrent/macros/less.sh'
 alias vi='vim'
-alias jsonpp='python -mjson.tool'
-
-# shortcuts
-alias rd='rmdir'
-alias md='mkdir'
-alias g="grep"
 
 # programming
 alias CO="./configure"
@@ -92,21 +74,11 @@ alias texclean='rm -f *.toc *.lof *.lot *.aux* *.log *.out *.cp *.fn *.tp *.vr *
 # ignore ~/.ssh/known_hosts entries
 alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
 
-# if [[ -n "$TERMINFO" ]] && [[ -f "$TERMINFO/m/mostlike" ]]; then
-#     alias man="TERM=mostlike PAGER=less man"
-#     alias less="TERM=mostlike less"
-# fi
-
 # conversions
 alias i2u='iconv --from-code=ISO-8859-15 --to-code=UTF-8'
 alias u2i='iconv --from-code=UTF-8 --to-code=ISO-8859-15'
 #alias u2d="perl -pe 'chop; $_="$_\r\n";'"
 #alias d2u="tr -d '\015\032'"
-alias tango2gnome="convert -bordercolor Transparent -border 1x1"
-
-# games
-alias wow='startx -- :1 -screen wowscreen'
-alias nsrtc="nsrt -savetype jma -safetrim -remhead -rename -deint -fix -md5 -lowext -deldup -noext -sort genre1 -info -utf8 -r"
 
 # if proxy is required
 #alias slrn='tsocks /usr/bin/slrn'
@@ -130,7 +102,6 @@ if [[ -r /etc/debian_version ]] ; then
 fi
 
 # misc
-alias missingcovers='ls -d /home/jan/media/music/alben/*/*/ | grep -v "$(ls /home/jan/media/music/alben/*/*/cover.jpg | cut -d'/' -f 7,8)" | cut -d'/' -f 7,8'
 alias javabug="sudo sed -i 's/XINERAMA/FAKEEXTN/g' /usr/lib/jvm/java-6-sun/jre/lib/i386/xawt/libmawt.so"
 # doesn't work in zsh
 # alias alert='notify-send -i gnome-terminal "[$?] $(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/;\s*alert$//'\'')"'

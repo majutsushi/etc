@@ -1,3 +1,18 @@
+# Whenever a command completion is attempted, make sure the entire command
+# path is hashed first.
+setopt hash_list_all
+
+# If unset, the cursor is set to the end of the word if completion is
+# started. Otherwise it stays there and completion is done from both ends.
+setopt complete_in_word
+
+# load fancy menu completion
+zmodload zsh/complist
+
+# initialize completion system
+autoload -U compinit
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump
+
 # notice: use 'zstyle' for getting current settings
 # press ^Xh (control-x h) for getting tags in context; ^X? (control-x ?) to run complete_debug with trace output
 
@@ -69,24 +84,19 @@ _force_rehash() {
     (( CURRENT == 1 )) && rehash
     return 1 # Because we didn't really complete anything
 }
-# some people don't like the automatic correction - so run 'NOCOR=1 zsh' to deactivate it
-if [[ -n "$NOCOR" ]] ; then
-    zstyle ':completion:*' completer _oldlist _expand _force_rehash _complete
-    setopt nocorrect # do not try to correct the spelling if possible
+
+setopt correct  # try to correct the spelling if possible
+zstyle -e ':completion:*' completer '
+if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]]; then
+    _last_try="$HISTNO$BUFFER$CURSOR"
+    reply=(_complete _match _prefix)
 else
-    setopt correct  # try to correct the spelling if possible
-    zstyle -e ':completion:*' completer '
-    if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]]; then
-        _last_try="$HISTNO$BUFFER$CURSOR"
-        reply=(_complete _match _prefix)
+    if [[ $words[1] == (rm|mv) ]]; then
+        reply=(_complete)
     else
-        if [[ $words[1] == (rm|mv) ]]; then
-            reply=(_complete)
-        else
-            reply=(_oldlist _expand _force_rehash _complete _correct _approximate)
-        fi
-    fi'
-fi
+        reply=(_oldlist _expand _force_rehash _complete _correct _approximate)
+    fi
+fi'
 
 # command for process lists, the local web server details and host completion
 zstyle ':completion:*:urls' local 'www' '/var/www/' 'public_html'
@@ -114,5 +124,8 @@ zstyle ':completion:*:hosts' hosts $hosts
 
 # use generic completion system for programs not yet defined:
 compdef _gnu_generic tail head feh cp mv df stow uname ipacsum fetchipac
+
+# menu selection: pick item but stay in the menu (press esc-return)
+bindkey -M menuselect '\e^M' accept-and-menu-complete
 
 # vim: filetype=zsh

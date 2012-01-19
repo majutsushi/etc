@@ -1,3 +1,16 @@
+# make cd push the old directory onto the directory stack.
+setopt auto_pushd
+
+# Don't push multiple copies of the same directory onto the directory stack.
+setopt pushd_ignore_dups
+
+# Exchanges  the meanings of `+' and `-' when used with a number to specify a
+# directory in the stack.
+setopt pushd_minus
+
+# Do not print the directory stack after pushd or popd.
+setopt pushd_silent
+
 DIRSTACKSIZE=20
 
 if [[ -f $XDG_CACHE_HOME/zsh/zdirs ]] && [[ ${#dirstack[*]} -eq 0 ]]; then

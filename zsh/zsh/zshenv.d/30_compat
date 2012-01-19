@@ -1,0 +1,10 @@
+# use GNU tools on *BSD
+have gls        && ls()        { command gls "$@" }
+have gdircolors && dircolors() { command gdircolors "$@" }
+have gmake      && make()      { command gmake "$@" }
+have gfind      && find()      { command gfind "$@" }
+have glocate    && locate()    { command glocate "$@" }
+have gsed       && sed()       { command gsed "$@" }
+have gawk       && awk()       { command gawk "$@" }
+
+# vim: filetype=zsh

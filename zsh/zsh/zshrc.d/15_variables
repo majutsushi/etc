@@ -7,6 +7,8 @@ export PAGER=${PAGER:-less}
 
 export LESS="-Ri-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t"
 
+eval $(dircolors -b $ZDOTDIR/dircolors) 2>/dev/null || :
+
 # http://nion.modprobe.de/blog/archives/572-less-colors-for-man-pages.html
 # see 'man 5 termcap'
 export LESS_TERMCAP_md=$'\E[01;31m'  # start bold mode
@@ -33,7 +35,6 @@ export DEBEMAIL="jan@majutsushi.net"
 export DEBFULLNAME="Jan Larres"
 export BTS_CACHE=no
 
-export CVS_RSH=ssh
 export GDK_USE_XFT=1
 export QT_XFT=1
 #export GTK_IM_MODULE="scim"
@@ -66,11 +67,6 @@ export GPG_TTY=$(tty)
 # for java; XToolkit is the new one, but it doesn't work everywhere
 # export AWT_TOOLKIT=XToolkit
 # export AWT_TOOLKIT=MToolkit
-
-# proxy for Uni Passau Network
-# export http_proxy=http://www-cache.rz.uni-passau.de:3128
-# export HTTP_PROXY=http://www-cache.rz.uni-passau.de:3128
-# export ftp_proxy=http://www-cache.rz.uni-passau.de:3128
 
 # ulimit -c unlimited
 

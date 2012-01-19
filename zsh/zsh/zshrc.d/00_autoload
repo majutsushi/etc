@@ -5,63 +5,8 @@ autoload -U zmv
 
 autoload -U zrecompile
 
-autoload history-search-end
-
-# we don't want to quote/espace URLs on our own...
-autoload -U url-quote-magic
-zle -N self-insert url-quote-magic
-
 autoload run-help
 autoload run-help-git
 autoload run-help-svn
-
-# completion system
-type compinit &>/dev/null || { autoload -U compinit && compinit -d $XDG_CACHE_HOME/zsh/zcompdump }
-
-autoload -U zed                  # use ZLE editor to edit a file or function
-
-for mod in complist deltochar mathfunc ; do
-    zmodload -i zsh/${mod} 2>/dev/null || print "Notice: no ${mod} available :("
-done
-
-# autoload zsh modules when they are referenced
-for opt mod in a stat \
-               a zpty \
-               ap mapfile; do
-    zmodload -${opt} zsh/${mod} ${mod}
-done ; unset opt mod
-
-autoload -U insert-files && \
-zle -N insert-files && \
-bindkey "^Xf" insert-files
-
-bindkey ' '   magic-space    # also do history expansion on space
-
-# press esc-e for editing command line in $EDITOR or $VISUAL
-autoload -U edit-command-line && \
-zle -N edit-command-line && \
-bindkey '\ee' edit-command-line
-
-# menu selection: pick item but stay in the menu (press esc-return)
-bindkey -M menuselect '\e^M' accept-and-menu-complete
-
-# press "ctrl-x d" to insert the actual date in the form yyyy-mm-dd
-_bkdate() { BUFFER="$BUFFER$(date '+%F')"; CURSOR=$#BUFFER; }
-bindkey "^Xd" _bkdate
-zle -N _bkdate
-
-# press esc-m for inserting last typed word again (thanks to caphuso!)
-insert-last-typed-word() { zle insert-last-word -- 0 -1 }; \
-zle -N insert-last-typed-word; bindkey "\em" insert-last-typed-word
-
-# run command line as user root via sudo:
-_sudo-command-line() {
-  [[ $BUFFER != sudo\ * ]] && LBUFFER="sudo $LBUFFER"
-}
-zle -N sudo-command-line _sudo-command-line
-bindkey "^Xs" sudo-command-line
-
-autoload -Uz vcs_info
-vcs_info 2>/dev/null
 
 # vim: filetype=zsh

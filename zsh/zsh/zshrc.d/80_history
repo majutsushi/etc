@@ -1,4 +1,23 @@
+# append history list to the history file
+# (important for multiple parallel zsh sessions!)
+setopt append_history
+
+# import new commands from the history file also in other zsh-sessions
+setopt share_history
+
+# save each command's beginning timestamp and the duration to the history file
+setopt extended_history
+
+# If a new command line being added to the history list duplicates an older
+# one, the older command is removed from the list
+setopt hist_ignore_all_dups
+
+# remove command lines from the history list when the first character on the
+# line is a space
+setopt hist_ignore_space
+
 HISTFILE=$XDG_CACHE_HOME/zsh/history
 HISTSIZE=5000
 SAVEHIST=10000
+
 # vim: filetype=zsh

@@ -6,6 +6,9 @@ else
     ARROW=">"
 fi
 
+autoload -Uz vcs_info
+vcs_info 2>/dev/null
+
 precmd () {
 
     # handle deleted and then recreated directories
