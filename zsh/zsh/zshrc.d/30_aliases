@@ -1,3 +1,25 @@
+# reload functions
+freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
+compdef _functions freload
+
+# zsh profiling
+profile () {
+    ZSH_PROFILE_RC=1 $SHELL "$@"
+}
+
+# edit alias via zle:
+edalias() {
+    [[ -z "$1" ]] && { echo "Usage: edalias <alias_to_edit>" ; return 1 } || vared aliases'[$1]' ;
+}
+compdef _aliases edalias
+
+# edit function via zle:
+edfunc() {
+    [[ -z "$1" ]] && { echo "Usage: edfunc <function_to_edit>" ; return 1 } || zed -f "$1" ;
+}
+compdef _functions edfunc
+
+
 typeset -a _ls_opts; _ls_opts=(-F)
 if [[ "$TERM" != "dumb" ]]; then
     _ls_opts+="--color=auto"
@@ -20,10 +42,6 @@ alias lsw='ls -ld *(R,W,X.^ND/)'       # world-{readable,writable,executable} fi
 alias lsd='ls -d *(/)'                 # only show directories
 alias lse='ls -d *(/^F)'               # only show empty directories
 
-alias t='tree --dirsfirst -F'
-
-alias fu='sudo $(fc -ln -1) '
-
 if is_root; then
     INTERACTIVE="-i"
 fi
@@ -36,53 +54,114 @@ else
 fi
 alias mv="nocorrect mv $INTERACTIVE"
 alias mkdir="nocorrect mkdir"
-
+mcd() { mkdir -p "$@"; cd "$@" }
 
 # defaults for some programs
 alias grep='grep -E --color=auto'
 alias gdb="gdb -q"
 alias mtr="mtr -t"
 
-# general
+# execute last command as root
+alias fu='sudo $(fc -ln -1) '
+
 alias a='ack-grep'
 alias da='du -sch'
+alias ddiff='diff -Naurd -x *.swp -x *.o -x *.so -x cscope.* -x tags -x .git -x .svn -x CVS'
 alias g="grep"
 alias j='jobs -l'
 alias jsonpp='python -mjson.tool'
 alias le='/usr/share/vim/vimcurrent/macros/less.sh'
 alias pa='ps aux | less'
 alias pu='ps ux | less'
+alias t='tree --dirsfirst -F'
 alias vi='vim'
-
-# programming
-alias CO="./configure"
-alias CH="./configure --help"
-# have colormake && alias make='colormake'
-have colordiff && alias diff='colordiff'
-alias ddiff='diff -Naurd -x *.swp -x *.o -x *.so -x cscope.* -x tags -x .git -x .svn -x CVS'
-
-# net
 alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
 
-# prefer normal stat
-alias  stat='command stat'
-alias zstat='builtin stat'
+have colordiff && alias diff='colordiff'
 
-# cleaning up
-alias texclean='rm -f *.toc *.lof *.lot *.aux* *.log *.out *.cp *.fn *.tp *.vr *.pg *.ky *.bbl *.blg *.fdb_latexmk'
+bk()       { cp -r -b ${1} ${1}_$(date --iso-8601=m) }
+sshot()    { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desktop/screenshots/' "$@" }
+wp()       { dig +short txt ${1// /_}.wp.dg.cx }
+getlinks() { perl -ne 'while ( m/"((www|ftp|http):\/\/.*?)"/gc ) { print $1, "\n"; }' $* }
+alert()    { notify-send -i gnome-terminal "[$?] command finished" }
 
-# ignore ~/.ssh/known_hosts entries
-alias insecssh='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null"'
+# Function Usage: doc packagename
+doc() { cd /usr/share/doc/$1 && ll }
+_doc() { _files -W /usr/share/doc -/ }
+compdef _doc doc
 
 # conversions
 alias i2u='iconv --from-code=ISO-8859-15 --to-code=UTF-8'
 alias u2i='iconv --from-code=UTF-8 --to-code=ISO-8859-15'
-#alias u2d="perl -pe 'chop; $_="$_\r\n";'"
-#alias d2u="tr -d '\015\032'"
 
-# if proxy is required
-#alias slrn='tsocks /usr/bin/slrn'
-#alias mc="tsocks /usr/bin/mc"
+# switch terminal encoding (rxvt-unicode only)
+alias eucjp="printf '\33]701;%s\007' ja_JP.EUC-JP; export LANG=ja_JP.EUC-JP"
+alias utf8="printf '\33]701;%s\007' en_US.UTF-8; export LANG=en_US.UTF-8"
+
+# grep for running process, like: 'psgrep vim'
+psgrep() {
+    if [[ -z "$1" ]] ; then
+        echo "psgrep - grep for process(es) by keyword" >&2
+        echo "Usage: psgrep <keyword>" >&2 ; return 1
+    else
+        ps xauwww | head -n1
+        ps xauwww | grep -v "grep.*$1" | grep $1
+    fi
+}
+
+# upload()  { scp -p $1 cip:public_html/$2 }
+upload() {
+    if [[ -z "$1" ]]; then
+        echo "usage: upload file1 file2 ..."
+        return 1
+    else
+        wput ftp://majutsushi.net/httpdocs/stuff/ "$@"
+    fi
+    for i in "$@"; do
+        echo "http://majutsushi.net/stuff/${i// /%20}"
+    done
+}
+
+pdfembedfonts() {
+    if [[ $# != 1 ]]; then
+        echo "Usage: $0 input.pdf"
+        return 1
+    else
+        tmpname=$(mktemp)
+        gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dNOPLATFONTS -dPDFSETTINGS=/prepress -sOutputFile=$tmpname $1
+        mv $tmpname $1
+    fi
+}
+
+# zsh with perl-regex - use it e.g. via:
+# regcheck '\s\d\.\d{3}\.\d{3} Euro' ' 1.000.000 Euro'
+regcheck() {
+    zmodload -i zsh/pcre
+    pcre_compile $1 && \
+    pcre_match $2 && echo "regex matches" || echo "regex does not match"
+}
+
+# find out which libs define a symbol
+# usage example: 'lcheck strcpy'
+lcheck() {
+    if [[ -n "$1" ]] ; then
+        nm -go /usr/lib/lib*.a 2>/dev/null | grep ":[[:xdigit:]]\{8\} . .*$1" | grep "$1"
+    else
+        echo "Usage: lcheck <function>" >&2
+    fi
+}
+
+# display system state
+status() {
+    print ""
+    print "Date..: "$(date "+%Y-%m-%d %H:%M:%S")""
+    print "Shell.: Zsh $ZSH_VERSION (PID = $$, $SHLVL nests)"
+    print "Term..: $TTY ($TERM), $BAUD bauds, $COLUMNS x $LINES chars"
+    print "Login.: $LOGNAME (UID = $EUID) on $HOST"
+    print "System: $(cat /etc/[A-Za-z]*[_-][rv]e[lr]*)"
+    print "Uptime:$(uptime)"
+    print ""
+}
 
 # debian stuff
 if [[ -r /etc/debian_version ]] ; then
@@ -92,38 +171,44 @@ if [[ -r /etc/debian_version ]] ; then
     alias afs='apt-file search'
     alias api="$SUDO aptitude install"
     alias dbp='dpkg-buildpackage'
-    alias ge='grep-excuses'
     alias muttbts='bts --mailreader="mutt -f %s" --mbox show'
-#     alias deborphan-by-size="dpkg-query -W --showformat='${Installed-Size} ${Package}\n' `deborphan -a | awk '{print $2}'` | sort -n"
-
-    alias tlog="tail -f /var/log/syslog"
     alias aptitude-just-recommended='aptitude -o "Aptitude::Pkg-Display-Limit=!?reverse-depends(~i) ~M !?essential"'
     alias aptitude-also-via-dependency='aptitude -o "Aptitude::Pkg-Display-Limit=~i !~M ?reverse-depends(~i) !?essential"'
+
+    # use "dchange <package-name>" to view Debian's changelog of the package:
+    dchange() {
+        if [[ -r /usr/share/doc/${1}/changelog.Debian.gz ]] ; then
+            less /usr/share/doc/${1}/changelog.Debian.gz
+        else
+            if [[ -r /usr/share/doc/${1}/changelog.gz ]] ; then
+                less /usr/share/doc/${1}/changelog.gz
+            else
+                echo "No changelog for package $1 found, sorry."
+                return 1
+            fi
+        fi
+    }
+    _dchange() { _files -W /usr/share/doc -/ }
+    compdef _dchange dchange
+
+    # use "uchange <package-name>" to view upstream's changelog of the package:
+    uchange() {
+        if [[ -r /usr/share/doc/${1}/changelog.gz ]] ; then
+            less /usr/share/doc/${1}/changelog.gz
+        else
+            echo "No changelog for package $1 found, sorry."
+            return 1
+        fi
+    }
+    _uchange() { _files -W /usr/share/doc -/ }
+    compdef _uchange uchange
 fi
 
-# misc
+# for ecs systems
+if [[ -d /etc/pkgs/ ]]; then
+    need() { source "/etc/pkgs/$1.sh"; }
+fi
+
 alias javabug="sudo sed -i 's/XINERAMA/FAKEEXTN/g' /usr/lib/jvm/java-6-sun/jre/lib/i386/xawt/libmawt.so"
-# doesn't work in zsh
-# alias alert='notify-send -i gnome-terminal "[$?] $(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/;\s*alert$//'\'')"'
-# alias alert='notify-send -i gnome-terminal "[$?] $(fc -ln | tail -n1 |sed -e '\''s/;\s*alert$//'\'')"'
-# alias alert="notify-send -i gnome-terminal \"[$?] !#\""
-alert() { notify-send -i gnome-terminal "[$?] command finished" }
-
-# switch terminal encoding (rxvt-unicode only)
-alias eucjp="printf '\33]701;%s\007' ja_JP.EUC-JP; export LANG=ja_JP.EUC-JP"
-alias utf8="printf '\33]701;%s\007' en_US.UTF-8; export LANG=en_US.UTF-8"
-
-# Xterm resizing-fu. Note that these are utf-8 fonts
-alias hide='echo -en "\033]50;nil2\007"'
-alias tiny='echo -en "\033]50;-misc-fixed-medium-r-normal--8-80-75-75-c-50-iso10646-1\007"'
-alias small='echo -en "\033]50;6x10\007"'
-alias default='echo -e "\033]50;-misc-fixed-medium-r-semicondensed--13-*-*-*-*-*-iso10646-1\007"'
-alias medium='echo -en "\033]50;-misc-fixed-medium-r-normal--13-120-75-75-c-80-iso10646-1\007"'
-alias large='echo -en "\033]50;-misc-fixed-medium-*-*-*-15-*-*-*-*-*-iso10646-1\007"'
-# This is a large font that has a corresponding double-width font for
-# CJK and other characters, useful for full-on utf-8 goodness.
-alias larger='echo -en "\033]50;-misc-fixed-medium-r-normal--18-*-*-*-*-*-iso10646-1\007"'
-alias huge='echo -en "\033]50;-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1\007"'
-alias normal=default
 
 # vim: filetype=zsh

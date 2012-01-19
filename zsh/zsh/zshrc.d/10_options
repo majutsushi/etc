@@ -6,13 +6,19 @@ umask 022
 # don't forget to quote '^', '~' and '#'!
 setopt extended_glob
 
-# report the status of backgrounds jobs immediately
-setopt notify
+# disable backslash escapes unless -e is given
+setopt bsd_echo
 
 # don't kill background jobs when exiting shell
 setopt no_hup
 
-# alert me if something failed
+# display pid when suspending jobs
+setopt long_list_jobs
+
+# report the status of backgrounds jobs immediately
+setopt notify
+
+# print exit value of programs if not 0
 # setopt print_exit_value
 
 # try to avoid the 'zsh: no matches found...'
@@ -20,6 +26,9 @@ setopt no_nomatch
 
 setopt no_beep
 setopt interactive_comments
+
+# more brace expansion (e.g. {0-9})
+setopt brace_ccl
 
 # warn when overwriting files with output redirection
 # '>!'/'>|' and '>>!'/'>>|' to force

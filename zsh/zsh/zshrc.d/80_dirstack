@@ -12,17 +12,22 @@ setopt pushd_minus
 setopt pushd_silent
 
 DIRSTACKSIZE=20
+DIRSTACKFILE=$XDG_CACHE_HOME/zsh/zdirs
 
-if [[ -f $XDG_CACHE_HOME/zsh/zdirs ]] && [[ ${#dirstack[*]} -eq 0 ]]; then
-    dirstack=( ${(uf)"$(< $XDG_CACHE_HOME/zsh/zdirs)"} )
+if [[ -f ${DIRSTACKFILE} ]] && [[ ${#dirstack[*]} -eq 0 ]] ; then
+    dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
     # "cd -" won't work after login by just setting $OLDPWD, so
-    if [[ -d $dirstack[0] ]]; then
-        cd $dirstack[0] && cd $OLDPWD
-    fi
+    [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
 fi
 
 chpwd() {
-    builtin dirs -pl >! $XDG_CACHE_HOME/zsh/zdirs
+    local -ax my_stack
+    my_stack=( ${PWD} ${dirstack} )
+    if is42 ; then
+        builtin print -l ${(u)my_stack} >! ${DIRSTACKFILE}
+    else
+        uprint my_stack >! ${DIRSTACKFILE}
+    fi
 }
 
 # vim: filetype=zsh

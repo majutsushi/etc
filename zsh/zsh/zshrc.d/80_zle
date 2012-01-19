@@ -75,4 +75,35 @@ function _jump_after_first_word() {
 zle -N _jump_after_first_word
 bindkey '^x1' _jump_after_first_word
 
+## complete word from currently visible Screen or Tmux buffer.
+if have -c screen || have -c tmux; then
+    _complete_screen_display() {
+        [[ "$TERM" != screen* ]] && return 1
+
+        local TMPFILE=$(mktemp)
+        local -U -a _screen_display_wordlist
+        trap "rm -f $TMPFILE" EXIT
+
+        # fill array with contents from screen hardcopy
+        if ((${+TMUX})); then
+            #works, but crashes tmux below version 1.4
+            #luckily tmux -V option to ask for version, was also added in 1.4
+            tmux -V &>/dev/null || return
+            tmux -q capture-pane \; save-buffer -b 0 $TMPFILE \; delete-buffer -b 0
+        else
+            screen -X hardcopy $TMPFILE
+            # screen sucks, it dumps in latin1, apparently always. so recode it
+            # to system charset
+            have recode && recode latin1 $TMPFILE
+        fi
+        _screen_display_wordlist=( ${(QQ)$(<$TMPFILE)} )
+        # remove PREFIX to be completed from that array
+        _screen_display_wordlist[${_screen_display_wordlist[(i)$PREFIX]}]=""
+        compadd -a _screen_display_wordlist
+    }
+    # complete word from currently visible GNU screen buffer
+    bindkey -r "^X^o"
+    compdef -k _complete_screen_display complete-word '^X^o'
+fi
+
 # vim: filetype=zsh
