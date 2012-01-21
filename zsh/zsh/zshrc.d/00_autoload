@@ -5,6 +5,8 @@ autoload -U zmv
 
 autoload -U zrecompile
 
+autoload -U colors; colors
+
 autoload run-help
 autoload run-help-git
 autoload run-help-svn
