@@ -49,4 +49,9 @@ stty -ixon
 # watch for everyone but me and root
 watch=(notme root)
 
+# use emacs style per default:
+bindkey -e
+# use vi style:
+# bindkey -v
+
 # vim: filetype=zsh

@@ -1,8 +1,4 @@
 ## keybindings (run 'bindkeys' for details, more details via man zshzle)
-# use emacs style per default:
-bindkey -e
-# use vi style:
-# bindkey -v
 
 # also do history expansion on space
 bindkey ' ' magic-space
