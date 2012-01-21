@@ -1,0 +1,130 @@
+__gitdir ()
+{
+    if [ -n "${__git_dir-}" ]; then
+        echo "$__git_dir"
+    elif [ -d .git ]; then
+        echo .git
+    else
+        git rev-parse --git-dir 2>/dev/null
+    fi
+}
+
+__prompt_git()
+{
+    local gitdir="$(__gitdir)"
+    if [ -n "$gitdir" ]; then
+        local rebase=""
+        local branch=""
+        local extra=""
+        if [ -f "$gitdir/rebase-merge/interactive" ]; then
+            rebase="rebase-i"
+            branch="$(cat "$gitdir/rebase-merge/head-name")"
+        elif [ -d "$gitdir/rebase-merge" ]; then
+            rebase="rebase-m"
+            branch="$(cat "$gitdir/rebase-merge/head-name")"
+        else
+            if [ -d "$gitdir/rebase-apply" ]; then
+                if [ -f "$gitdir/rebase-apply/rebasing" ]; then
+                    rebase="rebase"
+                elif [ -f "$gitdir/rebase-apply/applying" ]; then
+                    rebase="am"
+                else
+                    rebase="am/rebase"
+                fi
+            elif [ -f "$gitdir/MERGE_HEAD" ]; then
+                rebase="merging"
+            elif [ -f "$gitdir/CHERRY_PICK_HEAD" ]; then
+                rebase="cherry-picking"
+            elif [ -f "$gitdir/BISECT_LOG" ]; then
+                rebase="bisecting"
+            fi
+
+            if branch="$(git symbolic-ref HEAD 2>/dev/null)" ||
+                branch="$(git describe --tags --exact-match HEAD 2>/dev/null)"; then
+                extra="$(git show --pretty=format:%d -s HEAD)"
+                extra="${extra// }"
+                extra="${extra//\(}"
+                extra="${extra//\)}"
+
+                # remove redundant info
+                earr=("${(s:,:)extra}")
+                earr=(${earr:#HEAD})
+                earr=(${earr//${branch#refs\/heads\/}})
+                earr=(${earr//*\/*})
+
+                if [[ -n ${(j::)earr} ]]; then
+                    local col="%{%B%F{cyan}%}"
+                    local colres="%{%f%}"
+                    extra=" ● $col${(j:,:)earr}"
+                    extra="${extra//,/$colres, $col}%{%f%b%}"
+                else
+                    extra=""
+                fi
+            elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)..."; then
+                extra=" ● %{%B%F{cyan}%}$(git describe --all HEAD 2>/dev/null)%{%b%f%}"
+            else
+                branch="unknown"
+            fi
+            branch="$branch"
+        fi
+
+        local w=""
+        local i=""
+        local s=""
+        local u=""
+        local c=""
+        local p=""
+
+        if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
+            if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
+                c="BARE:"
+            else
+                branch="GIT_DIR!"
+            fi
+        elif [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+
+            # show dirty state
+            # --ignore-submodules can significantly speed up if submodules
+            # are present
+            git diff --no-ext-diff --quiet --exit-code --ignore-submodules || w="%{%F{cyan}%}*%{%f%}"
+            if git rev-parse --quiet --verify HEAD >/dev/null; then
+                git diff-index --cached --quiet HEAD -- || i="%{%F{cyan}%}+%{%f%}"
+            else
+                i="%{%F{cyan}%}#%{%f%}"
+            fi
+
+            # show stashed changes
+            git rev-parse --verify refs/stash >/dev/null 2>&1 && s="%{%F{cyan}%}$%{%f%}"
+
+            # show untracked files
+            if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+                u="%{%F{cyan}%}%%%{%f%}"
+            fi
+
+            if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
+                __git_ps1_show_upstream
+            fi
+        fi
+
+        local flags="$w$i$s$u"
+        if [[ -n "$rebase" ]]; then
+            rebase=" %{%F{167}%}${rebase}%{%f%}"
+        fi
+        local svn=""
+        if [[ -d ${gitdir}/svn ]]; then
+            svn="s"
+        fi
+        echo " %{%B%}±$svn %{%F{220}%}$c${branch##refs/heads/}${flags:+$flags}$rebase$p%{%b%f%}$extra"
+    fi
+}
+
+__prompt_hg()
+{
+    hg prompt --angle-brackets "\
+< ☿ %{%B%F{220}%}<branch>%{%b%f%}>\
+<%{%B%F{cyan}%}<status|modified|unknown>%{%b%f%}>\
+<%{%B%F{cyan}%}<update>%{%b%f%}>\
+< ● %{%B%F{cyan}%}<tags|%{%b%f%}, %{%B%F{cyan}%}>%{%b%f%}>" 2>/dev/null
+}
+
+# vim: filetype=zsh

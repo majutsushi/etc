@@ -6,6 +6,8 @@ umask 022
 # don't forget to quote '^', '~' and '#'!
 setopt extended_glob
 
+setopt prompt_subst
+
 # disable backslash escapes unless -e is given
 setopt bsd_echo
 
