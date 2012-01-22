@@ -4,8 +4,9 @@
 # http://git.madduck.net/v/etc/zsh.git/blob/HEAD:/.zsh/zshrc/60_vcsprompt
 
 PVC_RESET="%{%b%f%}"
+PV_REFS_PREFIX=" ● "
 PVC_REFS="%{%F{51}%}"
-PV_REFS_DELIM=" ● "
+PVC_REFS_DELIM=""
 PVC_FLAGS="%{%F{51}%}"
 PVC_BRANCH="%{%F{220}%}"
 PVC_REBASE="%{%F{167}%}"
@@ -126,7 +127,7 @@ __prompt_git_geninfo() {
             branch="$(git describe --tags --exact-match HEAD 2>/dev/null)"; then
             refs="$(__prompt_git_refs)"
         elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)..."; then
-            refs="$PV_REFS_DELIM$PVC_REFS$(git describe --all HEAD 2>/dev/null)$PVC_RESET"
+            refs="$PV_REFS_PREFIX$PVC_REFS$(git describe --all HEAD 2>/dev/null)$PVC_RESET"
         else
             branch="unknown"
         fi
@@ -154,9 +155,8 @@ __prompt_git_refs() {
     refs_arr=(${refs_arr//*\/*})
 
     if [[ -n ${(j::)refs_arr} ]]; then
-        local colres="%{%f%}"
-        refs="$PV_REFS_DELIM$PVC_REFS${(j:,:)refs_arr}"
-        refs="${refs//,/$colres, $PVC_REFS}$PVC_RESET"
+        refs="$PV_REFS_PREFIX$PVC_REFS${(j:,:)refs_arr}"
+        refs="${refs//,/$PVC_RESET$PVC_REFS_DELIM, $PVC_RESET$PVC_REFS}$PVC_RESET"
     else
         refs=""
     fi
@@ -237,7 +237,7 @@ __prompt_hg() {
 < ☿ $PVC_BRANCH<branch>$PVC_RESET>\
 <$PVC_FLAGS<status|modified|unknown>$PVC_RESET>\
 <$PVC_FLAGS<update>$PVC_RESET>\
-<$PV_REFS_DELIM$PVC_REFS<tags|$PVC_RESET, $PVC_REFS>$PVC_RESET>" 2>/dev/null
+<$PV_REFS_PREFIX$PVC_REFS<tags|$PVC_RESET$PVC_REFS_DELIM, $PVC_RESET$PVC_REFS>$PVC_RESET>" 2>/dev/null
 }
 
 __prompt_vcs_type()
