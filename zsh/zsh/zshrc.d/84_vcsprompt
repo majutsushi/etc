@@ -4,10 +4,12 @@
 # http://git.madduck.net/v/etc/zsh.git/blob/HEAD:/.zsh/zshrc/60_vcsprompt
 
 PVC_RESET="%{%b%f%}"
-PVC_REFS="%{%B%F{cyan}%}"
+PVC_REFS="%{%F{51}%}"
 PV_REFS_DELIM=" ● "
-PVC_FLAGS="%{%B%F{cyan}%}"
-PVC_BRANCH="%{%B%F{220}%}"
+PVC_FLAGS="%{%F{51}%}"
+PVC_BRANCH="%{%F{220}%}"
+PVC_REBASE="%{%F{167}%}"
+PVC_UPSTREAM="%{%f%}"
 
 __gitdir () {
     if [ -n "${__git_dir-}" ]; then
@@ -89,7 +91,7 @@ __prompt_git_show_upstream() {
             r=" +${count#*	}/-${count%	*}" ;;
     esac
 
-    echo -n "%{%B%f%}$r%{%b%f%}"
+    echo -n "$PVC_UPSTREAM$r$PVC_RESET"
 }
 
 __prompt_git_geninfo() {
@@ -197,7 +199,7 @@ __prompt_git() {
         local refs="$geninfo[2]"
 
         if [[ -n "$rebase" ]]; then
-            rebase=" %{%F{167}%}${rebase}%{%f%}"
+            rebase=" $PVC_REBASE${rebase}$PVC_RESET"
         fi
 
         local c=""
@@ -219,7 +221,7 @@ __prompt_git() {
         fi
 
         local result=""
-        result+=" %{%B%}±$svn%{%b%}"
+        result+=" ±$svn"
         result+=" $PVC_BRANCH$c$branch$PVC_RESET"
         result+="$flags"
         result+="$rebase"
