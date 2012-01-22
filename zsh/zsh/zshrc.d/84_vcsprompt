@@ -1,5 +1,15 @@
-__gitdir ()
-{
+# partially based on
+# https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+# and
+# http://git.madduck.net/v/etc/zsh.git/blob/HEAD:/.zsh/zshrc/60_vcsprompt
+
+PVC_RESET="%{%b%f%}"
+PVC_REFS="%{%B%F{cyan}%}"
+PV_REFS_DELIM=" ● "
+PVC_FLAGS="%{%B%F{cyan}%}"
+PVC_BRANCH="%{%B%F{220}%}"
+
+__gitdir () {
     if [ -n "${__git_dir-}" ]; then
         echo "$__git_dir"
     elif [ -d .git ]; then
@@ -9,71 +19,189 @@ __gitdir ()
     fi
 }
 
-__prompt_git()
-{
-    local gitdir="$(__gitdir)"
-    if [ -n "$gitdir" ]; then
-        local rebase=""
-        local branch=""
-        local extra=""
-        if [ -f "$gitdir/rebase-merge/interactive" ]; then
-            rebase="rebase-i"
-            branch="$(cat "$gitdir/rebase-merge/head-name")"
-        elif [ -d "$gitdir/rebase-merge" ]; then
-            rebase="rebase-m"
-            branch="$(cat "$gitdir/rebase-merge/head-name")"
-        else
-            if [ -d "$gitdir/rebase-apply" ]; then
-                if [ -f "$gitdir/rebase-apply/rebasing" ]; then
-                    rebase="rebase"
-                elif [ -f "$gitdir/rebase-apply/applying" ]; then
-                    rebase="am"
-                else
-                    rebase="am/rebase"
+__prompt_git_show_upstream() {
+    local key value
+    typeset -a svn_remote
+    local svn_url_pattern count n
+    local upstream=git legacy="" verbose=""
+
+    # get some config options from git-config
+    local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
+    while read -r key value; do
+        case "$key" in
+            bash.showupstream)
+                if [[ -z "${value}" ]]; then
+                    echo ""
+                    return
                 fi
-            elif [ -f "$gitdir/MERGE_HEAD" ]; then
-                rebase="merging"
-            elif [ -f "$gitdir/CHERRY_PICK_HEAD" ]; then
-                rebase="cherry-picking"
-            elif [ -f "$gitdir/BISECT_LOG" ]; then
-                rebase="bisecting"
+                ;;
+            svn-remote.*.url)
+                svn_remote[$((${#svn_remote[@]} + 1))]="$value"
+                svn_url_pattern+="\\|$value"
+                upstream=svn+git # default upstream is SVN if available, else git
+                ;;
+        esac
+    done <<< "$output"
+
+    # Find our upstream
+    case "$upstream" in
+        git)    upstream="@{upstream}" ;;
+        svn*)
+            # get the upstream from the "git-svn-id: ..." in a commit message
+            # (git-svn uses essentially the same procedure internally)
+            typeset -a svn_upstream
+            svn_upstream=($(git log --first-parent -1 \
+                --grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
+            if [[ 0 -ne ${#svn_upstream[@]} ]]; then
+                svn_upstream=${svn_upstream[$((${#svn_upstream[@]} - 2))]}
+                svn_upstream=${svn_upstream%@*}
+                local n_stop="${#svn_remote[@]}"
+                for ((n=1; n <= n_stop; ++n)); do
+                    svn_upstream=${svn_upstream#${svn_remote[$n]}}
+                done
+
+                if [[ -z "$svn_upstream" ]]; then
+                    # default branch name for checkouts with no layout:
+                    upstream=${GIT_SVN_ID:-git-svn}
+                else
+                    upstream=${svn_upstream#/}
+                fi
+            elif [[ "svn+git" = "$upstream" ]]; then
+                upstream="@{upstream}"
             fi
+            ;;
+    esac
 
-            if branch="$(git symbolic-ref HEAD 2>/dev/null)" ||
-                branch="$(git describe --tags --exact-match HEAD 2>/dev/null)"; then
-                extra="$(git show --pretty=format:%d -s HEAD)"
-                extra="${extra// }"
-                extra="${extra//\(}"
-                extra="${extra//\)}"
+    # Find how many commits we are ahead/behind our upstream
+    count="$(git rev-list --count --left-right "$upstream"...HEAD 2>/dev/null)"
 
-                # remove redundant info
-                earr=("${(s:,:)extra}")
-                earr=(${earr:#HEAD})
-                earr=(${earr//${branch#refs\/heads\/}})
-                earr=(${earr//*\/*})
+    local r=""
+    case "$count" in
+        "") # no upstream
+            r="" ;;
+        "0	0") # equal to upstream
+            r="" ;;
+        "0	"*) # ahead of upstream
+            r=" +${count#0	}" ;;
+        *"	0") # behind upstream
+            r=" -${count%	0}" ;;
+        *)	    # diverged from upstream
+            r=" +${count#*	}/-${count%	*}" ;;
+    esac
 
-                if [[ -n ${(j::)earr} ]]; then
-                    local col="%{%B%F{cyan}%}"
-                    local colres="%{%f%}"
-                    extra=" ● $col${(j:,:)earr}"
-                    extra="${extra//,/$colres, $col}%{%f%b%}"
-                else
-                    extra=""
-                fi
-            elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)..."; then
-                extra=" ● %{%B%F{cyan}%}$(git describe --all HEAD 2>/dev/null)%{%b%f%}"
+    echo -n "%{%B%f%}$r%{%b%f%}"
+}
+
+__prompt_git_geninfo() {
+    local rebase=""
+    local branch=""
+    local refs=""
+
+    if [ -f "$gitdir/rebase-merge/interactive" ]; then
+        rebase="rebase-i"
+        branch="$(cat "$gitdir/rebase-merge/head-name")"
+    elif [ -d "$gitdir/rebase-merge" ]; then
+        rebase="rebase-m"
+        branch="$(cat "$gitdir/rebase-merge/head-name")"
+    else
+        if [ -d "$gitdir/rebase-apply" ]; then
+            if [ -f "$gitdir/rebase-apply/rebasing" ]; then
+                rebase="rebase"
+            elif [ -f "$gitdir/rebase-apply/applying" ]; then
+                rebase="am"
             else
-                branch="unknown"
+                rebase="am/rebase"
             fi
-            branch="$branch"
+        elif [ -f "$gitdir/MERGE_HEAD" ]; then
+            rebase="merging"
+        elif [ -f "$gitdir/CHERRY_PICK_HEAD" ]; then
+            rebase="cherry-picking"
+        elif [ -f "$gitdir/BISECT_LOG" ]; then
+            rebase="bisecting"
         fi
 
-        local w=""
-        local i=""
-        local s=""
-        local u=""
+        if branch="$(git symbolic-ref HEAD 2>/dev/null)" ||
+            branch="$(git describe --tags --exact-match HEAD 2>/dev/null)"; then
+            refs="$(__prompt_git_refs)"
+        elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)..."; then
+            refs="$PV_REFS_DELIM$PVC_REFS$(git describe --all HEAD 2>/dev/null)$PVC_RESET"
+        else
+            branch="unknown"
+        fi
+        branch="$branch"
+    fi
+
+    echo "${branch##refs/heads/}"
+    echo "$rebase"
+    echo "$refs"
+}
+
+__prompt_git_refs() {
+    typeset -a refs_arr
+    local refs=""
+
+    refs="$(git show --pretty=format:%d -s HEAD)"
+    refs="${refs// }"
+    refs="${refs//\(}"
+    refs="${refs//\)}"
+
+    # remove redundant info
+    refs_arr=("${(s:,:)refs}")
+    refs_arr=(${refs_arr:#HEAD})
+    refs_arr=(${refs_arr//${branch#refs\/heads\/}})
+    refs_arr=(${refs_arr//*\/*})
+
+    if [[ -n ${(j::)refs_arr} ]]; then
+        local colres="%{%f%}"
+        refs="$PV_REFS_DELIM$PVC_REFS${(j:,:)refs_arr}"
+        refs="${refs//,/$colres, $PVC_REFS}$PVC_RESET"
+    else
+        refs=""
+    fi
+
+    echo -n "$refs"
+}
+
+__prompt_git_flags() {
+    local flags=""
+
+    # show dirty state
+    # --ignore-submodules can significantly speed up if submodules are present
+    git diff --no-ext-diff --quiet --exit-code --ignore-submodules || flags+="*"
+    if git rev-parse --quiet --verify HEAD >/dev/null; then
+        git diff-index --cached --quiet HEAD -- || flags+="+"
+    else
+        flags+="#"
+    fi
+
+    # show stashed changes
+    git rev-parse --verify refs/stash >/dev/null 2>&1 && flags+="$"
+
+    # show untracked files
+    if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+        flags+="%%"
+    fi
+
+    echo -n "$PVC_FLAGS$flags$PVC_RESET"
+}
+
+__prompt_git() {
+    local gitdir="$(__gitdir)"
+
+    if [ -n "$gitdir" ]; then
+        typeset -a geninfo
+        geninfo=(${(f)"$(__prompt_git_geninfo)"})
+
+        local rebase="$geninfo[0]"
+        local branch="$geninfo[1]"
+        local refs="$geninfo[2]"
+
+        if [[ -n "$rebase" ]]; then
+            rebase=" %{%F{167}%}${rebase}%{%f%}"
+        fi
+
         local c=""
-        local p=""
+        local flags=""
 
         if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
             if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
@@ -82,49 +210,60 @@ __prompt_git()
                 branch="GIT_DIR!"
             fi
         elif [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
-
-            # show dirty state
-            # --ignore-submodules can significantly speed up if submodules
-            # are present
-            git diff --no-ext-diff --quiet --exit-code --ignore-submodules || w="%{%F{cyan}%}*%{%f%}"
-            if git rev-parse --quiet --verify HEAD >/dev/null; then
-                git diff-index --cached --quiet HEAD -- || i="%{%F{cyan}%}+%{%f%}"
-            else
-                i="%{%F{cyan}%}#%{%f%}"
-            fi
-
-            # show stashed changes
-            git rev-parse --verify refs/stash >/dev/null 2>&1 && s="%{%F{cyan}%}$%{%f%}"
-
-            # show untracked files
-            if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-                u="%{%F{cyan}%}%%%{%f%}"
-            fi
-
-            if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
-                __git_ps1_show_upstream
-            fi
+            flags="$(__prompt_git_flags)"
         fi
 
-        local flags="$w$i$s$u"
-        if [[ -n "$rebase" ]]; then
-            rebase=" %{%F{167}%}${rebase}%{%f%}"
-        fi
         local svn=""
         if [[ -d ${gitdir}/svn ]]; then
             svn="s"
         fi
-        echo " %{%B%}±$svn %{%F{220}%}$c${branch##refs/heads/}${flags:+$flags}$rebase$p%{%b%f%}$extra"
+
+        local result=""
+        result+=" %{%B%}±$svn%{%b%}"
+        result+=" $PVC_BRANCH$c$branch$PVC_RESET"
+        result+="$flags"
+        result+="$rebase"
+        result+="$(__prompt_git_show_upstream)"
+        result+="$refs"
+
+        echo -n $result
     fi
 }
 
-__prompt_hg()
-{
+__prompt_hg() {
     hg prompt --angle-brackets "\
-< ☿ %{%B%F{220}%}<branch>%{%b%f%}>\
-<%{%B%F{cyan}%}<status|modified|unknown>%{%b%f%}>\
-<%{%B%F{cyan}%}<update>%{%b%f%}>\
-< ● %{%B%F{cyan}%}<tags|%{%b%f%}, %{%B%F{cyan}%}>%{%b%f%}>" 2>/dev/null
+< ☿ $PVC_BRANCH<branch>$PVC_RESET>\
+<$PVC_FLAGS<status|modified|unknown>$PVC_RESET>\
+<$PVC_FLAGS<update>$PVC_RESET>\
+<$PV_REFS_DELIM$PVC_REFS<tags|$PVC_RESET, $PVC_REFS>$PVC_RESET>" 2>/dev/null
+}
+
+__prompt_vcs_type()
+{
+    # return the type of the closest repository in the path hierarchy
+    local dir
+    while true; do
+        [ -d ${dir}.git ] && echo git && break
+        [ -d "$GIT_DIR" ] && echo git && break
+        [ -d ${dir}.hg ] && echo hg && break
+        [ "$(readlink -f ${dir:-.})" = / ] && echo NONE && break
+        dir="../$dir"
+    done
+}
+
+__prompt_vcs() {
+    local type="$(__prompt_vcs_type)"
+
+    case "$type" in
+        git)
+            __prompt_git
+            ;;
+        hg)
+            __prompt_hg
+            ;;
+        *)
+            ;;
+    esac
 }
 
 # vim: filetype=zsh

@@ -52,7 +52,7 @@ __prompt_wperm(){
 }
 
 PS1='
-%{%F{167}%B%}%n %{%f%}%}@ %{%F{220}%}%m%{%b%f%} ● %{%B%F{green}%}%<...<%~%<<%{%f%b%}$(__prompt_wperm)$(__prompt_git)$(__prompt_hg)
+%{%F{167}%B%}%n %{%f%}%}@ %{%F{220}%}%m%{%b%f%} ● %{%B%F{green}%}%<...<%~%<<%{%f%b%}$(__prompt_wperm)$(__prompt_vcs)
 %(!.#.>) '
 
 RPS1='$(__prompt_exitcode)$(__prompt_jobs)'
