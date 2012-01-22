@@ -9,7 +9,7 @@ PV_REFS_DELIM=" ● "
 PVC_FLAGS="%{%F{51}%}"
 PVC_BRANCH="%{%F{220}%}"
 PVC_REBASE="%{%F{167}%}"
-PVC_UPSTREAM="%{%f%}"
+PVC_UPSTREAM=""
 
 __gitdir () {
     if [ -n "${__git_dir-}" ]; then
