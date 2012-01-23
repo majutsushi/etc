@@ -181,7 +181,7 @@ __prompt_git_flags() {
 
     # show untracked files
     if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-        flags+="%%"
+        flags+="?"
     fi
 
     echo -n "$PVC_FLAGS$flags$PVC_RESET"
