@@ -44,6 +44,9 @@
 [diff]
 	tool = vimdiff
 
+[fetch]
+	recurseSubmodules = on-demand
+
 [mergetool "gvimdiff3"]
 	cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [mergetool "vimdiff3"]
