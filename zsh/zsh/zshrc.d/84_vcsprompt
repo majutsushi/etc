@@ -3,14 +3,24 @@
 # and
 # http://git.madduck.net/v/etc/zsh.git/blob/HEAD:/.zsh/zshrc/60_vcsprompt
 
-PVC_RESET="%{%b%f%}"
+COL_RESET="%{$reset_color%}"
 PV_REFS_PREFIX=" ● "
-PVC_REFS="%{%F{51}%}"
-PVC_REFS_DELIM=""
-PVC_FLAGS="%{%F{51}%}"
-PVC_BRANCH="%{%F{220}%}"
-PVC_REBASE="%{%F{167}%}"
-PVC_UPSTREAM=""
+
+if is43; then
+    COL_REFS="%{%F{51}%}"
+    COL_REFS_DELIM=""
+    COL_FLAGS="%{%F{51}%}"
+    COL_BRANCH="%{%F{220}%}"
+    COL_REBASE="%{%F{167}%}"
+    COL_UPSTREAM=""
+else
+    COL_REFS="%{[38;05;51m%}"
+    COL_REFS_DELIM=""
+    COL_FLAGS="%{[38;05;51m%}"
+    COL_BRANCH="%{[38;05;220m%}"
+    COL_REBASE="%{[38;05;167m%}"
+    COL_UPSTREAM=""
+fi
 
 __gitdir () {
     if [ -n "${__git_dir-}" ]; then
@@ -92,7 +102,7 @@ __prompt_git_show_upstream() {
             r=" +${count#*	}/-${count%	*}" ;;
     esac
 
-    echo -n "$PVC_UPSTREAM$r$PVC_RESET"
+    echo -n "$COL_UPSTREAM$r$COL_RESET"
 }
 
 __prompt_git_geninfo() {
@@ -127,7 +137,7 @@ __prompt_git_geninfo() {
             branch="$(git describe --tags --exact-match HEAD 2>/dev/null)"; then
             refs="$(__prompt_git_refs)"
         elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)..."; then
-            refs="$PV_REFS_PREFIX$PVC_REFS$(git describe --all HEAD 2>/dev/null)$PVC_RESET"
+            refs="$PV_REFS_PREFIX$COL_REFS$(git describe --all HEAD 2>/dev/null)$COL_RESET"
         else
             branch="unknown"
         fi
@@ -155,8 +165,8 @@ __prompt_git_refs() {
     refs_arr=(${refs_arr//*\/*})
 
     if [[ -n ${(j::)refs_arr} ]]; then
-        refs="$PV_REFS_PREFIX$PVC_REFS${(j:,:)refs_arr}"
-        refs="${refs//,/$PVC_RESET$PVC_REFS_DELIM, $PVC_RESET$PVC_REFS}$PVC_RESET"
+        refs="$PV_REFS_PREFIX$COL_REFS${(j:,:)refs_arr}"
+        refs="${refs//,/$COL_RESET$COL_REFS_DELIM, $COL_RESET$COL_REFS}$COL_RESET"
     else
         refs=""
     fi
@@ -184,7 +194,7 @@ __prompt_git_flags() {
         flags+="?"
     fi
 
-    echo -n "$PVC_FLAGS$flags$PVC_RESET"
+    echo -n "$COL_FLAGS$flags$COL_RESET"
 }
 
 __prompt_git() {
@@ -199,7 +209,7 @@ __prompt_git() {
         local refs="$geninfo[3]"
 
         if [[ -n "$rebase" ]]; then
-            rebase=" $PVC_REBASE${rebase}$PVC_RESET"
+            rebase=" $COL_REBASE${rebase}$COL_RESET"
         fi
 
         local c=""
@@ -222,7 +232,7 @@ __prompt_git() {
 
         local result=""
         result+=" ±$svn"
-        result+=" $PVC_BRANCH$c$branch$PVC_RESET"
+        result+=" $COL_BRANCH$c$branch$COL_RESET"
         result+="$flags"
         result+="$rebase"
         result+="$(__prompt_git_show_upstream)"
@@ -234,10 +244,10 @@ __prompt_git() {
 
 __prompt_hg() {
     hg prompt --angle-brackets "\
-< ☿ $PVC_BRANCH<branch>$PVC_RESET>\
-<$PVC_FLAGS<status|modified|unknown>$PVC_RESET>\
-<$PVC_FLAGS<update>$PVC_RESET>\
-<$PV_REFS_PREFIX$PVC_REFS<tags|$PVC_RESET$PVC_REFS_DELIM, $PVC_RESET$PVC_REFS>$PVC_RESET>" 2>/dev/null
+< ☿ $COL_BRANCH<branch>$COL_RESET>\
+<$COL_FLAGS<status|modified|unknown>$COL_RESET>\
+<$COL_FLAGS<update>$COL_RESET>\
+<$PV_REFS_PREFIX$COL_REFS<tags|$COL_RESET$COL_REFS_DELIM, $COL_RESET$COL_REFS>$COL_RESET>" 2>/dev/null
 }
 
 __prompt_vcs_type()

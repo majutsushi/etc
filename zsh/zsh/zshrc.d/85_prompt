@@ -36,12 +36,29 @@ preexec () {
     esac
 }
 
+COL_RESET="%{$reset_color%}"
+COL_BOLD="%{$bold_color%}"
+
+if is43; then
+    COL_USER='%{%F{167}%}'
+    COL_HOST='%{%F{220}%}'
+    COL_DIR='%{%F{green}%}'
+    COL_JOBS='%{%B%F{cyan}%}'
+    COL_EXIT='%{%B%F{red}%}'
+else
+    COL_USER='%{[38;05;167m%}'
+    COL_HOST='%{[38;05;220m%}'
+    COL_DIR="%{$fg[green]%}"
+    COL_JOBS="%{$bold_color$fg[cyan]%}"
+    COL_EXIT="%{$bold_color$fg[red]%}"
+fi
+
 __prompt_jobs() {
-    echo '%(1j.%{%B%F{cyan}%}%j%{%b%f%}.)'
+    echo "%(1j.${COL_JOBS}%j${COL_RESET}.)"
 }
 
 __prompt_exitcode() {
-    echo '%(0?..%{%B%F{red}%}%?%{%b%f%})%(1j. .)'
+    echo "%(0?..${COL_EXIT}%?${COL_RESET})%(1j. .)"
 }
 
 # test if we have writing permission for the current directory
@@ -52,12 +69,12 @@ __prompt_wperm(){
 }
 
 PS1='
-%{%F{167}%}%n %{%f%}%}@ %{%F{220}%}%m%{%b%f%} ● %{%F{green}%}%<...<%~%<<%{%f%b%}$(__prompt_wperm)$(__prompt_vcs)
+${COL_USER}%n ${COL_RESET}@ ${COL_HOST}%m${COL_RESET} ● ${COL_DIR}%<...<%~%<<${COL_RESET}$(__prompt_wperm)$(__prompt_vcs)
 %(!.#.>) '
 
 RPS1='$(__prompt_exitcode)$(__prompt_jobs)'
 
-PS2="%{%B%}%_%{%b%} %(!.#.>) "
+PS2="${COL_BOLD}%_${COL_RESET} %(!.#.>) "
 PS3='?# '         # selection prompt used within a select loop.
 PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
 
