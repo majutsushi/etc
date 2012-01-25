@@ -1,9 +1,18 @@
-precmd () {
+precmd() {
     # handle deleted and then recreated directories
     if ! [[ . -ef $PWD ]]; then
         if ! cd -- "${PWD}" >/dev/null 2>&1; then
             echo "W: ${PWD} does not exist anymore"
             return 1
+        fi
+    fi
+
+    # adjust screen window title
+    if [[ "$TERM" == screen* ]]; then
+        if [[ -n "$SSH_CLIENT" ]]; then
+            print -Pn "\ek%m\e\\"
+        else
+            echo -ne "\ekzsh\e\\"
         fi
     fi
 
@@ -13,22 +22,16 @@ precmd () {
         print -Pn "\e]0;%n@%m: %~\a"
         ;;
     esac
-    if [[ "$TERM" == screen* ]]; then
-        if [[ -n "$SSH_CLIENT" ]]; then
-            print -Pn "\ek%m\e\\"
-        else
-            echo -ne "\ekzsh\e\\"
-        fi
-    fi
 }
 
-preexec () {
+preexec() {
     # get the name of the program currently running and hostname of local machine
     # set screen window title if running in a screen
     if [[ "$TERM" == screen* ]]; then
         local CMD="${1[(wr)^(*=*|sudo|(auto)?ssh|-*)]//*\//}${SSH_CLIENT:+@${HOST//.*/}}"
         echo -ne "\ek$CMD\e\\"
     fi
+
     # adjust title of xterm
     case $TERM in (xterm*|rxvt*|screen*)
         print -Pn "\e]0;%n@%m: $1\a"
@@ -45,12 +48,14 @@ if is43; then
     COL_DIR='%{%F{green}%}'
     COL_JOBS='%{%B%F{cyan}%}'
     COL_EXIT='%{%B%F{red}%}'
+    COL_WPERM='%{%B%F{red}%}'
 else
     COL_USER='%{[38;05;167m%}'
     COL_HOST='%{[38;05;220m%}'
     COL_DIR="%{$fg[green]%}"
     COL_JOBS="%{$bold_color$fg[cyan]%}"
     COL_EXIT="%{$bold_color$fg[red]%}"
+    COL_WPERM="%{$bold_color$fg[red]%}"
 fi
 
 __prompt_jobs() {
@@ -62,9 +67,9 @@ __prompt_exitcode() {
 }
 
 # test if we have writing permission for the current directory
-__prompt_wperm(){
-    if ! [[ -w "$(pwd)" ]]; then
-        echo "%{%B%F{red}%}!%{%b%f%}"
+__prompt_wperm() {
+    if ! [[ -w "$PWD" ]]; then
+        echo "${COL_WPERM}!${COL_RESET}"
     fi
 }
 
