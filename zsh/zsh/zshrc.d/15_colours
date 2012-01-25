@@ -1,0 +1,27 @@
+# set up an associative array with all 255 colours
+
+typeset -a colours
+colours=("black" "red" "green" "yellow" "blue" "magenta" "cyan" "white")
+
+typeset -gA pcol
+
+if is43; then
+    for (( i = 1; i < 254; i += 1 )); do
+        pcol[$i]="%{%F{${i}}%}"
+    done
+    for c in $colours; do
+        pcol[$c]="%{%F{${c}}%}"
+    done
+else
+    for (( i = 1; i < 254; i += 1)); do
+        pcol[$i]="%{[38;05;${i}m%}"
+    done
+    for c in $colours; do
+        pcol[$c]="%{$fg[${c}]%}"
+    done
+fi
+
+pcol[bold]="%{$bold_color%}"
+pcol[reset]="%{$reset_color%}"
+
+# vim: filetype=zsh
