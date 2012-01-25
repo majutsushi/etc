@@ -194,9 +194,9 @@ __prompt_git() {
         typeset -a geninfo
         geninfo=(${(f)"$(__prompt_git_geninfo)"})
 
-        local rebase="$geninfo[0]"
         local branch="$geninfo[1]"
-        local refs="$geninfo[2]"
+        local rebase="$geninfo[2]"
+        local refs="$geninfo[3]"
 
         if [[ -n "$rebase" ]]; then
             rebase=" $PVC_REBASE${rebase}$PVC_RESET"
