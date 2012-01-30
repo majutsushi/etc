@@ -192,14 +192,14 @@ __prompt_git() {
 
     if [ -n "$gitdir" ]; then
         typeset -a geninfo
-        geninfo=(${(f)"$(__prompt_git_geninfo)"})
+        geninfo=("${(@f)$(__prompt_git_geninfo)}")
 
         local branch="$geninfo[1]"
         local rebase="$geninfo[2]"
         local refs="$geninfo[3]"
 
         if [[ -n "$rebase" ]]; then
-            rebase=" $COL_REBASE${rebase}${pcol[reset]}"
+            rebase=" ${COL_REBASE}${rebase}${pcol[reset]}"
         fi
 
         local c=""
