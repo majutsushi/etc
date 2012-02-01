@@ -56,8 +56,6 @@ export PATH
 # cdpath=(.. ~)
 
 fpath=($ZDOTDIR/func $fpath)
-fpath=($ZDOTDIR/func/VCS_Info $fpath)
-fpath=($ZDOTDIR/func/VCS_Info/Backends $fpath)
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath
