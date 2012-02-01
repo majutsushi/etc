@@ -5,6 +5,9 @@
 #    options("device" = "quartz")
 }
 
+setHook(packageEvent("grDevices", "onLoad"),
+        function(...) grDevices::X11.options(type = "cairo"))
+
 # tikz
 options(tikzMetricsDictionary = "~/.cache/tikzMetricsDictionary")
 options(tikzDocumentDeclaration = "\\documentclass[12pt]{book}")
@@ -25,3 +28,5 @@ options(tikzLatexPackages = c(
     "\\usepackage[tracking=smallcaps]{microtype}",
     "\\SetTracking{ encoding = *, shape = sc}{ 50 }"
 ))
+
+# vim: filetype=r
