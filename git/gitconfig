@@ -3,7 +3,7 @@
 	email = jan@majutsushi.net
 
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = ~/.etc/git/gitignore
 	fsyncobjectfiles = false
 
 [alias]
