@@ -106,7 +106,7 @@ zstyle ':completion:*:urls' local 'www' '/var/www/' 'public_html'
 zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/cache/
 
 # host completion /* add brackets as vim can't parse zsh's complex cmdlines 8-) {{{ */
-if is42 ; then
+if is-at-least 4.2; then
     [[ -r ~/.ssh/known_hosts ]] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
     [[ -r /etc/hosts ]] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
 else

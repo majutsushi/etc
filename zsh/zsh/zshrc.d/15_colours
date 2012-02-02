@@ -5,7 +5,7 @@ colours=("black" "red" "green" "yellow" "blue" "magenta" "cyan" "white")
 
 typeset -gA pcol
 
-if is43; then
+if is-at-least 4.3; then
     for (( i = 1; i < 254; i += 1 )); do
         pcol[$i]="%{%F{${i}}%}"
     done

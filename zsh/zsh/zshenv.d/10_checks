@@ -1,5 +1,7 @@
 # check for versions (compatibility reasons)
 
+autoload -U is-at-least
+
 islinux() {
     [[ $OSTYPE == linux* ]] && return 0
     return 1
@@ -19,24 +21,6 @@ isecs() {
 }
 
 issolaris && return 0
-
-is42(){
-    [[ $ZSH_VERSION == 4.<2->* || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
-is43(){
-    [[ $ZSH_VERSION == 4.<3->* || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
-is433(){
-    [[ $ZSH_VERSION == 4.3.<3->* || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
-
-has_vcsinfo() {
-    [[ -n $VCS_INFO_backends ]] && return 0
-    return 1
-}
 
 # check for user, if not running as root set $SUDO to sudo
 (( EUID != 0 )) && SUDO='sudo' || SUDO=''

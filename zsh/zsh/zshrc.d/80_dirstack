@@ -23,7 +23,7 @@ fi
 chpwd() {
     local -ax my_stack
     my_stack=( ${PWD} ${dirstack} )
-    if is42 ; then
+    if is-at-least 4.2; then
         builtin print -l ${(u)my_stack} >! ${DIRSTACKFILE}
     else
         uprint my_stack >! ${DIRSTACKFILE}
