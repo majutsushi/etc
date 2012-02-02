@@ -1,0 +1,127 @@
+if is-at-least 4.3.4; then
+
+__set_screen_title() {
+    print -nP $'\ek'$1$'\e'\\
+}
+_update_screen_title() {
+    case $TERM in (screen*)
+        if [[ -n "$1" ]]; then
+            __set_screen_title "${1}"
+        elif [[ -n "$SSH_CLIENT" ]]; then
+            __set_screen_title "%m"
+        else
+            __set_screen_title "zsh"
+        fi
+        ;;
+    esac
+}
+precmd_functions+=_update_screen_title
+
+
+__set_xterm_title() {
+    print -nP $'\e]0;'$1$'\a'
+}
+_update_xterm_title() {
+    case $TERM in (xterm*|rxvt*|screen*)
+        if [[ -n "$1" ]]; then
+            __set_xterm_title "%n@%m: $1 | %~"
+        else
+            __set_xterm_title "%n@%m: %~"
+        fi
+        ;;
+    esac
+}
+precmd_functions+=_update_xterm_title
+
+
+__simplify_cmd() {
+    # get first word of command that doesn't match the pattern
+    local pattern="^(*=*|sudo|(auto)?ssh|-*)"
+    local cmd="${1[(wr)${pattern}]}"
+
+    # only retain part after last /
+    cmd="${cmd//*\//}"
+
+    # if running under ssh append @host
+    if [[ -n $SSH_CLIENT ]]; then
+        cmd+="@$(print -nP %m)"
+    fi
+
+    print -n "$cmd"
+}
+
+# adapted from
+# http://git.madduck.net/v/etc/zsh.git/blob/HEAD:/.zsh/zshrc/85_xtermtitle
+_update_exec_titles() {
+    # split up the command line
+    local -a cmd; cmd=(${(z)1})
+
+    # Construct a command that will output the desired job number.
+    case $cmd[1] in
+        fg) if (( $#cmd == 1 )); then
+                # No arguments, must find the current job
+                cmd=(builtin jobs -l %+)
+            else
+                # Replace the command name, ignore extra args.
+                cmd=(builtin jobs -l ${(Q)cmd[2]})
+            fi;;
+        %*) cmd=(builtin jobs -l ${(Q)cmd[1]});; # Same as "else" above
+        *) # Not resuming a job,
+            _update_xterm_title "$cmd"
+            _update_screen_title "$(__simplify_cmd "$cmd")"
+            return;;                        # so we're all done
+    esac
+
+    local -A jt; jt=(${(kv)jobtexts})       # Copy jobtexts for subshell
+
+    # Run the command, read its output, and look up the jobtext.
+    # Could parse $rest here, but $jobtexts (via $jt) is easier.
+    $cmd >>(
+        read num rest
+        cmd=(${(z)${(e):-\$jt$num}})
+        _update_xterm_title "$cmd"
+        _update_screen_title "$(__simplify_cmd "$cmd")"
+    )
+}
+preexec_functions+=_update_exec_titles
+
+
+# Old version
+else # < 4.3.4
+
+precmd() {
+    # adjust screen window title
+    if [[ "$TERM" == screen* ]]; then
+        if [[ -n "$SSH_CLIENT" ]]; then
+            print -Pn "\ek%m\e\\"
+        else
+            echo -ne "\ekzsh\e\\"
+        fi
+    fi
+
+    # adjust title of xterm
+    # see http://www.faqs.org/docs/Linux-mini/Xterm-Title.html
+    case $TERM in (xterm*|rxvt*|screen*)
+        print -Pn "\e]0;%n@%m: %~\a"
+        ;;
+    esac
+}
+
+preexec() {
+    # get the name of the program currently running and hostname of local machine
+    # set screen window title if running in a screen
+    if [[ "$TERM" == screen* ]]; then
+        local CMD="${1[(wr)^(*=*|sudo|(auto)?ssh|-*)]//*\//}${SSH_CLIENT:+@${HOST//.*/}}"
+        echo -ne "\ek$CMD\e\\"
+    fi
+
+    # adjust title of xterm
+    case $TERM in (xterm*|rxvt*|screen*)
+        print -Pn "\e]0;%n@%m: $1\a"
+        ;;
+    esac
+}
+
+fi
+
+# vim: filetype=zsh

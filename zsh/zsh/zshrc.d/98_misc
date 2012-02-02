@@ -1,0 +1,12 @@
+# handle deleted and then recreated directories
+_dir_cycle() {
+    if ! [[ . -ef $PWD ]]; then
+        if ! cd -- "${PWD}" >/dev/null 2>&1; then
+            echo "W: ${PWD} does no longer exist"
+            return 1
+        fi
+    fi
+}
+precmd_functions+=_dir_cycle
+
+# vim: filetype=zsh
