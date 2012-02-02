@@ -244,6 +244,10 @@ __prompt_vcs_type()
 {
     # return the type of the closest repository in the path hierarchy
     local dir
+
+    # protect against infinite loop if current directory got deleted
+    [[ ! -d "$PWD" ]] && echo NONE && return
+
     while true; do
         [ -d ${dir}.git ] && echo git && break
         [ -d "$GIT_DIR" ] && echo git && break
