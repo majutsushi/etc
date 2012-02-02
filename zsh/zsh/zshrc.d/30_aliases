@@ -33,14 +33,6 @@ fi
 alias ls="LC_COLLATE=POSIX ls $_ls_opts"
 alias ll="ls -l"
 alias l="ls -lA"
-alias lad='ls -d .*(/)'                # only show dot-directories
-alias lsa='ls -a .*(.)'                # only show dot-files
-alias lss='ls -l *(s,S,t)'             # only files with setgid/setuid/sticky flag
-alias lsl='ls -l *(@[1,10])'           # only symlinks
-alias lsx='ls -l *(*[1,10])'           # only executables
-alias lsw='ls -ld *(R,W,X.^ND/)'       # world-{readable,writable,executable} files
-alias lsd='ls -d *(/)'                 # only show directories
-alias lse='ls -d *(/^F)'               # only show empty directories
 
 if is_root; then
     INTERACTIVE="-i"
