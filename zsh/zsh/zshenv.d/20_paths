@@ -1,31 +1,24 @@
-# some ideas from http://www.memoryhole.net/kyle/2008/03/my_bashrc.html
-
-add_to_path() {
-    pos=$1
-    oldpath=$2
-    dir=$3
-
-    if [[ -n "$dir" && "$dir" != "." && -d "$dir" && -x "$dir" ]]; then
-        dir=$(cd "$dir" && pwd -P)
-
-        if [[ -z $(eval "echo \"\$$oldpath\"") ]]; then
-            eval "$oldpath=$dir"
-        else
-            case $pos in
-                pre)  eval "$oldpath=$dir:\$$oldpath" ;;
-                post) eval "$oldpath=\$$oldpath:$dir" ;;
-            esac
+# adapted from
+# http://zsh.sourceforge.net/Contrib/startup/users/debbiep/dot.zshenv
+rationalize_path() {
+    # Note that this works only on arrays, not colon-delimited strings.
+    # Not that this is a problem now that there is typeset -T.
+    local dir
+    local build
+    build=()
+    # Evil quoting to survive an eval and to make sure that
+    # this works even with variables containing IFS characters, if I'm
+    # crazy enough to setopt shwordsplit.
+    eval '
+    foreach dir in "$'"$1"'[@]"
+    do
+        if [[ -n "$dir" && "$dir" != "." && -d "$dir" && -x "$dir" ]]; then
+#             dir=$(cd "$dir" && pwd -P)
+            build=("$build[@]" "$dir")
         fi
-    fi
-}
-
-verify_path() {
-    TMPPATH=
-    for i in $path; do
-        add_to_path post TMPPATH $i
     done
-    PATH=$TMPPATH
-    unset TMPPATH
+    '"$1"'=( "$build[@]" )
+    '
 }
 
 if [[ -d /opt/intel ]]; then
@@ -33,35 +26,48 @@ if [[ -d /opt/intel ]]; then
     source /opt/intel/idb/10.0.023/bin/idbvars.sh
 fi
 
-verify_path
+path=(
+    "$HOME/bin"
+    "$HOME/.etc/bin"
+    "$HOME/usr/bin"
+    "$HOME/.local/bin"
 
-add_to_path post PATH /usr/local/sbin
-add_to_path post PATH /sbin
-add_to_path post PATH /usr/sbin
+    /var/lib/gems/1.8/bin/
 
-# Macports
-add_to_path pre PATH /opt/local/bin
-add_to_path pre PATH /opt/local/sbin
+    # Macports
+    /opt/local/bin
+    /opt/local/sbin
 
-add_to_path pre PATH "/var/lib/gems/1.8/bin/"
-add_to_path pre PATH $HOME/.local/bin
-add_to_path pre PATH $HOME/usr/bin
-add_to_path pre PATH $HOME/.etc/bin
+    "$path[@]"
 
-# make sure $HOME/bin has the highest priority
-add_to_path pre PATH $HOME/bin
-
-export PATH
-
-# cdpath=(.. ~)
+    /usr/local/sbin
+    /sbin
+    /usr/sbin
+)
+typeset -gxU path
+rationalize_path path
 
 fpath=($ZDOTDIR/func $fpath)
+typeset -gxU fpath
+rationalize_path fpath
 
-# automatically remove duplicates from these arrays
-typeset -U path cdpath fpath manpath
+# cdpath=(.. ~)
+typeset -gxU cdpath
+rationalize_path cdpath
 
-add_to_path post LD_LIBRARY_PATH $HOME/lib
-export LD_LIBRARY_PATH
+if [[ -z "$MANPATH" ]] && have manpath; then
+    MANPATH="$(manpath)"
+fi
+typeset -gxU manpath
+rationalize_path manpath
+
+typeset -gxT LD_LIBRARY_PATH ld_library_path
+ld_library_path=(
+    "$HOME/lib"
+    "$ld_library_path[@]"
+)
+typeset -gxU ld_library_path
+rationalize_path ld_library_path
 
 export XDG_DATA_HOME=$HOME/.local/share
 # export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
