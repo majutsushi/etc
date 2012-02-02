@@ -419,7 +419,7 @@ color subject           "default"  "default"
 color thread_number     "default"  "default"  "bold"
 color tilde             "color152" "default"  "bold"
 color tree              "brown"    "default"  "bold"
-color underlinetext     "blue"     "default"  "underline"
+color underlinetext     "default"  "default"  "underline"
 color url               "default"  "default"  "bold"
 color verbatim          "green"    "default"
 
