@@ -38,7 +38,7 @@ local CURDIRSUDO=""
 if [[ $NBFILES > 0 ]] ; then
     print -l $FILES
     local ans
-    echo -n "Remove these files? [y/n] "
+    echo -n "Remove these files? [y/N] "
     read -q ans; echo
     if [[ $ans == "y" ]] ; then
         $CURDIRSUDO rm ${FILES}
