@@ -632,8 +632,10 @@ endfunction
 function! LoadDirLocals()
     let configs = reverse(findfile('.dir-locals.vim', '.;', -1))
     for config in configs
-"        execute 'sandbox source ' . config
-        execute 'source ' . config
+        if filereadable(config)
+"            execute 'sandbox source ' . config
+            execute 'source ' . config
+        endif
     endfor
 endfunction
 
