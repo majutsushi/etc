@@ -1,4 +1,5 @@
 PATH=/bin:/usr/bin:/usr/local/bin:$HOME/bin
+SHELL=/bin/sh
 VERBOSE=off
 MAILDIR=$HOME/Maildir
 DEFAULT=$HOME/Maildir/
