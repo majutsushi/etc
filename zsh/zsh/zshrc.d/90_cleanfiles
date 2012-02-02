@@ -1,0 +1,42 @@
+# remove files we never want to keep around
+#
+# Copyright © 1994–2008 martin f. krafft <madduck@madduck.net>
+# Released under the terms of the Artistic Licence 2.0
+
+typeset -la rmfiles
+
+# rmfiles+=~/plugin131.trace
+# rmfiles+=~/minicom.log
+# rmfiles+=~/.cshrc
+# rmfiles+=~/java.log.*(N)
+rmfiles+=~/unison.log
+rmfiles+=~/.bzr.log
+rmfiles+=~/.fonts.cache-1
+# rmfiles+=~/.gksu.lock
+# rmfiles+=~/.*.sw[mnop](N)
+# rmfiles+=~/.viminfo
+rmfiles+=~/.bash_history
+rmfiles+=~/core
+# rmfiles+=~/nohup.out
+# rmfiles+=~/typescript
+# rmfiles+=~/jpilot.log
+# rmfiles+=~/srtp.log
+# rmfiles+=~/hs_err_pid[0-9]*.log
+
+typeset -la _rmfiles
+
+for f in ${~rmfiles}; do
+  [[ -f $f ]] || continue
+  _rmfiles+="$f"
+done
+
+
+if (( $#_rmfiles )); then
+  _rmfiles=(${_rmfiles#$HOME/})
+  info "Removing files: ${_rmfiles[@]}..."
+  rm -f ${_rmfiles[@]}
+fi
+
+unset _rmfiles
+
+# vim:ft=zsh
