@@ -11,18 +11,18 @@
 . $ZDOTDIR/logging
 
 sourcedir() {
-  if [ ! -d "$1" ]; then
-    error "no such directory: $1"
-    return 1
-  fi
-#  debug "sourcing directory ${1#$ZDOTDIR/}"
-  for f in "$1"/*(.N,@N); do
-    case "$f" in
-      *~|*.bak|*.old|*.sw?|*.zwc|*.disabled) continue;;
-    esac
-#    debug "  sourcing file $f"
-    source "$f"
-  done
+    if [ ! -d "$1" ]; then
+        error "no such directory: $1"
+        return 1
+    fi
+#     debug "sourcing directory ${1#$ZDOTDIR/}"
+    for f in "$1"/*(.N,@N); do
+        case "$f" in
+            *~|*.bak|*.old|*.sw?|*.zwc|*.disabled) continue;;
+        esac
+#         debug "  sourcing file $f"
+        source "$f"
+    done
 }
 
 # vim:ft=zsh
