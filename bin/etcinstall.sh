@@ -38,6 +38,8 @@ xlink .etc/screen/screenrc .screenrc
 
 xlink .etc/slrn/slrnrc .slrnrc
 
+xlink .etc/urxvt .urxvt
+
 xlink .etc/vim/vimrc      .vimrc
 xlink .etc/vim/vim        .vim
 xlink .etc/vim/vimplaterc .vimplaterc
