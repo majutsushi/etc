@@ -1,8 +1,14 @@
+# start screen if not already in it or running a dumb terminal
+
 # 'rxvt' is needed for dvtm
-if [[ "$TERM" != screen* ]] && [[ "$TERM" != "rxvt" ]] &&
-   [[ "$TERM" != "dumb" ]] && [[ "$TERM" != "vt100" ]] && ! isecs; then
-    export ORIGTERM=$TERM
-    screen -m
-fi
+case $TERM in
+    (screen*|rxvt|dumb|vt100)
+        ;;
+    *) if ! isecs; then
+          export ORIGTERM=$TERM
+          screen -m
+       fi
+       ;;
+esac
 
 # vim: filetype=zsh
