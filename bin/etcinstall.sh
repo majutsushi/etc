@@ -13,6 +13,10 @@ xlink() {
 OLDPWD=$PWD
 cd $HOME
 
+xlink .etc/bash/bashrc       .bashrc
+xlink .etc/bash/bash_profile .bash_profile
+xlink .etc/bash/bash_logout  .bash_logout
+
 xlink .etc/emacs/emacs   .emacs
 xlink .etc/emacs/emacs.d .emacs.d
 

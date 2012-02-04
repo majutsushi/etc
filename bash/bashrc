@@ -1,0 +1,40 @@
+# minimal bashrc for starting zsh or in case zsh is not available
+
+. /etc/bash.bashrc
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# disable XON/XOFF flow control (^s/^q)
+stty ixoff
+stty -ixon
+
+if [[ -f /usr/share/bash-completion/bash_completion ]]; then
+    . /usr/share/bash-completion/bash_completion
+fi
+
+umask 0022
+
+function bk() {
+    cp -b ${1} ${1}_$(date --iso-8601=m)
+}
+
+export PATH=$HOME/bin:$PATH
+
+export PS1="\u@\h:\w \$ "
+
+export LS_OPTIONS='--color=auto -F'
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias l='ls $LS_OPTIONS -lA'
+
+if [[ -f ~/.bashrc.local ]]; then
+    . ~/.bashrc.local
+fi
+
+case $- in
+    *i*) if shopt -q login_shell && command -v zsh >/dev/null 2>&1; then
+             exec zsh -l
+         fi
+         ;;
+esac
