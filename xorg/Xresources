@@ -4,6 +4,37 @@
 
 !*fontList: -*-helvetica-medium-r-normal-*-*-80-*-*-*-*-*-*
 
+
+! *** common terminal settings ***
+*foreground: white
+*background: #303030
+! Black
+*color0:  #2E3436
+*color8:  #555753
+! Red
+*color1:  #D75F5F
+*color9:  #ef2929
+! Green
+*color2:  #87FF87
+*color10: #8AE234
+! Yellow
+*color3:  #FFD700
+*color11: #FCE94F
+! Blue
+*color4:  #87D7D7
+*color12: #729fcf
+! Magenta
+*color5:  #75507B
+*color13: #AD7FA8
+! Cyan
+*color6:  #06989A
+*color14: #34E2E2
+! White
+*color7:  #D3D7CF
+*color15: #EEEEEC
+
+
+! *** URxvt ***
 URxvt.font: terminus-12
 URxvt.boldFont: -maju-terminus-bold-r-normal--12-120-72-72-c-60-iso10646-1
 !URxvt.italicFont:
@@ -11,7 +42,7 @@ URxvt.boldFont: -maju-terminus-bold-r-normal--12-120-72-72-c-60-iso10646-1
 
 URxvt.reverseVideo: false
 !URxvt.foreground: grey90
-URxvt.foreground: white
+!URxvt.foreground: white
 
 ! for real transparency
 !URxvt.depth: 32
@@ -19,78 +50,10 @@ URxvt.foreground: white
 !URxvt.background: rgba:0000/0000/0000/8888
 ! for fake transparency
 URxvt.depth: 24
-URxvt.background: #303030
+!URxvt.background: #303030
 !URxvt.transparent: true
 !URxvt.tintColor: white
 !URxvt.shading: 15
-
-! Black
-URxvt.color0:      #2E3436
-URxvt.color8:      #555753
-!URxvt.color8:      #626262
-! Red
-!URxvt.color1:      #cc0000
-!URxvt.color1:      #CD5C5C
-URxvt.color1:      #D75F5F
-URxvt.color9:      #ef2929
-! Green
-!URxvt.color2:      #4E9A06
-URxvt.color2:      #87FF87
-URxvt.color10:     #8AE234
-! Yellow
-!URxvt.color3:      #C4A000
-URxvt.color3:      #FFD700
-URxvt.color11:     #FCE94F
-! Blue
-!URxvt.color4:      #3465a4
-URxvt.color4:      #87D7D7
-URxvt.color12:     #729fcf
-! Magenta
-URxvt.color5:      #75507B
-URxvt.color13:     #AD7FA8
-! Cyan
-URxvt.color6:      #06989A
-URxvt.color14:     #34E2E2
-! White
-URxvt.color7:      #D3D7CF
-!URxvt.color7:      #AFAFAF
-!URxvt.color7:      #626262
-URxvt.color15:     #EEEEEC
-!URxvt.color15:     #AFAFAF
-
-! molokai colours
-!urxvt.foreground:        white
-!urxvt.background:        black
-!urxvt.cursorColor:       #ff9900
-!urxvt.cursorColor2:      #000000
-!urxvt.colorBD:           #ffffff
-!urxvt.colorIT:           #bbbbbb
-!urxvt.colorUL:           #ff9900
-!urxvt.underlineColor:    #999999
-!*color0:     #262729
-!*color8:     #554444
-
-!*color1:    #F92672
-!*color9:    #FF669D
-
-!*color2:    #A6E22E
-!*color10:   #BEED5F
-
-!*color3:    #FD971F
-!*color11:   #FD971F
-
-!*color4 : #4682B4
-!*color12: #4682B4
-
-!*color5 : #AE81FF
-!*color13: #AE81FF
-
-!*color6 : #89b6e2
-!*color14: #46a4ff
-
-!*color7 : #FFFFFF
-!*color15: #FFFFF
-
 
 URxvt.cursorColor: yellow
 URxvt.underlineColor: yellow
@@ -140,37 +103,12 @@ URxvt.keysym.C-M-b: perl:bidi toggle show
 !URxvt.keysym.F3: \033[13~
 !URxvt.keysym.F4: \033[14~
 
-xterm*vt100.foreground: white
-xterm*vt100.background: #303030
 
-! Black
-xterm*vt100.color0:     #2E3436
-xterm*vt100.color8:     #555753
-! Red
-xterm*vt100.color1:     #D75F5F
-xterm*vt100.color9:     #ef2929
-! Green
-xterm*vt100.color2:     #87FF87
-xterm*vt100.color10:    #8AE234
-! Yellow
-xterm*vt100.color3:     #FFD700
-xterm*vt100.color11:    #FCE94F
-! Blue
-xterm*vt100.color4:     #87D7D7
-xterm*vt100.color12:    #729fcf
-! Magenta
-xterm*vt100.color5:     #75507B
-xterm*vt100.color13:    #AD7FA8
-! Cyan
-xterm*vt100.color6:     #06989A
-xterm*vt100.color14:    #34E2E2
-! White
-xterm*vt100.color7:     #D3D7CF
-xterm*vt100.color15:    #EEEEEC
+! *** XTerm ***
 
-xterm*vt100.geometry:   100x50
-xterm*vt100.visualBell: true
-xterm*vt100.metaSendsEscape: true
+*XTerm*vt100.geometry:   100x50
+*XTerm*vt100.visualBell: true
+*XTerm*vt100.metaSendsEscape: true
 
 yeahconsole.term: urxvt
 yeahconsole.screenWidth: 600
