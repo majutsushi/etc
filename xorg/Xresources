@@ -6,6 +6,8 @@
 
 
 ! *** common terminal settings ***
+*loginShell: true
+
 *foreground: white
 *background: #303030
 ! Black
