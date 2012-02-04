@@ -400,6 +400,31 @@ augroup END
 
 " Functions {{{1
 
+" UNIX helpers {{{2
+" From https://github.com/tpope/vim-eunuch/blob/master/plugin/eunuch.vim
+command! -bar -bang Remove :
+      \ let v:errmsg = '' |
+      \ let s:file = fnamemodify(bufname(<q-args>),':p') |
+      \ execute 'bdelete<bang>' |
+      \ if v:errmsg ==# '' && delete(s:file) |
+      \ echoerr 'Failed to delete "'.s:file.'"' |
+      \ endif |
+      \ unlet s:file
+
+command! -bar -nargs=1 -bang -complete=file Rename :
+      \ let s:file = expand('%:p') |
+      \ setlocal modified |
+      \ saveas<bang> <args> |
+      \ if s:file !=# expand('%:p') |
+      \ call delete(s:file) |
+      \ endif |
+      \ unlet s:file
+
+command! -bar SudoWrite :
+      \ setlocal nomodified |
+      \ silent exe 'write !sudo tee % >/dev/null' |
+      \ let &modified = v:shell_error
+
 " AutoMkDir() {{{2
 " Automatically create dir to write file to if it doesn't exist
 function! AutoMkDir()
@@ -860,9 +885,6 @@ function! ToggleFullscreen()
     silent !wmctrl -r :ACTIVE: -b toggle,fullscreen,above
 endfunction
 nnoremap <silent> <F11> :call ToggleFullscreen()<CR>
-
-" sudo write {{{2
-command! -bar -nargs=0 W  silent! exec "write !sudo tee % >/dev/null"  | silent! edit!
 
 " Options {{{1
 
