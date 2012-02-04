@@ -62,6 +62,7 @@ xlink .etc/colorgccrc .colorgccrc
 xlink .etc/ctags      .ctags
 xlink .etc/gdbinit    .gdbinit
 xlink .etc/indent.pro .indent.pro
+xlink .etc/inputrc    .inputrc
 xlink .etc/irbrc      .irbrc
 xlink .etc/lessfilter .lessfilter
 #xlink .etc/mailcap    .mailcap

@@ -1,0 +1,5 @@
+set bell-style visible
+set completion-ignore-case on
+set match-hidden-files off
+set show-all-if-ambiguous on
+set visible-stats on
