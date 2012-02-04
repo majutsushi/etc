@@ -23,10 +23,9 @@ export PATH=$HOME/bin:$PATH
 
 export PS1="\u@\h:\w \$ "
 
-export LS_OPTIONS='--color=auto -F'
-alias ls='ls $LS_OPTIONS'
-alias ll='ls $LS_OPTIONS -l'
-alias l='ls $LS_OPTIONS -lA'
+alias ls='ls  -F'
+alias ll='ls -lF'
+alias l='ls -lAF'
 
 if [[ -f ~/.bashrc.local ]]; then
     . ~/.bashrc.local
