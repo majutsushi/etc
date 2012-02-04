@@ -5,7 +5,7 @@ xlink() {
         echo -e "\033[31m$2 is not a symlink!\033[0m"
     else
         echo "Linking "$2""
-        rm "$2"
+        rm -f "$2"
         ln -s "$1" "$2"
     fi
 }
@@ -24,7 +24,7 @@ xlink .etc/git/gitconfig .gitconfig
 
 xlink .etc/mercurial/hgrc .hgrc
 
-if command mocp >/dev/null 2>&1; then
+if command -v mocp >/dev/null 2>&1; then
     xlink .etc/moc .moc
 fi
 
@@ -42,7 +42,7 @@ xlink .etc/vim/vimrc      .vimrc
 xlink .etc/vim/vim        .vim
 xlink .etc/vim/vimplaterc .vimplaterc
 
-if command xmonad >/dev/null 2>&1; then
+if command -v xmonad >/dev/null 2>&1; then
     xlink .etc/xmonad .xmonad
 fi
 
