@@ -55,7 +55,7 @@ bufferfile            $HOME/.cache/screen/screen-exchange
 hardcopydir           $HOME/.cache/screen
 logfile               $HOME/.cache/screen/screenlog.%n
 
-shell                 zsh
+shell                 -zsh
 
 # term                  rxvt-unicode
 
