@@ -53,9 +53,12 @@
 	cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[mergetool "threesome"]
+	cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'ThreesomeInit'"
+	trustExitCode = true
 
 [merge]
-	tool = vimdiff3
+	tool = threesome
 	conflictstyle = diff3
 
 [tig]

@@ -145,3 +145,6 @@
 [submodule "vim/vim/bundle/drawit"]
 	path = vim/vim/bundle/drawit
 	url = https://github.com/vim-scripts/DrawIt.git
+[submodule "vim/vim/bundle/threesome"]
+	path = vim/vim/bundle/threesome
+	url = https://github.com/sjl/threesome.vim.git

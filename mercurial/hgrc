@@ -1,6 +1,6 @@
 [ui]
 ignore = ~/.etc/mercurial/hgignore
-merge = vimdiff
+merge = threesome
 username = Jan Larres <jan@majutsushi.net>
 
 [extensions]
@@ -37,6 +37,9 @@ showfunc = true
 unified = 8
 
 [merge-tools]
+threesome.executable = vim
+threesome.args = -f $base $local $other $output -c 'ThreesomeInit'
+threesome.premerge = keep
 vimdiff.executable = vim
 vimdiff.args = -d $base $local $output $other +close +close
 
