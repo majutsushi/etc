@@ -79,7 +79,7 @@ URxvt.utmpInhibit: true
 
 URxvt.modifier: alt
 
-URxvt.perl-lib: /home/jan/.etc/urxvt/perl
+URxvt.perl-lib: /home/jan/.etc/urxvt/ext
 URxvt.perl-ext-common: default,xim-onthespot,selection-pastebin,fullscreen,matcher,url-picker,bidi
 
 URxvt.keysym.C-M-p: perl:selection-pastebin:remote-pastebin
