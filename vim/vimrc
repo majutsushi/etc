@@ -407,16 +407,16 @@ command! -bar -bang Remove :
       \ let s:file = fnamemodify(bufname(<q-args>),':p') |
       \ execute 'bdelete<bang>' |
       \ if v:errmsg ==# '' && delete(s:file) |
-      \ echoerr 'Failed to delete "'.s:file.'"' |
+      \     echoerr 'Failed to delete "'.s:file.'"' |
       \ endif |
       \ unlet s:file
 
 command! -bar -nargs=1 -bang -complete=file Rename :
       \ let s:file = expand('%:p') |
       \ setlocal modified |
-      \ saveas<bang> <args> |
+      \ keepalt saveas<bang> <args> |
       \ if s:file !=# expand('%:p') |
-      \ call delete(s:file) |
+      \     call delete(s:file) |
       \ endif |
       \ unlet s:file
 
