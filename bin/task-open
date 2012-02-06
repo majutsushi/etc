@@ -1,0 +1,45 @@
+#!/usr/bin/python
+
+import os
+import sys
+import re
+from subprocess import Popen, PIPE
+import shlex
+
+taskbin = 'task rc._forcecolor=no rc.defaultwidth=0 '
+
+def system(cmd):
+    p = Popen(shlex.split(cmd), stdout=PIPE, stderr=PIPE)
+    (stdout, stderr) = p.communicate()
+
+    if p.returncode != 0:
+        print 'Error executing "' + cmd + '"!'
+        print stderr
+        exit()
+
+    return stdout.splitlines()
+
+if len(sys.argv) != 2:
+    print 'usage: ' + sys.argv[0] + ' <task id>'
+
+taskinfo = system(taskbin + ' ' + sys.argv[1] + ' info')
+
+msgid = ''
+
+for line in taskinfo:
+    match = re.search(r'Message-ID: (?P<msgid>.*)$', line)
+
+    if match:
+        msgid = match.group('msgid')
+        break
+
+if msgid == '':
+    print 'No message id found!'
+    exit()
+
+# find file name/path of message belonging to msgid
+fname = system('mu find -f l msgid:' + msgid)[0]
+maildir = os.path.dirname(os.path.dirname(fname))
+
+mutt_keys = r'b/~i' + msgid + r'\n\n'
+os.execlp('mutt', '-R', '-f', maildir + '/', '-e', 'push ' + mutt_keys)

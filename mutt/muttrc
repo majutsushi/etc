@@ -535,6 +535,8 @@ macro index  ,mr        "<change-folder-readonly>~/.mu/results\n" "display mu fi
 
 # capture in org-mode
 macro index,pager  \eR  "<pipe-message>~/.etc/mutt/remember-mail\n" "Capture message in org-mode"
+# save in taskwarrior
+macro index,pager  \eT  "<pipe-message>~/.etc/mutt/task-add.py\n" "Save message to taskwarrior"
 
 # X-Label patch
 ifdef edit-label bind index,pager y edit-label
