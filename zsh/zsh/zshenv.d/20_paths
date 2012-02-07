@@ -13,7 +13,7 @@ rationalize_path() {
     foreach dir in "$'"$1"'[@]"
     do
         if [[ -n "$dir" && "$dir" != "." && -d "$dir" && -x "$dir" ]]; then
-#             dir=$(cd "$dir" && pwd -P)
+            dir=$(cd "$dir" && pwd -P)
             build=("$build[@]" "$dir")
         fi
     done
@@ -44,30 +44,37 @@ path=(
     /sbin
     /usr/sbin
 )
-typeset -gxU path
 rationalize_path path
+typeset -gxU path
 
-fpath=($ZDOTDIR/func $fpath)
-typeset -gxU fpath
+fpath=(
+    "$ZDOTDIR/func"
+    "$fpath[@]"
+)
 rationalize_path fpath
+typeset -gxU fpath
 
 # cdpath=(.. ~)
-typeset -gxU cdpath
 rationalize_path cdpath
+typeset -gxU cdpath
 
 if [[ -z "$MANPATH" ]] && have manpath; then
     MANPATH="$(manpath)"
 fi
-typeset -gxU manpath
+manpath=(
+    "$HOME/usr/man"
+    "$manpath[@]"
+)
 rationalize_path manpath
+typeset -gxU manpath
 
 typeset -gxT LD_LIBRARY_PATH ld_library_path
 ld_library_path=(
     "$HOME/lib"
     "$ld_library_path[@]"
 )
-typeset -gxU ld_library_path
 rationalize_path ld_library_path
+typeset -gxU ld_library_path
 
 export XDG_DATA_HOME=$HOME/.local/share
 # export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
