@@ -55,6 +55,7 @@ alias mtr="mtr -t"
 
 # execute last command as root
 alias fu='sudo $(fc -ln -1) '
+alias tree='tree --dirsfirst -F'
 
 alias a='ack-grep'
 alias da='du -sch'
@@ -66,7 +67,6 @@ alias le='/usr/share/vim/vimcurrent/macros/less.sh'
 alias pa='ps aux | less'
 alias pu='ps ux | less'
 alias t='task'
-alias tr='tree --dirsfirst -F'
 alias vi='vim'
 alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
 
