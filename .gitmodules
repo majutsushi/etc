@@ -148,3 +148,6 @@
 [submodule "vim/vim/bundle/threesome"]
 	path = vim/vim/bundle/threesome
 	url = https://github.com/sjl/threesome.vim.git
+[submodule "vim/vim/bundle/gitv"]
+	path = vim/vim/bundle/gitv
+	url = https://github.com/gregsexton/gitv.git

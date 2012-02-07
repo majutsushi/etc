@@ -1304,6 +1304,9 @@ let g:EnhCommentifyBindInInsert = 'No'
 let g:EnhCommentifyTraditionalMode = 'No'
 let g:EnhCommentifyFirstLineMode = 'Yes'
 
+" Gitv {{{2
+let g:Gitv_OpenHorizontal = 1
+
 " GnuPG {{{2
 let g:GPGUsePipes = 1
 
