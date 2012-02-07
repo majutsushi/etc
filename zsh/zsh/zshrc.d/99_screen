@@ -4,10 +4,8 @@
 case $TERM in
     (screen*|rxvt|dumb|vt100)
         ;;
-    *) if ! isecs; then
-          export ORIGTERM=$TERM
-          screen -m
-       fi
+    *) export ORIGTERM=$TERM
+       screen -m
        ;;
 esac
 
