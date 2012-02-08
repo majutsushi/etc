@@ -108,9 +108,11 @@ URxvt.keysym.C-M-b: perl:bidi toggle show
 
 ! *** XTerm ***
 
-*XTerm*vt100.geometry:   100x50
-*XTerm*vt100.visualBell: true
-*XTerm*vt100.metaSendsEscape: true
+UXTerm*vt100.geometry: 100x50
+UXTerm*vt100.metaSendsEscape: true
+!UXTerm*vt100.utf8: 1
+UXTerm*vt100.visualBell: true
+
 
 yeahconsole.term: urxvt
 yeahconsole.screenWidth: 600
@@ -119,6 +121,7 @@ yeahconsole.aniDelay: 10
 !yeahconsole.toggleKey: ControlAlt+y
 !yeahconsole.toggleKey: None+F1
 yeahconsole.toggleKey: Control+F1
+
 
 KDrill*kdictfile: /usr/share/edict/kanjidic
 !KDrill*edictfile: /usr/share/edict/edict
