@@ -63,10 +63,18 @@ if [[ -z "$MANPATH" ]] && have manpath; then
 fi
 manpath=(
     "$HOME/usr/man"
+    "$HOME/usr/share/man"
     "$manpath[@]"
 )
 rationalize_path manpath
 typeset -gxU manpath
+
+typeset -gxT LIBRARY_PATH library_path
+library_path=(
+    "$library_path[@]"
+)
+rationalize_path library_path
+typeset -gxU library_path
 
 typeset -gxT LD_LIBRARY_PATH ld_library_path
 ld_library_path=(
