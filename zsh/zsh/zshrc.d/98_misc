@@ -9,4 +9,8 @@ _dir_cycle() {
 }
 precmd_functions+=_dir_cycle
 
+if [[ -f $HOME/.zshrc.local ]]; then
+    source $HOME/.zshrc.local
+fi
+
 # vim: filetype=zsh
