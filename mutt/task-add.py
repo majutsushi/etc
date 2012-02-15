@@ -34,7 +34,7 @@ ghurl = re.match(r'^(?P<url>https://github\.com/\w+/\w+/issues/\d+)(#.*)?$', bod
 if ghurl:
     ann = ghurl.group('url')
     # convert '[repo]' into 'project:repo'
-    subject = re.sub(r'^\[(\w+)\] ', r'project:\1 ', subject)
+    subject = re.sub(r'^(?:Re: )?\[(\w+)\] ', r'project:\1 ', subject)
 
 
 # switch to terminal for stdin
