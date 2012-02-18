@@ -30,11 +30,12 @@ subject = msg['subject']
 
 # if mail is an issue report from github, use the issue url as annotation
 # instead of the message-id
-ghurl = re.match(r'^(?P<url>https://github\.com/\w+/\w+/issues/\d+)(#.*)?$', body[-1])
+ghpat = r'[a-zA-Z0-9.-]+'
+ghurl = re.match(r'^(?P<url>https://github\.com/' + ghpat + '/' + ghpat + '/issues/\d+)(#.*)?$', body[-1])
 if ghurl:
     ann = ghurl.group('url')
     # convert '[repo]' into 'project:repo'
-    subject = re.sub(r'^(?:Re: )?\[(\w+)\] ', r'project:\1 ', subject)
+    subject = re.sub(r'^(?:Re: )?\[(' + ghpat + ')\] ', r'project:\1 ', subject)
 
 
 # switch to terminal for stdin
