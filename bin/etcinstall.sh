@@ -15,6 +15,8 @@ xlink() {
 OLDPWD=$PWD
 cd $HOME
 
+xlink .etc/ackrc .ackrc
+
 xlink .etc/bash/bashrc       .bashrc       bash
 xlink .etc/bash/bash_profile .bash_profile bash
 xlink .etc/bash/bash_logout  .bash_logout  bash
