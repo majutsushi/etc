@@ -4,11 +4,8 @@ set encoding=utf-8
 let mapleader=","
 
 let g:pathogen_disabled = []
-let g:pathogen_disabled += ['current-func-info']
 let g:pathogen_disabled += ['vim-orgmode']
-if has('python') && executable('clang')
-    let g:pathogen_disabled += ['omnicppcomplete']
-else
+if !has('python') || !executable('clang')
     let g:pathogen_disabled += ['clang_complete']
 endif
 if v:version < 703
@@ -111,8 +108,6 @@ au FileType help if &buftype == 'help' | call <SID>SetupHelpWindow() | endif
 
 " filetype-specific settings
 au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
-au FileType tex let b:vikiFamily="LaTeX"
-au FileType viki compiler deplate
 au FileType gtkrc setlocal tabstop=2 shiftwidth=2
 au FileType haskell compiler ghc
 au FileType ruby setlocal omnifunc=rubycomplete#Complete
@@ -1245,11 +1240,6 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Plugin and script options {{{1
 
-" CCTree {{{2
-let g:CCTreeRecursiveDepth = 2
-let g:CCTreeMinVisibleDepth = 2
-let g:CCTreeOrientation = "leftabove"
-
 " changelog {{{2
 let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 
@@ -1280,30 +1270,23 @@ let g:devhelpAssistant = 0
 let g:devhelpSearchKey = '<F7>'
 let g:devhelpWordLength = 5
 
-" EasyGrep {{{2
-let g:EasyGrepFileAssociations = expand('~/.vim/bundle/easygrep/plugin/EasyGrepFileAssociations')
-let g:EasyGrepMode = 2
-let g:EasyGrepCommand = 0
-let g:EasyGrepRecursive = 1
-let g:EasyGrepIgnoreCase = 1
-let g:EasyGrepHidden = 0
-let g:EasyGrepAllOptionsInExplorer = 1
-let g:EasyGrepWindow = 0
-let g:EasyGrepReplaceWindowMode = 0
-let g:EasyGrepOpenWindowOnMatch = 1
-let g:EasyGrepEveryMatch = 0
-let g:EasyGrepJumpToMatch = 1
-let g:EasyGrepInvertWholeWord = 0
-let g:EasyGrepFileAssociationsInExplorer = 0
-let g:EasyGrepOptionPrefix = '<leader>vy'
-let g:EasyGrepReplaceAllPerFile = 0
-
 " enhanced-commentify {{{2
 " let g:EnhCommentifyRespectIndent = 'Yes'
 " let g:EnhCommentifyPretty = 'Yes'
 let g:EnhCommentifyBindInInsert = 'No'
 let g:EnhCommentifyTraditionalMode = 'No'
 let g:EnhCommentifyFirstLineMode = 'Yes'
+
+" FSwitch {{{2
+nnoremap <silent> <Leader>of :FSHere<cr>
+nnoremap <silent> <Leader>ol :FSRight<cr>
+nnoremap <silent> <Leader>oL :FSSplitRight<cr>
+nnoremap <silent> <Leader>oh :FSLeft<cr>
+nnoremap <silent> <Leader>oH :FSSplitLeft<cr>
+nnoremap <silent> <Leader>ok :FSAbove<cr>
+nnoremap <silent> <Leader>oK :FSSplitAbove<cr>
+nnoremap <silent> <Leader>oj :FSBelow<cr>
+nnoremap <silent> <Leader>oJ :FSSplitBelow<cr>
 
 " Gitv {{{2
 let g:Gitv_OpenHorizontal = 1
@@ -1313,11 +1296,6 @@ let g:GPGUsePipes = 1
 
 " Gundo {{{2
 nnoremap <leader>u :GundoToggle<CR>
-
-" LanguageTool {{{2
-let g:languagetool_jar = "~/lib/LanguageTool/LanguageTool.jar"
-let g:languagetool_disable_rules = "WHITESPACE_RULE,EN_QUOTES"
-let g:languagetool_win_height = "15"
 
 " Latex Box {{{2
 let g:LatexBox_completion_close_braces = 0
@@ -1345,19 +1323,6 @@ let NERDTreeIgnore = [
 nmap <silent> <F10> :NERDTreeToggle<CR>
 nmap <silent> <leader>nf :NERDTreeFind<CR>
 
-" omnicppcomplete {{{2
-let g:OmniCpp_MayCompleteDot = 1 " autocomplete with .
-let g:OmniCpp_MayCompleteArrow = 1 " autocomplete with ->
-let g:OmniCpp_MayCompleteScope = 1 " autocomplete with ::
-let g:OmniCpp_SelectFirstItem = 2 " select first item (but don't insert)
-let g:OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
-let g:OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype (i.e. parameters) in popup window
-let g:OmniCpp_LocalSearchDecl = 1 " don't require special style of function opening braces
-
-" PreciseJump {{{2
-let g:PreciseJump_target_keys = 'abcdefghijklmnopqrstuwxz123456789[];''\,./ABCDEFGHIJKLMNOPQRSTUWXZ{}:"|<>?!@#$%^&*()_+'
-"let g:PreciseJump_I_am_brave  = 1
-
 " ProtoDef {{{2
 let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
 let g:protodefctagsexe = g:ctagsbin
@@ -1377,10 +1342,6 @@ endif
 let vimrplugin_conqueplugin = 1
 let vimrplugin_conquevsplit = 1
 let vimrplugin_underscore   = 0
-
-" rubycomplete {{{2
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_rails = 1
 
 " selectbuf {{{2
 let g:selBufAlwaysShowDetails = 1
@@ -1414,23 +1375,6 @@ let g:tagbar_type_idl = {
 nmap <silent>   <F9> :TagbarOpenAutoClose<CR>
 nmap <silent> <S-F9> :TagbarToggle<CR>
 
-" taglist {{{2
-"let Tlist_File_Fold_Auto_Close = 1
-"let Tlist_Display_Prototype = 1
-let Tlist_Show_One_File = 1
-"let Tlist_Auto_Highlight_Tag = 0
-let Tlist_Enable_Fold_Column = 0
-let Tlist_Use_Right_Window = 1
-let Tlist_Inc_Winwidth = 0 " to prevent problems with project.vim
-let Tlist_Sort_Type = "name"
-let tlist_c_settings = 'c;d:macros;p:prototypes;v:variables;t:typedefs;m:members;g:enums;s:structs;u:unions;f:functions'
-let tlist_cpp_settings = 'c++;d:macros;n:namespace;p:prototypes;v:variables;t:typedefs;c:class;m:members;g:enums;s:structs;u:unions;f:functions'
-"let g:tlist_tex_settings = 'tex;c:chapters;s:sections;u:subsections;b:subsubsections;p:parts;P:paragraphs;G:subparagraphs;i:includes'
-let tlist_tex_settings = 'latex;s:sections;g:graphics;l:labels;r:refs;p:pagerefs'
-let tlist_idl_settings = 'xpidl;p:prototypes;i:interfaces;a:attributes;t:types;o:operations'
-
-"nmap <silent> <F9> :Tlist<CR>
-
 " TOhtml syntax script {{{2
 let html_use_css = 1
 let html_number_lines = 0
@@ -1458,99 +1402,11 @@ function! Utl_AddressScheme_mutt(uri, fragment, dispMode)
     return []
 endfunction
 
-" Viki {{{2
-let g:vikiLowerCharacters = "a-zäöüßáàéèíìóòçñ"
-let g:vikiUpperCharacters = "A-ZÄÖÜ"
-let g:vikiUseParentSuffix = 1
-let g:vikiOpenUrlWith_http = "silent !firefox %{URL}"
-let g:vikiOpenFileWith_html  = "silent !firefox %{FILE}"
-let g:vikiOpenFileWith_ANY   = "silent !start %{FILE}"
-let g:vikiMapQParaKeys = ""
-" we want to allow deplate to execute ruby code and external helper
-" application
-let g:deplatePrg = "deplate -x -X "
-let g:vikiNameSuffix=".viki"
-let g:vikiHomePage = "~/projects/viki/Main.viki"
-
-" open main viki
-nmap <Leader>vh :VikiHome<CR>
-
 " vimfootnotes {{{2
 imap Ǣf         <Plug>AddVimFootnote
 imap Ǣr         <Plug>ReturnFromFootnote
 nmap <leader>fa <Plug>AddVimFootnote
 nmap <leader>fr <Plug>ReturnFromFootnote
-
-" VimOrganizer {{{2
-let g:agenda_files = [expand('~/projects/org/gtd.org')]
-let g:org_todo_setup = 'TODO STARTED WAITING DELEGATED APPT | DONE FORWARDED CANCELLED'
-"let g:org_tags_alist = '{work(w) priv(p)} vim(v) mozilla(M) PROJECT(P) READING(r) EMAIL(m)'
-let g:org_tags_alist = '{work(w) priv(p)}'
-
-function! OrgCustomColors()
-    " various Org syntax item highlighting statements are below
-    " these are the current defaults.  Uncomment and edit a line if you
-    " want different highlighting fof the element
-
-    " below are defaults for any TODOS you define.  TODOS that
-    " come before the | in a definition will use  'NOTDONETODO'
-    " and those that come after are DONETODO
-    hi! DONETODO guifg=green ctermfg=green
-    hi! NOTDONETODO guifg=red ctermfg=red
-
-    " heading level highlighting is done in pairs, one for the
-    " heading when unfoled and one for folded.  Default is to make
-    " them the same except for the folded version being bold:
-    " assign OL1 pair for level 1, OL2 pair for level 2, etc.
-    "hi! OL1 guifg=somecolor guibg=somecolor
-    "hi! OL1Folded guifg=somecolor guibg=somecolor gui=bold
-
-
-    " tags are lines below headings that have :colon:separated:tags:
-    "hi! Org_Tag guifg=lightgreen ctermfg=blue
-
-    "  lines that begin with '#+' in column 0 are config lines
-    "hi! Org_Config_Line guifg=darkgray ctermfg=magenta
-
-    "drawers are :PROPERTIES: and :LOGBOOK: lines and their associated
-    " :END: lines
-    "hi! Org_Drawer guifg=pink ctermfg=magenta
-    "hi! Org_Drawer_Folded guifg=pink ctermfg=magenta gui=bold cterm=bold
-
-    " this applies to value names in :PROPERTIES: blocks
-    "hi! Org_Property_Value guifg=pink ctermfg=magenta
-
-    " three lines below apply to different kinds of blocks
-    "hi! Org_Block guifg=#555555 ctermfg=magenta
-    "hi! Org_Src_Block guifg=#555555 ctermfg=magenta
-    "hi! Org_Table guifg=#888888 guibg=#333333 ctermfg=magenta
-
-    " dates are date specs between angle brackets (<>) or square brackets ([])
-    "hi! Org_Date guifg=magenta ctermfg=magenta gui=underline cterm=underline
-
-    " Org_Star is used to "hide" initial asterisks in a heading
-    "hi! Org_Star guifg=#444444 ctermfg=darkgray
-
-    "hi! Props guifg=#ffa0a0 ctermfg=gray
-
-    " bold, itals, underline, and code are highlights applied
-    " to character formatting
-    "hi! Org_Code guifg=darkgray gui=bold ctermfg=14
-    "hi! Org_Itals gui=italic guifg=#aaaaaa ctermfg=lightgray
-    "hi! Org_Bold gui=bold guifg=#aaaaaa ctermfg=lightgray
-    "hi! Org_Underline gui=underline guifg=#aaaaaa ctermfg=lightgray
-    "hi! Org_Lnumber guifg=#999999 ctermfg=gray
-
-    " these lines apply to links: [[link]], and [[link][link desc]]
-    "if has("conceal")
-    "    hi! default linkends guifg=blue ctermfg=blue
-    "endif
-    "hi! Org_Full_Link guifg=cyan gui=underline ctermfg=lightblue cterm=underline
-    "hi! Org_Half_Link guifg=cyan gui=underline ctermfg=lightblue cterm=underline
-
-    "  applies to the Heading line that can be displayed in column view
-    "highlight OrgColumnHeadings guibg=#444444 guifg=#aaaaaa gui=underline
-endfunction
 
 " vimplate {{{2
 let Vimplate = expand('~/.vim/bundle/vimplate/vimplate')
@@ -1727,17 +1583,6 @@ nnoremap <M-8> 8gt
 nnoremap <M-9> 9gt
 
 nnoremap <C-W>e :enew<CR>
-
-" FSwitch mappings
-nnoremap <silent> <Leader>of :FSHere<cr>
-nnoremap <silent> <Leader>ol :FSRight<cr>
-nnoremap <silent> <Leader>oL :FSSplitRight<cr>
-nnoremap <silent> <Leader>oh :FSLeft<cr>
-nnoremap <silent> <Leader>oH :FSSplitLeft<cr>
-nnoremap <silent> <Leader>ok :FSAbove<cr>
-nnoremap <silent> <Leader>oK :FSSplitAbove<cr>
-nnoremap <silent> <Leader>oj :FSBelow<cr>
-nnoremap <silent> <Leader>oJ :FSSplitBelow<cr>
 
 nnoremap <leader>vs :source ~/.vimrc<CR>:filetype detect<CR>:echo 'vimrc reloaded'<CR>
 nnoremap <leader>ve :edit   ~/.vimrc<CR>

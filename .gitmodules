@@ -10,18 +10,12 @@
 [submodule "vim/vim/bundle/tlib"]
 	path = vim/vim/bundle/tlib
 	url = https://github.com/tomtom/tlib_vim.git
-[submodule "vim/vim/bundle/tregisters"]
-	path = vim/vim/bundle/tregisters
-	url = https://github.com/tomtom/tregisters_vim.git
 [submodule "vim/vim/bundle/checkattach"]
 	path = vim/vim/bundle/checkattach
 	url = https://github.com/chrisbra/CheckAttach.git
 [submodule "vim/vim/bundle/surround"]
 	path = vim/vim/bundle/surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "vim/vim/bundle/viki"]
-	path = vim/vim/bundle/viki
-	url = https://github.com/tomtom/viki_vim.git
 [submodule "vim/vim/bundle/repeat"]
 	path = vim/vim/bundle/repeat
 	url = https://github.com/tpope/vim-repeat.git
@@ -43,9 +37,6 @@
 [submodule "vim/vim/bundle/enhcommentify"]
 	path = vim/vim/bundle/enhcommentify
 	url = https://github.com/vim-scripts/EnhCommentify.vim.git
-[submodule "vim/vim/bundle/cctree"]
-	path = vim/vim/bundle/cctree
-	url = https://github.com/vim-scripts/CCTree.git
 [submodule "vim/vim/bundle/genutils"]
 	path = vim/vim/bundle/genutils
 	url = https://github.com/vim-scripts/genutils.git
@@ -58,24 +49,15 @@
 [submodule "vim/vim/bundle/selectbuf"]
 	path = vim/vim/bundle/selectbuf
 	url = https://github.com/vim-scripts/SelectBuf.git
-[submodule "vim/vim/bundle/taglist"]
-	path = vim/vim/bundle/taglist
-	url = https://github.com/vim-scripts/taglist.vim.git
 [submodule "vim/vim/bundle/vimfootnotes"]
 	path = vim/vim/bundle/vimfootnotes
 	url = https://github.com/vim-scripts/VimFootnotes.git
-[submodule "vim/vim/bundle/voom"]
-	path = vim/vim/bundle/voom
-	url = https://github.com/vim-scripts/VOoM.git
 [submodule "vim/vim/bundle/gtk-vim-syntax"]
 	path = vim/vim/bundle/gtk-vim-syntax
 	url = https://github.com/vim-scripts/gtk-vim-syntax.git
 [submodule "vim/vim/bundle/vis"]
 	path = vim/vim/bundle/vis
 	url = https://github.com/vim-scripts/vis.git
-[submodule "vim/vim/bundle/easygrep"]
-	path = vim/vim/bundle/easygrep
-	url = https://github.com/vim-scripts/EasyGrep.git
 [submodule "vim/vim/bundle/yankring"]
 	path = vim/vim/bundle/yankring
 	url = https://github.com/vim-scripts/YankRing.vim.git
@@ -85,9 +67,6 @@
 [submodule "vim/vim/bundle/vim-r-plugin"]
 	path = vim/vim/bundle/vim-r-plugin
 	url = https://github.com/vim-scripts/Vim-R-plugin.git
-[submodule "vim/vim/bundle/languagetool"]
-	path = vim/vim/bundle/languagetool
-	url = https://github.com/vim-scripts/LanguageTool.git
 [submodule "vim/vim/bundle/stlimproved"]
 	path = vim/vim/bundle/stlimproved
 	url = https://github.com/vim-scripts/STL-improved.git
@@ -100,12 +79,6 @@
 [submodule "vim/vim/bundle/markdown"]
 	path = vim/vim/bundle/markdown
 	url = https://github.com/tpope/vim-markdown
-[submodule "vim/vim/bundle/precisejump"]
-	path = vim/vim/bundle/precisejump
-	url = https://github.com/vim-scripts/PreciseJump.git
-[submodule "vim/vim/bundle/current-func-info"]
-	path = vim/vim/bundle/current-func-info
-	url = https://github.com/tyru/current-func-info.vim.git
 [submodule "zsh/zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
@@ -124,9 +97,6 @@
 [submodule "vim/vim/bundle/vim-speeddating"]
 	path = vim/vim/bundle/vim-speeddating
 	url = https://github.com/tpope/vim-speeddating.git
-[submodule "vim/vim/bundle/vimorganizer"]
-	path = vim/vim/bundle/vimorganizer
-	url = https://github.com/hsitz/VimOrganizer.git
 [submodule "vim/vim/bundle/calendar.vim"]
 	path = vim/vim/bundle/calendar.vim
 	url = https://github.com/mattn/calendar-vim.git
