@@ -1295,6 +1295,9 @@ let g:devhelpAssistant = 0
 let g:devhelpSearchKey = '<F7>'
 let g:devhelpWordLength = 5
 
+" EasyMotion {{{2
+let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
+
 " enhanced-commentify {{{2
 " let g:EnhCommentifyRespectIndent = 'Yes'
 " let g:EnhCommentifyPretty = 'Yes'
