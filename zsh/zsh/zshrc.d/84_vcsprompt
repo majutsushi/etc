@@ -127,7 +127,9 @@ __prompt_git_geninfo() {
             branch="$(git describe --tags --exact-match HEAD 2>/dev/null)"; then
             refs="$(__prompt_git_refs)"
         elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)..."; then
-            refs="$PV_REFS_PREFIX$COL_REFS$(git describe --all HEAD 2>/dev/null)${pcol[reset]}"
+            if refs=$(git describe --all HEAD 2>/dev/null); then
+                refs="${PV_REFS_PREFIX}${COL_REFS}${refs}${pcol[reset]}"
+            fi
         else
             branch="unknown"
         fi
