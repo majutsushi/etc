@@ -1427,12 +1427,6 @@ function! Utl_AddressScheme_mutt(uri, fragment, dispMode)
     return []
 endfunction
 
-" vimfootnotes {{{2
-imap Ǣf         <Plug>AddVimFootnote
-imap Ǣr         <Plug>ReturnFromFootnote
-nmap <leader>fa <Plug>AddVimFootnote
-nmap <leader>fr <Plug>ReturnFromFootnote
-
 " vimplate {{{2
 let Vimplate = expand('~/.vim/bundle/vimplate/vimplate')
 
