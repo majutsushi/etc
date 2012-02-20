@@ -128,7 +128,7 @@ __prompt_git_geninfo() {
             refs="$(__prompt_git_refs)"
         elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)..."; then
             if refs=$(git describe --all HEAD 2>/dev/null); then
-                refs="${PV_REFS_PREFIX}${COL_REFS}${refs}${pcol[reset]}"
+                refs="${PV_REFS_PREFIX}${COL_REFS}${refs##heads/}${pcol[reset]}"
             fi
         else
             branch="unknown"
