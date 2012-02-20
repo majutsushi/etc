@@ -34,9 +34,6 @@
 [submodule "vim/vim/bundle/zoomwin"]
 	path = vim/vim/bundle/zoomwin
 	url = https://github.com/vim-scripts/ZoomWin.git
-[submodule "vim/vim/bundle/enhcommentify"]
-	path = vim/vim/bundle/enhcommentify
-	url = https://github.com/vim-scripts/EnhCommentify.vim.git
 [submodule "vim/vim/bundle/genutils"]
 	path = vim/vim/bundle/genutils
 	url = https://github.com/vim-scripts/genutils.git
@@ -124,3 +121,6 @@
 [submodule "vim/vim/bundle/easymotion"]
 	path = vim/vim/bundle/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
+[submodule "vim/vim/bundle/nerdcommenter"]
+	path = vim/vim/bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git

@@ -1298,13 +1298,6 @@ let g:devhelpWordLength = 5
 " EasyMotion {{{2
 let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
 
-" enhanced-commentify {{{2
-" let g:EnhCommentifyRespectIndent = 'Yes'
-" let g:EnhCommentifyPretty = 'Yes'
-let g:EnhCommentifyBindInInsert = 'No'
-let g:EnhCommentifyTraditionalMode = 'No'
-let g:EnhCommentifyFirstLineMode = 'Yes'
-
 " FSwitch {{{2
 nnoremap <silent> <Leader>of :FSHere<cr>
 nnoremap <silent> <Leader>ol :FSRight<cr>
@@ -1329,6 +1322,10 @@ nnoremap <leader>u :GundoToggle<CR>
 let g:LatexBox_completion_close_braces = 0
 "let g:LatexBox_latexmk_options = "-pvc"
 let g:LatexBox_autojump = 1
+
+" NERD_Commenter {{{2
+let g:NERDRemoveAltComs = 0
+let g:NERDSpaceDelims = 1
 
 " NERD_Tree {{{2
 let NERDTreeMinimalUI = 1
