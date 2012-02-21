@@ -1355,7 +1355,9 @@ let g:protodefctagsexe = g:ctagsbin
 let g:quickfixsigns_classes = ['qfl', 'loc', 'marks', 'vcsdiff', 'breakpoints']
 let g:quickfixsigns_blacklist_buffer = '\v(^__.*__$)|(^NERD_tree.*)|(^$)'
 " exclude 'p' and 'l' because of xptemplate
-let g:quickfixsigns#marks#marks = split('abcdefghijkmnoqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', '\zs')
+" also exclude "'." from buffer and "<>^" from global
+let g:quickfixsigns#marks#buffer = split('abcdefghijkmnoqrstuvwxyz', '\zs')
+let g:quickfixsigns#marks#global = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '\zs')
 
 " r-plugin {{{2
 if executable('urxvt')
