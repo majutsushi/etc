@@ -119,4 +119,4 @@ LOGFILE=$MAILDIR/procmail_log
 :0
 $DEFAULT
 
-# vim:noexpandtab
+# vim: filetype=procmail noexpandtab
