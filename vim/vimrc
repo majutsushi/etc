@@ -111,7 +111,6 @@ au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
 au FileType gtkrc setlocal tabstop=2 shiftwidth=2
 au FileType haskell compiler ghc
 au FileType ruby setlocal omnifunc=rubycomplete#Complete
-au FileType xdefaults au BufWritePost <buffer> silent !xrdb -merge <afile>
 
 " Folding of (gnu)make output.
 augroup quickfix
