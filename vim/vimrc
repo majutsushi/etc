@@ -1370,10 +1370,6 @@ let vimrplugin_conqueplugin = 1
 let vimrplugin_conquevsplit = 1
 let vimrplugin_underscore   = 0
 
-" selectbuf {{{2
-let g:selBufAlwaysShowDetails = 1
-let g:selBufLauncher = "!see"
-
 " Tagbar {{{2
 let g:tagbar_ctags_bin = g:ctagsbin
 let g:tagbar_compact = 1
@@ -1575,12 +1571,8 @@ endif
 
 " Buffers/Files {{{2
 
-nmap <silent> <leader>b <Plug>SelectBuf
-" needed to keep SelectBuf from complaining about existing maps
-imap <silent> <S-F1> <ESC><Plug>SelectBuf
-
 " Fast open a buffer by searching for a name
-nnoremap <c-q> :b 
+nnoremap <leader>b :buffers<CR>:buffer<space>
 
 nnoremap <M-,>     :bprevious!<CR>
 nnoremap <M-.>     :bnext!<CR>

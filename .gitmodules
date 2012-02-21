@@ -34,18 +34,9 @@
 [submodule "vim/vim/bundle/zoomwin"]
 	path = vim/vim/bundle/zoomwin
 	url = https://github.com/vim-scripts/ZoomWin.git
-[submodule "vim/vim/bundle/genutils"]
-	path = vim/vim/bundle/genutils
-	url = https://github.com/vim-scripts/genutils.git
 [submodule "vim/vim/bundle/lbdbq"]
 	path = vim/vim/bundle/lbdbq
 	url = https://github.com/vim-scripts/lbdbq.git
-[submodule "vim/vim/bundle/multiselect"]
-	path = vim/vim/bundle/multiselect
-	url = https://github.com/vim-scripts/multiselect.git
-[submodule "vim/vim/bundle/selectbuf"]
-	path = vim/vim/bundle/selectbuf
-	url = https://github.com/vim-scripts/SelectBuf.git
 [submodule "vim/vim/bundle/gtk-vim-syntax"]
 	path = vim/vim/bundle/gtk-vim-syntax
 	url = https://github.com/vim-scripts/gtk-vim-syntax.git
