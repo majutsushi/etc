@@ -34,9 +34,6 @@
 [submodule "vim/vim/bundle/zoomwin"]
 	path = vim/vim/bundle/zoomwin
 	url = https://github.com/vim-scripts/ZoomWin.git
-[submodule "vim/vim/bundle/lbdbq"]
-	path = vim/vim/bundle/lbdbq
-	url = https://github.com/vim-scripts/lbdbq.git
 [submodule "vim/vim/bundle/gtk-vim-syntax"]
 	path = vim/vim/bundle/gtk-vim-syntax
 	url = https://github.com/vim-scripts/gtk-vim-syntax.git
