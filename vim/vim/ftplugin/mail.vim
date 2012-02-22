@@ -21,16 +21,16 @@ else
     let s:quote_mark_re = '\%('
 
     " we don't care about people's websites or where to get files
-    let s:quote_mark_re = s:quote_mark_re . '\%(http:\|ftp:\|scp:\)\@!'
+    let s:quote_mark_re .= '\%(http:\|ftp:\|scp:\)\@!'
 
-    " sometimes there are pesky smiley's on a line
-    let s:quote_mark_re = s:quote_mark_re . '\%(:[\-\^]\?[][)(><}{|/DP]\)\@!'
+    " sometimes there are pesky smileys on a line
+    let s:quote_mark_re .= '\%(:[\-\^]\?[][)(><}{|/DP]\)\@!'
 
-    " some ppl put initals in the quotes
-    let s:quote_mark_re = s:quote_mark_re . '\w\{-,4}'
+    " some people put initals in the quotes
+    let s:quote_mark_re .= '\w\{-,4}'
 
     " actual quote chars
-    let s:quote_mark_re = s:quote_mark_re . '[' . s:quote_chars . ']'
+    let s:quote_mark_re .= '[' . s:quote_chars . ']'
 
     " Ignore long "runs" of quote_chars.  This is to avoid "separators" in
     " email: e.g.
@@ -38,13 +38,13 @@ else
     "   > ################### begin excerpt ###################
     "   > blah blah blah
     "   > ################### end excerpt   ###################
-    let s:quote_mark_re = s:quote_mark_re . '\%([' . s:quote_chars . ']\{4,}\)\@!'
+    let s:quote_mark_re .= '\%([' . s:quote_chars . ']\{4,}\)\@!'
 
     " some ppl put whitespace in the quote, and others don't.
-    let s:quote_mark_re = s:quote_mark_re . '\s\?'
+    let s:quote_mark_re .= '\s\?'
 
     " End
-    let s:quote_mark_re = s:quote_mark_re . '\)'
+    let s:quote_mark_re .= '\)'
 endif
 
 let s:quote_block_re = '^' . s:quote_mark_re . '\+'
@@ -60,12 +60,18 @@ if !exists("no_plugin_maps") && !exists("no_mail_after_maps")
 
     " Provide a motion operator for commands (so you can delete a quote
     " segment, or format quoted segment)
-    onoremap <script> <silent> <buffer> q :execute 'normal! ' . <SID>QuoteMotion(line('.'), 'inc_or_dec')<CR>
+    onoremap <script> <silent> <buffer> q :execute 'normal! ' . <SID>QuoteMotion(line('.'))<CR>
+
+    " Text objects for visual mode and operators
+    xnoremap <script> <silent> <buffer> iq :<C-U>call <SID>QuoteObject('i')<CR>
+    omap     <script> <silent> <buffer> iq :normal Viq<CR>
+    xnoremap <script> <silent> <buffer> aq :<C-U>call <SID>QuoteObject('a')<CR>
+    omap     <script> <silent> <buffer> aq :normal Vaq<CR>
 endif
 
 " Functions {{{1
 
-" QuoteEraseSig {{{2
+" s:QuoteEraseSig {{{2
 " This routine will try and remove 'quoted' signatures.
 "
 " If someone responds with an email that doesn't use '>' as the
@@ -94,15 +100,15 @@ function! s:QuoteEraseSig()
     "   modify this loop so that the cursor doesn't change
     "   delete blank quoted lines before the sig
     while search(s:quote_block_re . '\s*-- $', 'w') != 0
-        let motion = s:QuoteMotion(line("."), "dec")
+        let motion = s:QuoteMotion(line("."))
         exe "normal! d" . motion
     endwhile
 
     " restore starting position
-    exe "normal! " . a:firstline . 'gg'
+    execute start_location
 endfunction
 
-" QuoteMangledMerge {{{2
+" s:QuoteMangledMerge {{{2
 " This routine will try and make sense out of 'Mangled' quoted paragraph.
 " For example, it will try and turn
 "
@@ -178,7 +184,7 @@ function! s:QuoteMangledMerge() range
     endwhile
 endfunction
 
-" QuoteDelEmpty {{{2
+" s:QuoteDelEmpty {{{2
 " Replace empty quoted lines (e.g. "> ab% ") with empty lines (convenient to
 " automatically reformat one paragraph).
 "
@@ -229,7 +235,7 @@ function! s:QuoteDelEmpty() range
     exe 'normal! ' . a:firstline . 'gg'
 endfunction
 
-" QuoteMotion {{{2
+" s:QuoteMotion {{{2
 " This routine will output a motion command that operatates over a quote
 " segment.  It is possible to dictate how the routine knows when a quote
 " segment stops.  This is by passing in an argument suitable for use by
@@ -240,8 +246,8 @@ endfunction
 "   dq  => delete an entire quote section
 "   gqq => format an entire quote section
 "
-function! s:QuoteMotion(line, chg)
-    let len = s:QuoteLenSgmt(a:line, a:chg)
+function! s:QuoteMotion(line)
+    let len = s:QuoteLenSgmt(a:line)
     if len == 0
         return 0
     endif
@@ -254,7 +260,7 @@ function! s:QuoteMotion(line, chg)
     endif
 endfunction
 
-" QuoteLenSgmt {{{2
+" s:QuoteLenSgmt {{{2
 " This tries to figure out how long a particular quote segment lasts.  It is
 " possible to dictate how the routine knows when a quote segment stops.  This
 " is done by passing in an argument suitable for use by s:QuoteGetDepth.
@@ -269,30 +275,56 @@ endfunction
 "
 "   will return 3 if passed
 "
-function! s:QuoteLenSgmt(start, chg)
-    let depth = s:QuoteGetDepth(a:start)
-
-    let len = 1
+function! s:QuoteLenSgmt(curline)
+    let depth = s:QuoteGetDepth(a:curline)
 
     " find end of quote
-    for i in range(a:start + 1, line('$'))
-        if a:chg == "inc_or_dec"
-            if depth != s:QuoteGetDepth(i)
-                break
-            endif
-        elseif a:chg == "dec"
-            if depth > s:QuoteGetDepth(i)
-                break
-            endif
+    for i in range(a:curline + 1, line('$'))
+        if depth != s:QuoteGetDepth(i)
+            return i - a:curline
         endif
-
-        let len += 1
     endfor
-
-    return len
 endfunction
 
-" QuoteGetDepth {{{2
+" s:QuoteObject() {{{2
+" Text object for a quote.
+" 'type' is 'i' for an 'inner' quote, i.e. only one level, or 'a' for 'an'
+" quote, a quote of any levels surrounded by lines that are not quotes
+function! s:QuoteObject(type)
+    let curline = line('.')
+    let depth   = s:QuoteGetDepth(curline)
+
+    let start = curline
+    let end   = curline
+
+    " find first line of quote
+    for i in range(curline - 1, 1, -1)
+        let newdepth = s:QuoteGetDepth(i)
+
+        if (a:type == 'i' && newdepth != depth ||
+          \ a:type == 'a' && newdepth == 0)
+            break
+        endif
+
+        let start -= 1
+    endfor
+
+    " find last line of quote
+    for i in range(curline + 1, line('$'))
+        let newdepth = s:QuoteGetDepth(i)
+
+        if (a:type == 'i' && newdepth != depth ||
+          \ a:type == 'a' && newdepth == 0)
+            break
+        endif
+
+        let end += 1
+    endfor
+
+    execute 'normal! ' . start . 'GV' . end . 'G'
+endfunction
+
+" s:QuoteGetDepth {{{2
 " This routine will try and return the quote depth for a particular line.
 "
 " e.g.: (the return value for this routine is in ())
@@ -317,7 +349,7 @@ function! s:QuoteGetDepth(line)
     return quote_depth
 endfunction
 
-" tprot {{{2
+" s:tprot {{{2
 function! s:tprot()
     call cursor(1,1)
     call search('^> ')
@@ -326,14 +358,14 @@ function! s:tprot()
     endif
 endfunction
 
-" FormatQuotes {{{2
+" s:FormatQuotes {{{2
 function! s:FormatQuotes()
     call cursor(1, 1)
     call search('^> ')
     normal gqip
 endfunction
 
-" CursorStart {{{2
+" s:CursorStart {{{2
 " Moves the cursor to a 'sensible' position.
 function! s:CursorStart()
     call cursor(1, 1)
