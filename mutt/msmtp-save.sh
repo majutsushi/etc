@@ -1,14 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 # /home/jan/bin/msmtp-save.sh
 # Author       : Jan Larres <jan@majutsushi.net>
 # Created      : 2010-07-08 01:25:31 +1200 NZST
-# Last changed : 2010-07-08 04:12:03 +1200 NZST
+# Last changed : 2012-02-22 14:30:48 +1300 NZDT
 
-MAIL=$(mktemp)
-
-trap "rm -f $MAIL" INT TERM EXIT
-
-cat > $MAIL
-
-cat $MAIL | lbdb-fetchaddr -a -x 'to:cc:bcc:resent-to'
-cat $MAIL | exec /usr/bin/msmtp $*
+tee >(lbdb-fetchaddr -a -x 'to:cc:bcc:resent-to') | /usr/bin/msmtp "$@"
