@@ -1,6 +1,8 @@
 # backup files
 *~
 
+.nfs*
+
 # object files
 *.[ao]
 *.so
