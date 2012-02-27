@@ -6,6 +6,9 @@ bindkey ' ' magic-space
 bindkey '^p' up-line-or-search
 bindkey '^n' down-line-or-search
 
+# turn current line into comment and commit
+bindkey '^[#' pound-insert
+
 # define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
 #  WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>' # the default
 #  WORDCHARS=.
