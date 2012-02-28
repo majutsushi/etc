@@ -144,8 +144,8 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 " From https://github.com/mitechie/pyvim/blob/master/.vimrc
 au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 'silent !chmod u+x <afile>' | endif | endif
 
-au BufNewFile,BufReadPost *.mutt/fortunes* setlocal textwidth=76
-au BufWritePost           *.mutt/fortunes* silent !strfile <afile> >/dev/null
+au BufNewFile,BufReadPost *mutt/fortunes* setlocal textwidth=76
+au BufWritePost           *mutt/fortunes* silent !strfile <afile> >/dev/null
 
 " Statusline {{{1
 " Adapted from https://github.com/Lokaltog/sync/blob/master/vim/vimrc
