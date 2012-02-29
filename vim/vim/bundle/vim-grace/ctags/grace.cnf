@@ -1,0 +1,8 @@
+--langdef=grace
+--langmap=grace:.grace
+--regex-grace=/^import[[:blank:]]+([a-zA-Z0-9_]+);?$/\1/i,import/
+--regex-grace=/^def[[:blank:]]+([a-zA-Z0-9_]+)/\1/d,def/
+--regex-grace=/^var[[:blank:]]+([a-zA-Z0-9_]+)/\1/v,var/
+--regex-grace=/^type[[:blank:]]+([a-zA-Z0-9_ <>]+)[[:blank:]]+=/\1/t,type/
+--regex-grace=/^class[[:blank:]]+([a-zA-Z0-9_ <>]+)[[:blank:]]+\{/\1/c,class/
+--regex-grace=/^method[[:blank:]]+([a-zA-Z0-9_]+)([^{]*)[[:space:]]+\{[[:blank:]]*$/\1/m,method/
