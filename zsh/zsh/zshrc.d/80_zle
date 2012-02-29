@@ -9,6 +9,10 @@ bindkey '^n' down-line-or-search
 # turn current line into comment and commit
 bindkey '^[#' pound-insert
 
+# insert last word from previous command at cursor
+# multiple presses cycle
+bindkey '^[l' insert-last-word
+
 # define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
 #  WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>' # the default
 #  WORDCHARS=.
