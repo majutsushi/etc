@@ -93,7 +93,7 @@
 	browser = firefox
 
 [instaweb]
-	httpd = lighttpd
+	httpd = webrick
 
 [gui]
 	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
