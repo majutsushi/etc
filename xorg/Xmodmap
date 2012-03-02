@@ -53,3 +53,15 @@ keycode 134 = Mode_switch Multi_key Pointer_Button2
 !add Mod2 = Meta_L
 !add Mod2 = Meta_R
 
+! Mac key codes
+! –   en dash             ⌥  + –
+! —   em dash             ⌥⇧ + –
+! …   horizontal ellipsis ⌥  + ;
+! “ ” double quotes       ⌥  + [
+!                         ⌥⇧ + [
+! ‘ ’ single quotes       ⌥  + ]
+!                         ⌥⇧ + ]
+! « » guillemets          ⌥  + \
+!                         ⌥⇧ + \
+! €   Euro                ⌥⇧ + 2
+! °   degrees             ⌥⇧ + 8
