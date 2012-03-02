@@ -224,19 +224,12 @@ bind l focus right
 #   bindkey -k k7 prev
 #   bindkey -k k8 next
 
-# ctrl+left OR right arrow cycles all the windows
+# ctrl+left / right arrow cycles all the windows
   bindkey "^[Oc" next
   bindkey "^[Od" prev
 
-# or if you prefer shift+arrow
-#   bindkey "^[[c" next
-#   bindkey "^[[d" prev
-
-# shift-tab for cycling
-#   bindkey "^[[Z" next
-
-  bindkey "^[." next
-  bindkey "^[," prev
+  bindkey "^[>" next
+  bindkey "^[<" prev
 
 # OS X (iTerm)
   bindkey "≥" next
