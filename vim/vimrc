@@ -342,7 +342,7 @@ let g:default_stl .= "%) "
 let g:default_stl .= "#[FunctionName] "
 
 " Function name
-"let g:default_stl .= "<CUR>%(%{cfi#format('%s() |', '')} %)</CUR>"
+" let g:default_stl .= "<CUR>%(%{tagbar#currenttag('%s |', '')} %)</CUR>"
 
 " Truncate here
 let g:default_stl .= "%<"
