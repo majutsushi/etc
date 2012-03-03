@@ -80,11 +80,7 @@ URxvt.utmpInhibit: true
 URxvt.modifier: alt
 
 !URxvt.perl-lib: /home/jan/.etc/urxvt/ext
-URxvt.perl-ext-common: default,xim-onthespot,selection-pastebin,fullscreen,matcher,url-picker,bidi
-
-URxvt.keysym.C-M-p: perl:selection-pastebin:remote-pastebin
-URxvt.selection-pastebin.cmd: pub %
-URxvt.selection-pastebin.url: http://majutsushi.net/stuff/%
+URxvt.perl-ext-common: default,xim-onthespot,fullscreen,matcher,url-picker,bidi,keyboard-select,clipboard
 
 URxvt.keysym.F11: perl:fullscreen:switch
 
@@ -96,6 +92,15 @@ URxvt.underlineURLs: true
 
 URxvt.bidi.enabled:  1
 URxvt.keysym.C-M-b: perl:bidi toggle show
+
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s:      perl:keyboard-select:search
+
+URxvt.keysym.M-c:   perl:clipboard:copy
+URxvt.keysym.M-v:   perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+URxvt.copyCommand:  xclip -i -selection clipboard
+URxvt.pasteCommand: xclip -o -selection clipboard
 
 !URxvt.termName: xterm
 !URxvt.keysym.Home: \033[1~
