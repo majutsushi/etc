@@ -1,5 +1,8 @@
+TAB: menu-complete
+
 set bell-style visible
 set completion-ignore-case on
 set match-hidden-files off
+set menu-complete-display-prefix on
 set show-all-if-ambiguous on
 set visible-stats on
