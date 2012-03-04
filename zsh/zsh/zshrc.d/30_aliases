@@ -49,7 +49,7 @@ alias mkdir="nocorrect mkdir"
 mcd() { mkdir -p "$@"; cd "$@" }
 
 # defaults for some programs
-alias grep='grep -E --color=auto'
+alias grep="grep --extended-regexp --ignore-case --recursive"
 alias gdb="gdb -q"
 alias mtr="mtr -t"
 

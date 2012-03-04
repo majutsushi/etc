@@ -26,6 +26,8 @@ export LESS_TERMCAP_me=$'\E[0m'      # end all modes
 # make less more friendly for non-text input files, see lesspipe(1)
 [[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
 
+export GREP_OPTIONS='--color=auto'
+
 # set default browser
 if [[ -z "$BROWSER" ]] ; then
     if [[ -n "$DISPLAY" ]] ; then
