@@ -78,6 +78,19 @@ sshot()    { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desktop/screens
 wp()       { dig +short txt ${1// /_}.wp.dg.cx }
 getlinks() { perl -ne 'while ( m/"((www|ftp|http):\/\/.*?)"/gc ) { print $1, "\n"; }' $* }
 
+# easily reattach tmux sessions
+# http://blog.plenz.com/2012-01/tmux-session-names.html
+tm() {
+    [[ -z "$1" ]] && { tmux attach; return 0 }
+    tmux has -t $1 && tmux attach -t $1 || tmux new -s $1
+}
+__tmux-sessions() {
+    local -a sessions
+    sessions=( ${${(f)"$(command tmux list-sessions)"}/:[ $'\t']##/:} )
+    _describe -t sessions 'sessions' sessions "$@"
+}
+compdef __tmux-sessions tm
+
 alert() {
     eval '"$@"'
     local rv=$?
