@@ -44,6 +44,8 @@ setopt no_flow_control
 stty ixoff
 stty -ixon
 
+setopt correct
+
 # report about cpu-/system-/user-time of command
 # if running longer than 5 seconds
 # REPORTTIME=5
