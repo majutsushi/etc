@@ -1802,12 +1802,8 @@ inoremap        <c-a> <esc>0i
 inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
 
 " quickfix
-nnoremap <leader>cn :cnext<cr>
-nnoremap <leader>cp :cprevious<cr>
 nnoremap <expr> <leader>co &lines / 4 < 10 ? ':botright copen 10<cr>'
                                          \ : ':botright copen <C-r>=&lines / 4<cr><cr>'
-nnoremap <leader>cc :cclose<cr>
-nnoremap <leader>cl :clist<cr>
 
 " search for visually selected text
 xnoremap <silent> * :<C-U>
