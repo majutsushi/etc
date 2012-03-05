@@ -555,9 +555,6 @@ function! GenerateFoldText()
 endfunction
 
 " GenerateTabLine() {{{2
-if exists("+guioptions")
-     set go-=e
-endif
 if exists("+showtabline")
     function! GenerateTabLine()
         let s = ''
@@ -629,12 +626,13 @@ function! GuiSettings()
     endif
 
     set guioptions+=c " use console dialogs
+    set guioptions-=a " don't auto-copy selection to * register
     set guioptions-=e " don't use gui tabs
-    set guioptions-=T " don't show toolbar
     set guioptions-=m " don't show menubar
+    set guioptions-=T " don't show toolbar
 
     " "no", "yes" or "menu"; how to use the ALT key
-"   set winaltkeys=no
+    set winaltkeys=no
 
     set lines=50
     set columns=80
@@ -1072,6 +1070,10 @@ set confirm
 "set visualbell
 
 " selecting text {{{2
+
+" 'unnamed' to use the * register like unnamed register
+" 'autoselect' to always put selected text into register *
+set clipboard=exclude:cons\|linux
 
 " editing text {{{2
 
