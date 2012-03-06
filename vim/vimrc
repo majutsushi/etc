@@ -1800,6 +1800,7 @@ nnoremap k gk
 " emacs-like c-a/c-e movement
 inoremap        <c-a> <esc>0i
 inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
+inoremap        <c-b> <left>
 
 " quickfix
 nnoremap <expr> <leader>co &lines / 4 < 10 ? ':botright copen 10<cr>'
