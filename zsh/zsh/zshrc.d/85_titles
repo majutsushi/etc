@@ -19,7 +19,7 @@ precmd_functions+=_update_screen_title
 
 
 __set_xterm_title() {
-    print -n $'\e]0;'$1$'\a'
+    print -nr $'\e]0;'$1$'\a'
 }
 _update_xterm_title() {
     case $TERM in (xterm*|rxvt*|screen*)
