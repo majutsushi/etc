@@ -20,6 +20,7 @@ else
         pcol[$c]="%{$fg[${c}]%}"
     done
 fi
+unset i
 
 pcol[bold]="%{$bold_color%}"
 pcol[reset]="%{$reset_color%}"

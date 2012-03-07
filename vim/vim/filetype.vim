@@ -8,5 +8,6 @@ augroup filetypedetect
     au BufNewFile,BufReadPost *.gnuplot setfiletype gnuplot
     au BufNewFile,BufReadPost *.gle     setfiletype gle
     au BufNewFile,BufReadPost *.otl.gpg setfiletype vo_base
+    au BufNewFile,BufReadPost .tmux.conf,tmux.conf setfiletype tmux
 augroup END
 

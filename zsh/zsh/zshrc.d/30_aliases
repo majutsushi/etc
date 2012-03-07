@@ -78,6 +78,26 @@ sshot()    { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desktop/screens
 wp()       { dig +short txt ${1// /_}.wp.dg.cx }
 getlinks() { perl -ne 'while ( m/"((www|ftp|http):\/\/.*?)"/gc ) { print $1, "\n"; }' $* }
 
+tmux() {
+    # create a cache directory for status script updates, taken from byobu
+    if [[ -w /dev/shm ]]; then
+        for dir in /dev/shm/tmux-${USER}-*; do
+            if [[ -d "$dir" ]] && [[ -O "$dir" ]]; then
+                export TMUX_CACHE="$dir"
+                break
+            fi
+        done
+        if [[ ! -d "$TMUX_CACHE" ]] || [[ ! -O "$TMUX_CACHE" ]]; then
+            export TMUX_CACHE=$(mktemp -d /dev/shm/tmux-$USER-XXXXXXXX)
+        fi
+    else
+        export TMUX_CACHE="$XDG_CACHE_HOME/tmux"
+    fi
+    mkdir -p "$TMUX_CACHE/status" "$TMUX_CACHE/.last"
+
+    command tmux "$@"
+}
+
 # easily reattach tmux sessions
 # http://blog.plenz.com/2012-01/tmux-session-names.html
 tm() {

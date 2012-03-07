@@ -40,6 +40,8 @@ xlink .etc/screen/screenrc .screenrc screen
 
 xlink .etc/slrn/slrnrc .slrnrc slrn
 
+xlink .etc/tmux/tmux.conf .tmux.conf tmux
+
 xlink .etc/urxvt .urxvt urxvt
 
 xlink .etc/vim/vimrc      .vimrc      vim

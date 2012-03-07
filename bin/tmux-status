@@ -1,0 +1,53 @@
+#!/usr/bin/env zsh
+# heavily inspired by byobu
+
+battery=1
+cputemp=1
+
+TMUX_LIBDIR=$HOME/.etc/tmux/lib
+
+if [[ -r $HOME/.etc/tmux/statusrc ]]; then
+    . $HOME/.etc/tmux/statusrc
+fi
+
+ismac() {
+    [[ "$(uname -s)" == "Darwin" ]] && return 0
+    return 1
+}
+
+status_freq() {
+    case "$1" in
+        battery) echo 61 ;;
+        cputemp) echo 19 ;;
+    esac
+}
+
+get_status() {
+    function="$1"
+
+    local cachepath="$TMUX_CACHE/status/$function"
+    local lastpath="$TMUX_CACHE/.last/$function"
+    local lastrun
+    [[ -r "$lastpath" ]] && read lastrun < "$lastpath" || lastrun=0
+
+    freq=$(status_freq "$function")
+    local expiry=$(($lastrun+$freq))
+
+    . $TMUX_LIBDIR/$function
+
+    # Update cache now, if necessary
+    if [[ $NOW -ge $expiry ]] || [[ "$lastrun" = "0" ]]; then
+        "__$function" > "$cachepath"
+        echo "$NOW" > "$lastpath"
+    fi
+    if [[ -s "$cachepath" ]]; then
+        IFS= read line < "$cachepath"; printf "$line"
+    fi
+}
+
+NOW=$(print -P "%D{%s}")
+
+eval x="\$$1" || exit 1
+if [[ "$x" == "1" ]]; then
+    get_status "$1"
+fi

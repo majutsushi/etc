@@ -1,0 +1,11 @@
+TEMP_DEVICE=${TEMP_DEVICE:-/sys/class/hwmon/hwmon0/device/temp2_input}
+
+__cputemp() {
+    local t
+    if [[ -r "$TEMP_DEVICE" ]]; then
+        read t < "$TEMP_DEVICE" && t=$(($t/1000))
+        printf "#[fg=yellow,bg=black,bold]%s#[default]#[fg=yellow,bg=black]\260C#[default]" "$t"
+    fi
+}
+
+# vim: filetype=zsh
