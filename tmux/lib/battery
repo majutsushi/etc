@@ -21,7 +21,7 @@ __battery() {
                 charged|Unknown|Full) sign="=" ;;
                 *) sign="$state" ;;
             esac
-            printf "${bcolor}%s#[default]${color}$sign#[default]" "$percent"
+            printf "${bcolor}%s#[default]${color}$sign#[default] " "$percent"
         fi
     fi
 }
