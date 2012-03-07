@@ -19,14 +19,14 @@ precmd_functions+=_update_screen_title
 
 
 __set_xterm_title() {
-    print -nP $'\e]0;'$1$'\a'
+    print -n $'\e]0;'$1$'\a'
 }
 _update_xterm_title() {
     case $TERM in (xterm*|rxvt*|screen*)
         if [[ -n "$1" ]]; then
-            __set_xterm_title "%n@%m: $1 | %~"
+            __set_xterm_title "$(print -nP '%n@%m: ')$1$(print -nP ' | %~')"
         else
-            __set_xterm_title "%n@%m: %~"
+            __set_xterm_title "$(print -nP '%n@%m: %~')"
         fi
         ;;
     esac
@@ -117,7 +117,7 @@ preexec() {
 
     # adjust title of xterm
     case $TERM in (xterm*|rxvt*|screen*)
-        print -Pn "\e]0;%n@%m: $1\a"
+        print -n "\e]0;${USER}@${HOST}: $1\a"
         ;;
     esac
 }
