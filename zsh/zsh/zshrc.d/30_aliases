@@ -69,7 +69,7 @@ alias pu='ps ux | less'
 alias t='noglob task'
 alias vi='vim'
 alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
-alias myip='lynx -dump tnx.nl/ip'
+alias myip='curl http://v4.ipv6-test.com/api/myip.php'
 
 have colordiff && alias diff='colordiff'
 
