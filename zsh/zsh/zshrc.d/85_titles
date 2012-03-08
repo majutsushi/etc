@@ -1,14 +1,14 @@
 if is-at-least 4.3.4; then
 
 __set_screen_title() {
-    print -nP $'\ek'$1$'\e'\\
+    print -nr $'\ek'$1$'\e\\'
 }
 _update_screen_title() {
     case $TERM in (screen*)
         if [[ -n "$1" ]]; then
             __set_screen_title "${1}"
         elif [[ -n "$SSH_CLIENT" ]]; then
-            __set_screen_title "%m"
+            __set_screen_title "$(print -nP '%m')"
         else
             __set_screen_title "zsh"
         fi
@@ -19,7 +19,7 @@ precmd_functions+=_update_screen_title
 
 
 __set_xterm_title() {
-    print -nr $'\e]0;'$1$'\a'
+    print -nr $'\e]0;'$1$'\e\\'
 }
 _update_xterm_title() {
     case $TERM in (xterm*|rxvt*|screen*)
@@ -93,16 +93,16 @@ precmd() {
     # adjust screen window title
     if [[ "$TERM" == screen* ]]; then
         if [[ -n "$SSH_CLIENT" ]]; then
-            print -Pn "\ek%m\e\\"
+            print -nP "\ek%m\e\\"
         else
-            echo -ne "\ekzsh\e\\"
+            print -n "\ekzsh\e\\"
         fi
     fi
 
     # adjust title of xterm
     # see http://www.faqs.org/docs/Linux-mini/Xterm-Title.html
     case $TERM in (xterm*|rxvt*|screen*)
-        print -Pn "\e]0;%n@%m: %~\a"
+        print -nP "\e]0;%n@%m: %~\e\\"
         ;;
     esac
 }
@@ -112,12 +112,12 @@ preexec() {
     # set screen window title if running in a screen
     if [[ "$TERM" == screen* ]]; then
         local CMD="${1[(wr)^(*=*|sudo|(auto)?ssh|-*)]//*\//}${SSH_CLIENT:+@${HOST//.*/}}"
-        echo -ne "\ek$CMD\e\\"
+        print -nr $'\ek'$CMD$'\e\\'
     fi
 
     # adjust title of xterm
     case $TERM in (xterm*|rxvt*|screen*)
-        print -n "\e]0;${USER}@${HOST}: $1\a"
+        print -nr $'\e]0;'${USER}@${HOST}: $1$'\e\\'
         ;;
     esac
 }
