@@ -600,12 +600,20 @@ endif
 " GenCscopeAndTags() {{{2
 function! GenCscopeAndTags()
     " see ~/.ctags
+    let ctagsbin = g:ctagsbin
+    let userdefs = tagbar#getusertypes()
+    for type in values(userdefs)
+        if has_key(type, 'deffile')
+            let ctagsbin .= ' --options=' . expand(type.deffile)
+        endif
+    endfor
+
     if filereadable("cscope.files")
         execute '!cscope -qbc'
-        execute '!' . g:ctagsbin . ' -L cscope.files'
+        execute '!' . ctagsbin . ' -L cscope.files'
     else
         execute '!cscope -Rqbc'
-        execute '!' . g:ctagsbin . ' -R'
+        execute '!' . ctagsbin . ' -R'
     endif
     if filereadable('cscope.out')
         if cscope_connection(2, "cscope.out") == 0
