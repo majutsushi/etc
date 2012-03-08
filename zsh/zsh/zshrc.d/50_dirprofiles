@@ -81,7 +81,7 @@ function chpwd_profiles() {
     CHPWD_PROFILE="${profile}"
     return 0
 }
-chpwd_functions=( ${chpwd_functions} chpwd_profiles )
+add-zsh-hook chpwd chpwd_profiles
 
 fi
 

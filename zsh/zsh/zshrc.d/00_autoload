@@ -7,6 +7,8 @@ autoload -U zrecompile
 
 autoload -U colors; colors
 
+autoload -U add-zsh-hook
+
 autoload run-help
 autoload run-help-git
 autoload run-help-svn
