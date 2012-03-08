@@ -46,7 +46,9 @@ else
 fi
 alias mv="nocorrect mv $INTERACTIVE"
 alias mkdir="nocorrect mkdir"
+
 mcd() { mkdir -p "$@"; cd "$@" }
+compdef _mkdir mcd
 
 # defaults for some programs
 alias grep="grep --extended-regexp --ignore-case --recursive"

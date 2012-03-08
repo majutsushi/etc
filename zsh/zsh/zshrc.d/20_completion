@@ -24,6 +24,8 @@ zstyle ':completion:*' menu select=1
 zstyle ':completion:*' verbose true
 # match uppercase from lowercase
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
+# show ignored matches if we really want to
+zstyle ':completion:*' single-ignored show
 # caching
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache/
@@ -54,7 +56,7 @@ else
     if [[ $words[1] == (rm|mv) ]]; then
         reply=(_complete)
     else
-        reply=(_oldlist _force_rehash _complete _correct _approximate)
+        reply=(_oldlist _force_rehash _complete _correct _approximate _ignored)
     fi
 fi'
 zstyle ':completion:*:correct:*'   insert-unambiguous true
@@ -113,6 +115,13 @@ hosts=(
     localhost
 )
 zstyle ':completion:*:hosts' hosts $hosts
+zstyle ':completion:*:hosts' ignored-patterns 'ip6-*'
+
+zstyle ':completion:*:users' ignored-patterns avahi avahi-autoipd backup bin bitlbee \
+    cl-builder colord daemon Debian-exim Debian-gdm festival fetchmail games gnats hplip \
+    irc lastfm libuuid list lp mail man messagebus minbif mpd news nobody ntp polkituser \
+    proxy saned spampd sshd statd sync sys timidity uml-net usbmux uucp www-data '_*'
+
 
 # use generic completion for programs that support --help
 compdef _gnu_generic tail head cp mv df uname ack-grep
