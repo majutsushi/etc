@@ -5,7 +5,7 @@ case $TERM in
     (screen*|rxvt|dumb|vt100)
         ;;
     *) export ORIGTERM=$TERM
-       if have tmux; then
+       if have -c tmux; then
            tmux new-session
        else
            screen -m
