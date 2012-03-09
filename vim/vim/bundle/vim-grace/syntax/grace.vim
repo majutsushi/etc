@@ -70,6 +70,9 @@ syn match graceNumber "\(\<\d\+\.\d*\|\.\d\+\)\([eE][-+]\=\d\+\)\=[fFdD]\="
 syn match graceNumber "\<\d\+[eE][-+]\=\d\+[fFdD]\=\>"
 syn match graceNumber "\<\d\+\([eE][-+]\=\d\+\)\=[fFdD]\>"
 
+syn region graceBlock start="{" end="}" transparent fold
+" syntax region graceBlock start="^\z(\s*\)method .\+ {" end="^\z1}" transparent fold
+
 syn sync fromstart
 
 " known errors

@@ -5,6 +5,7 @@ setlocal textwidth=80
 setlocal smarttab
 setlocal expandtab
 setlocal smartindent
+setlocal foldmethod=syntax
 
 let g:tagbar_type_grace = {
     \ 'ctagstype' : 'grace',
