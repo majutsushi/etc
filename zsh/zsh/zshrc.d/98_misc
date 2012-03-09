@@ -1,13 +1,15 @@
-# handle deleted and then recreated directories
-_dir_cycle() {
-    if ! [[ . -ef $PWD ]]; then
-        if ! cd -- "${PWD}" >/dev/null 2>&1; then
-            echo "W: ${PWD} does no longer exist"
-            return 1
+if is-at-least 4.3; then
+    # handle deleted and then recreated directories
+    _dir_cycle() {
+        if ! [[ . -ef $PWD ]]; then
+            if ! cd -- "${PWD}" >/dev/null 2>&1; then
+                echo "W: ${PWD} does no longer exist"
+                return 1
+            fi
         fi
-    fi
-}
-add-zsh-hook precmd _dir_cycle
+    }
+    add-zsh-hook precmd _dir_cycle
+fi
 
 if [[ -f $HOME/.zshrc.local ]]; then
     source $HOME/.zshrc.local
