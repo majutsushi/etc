@@ -72,9 +72,13 @@ xlink .etc/lessfilter .lessfilter less
 #xlink .etc/mailcap    .mailcap
 #xlink .etc/procmailrc .procmailrc
 
-for tinfo in .etc/terminfo/*; do
-    echo "Compiling terminfo ${tinfo##.etc/terminfo/}"
-    tic $tinfo
+for tinfof in .etc/terminfo/*; do
+    tinfo=$(basename ${tinfof})
+    echo "Compiling terminfo ${tinfo}"
+    tic $tinfof
+    if [[ -f .termcap ]] && ! grep -qE "^${tinfo}\|" .termcap; then
+        tic -C ${tinfof} >> .termcap
+    fi
 done
 
 cd $OLDPWD
