@@ -5,6 +5,8 @@ bindkey ' ' magic-space
 
 bindkey '^p' up-line-or-search
 bindkey '^n' down-line-or-search
+bindkey '^r' history-incremental-pattern-search-backward
+bindkey '^s' history-incremental-pattern-search-forward
 
 # turn current line into comment and commit
 bindkey '^[#' pound-insert
