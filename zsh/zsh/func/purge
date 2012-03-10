@@ -24,6 +24,8 @@ FILES=(
     *.(orig|rej)(.DN)
     *.dpkg-(old|dist|new)(DN)
     ._(cfg|mrg)[0-9][0-9][0-9][0-9]_*(N)
+    .DS_Store(.N)
+    __MACOSX(/N)
     ${~TEXTEMPFILES}
     ${~GHCTEMPFILES}
     ${~PYTEMPFILES}
