@@ -1799,6 +1799,9 @@ inoremap        <c-b> <left>
 nnoremap <expr> <leader>co &lines / 4 < 10 ? ':botright copen 10<cr>'
                                          \ : ':botright copen <C-r>=&lines / 4<cr><cr>'
 
+" display the number of matches of current search pattern
+nnoremap g/ :%s/<C-R>=&ignorecase ? '\c' : '\C'<CR><C-R>///gne<CR>
+
 " search for visually selected text
 xnoremap <silent> * :<C-U>
               \let old_reg=getreg('"')<bar>
