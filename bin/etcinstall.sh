@@ -72,4 +72,9 @@ xlink .etc/lessfilter .lessfilter less
 #xlink .etc/mailcap    .mailcap
 #xlink .etc/procmailrc .procmailrc
 
+for tinfo in .etc/terminfo/*; do
+    echo "Compiling terminfo ${tinfo##.etc/terminfo/}"
+    tic $tinfo
+done
+
 cd $OLDPWD
