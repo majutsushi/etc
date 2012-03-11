@@ -76,8 +76,15 @@ for tinfof in .etc/terminfo/*; do
     tinfo=$(basename ${tinfof})
     echo "Compiling terminfo ${tinfo}"
     tic $tinfof
-    if [[ -f .termcap ]] && ! grep -qE "^${tinfo}\|" .termcap; then
-        tic -C ${tinfof} >> .termcap
+
+    # also install termcap data if the shell is linked against it
+    if ldd $(which bash) | grep -q libtermcap; then
+        echo "termcap in use, appending ${tinfo} to ~/.termcap"
+        if [[ -f .termcap ]] && ! grep -qE "^${tinfo}\|" .termcap; then
+            tic -C ${tinfof} >> .termcap
+        else
+            tic -C ${tinfof} > .termcap
+        fi
     fi
 done
 
