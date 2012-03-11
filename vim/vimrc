@@ -43,16 +43,8 @@ unlet ctagsbins
 " remove all autocommands to avoid sourcing them twice
 autocmd!
 
-autocmd GUIEnter * call GuiSettings()
-
-"au BufWritePost ~/.vimrc so ~/.vimrc
-
 autocmd InsertLeave * set nocul
 autocmd InsertEnter * set cul
-
-" for VimOrganizer
-au! BufRead,BufWrite,BufWritePost,BufNewFile *.org
-au BufEnter *.org call org#SetOrgFileType()
 
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
@@ -60,16 +52,10 @@ au BufEnter *.org call org#SetOrgFileType()
 autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
 autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 
-autocmd BufNewFile,BufReadPost * call LoadDirLocals()
-
 autocmd BufNewFile,BufWritePre * call AutoMkDir()
-
-autocmd BufWritePre * call Timestamp()
 
 " create undo break point
 autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
-
-"au BufWritePre * let &bex = '-' . strftime("%Y%b%d%X") . '~'
 
 "augroup fastescape
 "    autocmd!
@@ -78,8 +64,8 @@ autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 "    set ttimeout
 "    set timeoutlen=10
 
-"    au InsertEnter * set timeout
-"    au InsertLeave * set notimeout
+"    autocmd InsertEnter * set timeout
+"    autocmd InsertLeave * set notimeout
 "augroup END
 
 " When switching buffers, preserve window view.
@@ -92,61 +78,27 @@ function! IsNotSpecialBuf(buf)
           \ (bufname(a:buf) !~ "fugitive*"))
 endfunction
 if v:version >= 700
-    au BufLeave * if(IsNotSpecialBuf("%")) | let b:winview = winsaveview() | endif
-    au BufEnter * if(exists('b:winview') && IsNotSpecialBuf("%")) | call winrestview(b:winview) | endif
+    autocmd BufLeave * if(IsNotSpecialBuf("%")) | let b:winview = winsaveview() | endif
+    autocmd BufEnter * if(exists('b:winview') && IsNotSpecialBuf("%")) | call winrestview(b:winview) | endif
 endif
 
-function! s:SetupHelpWindow()
-    " Set custom statusline
-    let b:stl = "#[Branch] HELP #[FileName] %<%t #[FunctionName] %=#[LinePercentS]#[LinePercent] %p%%"
-
-    nnoremap <buffer> <Space> <C-]> " Space selects subject
-    nnoremap <buffer> <BS>    <C-T> " Backspace to go back
-    nnoremap <buffer> q       :q<CR>
-endfunction
-au FileType help if &buftype == 'help' | call <SID>SetupHelpWindow() | endif
+" automatically give executable permissions if file begins with #!
+" and contains" '/bin/' in the path
+" From https://github.com/mitechie/pyvim/blob/master/.vimrc
+autocmd BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 'silent !chmod u+x <afile>' | endif | endif
 
 " filetype-specific settings
-au FileType make setlocal noexpandtab tabstop=8 shiftwidth=8
-au FileType gtkrc setlocal tabstop=2 shiftwidth=2
-au FileType haskell compiler ghc
-au FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType make    setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=0
+autocmd FileType gtkrc   setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType haskell compiler ghc
+autocmd FileType ruby    setlocal omnifunc=rubycomplete#Complete
 
-" Folding of (gnu)make output.
-augroup quickfix
-    au BufReadPost quickfix setlocal foldmethod=marker
-    au BufReadPost quickfix setlocal foldmarker=Entering\ directory,Leaving\ directory
-    au BufReadPost quickfix nnoremap <buffer> <silent> zq zM:g/error:/normal zv<CR>
-    au BufReadPost quickfix nnoremap <buffer> <silent> zw zq:g/warning:/normal zv<CR>
-    au BufReadPost quickfix nnoremap <buffer> <silent> q :close<CR>
-"    au BufReadPost quickfix normal zq
+augroup commentstrings
+    autocmd FileType cpp setlocal commentstring=//%s
 augroup END
 
-" setup templates
-au BufNewFile *.tex Vimplate LaTeX
-au BufNewFile *.sh Vimplate shell
-au BufNewFile *.c Vimplate c
-au BufNewFile *.vim Vimplate vim
-au BufNewFile *.rb Vimplate ruby
-au BufNewFile Makefile Vimplate Makefile-C
-
-" FSwitch setup
-au BufEnter *.c        let b:fswitchdst  = 'h'
-au BufEnter *.c        let b:fswitchlocs = './'
-au BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
-au BufEnter *.cpp,*.cc let b:fswitchlocs = './'
-au BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
-au BufEnter *.h        let b:fswitchlocs = './'
-
-" automatically delete fugitive buffers when leaving them
-autocmd BufReadPost fugitive://* set bufhidden=delete
-
-" automatically give executable permissions if file begins with #! and contains" '/bin/' in the path
-" From https://github.com/mitechie/pyvim/blob/master/.vimrc
-au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 'silent !chmod u+x <afile>' | endif | endif
-
-au BufNewFile,BufReadPost *mutt/fortunes* setlocal textwidth=76
-au BufWritePost           *mutt/fortunes* silent !strfile <afile> >/dev/null
+autocmd BufNewFile,BufReadPost *mutt/fortunes* setlocal textwidth=76
+autocmd BufWritePost           *mutt/fortunes* silent !strfile <afile> >/dev/null
 
 " Statusline {{{1
 " Adapted from https://github.com/Lokaltog/sync/blob/master/vim/vimrc
@@ -387,11 +339,11 @@ let g:default_stl .= "#[LinePercent] %p%%"
 augroup StatusLineHighlight
     autocmd!
 
-    au ColorScheme * call <SID>StatusLineColors(s:statuscolors)
+    autocmd ColorScheme * call <SID>StatusLineColors(s:statuscolors)
 
-    au BufEnter,BufWinEnter,WinEnter,CmdwinEnter,CursorHold,BufWritePost,InsertLeave * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Normal', 1)
-    au BufLeave,BufWinLeave,WinLeave,CmdwinLeave * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Normal', 0)
-    au InsertEnter,CursorHoldI * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Insert', 1)
+    autocmd BufEnter,BufWinEnter,WinEnter,CmdwinEnter,CursorHold,BufWritePost,InsertLeave * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Normal', 1)
+    autocmd BufLeave,BufWinLeave,WinLeave,CmdwinLeave * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Normal', 0)
+    autocmd InsertEnter,CursorHoldI * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Insert', 1)
 augroup END
 
 " Functions {{{1
@@ -645,6 +597,7 @@ function! GuiSettings()
     set lines=50
     set columns=80
 endfunction
+autocmd GUIEnter * call GuiSettings()
 
 " InsertGuards() {{{2
 function! InsertGuards()
@@ -665,6 +618,7 @@ function! LoadDirLocals()
         endif
     endfor
 endfunction
+autocmd BufNewFile,BufReadPost * call LoadDirLocals()
 
 " PreviewWord() {{{2
 function! PreviewWord(local)
@@ -844,6 +798,7 @@ function! Timestamp()
         endif
     endfor
 endfunction
+autocmd BufWritePre * call Timestamp()
 
 " ToggleExpandTab() {{{2
 function! ToggleExpandTab()
@@ -1319,6 +1274,17 @@ nnoremap <silent> <Leader>oK :FSSplitAbove<cr>
 nnoremap <silent> <Leader>oj :FSBelow<cr>
 nnoremap <silent> <Leader>oJ :FSSplitBelow<cr>
 
+autocmd BufEnter *.c        let b:fswitchdst  = 'h'
+autocmd BufEnter *.c        let b:fswitchlocs = './'
+autocmd BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
+autocmd BufEnter *.cpp,*.cc let b:fswitchlocs = './'
+autocmd BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
+autocmd BufEnter *.h        let b:fswitchlocs = './'
+
+" Fugitive {{{2
+" automatically delete fugitive buffers when leaving them
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
 " Gitv {{{2
 let g:Gitv_OpenHorizontal = 1
 
@@ -1438,6 +1404,14 @@ endfunction
 
 " vimplate {{{2
 let Vimplate = expand('~/.vim/bundle/vimplate/vimplate')
+
+" setup templates
+autocmd BufNewFile *.tex Vimplate LaTeX
+autocmd BufNewFile *.sh Vimplate shell
+autocmd BufNewFile *.c Vimplate c
+autocmd BufNewFile *.vim Vimplate vim
+autocmd BufNewFile *.rb Vimplate ruby
+autocmd BufNewFile Makefile Vimplate Makefile-C
 
 " voom {{{2
 let g:voom_tab_key = '<C-Tab>'
