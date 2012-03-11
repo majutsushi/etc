@@ -37,7 +37,7 @@
 
 
 ! *** URxvt ***
-URxvt.font: terminus-12
+URxvt.font:   -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
 URxvt.boldFont: -maju-terminus-bold-r-normal--12-120-72-72-c-60-iso10646-1
 !URxvt.italicFont:
 !URxvt.boldItalicFont:
@@ -80,7 +80,7 @@ URxvt.utmpInhibit: true
 URxvt.modifier: alt
 
 !URxvt.perl-lib: /home/jan/.etc/urxvt/ext
-URxvt.perl-ext-common: default,xim-onthespot,fullscreen,matcher,url-picker,bidi,keyboard-select,clipboard
+URxvt.perl-ext-common: default,xim-onthespot,fullscreen,matcher,url-picker,bidi,keyboard-select,clipboard,font-size
 
 URxvt.keysym.F11: perl:fullscreen:switch
 
@@ -102,6 +102,9 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt.copyCommand:  xclip -i -selection clipboard
 URxvt.pasteCommand: xclip -o -selection clipboard
 
+URxvt.keysym.C-Up:   perl:font:increase
+URxvt.keysym.C-Down: perl:font:decrease
+
 !URxvt.termName: xterm
 !URxvt.keysym.Home: \033[1~
 !URxvt.keysym.End: \033[4~
@@ -113,10 +116,14 @@ URxvt.pasteCommand: xclip -o -selection clipboard
 
 ! *** XTerm ***
 
+UXTerm.termName: xterm-256color
 UXTerm*vt100.geometry: 100x50
 UXTerm*vt100.metaSendsEscape: true
 !UXTerm*vt100.utf8: 1
 UXTerm*vt100.visualBell: true
+UXTerm*vt100.translations: #override \
+    Ctrl<Key>Up: larger-vt-font() \n\
+    Ctrl<Key>Down: smaller-vt-font() \n
 
 
 yeahconsole.term: urxvt

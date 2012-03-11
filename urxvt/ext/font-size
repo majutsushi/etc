@@ -1,0 +1,156 @@
+#!/usr/bin/perl
+
+# Based on:
+# https://github.com/dave0/urxvt-font-size
+# https://github.com/noah/urxvt-font
+# 
+# TODO: bold/italic/bold-italic
+# TODO: multiple fonts (,)
+
+use constant X_RESOURCES => "~/.Xresources";
+
+sub on_user_command
+{
+    my ($self,$cmd) = @_;
+
+    if ($cmd eq "font:increase") {
+        font_change_size($self,  1);
+    } elsif ($cmd eq "font:decrease") {
+        font_change_size($self,  -1);
+    }
+}
+
+sub font_change_size
+{
+    my ($term, $change) = @_;
+
+    my ($fontstring) = $term->resource('font');
+
+    # $term->scr_add_lines("\r\nCurrent is $fontstring\n");
+
+    if ($fontstring =~ /^xft:/) {
+        font_change_size_xft($term, $fontstring, $change);
+    } else {
+        font_change_size_x11($term, $fontstring, $change);
+    }
+}
+
+sub font_change_size_xft
+{
+  my ($term, $fontstring, $change) = @_;
+
+  my (@pieces)  = split(/:/, $fontstring);
+  my (@resized) = ();
+
+  foreach my $piece (@pieces)
+  {
+      if ($piece =~ /pixelsize=(\d*)/)
+      {
+          my $size      = $1;
+          my $new_size  = ($change > 0 ? ($size + 1) : ($size - 1));
+          $piece =~ s/pixelsize=$size/pixelsize=$new_size/;
+      }
+      push @resized, $piece;
+  }
+
+  my ($resized_str)   = join (":", @resized);
+
+  font_apply_new($term, $resized_str);
+}
+
+sub font_change_size_x11
+{
+    my ($term, $fontstring, $change) = @_;
+
+    #-xos4-terminus-medium-r-normal-*-12-*-*-*-*-*-*-1
+
+    my @fields = qw(foundry family weight slant setwidth style pixelSize pointSize Xresolution Yresolution spacing averageWidth registry encoding);
+
+    my %font;
+    $fontstring =~ s/^-//;  # Strip leading - before split
+    @font{@fields} = split(/-/, $fontstring);
+
+    if( $font{registry} eq '*' ) {
+        $font{registry} ='iso8859';
+    }
+
+    # Blank out the size for the pattern
+    my %pattern = %font;
+    $pattern{foundry} = '*';
+    $pattern{pixelSize} = '*';
+    $pattern{pointSize} = '*';
+    $pattern{averageWidth} = '*';
+    # make sure there are no empty fields
+    foreach my $field (@fields) {
+        $pattern{$field} = '*' unless defined($pattern{$field});
+    }
+    my $new_fontstring = '-' . join('-', @pattern{@fields});
+
+    my @possible;
+    # $term->scr_add_lines("\r\nPattern is $new_fontstring\n");
+    open(FOO, "xlsfonts -fn '$new_fontstring' | sort -u |") or die $!;
+    while (<FOO>) {
+        chomp;
+        s/^-//;  # Strip leading '-' before split
+        my @fontdata = split(/-/,$_);
+
+        # zero-size font is stupid.  Avoid.
+        next if $fontdata[6] == 0;
+
+        push @possible, [$fontdata[6], "-$_"];
+        # $term->scr_add_lines("\r\npossibly $fontdata[6] $_\n");
+    }
+    close(FOO);
+
+    if (!@possible) {
+        die "No possible fonts!";
+    }
+
+    if ($change > 0) {
+        # sort by font size, ascending
+        @possible = sort {$a->[0] <=> $b->[0]} @possible;
+
+        foreach my $candidate (@possible) {
+            if ($font{pixelSize} < $candidate->[0]) {
+                font_apply_new($term, $candidate->[1]);
+                return;
+            }
+        }
+    } elsif ($change < 0) {
+        # sort by font size, descending
+        @possible = sort {$b->[0] <=> $a->[0]} @possible;
+
+        foreach my $candidate (@possible) {
+            if ($font{pixelSize} > $candidate->[0]) {
+                font_apply_new($term, $candidate->[1]);
+                return;
+            }
+        }
+    }
+
+    $term->scr_bell;
+}
+
+sub font_apply_new
+{
+    my ($term, $newfont) = @_;
+
+    # $term->scr_add_lines("\rDEBUG: new font is $newfont\n");
+
+    $term->cmd_parse("\033]710;" . $newfont . "\033\\"); # normal
+    # $term->cmd_parse("\033]711;" . $newfont . "\033\\"); # bold
+    # $term->cmd_parse("\033]712;" . $newfont . "\033\\"); # italic
+    # $term->cmd_parse("\033]713;" . $newfont . "\033\\"); # bold-italic
+
+    # load the xrdb db
+    # system("xrdb -load " . X_RESOURCES);
+
+    # merge the new values
+    # open(XRDB_MERGE, "| xrdb -merge") || die "can't fork: $!";
+    # local $SIG{PIPE} = sub { die "xrdb pipe broke" };
+    # print XRDB_MERGE "URxvt.font: " . $newfont;
+    # close(XRDB_MERGE) || die "bad xrdb: $! $?";
+
+    # write the db values back to the file
+    # system("xrdb -edit " . X_RESOURCES);
+}
