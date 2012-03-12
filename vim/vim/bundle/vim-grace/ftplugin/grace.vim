@@ -6,6 +6,7 @@ setlocal smarttab
 setlocal expandtab
 setlocal smartindent
 setlocal foldmethod=syntax
+setlocal commentstring=//%s
 
 let g:tagbar_type_grace = {
     \ 'ctagstype' : 'grace',
