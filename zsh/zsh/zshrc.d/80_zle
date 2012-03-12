@@ -5,8 +5,11 @@ bindkey ' ' magic-space
 
 bindkey '^p' up-line-or-search
 bindkey '^n' down-line-or-search
-bindkey '^r' history-incremental-pattern-search-backward
-bindkey '^s' history-incremental-pattern-search-forward
+
+if is-at-least 4.3; then
+    bindkey '^r' history-incremental-pattern-search-backward
+    bindkey '^s' history-incremental-pattern-search-forward
+fi
 
 # turn current line into comment and commit
 bindkey '^[#' pound-insert
