@@ -23,7 +23,11 @@ zstyle ':completion:*' menu select=1
 # provide verbose completion information
 zstyle ':completion:*' verbose true
 # match uppercase from lowercase
-zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
+if is-at-least 4.3; then
+    zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
+else
+    zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+fi
 # show ignored matches if we really want to
 zstyle ':completion:*' single-ignored show
 # caching
