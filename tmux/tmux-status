@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # heavily inspired by byobu
 
-items="battery cputemp"
+items="cputemp battery"
 
 TMUX_LIBDIR=$HOME/.etc/tmux/lib
 
@@ -10,7 +10,7 @@ if [[ -r $HOME/.local/share/tmux-statusrc ]]; then
 fi
 
 ismac() {
-    [[ "$(uname -s)" == "Darwin" ]] && return 0
+    [[ $OSTYPE == darwin* ]] && return 0
     return 1
 }
 
@@ -35,7 +35,7 @@ get_status() {
     . $TMUX_LIBDIR/$function
 
     # Update cache now, if necessary
-    if [[ $NOW -ge $expiry ]] || [[ "$lastrun" = "0" ]]; then
+    if (( $NOW >= $expiry )) || (( $lastrun == 0 )); then
         "__$function" > "$cachepath"
         echo "$NOW" > "$lastpath"
     fi
