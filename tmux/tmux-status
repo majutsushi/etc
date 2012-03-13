@@ -1,13 +1,12 @@
 #!/usr/bin/env zsh
 # heavily inspired by byobu
 
-battery=1
-cputemp=1
+items="battery cputemp"
 
 TMUX_LIBDIR=$HOME/.etc/tmux/lib
 
-if [[ -r $HOME/.etc/tmux/statusrc ]]; then
-    . $HOME/.etc/tmux/statusrc
+if [[ -r $HOME/.local/share/tmux-statusrc ]]; then
+    . $HOME/.local/share/tmux-statusrc
 fi
 
 ismac() {
@@ -47,7 +46,6 @@ get_status() {
 
 NOW=$(print -P "%D{%s}")
 
-eval x="\$$1" || exit 1
-if [[ "$x" == "1" ]]; then
-    get_status "$1"
-fi
+for item in ${(s: :)items}; do
+    get_status "$item"
+done
