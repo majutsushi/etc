@@ -1,0 +1,36 @@
+#!/usr/bin/python
+
+import sys
+from subprocess import Popen, PIPE
+import shlex
+import readline
+
+def system(cmd):
+    p = Popen(shlex.split(cmd), stdout=PIPE, stderr=PIPE)
+    (stdout, stderr) = p.communicate()
+
+    if p.returncode != 0:
+        print stderr
+        raw_input('Press enter')
+        exit()
+
+    return stdout.splitlines()
+
+def pre_input_hook():
+    sys.stdout.write('\033[m')
+    readline.redisplay()
+readline.set_pre_input_hook(pre_input_hook)
+
+# get search query
+readline.parse_and_bind('set editing-mode emacs')
+try:
+    sys.stdout.write('\033[1m')
+    query = raw_input('Query: ')
+except KeyboardInterrupt:
+    print
+    print 'Aborted'
+    exit()
+
+system('mu find --format=links --clearlinks --linksdir=~/.mu/results ' + query)
+
+# vim: filetype=python
