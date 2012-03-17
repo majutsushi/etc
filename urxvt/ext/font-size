@@ -31,7 +31,7 @@ sub on_user_command
     } elsif ($cmd eq "font:decglobal") {
         fonts_change_size($self, -1, 1);
     } elsif ($cmd eq "font:incsave") {
-        fonts_change_size($self, -1, 2);
+        fonts_change_size($self,  1, 2);
     } elsif ($cmd eq "font:decsave") {
         fonts_change_size($self, -1, 2);
     }
