@@ -14,7 +14,7 @@ __prompt_wperm() {
 }
 
 PS1='
-${pcol[167]}%n ${pcol[reset]}@ ${pcol[220]}%m${pcol[reset]} ● ${pcol[green]}%<...<%~%<<${pcol[reset]}$(__prompt_wperm)$(__prompt_vcs)
+${pcol[167]}%n ${pcol[reset]}@ ${pcol[220]}%m${pcol[reset]} • ${pcol[green]}%<...<%~%<<${pcol[reset]}$(__prompt_wperm)$(__prompt_vcs)
 %(2L.${pcol[bold]}%L${pcol[reset]} .)%(!.#.>) '
 
 RPS1='$(__prompt_exitcode)$(__prompt_jobs)'

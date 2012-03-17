@@ -3,7 +3,7 @@
 # and
 # http://git.madduck.net/v/etc/zsh.git/blob/HEAD:/.zsh/zshrc/60_vcsprompt
 
-PV_REFS_PREFIX=" ● "
+PV_REFS_PREFIX=" • "
 
 COL_REFS="${pcol[51]}"
 COL_REFS_DELIM=""
