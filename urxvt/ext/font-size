@@ -4,63 +4,148 @@
 # https://github.com/dave0/urxvt-font-size
 # https://github.com/noah/urxvt-font
 # 
-# TODO: bold/italic/bold-italic
-# TODO: multiple fonts (,)
+# TODO: short names
+# TODO: x: prefix
+# TODO: [] specifications
+
+use strict;
+use warnings;
 
 use constant X_RESOURCES => "~/.Xresources";
 
+my %codes = (
+    "font"           => 710,
+    "boldFont"       => 711,
+    "italicFont"     => 712,
+    "boldItalicFont" => 713
+);
+
 sub on_user_command
 {
-    my ($self,$cmd) = @_;
+    my ($self, $cmd) = @_;
 
     if ($cmd eq "font:increase") {
-        font_change_size($self,  1);
+        fonts_change_size($self,  1);
     } elsif ($cmd eq "font:decrease") {
-        font_change_size($self,  -1);
+        fonts_change_size($self,  -1);
     }
 }
 
-sub font_change_size
+sub fonts_change_size
 {
     my ($term, $change) = @_;
 
-    my ($fontstring) = $term->resource('font');
+    my @newfonts = ();
 
-    # $term->scr_add_lines("\r\nCurrent is $fontstring\n");
-
-    if ($fontstring =~ /^xft:/) {
-        font_change_size_xft($term, $fontstring, $change);
-    } else {
-        font_change_size_x11($term, $fontstring, $change);
+    my $curres = $term->resource('font');
+    if (!$curres) {
+        return;
     }
+    my @curfonts = split(/,/, $curres);
+
+    my $basefont = shift(@curfonts);
+    my ($newbasefont, $newbasesize) = handle_font($term, $basefont, $change, 0);
+    push @newfonts, $newbasefont;
+
+    # Only adjust other fonts if base font changed
+    if ($newbasefont ne $basefont) {
+        foreach my $font (@curfonts) {
+            my ($newfont, $newsize) = handle_font($term, $font, $change, $newbasesize);
+            push @newfonts, $newfont;
+        }
+        my $newres = join(",", @newfonts);
+        font_apply_new($term, $newres, $codes{"font"});
+
+        handle_type($term, "boldFont",       $change, $newbasesize);
+        handle_type($term, "italicFont",     $change, $newbasesize);
+        handle_type($term, "boldItalicFont", $change, $newbasesize);
+    }
+}
+
+sub handle_type
+{
+    my ($term, $type, $change, $basesize) = @_;
+
+    my $curres = $term->resource($type);
+    if (!$curres) {
+        return;
+    }
+    my @curfonts = split(/,/, $curres);
+    my @newfonts = ();
+
+    foreach my $font (@curfonts) {
+        my ($newfont, $newsize) = handle_font($term, $font, $change, $basesize);
+        push @newfonts, $newfont;
+    }
+
+    my $newres = join(",", @newfonts);
+    font_apply_new($term, $newres, $codes{$type});
+}
+
+sub handle_font
+{
+    my ($term, $font, $change, $basesize) = @_;
+
+    my $newfont;
+    my $newsize;
+
+    if ($font =~ /^\s*xft:/) {
+        ($newfont, $newsize) = font_change_size_xft($term, $font, $change, $basesize);
+    } elsif ($font =~ /^\s*-/) {
+        ($newfont, $newsize) = font_change_size_x11($term, $font, $change, $basesize);
+    } else {
+        # not a supported font, ring the bell if it is the base font and just
+        # return the current font
+        if ($basesize == 0) {
+            $term->scr_bell;
+        }
+        return ($font, $basesize);
+    }
+
+    # $term->scr_add_lines("\r\nNew font is $newfont\n");
+    return ($newfont, $newsize);
 }
 
 sub font_change_size_xft
 {
-  my ($term, $fontstring, $change) = @_;
+    my ($term, $fontstring, $change, $basesize) = @_;
 
-  my (@pieces)  = split(/:/, $fontstring);
-  my (@resized) = ();
+    my @pieces   = split(/:/, $fontstring);
+    my @resized  = ();
+    my $size     = 0;
+    my $new_size = 0;
 
-  foreach my $piece (@pieces)
-  {
-      if ($piece =~ /pixelsize=(\d*)/)
-      {
-          my $size      = $1;
-          my $new_size  = ($change > 0 ? ($size + 1) : ($size - 1));
-          $piece =~ s/pixelsize=$size/pixelsize=$new_size/;
-      }
-      push @resized, $piece;
-  }
+    foreach my $piece (@pieces) {
+        if ($piece =~ /pixelsize=(\d*)/) {
+            $size = $1;
 
-  my ($resized_str)   = join (":", @resized);
+            if ($basesize != 0) {
+                $new_size = $basesize;
+            } else {
+                $new_size = ($change > 0 ? ($size + 1) : ($size - 1));
+            }
 
-  font_apply_new($term, $resized_str);
+            $piece =~ s/pixelsize=$size/pixelsize=$new_size/;
+        }
+        push @resized, $piece;
+    }
+
+    my $resized_str = join(":", @resized);
+
+    # don't make fonts too small
+    if ($new_size >= 10) {
+        return ($resized_str, $new_size);
+    } else {
+        if ($basesize == 0) {
+            $term->scr_bell;
+        }
+        return ($fontstring, $size);
+    }
 }
 
 sub font_change_size_x11
 {
-    my ($term, $fontstring, $change) = @_;
+    my ($term, $fontstring, $change, $basesize) = @_;
 
     #-xos4-terminus-medium-r-normal-*-12-*-*-*-*-*-*-1
 
@@ -70,13 +155,14 @@ sub font_change_size_x11
     $fontstring =~ s/^-//;  # Strip leading - before split
     @font{@fields} = split(/-/, $fontstring);
 
-    if( $font{registry} eq '*' ) {
+    if ($font{registry} eq '*') {
         $font{registry} ='iso8859';
     }
 
     # Blank out the size for the pattern
     my %pattern = %font;
     $pattern{foundry} = '*';
+    $pattern{setwidth} = '*';
     $pattern{pixelSize} = '*';
     $pattern{pointSize} = '*';
     $pattern{averageWidth} = '*';
@@ -92,10 +178,7 @@ sub font_change_size_x11
     while (<FOO>) {
         chomp;
         s/^-//;  # Strip leading '-' before split
-        my @fontdata = split(/-/,$_);
-
-        # zero-size font is stupid.  Avoid.
-        next if $fontdata[6] == 0;
+        my @fontdata = split(/-/, $_);
 
         push @possible, [$fontdata[6], "-$_"];
         # $term->scr_add_lines("\r\npossibly $fontdata[6] $_\n");
@@ -106,14 +189,24 @@ sub font_change_size_x11
         die "No possible fonts!";
     }
 
-    if ($change > 0) {
+    if ($basesize != 0) {
+        # sort by font size, descending
+        @possible = sort {$b->[0] <=> $a->[0]} @possible;
+
+        # font is not the base font, so find the largest font that is at most
+        # as large as the base font
+        foreach my $candidate (@possible) {
+            if ($candidate->[0] == $basesize) {
+                return ($candidate->[1], $candidate->[0]);
+            }
+        }
+    } elsif ($change > 0) {
         # sort by font size, ascending
         @possible = sort {$a->[0] <=> $b->[0]} @possible;
 
         foreach my $candidate (@possible) {
-            if ($font{pixelSize} < $candidate->[0]) {
-                font_apply_new($term, $candidate->[1]);
-                return;
+            if ($candidate->[0] > $font{pixelSize}) {
+                return ($candidate->[1], $candidate->[0]);
             }
         }
     } elsif ($change < 0) {
@@ -121,33 +214,41 @@ sub font_change_size_x11
         @possible = sort {$b->[0] <=> $a->[0]} @possible;
 
         foreach my $candidate (@possible) {
-            if ($font{pixelSize} > $candidate->[0]) {
-                font_apply_new($term, $candidate->[1]);
-                return;
+            if ($candidate->[0] < $font{pixelSize} && $candidate->[0] != 0) {
+                return ($candidate->[1], $candidate->[0]);
             }
         }
     }
 
-    $term->scr_bell;
+    # no fitting font available, check whether a 0-size font can be used to
+    # fit the size of the base font
+    @possible = sort {$a->[0] <=> $b->[0]} @possible;
+    if ($basesize != 0 && $possible[0]->[0] == 0) {
+        return ($possible[0]->[1], $basesize);
+    } else {
+        # if there is absolutely no smaller/larger font that can be used
+        # return the current one, and beep if this is the base font
+        if ($basesize == 0) {
+            $term->scr_bell;
+        }
+        return ($fontstring, $font{pixelSize});
+    }
 }
 
 sub font_apply_new
 {
-    my ($term, $newfont) = @_;
+    my ($term, $newfont, $code) = @_;
 
     # $term->scr_add_lines("\rDEBUG: new font is $newfont\n");
 
-    $term->cmd_parse("\033]710;" . $newfont . "\033\\"); # normal
-    # $term->cmd_parse("\033]711;" . $newfont . "\033\\"); # bold
-    # $term->cmd_parse("\033]712;" . $newfont . "\033\\"); # italic
-    # $term->cmd_parse("\033]713;" . $newfont . "\033\\"); # bold-italic
+    $term->cmd_parse("\033]" . $code . ";" . $newfont . "\033\\");
 
     # load the xrdb db
     # system("xrdb -load " . X_RESOURCES);
 
     # merge the new values
     # open(XRDB_MERGE, "| xrdb -merge") || die "can't fork: $!";
-    # local $SIG{PIPE} = sub { die "xrdb pipe broke" };
+    # local $SIG{PIPE} = sub { die "xrdb pipe broken" };
     # print XRDB_MERGE "URxvt.font: " . $newfont;
     # close(XRDB_MERGE) || die "bad xrdb: $! $?";
 
