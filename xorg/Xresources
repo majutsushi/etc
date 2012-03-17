@@ -37,8 +37,14 @@
 
 
 ! *** URxvt ***
-URxvt.font:   -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
-URxvt.boldFont: -maju-terminus-bold-r-normal--12-120-72-72-c-60-iso10646-1
+URxvt.font: -xos4-terminus-medium-r-normal--12-120-72-72-c-0-iso10646-1,\
+            xft:DejaVu Sans Mono:pixelsize=12,\
+            xft:TakaoGothic:pixelsize=12,\
+            xft:Code2000:pixelsize=12
+URxvt.boldFont: -maju-terminus-bold-r-normal--12-120-72-72-c-60-iso10646-1,\
+                xft:DejaVu Sans Mono:weight=bold:pixelsize=12,\
+                xft:TakaoGothic:weight=bold:pixelsize=12,\
+                xft:Code2000:weight=bold:pixelsize=12
 !URxvt.italicFont:
 !URxvt.boldItalicFont:
 
@@ -121,9 +127,7 @@ UXTerm*vt100.geometry: 100x50
 UXTerm*vt100.metaSendsEscape: true
 !UXTerm*vt100.utf8: 1
 UXTerm*vt100.visualBell: true
-UXTerm*vt100.translations: #override \
-    Ctrl<Key>Up: larger-vt-font() \n\
-    Ctrl<Key>Down: smaller-vt-font() \n
+UXTerm*vt100.translations:	#override Ctrl<Key>Up: larger-vt-font() \n Ctrl<Key>Down: smaller-vt-font() \n
 
 
 yeahconsole.term: urxvt
