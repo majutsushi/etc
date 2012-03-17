@@ -11,8 +11,6 @@
 use strict;
 use warnings;
 
-use constant X_RESOURCES => "~/.Xresources";
-
 my %escapecodes = (
     "font"           => 710,
     "boldFont"       => 711,
@@ -25,15 +23,23 @@ sub on_user_command
     my ($self, $cmd) = @_;
 
     if ($cmd eq "font:increase") {
-        fonts_change_size($self,  1);
+        fonts_change_size($self,  1, 0);
     } elsif ($cmd eq "font:decrease") {
-        fonts_change_size($self,  -1);
+        fonts_change_size($self, -1, 0);
+    } elsif ($cmd eq "font:incglobal") {
+        fonts_change_size($self,  1, 1);
+    } elsif ($cmd eq "font:decglobal") {
+        fonts_change_size($self, -1, 1);
+    } elsif ($cmd eq "font:incsave") {
+        fonts_change_size($self, -1, 2);
+    } elsif ($cmd eq "font:decsave") {
+        fonts_change_size($self, -1, 2);
     }
 }
 
 sub fonts_change_size
 {
-    my ($term, $change) = @_;
+    my ($term, $change, $save) = @_;
 
     my @newfonts = ();
 
@@ -54,17 +60,23 @@ sub fonts_change_size
             push @newfonts, $newfont;
         }
         my $newres = join(",", @newfonts);
-        font_apply_new($term, $newres, $escapecodes{"font"});
+        font_apply_new($term, $newres, "font", $save);
 
-        handle_type($term, "boldFont",       $change, $newbasesize);
-        handle_type($term, "italicFont",     $change, $newbasesize);
-        handle_type($term, "boldItalicFont", $change, $newbasesize);
+        handle_type($term, "boldFont",       $change, $newbasesize, $save);
+        handle_type($term, "italicFont",     $change, $newbasesize, $save);
+        handle_type($term, "boldItalicFont", $change, $newbasesize, $save);
+    }
+
+    if ($save > 1) {
+        # write the new values back to the file
+        my $xresources = readlink $ENV{"HOME"} . "/.Xresources";
+        system("xrdb -edit " . $xresources);
     }
 }
 
 sub handle_type
 {
-    my ($term, $type, $change, $basesize) = @_;
+    my ($term, $type, $change, $basesize, $save) = @_;
 
     my $curres = $term->resource($type);
     if (!$curres) {
@@ -79,7 +91,7 @@ sub handle_type
     }
 
     my $newres = join(",", @newfonts);
-    font_apply_new($term, $newres, $escapecodes{$type});
+    font_apply_new($term, $newres, $type, $save);
 }
 
 sub handle_font
@@ -221,7 +233,7 @@ sub font_change_size_x11
         # the end of the function
         if ($possible[0]->[0] > $basesize) {
             foreach my $candidate (@possible) {
-                if ($candidate->[0] < $basesize) {
+                if ($candidate->[0] <= $basesize) {
                     return ($candidate->[1], $candidate->[0]);
                 }
             }
@@ -263,21 +275,20 @@ sub font_change_size_x11
 
 sub font_apply_new
 {
-    my ($term, $newfont, $code) = @_;
+    my ($term, $newfont, $type, $save) = @_;
 
     # $term->scr_add_lines("\r\nnew font is $newfont\n");
 
-    $term->cmd_parse("\033]" . $code . ";" . $newfont . "\033\\");
+    $term->cmd_parse("\033]" . $escapecodes{$type} . ";" . $newfont . "\033\\");
 
     # load the xrdb db
     # system("xrdb -load " . X_RESOURCES);
 
-    # merge the new values
-    # open(XRDB_MERGE, "| xrdb -merge") || die "can't fork: $!";
-    # local $SIG{PIPE} = sub { die "xrdb pipe broken" };
-    # print XRDB_MERGE "URxvt.font: " . $newfont;
-    # close(XRDB_MERGE) || die "bad xrdb: $! $?";
-
-    # write the db values back to the file
-    # system("xrdb -edit " . X_RESOURCES);
+    if ($save > 0) {
+        # merge the new values
+        open(XRDB_MERGE, "| xrdb -merge") || die "can't fork: $!";
+        local $SIG{PIPE} = sub { die "xrdb pipe broken" };
+        print XRDB_MERGE "URxvt." . $type . ": " . $newfont;
+        close(XRDB_MERGE) || die "bad xrdb: $! $?";
+    }
 }
