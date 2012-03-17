@@ -108,10 +108,10 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt.copyCommand:  xclip -i -selection clipboard
 URxvt.pasteCommand: xclip -o -selection clipboard
 
-URxvt.keysym.C-Up:     perl:font:increase
-URxvt.keysym.C-Down:   perl:font:decrease
-URxvt.keysym.C-S-Up:   perl:font:incglobal
-URxvt.keysym.C-S-Down: perl:font:decglobal
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
 
 !URxvt.termName: xterm
 !URxvt.keysym.Home: \033[1~

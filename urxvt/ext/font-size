@@ -7,6 +7,28 @@
 # Based on:
 # https://github.com/dave0/urxvt-font-size
 # https://github.com/noah/urxvt-font
+#
+# USAGE
+#
+# Add font-size to the list of perl extensions:
+# URxvt.perl-ext-common: ...,font-size
+#
+# Add some keybindings:
+# URxvt.keysym.C-Up:     perl:font-size:increase
+# URxvt.keysym.C-Down:   perl:font-size:decrease
+# URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+# URxvt.keysym.C-S-Down: perl:font-size:decglobal
+#
+# Supported functions:
+# - increase/decrease:
+#       increase or decrease the font size of the current terminal.
+# - incglobal/decglobal:
+#       same as above and also adjust the X server values so all newly started
+#       terminals will use the same fontsize.
+# - incsave/decsave:
+#       same as incglobal/decglobal and also modify the ~/.Xresources file so
+#       the changed font sizes will persist over a restart of the X server or
+#       a reboot.
 
 use strict;
 use warnings;
@@ -22,17 +44,17 @@ sub on_user_command
 {
     my ($self, $cmd) = @_;
 
-    if ($cmd eq "font:increase") {
+    if ($cmd eq "font-size:increase") {
         fonts_change_size($self,  1, 0);
-    } elsif ($cmd eq "font:decrease") {
+    } elsif ($cmd eq "font-size:decrease") {
         fonts_change_size($self, -1, 0);
-    } elsif ($cmd eq "font:incglobal") {
+    } elsif ($cmd eq "font-size:incglobal") {
         fonts_change_size($self,  1, 1);
-    } elsif ($cmd eq "font:decglobal") {
+    } elsif ($cmd eq "font-size:decglobal") {
         fonts_change_size($self, -1, 1);
-    } elsif ($cmd eq "font:incsave") {
+    } elsif ($cmd eq "font-size:incsave") {
         fonts_change_size($self,  1, 2);
-    } elsif ($cmd eq "font:decsave") {
+    } elsif ($cmd eq "font-size:decsave") {
         fonts_change_size($self, -1, 2);
     }
 }
