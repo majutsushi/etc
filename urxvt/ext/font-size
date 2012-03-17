@@ -1,19 +1,19 @@
 #!/usr/bin/perl
-
+#
+# On-the-fly adjusting of the font size in urxvt
+#
+# Author: Jan Larres <jan@majutsushi.net>
+#
 # Based on:
 # https://github.com/dave0/urxvt-font-size
 # https://github.com/noah/urxvt-font
-# 
-# TODO: short names
-# TODO: x: prefix
-# TODO: [] specifications
 
 use strict;
 use warnings;
 
 use constant X_RESOURCES => "~/.Xresources";
 
-my %codes = (
+my %escapecodes = (
     "font"           => 710,
     "boldFont"       => 711,
     "italicFont"     => 712,
@@ -54,7 +54,7 @@ sub fonts_change_size
             push @newfonts, $newfont;
         }
         my $newres = join(",", @newfonts);
-        font_apply_new($term, $newres, $codes{"font"});
+        font_apply_new($term, $newres, $escapecodes{"font"});
 
         handle_type($term, "boldFont",       $change, $newbasesize);
         handle_type($term, "italicFont",     $change, $newbasesize);
@@ -79,7 +79,7 @@ sub handle_type
     }
 
     my $newres = join(",", @newfonts);
-    font_apply_new($term, $newres, $codes{$type});
+    font_apply_new($term, $newres, $escapecodes{$type});
 }
 
 sub handle_font
@@ -88,21 +88,39 @@ sub handle_font
 
     my $newfont;
     my $newsize;
+    my $prefix = 0;
 
-    if ($font =~ /^\s*xft:/) {
+    if ($font =~ /^\s*x:/) {
+        $font =~ s/^\s*x://;
+        $prefix = 1;
+    }
+    if ($font =~ /^\s*(\[.*\])?xft:/) {
         ($newfont, $newsize) = font_change_size_xft($term, $font, $change, $basesize);
     } elsif ($font =~ /^\s*-/) {
         ($newfont, $newsize) = font_change_size_x11($term, $font, $change, $basesize);
     } else {
-        # not a supported font, ring the bell if it is the base font and just
-        # return the current font
-        if ($basesize == 0) {
-            $term->scr_bell;
+        # check whether the font is a valid alias and if yes resolve it to the
+        # actual font
+        my $lsfinfo = `xlsfonts -l $font 2>/dev/null`;
+
+        if ($lsfinfo eq "") {
+            # not a valid alias, ring the bell if it is the base font and just
+            # return the current font
+            if ($basesize == 0) {
+                $term->scr_bell;
+            }
+            return ($font, $basesize);
         }
-        return ($font, $basesize);
+
+        my $fontinfo = (split(/\n/, $lsfinfo))[-1];
+        my ($fontfull) = ($fontinfo =~ /\s+([-a-z0-9]+$)/);
+        ($newfont, $newsize) = font_change_size_x11($term, $fontfull, $change, $basesize);
     }
 
     # $term->scr_add_lines("\r\nNew font is $newfont\n");
+    if ($prefix) {
+        $newfont = "x:$newfont";
+    }
     return ($newfont, $newsize);
 }
 
@@ -116,7 +134,7 @@ sub font_change_size_xft
     my $new_size = 0;
 
     foreach my $piece (@pieces) {
-        if ($piece =~ /pixelsize=(\d*)/) {
+        if ($piece =~ /pixelsize=(\d+)/) {
             $size = $1;
 
             if ($basesize != 0) {
@@ -165,6 +183,10 @@ sub font_change_size_x11
     $pattern{setwidth} = '*';
     $pattern{pixelSize} = '*';
     $pattern{pointSize} = '*';
+    # if ($basesize != 0) {
+    #     $pattern{Xresolution} = '*';
+    #     $pattern{Yresolution} = '*';
+    # }
     $pattern{averageWidth} = '*';
     # make sure there are no empty fields
     foreach my $field (@fields) {
@@ -194,10 +216,14 @@ sub font_change_size_x11
         @possible = sort {$b->[0] <=> $a->[0]} @possible;
 
         # font is not the base font, so find the largest font that is at most
-        # as large as the base font
-        foreach my $candidate (@possible) {
-            if ($candidate->[0] == $basesize) {
-                return ($candidate->[1], $candidate->[0]);
+        # as large as the base font. If the largest possible font is smaller
+        # than the base font bail and hope that a 0-size font can be found at
+        # the end of the function
+        if ($possible[0]->[0] > $basesize) {
+            foreach my $candidate (@possible) {
+                if ($candidate->[0] < $basesize) {
+                    return ($candidate->[1], $candidate->[0]);
+                }
             }
         }
     } elsif ($change > 0) {
@@ -231,7 +257,7 @@ sub font_change_size_x11
         if ($basesize == 0) {
             $term->scr_bell;
         }
-        return ($fontstring, $font{pixelSize});
+        return ("-$fontstring", $font{pixelSize});
     }
 }
 
@@ -239,7 +265,7 @@ sub font_apply_new
 {
     my ($term, $newfont, $code) = @_;
 
-    # $term->scr_add_lines("\rDEBUG: new font is $newfont\n");
+    # $term->scr_add_lines("\r\nnew font is $newfont\n");
 
     $term->cmd_parse("\033]" . $code . ";" . $newfont . "\033\\");
 
