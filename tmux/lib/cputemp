@@ -4,6 +4,7 @@ __cputemp() {
     local t
     if [[ -r "$TEMP_DEVICE" ]]; then
         read t < "$TEMP_DEVICE" && t=$(($t/1000))
+        [[ -n "$t" ]] || return
         printf "#[fg=yellow,bg=black,bold]%s#[default]#[fg=yellow,bg=black]\260C#[default] " "$t"
     fi
 }

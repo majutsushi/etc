@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
-# heavily inspired by byobu
+# Takes some code from byobu and is therefore released under the GPLv3
+
+setopt sh_word_split
 
 items="cputemp battery"
 
@@ -26,8 +28,8 @@ get_status() {
 
     local cachepath="$TMUX_CACHE/status/$function"
     local lastpath="$TMUX_CACHE/.last/$function"
-    local lastrun
-    [[ -r "$lastpath" ]] && read lastrun < "$lastpath" || lastrun=0
+    local lastrun=0
+    [[ -r "$lastpath" ]] && read lastrun < "$lastpath"
 
     freq=$(status_freq "$function")
     local expiry=$(($lastrun+$freq))
@@ -36,16 +38,22 @@ get_status() {
 
     # Update cache now, if necessary
     if (( $NOW >= $expiry )) || (( $lastrun == 0 )); then
-        "__$function" > "$cachepath"
-        echo "$NOW" > "$lastpath"
+        "__$function" > "$cachepath".new
     fi
-    if [[ -s "$cachepath" ]]; then
-        IFS= read line < "$cachepath"; printf "$line"
+    # Check if we have data in the cache
+    if [[ -s "$cachepath".new ]]; then
+        # Looks like we have an updated cache, use it
+        mv -f "$cachepath".new "$cachepath"
+        printf "%s" "$NOW" > "$lastpath"
+        IFS= read line < "$cachepath"; printf "%s" "$line"
+    elif [[ -s "$cachepath" ]]; then
+        # New cache is empty, but we have data from our last run, use it
+        IFS= read line < "$cachepath"; printf "%s" "$line"
     fi
 }
 
 NOW=$(print -P "%D{%s}")
 
-for item in ${(s: :)items}; do
+for item in $items; do
     get_status "$item"
 done
