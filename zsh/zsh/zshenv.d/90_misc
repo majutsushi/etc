@@ -1,3 +1,6 @@
+# make sure the value of SHELL is an absolute path
+export SHELL=$(which zsh)
+
 if [[ -f $HOME/.zshenv.local ]]; then
     source $HOME/.zshenv.local
 fi
