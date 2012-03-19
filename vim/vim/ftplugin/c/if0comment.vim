@@ -21,7 +21,7 @@ function! <SID>If0uncomment()
     for linenr in range(start + 1, line('$'))
         let line = getline(linenr)
 
-        if line =~ '^#if 0'
+        if line =~ '^#if'
             let emb += 1
         elseif line =~ '^#else'
             if emb == 0
