@@ -52,9 +52,6 @@
 [submodule "vim/vim/bundle/stlimproved"]
 	path = vim/vim/bundle/stlimproved
 	url = https://github.com/vim-scripts/STL-improved.git
-[submodule "vim/vim/bundle/comment"]
-	path = vim/vim/bundle/comment
-	url = https://github.com/vim-scripts/COMMENT.vim--Crawford.git
 [submodule "vim/vim/bundle/markdown"]
 	path = vim/vim/bundle/markdown
 	url = https://github.com/tpope/vim-markdown
