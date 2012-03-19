@@ -106,6 +106,3 @@
 [submodule "vim/vim/bundle/easymotion"]
 	path = vim/vim/bundle/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
-[submodule "vim/vim/bundle/nerdcommenter"]
-	path = vim/vim/bundle/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
