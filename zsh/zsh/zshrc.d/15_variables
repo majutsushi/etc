@@ -72,15 +72,18 @@ export GPG_TTY=$(tty)
 
 # update session environment variables if they got changed after re-attaching
 # a tmux session
-_update_from_tmux() {
-    VARS="$(tmux show-environment)"
-    for VAR in ${(f)VARS}; do
-        if [[ "${VAR#-}" == "${VAR}" ]]; then
-            export "$VAR"
-        fi
-    done
-}
-add-zsh-hook preexec _update_from_tmux
+if [[ -n "$TMUX" ]]; then
+    _update_from_tmux() {
+        VARS="$(tmux show-environment)"
+        for VAR in ${(f)VARS}; do
+            # only export non-removed variables
+            if [[ "${VAR#-}" == "${VAR}" ]]; then
+                export "$VAR"
+            fi
+        done
+    }
+    add-zsh-hook preexec _update_from_tmux
+fi
 
 # ulimit -c unlimited
 
