@@ -8,10 +8,24 @@ elseif exists("b:current_syntax")
 endif
 
 syn case match
-syn sync minlines=50
+syn sync minlines=5000
+
+" foldable blocks
+syn region graceMethodDef start="\s*\<method\>" end="{"he=e-1 contains=graceStatementMethod,graceType,graceKeyword
+syn keyword graceStatementMethod method contained
+syn region graceMethodFold start="^\z(\s*\)\<method\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
+syn region graceTypeDef start="\s*\<type\>" end="{"he=e-1 contains=graceStatementType,graceKeyword
+syn keyword graceStatementType type contained
+syn region graceTypeFold start="^\z(\s*\)\<type\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
+syn region graceClassDef start="\s*\<class\>" end="{"he=e-1 contains=graceClass,graceClassName,graceClassSpecializer,graceClassParams,graceType
+syn keyword graceClass class contained nextgroup=graceClassName
+syn match graceClassName "[^ =:;{}()\[]\+" contained nextgroup=graceClassSpecializer skipwhite
+syn region graceClassSpecializer start="\[" end="\]" contained contains=graceClassSpecializer nextgroup=GraceClassParams
+syn region graceClassParams start="(" end=")" contained contains=graceType
+syn region graceClassFold start="^\z(\s*\)\<class\>.*[^}]$" end="^\z1}\s*\(//.*\)\=$" transparent fold keepend extend
 
 " most Grace keywords
-syn keyword graceKeyword object class method return var def type
+syn keyword graceKeyword object return var def
 syn match graceKeyword "->"
 syn match graceKeyword ":="
 
@@ -29,16 +43,13 @@ syn keyword graceBoolean true false
 " definitions
 syn keyword graceDef def nextgroup=graceDefName skipwhite
 syn keyword graceVar var nextgroup=graceVarName skipwhite
-syn keyword graceClass class nextgroup=graceClassName skipwhite
 syn keyword graceObject object skipwhite
 syn keyword graceTrait trait nextgroup=graceClassName skipwhite
 syn match graceDefName "[^ =:;{}()[]\+" contained nextgroup=graceDefSpecializer skipwhite
 syn match graceDefName "[^ =:;{}()[]\+" contained
-syn match graceVarName "[^ =:;{}()[]\+" contained 
+syn match graceVarName "[^ =:;{}()[]\+" contained
 syn region graceVarName start="`" end="`"
-syn match graceClassName "[^ =:;{}()\[]\+" contained nextgroup=graceClassSpecializer skipwhite
 syn region graceDefSpecializer start="\[" end="\]" contained contains=graceDefSpecializer
-syn region graceClassSpecializer start="\[" end="\]" contained contains=graceClassSpecializer
 
 " method call
 syn match graceRoot "\<[a-zA-Z][_$a-zA-Z0-9]*\."me=e-1
@@ -70,9 +81,6 @@ syn match graceNumber "\(\<\d\+\.\d*\|\.\d\+\)\([eE][-+]\=\d\+\)\=[fFdD]\="
 syn match graceNumber "\<\d\+[eE][-+]\=\d\+[fFdD]\=\>"
 syn match graceNumber "\<\d\+\([eE][-+]\=\d\+\)\=[fFdD]\>"
 
-syn region graceBlock start="{" end="}" transparent fold
-" syntax region graceBlock start="^\z(\s*\)method .\+ {" end="^\z1}" transparent fold
-
 syn sync fromstart
 
 " known errors
@@ -86,36 +94,38 @@ syn keyword graceBuiltinMethod if then for each while do contained
 syn keyword graceBuiltinMethod for each while do if then else elseif
 
 " map grace groups to standard groups
-hi link graceError Error
-hi link graceWSError Error
-hi link graceBuiltinMethod Identifier
-hi link graceKeyword Keyword
-hi link gracePackage Include
-hi link graceImport Include
-hi link graceBoolean Boolean
-hi link graceOperator Normal
-hi link graceNumber Number
-hi link graceEmptyString String
-hi link graceString String
-hi link graceChar String
-hi link graceStringEscape Special
-hi link graceSymbol Special
-hi link graceUnicode Special
-hi link graceComment Comment
-hi link graceLineComment Comment
-hi link graceTodo Todo
-hi link graceType Type
-hi link graceTypeSpecializer graceType
-hi link graceVar Keyword
-hi link graceDef Keyword
-hi link graceClass Keyword
-hi link graceObject Keyword
-hi link graceTrait Keyword
-hi link graceDefName Function
-hi link graceDefSpecializer Function
-hi link graceClassName Special
-hi link graceClassSpecializer Special
-hi link graceInterpolationDelimiter	Delimiter
+hi def link graceError Error
+hi def link graceWSError Error
+hi def link graceBuiltinMethod Identifier
+hi def link graceKeyword Keyword
+hi def link graceStatementMethod graceKeyword
+hi def link graceStatementType graceKeyword
+hi def link gracePackage Include
+hi def link graceImport Include
+hi def link graceBoolean Boolean
+hi def link graceOperator Normal
+hi def link graceNumber Number
+hi def link graceEmptyString String
+hi def link graceString String
+hi def link graceChar String
+hi def link graceStringEscape Special
+hi def link graceSymbol Special
+hi def link graceUnicode Special
+hi def link graceComment Comment
+hi def link graceLineComment Comment
+hi def link graceTodo Todo
+hi def link graceType Type
+hi def link graceTypeSpecializer graceType
+hi def link graceVar Keyword
+hi def link graceDef Keyword
+hi def link graceClass Keyword
+hi def link graceObject Keyword
+hi def link graceTrait Keyword
+hi def link graceDefName Function
+hi def link graceDefSpecializer Function
+hi def link graceClassName Special
+hi def link graceClassSpecializer Special
+hi def link graceInterpolationDelimiter Delimiter
 
 let b:current_syntax = "grace"
 
