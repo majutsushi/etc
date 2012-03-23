@@ -354,7 +354,7 @@ function! s:tprot()
     call cursor(1,1)
     call search('^> ')
     if 1 < line(".")
-        .,/\v(^$)|(%$)/!sed -e 's/^> //' | t-prot --body -ck --max-lines=250 -l -L$XDG_CONFIG_HOME/t-prot/footers -a -A$XDG_CONFIG_HOME/t-prot/ads | sed -e 's/^/> /'
+        .,/\v(^$)|(%$)/!sed -e 's/^> \?//' | t-prot --body -ck --max-lines=250 -l -L$XDG_CONFIG_HOME/t-prot/footers -a -A$XDG_CONFIG_HOME/t-prot/ads | sed -e 's/^/> /'
     endif
 endfunction
 
@@ -395,6 +395,9 @@ silent! %s/\(^\([a-zA-z-]\+:\|--\)\)\@<!\s\+$//
 " Remove spaces between quotes (> > to >>).
 silent! %s/^\(>\+\) >/\1>/g
 silent! %s/^\(>\+\) >/\1>/g
+
+" Insert space after last quote character if missing
+silent! g/^\(>\+\)[^> \r]/s/^\(>\+\)\(.*\)/\1 \2/
 
 "call s:FormatQuotes() " doesn't work with pre-formatted text
 
