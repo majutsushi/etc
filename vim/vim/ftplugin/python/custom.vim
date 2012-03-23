@@ -2,7 +2,7 @@
 " Author       : Jan Larres <jan@majutsushi.net>
 " Website      : http://majutsushi.net
 " Created      : 2010-04-08 20:28:40 +1200 NZST
-" Last changed : 2011-11-01 18:29:41 +1300 NZDT
+" Last changed : 2012-03-23 23:03:57 +1300 NZDT
 
 "setlocal foldmethod=indent
 setlocal omnifunc=pythoncomplete#Complete
@@ -25,3 +25,24 @@ for p in sys.path:
         vim.command(r"setlocal path+=%s" % (p.replace(" ", r"\ ")))
 EOF
 endif
+
+function! s:ScreenShellListener()
+    if g:ScreenShellActive
+        if g:ScreenShellCmd == 'ipython'
+            nnoremap <silent> <buffer> <leader>ss :ScreenSend<cr>
+            xnoremap <silent> <buffer> <leader>ss :ScreenSend<cr>
+        else
+            nnoremap <silent> <buffer> <leader>ss <Nop>
+        endif
+    else
+        nnoremap <silent> <buffer> <leader>ss :ScreenShellVertical ipython<cr>
+    endif
+endfunction
+
+call s:ScreenShellListener()
+augroup ScreenShellEnter
+    autocmd User *.py call <SID>ScreenShellListener()
+augroup END
+augroup ScreenShellExit
+    autocmd User *.py call <SID>ScreenShellListener()
+augroup END

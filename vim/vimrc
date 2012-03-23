@@ -767,13 +767,13 @@ endfunction
 " SynStack() {{{2
 " Show syntax highlighting groups for word under cursor
 function! SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-     \ synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+       \ synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
 endfunc
-nmap <leader>ss :call SynStack()<CR>
+nmap <leader>sy :call SynStack()<CR>
 
 " Tab2Space/Space2Tab {{{2
 command! -range=% -nargs=0 Tab2Space exec "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', "repeat(' ', ".&ts."), 'g')"
@@ -1338,6 +1338,29 @@ endif
 let vimrplugin_conqueplugin = 1
 let vimrplugin_conquevsplit = 1
 let vimrplugin_underscore   = 0
+
+" Screen {{{2
+let g:ScreenImpl = 'Tmux'
+let g:ScreenShellTerminal = 'urxvt'
+let g:ScreenShellExpandTabs = 1
+
+function! s:ScreenShellListener()
+    if g:ScreenShellActive
+        nnoremap <silent> <leader>ss :ScreenSend<cr>
+        xnoremap <silent> <leader>ss :ScreenSend<cr>
+        nnoremap <silent> <leader>sx :ScreenQuit<cr>
+    else
+        nnoremap <silent> <leader>ss :ScreenShellVertical<cr>
+    endif
+endfunction
+
+nnoremap <silent> <leader>ss :ScreenShellVertical<cr>
+augroup ScreenShellEnter
+    autocmd User * call <SID>ScreenShellListener()
+augroup END
+augroup ScreenShellExit
+    autocmd User * call <SID>ScreenShellListener()
+augroup END
 
 " Tagbar {{{2
 let g:tagbar_ctags_bin = g:ctagsbin

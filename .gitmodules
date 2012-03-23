@@ -103,3 +103,6 @@
 [submodule "vim/vim/bundle/easymotion"]
 	path = vim/vim/bundle/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
+[submodule "vim/vim/bundle/screen"]
+	path = vim/vim/bundle/screen
+	url = https://github.com/ervandew/screen.git
