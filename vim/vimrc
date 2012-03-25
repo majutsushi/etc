@@ -622,19 +622,20 @@ autocmd BufNewFile,BufReadPost * call LoadDirLocals()
 
 " PreviewWord() {{{2
 function! PreviewWord(local)
-    if &previewwindow			" don't do this in the preview window
+    " don't do this in the preview window
+    if &previewwindow
         return
     endif
 
     let l:editwinnum = winnr()
 
-    let w = expand("<cword>")		" get the word under cursor
-    if w =~ '\a'			" if the word contains a letter
+    let w = expand("<cword>")
+    if w =~ '\a'
 
         " Delete any existing highlight before showing another tag
-        silent! wincmd P		" jump to preview window
-        if &previewwindow		" if we really get there...
-            match none			" delete existing highlight
+        silent! wincmd P   " jump to preview window
+        if &previewwindow  " if we really get there...
+            match none     " delete existing highlight
             silent! exe l:editwinnum . "wincmd w"
         endif
 
@@ -649,14 +650,14 @@ function! PreviewWord(local)
             endtry
         endif
 
-        silent! wincmd P		" jump to preview window
-        if &previewwindow		" if we really get there...
+        silent! wincmd P
+        if &previewwindow
             if has("folding")
-                silent! .foldopen	" don't want a closed fold
+                silent! .foldopen
             endif
-            call search("$", "b")	" to end of previous line
+            call search("$", "b") " to end of previous line
             let w = substitute(w, '\\', '\\\\', "")
-            call search('\<\V' . w . '\>')	" position cursor on match
+            call search('\<\V' . w . '\>') " position cursor on match
             " Add a match highlight to the word at this position
             hi previewWord term=bold ctermbg=green guibg=green
             exe 'match previewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
@@ -690,37 +691,37 @@ endfun
 " Define a command to make it easier to use
 command! -nargs=* Qargs execute 'args ' . QuickfixFilenames()
 function! QuickfixFilenames()
-  " Building a hash ensures we get each buffer only once
-  let buffer_numbers = {}
-  for quickfix_item in getqflist()
-    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
-  endfor
-  return join(values(buffer_numbers))
+    " Building a hash ensures we get each buffer only once
+    let buffer_numbers = {}
+    for quickfix_item in getqflist()
+        let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+    endfor
+    return join(values(buffer_numbers))
 endfunction
 
 command! -nargs=+ QFDo call QFDo(<q-args>)
 " Function that does the work
 function! QFDo(command)
-  " Create a dictionary so that we can get the list of buffers rather than
-  " the list of lines in buffers (easy way to get unique entries)
-  let buffer_numbers = {}
-  " For each entry, use the buffer number as a dictionary key (won't get
-  " repeats)
-  for fixlist_entry in getqflist()
-    let buffer_numbers[fixlist_entry['bufnr']] = 1
-  endfor
-  " Make it into a list as it seems cleaner
-  let buffer_number_list = keys(buffer_numbers)
+    " Create a dictionary so that we can get the list of buffers rather than
+    " the list of lines in buffers (easy way to get unique entries)
+    let buffer_numbers = {}
+    " For each entry, use the buffer number as a dictionary key (won't get
+    " repeats)
+    for fixlist_entry in getqflist()
+        let buffer_numbers[fixlist_entry['bufnr']] = 1
+    endfor
+    " Make it into a list as it seems cleaner
+    let buffer_number_list = keys(buffer_numbers)
 
-  " For each buffer
-  for num in buffer_number_list
-    " Select the buffer
-    exe 'buffer' num
-    " Run the command that's passed as an argument
-    exe a:command
-    " Save if necessary
-    update
-  endfor
+    " For each buffer
+    for num in buffer_number_list
+        " Select the buffer
+        exe 'buffer' num
+        " Run the command that's passed as an argument
+        exe a:command
+        " Save if necessary
+        update
+    endfor
 endfunction
 
 " RunShellCommand() {{{2
