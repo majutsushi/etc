@@ -2,7 +2,7 @@
 " Author       : Jan Larres <jan@majutsushi.net>
 " Website      : http://majutsushi.net
 " Created      : 2012-01-18 00:13:58 +1300 NZDT
-" Last changed : 2012-01-18 15:07:56 +1300 NZDT
+" Last changed : 2012-03-25 18:33:38 +1300 NZDT
 
 " s:Gnuplot() {{{1
 function! s:Gnuplot() range
@@ -31,6 +31,7 @@ function! s:Gnuplot() range
     let commandfile = tempname()
 
     execute 'redir! > ' . commandfile
+    echon "load '~/.etc/gnuplot/grey.gnuplot'\n"
     echon "plot('" . datafile . "') with linespoints\n"
     redir END
 
