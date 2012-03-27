@@ -1309,6 +1309,8 @@ let NERDTreeIgnore = [
     \ '\.pdf$'
 \ ]
 
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
 nmap <silent> <F10> :NERDTreeToggle<CR>
 nmap <silent> <leader>nf :NERDTreeFind<CR>
 
