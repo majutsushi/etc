@@ -1666,10 +1666,10 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>"   : "\<PageUp>"
 
 " insert mode completion
-inoremap  
-inoremap  
-"inoremap  
-"inoremap  
+inoremap <C-]> <C-X><C-]>
+inoremap <C-F> <C-X><C-F>
+"inoremap <C-D> <C-X><C-D>
+"inoremap <C-L> <C-X><C-L>
 
 " create undo break points
 inoremap <C-U> <C-G>u<C-U>
