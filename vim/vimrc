@@ -972,9 +972,9 @@ function! GetScreenTitle()
     endif
     return title
 endfunction
-if (&term =~ '^screen')
-    set t_ts=k
-    set t_fs=\
+if &term =~ '^screen'
+    let &t_ts = "\<Esc>k"
+    let &t_fs = "\<Esc>\\"
     autocmd BufEnter * let &titlestring = GetScreenTitle()
 endif
 
