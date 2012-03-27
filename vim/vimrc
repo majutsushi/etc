@@ -57,16 +57,10 @@ autocmd BufNewFile,BufWritePre * call AutoMkDir()
 " create undo break point
 autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 
-"augroup fastescape
-"    autocmd!
-
-"    set notimeout
-"    set ttimeout
-"    set timeoutlen=10
-
-"    autocmd InsertEnter * set timeout
-"    autocmd InsertLeave * set notimeout
-"augroup END
+augroup fastescape
+    autocmd InsertEnter * set timeoutlen=10
+    autocmd InsertLeave * set timeoutlen=1000
+augroup END
 
 " When switching buffers, preserve window view.
 function! IsNotSpecialBuf(buf)
