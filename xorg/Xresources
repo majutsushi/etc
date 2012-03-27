@@ -179,6 +179,10 @@ URxvt.keysym.M-C-S-Left      : \033[1;8D
 URxvt.keysym.M-C-S-Home      : \033[1;8H
 URxvt.keysym.M-C-S-End       : \033[1;8F
 
+! Map private escape sequence
+! https://en.wikipedia.org/wiki/C0_and_C1_control_codes
+URxvt.keysym.C-space : \033QA
+
 ! *** XTerm ***
 
 UXTerm.termName: xterm-256color
@@ -187,8 +191,9 @@ UXTerm*vt100.metaSendsEscape: true
 !UXTerm*vt100.utf8: 1
 UXTerm*vt100.visualBell: true
 UXTerm*vt100.translations: #override \
-    Ctrl<Key>Up: larger-vt-font() \n\
-    Ctrl<Key>Down: smaller-vt-font() \n
+    Ctrl <Key>Up: larger-vt-font() \n\
+    Ctrl <Key>Down: smaller-vt-font() \n\
+    Ctrl <Key>space: string(0x1b) string("QA") \n
 
 
 yeahconsole.term: urxvt

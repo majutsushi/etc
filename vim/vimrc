@@ -1592,6 +1592,8 @@ if !has("gui_running")
     call s:MapEscapeSequence('[1;8F', '<M-C-S-End>')
 
     call s:MapMetaKeys()
+
+    call s:MapEscapeSequence('QA', '<C-Space>')
 endif
 
 if $ORIGTERM =~ 'rxvt-unicode'
