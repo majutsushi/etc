@@ -68,6 +68,7 @@ alias jsonpp='python -mjson.tool'
 alias le='/usr/share/vim/vimcurrent/macros/less.sh'
 alias pa='ps aux | less'
 alias pu='ps ux | less'
+alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 alias t='noglob task'
 alias vi='vim'
 alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
@@ -238,11 +239,6 @@ if [[ -r /etc/debian_version ]] ; then
     }
     _uchange() { _files -W /usr/share/doc -/ }
     compdef _uchange uchange
-fi
-
-# for ecs systems
-if [[ -d /etc/pkgs/ ]]; then
-    need() { source "/etc/pkgs/$1.sh"; }
 fi
 
 alias javabug="sudo sed -i 's/XINERAMA/FAKEEXTN/g' /usr/lib/jvm/java-6-sun/jre/lib/i386/xawt/libmawt.so"
