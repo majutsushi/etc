@@ -1527,6 +1527,17 @@ if !has("gui_running")
     map <Esc>O1;2R  <S-F3>
     map <Esc>O1;2S  <S-F4>
 
+    map <Esc>1 <M-1>
+    map <Esc>2 <M-2>
+    map <Esc>3 <M-3>
+    map <Esc>4 <M-4>
+    map <Esc>5 <M-5>
+    map <Esc>6 <M-6>
+    map <Esc>7 <M-7>
+    map <Esc>8 <M-8>
+    map <Esc>9 <M-9>
+    map <Esc>0 <M-0>
+
     " See ~/.Xresources
     map <End>[1;2A <S-Up>
     map <End>[1;2B <S-Down>
