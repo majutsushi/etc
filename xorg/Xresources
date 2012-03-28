@@ -179,11 +179,27 @@ URxvt.keysym.M-C-S-Left      : \033[1;8D
 URxvt.keysym.M-C-S-Home      : \033[1;8H
 URxvt.keysym.M-C-S-End       : \033[1;8F
 
-! Map private escape sequence so vim can remap it
+! Map private escape sequences so vim can remap them
 ! https://en.wikipedia.org/wiki/C0_and_C1_control_codes
-URxvt.keysym.C-space : \033QA
+! https://en.wikipedia.org/wiki/ANSI_escape_code
+URxvt.keysym.C-space      : \033[?1;32~
+URxvt.keysym.C-exclam     : \033[?1;33~
+URxvt.keysym.C-quotedbl   : \033[?1;34~
+URxvt.keysym.C-numbersign : \033[?1;35~
+URxvt.keysym.C-dollar     : \033[?1;36~
+URxvt.keysym.C-percent    : \033[?1;37~
+URxvt.keysym.C-ampersand  : \033[?1;38~
+! URxvt.keysym.C-exclam : \033[?1;39~
+URxvt.keysym.C-parenleft  : \033[?1;40~
+URxvt.keysym.C-parenright : \033[?1;41~
+URxvt.keysym.C-asterisk   : \033[?1;42~
+URxvt.keysym.C-plus       : \033[?1;43~
+URxvt.keysym.C-comma      : \033[?1;44~
+URxvt.keysym.C-minus      : \033[?1;45~
+URxvt.keysym.C-period     : \033[?1;46~
+URxvt.keysym.C-slash      : \033[?1;47~
 ! Recognize ctrl-<num>
-URxvt.keysym.C-0x30 : list|\033Q1;|0123456789|~
+URxvt.keysym.C-0x30 : list|\033[?1;|0123456789|~
 
 ! *** XTerm ***
 
@@ -195,17 +211,31 @@ UXTerm*vt100.visualBell: true
 UXTerm*vt100.translations: #override \
     Ctrl <Key>Up: larger-vt-font() \n\
     Ctrl <Key>Down: smaller-vt-font() \n\
-    Ctrl <Key>space: string(0x1b) string("QA") \n\
-    Ctrl <Key>0: string(0x1b) string("Q1;0~") \n\
-    Ctrl <Key>1: string(0x1b) string("Q1;1~") \n\
-    Ctrl <Key>2: string(0x1b) string("Q1;2~") \n\
-    Ctrl <Key>3: string(0x1b) string("Q1;3~") \n\
-    Ctrl <Key>4: string(0x1b) string("Q1;4~") \n\
-    Ctrl <Key>5: string(0x1b) string("Q1;5~") \n\
-    Ctrl <Key>6: string(0x1b) string("Q1;6~") \n\
-    Ctrl <Key>7: string(0x1b) string("Q1;7~") \n\
-    Ctrl <Key>8: string(0x1b) string("Q1;8~") \n\
-    Ctrl <Key>9: string(0x1b) string("Q1;9~") \n
+    Ctrl <Key>space:      string(0x1b) string("[?1;32~") \n\
+    Ctrl <Key>exclam:     string(0x1b) string("[?1;33~") \n\
+    Ctrl <Key>quotedbl:   string(0x1b) string("[?1;34~") \n\
+    Ctrl <Key>numbersign: string(0x1b) string("[?1;35~") \n\
+    Ctrl <Key>dollar:     string(0x1b) string("[?1;36~") \n\
+    Ctrl <Key>percent:    string(0x1b) string("[?1;37~") \n\
+    Ctrl <Key>ampersand:  string(0x1b) string("[?1;38~") \n\
+    Ctrl <Key>parenleft:  string(0x1b) string("[?1;40~") \n\
+    Ctrl <Key>parenright: string(0x1b) string("[?1;41~") \n\
+    Ctrl <Key>asterisk:   string(0x1b) string("[?1;42~") \n\
+    Ctrl <Key>plus:       string(0x1b) string("[?1;43~") \n\
+    Ctrl <Key>comma:      string(0x1b) string("[?1;44~") \n\
+    Ctrl <Key>minus:      string(0x1b) string("[?1;45~") \n\
+    Ctrl <Key>period:     string(0x1b) string("[?1;46~") \n\
+    Ctrl <Key>slash:      string(0x1b) string("[?1;47~") \n\
+    Ctrl <Key>0: string(0x1b) string("[?1;0~") \n\
+    Ctrl <Key>1: string(0x1b) string("[?1;1~") \n\
+    Ctrl <Key>2: string(0x1b) string("[?1;2~") \n\
+    Ctrl <Key>3: string(0x1b) string("[?1;3~") \n\
+    Ctrl <Key>4: string(0x1b) string("[?1;4~") \n\
+    Ctrl <Key>5: string(0x1b) string("[?1;5~") \n\
+    Ctrl <Key>6: string(0x1b) string("[?1;6~") \n\
+    Ctrl <Key>7: string(0x1b) string("[?1;7~") \n\
+    Ctrl <Key>8: string(0x1b) string("[?1;8~") \n\
+    Ctrl <Key>9: string(0x1b) string("[?1;9~") \n
 
 
 yeahconsole.term: urxvt

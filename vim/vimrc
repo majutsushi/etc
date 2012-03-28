@@ -1593,9 +1593,11 @@ if !has("gui_running")
 
     call s:MapMetaKeys()
 
-    call s:MapEscapeSequence('QA', '<C-Space>')
+    for i in range(32, 47)
+        call s:MapEscapeSequence('[?1;' . i . '~', '<C-' . nr2char(i) . '>')
+    endfor
     for i in range(0, 9)
-        call s:MapEscapeSequence('Q1;' . i . '~', '<C-' . i . '>')
+        call s:MapEscapeSequence('[?1;' . i . '~', '<C-' . i . '>')
     endfor
 endif
 
