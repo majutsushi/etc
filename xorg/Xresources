@@ -86,7 +86,7 @@ URxvt.utmpInhibit: true
 URxvt.modifier: alt
 
 !URxvt.perl-lib: /home/jan/.etc/urxvt/ext
-URxvt.perl-ext-common: default,xim-onthespot,fullscreen,matcher,url-picker,bidi,keyboard-select,clipboard,font-size
+URxvt.perl-ext-common: default,xim-onthespot,fullscreen,matcher,url-picker,bidi,keyboard-select,clipboard,font-size,keysym-list
 
 URxvt.keysym.F11: perl:fullscreen:switch
 
@@ -179,9 +179,11 @@ URxvt.keysym.M-C-S-Left      : \033[1;8D
 URxvt.keysym.M-C-S-Home      : \033[1;8H
 URxvt.keysym.M-C-S-End       : \033[1;8F
 
-! Map private escape sequence
+! Map private escape sequence so vim can remap it
 ! https://en.wikipedia.org/wiki/C0_and_C1_control_codes
 URxvt.keysym.C-space : \033QA
+! Recognize ctrl-<num>
+URxvt.keysym.C-0x30 : list|\033Q1;|0123456789|~
 
 ! *** XTerm ***
 
@@ -193,7 +195,17 @@ UXTerm*vt100.visualBell: true
 UXTerm*vt100.translations: #override \
     Ctrl <Key>Up: larger-vt-font() \n\
     Ctrl <Key>Down: smaller-vt-font() \n\
-    Ctrl <Key>space: string(0x1b) string("QA") \n
+    Ctrl <Key>space: string(0x1b) string("QA") \n\
+    Ctrl <Key>0: string(0x1b) string("Q1;0~") \n\
+    Ctrl <Key>1: string(0x1b) string("Q1;1~") \n\
+    Ctrl <Key>2: string(0x1b) string("Q1;2~") \n\
+    Ctrl <Key>3: string(0x1b) string("Q1;3~") \n\
+    Ctrl <Key>4: string(0x1b) string("Q1;4~") \n\
+    Ctrl <Key>5: string(0x1b) string("Q1;5~") \n\
+    Ctrl <Key>6: string(0x1b) string("Q1;6~") \n\
+    Ctrl <Key>7: string(0x1b) string("Q1;7~") \n\
+    Ctrl <Key>8: string(0x1b) string("Q1;8~") \n\
+    Ctrl <Key>9: string(0x1b) string("Q1;9~") \n
 
 
 yeahconsole.term: urxvt
