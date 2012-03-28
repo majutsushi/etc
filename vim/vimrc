@@ -1505,10 +1505,10 @@ function! s:MapMetaKeys()
 endfunction
 
 if !has("gui_running")
-    call s:MapEscapeSequence('A', '<Up>')
-    call s:MapEscapeSequence('B', '<Down>')
-    call s:MapEscapeSequence('C', '<Right>')
-    call s:MapEscapeSequence('D', '<Left>')
+    call s:MapEscapeSequence('[A', '<Up>')
+    call s:MapEscapeSequence('[B', '<Down>')
+    call s:MapEscapeSequence('[C', '<Right>')
+    call s:MapEscapeSequence('[D', '<Left>')
     " rxvt-unicode
     call s:MapEscapeSequence('[23~', '<S-F1>')
     call s:MapEscapeSequence('[24~', '<S-F2>')
