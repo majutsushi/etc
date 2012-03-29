@@ -1599,6 +1599,7 @@ if !has("gui_running")
     for i in range(0, 9)
         call s:MapEscapeSequence('[?1;' . i . '~', '<C-' . i . '>')
     endfor
+    call s:MapEscapeSequence('[?1;6~', '<C-^>')
 endif
 
 if $ORIGTERM =~ 'rxvt-unicode'
