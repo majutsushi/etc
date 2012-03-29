@@ -774,6 +774,32 @@ nmap <leader>sy :call SynStack()<CR>
 command! -range=% -nargs=0 Tab2Space exec "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', "repeat(' ', ".&ts."), 'g')"
 command! -range=% -nargs=0 Space2Tab exec "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0), ' \\{".&ts."\\}', '\\t', 'g')"
 
+" TextObjectNumber() {{{2
+function! s:TextObjectNumber(whole)
+    normal! v
+
+    while getline('.')[col('.')] =~# '\v[0-9.]'
+        normal! l
+    endwhile
+
+    if a:whole
+        normal! o
+
+        while col('.') > 1 && getline('.')[col('.') - 2] =~# '\v[0-9.]'
+            normal! h
+        endwhile
+
+        normal! o
+    endif
+endfunction
+
+onoremap  N :<c-u>call <SID>TextObjectNumber(0)<cr>
+xnoremap  N :<c-u>call <SID>TextObjectNumber(0)<cr>
+onoremap aN :<c-u>call <SID>TextObjectNumber(1)<cr>
+xnoremap aN :<c-u>call <SID>TextObjectNumber(1)<cr>
+onoremap iN :<c-u>call <SID>TextObjectNumber(1)<cr>
+xnoremap iN :<c-u>call <SID>TextObjectNumber(1)<cr>
+
 " Timestamp() {{{2
 function! Timestamp()
     let matchpat = '\v\C%(<Last changed\s*:\s+)\zs\d{4}-\d{2}-\d{2} (\d{2}):\d{2}:\d{2} [+-]\d{4} \a+|TIMESTAMP'
