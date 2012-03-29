@@ -1497,11 +1497,11 @@ function! s:MapMetaKeys()
     let keys .= 'abcdefghijklmnopqrstuvwxyz'
     let keys .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     let keys .= '-=!@#$%^&*()_+§±[{]};:''"\`~,<.>/?'
-    " let keys .= '|' " doesn't work
 
     for key in split(keys, '\zs')
         call s:MapEscapeSequence(key, '<M-' . key . '>')
     endfor
+    call s:MapEscapeSequence('\|', '<M-\|>')
 endfunction
 
 if !has("gui_running")
