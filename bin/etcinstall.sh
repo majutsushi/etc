@@ -71,6 +71,7 @@ xlink .etc/irbrc      .irbrc      irb
 xlink .etc/lessfilter .lessfilter less
 #xlink .etc/mailcap    .mailcap
 #xlink .etc/procmailrc .procmailrc
+xlink .etc/taskrc     .taskrc     task
 
 for tinfof in .etc/terminfo/*; do
     tinfo=$(basename ${tinfof})

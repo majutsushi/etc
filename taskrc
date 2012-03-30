@@ -1,0 +1,78 @@
+# [Created by task 1.9.4 2/5/2012 16:28:15]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-faq',
+# 'man task-tutorial', 'man task-color', 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.task
+
+dateformat=Y-M-D
+dateformat.annotation=Y-M-D
+dateformat.report=Y-M-D
+
+default.command=l
+
+journal.time=on
+
+report.l.columns=id,project,priority,due,active,description,tags
+report.l.description=Lists all tasks matching the specified criteria
+report.l.filter=status:pending
+report.l.labels=ID,Project,Pri,Due,Active,Description,Tags
+report.l.sort=due+,priority-,active-,project+,description+
+
+weekstart=Monday
+
+color=on
+color.header=color3
+color.footnote=color3
+color.debug=color3
+
+color.summary.bar=black on rgb141
+color.summary.background=white on color0
+
+color.history.add=color0 on rgb500
+color.history.done=color0 on rgb050
+color.history.delete=color0 on rgb550
+
+color.burndown.pending=on color9
+color.burndown.started=black on color11
+color.burndown.done=on color10
+
+color.sync.added=color10
+color.sync.changed=color11
+color.sync.rejected=color9
+
+color.undo.before=color1
+color.undo.after=color2
+
+color.calendar.today=color15 on color30
+color.calendar.due=color0 on color1
+color.calendar.due.today=color15 on color1
+color.calendar.overdue=color7 on color9
+color.calendar.weekend=on color235
+color.calendar.holiday=color0 on color11
+color.calendar.weeknumber=color51
+
+color.recurring=color51
+color.overdue=color9
+color.due.today=color196
+color.due=color1
+color.active=color223 on color173
+color.pri.none=
+color.pri.H=color255
+color.pri.M=color250
+color.pri.L=color245
+color.tagged=
+color.blocked=white on color8
+color.project.none=
+color.tag.none=color197
+color.alternate=on color235
+
+include /usr/share/task/holidays-NZ.rc
