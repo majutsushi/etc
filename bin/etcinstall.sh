@@ -75,6 +75,7 @@ xlink .etc/taskrc     .taskrc     task
 
 for tinfof in .etc/terminfo/*; do
     tinfo=$(basename ${tinfof})
+    tinfo=${tinfo%.terminfo}
     echo "Compiling terminfo ${tinfo}"
     tic $tinfof
 
