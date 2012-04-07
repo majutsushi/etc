@@ -1,0 +1,119 @@
+# extract files into a separate directory automatically
+
+emulate -L zsh
+
+setopt extended_glob
+setopt no_clobber
+
+if [[ -z "$1" ]]; then
+    echo "usage: $0 <file>"
+    return 1
+fi
+
+TMPDIR=zsh-extract-$$-$RANDOM
+BASENAME=""
+mkdir $TMPDIR
+
+case "$1" in
+    *.tar.bz2)
+        BASENAME=${BASENAME:-${1%.tar.bz2}} ;&
+    *.tbz2)
+        BASENAME=${BASENAME:-${1%.tbz2}} ;&
+    *.tbz)
+        BASENAME=${BASENAME:-${1%.tbz}}
+        COMMAND="tar xvj -f '$1' -C $TMPDIR"
+        ;;
+    *.tar.gz)
+        BASENAME=${BASENAME:-${1%.tar.gz}} ;&
+    *.tgz)
+        BASENAME=${BASENAME:-${1%.tgz}}
+        COMMAND="tar xvz -f '$1' -C $TMPDIR"
+        ;;
+    *.tar.xz)
+        BASENAME=${BASENAME:-${1%.tar.xz}} ;&
+    *.txz)
+        BASENAME=${BASENAME:-${1%.txz}} ;&
+    *.tar.lzma)
+        BASENAME=${BASENAME:-${1%.tar.lzma}}
+        COMMAND="tar xvJ -f '$1' -C $TMPDIR"
+        ;;
+    *.tar)
+        BASENAME=${BASENAME:-${1%.tar}}
+        COMMAND="tar xv -f '$1' -C $TMPDIR"
+        ;;
+    *.rar)
+        BASENAME=${BASENAME:-${1%.rar}}
+        COMMAND="mv '$1' $TMPDIR && cd $TMPDIR && unrar x '$1' && mv '$1' .. && cd .."
+        ;;
+    *.lzh)
+        BASENAME=${BASENAME:-${1%.lzh}}
+        COMMAND="mv '$1' $TMPDIR && cd $TMPDIR && lha x '$1' && mv '$1' .. && cd .."
+        ;;
+    *.7z)
+        BASENAME=${BASENAME:-${1%.7z}}
+        COMMAND="7z x -o$TMPDIR '$1'"
+        ;;
+    *.zip)
+        BASENAME=${BASENAME:-${1%.zip}} ;&
+    *.jar)
+        BASENAME=${BASENAME:-${1%.jar}}
+        COMMAND="unzip -d $TMPDIR '$1'"
+        ;;
+    *.deb)
+        BASENAME=${BASENAME:-${1%.deb}}
+        COMMAND="mv '$1' $TMPDIR && cd $TMPDIR && ar -x '$1' && mv '$1' .. && cd .."
+        ;;
+    *.bz2)
+        BASENAME=${BASENAME:-${1%.bz2}}
+        COMMAND="bzip2 -d -c '$1' > '$BASENAME'"
+        ;;
+    *.gz)
+        BASENAME=${BASENAME:-${1%.gz}} ;&
+    *.Z)
+        BASENAME=${BASENAME:-${1%.Z}}
+        COMMAND="gzip -d -c '$1' > '$BASENAME'"
+        ;;
+    *.xz)
+        BASENAME=${BASENAME:-${1%.xz}} ;&
+    *.lzma)
+        BASENAME=${BASENAME:-${1%.lzma}}
+        COMMAND="xz -d -c '$1' > '$BASENAME'"
+        ;;
+    *)
+        echo "Unsupported archive type"
+        rmdir $TMPDIR
+        return 1
+        ;;
+esac
+
+eval "$COMMAND"
+
+RET=$?
+if (( $RET != 0 )); then
+    rmdir $TMPDIR
+    return $RET
+fi
+
+echo
+
+NUMFILES=$(ls $TMPDIR | wc -l)
+if (( $NUMFILES == 0 )); then
+    rmdir $TMPDIR
+    echo "Extracted file to \"$BASENAME\""
+elif (( $NUMFILES == 1 )); then
+    FILE=$(basename $TMPDIR/*)
+    mv $TMPDIR/$FILE .
+    rmdir $TMPDIR
+    echo "Extracted \"$FILE\" to current directory"
+else
+    if ! [[ -e "BASENAME" ]]; then
+        mkdir "$BASENAME"
+        mv $TMPDIR/* "$BASENAME"
+        rmdir $TMPDIR
+        echo "Extracted files to directory \"$BASENAME\""
+    else
+        echo "Extracted files to directory \"$TMPDIR\""
+    fi
+fi
+
+# vim: filetype=zsh

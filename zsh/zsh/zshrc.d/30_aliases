@@ -66,13 +66,14 @@ alias g="grep"
 alias j='jobs -l'
 alias jsonpp='python -mjson.tool'
 alias le='/usr/share/vim/vimcurrent/macros/less.sh'
+alias myip='curl http://v4.ipv6-test.com/api/myip.php'
 alias pa='ps aux | less'
 alias pu='ps ux | less'
 alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 alias t='noglob task'
 alias vi='vim'
 alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
-alias myip='curl http://v4.ipv6-test.com/api/myip.php'
+alias x='extract'
 
 have colordiff && alias diff='colordiff'
 
