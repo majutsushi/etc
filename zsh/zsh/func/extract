@@ -101,15 +101,17 @@ if (( $NUMFILES == 0 )); then
     rmdir $TMPDIR
     echo "Extracted file to \"$BASENAME\""
 elif (( $NUMFILES == 1 )); then
-    FILE=$(basename $TMPDIR/*)
-    mv $TMPDIR/$FILE .
-    rmdir $TMPDIR
-    echo "Extracted \"$FILE\" to current directory"
+    if ! [[ -e "BASENAME" ]]; then
+        FILE=$(basename $TMPDIR/*)
+        mv $TMPDIR/$FILE .
+        rmdir $TMPDIR
+        echo "Extracted \"$FILE\" to current directory"
+    else
+        echo "Extracted \"$FILE\" to directory \"$TMPDIR\""
+    fi
 else
     if ! [[ -e "BASENAME" ]]; then
-        mkdir "$BASENAME"
-        mv $TMPDIR/* "$BASENAME"
-        rmdir $TMPDIR
+        mv $TMPDIR "$BASENAME"
         echo "Extracted files to directory \"$BASENAME\""
     else
         echo "Extracted files to directory \"$TMPDIR\""
