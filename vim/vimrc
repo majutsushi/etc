@@ -88,7 +88,8 @@ autocmd FileType haskell compiler ghc
 autocmd FileType ruby    setlocal omnifunc=rubycomplete#Complete
 
 augroup commentstrings
-    autocmd FileType cpp setlocal commentstring=//%s
+    autocmd FileType cpp  setlocal commentstring=//%s
+    autocmd FileType tmux setlocal commentstring=#%s
 augroup END
 
 autocmd BufNewFile,BufReadPost *mutt/fortunes* setlocal textwidth=76
