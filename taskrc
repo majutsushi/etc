@@ -17,9 +17,15 @@ dateformat=Y-M-D
 dateformat.annotation=Y-M-D
 dateformat.report=Y-M-D
 
-default.command=l
+default.command=next
 
 journal.time=on
+
+report.next.columns=id,project,priority,due,active,description,tags
+report.next.description=Lists the most urgent tasks
+report.next.filter=status:pending -waiting depends.none:
+report.next.labels=ID,Project,Pri,Due,Active,Description,Tags
+report.next.sort=due+,priority-,active-,project+,description+
 
 report.l.columns=id,project,priority,due,active,description,tags
 report.l.description=Lists all tasks matching the specified criteria
