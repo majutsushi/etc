@@ -10,73 +10,79 @@ if [[ -z "$1" ]]; then
     return 1
 fi
 
-TMPDIR=zsh-extract-$$-$RANDOM
+TMPDIR=zsh-extract-$RANDOM
+ARCHIVEDIR="${1:h}"
+ARCHIVEFILE="${1:t}"
 BASENAME=""
+MOVE=no
 mkdir $TMPDIR
 
 case "$1" in
     *.tar.bz2)
-        BASENAME=${BASENAME:-${1%.tar.bz2}} ;&
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.tar.bz2}} ;&
     *.tbz2)
-        BASENAME=${BASENAME:-${1%.tbz2}} ;&
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.tbz2}} ;&
     *.tbz)
-        BASENAME=${BASENAME:-${1%.tbz}}
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.tbz}}
         COMMAND="tar xvj -f '$1' -C $TMPDIR"
         ;;
     *.tar.gz)
-        BASENAME=${BASENAME:-${1%.tar.gz}} ;&
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.tar.gz}} ;&
     *.tgz)
-        BASENAME=${BASENAME:-${1%.tgz}}
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.tgz}}
         COMMAND="tar xvz -f '$1' -C $TMPDIR"
         ;;
     *.tar.xz)
-        BASENAME=${BASENAME:-${1%.tar.xz}} ;&
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.tar.xz}} ;&
     *.txz)
-        BASENAME=${BASENAME:-${1%.txz}} ;&
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.txz}} ;&
     *.tar.lzma)
-        BASENAME=${BASENAME:-${1%.tar.lzma}}
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.tar.lzma}}
         COMMAND="tar xvJ -f '$1' -C $TMPDIR"
         ;;
     *.tar)
-        BASENAME=${BASENAME:-${1%.tar}}
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.tar}}
         COMMAND="tar xv -f '$1' -C $TMPDIR"
         ;;
     *.rar)
-        BASENAME=${BASENAME:-${1%.rar}}
-        COMMAND="mv '$1' $TMPDIR && cd $TMPDIR && unrar x '$1' && mv '$1' .. && cd .."
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.rar}}
+        COMMAND="unrar x '${ARCHIVEFILE}'"
+        MOVE=yes
         ;;
     *.lzh)
-        BASENAME=${BASENAME:-${1%.lzh}}
-        COMMAND="mv '$1' $TMPDIR && cd $TMPDIR && lha x '$1' && mv '$1' .. && cd .."
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.lzh}}
+        COMMAND="lha x '${ARCHIVEFILE}'"
+        MOVE=yes
         ;;
     *.7z)
-        BASENAME=${BASENAME:-${1%.7z}}
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.7z}}
         COMMAND="7z x -o$TMPDIR '$1'"
         ;;
     *.zip)
-        BASENAME=${BASENAME:-${1%.zip}} ;&
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.zip}} ;&
     *.jar)
-        BASENAME=${BASENAME:-${1%.jar}}
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.jar}}
         COMMAND="unzip -d $TMPDIR '$1'"
         ;;
     *.deb)
-        BASENAME=${BASENAME:-${1%.deb}}
-        COMMAND="mv '$1' $TMPDIR && cd $TMPDIR && ar -x '$1' && mv '$1' .. && cd .."
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.deb}}
+        COMMAND="ar -x '${ARCHIVEFILE}'"
+        MOVE=yes
         ;;
     *.bz2)
-        BASENAME=${BASENAME:-${1%.bz2}}
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.bz2}}
         COMMAND="bzip2 -d -c '$1' > '$BASENAME'"
         ;;
     *.gz)
-        BASENAME=${BASENAME:-${1%.gz}} ;&
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.gz}} ;&
     *.Z)
-        BASENAME=${BASENAME:-${1%.Z}}
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.Z}}
         COMMAND="gzip -d -c '$1' > '$BASENAME'"
         ;;
     *.xz)
-        BASENAME=${BASENAME:-${1%.xz}} ;&
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.xz}} ;&
     *.lzma)
-        BASENAME=${BASENAME:-${1%.lzma}}
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.lzma}}
         COMMAND="xz -d -c '$1' > '$BASENAME'"
         ;;
     *)
@@ -86,9 +92,15 @@ case "$1" in
         ;;
 esac
 
-eval "$COMMAND"
+if [[ $MOVE == yes ]]; then
+    mv "$1" $TMPDIR && cd $TMPDIR && eval "$COMMAND"
+    RET=$?
+    mv "$ARCHIVEFILE" "$ARCHIVEDIR" && cd ..
+else
+    eval "$COMMAND"
+    RET=$?
+fi
 
-RET=$?
 if (( $RET != 0 )); then
     rmdir $TMPDIR
     return $RET
@@ -102,8 +114,8 @@ if (( $NUMFILES == 0 )); then
     echo "Extracted file to \"$BASENAME\""
 elif (( $NUMFILES == 1 )); then
     if ! [[ -e "BASENAME" ]]; then
-        FILE=$(basename $TMPDIR/*)
-        mv $TMPDIR/$FILE .
+        FILE="$(basename $TMPDIR/*)"
+        mv "$TMPDIR/$FILE" .
         rmdir $TMPDIR
         echo "Extracted \"$FILE\" to current directory"
     else
