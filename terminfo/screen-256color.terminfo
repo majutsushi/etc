@@ -283,7 +283,7 @@ screen-256color|GNU Screen with 256 colors,
 	kdch1=\E[3~,
 # key_dl                    kdl1     kL  delete-line key
 # key_down                  kcud1    kd  down-arrow key
-	kcud1=\EOB,
+	kcud1=\E[B,
 # key_eic                   krmir    kM  sent by rmir or smir in insert mode
 # key_end                   kend     @7  end key
 	kend=\E[4~,
@@ -375,7 +375,7 @@ screen-256color|GNU Screen with 256 colors,
 	kich1=\E[2~,
 # key_il                    kil1     kA  insert-line key
 # key_left                  kcub1    kl  left-arrow key
-	kcub1=\EOD,
+	kcub1=\E[D,
 # key_ll                    kll      kH  lower-left key (home down)
 # key_mark                  kmrk     %2  mark key
 # key_message               kmsg     %3  message key
@@ -398,7 +398,7 @@ screen-256color|GNU Screen with 256 colors,
 # key_restart               krst     &4  restart key
 # key_resume                kres     &5  resume key
 # key_right                 kcuf1    kr  right-arrow key
-	kcuf1=\EOC,
+	kcuf1=\E[C,
 # key_save                  ksav     &6  save key
 # key_sbeg                  kBEG     &9  shifted begin key
 # key_scancel               kCAN     &0  shifted cancel key
@@ -435,7 +435,7 @@ screen-256color|GNU Screen with 256 colors,
 # key_suspend               kspd     &7  suspend key
 # key_undo                  kund     &8  undo key
 # key_up                    kcuu1    ku  up-arrow key
-	kcuu1=\EOA,
+	kcuu1=\E[A,
 # keypad_local              rmkx     ke  leave 'keyboard_transmit' mode
 	rmkx=\E[?1l\E>,
 # keypad_xmit               smkx     ks  enter 'keyboard_transmit' mode
