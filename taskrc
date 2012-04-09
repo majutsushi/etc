@@ -21,17 +21,17 @@ default.command=next
 
 journal.time=on
 
-report.next.columns=id,project,priority,due,active,description,tags
+report.next.columns=id,project,priority,due,start.active,urgency,description,tags
 report.next.description=Lists the most urgent tasks
 report.next.filter=status:pending -waiting depends.none:
-report.next.labels=ID,Project,Pri,Due,Active,Description,Tags
-report.next.sort=due+,priority-,active-,project+,description+
+report.next.labels=ID,Project,Pri,Due,Active,Urgency,Description,Tags
+report.next.sort=urgency-,due+,priority-,start-,project+,description+
 
-report.l.columns=id,project,priority,due,active,description,tags
+report.l.columns=id,project,priority,due,start.active,description,tags
 report.l.description=Lists all tasks matching the specified criteria
 report.l.filter=status:pending
 report.l.labels=ID,Project,Pri,Due,Active,Description,Tags
-report.l.sort=due+,priority-,active-,project+,description+
+report.l.sort=due+,priority-,start.active-,project+,description+
 
 weekstart=Monday
 
@@ -81,4 +81,4 @@ color.project.none=
 color.tag.none=color197
 color.alternate=on color235
 
-include /usr/share/task/holidays-NZ.rc
+include /usr/share/task/holidays.en-NZ.rc
