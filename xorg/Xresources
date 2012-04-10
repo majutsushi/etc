@@ -282,6 +282,11 @@ URxvt.keysym.C-S-F12   : \033[24;6~
 URxvt.keysym.M-C-F12   : \033[24;7~
 URxvt.keysym.M-C-S-F12 : \033[24;8~
 
+! Map private escape sequences so vim can remap them
+! https://en.wikipedia.org/wiki/C0_and_C1_control_codes
+! https://en.wikipedia.org/wiki/ANSI_escape_code
+URxvt.keysym.C-space : \033[?1;32~
+
 
 ! *** XTerm ***
 
@@ -291,8 +296,9 @@ UXTerm*vt100.metaSendsEscape: true
 !UXTerm*vt100.utf8: 1
 UXTerm*vt100.visualBell: true
 UXTerm*vt100.translations: #override \
-    Ctrl <Key>Up: larger-vt-font() \n\
-    Ctrl <Key>Down: smaller-vt-font() \n
+    Ctrl <Key>Up:    larger-vt-font() \n\
+    Ctrl <Key>Down:  smaller-vt-font() \n\
+    Ctrl <Key>space: string(0x1b) string("[?1;32~") \n
 
 
 yeahconsole.term: urxvt
