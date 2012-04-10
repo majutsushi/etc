@@ -21,6 +21,8 @@ default.command=next
 
 journal.time=on
 
+calendar.holidays=full
+
 report.next.columns=id,project,priority,due,start.active,urgency,description,tags
 report.next.description=Lists the most urgent tasks
 report.next.filter=status:pending -waiting depends.none:
