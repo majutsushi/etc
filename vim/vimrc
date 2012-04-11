@@ -1558,7 +1558,7 @@ if &term =~ '^rxvt-unicode\|xterm\|screen'
 
     " <C-Space> isn't a recognized keycode, therefore we have to do this:
     " http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
-    execute "set <F13>=\e[?1;32~"
+    execute "set <F13>=\eQ1;32~"
     map  <F13> <C-Space>
     map! <F13> <C-Space>
 endif
