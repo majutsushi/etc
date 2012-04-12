@@ -291,6 +291,7 @@ URxvt.keysym.C-space : \033Q1;32~
 ! *** XTerm ***
 
 UXTerm.termName: xterm-256color
+UXTerm*vt100.cursorColor: yellow
 UXTerm*vt100.geometry: 100x50
 UXTerm*vt100.metaSendsEscape: true
 !UXTerm*vt100.utf8: 1
