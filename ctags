@@ -28,6 +28,10 @@
 --regex-latex=/\\ref[[:space:]]*\{([^}]+)\}/\1/r,ref/
 --regex-latex=/\\pageref[[:space:]]*\{([^}]+)\}/\1/p,pageref/
 
+--langdef=bib
+--langmap=bib:.bib
+--regex-bib=/^@[A-Za-z]+\{([^,]*)/\1/b,bib/
+
 --langdef=xpidl
 --langmap=xpidl:.idl
 --regex-xpidl=/^[[:blank:]]*interface[[:space:]]+([a-zA-Z0-9_]+);$/\1/p,prototype/
