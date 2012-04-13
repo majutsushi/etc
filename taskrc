@@ -23,10 +23,10 @@ journal.time=on
 
 calendar.holidays=full
 
-report.next.columns=id,project,priority,due,start.active,urgency,description,tags
+report.next.columns=id,project,priority,due,start.active,description,tags
 report.next.description=Lists the most urgent tasks
 report.next.filter=status:pending -waiting depends.none:
-report.next.labels=ID,Project,Pri,Due,Active,Urgency,Description,Tags
+report.next.labels=ID,Project,Pri,Due,Active,Description,Tags
 report.next.sort=urgency-,due+,priority-,start-,project+,description+
 
 report.l.columns=id,project,priority,due,start.active,description,tags
