@@ -20,7 +20,7 @@ endif
 
 " search for exuberant ctags
 let ctagsbins  = []
-let ctagsbins += [expand('~/src/ctags/ctags')]
+let ctagsbins += [expand('~/src/ctags/dctags')]
 let ctagsbins += ['ctags-exuberant'] " Debian
 let ctagsbins += ['exuberant-ctags']
 let ctagsbins += ['exctags'] " FreeBSD, NetBSD
