@@ -1,0 +1,338 @@
+# http://nethack.wikia.com/wiki/Options
+
+#
+# Appearance
+#
+# OPTIONS=align_message # top,bottom,left,right
+# OPTIONS=align_status # top,bottom,left,right
+# OPTIONS=ascii_map
+OPTIONS=boulder:0
+OPTIONS=color
+OPTIONS=fruit:pineapple
+# OPTIONS=fullscreen
+OPTIONS=hilite_pet
+OPTIONS=lit_corridor
+OPTIONS=!showrace
+OPTIONS=sparkle
+OPTIONS=standout
+# OPTIONS=!use_inverse
+# OPTIONS=windowcolors:
+
+# OPTIONS=DECgraphics
+# OPTIONS=IBMgraphics
+
+# OPTIONS=dungeon: │─┌┐└┘┼┴┬┤├·■■++≡±·░▒<><>_|\\#⌠≋·≋··## #≋
+# OPTIONS=effects:
+# OPTIONS=graphics:
+# OPTIONS=monsters:
+# OPTIONS=objects:
+# OPTIONS=traps:
+
+#
+# Interface
+#
+OPTIONS=autodig
+OPTIONS=autopickup
+OPTIONS=autoquiver
+OPTIONS=checkpoint
+OPTIONS=cmdassist
+OPTIONS=confirm
+OPTIONS=disclose:+i+a+v+g+c
+OPTIONS=extmenu
+OPTIONS=fixinv
+OPTIONS=help
+OPTIONS=!lootabc
+
+# bold,inverse,underline
+OPTIONS=menu_headings:inverse
+
+# traditional,combination,partial,full
+OPTIONS=menustyle:full
+
+# OPTIONS=menu_deselect_all:-
+# OPTIONS=menu_deselect_page:\
+# OPTIONS=menu_first_page:\^
+# OPTIONS=menu_invert_all:@
+# OPTIONS=menu_invert_page:~
+# OPTIONS=menu_last_page:|
+# OPTIONS=menu_next_page:>
+# OPTIONS=menu_previous_page:<
+# OPTIONS=menu_search:\:
+# OPTIONS=menu_select_all:.
+# OPTIONS=menu_select_page:\,
+
+OPTIONS=!mouse_support
+OPTIONS=msghistory:20
+
+# single,combination,full,reversed
+OPTIONS=msg_window:full
+
+OPTIONS=!number_pad
+# OPTIONS=packorder: # character string
+OPTIONS=paranoid_hit
+OPTIONS=!perm_invent
+
+# Unencumbered,Burdened,Stressed,Strained,Overtaxed
+OPTIONS=pickup_burden:Stressed
+
+# character string
+OPTIONS=pickup_types:$
+
+OPTIONS=!popup_dialog
+OPTIONS=prayconfirm
+OPTIONS=pushweapon
+OPTIONS=rest_on_space
+
+# teleport,run,walk,crawl
+OPTIONS=runmode:walk
+
+OPTIONS=safe_pet
+# OPTIONS=scroll_amount:
+# OPTIONS=scroll_margin:
+OPTIONS=sortpack
+OPTIONS=sound
+OPTIONS=travel
+OPTIONS=verbose
+OPTIONS=warnings:012345
+OPTIONS=wraptext
+
+
+#
+# Status line
+#
+OPTIONS=hpmon
+OPTIONS=showexp
+OPTIONS=!showscore
+OPTIONS=time
+
+
+#
+# Character
+#
+# OPTIONS=align:chaotic # lawful,neutral,chaotic
+OPTIONS=catname:Percy
+OPTIONS=dogname:Pooch
+# OPTIONS=gender:random
+OPTIONS=horsename:Agro
+OPTIONS=name:player
+# OPTIONS=pettype: # cat,dog,none
+# OPTIONS=!player_selection
+# OPTIONS=race:random
+# OPTIONS=role:random
+
+
+#
+# General
+#
+OPTIONS=legacy
+OPTIONS=mail
+OPTIONS=news
+
+# o: own, a: around own, t: top
+OPTIONS=scores:10t 2a o
+
+OPTIONS=splash_screen
+OPTIONS=tombstone
+OPTIONS=toptenwin
+
+
+#
+# Technical
+#
+OPTIONS=eight_bit_tty
+OPTIONS=!ignintr
+OPTIONS=!null
+OPTIONS=preload_tiles
+OPTIONS=silent
+OPTIONS=timed_delay
+# OPTIONS=windowtype:tty
+
+
+# Enable this if you want to see your inventory sorted in alphabetical
+# order by item instead of by index letter:
+# OPTIONS=sortloot:full
+# or if you just want containers sorted:
+# OPTIONS=sortloot:loot
+
+# Some sane defaults for menucolor
+OPTIONS=menucolors
+# MENUCOLOR=" blessed "=green
+# MENUCOLOR=" holy "=green
+# MENUCOLOR=" uncursed "=yellow
+# MENUCOLOR=" cursed "=red
+# MENUCOLOR=" unholy "=red
+# MENUCOLOR=" cursed .* (being worn)"=orange&underline
+
+#########
+# B/U/C #
+#########
+#MENUCOLOR="^[a-zA-Z$] - "=white #may want to enable this if regularly playing priest.. (priests don't see the 'uncursed')
+MENUCOLOR=" !C"=white
+MENUCOLOR=" !B"=white
+MENUCOLOR=" !UC"=white
+MENUCOLOR=" uncursed"=white
+MENUCOLOR=" ([-0-9]+:[-0-9]+)"=white #nethack doesn't display "uncursed" if charges are known
+MENUCOLOR=" [+-][0-9]"=white
+
+MENUCOLOR=" blessed"=cyan
+MENUCOLOR=" cursed"=red
+
+
+################
+# WATER SPORTS #
+################
+MENUCOLOR=" holy water"=cyan&bold
+MENUCOLOR=" blessed clear potion"=cyan&bold
+MENUCOLOR=" blessed potions? called water"=cyan&bold
+MENUCOLOR=" potions? of water named blessed"=cyan&bold
+MENUCOLOR=" potions? called water named blessed"=cyan&bold
+MENUCOLOR=" unholy water"=orange
+MENUCOLOR=" cursed clear potion"=orange
+MENUCOLOR=" cursed potions? called water"=orange
+MENUCOLOR=" potions? called water named cursed"=orange
+
+#################
+# MISCELLANEOUS #
+#################
+MENUCOLOR=" (lit)"=bold
+
+###########
+# GOODIES #
+###########
+MENUCOLOR=" bag .* holding"=magenta
+MENUCOLOR=" luckstone"=magenta
+MENUCOLOR=" wand .* wishing"= magenta
+MENUCOLOR=" magic marker"=magenta
+MENUCOLOR=" magic lamp"=magenta
+MENUCOLOR=" unicorn horn[^[]*$"=magenta #this doesn't color the #enhance unicorn horn skill
+MENUCOLOR=" tinning kit"=magenta
+MENUCOLOR=" lamp .* magic"=magenta
+MENUCOLOR=" ring .* regeneration"=magenta
+MENUCOLOR=" ring .* slow digestion"=magenta
+MENUCOLOR=" amulet .* life saving"=magenta
+
+#############
+# ARTIFACTS #
+#############
+#unaligned
+MENUCOLOR=" \(Dragonbane\|Fire Brand\|Frost Brand\|Ogresmasher\|Trollsbane\|Werebane\)"=lightgreen
+
+#lawful normal, quest
+MENUCOLOR=" \(Demonbane\|Excalibur\|Grayswandir\|Snickersnee\|Sunsword\)"=lightgreen
+MENUCOLOR=" \(Orb of Detection\|Sceptre of Might\|Magic Mirror of Merlin\|Mitre of Holiness\|Tsurugi of Muramasa\)"=lightgreen
+
+#neutral normal, quest
+MENUCOLOR=" \(Cleaver\|Giantslayer\|Magicbane\|Mjollnir\|Vorpal Blade\)"=lightgreen
+MENUCOLOR=" \(Heart of Ahriman\|Staff of Aesculapius\|Eyes of the Overworld\|Platinum Yendorian Express Card\|Orb of Fate\|Eye of the Aethiopica\)"=lightgreen
+
+#chaotic normal, quest
+MENUCOLOR=" \(Grimtooth\|Orcrist\|Sting\|Stormbringer\)"=lightgreen
+MENUCOLOR=" \(Longbow of Diana\|Master Key of Thievery\)"=lightgreen
+
+#invocation items
+MENUCOLOR=" \(Bell of Opening\|silver bell\|Candelabrum of Invocation\|candelabrum\|Book of the Dead\|papyrus spellbook\)"=magenta&bold
+
+#raison d'etre
+MENUCOLOR=" Amulet of Yendor named"=magenta&bold&underline
+
+#############
+# BAD STUFF #
+#############
+MENUCOLOR=" loadstone"=red&underline
+MENUCOLOR=" cursed .* luckstone"=orange&underline
+
+##############################
+# WATCH OUT, BAG OF HOLDING! #
+##############################
+MENUCOLOR=" bag .* tricks"=blue&underline
+MENUCOLOR=" wand .* cancellation"=blue&underline
+MENUCOLOR=" wand .* vanish"=blue&underline
+
+################
+# SHINY THINGS #
+################
+MENUCOLOR=" gold piece"=yellow
+MENUCOLOR=" valuable"=brown
+MENUCOLOR=" gems? .* hard"=yellow
+
+#soft gems
+MENUCOLOR=" \([0-9]+\|an?\|gems? .*\) \(uncursed \|cursed \|blessed \)?\(dilithium\|opal\|garnet\|jasper\|agate\|jet\|obsidian\|jade\|citrine\|chrysoberyl\|amber\|amethyst\|fluorite\|turquoise\)\(e?s\)?\( stones?\| gems?\| crystals?\)?\( named .*\)?$"=brown
+
+#hard gems
+MENUCOLOR=" \([0-9]+\|an?\|gems?.*\) \(uncursed \|cursed \|blessed \)?\(diamond\|rub\(y\|ies\)\|jacinth\|sapphire\|black opal\|emerald\|topaz\|aquamarine\)\(e?s\)?\( stones?\| gems?\)?\( named .*\)?$"=yellow
+
+#######################
+# SPELL FAILURE RATES #
+#######################
+MENUCOLOR=" 0%"=white
+MENUCOLOR=" [1-9]%"=cyan
+MENUCOLOR=" [12][0-9]%"=cyan
+MENUCOLOR=" [3-6][0-9]%"=yellow
+MENUCOLOR=" 7[0-5]%"=yellow
+MENUCOLOR=" 7[6-9]%"=orange
+MENUCOLOR=" 8[0-9]%"=orange
+MENUCOLOR=" 9[0-9]%"=red
+MENUCOLOR=" 100%"=red
+
+###################
+# FORGOTTEN SPELL #  # thanks, Stevie
+###################
+MENUCOLOR="[a-zA-Z] - [a-zA-Z ]+ [0-9]\*   [a-z]+ +[0-9]+%"=magenta
+
+############
+# SHOPPING #
+############
+#This doesn't want to work for my term
+#MENUCOLOR=" (unpaid, [0-9]+ zorkmids?)"=underline
+
+############
+# #ENHANCE #  # thanks itsblah
+############
+MENUCOLOR="^ +[a-z -]+ +\[\(Unskilled\|Basic\|Skilled\|Expert\|Master\|Grand Master\)\]$"=none           # normal
+MENUCOLOR="^ *[a-z] - +[a-z -]+ +\[\(Unskilled\|Basic\|Skilled\|Expert\|Master\|Grand Master\)\]$"=white # ready to enhance
+MENUCOLOR="^ +\* +[a-z -]+ +\[\(Unskilled\|Basic\|Skilled\|Expert\|Master\|Grand Master\)\]$"=white      # enhanceable if more skill slots
+MENUCOLOR="^ +# +[a-z -]+ +\[\(Unskilled\|Basic\|Skilled\|Expert\|Master\|Grand Master\)\]$"=none        # enhanceable if more potential
+
+################
+# FORCE COLORS #
+################
+# Some of these are subject to change !
+
+MENUCOLOR="{R}"=red
+MENUCOLOR="{B}"=blue
+MENUCOLOR="{C}"=cyan
+MENUCOLOR="{G}"=green
+MENUCOLOR="{Y}"=yellow
+MENUCOLOR="{[MP]}"=magenta
+MENUCOLOR="{O}"=orange
+MENUCOLOR="{W}"=white
+MENUCOLOR="{L}"=black
+MENUCOLOR="{y}"=gray
+MENUCOLOR="{g}"=lightgreen
+MENUCOLOR="{b}"=lightblue
+MENUCOLOR="{[mp]}"=lightmagenta
+MENUCOLOR="{c}"=lightcyan
+MENUCOLOR="{N}"=none
+MENUCOLOR="{X}"=bold
+MENUCOLOR="{x}"=dim
+MENUCOLOR="{U}"=underline
+MENUCOLOR="{I}"=inverse
+MENUCOLOR="{K}"=blink
+
+########################
+# LOOT/APPLY CONTAINER #
+########################
+MENUCOLOR=" is empty. Do what?"=none
+MENUCOLOR="Put something into .*"=none
+MENUCOLOR="Take something out of .*"=none
+
+MENUCOLOR="cancellation"=magenta&underline
+MENUCOLOR="bag"=magenta&underline
+
+
+
+MENUCOLOR="wand$"=magenta&underline
+MENUCOLOR="wand named"=magenta&underline
+MENUCOLOR="wand called"=lightmagenta&underline
+
+# vim: filetype=conf

@@ -66,6 +66,8 @@ export NNTPSERVER=news.gmane.org
 
 export GPG_TTY=$(tty)
 
+export NETHACKOPTIONS=@$HOME/.etc/nethackrc
+
 # for java; XToolkit is the new one, but it doesn't work everywhere
 # export AWT_TOOLKIT=XToolkit
 # export AWT_TOOLKIT=MToolkit
