@@ -1,12 +1,83 @@
+% entry formatting
+print.align              = 19
+print.align.key          = 19
+print.align.string       = 19
+print.comma.at.end       = on
+print.equal.right        = on
 print.indent             = 4
+print.line.length        = 77
+print.newline            = 1
 print.use.tab            = off
-#print.wide.equal         = on
+%print.wide.equal         = on
 suppress.initial.newline = on
-delete.field             = {url}
-delete.field             = {abstract}
-delete.field             = {doi}
-delete.field             = {isbn}
-delete.field             = {issn}
-delete.field             = {note}
-rewrite.rule             = { howpublished # "^{{\(.*\)}}$" # "\"\\url{\1}\"" }
-rewrite.rule             = { howpublished # "^{\(.*\)}$"   # "\"\\url{\1}\"" }
+
+% sort in ascending order
+sort         = on
+sort.reverse = off
+
+% keys
+preserve.keys        = off
+preserve.key.case    = on
+key.make.alias       = off
+key.generation       = on
+key.number.separator = "*"
+key.base             = lower
+fmt.et.al            = ".ea"
+new.format.type      {2 = "%*5.1l[][.][]"}
+key.format           =
+{
+    %s(bibkey) #
+    {
+        {
+            %-2.2p(author) #
+            %-2.2p(editor) #
+            anon
+        }
+        :
+        {
+            %-2.5T(title) #
+            %-2.5T(booktitle) #
+            notitle
+        }
+        {
+            : %4d(year) #
+        }
+    } #
+    ???
+}
+ignored.word = "{a}"
+ignored.word = "{a}n"
+ignored.word = "das"
+ignored.word = "der"
+ignored.word = "die"
+ignored.word = "{}ein"
+ignored.word = "{}eine"
+ignored.word = "{}el"
+ignored.word = "{}il"
+ignored.word = "la"
+ignored.word = "le"
+ignored.word = "les"
+ignored.word = "the"
+ignored.word = "{}un"
+ignored.word = "{}une"
+ignored.word = "annual"
+ignored.word = "conference"
+ignored.word = "for"
+ignored.word = "meeting"
+ignored.word = "of"
+
+% get rid of unnecessary fields
+delete.field = {url}
+delete.field = {abstract}
+delete.field = {doi}
+delete.field = {isbn}
+delete.field = {issn}
+delete.field = {note}
+delete.field = {keywords}
+
+% sort fields
+sort.order = {* = author # title # year}
+
+% wrap URLs in \url{}
+rewrite.rule = { howpublished # "^{{\(.*\)}}$" # "\"\\url{\1}\"" }
+rewrite.rule = { howpublished # "^{\(.*\)}$"   # "\"\\url{\1}\"" }
