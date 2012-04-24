@@ -676,6 +676,9 @@ color index     bright$my_white $my_background  ~N    # new mail
 color index     color113        $my_background  '!~N (%f sent | %f abook) !%C ml'
 color index     brightcolor113  $my_background  ' ~N (%f sent | %f abook) !%C ml'
 
+color index     color250        $my_background  '!~N ~c jan@majutsushi.net'
+color index     brightcolor250  $my_background  ' ~N ~c jan@majutsushi.net'
+
 color index     $my_cyan        $my_background  '(~P !~D) | (~v ~(~P !~D))'    # mail from myself
 
 color index     color241        $my_background  '=s "*****SPAM*****"'
