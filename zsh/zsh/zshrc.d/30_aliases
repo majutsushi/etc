@@ -51,7 +51,7 @@ mcd() { mkdir -p "$@"; cd "$@" }
 compdef _mkdir mcd
 
 # defaults for some programs
-alias grep="grep --extended-regexp --ignore-case --recursive"
+alias grep="grep --extended-regexp --ignore-case"
 alias gdb="gdb -q"
 alias mtr="mtr -t"
 
