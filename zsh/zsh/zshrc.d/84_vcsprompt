@@ -56,10 +56,10 @@ __prompt_git_show_upstream() {
             svn_upstream=($(git log --first-parent -1 \
                 --grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
             if [[ 0 -ne ${#svn_upstream[@]} ]]; then
-                svn_upstream=${svn_upstream[$((${#svn_upstream[@]} - 2))]}
+                svn_upstream=${svn_upstream[$((${#svn_upstream[@]} - 1))]}
                 svn_upstream=${svn_upstream%@*}
                 local n_stop="${#svn_remote[@]}"
-                for ((n=1; n <= n_stop; ++n)); do
+                for ((n = 1; n <= n_stop; ++n)); do
                     svn_upstream=${svn_upstream#${svn_remote[$n]}}
                 done
 
