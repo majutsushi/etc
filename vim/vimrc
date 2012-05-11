@@ -30,6 +30,7 @@ let ctagsbins += ['ectags'] " OpenBSD
 let ctagsbins += ['ctags']
 let ctagsbins += ['ctags.exe']
 let ctagsbins += ['tags']
+let g:ctagsbin = ''
 for ctags in ctagsbins
     if executable(ctags)
         let g:ctagsbin = ctags
@@ -542,6 +543,10 @@ endif
 " GenCscopeAndTags() {{{2
 function! GenCscopeAndTags()
     " see ~/.ctags
+    if g:ctagsbin == ''
+        echomsg 'No ctags found!'
+        return
+    endif
     let ctagsbin = g:ctagsbin
     let userdefs = tagbar#getusertypes()
     for type in values(userdefs)
