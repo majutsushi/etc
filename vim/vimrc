@@ -1858,7 +1858,8 @@ cnoremap <C-P> <Up>
 cnoremap ;rcm %s/<C-M>//g
 
 " expand %% to current directory
-cabbrev <expr> %% expand('%:~:h')
+" cabbrev <expr> %% expand('%:~:h')
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 " Misc {{{2
 
