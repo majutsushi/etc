@@ -803,7 +803,7 @@ xnoremap iN :<c-u>call <SID>TextObjectNumber(1)<cr>
 
 " Timestamp() {{{2
 function! Timestamp()
-    let matchpat = '\v\C%(<Last changed\s*:\s+)\zs\d{4}-\d{2}-\d{2} (\d{2}):\d{2}:\d{2} [+-]\d{4} \a+|TIMESTAMP'
+    let matchpat = '\v\C%(<Last changed\s*:\s+)\zs\d{4}-\d{2}-\d{2} (\d{2}):\d{2}:\d{2} [+-]\d{4} \a+|<TIMESTAMP>'
     let replpat  = '%Y-%m-%d %H:%M:%S %z %Z'
 
     for linenr in range(1, 20)
@@ -811,12 +811,13 @@ function! Timestamp()
         let matchl = matchlist(line, matchpat)
         if !empty(matchl)
             let hour = strftime('%H')
+            " only update once per hour to avoid messing with the undo buffer
+            " too much
             if matchl[1] != hour
                 let repl    = strftime(replpat)
                 let newline = substitute(line, matchpat, repl, '')
                 keepjumps call setline(linenr, newline)
             endif
-            break
         endif
     endfor
 endfunction
