@@ -2,6 +2,10 @@
 
 set prompt \033[1m(gdb) \033[0m
 
+set history filename ~/.cache/gdb_history
+set history save on
+set history size 1024
+
 set print pretty
 set print symbol-filename on
 set print array on
