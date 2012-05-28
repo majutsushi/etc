@@ -406,6 +406,64 @@ function! Bclose()
     endif
 endfunction
 
+" CenterBlock() {{{2
+function! CenterBlock(...) range
+    let width = a:0 > 0 ? a:1 : (&textwidth > 0 ? &textwidth : 80)
+    let left  = width
+    let right = 1
+
+    for linenr in range(a:firstline, a:lastline)
+        let line = getline(linenr)
+        if line =~ '^$'
+            continue
+        endif
+
+        let l = match(line, '\S') + 1
+        if l < left
+            let left = l
+        endif
+
+        let r = len(line)
+        if r > right
+            let right = r
+        endif
+    endfor
+
+    if left > right
+        echoerr 'No valid region found!'
+        return
+    endif
+    if right > width
+        echoerr 'Width is too small!'
+        return
+    endif
+
+    let mean = float2nr(round((left + (width - right)) / 2.0))
+
+    if mean > left
+        for linenr in range(a:firstline, a:lastline)
+            let line = getline(linenr)
+            if line =~ '^$'
+                continue
+            endif
+            let padding = repeat(' ', mean - left)
+            let line = substitute(line, '.*', padding . '\0', '')
+            call setline(linenr, line)
+        endfor
+    else
+        for linenr in range(a:firstline, a:lastline)
+            let line = getline(linenr)
+            if line =~ '^$'
+                continue
+            endif
+            let line = substitute(line, '\s\{' . (left - mean) . '\}', '', '')
+            call setline(linenr, line)
+        endfor
+    endif
+endfunction
+
+command! -range -nargs=? CenterBlock <line1>,<line2>call CenterBlock(<f-args>)
+
 " DiffOrig() {{{2
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
