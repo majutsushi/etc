@@ -73,7 +73,6 @@
 	tab-size = 8
 	horizontal-scroll = 50%
 	split-view-height = 66%
-	commit-encoding = "UTF-8"
 	status-untracked-dirs = no
 
 [tig "color"]
