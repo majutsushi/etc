@@ -307,8 +307,8 @@ yeahconsole.screenWidth: 600
 yeahconsole.consoleHeight: 50
 yeahconsole.aniDelay: 10
 !yeahconsole.toggleKey: ControlAlt+y
-!yeahconsole.toggleKey: None+F1
-yeahconsole.toggleKey: Control+F1
+! yeahconsole.toggleKey: Control+F1
+yeahconsole.toggleKey: Win+s
 
 
 KDrill*kdictfile: /usr/share/edict/kanjidic
