@@ -1,6 +1,7 @@
 # .gdbinit file for debugging Mozilla
 
-set prompt \033[1m(gdb) \033[0m
+# set prompt \033[1m(gdb) \033[0m
+set extended-prompt \w - \f\n(gdb) 
 
 set history filename ~/.cache/gdb_history
 set history save on
