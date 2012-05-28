@@ -14,8 +14,8 @@
 	sl  = log --stat
 	gl  = log --graph --pretty=format:\"%C(yellow)%h%C(red)%d%Creset %s\"
 	gla = log --graph --pretty=format:\"%C(yellow)%h%C(red)%d%Creset %s\" --all
-	ll  = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ci%C(green) %an %C(red)%d %Creset%s\"
-	lla = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ci%C(green) %an %C(red)%d %Creset%s\" --all
+	ll  = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ai%C(green) %an %C(red)%d %Creset%s\"
+	lla = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ai%C(green) %an %C(red)%d %Creset%s\" --all
 	in = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll ..trunk 2>/dev/null; then git ll ..git-svn; fi; else git ll ..origin; fi"
 	out = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll trunk.. 2>/dev/null; then git ll git-svn..; fi; else git ll origin..; fi"
 
