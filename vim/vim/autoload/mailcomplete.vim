@@ -2,7 +2,7 @@
 " Author       : Jan Larres <jan@majutsushi.net>
 " License      : GPLv3
 " Created      : 2012-02-22 14:10:50 +1300 NZDT
-" Last changed : 2012-02-22 14:10:51 +1300 NZDT
+" Last changed : 2012-05-28 23:04:34 +1200 NZST
 "
 " Based on http://www.vim.org/scripts/script.php?script_id=1757
 " and http://dollyfish.net.nz/blog/2008-04-01/mutt-and-vim-custom-autocompletion
@@ -26,6 +26,10 @@ function! mailcomplete#Complete(findstart, base)
         let result = []
         let query = substitute(a:base, '"', '', 'g')
         let query = substitute(query, '\s*<.*>\s*', '', 'g')
+
+        if query == ''
+            return []
+        endif
 
         for m in s:LbdbQuery(query)
             call add(result, printf('%s <%s>', m[0], m[1]))
