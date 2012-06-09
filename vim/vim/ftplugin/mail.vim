@@ -384,6 +384,9 @@ endfunction
 setlocal textwidth=72
 setlocal omnifunc=mailcomplete#Complete
 
+" Replace non-breaking spaces with normal spaces
+silent! %s/ / /g
+
 call s:QuoteEraseSig()
 
 call s:tprot()
