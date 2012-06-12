@@ -83,9 +83,9 @@ for tinfof in .etc/terminfo/*; do
     if ldd $(which bash) | grep -q libtermcap; then
         echo "termcap in use, appending ${tinfo} to ~/.termcap"
         if [[ -f .termcap ]] && ! grep -qE "^${tinfo}\|" .termcap; then
-            tic -C ${tinfof} >> .termcap
+            tic -C -T ${tinfof} >> .termcap
         else
-            tic -C ${tinfof} > .termcap
+            tic -C -T ${tinfof} > .termcap
         fi
     fi
 done
