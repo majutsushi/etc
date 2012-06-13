@@ -1,6 +1,6 @@
 [ui]
 ignore = ~/.etc/mercurial/hgignore
-merge = threesome
+merge = splice
 username = Jan Larres <jan@majutsushi.net>
 
 [extensions]
@@ -37,9 +37,9 @@ showfunc = true
 unified = 8
 
 [merge-tools]
-threesome.executable = vim
-threesome.args = -f $base $local $other $output -c 'ThreesomeInit'
-threesome.premerge = keep
+splice.executable = vim
+splice.args = -f $base $local $other $output -c 'SpliceInit'
+splice.premerge = keep
 vimdiff.executable = vim
 vimdiff.args = -d $base $local $output $other +close +close
 
