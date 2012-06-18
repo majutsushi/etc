@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/python -u
+# -u for unbuffered I/O
 
 import sys
 import os
@@ -6,17 +7,21 @@ import re
 from time import strftime, localtime
 import mechanize
 import gnomekeyring as gkey
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, check_call, CalledProcessError
 import shlex
+from tempfile import mkstemp
 
 br = mechanize.Browser()
 
-def system(cmd):
+def system(cmd, msg = None):
     p = Popen(shlex.split(cmd), stdout=PIPE, stderr=PIPE)
     (stdout, stderr) = p.communicate()
 
     if p.returncode != 0:
-        print 'Error executing', cmd, '!'
+        if msg is None:
+            print 'Error executing', cmd, '!'
+        else:
+            print msg
         print stderr
         exit()
 
@@ -31,7 +36,7 @@ def get_script_files():
     return [file for file in files if is_not_ignored(file)]
 
 def update_files(scrver):
-    print 'Updating version number in files to', scrver, '...',
+    print 'Updating version number in files to', scrver + '...',
 
     pat = re.compile(r'^(?P<text>(" )?Version:\s+)[0-9.]+$')
     files = get_script_files()
@@ -47,12 +52,11 @@ def update_files(scrver):
 
     print 'done.'
 
-def update_gh_site(scrver, scrcommfile):
+def update_gh_site(scrver, scrcommfile, reldate):
     print 'Updating website...',
 
     system('git checkout gh-pages')
-    out_fname = '_posts/' + \
-                strftime('%Y-%m-%d', localtime()) + '-' + scrver + '.markdown'
+    out_fname = '_posts/' + reldate + '-' + scrver + '.markdown'
 
     with open(out_fname, 'w') as outf:
         outf.write('---\n')
@@ -116,45 +120,95 @@ def make_vimball(scrname):
     print 'done.'
     return os.path.abspath(scrname + '.vmb')
 
-if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print 'Usage: ' + sys.argv[0] + ' scrver scrcommfile [vimver]'
+def call_vim(filename, args = None):
+    def abort():
+        print 'Aborted.'
+        os.unlink(scrcommfile)
         exit()
+
+    cmd = 'vim ' + filename
+    if args is not None:
+        cmd += ' ' + args
+
+    timestamp = os.stat(filename).st_mtime
+    try:
+        check_call(shlex.split(cmd))
+    except CalledProcessError:
+        abort()
+    if timestamp == os.stat(filename).st_mtime:
+        abort()
+
+if __name__ == '__main__':
+    system('git diff --no-ext-diff --quiet --exit-code --ignore-submodules',
+           'Error: workdir is dirty!')
 
     if not os.path.exists('.info'):
-        print 'No .info file found, exiting'
+        print 'No .info file found, exiting.'
         exit()
 
-    scrver = sys.argv[1]
-
-    print 'Reading version comment file...'
-    scrcommfile = os.path.abspath(sys.argv[2])
-    with open(scrcommfile) as f:
-        scrcomment = f.read()
-
-    if len(sys.argv) == 4:
-        vimver = sys.argv[3]
-    else:
-        vimver = 7.0
-
-    print 'Reading plugin info file...'
     with open('.info') as infofile:
         info    = infofile.readlines()
         scrname = info[0].strip()
         scrid   = info[1].strip()
 
-    update_files(scrver)
-    print 'Committing version', scrver, '...'
-    system('git commit -a -m "Version ' + scrver + '"')
-    print 'Tagging version', scrver, '...'
-    system('git tag v' + scrver)
+    print 'Scriptname:', scrname
+    print 'Script ID:', scrid
 
-    update_gh_site(scrver, scrcommfile)
+    oscrvers = system('git describe --tags --abbrev=0')[0]
+    oscrmatch = re.match('^v(?P<major>\d+)\.(?P<minor>\d+)(\.(?P<bugfix>\d+))?$', oscrvers)
+    omajor = oscrmatch.group('major')
+    ominor = oscrmatch.group('minor')
+    obugfix = oscrmatch.group('bugfix')
+    if obugfix is not None:
+        print 'Old version:', omajor + '.' + ominor + '.' + obugfix
+    else:
+        print 'Old version:', omajor + '.' + ominor
+    scrver = raw_input('New version [' + omajor + '.' + str(int(ominor) + 1) + ']: ')
+
+    if len(scrver) == 0:
+        scrver = omajor + '.' + str(int(ominor) + 1)
+
+    vimver = raw_input('Vim version [7.0]: ')
+    if len(vimver) == 0:
+        vimver = 7.0
+
+    reldate = strftime('%Y-%m-%d', localtime())
+
+    [handle, scrcommfile] = mkstemp()
+    os.close(handle)
+
+    call_vim(scrcommfile)
+
+    docfile = 'doc/' + scrname + '.txt'
+    headerpat = r'^\d\+\.\d\+\(\.\d\+\)\? (\d\{4}-\d\{2}-\d\{2})$'
+    docargs  = ' -c "call search(\'' + headerpat + '\')"'
+    docargs += ' -c "normal! 2k"'
+    docargs += ' -c "silent put =\'\'"'
+    docargs += ' -c "read ' + scrcommfile + '"'
+    docargs += ' -c "normal! >ipgqip{"'
+    docargs += ' -c "silent put =\'' + scrver + ' (' + reldate + ')\'"'
+    # docargs += ' -c "wq"'
+
+    call_vim(docfile, docargs)
+
+    update_files(scrver)
+    print 'Committing version', scrver + '...',
+    system('git commit -a -m "Version ' + scrver + '"')
+    print 'done.'
+    print 'Tagging version', scrver + '...',
+    system('git tag v' + scrver)
+    print 'done.'
+
+    update_gh_site(scrver, scrcommfile, reldate)
 
     print 'Pushing changes...',
     system('git push')
     system('git push --tags')
     print 'done.'
+
+    with open(scrcommfile) as f:
+        scrcomment = f.read()
+    os.unlink(scrcommfile)
 
     vimball = make_vimball(scrname)
     login()
