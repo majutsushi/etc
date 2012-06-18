@@ -502,7 +502,7 @@ module Hub
         tty_state = `stty -g`
         system 'stty raw -echo -icanon isig' if $?.success?
         pass = ''
-        while char = $stdin.getbyte and not (char == 13 or char == 10)
+        while char = $stdin.getbyte and not(char == 13 or char == 10)
           if char == 127 or char == 8
             pass[-1,1] = '' unless pass.empty?
           else

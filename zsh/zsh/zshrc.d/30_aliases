@@ -75,6 +75,8 @@ alias vi='vim'
 alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
 alias x='extract'
 
+is-at-least 4.3 && alias git='hub'
+
 have colordiff && alias diff='colordiff'
 
 bk()       { cp -r -b ${1} ${1}_$(date --iso-8601=m) }
