@@ -10,6 +10,7 @@ import gnomekeyring as gkey
 from subprocess import Popen, PIPE, check_call, CalledProcessError
 import shlex
 from tempfile import mkstemp
+import md5
 
 br = mechanize.Browser()
 
@@ -131,12 +132,19 @@ def call_vim(filename, args = None):
         cmd += ' ' + args
 
     timestamp = os.stat(filename).st_mtime
+    with open(filename) as f:
+        checksum = md5.md5(f.read()).hexdigest()
     try:
         check_call(shlex.split(cmd))
     except CalledProcessError:
         abort()
     if timestamp == os.stat(filename).st_mtime:
         abort()
+    else:
+        with open(filename) as f:
+            newchecksum = md5.md5(f.read()).hexdigest()
+        if newchecksum == checksum:
+            abort()
 
 if __name__ == '__main__':
     system('git diff --no-ext-diff --quiet --exit-code --ignore-submodules',
