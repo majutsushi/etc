@@ -12,13 +12,15 @@ COL_BRANCH="${pcol[220]}"
 COL_REBASE="${pcol[167]}"
 COL_UPSTREAM=""
 
+GIT=(command git)
+
 __gitdir () {
     if [ -n "${__git_dir-}" ]; then
         echo "$__git_dir"
     elif [ -d .git ]; then
         echo .git
     else
-        git rev-parse --git-dir 2>/dev/null
+        $GIT rev-parse --git-dir 2>/dev/null
     fi
 }
 
@@ -29,7 +31,7 @@ __prompt_git_show_upstream() {
     local upstream=git legacy="" verbose=""
 
     # get some config options from git-config
-    local output="$(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
+    local output="$($GIT config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
     while read -r key value; do
         case "$key" in
             bash.showupstream)
@@ -53,7 +55,7 @@ __prompt_git_show_upstream() {
             # get the upstream from the "git-svn-id: ..." in a commit message
             # (git-svn uses essentially the same procedure internally)
             typeset -a svn_upstream
-            svn_upstream=($(git log --first-parent -1 \
+            svn_upstream=($($GIT log --first-parent -1 \
                 --grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
             if [[ 0 -ne ${#svn_upstream[@]} ]]; then
                 svn_upstream=${svn_upstream[$((${#svn_upstream[@]} - 1))]}
@@ -76,7 +78,7 @@ __prompt_git_show_upstream() {
     esac
 
     # Find how many commits we are ahead/behind our upstream
-    count="$(git rev-list --count --left-right "$upstream"...HEAD 2>/dev/null)"
+    count="$($GIT rev-list --count --left-right "$upstream"...HEAD 2>/dev/null)"
 
     local r=""
     case "$count" in
@@ -123,11 +125,11 @@ __prompt_git_geninfo() {
             rebase="bisecting"
         fi
 
-        if branch="$(git symbolic-ref HEAD 2>/dev/null)" ||
-            branch="$(git describe --tags --exact-match HEAD 2>/dev/null)"; then
+        if branch="$($GIT symbolic-ref HEAD 2>/dev/null)" ||
+            branch="$($GIT describe --tags --exact-match HEAD 2>/dev/null)"; then
             refs="$(__prompt_git_refs)"
         elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)..."; then
-            if refs=$(git describe --all HEAD 2>/dev/null); then
+            if refs=$($GIT describe --all HEAD 2>/dev/null); then
                 refs="${PV_REFS_PREFIX}${COL_REFS}${refs##heads/}${pcol[reset]}"
             fi
         else
@@ -145,7 +147,7 @@ __prompt_git_refs() {
     typeset -a refs_arr
     local refs=""
 
-    refs="$(git show --pretty=format:%d -s HEAD)"
+    refs="$($GIT show --pretty=format:%d -s HEAD)"
     refs="${refs// }"
     refs="${refs//\(}"
     refs="${refs//\)}"
@@ -171,18 +173,18 @@ __prompt_git_flags() {
 
     # show dirty state
     # --ignore-submodules can significantly speed up if submodules are present
-    git diff --no-ext-diff --quiet --exit-code --ignore-submodules || flags+="*"
-    if git rev-parse --quiet --verify HEAD >/dev/null; then
-        git diff-index --cached --quiet HEAD -- || flags+="+"
+    $GIT diff --no-ext-diff --quiet --exit-code --ignore-submodules || flags+="*"
+    if $GIT rev-parse --quiet --verify HEAD >/dev/null; then
+        $GIT diff-index --cached --quiet HEAD -- || flags+="+"
     else
         flags+="#"
     fi
 
     # show stashed changes
-    git rev-parse --verify refs/stash >/dev/null 2>&1 && flags+="$"
+    $GIT rev-parse --verify refs/stash >/dev/null 2>&1 && flags+="$"
 
     # show untracked files
-    if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+    if [ -n "$($GIT ls-files --others --exclude-standard)" ]; then
         flags+="?"
     fi
 
@@ -207,13 +209,13 @@ __prompt_git() {
         local c=""
         local flags=""
 
-        if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
-            if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
+        if [ "true" = "$($GIT rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
+            if [ "true" = "$($GIT rev-parse --is-bare-repository 2>/dev/null)" ]; then
                 c="BARE:"
             else
                 branch="GIT_DIR!"
             fi
-        elif [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+        elif [ "true" = "$($GIT rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
             flags="$(__prompt_git_flags)"
         fi
 
