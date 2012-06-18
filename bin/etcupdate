@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo -n "Updating ack..."
+curl http://betterthangrep.com/ack-standalone --silent --location -o ~/.etc/bin/ack-grep && chmod 0755 ~/.etc/bin/ack-grep
+echo " done."
+
+echo -n "Updating hub..."
+curl http://defunkt.io/hub/standalone --silent --location -o ~/.etc/bin/hub && chmod 0755 ~/.etc/bin/hub
+echo " done."
+
+echo -n "Updating hub completion..."
+curl https://raw.github.com/defunkt/hub/master/etc/hub.zsh_completion --silent --location -o ~/.etc/zsh/zsh/zshrc.d/21_hub_completion
+echo " done."
