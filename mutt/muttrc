@@ -535,7 +535,7 @@ macro index  ,s  "<shell-escape>~/.etc/mutt/mu-search<enter><change-folder-reado
 # capture in org-mode
 macro index,pager  \eR  "<pipe-message>~/.etc/mutt/remember-mail\n" "Capture message in org-mode"
 # save in taskwarrior
-macro index,pager  \eT  "<pipe-message>~/.etc/mutt/task-add.py\n" "Save message to taskwarrior"
+macro index,pager  \eT  "<pipe-message>~/.etc/mutt/task-add\n" "Save message to taskwarrior"
 
 # X-Label patch
 ifdef edit-label bind index,pager y edit-label
