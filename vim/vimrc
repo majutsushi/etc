@@ -1860,6 +1860,9 @@ xnoremap <silent> g# :<C-U>
               \escape(@", '\\/.*$^~[]'), '\_s\+', '\\_s\\+', 'g')<cr><cr>
               \:call setreg('"', old_reg, old_regmode)<cr>
 
+" substitute visual selection
+xnoremap & "*y<Esc>:<c-u>%s/<c-r>=substitute(escape(@*, '\/.*$^~[]'), "\n", '\\n', "g")<cr>/
+
 " Display {{{2
 
 " toggle folds
