@@ -23,8 +23,13 @@ def system(cmd):
     return stdout.splitlines()
 
 
-msg     = Parser().parse(sys.stdin)
-body    = msg.get_payload().splitlines()
+msg = Parser().parse(sys.stdin)
+
+main = msg
+while main.is_multipart():
+    main = main.get_payload()[0]
+
+body    = main.get_payload().splitlines()
 subject = msg['subject']
 
 
