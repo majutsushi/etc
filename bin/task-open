@@ -41,5 +41,5 @@ if msgid == '':
 fname = system('mu find -f l msgid:' + msgid)[0]
 maildir = os.path.dirname(os.path.dirname(fname))
 
-mutt_keys = r'b/~i' + msgid + r'\n\n'
+mutt_keys = r'b<collapse-all>/~i' + msgid + r'\n\n'
 os.execlp('mutt', '-R', '-f', maildir + '/', '-e', 'push ' + mutt_keys)
