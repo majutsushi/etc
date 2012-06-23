@@ -1,6 +1,7 @@
 export TIMEFMT="%*E real  %*U user  %*S system  %P  %J"
 
-export EDITOR=${EDITOR:-vim}
+export EDITOR=vim
+export BROWSER=xdg-open
 export MAIL=${MAIL:-/var/mail/$USER}
 
 export PAGER=${PAGER:-less}
@@ -23,15 +24,6 @@ export LESS_TERMCAP_me=$'\E[0m'      # end all modes
 [[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
 
 export GREP_OPTIONS='--color=auto'
-
-# set default browser
-if [[ -z "$BROWSER" ]] ; then
-    if [[ -n "$DISPLAY" ]] ; then
-        export BROWSER=x-www-browser
-    else
-        export BROWSER=www-browser
-    fi
-fi
 
 export DEBEMAIL="jan@majutsushi.net"
 export DEBFULLNAME="Jan Larres"
