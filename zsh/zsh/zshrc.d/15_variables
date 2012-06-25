@@ -45,7 +45,7 @@ export SDL_AUDIODRIVER=alsa
 
 # export TEXMFHOME=$HOME/.texmf
 
-export RUBYOPT="-w $RUBYOPT"
+# export RUBYOPT="-w $RUBYOPT"
 export RI="-f ansi"
 
 export TERMINFO=$HOME/.terminfo
