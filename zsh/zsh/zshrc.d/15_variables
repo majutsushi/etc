@@ -1,3 +1,5 @@
+export ORIGHOME=$HOME
+
 export TIMEFMT="%*E real  %*U user  %*S system  %P  %J"
 
 export EDITOR=vim

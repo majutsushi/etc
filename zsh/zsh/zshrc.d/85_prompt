@@ -1,9 +1,9 @@
 __prompt_jobs() {
-    echo "%(1j.${pcol[bold]}${pcol[cyan]}%j${pcol[reset]}.)"
+    echo "%(1j. ${pcol[bold]}${pcol[cyan]}%j${pcol[reset]}.)"
 }
 
 __prompt_exitcode() {
-    echo "%(0?..${pcol[bold]}${pcol[red]}%?${pcol[reset]})%(1j. .)"
+    echo "%(0?.. ${pcol[bold]}${pcol[red]}%?${pcol[reset]})"
 }
 
 # test if we have writing permission for the current directory
@@ -44,13 +44,19 @@ __prompt_logo() {
     echo "$LOGO • "
 }
 
+__prompt_orighome() {
+    if [[ $HOME != $ORIGHOME ]]; then
+        print "${pcol[246]}${PWD/$ORIGHOME/\~}${pcol[reset]}"
+    fi
+}
+
 LOGO=""
 
 PS1='
 $(__prompt_logo)${pcol[167]}%n ${pcol[reset]}@ ${pcol[220]}%m${pcol[reset]} • ${pcol[green]}%<...<%~%<<${pcol[reset]}$(__prompt_wperm)$(__prompt_vcs)
 %(2L.${pcol[bold]}%L${pcol[reset]} .)%(!.#.>) '
 
-RPS1='$(__prompt_exitcode)$(__prompt_jobs)'
+RPS1='$(__prompt_orighome)$(__prompt_exitcode)$(__prompt_jobs)'
 
 PS2="${pcol[bold]}%_${pcol[reset]} %(!.#.>) "
 PS3='?# '         # selection prompt used within a select loop.
