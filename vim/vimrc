@@ -1326,6 +1326,7 @@ let g:ConqueTerm_StartMessages = 0
 
 " Ctrl-P {{{2
 let g:ctrlp_map = '<leader>ff'
+let g:ctrlp_cmd = 'CtrlPMixed'
 nnoremap <silent> <leader>fb :CtrlPBuffer<CR>
 nnoremap <silent> <leader>ft :CtrlPTag<CR>
 let g:ctrlp_prompt_mappings = {
@@ -1347,6 +1348,8 @@ let g:ctrlp_user_command = {
     \ 'fallback': 'find %s -type f'
 \ }
 let g:ctrlp_open_new_file = 'r'
+let g:ctrlp_lazy_update = 0
+let g:ctrlp_mruf_relative = 0
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript']
 
 " devhelp {{{2
