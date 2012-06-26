@@ -389,7 +389,9 @@ silent! %s/ / /g
 
 call s:QuoteEraseSig()
 
-call s:tprot()
+if executable('t-prot')
+    call s:tprot()
+endif
 
 " Replace trailing spaces except after mail headers (To:,
 " etc.) or a signature delimiter (-- ).
