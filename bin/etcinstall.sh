@@ -73,6 +73,8 @@ xlink .etc/lessfilter .lessfilter less
 #xlink .etc/procmailrc .procmailrc
 xlink .etc/taskrc     .taskrc     task
 
+lesskey .etc/lesskey
+
 for tinfof in .etc/terminfo/*; do
     tinfo=$(basename ${tinfof})
     tinfo=${tinfo%.terminfo}

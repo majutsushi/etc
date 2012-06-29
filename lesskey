@@ -1,0 +1,7 @@
+#command
+h left-scroll
+l right-scroll
+
+#line-edit
+^P up
+^N down
