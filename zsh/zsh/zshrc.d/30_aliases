@@ -61,7 +61,6 @@ alias tree='tree --dirsfirst -F'
 
 alias a='ack-grep'
 alias da='du -sch'
-alias ddiff='diff -Naurd -x *.swp -x *.o -x *.so -x cscope.* -x tags -x .git -x .svn -x CVS'
 alias g="grep"
 alias j='jobs -l'
 alias jsonpp='python -mjson.tool'
@@ -77,7 +76,12 @@ alias x='extract'
 
 is-at-least 4.3 && alias git='hub'
 
-have colordiff && alias diff='colordiff'
+# diff
+if have colordiff; then
+    alias diff='colordiff'
+    wdiff() { command wdiff "$@" | colordiff }
+fi
+alias ddiff='diff -Naurd -x *.swp -x *.o -x *.so -x cscope.* -x tags -x .git -x .svn -x CVS'
 
 bk()       { cp -r -b ${1} ${1}_$(date --iso-8601=m) }
 sshot()    { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desktop/screenshots/' "$@" }

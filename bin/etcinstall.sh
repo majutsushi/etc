@@ -60,18 +60,19 @@ xlink .etc/xmonad .xmonad xmonad
 
 xlink .etc/zsh/zshenv .zshenv zsh
 
-xlink .etc/Rprofile   .Rprofile   R
-xlink .etc/bibtoolrsc .bibtoolrsc bibtool
-xlink .etc/colorgccrc .colorgccrc colorgcc
-xlink .etc/ctags      .ctags      ctags
-xlink .etc/gdbinit    .gdbinit    gdb
-xlink .etc/indent.pro .indent.pro indent
-xlink .etc/inputrc    .inputrc
-xlink .etc/irbrc      .irbrc      irb
-xlink .etc/lessfilter .lessfilter less
-#xlink .etc/mailcap    .mailcap
-#xlink .etc/procmailrc .procmailrc
-xlink .etc/taskrc     .taskrc     task
+xlink .etc/Rprofile    .Rprofile    R
+xlink .etc/bibtoolrsc  .bibtoolrsc  bibtool
+xlink .etc/colorgccrc  .colorgccrc  colorgcc
+xlink .etc/colordiffrc .colordiffrc colordiff
+xlink .etc/ctags       .ctags       ctags
+xlink .etc/gdbinit     .gdbinit     gdb
+xlink .etc/indent.pro  .indent.pro  indent
+xlink .etc/inputrc     .inputrc
+xlink .etc/irbrc       .irbrc       irb
+xlink .etc/lessfilter  .lessfilter  less
+#xlink .etc/mailcap     .mailcap
+#xlink .etc/procmailrc  .procmailrc
+xlink .etc/taskrc      .taskrc      task
 
 lesskey .etc/lesskey
 
