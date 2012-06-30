@@ -1,3 +1,27 @@
+if ! is-at-least 4.3.5; then
+    fpath=(
+        "$ZDOTDIR/func/compat"
+        "$fpath[@]"
+    )
+    function precmd() {
+        for function in $precmd_functions; do
+            $function "$@"
+        done
+    }
+    function preexec() {
+        for function in $preexec_functions; do
+            $function "$@"
+        done
+    }
+    function chpwd() {
+        for function in $chpwd_functions; do
+            $function "$@"
+        done
+    }
+fi
+rationalize_path fpath
+typeset -gxU fpath
+
 # use GNU tools on *BSD
 # based on
 # https://github.com/sorin-ionescu/oh-my-zsh/blob/master/plugins/gnu-utils/init.zsh

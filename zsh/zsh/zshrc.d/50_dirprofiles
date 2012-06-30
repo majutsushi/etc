@@ -1,6 +1,6 @@
 # directory based profiles (from grml)
 
-if is-at-least 4.3.3; then
+if is-at-least 4.3.5; then
 
 CHPWD_PROFILE='default'
 function chpwd_profiles() {

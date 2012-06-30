@@ -1,4 +1,4 @@
-if is-at-least 4.3.4; then
+if is-at-least 4.3.5; then
 
 __set_screen_title() {
     if [[ "$TERM" == screen* ]]; then
@@ -81,9 +81,9 @@ add-zsh-hook preexec _update_exec_titles
 
 
 # Old version
-else # < 4.3.4
+else # < 4.3.5
 
-precmd() {
+_old_precmd_title() {
     # adjust screen window title
     if [[ "$TERM" == screen* ]]; then
         if [[ -n "$SSH_CLIENT" ]]; then
@@ -100,8 +100,9 @@ precmd() {
         ;;
     esac
 }
+add-zsh-hook precmd _old_precmd_title
 
-preexec() {
+_old_preexec_title() {
     # get the name of the program currently running and hostname of local machine
     # set screen window title if running in a screen
     if [[ "$TERM" == screen* ]]; then
@@ -115,6 +116,7 @@ preexec() {
         ;;
     esac
 }
+add-zsh-hook preexec _old_preexec_title
 
 fi
 
