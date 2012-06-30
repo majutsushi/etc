@@ -37,9 +37,11 @@ zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache/
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 zstyle ':completion:*' squeeze-slashes true
-zstyle ':completion:*' list-dirs-first true
+zstyle ':completion:*' list-dirs-first true # affects all-files/other-files
 zstyle ':completion:*' ignore-parents parent pwd
 
+# prevent asking with many results
+# zstyle ':completion:*:default' list-prompt '%p'
 zstyle ':completion:*:descriptions' format $'%{\e[0;32m%}completing %B%d%b%{\e[0m%}'
 zstyle ':completion:*:messages'     format '%d'
 zstyle ':completion:*:warnings'     format $'%{\e[0;31m%}No matches for:%{\e[0m%} %d'
@@ -82,6 +84,12 @@ zstyle ':completion:*:*:zcompile:*'           ignored-patterns '(*~|*.zwc)'
 zstyle ':completion:*:expand:*'               tag-order all-expansions
 # Ignore completion functions for commands you don't have:
 zstyle ':completion::(^approximate*):*:functions' ignored-patterns '_*'
+# don't complete files already in the command line
+zstyle ':completion:*:other-files' ignore-line other
+zstyle ':completion:*:directories' ignore-line other
+# ... except for mv and cp
+zstyle ':completion:*:(mv|cp):*' ignore-line no
+# zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
 
 # history word completion (^[/)
 zstyle ':completion:*:history-words' list false
@@ -96,8 +104,8 @@ zstyle ':completion:*:options'                      description 'yes'
 
 # don't complete backup files as executables
 zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
-zstyle ':completion:*:*:(^rm):*:*'                  ignored-patterns '*(.o|~)' '#*#(D)'
-zstyle ':completion:*:*:vim:*:*'                    ignored-patterns '(|**/)tags'
+zstyle ':completion:*:*:(^rm):*:*' ignored-patterns '*(.o|~)' '#*#(D)'
+zstyle ':completion:*:*:vim:*:*' ignored-patterns '(|**/)tags' '*.aux' '*.log' '*.pdf'
 
 zstyle ':completion:*:processes'          command 'ps xwww --forest -o pid,%cpu,tty,time,command'
 zstyle ':completion:*:kill:*'             force-list always
@@ -107,6 +115,9 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:manuals'   separate-sections true
 zstyle ':completion:*:manuals.*' insert-sections   true
 zstyle ':completion:*:man:*'     menu yes no-select
+
+# make ./configure completion simpler
+zstyle ':completion:*:*:-command-:*' ignored-patterns './config.*'
 
 # host completion /* add brackets as vim can't parse zsh's complex cmdlines {{{ */
 [[ -r ~/.ssh/known_hosts ]] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
