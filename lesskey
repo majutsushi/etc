@@ -3,5 +3,10 @@ h left-scroll
 l right-scroll
 
 #line-edit
+^A home
+^E end
+^F right
+^B left
+^W word-backspace
 ^P up
 ^N down
