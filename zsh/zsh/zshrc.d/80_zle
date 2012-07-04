@@ -3,13 +3,20 @@
 # also do history expansion on space
 bindkey ' ' magic-space
 
-bindkey '^p' up-line-or-search
-bindkey '^n' down-line-or-search
+autoload up-line-or-beginning-search
+zle -N up-line-or-beginning-search
+bindkey '^p' up-line-or-beginning-search
+autoload down-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^n' down-line-or-beginning-search
 
 if is-at-least 4.3; then
     bindkey '^r' history-incremental-pattern-search-backward
     bindkey '^s' history-incremental-pattern-search-forward
 fi
+
+autoload smart-insert-last-word
+zle -N insert-last-word smart-insert-last-word
 
 # turn current line into comment and commit
 bindkey '^[#' pound-insert
@@ -29,7 +36,7 @@ slash-backward-kill-word() {
 zle -N slash-backward-kill-word
 # press esc-w (meta-w) to delete a word until its last '/'
 # (not the same as ctrl-w!)
-bindkey '\ew' slash-backward-kill-word
+bindkey '^[w' slash-backward-kill-word
 
 # we don't want to quote/espace URLs on our own...
 autoload -U url-quote-magic
@@ -42,17 +49,17 @@ bindkey "^Xf" insert-files
 # press esc-e for editing command line in $EDITOR or $VISUAL
 autoload -U edit-command-line
 zle -N edit-command-line
-bindkey '\ee' edit-command-line
+bindkey '^[e' edit-command-line
 
 # insert current date
 _insert_datestamp() { LBUFFER+=${(%):-'%D{%Y-%m-%d}'}; }
 zle -N insert-datestamp _insert_datestamp
-bindkey '\et' insert-datestamp
+bindkey '^[t' insert-datestamp
 
 # press esc-m for inserting last typed word again (thanks to caphuso!)
 insert-last-typed-word() { zle insert-last-word -- 0 -1 }
 zle -N insert-last-typed-word
-bindkey "\em" insert-last-typed-word
+bindkey "^[m" insert-last-typed-word
 
 # run command line as user root via sudo:
 _sudo-command-line() {
@@ -77,6 +84,6 @@ function _jump_after_first_word() {
     fi
 }
 zle -N _jump_after_first_word
-bindkey '^x1' _jump_after_first_word
+bindkey '^X1' _jump_after_first_word
 
 # vim: filetype=zsh
