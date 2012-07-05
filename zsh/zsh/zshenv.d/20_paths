@@ -49,6 +49,7 @@ typeset -gxU path
 
 fpath=(
     "$ZDOTDIR/func"
+    "$HOME/.etc/zsh/zsh-completions"
     "$fpath[@]"
 )
 rationalize_path fpath
