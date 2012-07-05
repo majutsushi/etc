@@ -59,7 +59,7 @@ alias mtr="mtr -t"
 alias fu='sudo $(fc -ln -1) '
 alias tree='tree --dirsfirst -F'
 
-alias a='ack-grep'
+alias a='ack'
 alias da='du -sch'
 alias g="grep"
 alias j='jobs -l'

@@ -1261,7 +1261,7 @@ set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*
 " running make and jumping to errors {{{2
 
 " program used for the ":grep" command (global or local to buffer)
-set grepprg=ack-grep
+set grepprg=ack
 
 " language specific {{{2
 
