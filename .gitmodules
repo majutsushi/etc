@@ -106,3 +106,6 @@
 [submodule "vim/vim/bundle/splice"]
 	path = vim/vim/bundle/splice
 	url = https://github.com/sjl/splice.vim.git
+[submodule "zsh/zsh/zsh-completions"]
+	path = zsh/zsh/zsh-completions
+	url = git://github.com/zsh-users/zsh-completions.git
