@@ -6,9 +6,11 @@ bindkey ' ' magic-space
 autoload up-line-or-beginning-search
 zle -N up-line-or-beginning-search
 bindkey '^p' up-line-or-beginning-search
+bindkey -M menuselect '^p' up-line-or-search
 autoload down-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey '^n' down-line-or-beginning-search
+bindkey -M menuselect '^n' down-line-or-search
 
 if is-at-least 4.3; then
     bindkey '^r' history-incremental-pattern-search-backward
