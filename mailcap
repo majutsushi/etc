@@ -9,3 +9,5 @@ application/vnd.openxmlformats-officedocument.wordprocessingml.document; mutt_bg
 application/vnd.openxmlformats-officedocument.wordprocessingml.document; docx2txt.pl '%s' -; nametemplate=%s.docx; copiousoutput
 application/zip; xdg-open '%s'; test=test -n "$DISPLAY"; nametemplate=%s.zip
 application/zip; unzip -l '%s'; nametemplate=%s.zip; copiousoutput
+text/rtf; mutt_bgrun abiword '%s'; test=test -n "$DISPLAY"; nametemplate=%s.rtf
+text/rtf; unrtf --text '%s'; nametemplate=%s.rtf; copiousoutput
