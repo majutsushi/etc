@@ -146,6 +146,9 @@ compdef '_files -g "*.(#l)(tar.bz2|tbz2|tbz|tar.gz|tgz|tar.xz|txz|tar.lzma|tar|r
 # menu selection: pick item but stay in the menu (press esc-return)
 bindkey -M menuselect '\e^M' accept-and-menu-complete
 
+# remove last inserted match
+bindkey -M menuselect '^w' undo
+
 # http://stackoverflow.com/a/844299/102250
 # show dots while completion is working
 expand-or-complete-with-dots() {
