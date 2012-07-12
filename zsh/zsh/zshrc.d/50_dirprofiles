@@ -83,6 +83,24 @@ function chpwd_profiles() {
 }
 add-zsh-hook chpwd chpwd_profiles
 
+_chpwd_notify() {
+    [[ ${profile} == ${CHPWD_PROFILE} ]] && return 1
+    print "chpwd(): Switching to profile: $profile"
+}
+
+chpwd_profile_default() {
+    _chpwd_notify
+    export HOME=$ORIGHOME
+}
+
+TESTHOME_BASE=${ORIGHOME}/src/testhomes
+zstyle ":chpwd:profiles:${TESTHOME_BASE}/*" profile testhomes
+chpwd_profile_testhomes() {
+    _chpwd_notify
+    testdir=${${PWD#${TESTHOME_BASE}/}%%/*}
+    export HOME=${TESTHOME_BASE}/${testdir}
+}
+
 fi
 
 # vim: filetype=zsh
