@@ -1,7 +1,5 @@
 # directory based profiles (from grml)
 
-if is-at-least 4.3.5; then
-
 CHPWD_PROFILE='default'
 function chpwd_profiles() {
     # Say you want certain settings to be active in certain directories.
@@ -83,24 +81,23 @@ function chpwd_profiles() {
 }
 add-zsh-hook chpwd chpwd_profiles
 
-_chpwd_notify() {
+_switch_notify() {
     [[ ${profile} == ${CHPWD_PROFILE} ]] && return 1
     print "chpwd(): Switching to profile: $profile"
+    return 0
 }
 
 chpwd_profile_default() {
-    _chpwd_notify
+    _switch_notify || return
     export HOME=$ORIGHOME
 }
 
 TESTHOME_BASE=${ORIGHOME}/src/testhomes
 zstyle ":chpwd:profiles:${TESTHOME_BASE}/*" profile testhomes
 chpwd_profile_testhomes() {
-    _chpwd_notify
+    _switch_notify || return
     testdir=${${PWD#${TESTHOME_BASE}/}%%/*}
     export HOME=${TESTHOME_BASE}/${testdir}
 }
-
-fi
 
 # vim: filetype=zsh

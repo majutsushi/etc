@@ -20,7 +20,7 @@ if [[ -f ${DIRSTACKFILE} ]] && [[ ${#dirstack[*]} -eq 0 ]] ; then
     [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
 fi
 
-chpwd() {
+_update_dirstack() {
     local -ax my_stack
     my_stack=( ${PWD} ${dirstack} )
     if is-at-least 4.2; then
@@ -29,5 +29,6 @@ chpwd() {
         uprint my_stack >! ${DIRSTACKFILE}
     fi
 }
+add-zsh-hook chpwd _update_dirstack
 
 # vim: filetype=zsh
