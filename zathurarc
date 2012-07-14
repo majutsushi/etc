@@ -1,0 +1,30 @@
+# zathurarc
+
+# settings
+set window-height 1024
+set window-width 768
+set adjust-open width
+# set show-scrollbars true
+set first-page-column 2
+set window-title-basename true
+# set database sqlite
+
+
+# key bindings
+map <C-[> abort
+map <F11> toggle_fullscreen
+map <C-l> reload
+
+map e          scroll down
+map y          scroll up
+map R          rotate rotate-ccw
+map <PageUp>   navigate previous
+map <PageDown> navigate next
+
+map <A-1> set "pages-per-row 1"
+map <A-2> set "pages-per-row 2"
+
+
+# colors
+# set statusbar-bg "#00FF00"
+# set statusbar-fg red

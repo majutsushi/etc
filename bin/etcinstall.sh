@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 xlink() {
     if [[ -n "$3" ]] && ! command -v "$3" >/dev/null 2>&1; then
         echo "$3 is not installed"
@@ -8,7 +10,11 @@ xlink() {
     else
         echo "Linking "$2""
         rm -f "$2"
-        ln -s "$1" "$2"
+        DIR=$(dirname "$2")
+        if ! [[ -d "$DIR" ]]; then
+            mkdir -p "$DIR"
+        fi
+        ln -s "$HOME/$1" "$2"
     fi
 }
 
@@ -49,6 +55,8 @@ xlink .etc/vim/vim        .vim        vim
 xlink .etc/vim/vimplaterc .vimplaterc vim
 
 xlink .etc/xmonad .xmonad xmonad
+
+xlink .etc/zathurarc .config/zathura/zathurarc zathura
 
 #xlink .etc/xorg/Xmodmap    .Xmodmap
 #xlink .etc/xorg/Xresources .Xresources
