@@ -144,6 +144,9 @@ compdef _gnu_generic tail head cp mv df uname
 
 compdef '_files -g "*.(#l)(tar.bz2|tbz2|tbz|tar.gz|tgz|tar.xz|txz|tar.lzma|tar|rar|lzh|7z|zip|jar|deb|bz2|gz|Z|xz|lzma)"' extract
 
+compdef '_files -g "*.(pdf|ps|djv(|u))"' evince
+compdef '_files -g "*.(pdf|ps|djv(|u))"' zathura
+
 # menu selection: pick item but stay in the menu (press esc-return)
 bindkey -M menuselect '\e^M' accept-and-menu-complete
 
