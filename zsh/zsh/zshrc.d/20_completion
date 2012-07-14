@@ -88,7 +88,8 @@ zstyle ':completion::(^approximate*):*:functions' ignored-patterns '_*'
 zstyle ':completion:*:other-files' ignore-line other
 zstyle ':completion:*:directories' ignore-line other
 # ... except for mv and cp
-zstyle ':completion:*:(mv|cp):*' ignore-line no
+zstyle ':completion:*:(mv|cp):*:other-files' ignore-line no
+zstyle ':completion:*:(mv|cp):*:directories' ignore-line no
 # zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
 
 # history word completion (^[/)
