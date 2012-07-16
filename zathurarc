@@ -23,6 +23,8 @@ map <PageDown> navigate next
 
 map <A-1> set "pages-per-row 1"
 map <A-2> set "pages-per-row 2"
+map <C-1> set "first-page-column 1"
+map <C-2> set "first-page-column 2"
 
 
 # colors
