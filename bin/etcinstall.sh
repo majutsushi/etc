@@ -2,13 +2,24 @@
 
 set -e
 
+info() {
+    # echo -e "\033[32m$1\033[0m"
+    echo -e "$1"
+}
+warn() {
+    echo -e "\033[33m$1\033[0m"
+}
+error() {
+    echo -e "\033[31m$1\033[0m"
+}
+
 xlink() {
     if [[ -n "$3" ]] && ! command -v "$3" >/dev/null 2>&1; then
-        echo "$3 is not installed"
+        warn "$3 is not installed"
     elif [[ -a "$2" && ! -L "$2" ]]; then
-        echo -e "\033[31m$2 is not a symlink!\033[0m"
+        error "$2 is not a symlink!"
     else
-        echo "Linking "$2""
+        info "Linking $2"
         rm -f "$2"
         DIR=$(dirname "$2")
         if ! [[ -d "$DIR" ]]; then
@@ -87,12 +98,12 @@ lesskey .etc/lesskey
 for tinfof in .etc/terminfo/*; do
     tinfo=$(basename ${tinfof})
     tinfo=${tinfo%.terminfo}
-    echo "Compiling terminfo ${tinfo}"
+    info "Compiling terminfo ${tinfo}"
     tic $tinfof
 
     # also install termcap data if the shell is linked against it
     if ldd $(which bash) | grep -q libtermcap; then
-        echo "termcap in use, appending ${tinfo} to ~/.termcap"
+        info "termcap in use, appending ${tinfo} to ~/.termcap"
         if [[ -f .termcap ]] && ! grep -qE "^${tinfo}\|" .termcap; then
             tic -C -T ${tinfof} >> .termcap
         else
