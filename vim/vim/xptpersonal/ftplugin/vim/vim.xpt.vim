@@ -28,7 +28,7 @@ endif
 
 XPT fun wrap " fun! ..(..) .. endfunction
 " `name^`$SPfun^() {{{`2^
-function! `name^`$SPfun^(`:_args:^)
+function! `name^`$SPfun^(`:_args:^) abort
     `cursor^
 endfunction
 
@@ -36,7 +36,7 @@ endfunction
 
 XPT member wrap " tips
 " `name^`$SPfun^() {{{`2^
-function! `name^`$SPfun^(`:_args:^) dict
+function! `name^`$SPfun^(`:_args:^) abort dict
     `cursor^
 endfunction
 
