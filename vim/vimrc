@@ -368,7 +368,12 @@ command! -bar SudoWrite :
 " AutoMkDir() {{{2
 " Automatically create dir to write file to if it doesn't exist
 function! AutoMkDir()
-    let required_dir = expand("<afile>:p:h")
+    let file = expand('<afile>')
+    if !filereadable(file)
+        " Netrw file or similar, don't try creating the directory
+        return
+    endif
+    let required_dir = fnamemodify(file, ':p:h')
     if !isdirectory(required_dir)
         if confirm("Directory '" . required_dir . "' doesn't exist.", "&Abort\n&Create it") != 2
             bdelete
