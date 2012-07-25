@@ -667,9 +667,9 @@ function! InsertGuards()
     normal! kk
 endfunction
 
-" LoadDirLocals() {{{2
-function! LoadDirLocals()
-    let configs = reverse(findfile('.dir-locals.vim', '.;', -1))
+" LoadLocalVimrcs() {{{2
+function! LoadLocalVimrcs()
+    let configs = reverse(findfile('.vimrc.local', '.;', -1))
     for config in configs
         if filereadable(config)
 "            execute 'sandbox source ' . config
@@ -677,7 +677,7 @@ function! LoadDirLocals()
         endif
     endfor
 endfunction
-autocmd BufNewFile,BufReadPost * call LoadDirLocals()
+autocmd BufNewFile,BufReadPost * call LoadLocalVimrcs()
 
 " PreviewWord() {{{2
 function! PreviewWord(local)
