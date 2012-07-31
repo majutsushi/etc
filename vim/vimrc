@@ -1331,9 +1331,10 @@ let g:ConqueTerm_StartMessages = 0
 
 " Ctrl-P {{{2
 let g:ctrlp_map = '<leader>ff'
-let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_cmd = 'CtrlP'
 nnoremap <silent> <leader>fb :CtrlPBuffer<CR>
-nnoremap <silent> <leader>ft :CtrlPTag<CR>
+nnoremap <silent> <leader>ft :CtrlPBufTag<CR>
+
 let g:ctrlp_prompt_mappings = {
     \ 'PrtBS()'      : ['<bs>', '<c-]>', '<c-h>'],
     \ 'PrtCurLeft()' : ['<left>', '<c-^>'],
