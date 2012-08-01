@@ -1,14 +1,6 @@
 " pairs.vim -- Smart pairs handling
 " Author       : Jan Larres <jan@majutsushi.net>
 
-let s:parens = { '(' : ')', '{' : '}', '[' : ']', '<' : '>' }
-let s:parensr = {}
-for [key, val] in items(s:parens)
-    let s:parensr[val] = key
-endfor
-let s:quotes = { '"' : '"', "'" : "'", '`' : '`' }
-let s:pairs = extend(copy(s:parens), s:quotes)
-
 " Taken from delimitMate
 " \! => opening character
 " \# => closing character
@@ -26,8 +18,8 @@ function! s:getcharrel(pos) abort
     return line[idx + a:pos]
 endfunction
 
-" s:OnOpenChar() {{{2
-function! s:OnOpenChar(char) abort
+" s:HandleOpenParen() {{{2
+function! s:HandleOpenParen(char) abort
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
@@ -36,33 +28,21 @@ function! s:OnOpenChar(char) abort
         return a:char
     endif
 
-    if has_key(s:parens, a:char)
-        " Don't pair characters if text to the right of cursor matches
-        " s:right_regex
-        let right_regex = substitute(s:right_regex, '\\\!',
-                    \ a:char == '[' ? '\\\[' : a:char, '')
-        let right_regex = substitute(right_regex, '\\\#',
-                    \ s:pairs[a:char] == ']' ? '\\\]' : s:pairs[a:char], '')
-        if getline('.')[col('.') - 1:] =~# right_regex
-            return a:char
-        endif
-    else
-        " Make quotes smarter
-        let exclre = '\w\|[^[:punct:][:space:]]'
-        if cprev == a:char || cprev =~# exclre || ccur =~# exclre
-            return a:char
-        end
+    " Don't pair characters if text to the right of cursor matches
+    " s:right_regex
+    let right_regex = substitute(s:right_regex, '\\\!',
+                \ a:char == '[' ? '\\\[' : a:char, '')
+    let right_regex = substitute(right_regex, '\\\#',
+                \ b:pairs_conf.parens[a:char] == ']' ? '\\\]' : b:pairs_conf.parens[a:char], '')
+    if getline('.')[col('.') - 1:] =~# right_regex
+        return a:char
     endif
 
-    return a:char . s:pairs[a:char] . "\<Left>"
+    return a:char . b:pairs_conf.parens[a:char] . "\<Left>"
 endfunction
 
-for char in keys(s:pairs)
-    execute 'inoremap <expr> <silent> ' . char . ' <SID>OnOpenChar("' . (char == '"' ? '\"' : char) . '")'
-endfor
-
-" s:OnCloseChar() {{{2
-function! s:OnCloseChar(char) abort
+" s:HandleCloseParen() {{{2
+function! s:HandleCloseParen(char) abort
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
@@ -70,23 +50,43 @@ function! s:OnCloseChar(char) abort
         return a:char
     endif
 
-    if a:char == ccur
+    if ccur == a:char
         return "\<Right>"
     endif
 
     return a:char
 endfunction
 
-for char in values(s:parens)
-    execute 'inoremap <expr> <silent> ' . char . ' <SID>OnCloseChar("' . char . '")'
-endfor
+" s:HandleQuote() {{{2
+function! s:HandleQuote(char) abort
+    let cprev = s:getcharrel(-1)
+    let ccur  = s:getcharrel(0)
+
+    " Don't pair escaped characters
+    if cprev == '\'
+        return a:char
+    endif
+
+    " Jump out of string
+    if ccur == a:char
+        return "\<Right>"
+    endif
+
+    " Make quotes smarter
+    let exclre = '\w\|[^[:punct:][:space:]]'
+    if cprev == a:char || cprev =~# exclre || ccur =~# exclre
+        return a:char
+    end
+
+    return a:char . b:pairs_conf.quotes[a:char] . "\<Left>"
+endfunction
 
 " s:HandleSpace() {{{2
 function! s:HandleSpace() abort
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
-    if has_key(s:pairs, cprev) && ccur == s:pairs[cprev]
+    if has_key(b:pairs_conf.pairs, cprev) && ccur == b:pairs_conf.pairs[cprev]
         return "\<Space>\<Space>\<Left>"
     else
         return "\<Space>"
@@ -105,21 +105,33 @@ function! s:HandleBackSpace() abort
     let lprev = getline(line('.') - 1)
     let lprevc = lprev[len(lprev) - 1]
 
-    if has_key(s:pairs, cprev) && ccur == s:pairs[cprev]
+    if has_key(b:pairs_conf.pairs, cprev) && ccur == b:pairs_conf.pairs[cprev]
+        " delete pair
         return "\<Delete>\<BS>"
     elseif cprev == ' ' && ccur == ' ' &&
-         \ has_key(s:pairs, cpprev) && cnext == s:pairs[cpprev]
+        " delete padding spaces
+         \ has_key(b:pairs_conf.pairs, cpprev) && cnext == b:pairs_conf.pairs[cpprev]
         return "\<Delete>\<BS>"
-    elseif getline('.') =~# '^\s*$' && has_key(s:pairs, lprevc)
+    elseif getline('.') =~# '^\s*$' && has_key(b:pairs_conf.pairs, lprevc)
+        " change
+        "
+        " foo {
+        "     |
+        " }
+        "
+        " to
+        "
+        " foo {|}
         let lnext = getline(line('.') + 1)
         let lnextc = lnext[len(lnext) - 1]
 
-        let closechars = join(values(s:pairs), '')
+        let closechars = join(values(b:pairs_conf.pairs), '')
         let closechars = substitute(closechars, '\]', '\\\]', '')
         let closepattern = '^\s*[' . closechars . ']$'
 
-        if lnext =~# closepattern && lnextc == s:pairs[lprevc]
-            return "\<C-U>\<BS>\<Esc>J\<Del>i"
+        if lnext =~# closepattern && lnextc == b:pairs_conf.pairs[lprevc]
+            let delline = col('.') > 1 ? "\<C-U>" : ""
+            return delline . "\<BS>\<Esc>J\<Del>i"
         else
             return "\<BS>"
         endif
@@ -153,12 +165,9 @@ function! s:HandleCR(...) abort
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
-    " echomsg cprev
-    " echomsg ccur
-
     " feedkeys() necessary here since the return value will be executed before
     " the feedkeys() above
-    if has_key(s:pairs, cprev) && ccur == s:pairs[cprev]
+    if has_key(b:pairs_conf.pairs, cprev) && ccur == b:pairs_conf.pairs[cprev]
         call feedkeys(rv . "\<Esc>==O", 'n')
         return ''
     else
@@ -167,10 +176,46 @@ function! s:HandleCR(...) abort
     endif
 endfunction
 
-" s:MapCRLocal() {{{2
-function! s:MapCRLocal() abort
-    let maprhs  = escape(maparg('<CR>', 'i'), '"')
-    if maprhs != '' && maprhs !~# '_HandleCR('
+" s:Init() {{{2
+function! s:Init() abort
+    if exists('b:pairs_conf')
+        return
+    endif
+
+    let b:pairs_conf = {}
+
+    let b:pairs_conf.parens = {}
+    for pair in exists('b:pairs_parens') ? b:pairs_parens : split(&matchpairs, ',')
+        let [open, close] = split(pair, ':')
+        let b:pairs_conf.parens[open] = close
+    endfor
+
+    let b:pairs_conf.quotes = {}
+    for quote in exists('b:pairs_quotes') ? split(b:pairs_quotes, '\zs') : ['"', "'", '`']
+        let b:pairs_conf.quotes[quote] = quote
+    endfor
+
+    let b:pairs_conf.pairs  = extend(copy(b:pairs_conf.parens), b:pairs_conf.quotes)
+
+    let mappre = 'inoremap <expr> <silent> <buffer> '
+    for char in keys(b:pairs_conf.parens)
+        if mapcheck(char, 'i') == ''
+            execute mappre . char . ' <SID>HandleOpenParen("' . char . '")'
+        endif
+    endfor
+    for char in values(b:pairs_conf.parens)
+        if mapcheck(char, 'i') == ''
+            execute mappre . char . ' <SID>HandleCloseParen("' . char . '")'
+        endif
+    endfor
+    for char in keys(b:pairs_conf.quotes)
+        if mapcheck(char, 'i') == ''
+            execute mappre . char . ' <SID>HandleQuote("' . (char == '"' ? '\"' : char) . '")'
+        endif
+    endfor
+
+    let maprhs = escape(maparg('<CR>', 'i'), '"')
+    if maprhs != ''
         if v:version > 703 || v:version == 703 && has('patch032')
             let mapdict = maparg('<CR>', 'i', 0, 1)
             let args = '"' . maprhs . '", ' . mapdict.expr . ', ' . mapdict.noremap
@@ -181,7 +226,9 @@ function! s:MapCRLocal() abort
             let args = '"' . maprhs . '", ' . mapexpr . ', 1'
             execute 'inoremap <expr> <silent> <buffer> <CR> <SID>HandleCR(' . args . ')'
         endif
+    else
+        inoremap <expr> <silent> <buffer> <CR> <SID>HandleCR()
     endif
 endfunction
 
-autocmd BufEnter * call s:MapCRLocal()
+autocmd BufEnter * call s:Init()
