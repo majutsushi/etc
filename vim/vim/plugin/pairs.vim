@@ -109,8 +109,8 @@ function! s:HandleBackSpace() abort
         " delete pair
         return "\<Delete>\<BS>"
     elseif cprev == ' ' && ccur == ' ' &&
-        " delete padding spaces
          \ has_key(b:pairs_conf.pairs, cpprev) && cnext == b:pairs_conf.pairs[cpprev]
+        " delete padding spaces
         return "\<Delete>\<BS>"
     elseif getline('.') =~# '^\s*$' && has_key(b:pairs_conf.pairs, lprevc)
         " change
