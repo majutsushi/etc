@@ -63,6 +63,8 @@ insert-last-typed-word() { zle insert-last-word -- 0 -1 }
 zle -N insert-last-typed-word
 bindkey "^[m" insert-last-typed-word
 
+bindkey "^[>" insert-last-word
+
 # run command line as user root via sudo:
 _sudo-command-line() {
   [[ $BUFFER != sudo\ * ]] && LBUFFER="sudo $LBUFFER"
