@@ -1650,11 +1650,21 @@ if &term =~ '^rxvt-unicode\|xterm\|screen'
     execute "set <F11>=\e[23;*~"
     execute "set <F12>=\e[24;*~"
 
+    execute "set <M-+>=\e+"
+    execute "set <M-->=\e-"
+    execute "set <M-=>=\e="
+
     " <C-Space> isn't a recognized keycode, therefore we have to do this:
     " http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
     execute "set <F13>=\eQ1;32~"
     map  <F13> <C-Space>
     map! <F13> <C-Space>
+    execute "set <F14>=\e>"
+    map  <F14> <M->>
+    map! <F14> <M->>
+    execute "set <F15>=\e<"
+    map  <F15> <M-<>
+    map! <F15> <M-<>
 endif
 
 if &term =~ '^rxvt-unicode' || $ORIGTERM =~ '^rxvt-unicode'
@@ -1689,8 +1699,6 @@ endif
 " Fast open a buffer by searching for a name
 nnoremap <leader>b :buffers<CR>:buffer<space>
 
-nnoremap <M-,>     :bprevious!<CR>
-nnoremap <M-.>     :bnext!<CR>
 nnoremap <M-Left>  :tabprevious<CR>
 nnoremap <M-Right> :tabnext<CR>
 
@@ -1925,6 +1933,13 @@ nnoremap <silent> <Leader>hl
       \ else <Bar>
       \   let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1) <Bar>
       \ endif<CR>
+
+" Change window size
+nnoremap <M->> <C-W>>
+nnoremap <M-<> <C-W><
+nnoremap <M-+> <C-W>+
+nnoremap <M--> <C-W>-
+nnoremap <M-=> <C-W>=
 
 " change font size with c-up/down
 nnoremap <silent> <C-Up>   :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)+1)', '')<CR>:set guifont?<CR>
