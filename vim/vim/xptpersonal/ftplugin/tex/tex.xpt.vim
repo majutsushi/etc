@@ -78,18 +78,23 @@ XSET what*|post=ExpandIfNotEmpty( ' & ', 'what*' )
 \end{tabular}
 ..XPT
 
+XPT chapter hint=chapter{..}
+\chapter{`chapterTitle~}
+\label{cha:`chapterLabel~}
+..XPT
+
 XPT section hint=section{..}
-\section{`sectionTitle~} %{{{2
+\section{`sectionTitle~}
 \label{sec:`sectionLabel~}
 ..XPT
 
 XPT subsection hint=subsection{..}
-\subsection{`sectionTitle~} %{{{3
+\subsection{`sectionTitle~}
 \label{sec:`sectionLabel~}
 ..XPT
 
 XPT subsubsection hint=subsubsection{..}
-\subsubsection{`sectionTitle~} %{{{4
+\subsubsection{`sectionTitle~}
 \label{sec:`sectionLabel~}
 ..XPT
 
