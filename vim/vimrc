@@ -1769,6 +1769,8 @@ nnoremap Y y$
 
 inoremap <C-D> <Del>
 
+nnoremap Q gqip
+
 set pastetoggle=<F3>
 
 nnoremap <S-F2> :call ToggleExpandTab()<CR>
