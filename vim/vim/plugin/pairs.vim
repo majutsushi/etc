@@ -185,7 +185,7 @@ function! s:Init() abort
     let b:pairs_conf = {}
 
     let b:pairs_conf.parens = {}
-    for pair in exists('b:pairs_parens') ? b:pairs_parens : split(&matchpairs, ',')
+    for pair in split(exists('b:pairs_parens') ? b:pairs_parens : &matchpairs, ',')
         let [open, close] = split(pair, ':')
         let b:pairs_conf.parens[open] = close
     endfor
