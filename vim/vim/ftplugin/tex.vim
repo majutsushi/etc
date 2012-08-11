@@ -4,6 +4,9 @@
 setlocal foldmethod=expr
 setlocal foldexpr=LatexFold(v:lnum)
 
+let b:pairs_parens = "(:),[:],{:},`:'"
+let b:pairs_quotes = "\"'"
+
 let b:chapter_present = search('^\\chapter{', 'cnw')
 autocmd BufWritePost <buffer> let b:chapter_present = search('^\\chapter{', 'cnw')
 
