@@ -7,6 +7,8 @@ l right-scroll
 ^E end
 ^F right
 ^B left
+^D delete
 ^W word-backspace
 ^P up
 ^N down
+^[ abort
