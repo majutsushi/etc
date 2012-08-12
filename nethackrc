@@ -3,8 +3,10 @@
 #
 # Appearance
 #
-# OPTIONS=align_message # top,bottom,left,right
-# OPTIONS=align_status # top,bottom,left,right
+# top,bottom,left,right
+# OPTIONS=align_message:top
+# top,bottom,left,right
+# OPTIONS=align_status:bottom
 # OPTIONS=ascii_map
 OPTIONS=boulder:0
 OPTIONS=color
@@ -16,11 +18,10 @@ OPTIONS=!showrace
 OPTIONS=sparkle
 OPTIONS=standout
 # OPTIONS=!use_inverse
+OPTIONS=use_darkgray
 # OPTIONS=windowcolors:
-
-# OPTIONS=DECgraphics
+OPTIONS=DECgraphics
 # OPTIONS=IBMgraphics
-
 # OPTIONS=dungeon: │─┌┐└┘┼┴┬┤├·■■++≡±·░▒<><>_|\\#⌠≋·≋··## #≋
 # OPTIONS=effects:
 # OPTIONS=graphics:
@@ -31,9 +32,16 @@ OPTIONS=standout
 #
 # Interface
 #
-OPTIONS=autodig
 OPTIONS=autopickup
+OPTIONS=pickup_types:$
+OPTIONS=pickup_thrown
+# Unencumbered,Burdened,Stressed,Strained,Overtaxed
+OPTIONS=pickup_burden:Stressed
+
 OPTIONS=autoquiver
+OPTIONS=quiver_fired
+
+OPTIONS=autodig
 OPTIONS=checkpoint
 OPTIONS=cmdassist
 OPTIONS=confirm
@@ -42,13 +50,11 @@ OPTIONS=extmenu
 OPTIONS=fixinv
 OPTIONS=help
 OPTIONS=!lootabc
-
+OPTIONS=menu_glyphs
 # bold,inverse,underline
 OPTIONS=menu_headings:inverse
-
 # traditional,combination,partial,full
 OPTIONS=menustyle:full
-
 # OPTIONS=menu_deselect_all:-
 # OPTIONS=menu_deselect_page:\
 # OPTIONS=menu_first_page:\^
@@ -60,35 +66,28 @@ OPTIONS=menustyle:full
 # OPTIONS=menu_search:\:
 # OPTIONS=menu_select_all:.
 # OPTIONS=menu_select_page:\,
-
 OPTIONS=!mouse_support
-OPTIONS=msghistory:20
-
+OPTIONS=msghistory:400
 # single,combination,full,reversed
 OPTIONS=msg_window:full
-
 OPTIONS=!number_pad
-# OPTIONS=packorder: # character string
+OPTIONS=packorder:")[%?+!=/(*`0_
 OPTIONS=paranoid_hit
+OPTIONS=paranoid_quit
+OPTIONS=paranoid_remove
 OPTIONS=!perm_invent
-
-# Unencumbered,Burdened,Stressed,Strained,Overtaxed
-OPTIONS=pickup_burden:Stressed
-
-# character string
-OPTIONS=pickup_types:$
-
 OPTIONS=!popup_dialog
 OPTIONS=prayconfirm
 OPTIONS=pushweapon
 OPTIONS=rest_on_space
-
 # teleport,run,walk,crawl
 OPTIONS=runmode:walk
-
 OPTIONS=safe_pet
 # OPTIONS=scroll_amount:
 # OPTIONS=scroll_margin:
+OPTIONS=showborn
+OPTIONS=showbuc
+OPTIONS=show_obj_sym
 OPTIONS=sortpack
 OPTIONS=sound
 OPTIONS=travel
@@ -96,14 +95,31 @@ OPTIONS=verbose
 OPTIONS=warnings:012345
 OPTIONS=wraptext
 
-
 #
 # Status line
 #
-OPTIONS=hpmon
 OPTIONS=showexp
-OPTIONS=!showscore
+OPTIONS=showscore
+OPTIONS=statuscolors
 OPTIONS=time
+
+# HP
+STATUSCOLOR=hp%100=green,hp%66=yellow,hp%50=orange
+STATUSCOLOR=hp%33=red&bold,hp%15:red&inverse,hp%0:red&inverse&blink
+# Pw
+STATUSCOLOR=pw%100=green,pw%66=yellow,pw%50:orange,pw%33=red&bold
+# Carry
+STATUSCOLOR=burdened:yellow,stressed:orange,strained:red&bold
+STATUSCOLOR=overtaxed:red&inverse,overloaded:red&inverse&blink
+# Hunger
+STATUSCOLOR=satiated:yellow,hungry:orange,weak:red&bold
+STATUSCOLOR=fainting:red&inverse,fainted:red&inverse&blink
+# Mental
+STATUSCOLOR=hallu:yellow,conf:orange,stun:red&bold
+# Health
+STATUSCOLOR=ill:red&inverse,foodpois:red&inverse,slime:red&inverse
+# Other
+STATUSCOLOR=held:red&inverse,blind:red&inverse
 
 
 #
@@ -114,12 +130,11 @@ OPTIONS=catname:Percy
 OPTIONS=dogname:Pooch
 # OPTIONS=gender:random
 OPTIONS=horsename:Agro
-OPTIONS=name:player
+OPTIONS=name:majutsushi
 # OPTIONS=pettype: # cat,dog,none
 # OPTIONS=!player_selection
 # OPTIONS=race:random
 # OPTIONS=role:random
-
 
 #
 # General
@@ -127,26 +142,22 @@ OPTIONS=name:player
 OPTIONS=legacy
 OPTIONS=mail
 OPTIONS=news
-
 # o: own, a: around own, t: top
 OPTIONS=scores:10t 2a o
-
 OPTIONS=splash_screen
 OPTIONS=tombstone
 OPTIONS=toptenwin
 
-
 #
 # Technical
 #
-OPTIONS=eight_bit_tty
+OPTIONS=!eight_bit_tty
 OPTIONS=!ignintr
 OPTIONS=!null
 OPTIONS=preload_tiles
 OPTIONS=silent
 OPTIONS=timed_delay
-# OPTIONS=windowtype:tty
-
+# OPTIONS=windowtype:curses
 
 # Enable this if you want to see your inventory sorted in alphabetical
 # order by item instead of by index letter:
@@ -154,29 +165,45 @@ OPTIONS=timed_delay
 # or if you just want containers sorted:
 # OPTIONS=sortloot:loot
 
-# Some sane defaults for menucolor
 OPTIONS=menucolors
-# MENUCOLOR=" blessed "=green
-# MENUCOLOR=" holy "=green
-# MENUCOLOR=" uncursed "=yellow
-# MENUCOLOR=" cursed "=red
-# MENUCOLOR=" unholy "=red
-# MENUCOLOR=" cursed .* (being worn)"=orange&underline
 
 #########
 # B/U/C #
 #########
 #MENUCOLOR="^[a-zA-Z$] - "=white #may want to enable this if regularly playing priest.. (priests don't see the 'uncursed')
-MENUCOLOR=" !C"=white
-MENUCOLOR=" !B"=white
-MENUCOLOR=" !UC"=white
-MENUCOLOR=" uncursed"=white
-MENUCOLOR=" ([-0-9]+:[-0-9]+)"=white #nethack doesn't display "uncursed" if charges are known
-MENUCOLOR=" [+-][0-9]"=white
-
 MENUCOLOR=" blessed"=cyan
-MENUCOLOR=" cursed"=red
+MENUCOLOR=" blessed .* \(weapon in hand\)"=cyan&bold
+MENUCOLOR=" blessed .* \(being worn\)"=cyan&bold
+MENUCOLOR=" blessed .* \(in quiver\)"=cyan&bold
+MENUCOLOR=" !b"=cyan
+MENUCOLOR=" !b \(weapon in hand\)"=cyan&bold
+MENUCOLOR=" !b \(being worn\)"=cyan&bold
+MENUCOLOR=" !b \(in quiver\)"=cyan&bold
 
+MENUCOLOR=" uncursed"=green
+MENUCOLOR=" uncursed .* \(weapon in hand\)"=lightgreen
+MENUCOLOR=" uncursed .* \(being worn\)"=lightgreen
+MENUCOLOR=" uncursed .* \(in quiver\)"=lightgreen
+MENUCOLOR=" !uc"=green
+MENUCOLOR=" !uc \(weapon in hand\)"=lightgreen
+MENUCOLOR=" !uc \(being worn\)"=lightgreen
+MENUCOLOR=" !uc \(in quiver\)"=lightgreen
+MENUCOLOR=" !nc"=green
+MENUCOLOR=" !nc \(weapon in hand\)"=lightgreen
+MENUCOLOR=" !nc \(being worn\)"=lightgreen
+MENUCOLOR=" !nc \(in quiver\)"=lightgreen
+
+MENUCOLOR=" ([-0-9]+:[-0-9]+)"=green #nethack doesn't display "uncursed" if charges are known
+# MENUCOLOR=" [+-][0-9]"=white
+
+MENUCOLOR=" cursed"=red
+MENUCOLOR=" cursed .* \(weapon in hand\)"=lightred
+MENUCOLOR=" cursed .* \(being worn\)"=lightred
+MENUCOLOR=" cursed .* \(in quiver\)"=lightred
+MENUCOLOR=" !c"=red
+MENUCOLOR=" !c \(weapon in hand\)"=lightred
+MENUCOLOR=" !c \(being worn\)"=lightred
+MENUCOLOR=" !c \(in quiver\)"=lightred
 
 ################
 # WATER SPORTS #
@@ -283,7 +310,7 @@ MENUCOLOR="[a-zA-Z] - [a-zA-Z ]+ [0-9]\*   [a-z]+ +[0-9]+%"=magenta
 # SHOPPING #
 ############
 #This doesn't want to work for my term
-#MENUCOLOR=" (unpaid, [0-9]+ zorkmids?)"=underline
+MENUCOLOR=" (unpaid, [0-9]+ zorkmids?)"=underline
 
 ############
 # #ENHANCE #  # thanks itsblah
@@ -296,28 +323,31 @@ MENUCOLOR="^ +# +[a-z -]+ +\[\(Unskilled\|Basic\|Skilled\|Expert\|Master\|Grand 
 ################
 # FORCE COLORS #
 ################
-# Some of these are subject to change !
 
-MENUCOLOR="{R}"=red
-MENUCOLOR="{B}"=blue
-MENUCOLOR="{C}"=cyan
-MENUCOLOR="{G}"=green
-MENUCOLOR="{Y}"=yellow
-MENUCOLOR="{[MP]}"=magenta
-MENUCOLOR="{O}"=orange
-MENUCOLOR="{W}"=white
-MENUCOLOR="{L}"=black
-MENUCOLOR="{y}"=gray
-MENUCOLOR="{g}"=lightgreen
-MENUCOLOR="{b}"=lightblue
-MENUCOLOR="{[mp]}"=lightmagenta
-MENUCOLOR="{c}"=lightcyan
-MENUCOLOR="{N}"=none
-MENUCOLOR="{X}"=bold
-MENUCOLOR="{x}"=dim
-MENUCOLOR="{U}"=underline
-MENUCOLOR="{I}"=inverse
-MENUCOLOR="{K}"=blink
+MENUCOLOR="\{L\}"=black
+MENUCOLOR="\{r\}"=red
+MENUCOLOR="\{R\}"=orange
+MENUCOLOR="\{g\}"=green
+MENUCOLOR="\{G\}"=lightgreen
+MENUCOLOR="\{y\}"=brown
+MENUCOLOR="\{Y\}"=yellow
+MENUCOLOR="\{b\}"=blue
+MENUCOLOR="\{B\}"=lightblue
+MENUCOLOR="\{m\}"=magenta
+MENUCOLOR="\{M\}"=lightmagenta
+MENUCOLOR="\{c\}"=cyan
+MENUCOLOR="\{C\}"=lightcyan
+MENUCOLOR="\{w\}"=gray
+MENUCOLOR="\{W\}"=white
+
+MENUCOLOR="\{N\}"=none
+MENUCOLOR="\{X\}"=bold
+MENUCOLOR="\{x\}"=dim
+MENUCOLOR="\{U\}"=underline
+MENUCOLOR="\{I\}"=inverse
+MENUCOLOR="\{K\}"=blink
+MENUCOLOR="\{R\}\{U\}"=red&underline
+MENUCOLOR="\{RU\}"=red&underline
 
 ########################
 # LOOT/APPLY CONTAINER #
@@ -329,10 +359,12 @@ MENUCOLOR="Take something out of .*"=none
 MENUCOLOR="cancellation"=magenta&underline
 MENUCOLOR="bag"=magenta&underline
 
-
-
 MENUCOLOR="wand$"=magenta&underline
 MENUCOLOR="wand named"=magenta&underline
 MENUCOLOR="wand called"=lightmagenta&underline
+
+OPTIONS=msgtype_regex
+
+# MSGTYPE=hide "You displaced *"
 
 # vim: filetype=conf
