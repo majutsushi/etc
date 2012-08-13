@@ -27,9 +27,9 @@ msg = Parser().parse(sys.stdin)
 
 main = msg
 while main.is_multipart():
-    main = main.get_payload()[0]
+    main = main.get_payload(0)
 
-body    = main.get_payload().splitlines()
+body    = main.get_payload(decode = True).splitlines()
 subject = msg['subject']
 
 
@@ -67,7 +67,7 @@ except KeyboardInterrupt:
     exit()
 
 # create task
-output = system(taskbin + ' add ' + desc)
+output = system(taskbin + ' add "' + desc + '"')
 tid = re.match(r'Created task (?P<id>\d+)\.', output[0]).group('id')
 
 # add annotation(s)
