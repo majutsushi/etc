@@ -33,7 +33,8 @@ OPTIONS=DECgraphics
 # Interface
 #
 OPTIONS=autopickup
-OPTIONS=pickup_types:$
+OPTIONS=pickup_types:$%
+OPTIONS=apexception_regex
 OPTIONS=pickup_thrown
 # Unencumbered,Burdened,Stressed,Strained,Overtaxed
 OPTIONS=pickup_burden:Stressed
@@ -67,7 +68,7 @@ OPTIONS=menustyle:full
 # OPTIONS=menu_select_all:.
 # OPTIONS=menu_select_page:\,
 OPTIONS=!mouse_support
-OPTIONS=msghistory:400
+OPTIONS=msghistory:60
 # single,combination,full,reversed
 OPTIONS=msg_window:full
 OPTIONS=!number_pad
@@ -363,8 +364,91 @@ MENUCOLOR="wand$"=magenta&underline
 MENUCOLOR="wand named"=magenta&underline
 MENUCOLOR="wand called"=lightmagenta&underline
 
+
+AUTOPICKUP_EXCEPTION=">:0\)"
+AUTOPICKUP_EXCEPTION="> named empty$"
+
+AUTOPICKUP_EXCEPTION="< +6 "
+AUTOPICKUP_EXCEPTION="< +7 "
+AUTOPICKUP_EXCEPTION="< +8 "
+AUTOPICKUP_EXCEPTION="< +9 "
+
+AUTOPICKUP_EXCEPTION=">*cheap plastic imitation of the Amulet of Yendor"
+AUTOPICKUP_EXCEPTION=">*cheap plastic imitation of the Amulet of Yendor named ?*"
+AUTOPICKUP_EXCEPTION=">*Amulet of Yendor"
+AUTOPICKUP_EXCEPTION="<*Amulet of Yendor named ?*"
+AUTOPICKUP_EXCEPTION="<*Candelabrum of Invocation"
+AUTOPICKUP_EXCEPTION="<*candelabrum"
+AUTOPICKUP_EXCEPTION="<*Bell of Opening"
+AUTOPICKUP_EXCEPTION="<*silver bell"
+AUTOPICKUP_EXCEPTION="<*Book of the Dead"
+AUTOPICKUP_EXCEPTION="<*papyrus spellbook"
+
+AUTOPICKUP_EXCEPTION=">corpse"
+
+# This should never pick up loadstones (id'd, called, blind, new)
+AUTOPICKUP_EXCEPTION=">stone called loa"
+AUTOPICKUP_EXCEPTION=">loadstone$"
+AUTOPICKUP_EXCEPTION=">loadstone named ."
+AUTOPICKUP_EXCEPTION="<stone called luck"
+AUTOPICKUP_EXCEPTION="<luckstone$"
+# blind: glass/gems show up as gem, all else as stone.
+AUTOPICKUP_EXCEPTION=">stone$"
+AUTOPICKUP_EXCEPTION=">flint stone$"
+AUTOPICKUP_EXCEPTION=">rock$"
+AUTOPICKUP_EXCEPTION=">gray stone$"
+# blessed, uncursed, cursed, greased
+AUTOPICKUP_EXCEPTION=">sed stone$"
+
+AUTOPICKUP_EXCEPTION="<wand of wishing$"
+AUTOPICKUP_EXCEPTION="<wand called wishing$"
+AUTOPICKUP_EXCEPTION="<wand of create monster$"
+AUTOPICKUP_EXCEPTION="<wand of teleportation$"
+AUTOPICKUP_EXCEPTION="<wand called tele"
+# AUTOPICKUP_EXCEPTION="<wand of polymorph$"
+# AUTOPICKUP_EXCEPTION="<wand called poly"
+AUTOPICKUP_EXCEPTION="<wand of fire$"
+AUTOPICKUP_EXCEPTION="<wand of lightning$"
+AUTOPICKUP_EXCEPTION="<wand of death$"
+# Cold is used for Juiblex swamp, etc.
+# AUTOPICKUP_EXCEPTION=">wand of cold$"
+AUTOPICKUP_EXCEPTION="<magic marker$"
+AUTOPICKUP_EXCEPTION="<magic lamp$"
+AUTOPICKUP_EXCEPTION="<^lamp$"
+AUTOPICKUP_EXCEPTION="<d lamp$"
+AUTOPICKUP_EXCEPTION="<amulet of life saving$"
+AUTOPICKUP_EXCEPTION="<amulet called life$"
+AUTOPICKUP_EXCEPTION="<athame$"
+
+AUTOPICKUP_EXCEPTION=">*heavy iron ball*"
+
+
 OPTIONS=msgtype_regex
 
-# MSGTYPE=hide "You displaced *"
+# delayed instadeaths, credits to stth
+MSGTYPE=stop "^The couatl swings itself around you!$"
+MSGTYPE=stop "^The electric eel swings itself around you!$"
+MSGTYPE=stop "^The giant eel swings itself around you!$"
+MSGTYPE=stop "^The kraken swings itself around you!$"
+MSGTYPE=stop "^The python grabs you!$"
+MSGTYPE=stop "^You don't feel very well.$"
+MSGTYPE=stop "^You are turning a little green.$"
+MSGTYPE=stop "^Your limbs are getting oozy.$"
+MSGTYPE=stop "^Your skin begins to peel away.$"
+MSGTYPE=stop "^You are turning into a green slime.$"
+MSGTYPE=stop "^You are slowing down.$"
+MSGTYPE=stop "^Your limbs are stiffening.$"
+MSGTYPE=stop "^It constricts your throat!$"
+MSGTYPE=stop "^You find it hard to breathe.$"
+MSGTYPE=stop "^You're gasping for air.$"
+MSGTYPE=stop "^Your blood is having trouble reaching your brain.$"
+MSGTYPE=stop "^You can no longer breathe.$"
+MSGTYPE=stop "^You're turning blue.$"
+MSGTYPE=stop "^Your consciousness is fading.$"
+MSGTYPE=stop "^You feel deathly sick.$"
+MSGTYPE=stop "^You feel much worse.$"
+MSGTYPE=stop "^You feel even worse.$"
+
+MSGTYPE=hide "You displaced *"
 
 # vim: filetype=conf
