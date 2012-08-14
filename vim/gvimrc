@@ -14,6 +14,12 @@ set guioptions-=e " don't use gui tabs
 set guioptions-=m " don't show menubar
 set guioptions-=T " don't show toolbar
 
+" disable scrollbars
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
+
 " "no", "yes" or "menu"; how to use the ALT key
 set winaltkeys=no
 
