@@ -62,6 +62,7 @@ xlink .etc/tmux/tmux.conf .tmux.conf tmux
 xlink .etc/urxvt .urxvt urxvt
 
 xlink .etc/vim/vimrc      .vimrc      vim
+xlink .etc/vim/gvimrc     .gvimrc     vim
 xlink .etc/vim/vim        .vim        vim
 xlink .etc/vim/vimplaterc .vimplaterc vim
 

@@ -636,28 +636,6 @@ function! GenCscopeAndTags()
 "    execute 'CCTreeLoadDB cscope.out'
 endfunction
 
-" GuiSettings() {{{2
-function! GuiSettings()
-    if has('macunix')
-        set guifont=Monaco:h10
-    else
-        set guifont=DejaVu\ Sans\ Mono\ 8
-    endif
-
-    set guioptions+=c " use console dialogs
-    set guioptions-=a " don't auto-copy selection to * register
-    set guioptions-=e " don't use gui tabs
-    set guioptions-=m " don't show menubar
-    set guioptions-=T " don't show toolbar
-
-    " "no", "yes" or "menu"; how to use the ALT key
-    set winaltkeys=no
-
-    set lines=50
-    set columns=80
-endfunction
-autocmd GUIEnter * call GuiSettings()
-
 " InsertGuards() {{{2
 function! InsertGuards()
     let guardname = "_" . substitute(toupper(expand("%:t")), "[\\.-]", "_", "g") . "_"
@@ -1076,15 +1054,6 @@ set mousemodel=popup
 " "xterm", "xterm2", "dec" or "netterm"; type of mouse
 set ttymouse=xterm
 
-" GUI {{{2
-
-if has("gui_running")
-    call GuiSettings()
-endif
-
-if exists('&macatsui')
-    set nomacatsui
-endif
 
 " printing {{{2
 
@@ -1940,10 +1909,6 @@ nnoremap <silent> <Leader>hl
       \ else <Bar>
       \   let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1) <Bar>
       \ endif<CR>
-
-" change font size with c-up/down
-nnoremap <silent> <C-Up>   :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)+1)', '')<CR>:set guifont?<CR>
-nnoremap <silent> <C-Down> :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)-1)', '')<CR>:set guifont?<CR>
 
 " Windows {{{2
 
