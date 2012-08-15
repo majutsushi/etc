@@ -368,21 +368,21 @@ MENUCOLOR="wand called"=lightmagenta&underline
 AUTOPICKUP_EXCEPTION=">:0\)"
 AUTOPICKUP_EXCEPTION="> named empty$"
 
-AUTOPICKUP_EXCEPTION="< +6 "
-AUTOPICKUP_EXCEPTION="< +7 "
-AUTOPICKUP_EXCEPTION="< +8 "
-AUTOPICKUP_EXCEPTION="< +9 "
+AUTOPICKUP_EXCEPTION="< \+6 "
+AUTOPICKUP_EXCEPTION="< \+7 "
+AUTOPICKUP_EXCEPTION="< \+8 "
+AUTOPICKUP_EXCEPTION="< \+9 "
 
-AUTOPICKUP_EXCEPTION=">*cheap plastic imitation of the Amulet of Yendor"
-AUTOPICKUP_EXCEPTION=">*cheap plastic imitation of the Amulet of Yendor named ?*"
-AUTOPICKUP_EXCEPTION=">*Amulet of Yendor"
-AUTOPICKUP_EXCEPTION="<*Amulet of Yendor named ?*"
-AUTOPICKUP_EXCEPTION="<*Candelabrum of Invocation"
-AUTOPICKUP_EXCEPTION="<*candelabrum"
-AUTOPICKUP_EXCEPTION="<*Bell of Opening"
-AUTOPICKUP_EXCEPTION="<*silver bell"
-AUTOPICKUP_EXCEPTION="<*Book of the Dead"
-AUTOPICKUP_EXCEPTION="<*papyrus spellbook"
+AUTOPICKUP_EXCEPTION=">cheap plastic imitation of the Amulet of Yendor"
+AUTOPICKUP_EXCEPTION=">cheap plastic imitation of the Amulet of Yendor named ."
+AUTOPICKUP_EXCEPTION=">Amulet of Yendor"
+AUTOPICKUP_EXCEPTION="<Amulet of Yendor named ."
+AUTOPICKUP_EXCEPTION="<Candelabrum of Invocation"
+AUTOPICKUP_EXCEPTION="<candelabrum"
+AUTOPICKUP_EXCEPTION="<Bell of Opening"
+AUTOPICKUP_EXCEPTION="<silver bell"
+AUTOPICKUP_EXCEPTION="<Book of the Dead"
+AUTOPICKUP_EXCEPTION="<papyrus spellbook"
 
 AUTOPICKUP_EXCEPTION=">corpse"
 
@@ -420,7 +420,7 @@ AUTOPICKUP_EXCEPTION="<amulet of life saving$"
 AUTOPICKUP_EXCEPTION="<amulet called life$"
 AUTOPICKUP_EXCEPTION="<athame$"
 
-AUTOPICKUP_EXCEPTION=">*heavy iron ball*"
+AUTOPICKUP_EXCEPTION=">heavy iron ball"
 
 
 OPTIONS=msgtype_regex
