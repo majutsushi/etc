@@ -1730,7 +1730,7 @@ inoremap <C-U> <C-G>u<C-U>
 "inoremap <CR>    <CR><C-G>u
 
 " Swap two words
-nnoremap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
+nnoremap <silent> gW :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
 
 " have Y behave analogously to D and C rather than to dd and cc (which is
 " already done by yy):
