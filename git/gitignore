@@ -18,6 +18,7 @@ cscope.*
 *.zwc
 
 # LaTeX stuff
+*.log
 *.aux
 *.auxlock
 *.bbl
