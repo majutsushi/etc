@@ -18,17 +18,18 @@ cscope.*
 *.zwc
 
 # LaTeX stuff
-*.log
 *.aux
 *.auxlock
 *.bbl
 *.blg
-*.toc
-*.lof
-*.lot
 *.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lol
+*.lot
 *.out
-missfont.log
+*.toc
 
 *.pdf
 
