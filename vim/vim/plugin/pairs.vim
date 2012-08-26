@@ -86,7 +86,7 @@ function! s:HandleSpace() abort
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
-    if has_key(b:pairs_conf.pairs, cprev) && ccur == b:pairs_conf.pairs[cprev]
+    if has_key(b:pairs_conf.parens, cprev) && ccur == b:pairs_conf.parens[cprev]
         return "\<Space>\<Space>\<Left>"
     else
         return "\<Space>"
@@ -109,7 +109,7 @@ function! s:HandleBackSpace() abort
         " delete pair
         return "\<Delete>\<BS>"
     elseif cprev == ' ' && ccur == ' ' &&
-         \ has_key(b:pairs_conf.pairs, cpprev) && cnext == b:pairs_conf.pairs[cpprev]
+         \ has_key(b:pairs_conf.parens, cpprev) && cnext == b:pairs_conf.parens[cpprev]
         " delete padding spaces
         return "\<Delete>\<BS>"
     elseif getline('.') =~# '^\s*$' && has_key(b:pairs_conf.pairs, lprevc)
