@@ -1781,6 +1781,21 @@ xnoremap <leader>ar :Align <-<CR>
 xnoremap > >gv
 xnoremap < <gv
 
+inoremap <M-H> <C-d>
+inoremap <M-L> <C-t>
+
+" Move current line up or down
+inoremap <M-K> <Esc>:<C-U>
+            \ let oldpos = getpos('.')<CR>
+            \ ddkP
+            \ :<C-U>call setpos('.', oldpos)<CR>
+            \ gki
+inoremap <M-J> <Esc>:<C-U>
+            \ let oldpos = getpos('.')<CR>
+            \ ddp
+            \ :<C-U>call setpos('.', oldpos)<CR>
+            \ gji
+
 xmap <Leader>t| <Plug>AM_t|
 xmap <Leader>t#   <Plug>AM_t#
 xmap <Leader>t,   <Plug>AM_t,
@@ -1829,11 +1844,19 @@ nnoremap k gk
 "nnoremap $ g$   " conflicts with virtualedit
 "nnoremap 0 g0
 "nnoremap ^ g^
+xnoremap j gj
+xnoremap k gk
 
 " emacs-like c-a/c-e movement
 inoremap        <c-a> <esc>0i
 inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
 inoremap        <c-b> <left>
+
+" move around in insert mode
+inoremap <M-h> <Esc>i
+inoremap <M-l> <Esc>la
+inoremap <M-k> <Esc>gka
+inoremap <M-j> <Esc>gja
 
 " quickfix
 nnoremap <expr> <leader>co &lines / 4 < 10 ? ':botright copen 10<cr>'
