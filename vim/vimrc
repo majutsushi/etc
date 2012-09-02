@@ -1623,17 +1623,17 @@ if &term =~ '^rxvt-unicode\|xterm\|screen'
     execute "set <F11>=\e[23;*~"
     execute "set <F12>=\e[24;*~"
 
-    execute "set <M-h>=\eh"
-    execute "set <M-j>=\ej"
-    execute "set <M-k>=\ek"
-    execute "set <M-l>=\el"
+    let metachars  = '0123456789'
+    let metachars .= 'abcdefghijklmnopqrstuvwxyz'
+    let metachars .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    let metachars .= '+-='
 
-    execute "set <M-+>=\e+"
-    execute "set <M-->=\e-"
-    execute "set <M-=>=\e="
+    for char in split(metachars, '\zs')
+        execute "set <M-" . char . ">=\e" . char
+    endfor
 
-    " <C-Space> isn't a recognized keycode, therefore we have to do this:
-    " http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
+    " Some key combinations aren't recognized keycodes, therefore we have to
+    " do this: http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
     execute "set <F13>=\eQ1;32~"
     map  <F13> <C-Space>
     map! <F13> <C-Space>
