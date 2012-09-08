@@ -42,6 +42,8 @@ xlink() {
 OLDPWD=$PWD
 cd $HOME
 
+ln -sf $HOME/.etc/.githooks/* .etc/.git/hooks
+
 xlink .etc/ackrc
 
 xlink .etc/bash/bashrc
