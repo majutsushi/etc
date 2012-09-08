@@ -16,84 +16,94 @@ error() {
 xlink() {
     if [[ -n "$3" ]] && ! command -v "$3" >/dev/null 2>&1; then
         warn "$3 is not installed"
-    elif [[ -a "$2" && ! -L "$2" ]]; then
-        error "$2 is not a symlink!"
+        return
+    fi
+
+    if [[ -n "$2" ]]; then
+        TARGET=$2
     else
-        info "Linking $2"
-        rm -f "$2"
-        DIR=$(dirname "$2")
+        TARGET=.$(basename "$1")
+    fi
+
+    if [[ -a "$TARGET" && ! -L "$TARGET" ]]; then
+        error "$TARGET is not a symlink!"
+        return
+    else
+        info "Linking $TARGET"
+        rm -f "$TARGET"
+        DIR=$(dirname "$TARGET")
         if ! [[ -d "$DIR" ]]; then
             mkdir -p "$DIR"
         fi
-        ln -s "$HOME/$1" "$2"
+        ln -s "$HOME/$1" "$TARGET"
     fi
 }
 
 OLDPWD=$PWD
 cd $HOME
 
-xlink .etc/ackrc .ackrc
+xlink .etc/ackrc
 
-xlink .etc/bash/bashrc       .bashrc       bash
-xlink .etc/bash/bash_profile .bash_profile bash
-xlink .etc/bash/bash_logout  .bash_logout  bash
+xlink .etc/bash/bashrc
+xlink .etc/bash/bash_profile
+xlink .etc/bash/bash_logout
 
-xlink .etc/emacs/emacs   .emacs   emacs
-xlink .etc/emacs/emacs.d .emacs.d emacs
+xlink .etc/emacs/emacs
+xlink .etc/emacs/emacs.d
 
-xlink .etc/git/gitconfig .gitconfig git
+xlink .etc/git/gitconfig
 
-xlink .etc/mercurial/hgrc .hgrc hg
+xlink .etc/mercurial/hgrc
 
-xlink .etc/moc .moc mocp
+xlink .etc/moc
 
-xlink .etc/mutt/muttrc .muttrc mutt
-xlink .etc/mutt/mutt   .mutt   mutt
+xlink .etc/mutt/muttrc
+xlink .etc/mutt/mutt
 
-xlink .etc/pentadactyl/pentadactylrc .pentadactylrc
-xlink .etc/pentadactyl/pentadactyl   .pentadactyl
+xlink .etc/pentadactyl/pentadactylrc
+xlink .etc/pentadactyl/pentadactyl
 
-xlink .etc/screen/screenrc .screenrc screen
+xlink .etc/screen/screenrc
 
-xlink .etc/slrn/slrnrc .slrnrc slrn
+xlink .etc/slrn/slrnrc
 
-xlink .etc/tmux/tmux.conf .tmux.conf tmux
+xlink .etc/tmux/tmux.conf
 
-xlink .etc/urxvt .urxvt urxvt
+xlink .etc/urxvt
 
-xlink .etc/vim/vimrc      .vimrc      vim
-xlink .etc/vim/gvimrc     .gvimrc     vim
-xlink .etc/vim/vim        .vim        vim
-xlink .etc/vim/vimplaterc .vimplaterc vim
+xlink .etc/vim/vimrc
+xlink .etc/vim/gvimrc
+xlink .etc/vim/vim
+xlink .etc/vim/vimplaterc
 
-xlink .etc/xmonad .xmonad xmonad
+xlink .etc/xmonad
 
-xlink .etc/zathurarc .config/zathura/zathurarc zathura
+xlink .etc/zathurarc .config/zathura/zathurarc
 
-#xlink .etc/xorg/Xmodmap    .Xmodmap
-#xlink .etc/xorg/Xresources .Xresources
-#xlink .etc/xorg/xinitrc    .xinitrc
-#xlink .etc/xorg/xinput.d   .xinput.d
-#xlink .etc/xorg/xinputrc   .xinputrc
-#xlink .etc/xorg/xsession   .xsession
-#xlink .etc/xorg/xsessionrc .xsessionrc
+#xlink .etc/xorg/Xmodmap
+#xlink .etc/xorg/Xresources
+#xlink .etc/xorg/xinitrc
+#xlink .etc/xorg/xinput.d
+#xlink .etc/xorg/xinputrc
+#xlink .etc/xorg/xsession
+#xlink .etc/xorg/xsessionrc
 
-xlink .etc/zsh/zshenv .zshenv zsh
+xlink .etc/zsh/zshenv
 
-xlink .etc/Rprofile    .Rprofile    R
-xlink .etc/bibtoolrsc  .bibtoolrsc  bibtool
-xlink .etc/colorgccrc  .colorgccrc  colorgcc
-xlink .etc/colordiffrc .colordiffrc colordiff
-xlink .etc/ctags       .ctags       ctags
-xlink .etc/gdbinit     .gdbinit     gdb
-xlink .etc/indent.pro  .indent.pro  indent
-xlink .etc/inputrc     .inputrc
-xlink .etc/irbrc       .irbrc       irb
-xlink .etc/latexmkrc   .latexmkrc   latexmk
-xlink .etc/lessfilter  .lessfilter  less
-#xlink .etc/mailcap     .mailcap
-#xlink .etc/procmailrc  .procmailrc
-xlink .etc/taskrc      .taskrc      task
+xlink .etc/Rprofile
+xlink .etc/bibtoolrsc
+xlink .etc/colorgccrc
+xlink .etc/colordiffrc
+xlink .etc/ctags
+xlink .etc/gdbinit
+xlink .etc/indent.pro
+xlink .etc/inputrc
+xlink .etc/irbrc
+xlink .etc/latexmkrc
+xlink .etc/lessfilter
+#xlink .etc/mailcap
+#xlink .etc/procmailrc
+xlink .etc/taskrc
 
 lesskey .etc/lesskey
 
