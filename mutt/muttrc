@@ -3,7 +3,6 @@
 
   set alias_file=~/.mutt/aliases
 source ~/.mutt/aliases
-source ~/.mutt/lists
 
 # }}}
 ###############################################################################
@@ -46,8 +45,7 @@ unset keep_flagged
   set mbox_type=Maildir
 
   set preconnect=""
-#   set sendmail="/usr/bin/msmtp"
-  set sendmail="~/.etc/mutt/msmtp-save.sh"
+  set sendmail="/usr/bin/msmtp"
   set sendmail_wait=0
   set use_envelope_from
   set ssl_ca_certificates_file=/etc/ssl/certs/ca-certificates.crt

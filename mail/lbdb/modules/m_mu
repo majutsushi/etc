@@ -1,0 +1,6 @@
+#!/bin/sh
+
+m_mu_query()
+{
+    mu cfind --muhome=~/.mu-sent-index --format=mutt-ab "$@" | sed -e '1d;s/$/	mu/'
+}

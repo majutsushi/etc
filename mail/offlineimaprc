@@ -1,0 +1,30 @@
+[general]
+accounts = Main
+ui = ttyui
+pythonfile = ~/.etc/mail/offlineimap-helpers.py
+metadata = ~/.cache/offlineimap
+
+[Account Main]
+localrepository = Local
+remoterepository = Remote
+autorefresh = 10
+holdconnectionopen = yes
+keepalive = 60
+
+[Repository Local]
+type = Maildir
+localfolders = ~/Maildir
+nametrans = lambda folder: 'INBOX' + folder
+folderfilter = lambda folder: not re.search('\.(lists|spam)', folder)
+
+[Repository Remote]
+type = IMAP
+remotehost = mail.majutsushi.net
+remoteusereval = get_username("mail.majutsushi.net")
+remotepasseval = get_password("mail.majutsushi.net")
+ssl = yes
+cert_fingerprint = 0edd5b8e5d6330c9e417d972d76bc38714db39a7
+nametrans = lambda folder: re.sub('^INBOX\.?', '.', folder)
+folderfilter = lambda folder: not re.search('\.(spam|Trash)', folder)
+
+# vim: ft=cfg

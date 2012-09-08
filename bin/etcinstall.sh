@@ -57,6 +57,10 @@ xlink .etc/mercurial/hgrc
 
 xlink .etc/moc
 
+xlink .etc/mail/lbdb
+xlink .etc/mail/msmtprc
+xlink .etc/mail/offlineimaprc
+
 xlink .etc/mutt/muttrc
 xlink .etc/mutt/mutt
 
