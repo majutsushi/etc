@@ -324,8 +324,7 @@ unset implicit_autoview # use autoview, if a "copiousoutput" is in mailcap.
   set pager_index_lines=15   # number of lines to see from the index
   set pager_stop        # Don't jump to next message at end of message.
 unset prompt_after      # display prompt after exit from pager
-#   set quote_regexp="^( {0,4}-?[>|:%]| {0,4}[a-z0-9]+[>|]+)+"
-  set quote_regexp="^( {0,4}-?[>|]| {0,4}[a-z0-9]+[>|]+)+"
+  set quote_regexp="^( {0,4}[a-z0-9]*[>|])+"
   set smart_wrap        # wrap long lines at word boundary.
   set smileys="(>From )|(:[-^]?[][)(><}{|/DP])"
   set tilde             # Internal Pager: ~~~~ at and of message?
