@@ -9,6 +9,8 @@ export MAIL=${MAIL:-/var/mail/$USER}
 export PAGER=${PAGER:-less}
 
 export LESS="-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t"
+export LESSHISTFILE=$XDG_CACHE_HOME/lesshst
+export LESSKEY=$XDG_CACHE_HOME/less
 
 eval $(dircolors -b $ZDOTDIR/dircolors) 2>/dev/null || :
 
