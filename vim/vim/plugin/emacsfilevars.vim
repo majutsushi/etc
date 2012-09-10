@@ -65,6 +65,10 @@ endfunction
 function! s:optiondict.tab_width(val) dict
     execute 'setlocal tabstop=' . a:val
 endfunction
+" s:optiondict.coding() {{{2
+" file encoding can't be changed in vim after a file has been loaded
+function! s:optiondict.coding(val) abort dict
+endfunction
 
 " Mappings {{{1
 let s:modeMappings = {
