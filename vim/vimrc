@@ -312,6 +312,10 @@ let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileEncoding()} %)</CUR>'
 let g:default_stl .= "#[ExpandTab] "
 
 let g:default_stl .= "%(#[Warning]"
+let g:default_stl .= "%{g:zoomwin_stl}"
+let g:default_stl .= "#[ExpandTab] %)"
+
+let g:default_stl .= "%(#[Warning]"
 let g:default_stl .= "%{StatuslineTrailingSpaceWarning()}"
 let g:default_stl .= "%{StatuslineTabWarning()}"
 let g:default_stl .= "#[ExpandTab] %)"
@@ -1543,6 +1547,15 @@ let g:xptemplate_vars = '$author=Jan Larres&$email=jan@majutsushi.net'
 " yankring {{{2
 let g:yankring_history_dir = '$HOME/.cache/vim'
 nnoremap <silent> <leader>y :YRShow<CR>
+
+" ZoomWin {{{2
+let g:zoomwin_stl = ''
+function! ZWStatusline(zoomed)
+    let g:zoomwin_stl = a:zoomed ? 'Z' : ''
+endfunction
+if !exists("g:ZoomWin_funcref")
+    let g:ZoomWin_funcref = function("ZWStatusline")
+endif
 
 " Abbrevs {{{1
 func! Eatchar(pat)
