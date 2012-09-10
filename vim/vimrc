@@ -1325,7 +1325,7 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_max_files = 0
 let g:ctrlp_user_command = {
     \ 'types': {
-        \ 1: ['.git/', 'cd %s && git ls-files'],
+        \ 1: ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard'],
         \ 2: ['.hg/', 'hg --cwd %s locate -I .'],
     \ },
     \ 'fallback': 'find %s -type f'
