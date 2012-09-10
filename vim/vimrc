@@ -1637,7 +1637,8 @@ if &term =~ '^rxvt-unicode\|xterm\|screen'
     execute "set <F12>=\e[24;*~"
 
     let metachars  = '0123456789'
-    let metachars .= 'abcdefghijklmnopqrstuvwxyz'
+    " remove g/ç as it conflicts with xptemplate
+    let metachars .= 'abcdefhijklmnopqrstuvwxyz'
     let metachars .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     let metachars .= '+-='
 
