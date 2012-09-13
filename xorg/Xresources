@@ -92,7 +92,7 @@ URxvt.keysym.F11: perl:fullscreen:switch
 
 !URxvt.keysym.M-u: perl:url-select:select_next
 !Ctrl-Enter
-URxvt.keysym.C-0xff0d: perl:url-picker
+URxvt.keysym.C-M-u: perl:url-picker
 URxvt.urlLauncher: firefox
 URxvt.underlineURLs: true
 
