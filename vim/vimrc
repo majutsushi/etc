@@ -1609,6 +1609,47 @@ endif
 
 " Terminal stuff {{{1
 
+" s:MapMetaChars() {{{2
+function! s:MapMetaChars() abort
+    let metachars  = '0123456789'
+    " remove g/ç as it conflicts with xptemplate
+    let metachars .= 'abcdefhijklmnopqrstuvwxyz'
+    let metachars .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    let metachars .= '+-='
+
+    for char in split(metachars, '\zs')
+        execute "set <M-" . char . ">=\e" . char
+    endfor
+endfunction "}}}2
+
+" s:MapExtraKeys() {{{2
+function! s:MapExtraKeys() abort
+    " Some key combinations aren't recognized keycodes, therefore we have to
+    " do this: http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
+    let extramaps = {
+        \ 'S-CR'    : 'Q13;2~',
+        \ 'C-CR'    : 'Q13;5~',
+        \ 'C-S-CR'  : 'Q13;6~',
+        \ 'C-Space' : 'Q32;5~',
+        \ 'M->'     : '>',
+        \ 'M-<'     : '<'
+    \ }
+    let mapc = 0
+    for [key, val] in items(extramaps)
+        if mapc == 50
+            echohl WarningMsg
+            echomsg "Unable to map " . key . ": out of spare keycodes"
+            echohl None
+            break
+        endif
+        let vkey = (mapc/25 == 0 ? '' : 'S-') . 'F' . (13 + mapc % 25)
+        execute "set  <" . vkey . ">=\e" . val
+        execute "map  <" . vkey . "> <" . key . ">"
+        execute "map! <" . vkey . "> <" . key . ">"
+        let mapc += 1
+    endfor
+endfunction "}}}2
+
 if &term =~ '^rxvt-unicode\|xterm\|screen'
     " see ~/.Xresources and ':h xterm-modifier-keys'
     execute "set <xUp>=\e[1;*A"
@@ -1647,27 +1688,9 @@ if &term =~ '^rxvt-unicode\|xterm\|screen'
     execute "set <F11>=\e[23;*~"
     execute "set <F12>=\e[24;*~"
 
-    let metachars  = '0123456789'
-    " remove g/ç as it conflicts with xptemplate
-    let metachars .= 'abcdefhijklmnopqrstuvwxyz'
-    let metachars .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    let metachars .= '+-='
+    call s:MapMetaChars()
 
-    for char in split(metachars, '\zs')
-        execute "set <M-" . char . ">=\e" . char
-    endfor
-
-    " Some key combinations aren't recognized keycodes, therefore we have to
-    " do this: http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
-    execute "set <F13>=\eQ32;5~"
-    map  <F13> <C-Space>
-    map! <F13> <C-Space>
-    execute "set <F14>=\e>"
-    map  <F14> <M->>
-    map! <F14> <M->>
-    execute "set <F15>=\e<"
-    map  <F15> <M-<>
-    map! <F15> <M-<>
+    call s:MapExtraKeys()
 endif
 
 if &term =~ '^rxvt-unicode' || $ORIGTERM =~ '^rxvt-unicode'
