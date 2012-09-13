@@ -290,14 +290,15 @@ let g:default_stl .= "%) "
 " Padding/HL group
 let g:default_stl .= "#[FunctionName] "
 
-" Function name
-" let g:default_stl .= "<CUR>%(%{tagbar#currenttag('%s |', '')} %)</CUR>"
-
 " Truncate here
 let g:default_stl .= "%<"
 
+" Function name
+" let g:default_stl .= "<CUR>%(%{tagbar#currenttag('%s', '')} %)</CUR>"
+let g:default_stl .= "%(%{tagbar#currenttag('%s', '')} %)"
+
 " Current directory
-let g:default_stl .= "%{fnamemodify(getcwd(), ':~')}"
+" let g:default_stl .= "%{fnamemodify(getcwd(), ':~')}"
 
 " Right align rest
 let g:default_stl .= "%= "
