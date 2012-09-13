@@ -285,7 +285,7 @@ URxvt.keysym.M-C-S-F12 : \033[24;8~
 ! Map private escape sequences so vim can remap them
 ! https://en.wikipedia.org/wiki/C0_and_C1_control_codes
 ! https://en.wikipedia.org/wiki/ANSI_escape_code
-URxvt.keysym.C-space : \033Q1;32~
+URxvt.keysym.C-space : \033Q32;5~
 
 
 ! *** XTerm ***

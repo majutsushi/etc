@@ -1659,7 +1659,7 @@ if &term =~ '^rxvt-unicode\|xterm\|screen'
 
     " Some key combinations aren't recognized keycodes, therefore we have to
     " do this: http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
-    execute "set <F13>=\eQ1;32~"
+    execute "set <F13>=\eQ32;5~"
     map  <F13> <C-Space>
     map! <F13> <C-Space>
     execute "set <F14>=\e>"
