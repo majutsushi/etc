@@ -478,6 +478,17 @@ endfunction
 
 command! -range -nargs=? CenterBlock <line1>,<line2>call CenterBlock(<f-args>)
 
+" CtrlG() {{{2
+function! CtrlG() abort
+    redir => default
+    execute "silent normal! \<C-g>"
+    redir END
+    " remove weird null bytes from the beginning
+    let default = substitute(default, '^.\{-}\ze"', '', '')
+    echo default fnamemodify(getcwd(), ':~')
+endfunction
+nnoremap <C-g> :call CtrlG()<CR>
+
 " DiffOrig() {{{2
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
