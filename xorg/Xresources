@@ -299,7 +299,7 @@ UXTerm*vt100.visualBell: true
 UXTerm*vt100.translations: #override \
     Ctrl <Key>Up:    larger-vt-font() \n\
     Ctrl <Key>Down:  smaller-vt-font() \n\
-    Ctrl <Key>space: string(0x1b) string("Q1;32~") \n
+    Ctrl <Key>space: string(0x1b) string("Q32;5~") \n
 
 
 yeahconsole.term: urxvt
