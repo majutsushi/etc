@@ -4,7 +4,6 @@ set encoding=utf-8
 let mapleader=","
 
 let g:pathogen_disabled = []
-let g:pathogen_disabled += ['vim-orgmode']
 if !has('python') || !executable('clang')
     let g:pathogen_disabled += ['clang_complete']
 endif
