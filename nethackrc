@@ -72,7 +72,7 @@ OPTIONS=msghistory:60
 # single,combination,full,reversed
 OPTIONS=msg_window:full
 OPTIONS=!number_pad
-OPTIONS=packorder:)[%?+!"=/(*`0_
+OPTIONS=packorder:$)[%?+!"=/(*`0_
 OPTIONS=paranoid_hit
 OPTIONS=paranoid_quit
 OPTIONS=paranoid_remove
