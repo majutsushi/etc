@@ -308,13 +308,12 @@ let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileFormat()} %)</CUR>'
 " File encoding
 let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileEncoding()} %)</CUR>'
 
-" Tabstop/indent/whitespace settings
 let g:default_stl .= "#[ExpandTab] "
 
-let g:default_stl .= "%(#[Warning]"
-let g:default_stl .= "%{g:zoomwin_stl}"
-let g:default_stl .= "#[ExpandTab] %)"
+" ZoomWin state
+let g:default_stl .= "%(#[Warning]%{g:zoomwin_stl}#[ExpandTab] %)"
 
+" Tabstop/indent/whitespace settings
 let g:default_stl .= "%(#[Warning]"
 let g:default_stl .= "%{StatuslineTrailingSpaceWarning()}"
 let g:default_stl .= "%{StatuslineTabWarning()}"
