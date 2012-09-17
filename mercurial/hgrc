@@ -50,4 +50,4 @@ opts.wdiff = -p -U 8 -w -r -N
 [pager]
 pager = less
 
-%include ~/.hgrc.local
+%include ~/.config/hgrc.local
