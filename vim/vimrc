@@ -1721,7 +1721,7 @@ endif
 
 " Mappings {{{1
 
-" Buffers/Files {{{2
+" Buffers/Files/Tabs {{{2
 
 " Fast open a buffer by searching for a name
 nnoremap <leader>b :buffers<CR>:buffer<space>
@@ -1747,9 +1747,8 @@ nnoremap <M-9> 9gt
 
 nnoremap <C-W>e :enew<CR>
 
-nnoremap <leader>vs :source ~/.vimrc<CR>:filetype detect<CR>:echo 'vimrc reloaded'<CR>
-nnoremap <leader>ve :edit   ~/.vimrc<CR>
-nnoremap <leader>vb :edit   ~/.vim/abbrevs.vim<CR>
+nnoremap <leader>ve :edit ~/.vimrc<CR>
+nnoremap <leader>vb :edit ~/.vim/abbrevs.vim<CR>
 
 " Text manipulation {{{2
 
@@ -1808,13 +1807,6 @@ xnoremap <S-Del>    "+d
 inoremap <C-Del>    <C-O>daw
 
 nnoremap <silent> <leader>ga :GNOMEAlignArguments<CR>
-
-" Parenthesis/bracket expanding
-xnoremap §§ <esc>`>a"<esc>`<i"<esc>
-xnoremap §q <esc>`>a'<esc>`<i'<esc>
-xnoremap §1 <esc>`>a)<esc>`<i(<esc>
-xnoremap §2 <esc>`>a]<esc>`<i[<esc>
-xnoremap §3 <esc>`>a}<esc>`<i{<esc>
 
 " remove trailing whitespace
 nnoremap <leader>rt :%s/\s\+$//<CR>
@@ -1975,17 +1967,6 @@ nnoremap <silent> <leader>w :set invwrap wrap?<CR>
 nnoremap <silent> <leader>pw :call PreviewWord(0)<CR>
 nnoremap <silent> <leader>pl :call PreviewWord(1)<CR>
 
-" highlight long lines
-nnoremap <silent> <Leader>hl
-      \ :if exists('w:long_line_match') <Bar>
-      \   silent! call matchdelete(w:long_line_match) <Bar>
-      \   unlet w:long_line_match <Bar>
-      \ elseif &textwidth > 0 <Bar>
-      \   let w:long_line_match = matchadd('ErrorMsg', '\%>'.&tw.'v.\+', -1) <Bar>
-      \ else <Bar>
-      \   let w:long_line_match = matchadd('ErrorMsg', '\%>80v.\+', -1) <Bar>
-      \ endif<CR>
-
 " Windows {{{2
 
 " Easier movement between windows
@@ -2017,9 +1998,6 @@ cnoremap <C-N> <Down>
 
 "cnoremap <Esc><C-B>     <S-Left>
 "cnoremap <Esc><C-F>     <S-Right>
-
-" ;rcm = remove "control-m"s - for those mails sent from DOS:
-cnoremap ;rcm %s/<C-M>//g
 
 " expand %% to current directory
 " cabbrev <expr> %% expand('%:~:h')
