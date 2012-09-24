@@ -1249,6 +1249,8 @@ set suffixesadd=.rb
 set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.swp,*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.class,*.zwc,obj*/**
 " command-line completion shows a list of matches
 "set wildmenu
+" key used to open the command-line window
+set cedit=<C-O>
 
 " running make and jumping to errors {{{2
 
@@ -1641,7 +1643,7 @@ function! s:MapExtraKeys() abort
             echohl None
             break
         endif
-        let vkey = (mapc/25 == 0 ? '' : 'S-') . 'F' . (13 + mapc % 25)
+        let vkey = (mapc / 25 == 0 ? '' : 'S-') . 'F' . (13 + mapc % 25)
         execute "set  <" . vkey . ">=\e" . val
         execute "map  <" . vkey . "> <" . key . ">"
         execute "map! <" . vkey . "> <" . key . ">"
@@ -2003,12 +2005,16 @@ nnoremap <M-=> <C-W>=
 
 " emacs-like keys in command line
 cnoremap <C-A> <Home>
-cnoremap <C-B> <Left>
-cnoremap <C-D> <Del>
 cnoremap <C-E> <End>
+
+cnoremap <C-B> <Left>
 cnoremap <C-F> <Right>
-cnoremap <C-N> <Down>
+
+cnoremap <C-D> <Del>
+
 cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
+
 "cnoremap <Esc><C-B>     <S-Left>
 "cnoremap <Esc><C-F>     <S-Right>
 
