@@ -4,6 +4,7 @@ emulate -L zsh
 
 setopt extended_glob
 setopt no_clobber
+setopt err_return
 
 if [[ -z "$1" ]]; then
     echo "usage: $0 <file>"
@@ -11,7 +12,7 @@ if [[ -z "$1" ]]; then
 fi
 
 TMPDIR=zsh-extract-$RANDOM
-ARCHIVEDIR="${1:h}"
+ARCHIVEDIR="$(readlink -f ${1:h})"
 ARCHIVEFILE="${1:t}"
 BASENAME=""
 MOVE=no
@@ -93,9 +94,12 @@ case "$1" in
 esac
 
 if [[ $MOVE == yes ]]; then
-    mv "$1" $TMPDIR && cd $TMPDIR && eval "$COMMAND"
+    mv "$1" $TMPDIR
+    cd $TMPDIR
+    eval "$COMMAND"
     RET=$?
-    mv "$ARCHIVEFILE" "$ARCHIVEDIR" && cd ..
+    mv "$ARCHIVEFILE" "$ARCHIVEDIR"
+    cd ..
 else
     eval "$COMMAND"
     RET=$?
