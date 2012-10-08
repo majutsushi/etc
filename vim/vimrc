@@ -62,7 +62,7 @@ autocmd BufNewFile,BufWritePre * call AutoMkDir()
 autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 
 " When switching buffers, preserve window view.
-function! IsNotSpecialBuf(buf)
+function! IsNotSpecialBuf(buf) abort
     return ((&buftype != "quickfix") &&
           \ !&previewwindow &&
           \ (bufname(a:buf) !~ "NERD_tree") &&
@@ -1747,8 +1747,8 @@ nnoremap <M-9> 9gt
 
 nnoremap <C-W>e :enew<CR>
 
-nnoremap <leader>ve :edit ~/.vimrc<CR>
-nnoremap <leader>vb :edit ~/.vim/abbrevs.vim<CR>
+nnoremap <leader>ve :edit ~/.etc/vim/vimrc<CR>
+nnoremap <leader>vb :edit ~/.etc/vim/vim/abbrevs.vim<CR>
 
 " Text manipulation {{{2
 
