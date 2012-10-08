@@ -22,7 +22,7 @@ source ~/.mutt/maildir
 #   set imap_user=
 #   set imap_pass=""
 
-  set postponed="=.postponed"
+  set postponed="=.Drafts"
   set record="=.sent"
   set imap_idle
   set imap_authenticators=""
@@ -188,7 +188,7 @@ unset use_domain        # add $hostname to all addresses without @host
   set compose_format="-- Mutt: Compose [Approx. msg size: %l Atts: %a]%>-"
   set content_type="text/plain"
   set copy              # always keep a copy of my mails
-  set encode_from       # use Quoted-Printable, if '^From ' in a mail.
+  set encode_from       # use Quoted-Printable if '^From ' in a mail.
   set fcc_attach        # store attachments too when doing a Fcc
   set fcc_clear         # FCCs will be stored unencrypted and unsigned
 unset force_name        # outgoing mail to be saved in folder of "login name"
@@ -225,9 +225,9 @@ unset reply_self        # if unset, a reply to yourself implies reply to other
 unset bounce_delivered  # unset => remove Delivered-To: when bouncing.
   set forward_decode    # decode messages when forwarding without MIME
   set forward_edit=yes
-  set forward_format="Fw: [%a: %s]"
-  set forward_quote     # quote forwarded message, if not $mime_forward
-  set mime_forward=ask-yes    # use MIME when forwarding mails.
+  set forward_format="Fw: %s"
+  set forward_quote     # quote forwarded message if not $mime_forward
+  set mime_forward=no         # use MIME when forwarding mails.
 unset mime_forward_decode     # decode messages when forwarding with MIME
   set mime_forward_rest=yes
 
@@ -259,7 +259,7 @@ unset meta_key          # Don't interpret Alt-x as ESC x
 unset read_only         # folders not read only
 unset score             # don't do scoring
   set sleep_time=1
-  set status_on_top     # status line at the top or button?
+unset status_on_top     # status line at the top or bottom?
 unset suspend           # Ctrl-Z is able to suspend mutt.
 unset wait_key          # Only "press a key" if return value non-zero
   set xterm_icon="M%?n?AIL&ail?"
@@ -302,9 +302,9 @@ unset mark_old          # mark new articles as old, when leaving mbox
   set read_inc=20
   set resolve           # go to next undeleted message after modifying current
 unset reverse_alias     # use realname from reverse alias lookup
-  set status_chars="-*%A" # status of mbox (unchanged, changed, readonly, attach)
-  set status_format="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---"
-  set to_chars=" +TCFL" # default (Not to me, To me, CC me, From me)
+  set status_chars=" *%A" # status of mbox (unchanged, changed, readonly, attach)
+  set status_format="---[%r%f ]---[ Msgs:%?M?%M/?%m%?n? New:%n?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p? ]---%>-(%P)---"
+  set to_chars=" +TCFL" # default (Not to me, To: me only, To: me, CC me, From me)
   set write_inc=10      # number - display increment count for every n-th mail
 
 # }}}
@@ -316,10 +316,10 @@ unset allow_ansi
 unset implicit_autoview # use autoview, if a "copiousoutput" is in mailcap.
 #  set mailcap_path=""
   set mailcap_sanitize  # remove ugly chars from mailcap % expands.
-  set markers           # put a '+' at the beginning of wrapped lines.
+unset markers           # put a '+' at the beginning of wrapped lines.
   set pager="builtin"
   set pager_context=3
-  set pager_format="%S [%C] %-20.20n (%l/%P) %s"
+  set pager_format="%S %s%*  %-20.20n (%P)"
 #   set pager_index_lines=9   # number of lines to see from the index
   set pager_index_lines=15   # number of lines to see from the index
   set pager_stop        # Don't jump to next message at end of message.
@@ -470,7 +470,9 @@ macro generic \e1 "<enter-command>set display_filter='t-prot -cmekatl --max-line
 # =============================================================================
 # browser {{{
 
-bind browser x          check-new
+bind browser x check-new
+bind browser g top-page
+bind browser G bottom-page
 
 # }}}
 # =============================================================================
@@ -490,6 +492,14 @@ bind pager         <up>       previous-line
 bind pager         <down>     next-line
 bind index,pager   \Cd        half-down
 bind index,pager   \Cu        half-up
+bind index         g          first-entry
+bind index         G          last-entry
+bind pager         g          top
+bind pager         G          bottom
+
+macro index s "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+
+bind index,pager  R  group-reply
 
 # change binding because of sidebar
 bind index,pager   B          bounce-message
@@ -560,8 +570,8 @@ macro index,pager  A  |'abook --add-email'\n
 macro index,pager  B  "!abook<enter>"
 
 # gpg
-macro pager  J          "<shell-escape>gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
-macro pager  K          "<shell-escape>gpg --lsign-key " "Sign PGP Key"
+macro pager  J  "<shell-escape>gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
+macro pager  K  "<shell-escape>gpg --lsign-key " "Sign PGP Key"
 
 # same in pager mode - ugly but what the hell...
 macro pager \e0         "<enter-command>unset display_filter; exec exit\n:exec display-message\n" "Turn TOFU protection off"
