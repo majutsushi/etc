@@ -3,7 +3,7 @@ SHELL=/bin/sh
 VERBOSE=off
 MAILDIR=$HOME/Maildir
 DEFAULT=$HOME/Maildir/
-LOGFILE=$MAILDIR/procmail_log
+LOGFILE=$HOME/.cache/procmail/procmail.log
 
 # Insert line count for imap/maildir
 :0Bfh
@@ -97,9 +97,12 @@ LOGFILE=$MAILDIR/procmail_log
 
 :0
 * ^X-Spam-Status: Yes
-.spam/
+{
+    foldername=.spam/
+    SWITCHRC=$HOME/.etc/procmail/markasread
+}
 
 :0
 $DEFAULT
 
-# vim: filetype=procmail noexpandtab
+# vim: filetype=procmail
