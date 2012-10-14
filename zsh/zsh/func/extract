@@ -50,6 +50,8 @@ case "$1" in
         COMMAND="unrar x '${ARCHIVEFILE}'"
         MOVE=yes
         ;;
+    *.lha)
+        BASENAME=${BASENAME:-${${ARCHIVEFILE}%.lha}} ;&
     *.lzh)
         BASENAME=${BASENAME:-${${ARCHIVEFILE}%.lzh}}
         COMMAND="lha x '${ARCHIVEFILE}'"
