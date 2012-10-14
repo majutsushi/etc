@@ -1,0 +1,22 @@
+# http://stuffphilwrites.com/2011/01/ultimate-procmail-recipe/
+# use with
+# SWITCHRC=$HOME/.etc/procmail/markasread
+
+:0c # store as new
+"$DEFAULT/$foldername"
+
+:0
+* LASTFOLDER ?? /\/[^/]+$
+{ tail=$MATCH }
+# first, move from "new/" to "cur/", appending the ":2,"
+# empty flag designator. Then add the "S" flag by
+# renaming the file accordingly.
+# If an idling client already moved the message to "cur",
+# the first move will fail silently, the second will
+# perform the "mark as read" function
+TRAP="mv -v '$LASTFOLDER' \
+  '$DEFAULT/$foldername/cur/$tail:2,' 2> /dev/null ; \
+mv -v '$DEFAULT/$foldername/cur/${tail}:2,' \
+  '$DEFAULT/$foldername/cur/$tail:2,S'"
+
+# vim: ft=procmail

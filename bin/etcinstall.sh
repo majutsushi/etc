@@ -108,7 +108,7 @@ xlink .etc/irbrc
 xlink .etc/latexmkrc
 xlink .etc/lessfilter
 #xlink .etc/mailcap
-#xlink .etc/procmailrc
+#xlink .etc/procmail/procmailrc
 xlink .etc/taskrc
 
 lesskey .etc/lesskey

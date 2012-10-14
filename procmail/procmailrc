@@ -67,38 +67,21 @@ LOGFILE=$MAILDIR/procmail_log
         -i "Content-Type: application/pgp-keys; format=text;"
 }
 
-# Mailinglisten
+# Mailing lists
 
-:0
-* ^X-Mailing-List:[	 ]<\/[^ >`']+
-.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
-
-:0
-* ^X-Mailing-List:[	 ]\/[^ `']+
-.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
-
-:0
-* ^X-BeenThere:[	 ]\/[^ `']+
-.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
-
-:0
-* ^Sender:[	 ]owner-\/[^ `']+
-.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
-
-:0
-* ^Delivered-To:[	 ]mailing list \/[^ `']+
-.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
-
-:0
-* ^X-Loop:[	 ]\/[^ `']+
-.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
-
-:0
-* ^Mailing-List:[	 ]list[	 ]\/[^ `';]+
-.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
-
-:0
-* ^List-post:[	 ]<mailto:\/[^ >`']+
+# Assign maximum score to matches so that other conditions get skipped.
+# http://www.perlcode.org/tutorials/procmail/proctut/proctip2.pod
+# Can't use variable for score as that would cause problems with shell quoting
+# the regex
+:0:
+* 9876543210^0 ^X-Mailing-List:[	 ]<\/[^ >`']+
+* 9876543210^0 ^X-Mailing-List:[	 ]\/[^ `']+
+* 9876543210^0 ^X-BeenThere:[	 ]\/[^ `']+
+* 9876543210^0 ^Sender:[	 ]owner-\/[^ `']+
+* 9876543210^0 ^Delivered-To:[	 ]mailing list \/[^ `']+
+* 9876543210^0 ^X-Loop:[	 ]\/[^ `']+
+* 9876543210^0 ^Mailing-List:[	 ]list[	 ]\/[^ `';]+
+* 9876543210^0 ^List-post:[	 ]<mailto:\/[^ >`']+
 .lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
 
 # Rest
