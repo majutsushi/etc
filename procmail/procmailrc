@@ -73,7 +73,7 @@ LOGFILE=$HOME/.cache/procmail/procmail.log
 # http://www.perlcode.org/tutorials/procmail/proctut/proctip2.pod
 # Can't use variable for score as that would cause problems with shell quoting
 # the regex
-:0:
+:0
 * 9876543210^0 ^X-Mailing-List:[	 ]<\/[^ >`']+
 * 9876543210^0 ^X-Mailing-List:[	 ]\/[^ `']+
 * 9876543210^0 ^X-BeenThere:[	 ]\/[^ `']+
@@ -82,7 +82,66 @@ LOGFILE=$HOME/.cache/procmail/procmail.log
 * 9876543210^0 ^X-Loop:[	 ]\/[^ `']+
 * 9876543210^0 ^Mailing-List:[	 ]list[	 ]\/[^ `';]+
 * 9876543210^0 ^List-post:[	 ]<mailto:\/[^ >`']+
-.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
+{
+    foldername=.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
+
+    # http://freesoftware.zona-m.net/how-ignore-uninteresting-threads-in-mailing-lists/
+    # simple recipe to ignore threads based on prior cache of threads to ignore.
+    # 20061230, SBS
+
+    # get In-Reply-To messageid, check to see if it is in the ignore cache or
+    # in the mua_ignore cache. formail stores cache with ascii-z terminations,
+    # but grep will still match the binary file.
+    # if we have a match in the MUA id file or current cache, ADD the
+    # messageid of THIS message to the cache, so that replies to it will also
+    # be ignored.
+
+    # ensure these are blank, not set to something you might have used them
+    # for previously
+    REFS=
+    REFSNL=
+
+    :0
+    * In-Reply-To:.*\/[^	 ].*
+    {
+        # Assign the results to REFS
+        REFS=${MATCH}
+    }
+
+    :0
+    * ^References:.*\/[^	 ].*
+    {
+        # Append the results to REFS
+        # no consideration as to whether REFS was null or not.
+        REFS="${REFS} ${MATCH}"
+    }
+
+    # by doing this ONLY if REFS contains non-whitespace, we spare ourselves
+    # the overhead of the pipe chain invocation when it isn't needed (i.e.
+    # messages with no references).  Arguably, REFS shouldn't be set at all if
+    # the headers are empty, but this check is cheap to perform
+    :0
+    * REFS ?? [^	 ]
+    {
+        REFSNL=`echo "$REFS" | tr -s "  " "\n\n" | \
+                sed -n -r -e '/^<[^>]+>$/ p'`
+    }
+
+    killedthreads=$HOME/.cache/killedthreads
+    :0hc:$killedthreads$LOCKEXT
+    * REFSNL ?? .
+    * ? grep -qF "$REFSNL" $killedthreads
+    | formail -D 500000 $killedthreads
+
+    # if the preceding conditions matched, then mark this message as read.
+    :0A
+    {
+        SWITCHRC=$HOME/.etc/procmail/markasread
+    }
+
+    :0:
+    $foldername
+}
 
 # Rest
 
@@ -102,7 +161,7 @@ LOGFILE=$HOME/.cache/procmail/procmail.log
     SWITCHRC=$HOME/.etc/procmail/markasread
 }
 
-:0
+:0:
 $DEFAULT
 
 # vim: filetype=procmail
