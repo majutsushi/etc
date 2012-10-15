@@ -2,7 +2,7 @@
 # use with
 # SWITCHRC=$HOME/.etc/procmail/markasread
 
-:0c # store as new
+:0c: # store as new
 "$DEFAULT/$foldername"
 
 :0
@@ -18,5 +18,7 @@ TRAP="mv -v '$LASTFOLDER' \
   '$DEFAULT/$foldername/cur/$tail:2,' 2> /dev/null ; \
 mv -v '$DEFAULT/$foldername/cur/${tail}:2,' \
   '$DEFAULT/$foldername/cur/$tail:2,S'"
+
+HOST
 
 # vim: ft=procmail
