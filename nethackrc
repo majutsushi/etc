@@ -174,23 +174,28 @@ OPTIONS=menucolors
 #MENUCOLOR="^[a-zA-Z$] - "=white #may want to enable this if regularly playing priest.. (priests don't see the 'uncursed')
 MENUCOLOR=" blessed"=cyan
 MENUCOLOR=" blessed .* \(weapon in hand\)"=cyan&bold
+MENUCOLOR=" blessed .* \(wielded.*\)"=cyan&bold
 MENUCOLOR=" blessed .* \(being worn\)"=cyan&bold
 MENUCOLOR=" blessed .* \(in quiver\)"=cyan&bold
 MENUCOLOR=" !b"=cyan
 MENUCOLOR=" !b \(weapon in hand\)"=cyan&bold
+MENUCOLOR=" !b \(wielded.*\)"=cyan&bold
 MENUCOLOR=" !b \(being worn\)"=cyan&bold
 MENUCOLOR=" !b \(in quiver\)"=cyan&bold
 
 MENUCOLOR=" uncursed"=green
 MENUCOLOR=" uncursed .* \(weapon in hand\)"=lightgreen
+MENUCOLOR=" uncursed .* \(wielded.*\)"=lightgreen
 MENUCOLOR=" uncursed .* \(being worn\)"=lightgreen
 MENUCOLOR=" uncursed .* \(in quiver\)"=lightgreen
 MENUCOLOR=" !uc"=green
 MENUCOLOR=" !uc \(weapon in hand\)"=lightgreen
+MENUCOLOR=" !uc \(wielded.*\)"=lightgreen
 MENUCOLOR=" !uc \(being worn\)"=lightgreen
 MENUCOLOR=" !uc \(in quiver\)"=lightgreen
 MENUCOLOR=" !nc"=green
 MENUCOLOR=" !nc \(weapon in hand\)"=lightgreen
+MENUCOLOR=" !nc \(wielded.*\)"=lightgreen
 MENUCOLOR=" !nc \(being worn\)"=lightgreen
 MENUCOLOR=" !nc \(in quiver\)"=lightgreen
 
@@ -198,13 +203,15 @@ MENUCOLOR=" ([-0-9]+:[-0-9]+)"=green #nethack doesn't display "uncursed" if char
 # MENUCOLOR=" [+-][0-9]"=white
 
 MENUCOLOR=" cursed"=red
-MENUCOLOR=" cursed .* \(weapon in hand\)"=lightred
-MENUCOLOR=" cursed .* \(being worn\)"=lightred
-MENUCOLOR=" cursed .* \(in quiver\)"=lightred
+MENUCOLOR=" cursed .* \(weapon in hand\)"=orange
+MENUCOLOR=" cursed .* \(wielded.*\)"=orange
+MENUCOLOR=" cursed .* \(being worn\)"=orange
+MENUCOLOR=" cursed .* \(in quiver\)"=orange
 MENUCOLOR=" !c"=red
-MENUCOLOR=" !c \(weapon in hand\)"=lightred
-MENUCOLOR=" !c \(being worn\)"=lightred
-MENUCOLOR=" !c \(in quiver\)"=lightred
+MENUCOLOR=" !c \(weapon in hand\)"=orange
+MENUCOLOR=" !c \(wielded.*\)"=orange
+MENUCOLOR=" !c \(being worn\)"=orange
+MENUCOLOR=" !c \(in quiver\)"=orange
 
 ################
 # WATER SPORTS #
@@ -222,7 +229,7 @@ MENUCOLOR=" potions? called water named cursed"=orange
 #################
 # MISCELLANEOUS #
 #################
-MENUCOLOR=" (lit)"=bold
+MENUCOLOR=" \(lit\)"=lightgreen
 
 ###########
 # GOODIES #
@@ -231,10 +238,12 @@ MENUCOLOR=" bag .* holding"=magenta
 MENUCOLOR=" luckstone"=magenta
 MENUCOLOR=" wand .* wishing"= magenta
 MENUCOLOR=" magic marker"=magenta
-MENUCOLOR=" magic lamp"=magenta
+MENUCOLOR=" magic lamp$"=magenta
+MENUCOLOR=" magic lamp \(lit\)"=lightmagenta
 MENUCOLOR=" unicorn horn[^[]*$"=magenta #this doesn't color the #enhance unicorn horn skill
 MENUCOLOR=" tinning kit"=magenta
-MENUCOLOR=" lamp .* magic"=magenta
+MENUCOLOR=" lamp .* magic$"=magenta
+MENUCOLOR=" lamp .* magic \(lit\)"=lightmagenta
 MENUCOLOR=" ring .* regeneration"=magenta
 MENUCOLOR=" ring .* slow digestion"=magenta
 MENUCOLOR=" amulet .* life saving"=magenta
@@ -269,13 +278,6 @@ MENUCOLOR=" Amulet of Yendor named"=magenta&bold&underline
 MENUCOLOR=" loadstone"=red&underline
 MENUCOLOR=" cursed .* luckstone"=orange&underline
 
-##############################
-# WATCH OUT, BAG OF HOLDING! #
-##############################
-MENUCOLOR=" bag .* tricks"=blue&underline
-MENUCOLOR=" wand .* cancellation"=blue&underline
-MENUCOLOR=" wand .* vanish"=blue&underline
-
 ################
 # SHINY THINGS #
 ################
@@ -292,15 +294,15 @@ MENUCOLOR=" \([0-9]+\|an?\|gems?.*\) \(uncursed \|cursed \|blessed \)?\(diamond\
 #######################
 # SPELL FAILURE RATES #
 #######################
-MENUCOLOR=" 0%"=white
+MENUCOLOR=" 0%"=green
 MENUCOLOR=" [1-9]%"=cyan
 MENUCOLOR=" [12][0-9]%"=cyan
-MENUCOLOR=" [3-6][0-9]%"=yellow
-MENUCOLOR=" 7[0-5]%"=yellow
-MENUCOLOR=" 7[6-9]%"=orange
-MENUCOLOR=" 8[0-9]%"=orange
-MENUCOLOR=" 9[0-9]%"=red
-MENUCOLOR=" 100%"=red
+MENUCOLOR=" [3-6][0-9]%"=brown
+MENUCOLOR=" 7[0-5]%"=brown
+MENUCOLOR=" 7[6-9]%"=red
+MENUCOLOR=" 8[0-9]%"=red
+MENUCOLOR=" 9[0-9]%"=orange
+MENUCOLOR=" 100%"=orange
 
 ###################
 # FORGOTTEN SPELL #  # thanks, Stevie
@@ -357,12 +359,18 @@ MENUCOLOR=" is empty. Do what?"=none
 MENUCOLOR="Put something into .*"=none
 MENUCOLOR="Take something out of .*"=none
 
-MENUCOLOR="cancellation"=magenta&underline
+MENUCOLOR="cancellation"=orange
 MENUCOLOR="bag"=magenta&underline
 
 MENUCOLOR="wand$"=magenta&underline
 MENUCOLOR="wand named"=magenta&underline
 MENUCOLOR="wand called"=lightmagenta&underline
+
+##############################
+# WATCH OUT, BAG OF HOLDING! #
+##############################
+MENUCOLOR=" bag .* tricks"=orange
+MENUCOLOR=" wand .* cancel"=orange
 
 
 AUTOPICKUP_EXCEPTION=">:0\)"
@@ -449,6 +457,20 @@ MSGTYPE=stop "^You feel deathly sick.$"
 MSGTYPE=stop "^You feel much worse.$"
 MSGTYPE=stop "^You feel even worse.$"
 
-MSGTYPE=hide "You displaced *"
+# vibrating square
+MSGTYPE=stop "^You feel a strange vibration under your "
+MSGTYPE=stop "^You feel a strange vibration beneath you\.$"
+
+MSGTYPE=hide "^You displaced"
+
+# make plane of fire less tedious
+# MSGTYPE=hide "^The fire doesn't seem to burn the .*!"
+# MSGTYPE=hide "^A tower of flame erupts from the floor under the "
+# MSGTYPE=hide "^The .* is already on fire!"
+# MSGTYPE=hide "^The fire doesn't seem to burn the .*!"
+# MSGTYPE=hide "^The .* is mildly warmed\."
+# MSGTYPE=hide "^The .* is uninjured\."
+# MSGTYPE=hide "^The .* is on fire!"
+# MSGTYPE=hide "^The .* is being roasted!"
 
 # vim: filetype=conf
