@@ -1314,7 +1314,10 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 
 " CheckAttach {{{2
-let g:attach_check_keywords = 'attached,attachment,angehängt,Anhang'
+let g:attach_check_keywords  = '.doc,.pdf,.xls,.ppt,.rtf,.pps'
+let g:attach_check_keywords .= ',attachment,attach,attached,attaching,enclosed'
+let g:attach_check_keywords .= ',anhängen,angehängt,Anhang'
+let g:attach_check_keywords .= ',CV,resume,cover letter'
 let g:checkattach_filebrowser = 'ranger'
 
 " clang_complete {{{2
