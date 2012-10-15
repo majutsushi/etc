@@ -44,7 +44,31 @@ cd $HOME
 
 ln -sf $HOME/.etc/.githooks/* .etc/.git/hooks
 
+xlink .etc/Rprofile
 xlink .etc/ackrc
+xlink .etc/bibtoolrsc
+xlink .etc/colorgccrc
+xlink .etc/colordiffrc
+xlink .etc/ctags
+xlink .etc/gdbinit
+xlink .etc/git/gitconfig
+xlink .etc/indent.pro
+xlink .etc/inputrc
+xlink .etc/irbrc
+xlink .etc/latexmkrc
+xlink .etc/lessfilter
+#xlink .etc/mailcap
+xlink .etc/mercurial/hgrc
+xlink .etc/moc
+#xlink .etc/procmail/procmailrc
+xlink .etc/screen/screenrc
+xlink .etc/slrn/slrnrc
+xlink .etc/taskrc
+xlink .etc/tmux/tmux.conf
+xlink .etc/urxvt
+xlink .etc/xmonad
+xlink .etc/zathurarc .config/zathura/zathurarc
+xlink .etc/zsh/zshenv
 
 xlink .etc/bash/bashrc
 xlink .etc/bash/bash_profile
@@ -52,12 +76,6 @@ xlink .etc/bash/bash_logout
 
 xlink .etc/emacs/emacs
 xlink .etc/emacs/emacs.d
-
-xlink .etc/git/gitconfig
-
-xlink .etc/mercurial/hgrc
-
-xlink .etc/moc
 
 xlink .etc/mail/lbdb
 xlink .etc/mail/msmtprc
@@ -69,22 +87,10 @@ xlink .etc/mutt/mutt
 xlink .etc/pentadactyl/pentadactylrc
 xlink .etc/pentadactyl/pentadactyl
 
-xlink .etc/screen/screenrc
-
-xlink .etc/slrn/slrnrc
-
-xlink .etc/tmux/tmux.conf
-
-xlink .etc/urxvt
-
 xlink .etc/vim/vimrc
 xlink .etc/vim/gvimrc
 xlink .etc/vim/vim
 xlink .etc/vim/vimplaterc
-
-xlink .etc/xmonad
-
-xlink .etc/zathurarc .config/zathura/zathurarc
 
 #xlink .etc/xorg/Xmodmap
 #xlink .etc/xorg/Xresources
@@ -94,22 +100,6 @@ xlink .etc/zathurarc .config/zathura/zathurarc
 #xlink .etc/xorg/xsession
 #xlink .etc/xorg/xsessionrc
 
-xlink .etc/zsh/zshenv
-
-xlink .etc/Rprofile
-xlink .etc/bibtoolrsc
-xlink .etc/colorgccrc
-xlink .etc/colordiffrc
-xlink .etc/ctags
-xlink .etc/gdbinit
-xlink .etc/indent.pro
-xlink .etc/inputrc
-xlink .etc/irbrc
-xlink .etc/latexmkrc
-xlink .etc/lessfilter
-#xlink .etc/mailcap
-#xlink .etc/procmail/procmailrc
-xlink .etc/taskrc
 
 lesskey .etc/lesskey
 
