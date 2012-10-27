@@ -1651,6 +1651,12 @@ function! s:MapExtraKeys() abort
         \ 'M->'     : '>',
         \ 'M-<'     : '<'
     \ }
+    if &term =~ '^xterm\|screen'
+        let extramaps['C-Insert'] = '[2;5~'
+    elseif &term =~ '^rxvt-unicode'
+        let extramaps['C-Insert'] = '[2^'
+    endif
+
     let mapc = 0
     for [key, val] in items(extramaps)
         if mapc == 50
