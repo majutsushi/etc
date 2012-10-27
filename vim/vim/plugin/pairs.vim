@@ -87,9 +87,9 @@ function! s:HandleSpace() abort
     let ccur  = s:getcharrel(0)
 
     if has_key(b:pairs_conf.parens, cprev) && ccur == b:pairs_conf.parens[cprev]
-        return "\<Space>\<Space>\<Left>"
+        return "\<C-]>\<Space>\<Space>\<Left>"
     else
-        return "\<Space>"
+        return "\<C-]>\<Space>"
     endif
 endfunction
 
@@ -160,6 +160,10 @@ function! s:HandleCR(...) abort
 
     if rv !~# "\<CR>$" && rv != ''
         return rv
+    endif
+
+    if rv !~ "^\<C-]>"
+        let rv = "\<C-]>" . rv
     endif
 
     let cprev = s:getcharrel(-1)
