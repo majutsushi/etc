@@ -26,6 +26,16 @@ for p in sys.path:
 EOF
 endif
 
+function s:IPython()
+    let g:ScreenShellSendPrefixOld = g:ScreenShellSendPrefix
+    let g:ScreenShellSendSuffixOld = g:ScreenShellSendSuffix
+    let g:ScreenShellSendPrefix = '%cpaste'
+    let g:ScreenShellSendSuffix = '--'
+    let g:ScreenShellSendVarsRestore = 1
+
+    ScreenShellVertical ipython
+endfunction
+
 function! s:ScreenShellListener()
     if g:ScreenShellActive
         if g:ScreenShellCmd == 'ipython'
@@ -35,14 +45,14 @@ function! s:ScreenShellListener()
             nnoremap <silent> <buffer> <leader>ss <Nop>
         endif
     else
-        nnoremap <silent> <buffer> <leader>ss :ScreenShellVertical ipython<cr>
+        nnoremap <silent> <buffer> <leader>ss :call <SID>IPython()<cr>
     endif
 endfunction
 
 call s:ScreenShellListener()
 augroup ScreenShellEnter
-    autocmd User *.py call <SID>ScreenShellListener()
+    autocmd User <buffer> call <SID>ScreenShellListener()
 augroup END
 augroup ScreenShellExit
-    autocmd User *.py call <SID>ScreenShellListener()
+    autocmd User <buffer> call <SID>ScreenShellListener()
 augroup END

@@ -1466,7 +1466,7 @@ function! s:ScreenShellListener()
     if g:ScreenShellActive
         nnoremap <silent> <leader>ss :ScreenSend<cr>
         xnoremap <silent> <leader>ss :ScreenSend<cr>
-        nnoremap <silent> <leader>sx :ScreenQuit<cr>
+        nnoremap <silent> <leader>sq :ScreenQuit<cr>
     else
         nnoremap <silent> <leader>ss :ScreenShellVertical<cr>
     endif
