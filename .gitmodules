@@ -49,9 +49,6 @@
 [submodule "vim/vim/bundle/vim-r-plugin"]
 	path = vim/vim/bundle/vim-r-plugin
 	url = https://github.com/vim-scripts/Vim-R-plugin.git
-[submodule "vim/vim/bundle/stlimproved"]
-	path = vim/vim/bundle/stlimproved
-	url = https://github.com/vim-scripts/STL-improved.git
 [submodule "vim/vim/bundle/markdown"]
 	path = vim/vim/bundle/markdown
 	url = https://github.com/tpope/vim-markdown
