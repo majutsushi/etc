@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# Author: Jan Larres <jan@majutsushi.net>
+# License: MIT/X11
 
 import urllib
 import urllib2
@@ -6,26 +8,33 @@ import sys
 import re
 from BeautifulSoup import BeautifulSoup
 
-nomode = ''
+sgr0 = ''
 bold = ''
 rev = ''
 sitm = ''
 ritm = ''
+smul = ''
+rmul = ''
 
 if sys.stdout.isatty():
-    nomode = '\033[0m'
     try:
         import curses
         curses.setupterm()
+        sgr0 = curses.tigetstr('sgr0')
         bold = curses.tigetstr('bold')
         rev  = curses.tigetstr('rev')
         sitm = curses.tigetstr('sitm')
         ritm = curses.tigetstr('ritm')
+        smul = curses.tigetstr('smul')
+        rmul = curses.tigetstr('rmul')
     except:
+        sgr0 = '\033[0m'
         bold = '\033[1m'
         rev  = '\033[7m'
         sitm = '\033[3m'
         ritm = '\033[23m'
+        smul = '\033[4m'
+        rmul = '\033[24m'
 
 if len(sys.argv) == 1:
     print 'Usage: leo <words>'
@@ -34,18 +43,19 @@ if len(sys.argv) == 1:
 words = ' '.join(sys.argv[1:])
 
 def process(s):
-    s = re.sub(r'<b>',       bold,   s)
-    s = re.sub(r'</b>',      nomode, s)
-    s = re.sub(r'<i>',       sitm,   s)
-    s = re.sub(r'</i>',      ritm,   s)
-    s = re.sub(r'<small>',   '',     s)
-    s = re.sub(r'</small>',  '',     s)
-    s = re.sub(r'<sup>',     '<',    s)
-    s = re.sub(r'</sup>',    '>',    s)
-    s = re.sub(r'<a[^>]*?>', '',     s)
-    s = re.sub(r'</a>',      '',     s)
+    s = re.sub(r'<b>',       bold, s)
+    s = re.sub(r'</b>',      sgr0, s)
+    s = re.sub(r'<i>',       sitm, s)
+    s = re.sub(r'</i>',      ritm, s)
+    s = re.sub(r'<small>',   '',   s)
+    s = re.sub(r'</small>',  '',   s)
+    s = re.sub(r'<sup>',     '<',  s)
+    s = re.sub(r'</sup>',    '>',  s)
+    s = re.sub(r'<a[^>]*?>', '',   s)
+    s = re.sub(r'</a>',      '',   s)
     # s = re.sub(r'<[^>]+?>', '', s)
     s = re.sub(r'&#160;', '', s)
+    s = re.sub(r'&nbsp;', '', s)
     s = re.sub(r'\*\)$', '', s)
     return s
 
@@ -56,7 +66,7 @@ params = {'lp'         : 'ende',
           'searchLoc'  : '0',
           'cmpType'    : 'relaxed',
           'relink'     : 'off',
-          'sectHdr'    : 'off',
+          'sectHdr'    : 'on',
           'spellToler' : 'std',
           'search'     : words}
 
@@ -85,20 +95,29 @@ for row in rows:
         continue
     elif row.find('th') != None:
         # subheader
-        contents = row.find('th')
-        print '\n' + rev + re.sub(r' +$', '', contents.renderContents()) + nomode
+        contents = row.find('th').renderContents()
+        if contents.find('No base forms found') != -1:
+            continue
+        print '\n' + rev + re.sub(r' +$', '', contents) + sgr0
     elif row.find('ul') != None:
         # base forms
         forms = row.findAll('li')
         for form in forms:
             print process(form.renderContents())
+    elif len(row.findAll('td')) == 1:
+        # section header
+        info = row.find('td')
+        info = process(info.getText())
+        if re.match(r'^more ', info):
+            continue
+        print smul + info + rmul
     else:
         # entry
         words = row.findAll('td')
         wordl = process(words[0].renderContents(encoding=None))
 
         esclen = 0
-        for escseq in [bold, nomode, sitm, ritm]:
+        for escseq in [bold, sgr0, sitm, ritm]:
             l = re.findall(re.escape(escseq), wordl)
             esclen += len(l) * len(escseq)
 
