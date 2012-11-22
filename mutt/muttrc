@@ -552,10 +552,10 @@ ifdef edit-label bind index,pager y edit-label
 
 # labels
 set my_vi=$editor
-macro index y "<enter-command>set editor=\"~/.etc/mutt/editlabel append\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Append label"
-macro pager y "<enter-command>set editor=\"~/.etc/mutt/editlabel append\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Append label"
-macro index Y "<enter-command>set editor=\"~/.etc/mutt/editlabel menu\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Edit labels"
-macro pager Y "<enter-command>set editor=\"~/.etc/mutt/editlabel menu\"\n<edit><sync-mailbox><next-undeleted><enter-command>set editor=$my_vi\n" "Edit labels"
+macro index y "<enter-command>set editor=\"~/.etc/mutt/editlabel append\"\n<enter-command>unset resolve<enter><edit><sync-mailbox><toggle-new><enter-command>set editor=$my_vi\n<enter-command>set resolve<enter>" "Append label"
+macro pager y "<exit>y<display-message>"
+macro index Y "<enter-command>set editor=\"~/.etc/mutt/editlabel menu\"\n<enter-command>unset resolve<enter><edit><sync-mailbox><toggle-new><enter-command>set editor=$my_vi\n<enter-command>unset resolve<enter>" "Edit labels"
+macro pager Y "<exit>Y<display-message>" "Edit labels"
 macro index \Cy "<limit>~y " "Limit view to label"
 
 # spam handlers
