@@ -75,7 +75,7 @@ alternates ((jan(\.larres)?|lists|majutsushi)@majutsushi\.net|jan\.larres@gmail\
 ###############################################################################
 # Security options {{{
 
-  set crypt_autosign    # see folder-hooks
+  set crypt_autosign
 unset crypt_autoencrypt
   set crypt_replyencrypt
   set crypt_replysign
@@ -179,11 +179,16 @@ unset text_flowed       # use format=flowed; if set, unset encode_from
 unset use_domain        # add $hostname to all addresses without @host
   set user_agent        # Create User-Agent: Mutt/<Version> header.
 
+folder-hook .    unmy_hdr *
+# folder-hook .    my_hdr From: Jan Larres <jan@majutsushi.net> # interferes with $reverse_name
+send-hook   ~l           my_hdr From: Jan Larres <lists@majutsushi.net>
+# folder-hook lists        my_hdr Reply-To: Jan Larres <jan@majutsushi.net>
+
 # }}}
 # =============================================================================
 # after editing {{{
 
-  set abort_unmodified=yes   # Abort, if message wasn't edited.
+  set abort_unmodified=yes   # Abort if message wasn't edited.
   set allow_8bit        # use QP or Base64 if unset.
   set compose_format="-- Mutt: Compose [Approx. msg size: %l Atts: %a]%>-"
   set content_type="text/plain"
@@ -251,7 +256,7 @@ unset beep_new          # beep on new mail
   set help              # show help in first line of the display
   set history=50
   set locale="en_NZ"
-  set mail_check=5
+  set mail_check=90
   set menu_scroll       # scroll on last line of menu (set) or do a nextpage?
 unset meta_key          # Don't interpret Alt-x as ESC x
   set move=no           # Move mail-spool to $mbox?
@@ -261,6 +266,7 @@ unset score             # don't do scoring
   set sleep_time=1
 unset status_on_top     # status line at the top or bottom?
 unset suspend           # Ctrl-Z is able to suspend mutt.
+  set timeout=15        # How long to wait for input to perform regular operations
 unset wait_key          # Only "press a key" if return value non-zero
   set xterm_icon="M%?n?AIL&ail?"
   set xterm_set_titles
@@ -306,6 +312,12 @@ unset reverse_alias     # use realname from reverse alias lookup
   set status_format="---[%r%f ]---[ Msgs:%?M?%M/?%m%?n? New:%n?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p? ]---%>-(%P)---"
   set to_chars=" +TCFL" # default (Not to me, To: me only, To: me, CC me, From me)
   set write_inc=10      # number - display increment count for every n-th mail
+
+folder-hook .    set sort=threads sort_aux=last-date-received
+folder-hook <    set sort=reverse-date
+folder-hook spam set sort=subject
+
+folder-hook !<   'push "<collapse-all>"'
 
 # }}}
 # =============================================================================
@@ -776,23 +788,7 @@ color body $my_green  $my_background "^#v[-+]"
 # charset-hook us-ascii ISO-8859-15
 # charset-hook unknown-8bit ISO-8859-15
 
-folder-hook .            set timeout=30
-folder-hook .            set sort=threads sort_aux=date-sent
-# folder-hook .            'push ":unset collapse_unread<enter><collapse-all>:set collapse_unread<enter>"'
-folder-hook .            'push "<collapse-all>"'
-folder-hook .            set mail_check=90
-folder-hook .            set crypt_autosign
-#folder-hook .            save-hook .* >.
-folder-hook .            unmy_hdr *
-# folder-hook .            my_hdr From: Jan Larres <jan@majutsushi.net> # interferes with $reverse_name
-folder-hook .            my_hdr X-Editor: Vim http://www.vim.org/
-folder-hook .            my_hdr X-Operating-System: `uname -s`/`uname -r` (`uname -m`)
-folder-hook "!"$         set timeout=5
-folder-hook <            set sort=reverse-date
-folder-hook tnt@a-n-t_de unset crypt_autosign
-
-send-hook   ~l           my_hdr From: Jan Larres <lists@majutsushi.net>
-# folder-hook lists        my_hdr Reply-To: Jan Larres <jan@majutsushi.net>
+#folder-hook .    save-hook .* >.
 
 # }}}
 ###############################################################################
@@ -820,4 +816,3 @@ send-hook   ~l           my_hdr From: Jan Larres <lists@majutsushi.net>
 ###############################################################################
 
 # vim: tw=0 fdm=marker fen
-
