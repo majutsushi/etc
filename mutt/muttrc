@@ -546,7 +546,7 @@ macro index,pager  ,T   "<change-folder>=.Todo\n" "Go to 'Todo' folder"
 macro index,pager  ,a   "<save-message>=.Archive\n" "Move message to folder 'Archive'"
 macro index,pager  ,w   "<save-message>=.Waiting\n" "Move message to folder 'Waiting'"
 macro index,pager  ,t   "<save-message>=.Todo\n" "Move message to folder 'Todo'"
-macro index,pager  ,p   "<pipe-message>procmail\n<delete-message>" "Pipe message through procmail"
+macro index,pager  ,p   "<pipe-message>procmail -a yes\n<delete-message>" "Pipe message through procmail"
 
 # search mail with maildir-utils
 macro index  ,s  "<shell-escape>~/.etc/mutt/mu-search<enter><change-folder-readonly>~/.mu/results<enter>" "Search with mu"
