@@ -5,6 +5,9 @@ MAILDIR=$HOME/Maildir
 DEFAULT=$HOME/Maildir/
 LOGFILE=$HOME/.cache/procmail/procmail.log
 
+# "yes" if ml mail should be marked as read
+READ=$1
+
 # Insert line count for imap/maildir
 :0Bfh
 * H ?? ! ^Lines:
@@ -84,6 +87,12 @@ LOGFILE=$HOME/.cache/procmail/procmail.log
 * 9876543210^0 ^List-post:[	 ]<mailto:\/[^ >`']+
 {
     foldername=.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
+
+    :0
+    * READ ?? yes
+    {
+        SWITCHRC=$HOME/.etc/procmail/markasread
+    }
 
     # http://freesoftware.zona-m.net/how-ignore-uninteresting-threads-in-mailing-lists/
     # simple recipe to ignore threads based on prior cache of threads to ignore.
