@@ -340,7 +340,7 @@ unset prompt_after      # display prompt after exit from pager
   set smart_wrap        # wrap long lines at word boundary.
   set smileys="(>From )|(:[-^]?[][)(><}{|/DP])"
   set tilde             # Internal Pager: ~~~~ at and of message?
-  set wrapmargin=0
+  set wrap=0
 
 auto_view text/html text/enriched text/rtf text/calendar application/pdf application/zip application/x-gunzip application/x-tar-gz application/pgp-signature #image/*
 
@@ -390,6 +390,8 @@ attachments +I text/calendar
 attachments +I application/.*
 attachments +I image/.*
 # attachments -I message/external-body
+
+mime_lookup application/octet-stream
 
 # }}}
 # =============================================================================
