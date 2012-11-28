@@ -26,7 +26,7 @@ MIMETYPE=$(file --mime-type -b $(readlink -f "$1"))
 
 if [[ -x "$(which highlight)" ]]; then
     case `echo "$1" | tr '[:upper:]' '[:lower:]'` in
-        *.c|*.cpp|*.h|*.py|*.sh|*.pl|*.patch|*.r|*.css|*.js)
+        *.c|*.cpp|*.h|*.py|*.sh|*.pl|*.patch|*.r|*.css|*.js|*.java)
             hl "$1"
             ;;
         *.zip)
