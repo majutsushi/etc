@@ -86,10 +86,16 @@ function! s:HandleSpace() abort
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
-    if has_key(b:pairs_conf.parens, cprev) && ccur == b:pairs_conf.parens[cprev]
-        return "\<C-]>\<Space>\<Space>\<Left>"
+    if v:version > 703 || v:version == 703 && has("patch489")
+        let expand = "\<C-]>"
     else
-        return "\<C-]>\<Space>"
+        let expand = ""
+    endif
+
+    if has_key(b:pairs_conf.parens, cprev) && ccur == b:pairs_conf.parens[cprev]
+        return expand . "\<Space>\<Space>\<Left>"
+    else
+        return expand . "\<Space>"
     endif
 endfunction
 
@@ -162,8 +168,10 @@ function! s:HandleCR(...) abort
         return rv
     endif
 
-    if rv !~ "^\<C-]>"
-        let rv = "\<C-]>" . rv
+    if v:version > 703 || v:version == 703 && has("patch489")
+        if rv !~ "^\<C-]>"
+            let rv = "\<C-]>" . rv
+        endif
     endif
 
     let cprev = s:getcharrel(-1)
