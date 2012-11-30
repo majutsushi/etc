@@ -1783,7 +1783,11 @@ inoremap <expr> <C-x><C-o> pumvisible() ? '<C-x><C-o>' : '<C-x><C-o><C-r>=pumvis
 inoremap <expr> <C-n>      pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 " http://vim.wikia.com/wiki/Improve_completion_popup_menu
 " inoremap <expr> <Esc>      pumvisible() ? "\<C-E>" : "\<Esc>"
-inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<C-]>\<CR>"
+if v:version > 703 || v:version == 703 && has("patch489")
+    inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<C-]>\<CR>"
+else
+    inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"
+endif
 "inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
 "inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
