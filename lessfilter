@@ -30,7 +30,7 @@ if [[ -x "$(which highlight)" ]]; then
         *.c|*.cpp|*.h|*.py|*.sh|*.pl|*.patch|*.r|*.css|*.js|*.java)
             hl "$1"
             ;;
-        *.zip)
+        *.jar|*.war|*.ear|*.xpi|*.zip)
             unzip -l "$1"
             ;;
         *)
