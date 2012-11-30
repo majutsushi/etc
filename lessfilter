@@ -7,6 +7,7 @@ filemaps[text/x-perl]=perl
 filemaps[text/x-python]=python
 filemaps[text/x-shellscript]=sh
 filemaps[text/x-diff]=diff
+filemaps[application/xml]=xml
 
 if [[ -f /usr/share/highlight/themes/molokai.style ]]; then
     STYLE=molokai
