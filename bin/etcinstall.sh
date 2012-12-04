@@ -103,6 +103,21 @@ xlink .etc/vim/vimplaterc
 
 lesskey .etc/lesskey
 
+FONTDIR=$HOME/.local/share/fonts
+mkdir -p $FONTDIR
+for fontf in .etc/xorg/fonts/*.bdf; do
+    font=$(basename ${fontf})
+    font=${font%.bdf}
+    info "Installing font ${font}"
+    bdftopcf -o $FONTDIR/${font}.pcf ${fontf}
+    gzip -f $FONTDIR/${font}.pcf
+done
+cd $FONTDIR
+mkfontdir
+cd $HOME
+xset -fp $FONTDIR
+xset +fp $FONTDIR
+
 for tinfof in .etc/terminfo/*; do
     tinfo=$(basename ${tinfof})
     tinfo=${tinfo%.terminfo}
