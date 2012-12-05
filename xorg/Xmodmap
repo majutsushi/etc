@@ -9,12 +9,27 @@ keysym  o = o O odiaeresis Odiaeresis
 keysym  a = a A adiaeresis Adiaeresis
 keysym  s = s S ssharp
 keysym  c = c C cent
-! keycode  26 = e E EuroSign currency
-! keycode  30 = u U udiaeresis Udiaeresis
-! keycode  32 = o O odiaeresis Odiaeresis
-! keycode  38 = a A adiaeresis Adiaeresis
-! keycode  39 = s S ssharp
-! keycode  54 = c C cent
+
+![Mac keysym emulation]
+! –   en dash             ⌥  + –
+! —   em dash             ⌥⇧ + –
+keysym minus = minus underscore endash emdash
+! …   horizontal ellipsis ⌥  + ;
+keysym semicolon = semicolon colon ellipsis ellipsis
+! “ ” double quotes       ⌥  + [
+!                         ⌥⇧ + [
+keysym bracketleft = bracketleft braceleft leftdoublequotemark rightdoublequotemark
+! ‘ ’ single quotes       ⌥  + ]
+!                         ⌥⇧ + ]
+keysym bracketright = bracketright braceright leftsinglequotemark rightsinglequotemark
+! « » guillemets          ⌥  + \
+!                         ⌥⇧ + \
+keysym backslash = backslash bar guillemotleft guillemotright
+! €   Euro                ⌥⇧ + 2
+keysym 2 = 2 at EuroSign EuroSign
+! °   degrees             ⌥⇧ + 8
+keysym 8 = 8 asterisk degree degree
+
 
 ![MacBook]
 keycode  49 = section plusminus
@@ -52,16 +67,3 @@ keycode 134 = Mode_switch Multi_key Pointer_Button2
 !add Mod1 = Alt_L
 !add Mod2 = Meta_L
 !add Mod2 = Meta_R
-
-! Mac key codes
-! –   en dash             ⌥  + –
-! —   em dash             ⌥⇧ + –
-! …   horizontal ellipsis ⌥  + ;
-! “ ” double quotes       ⌥  + [
-!                         ⌥⇧ + [
-! ‘ ’ single quotes       ⌥  + ]
-!                         ⌥⇧ + ]
-! « » guillemets          ⌥  + \
-!                         ⌥⇧ + \
-! €   Euro                ⌥⇧ + 2
-! °   degrees             ⌥⇧ + 8
