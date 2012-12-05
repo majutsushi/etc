@@ -46,6 +46,7 @@ ln -sf $HOME/.etc/.githooks/* .etc/.git/hooks
 
 xlink .etc/Rprofile
 xlink .etc/ackrc
+xlink .etc/aptitude
 xlink .etc/bibtoolrsc
 xlink .etc/colorgccrc
 xlink .etc/colordiffrc
