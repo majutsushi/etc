@@ -98,7 +98,7 @@ xlink .etc/vim/vimplaterc
 #xlink .etc/xorg/xinput.d
 #xlink .etc/xorg/xinputrc
 #xlink .etc/xorg/xsession
-#xlink .etc/xorg/xsessionrc
+xlink .etc/xorg/xsessionrc
 
 
 lesskey .etc/lesskey
@@ -115,7 +115,7 @@ done
 cd $FONTDIR
 mkfontdir
 cd $HOME
-xset -fp $FONTDIR
+xset -fp $FONTDIR 2> /dev/null
 xset +fp $FONTDIR
 
 for tinfof in .etc/terminfo/*; do
