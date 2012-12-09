@@ -81,6 +81,7 @@ xlink .etc/emacs/emacs.d
 xlink .etc/mail/lbdb
 xlink .etc/mail/msmtprc
 xlink .etc/mail/offlineimaprc
+xlink .etc/mail/t-prot .config/t-prot
 
 xlink .etc/mutt/muttrc
 xlink .etc/mutt/mutt
