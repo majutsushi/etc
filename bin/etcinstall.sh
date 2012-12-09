@@ -62,6 +62,7 @@ xlink .etc/lessfilter
 xlink .etc/mercurial/hgrc
 xlink .etc/moc
 #xlink .etc/procmail/procmailrc
+xlink .etc/redshift.conf .config/redshift.conf
 xlink .etc/screen/screenrc
 xlink .etc/slrn/slrnrc
 xlink .etc/taskrc
