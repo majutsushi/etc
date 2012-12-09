@@ -358,8 +358,11 @@ unignore x-label:
 unhdr_order *
 hdr_order Date: From: Reply-To: To: Cc: Subject: X-Label: X-Newsreader: X-Mailer: Organization: Organisation: User-Agent: X-Fnord: X-Message-Flag: Newsgroups: X-Spam-Status:
 
-# put multipart/mixed in front for Apple Mail messages with attachments
-alternative_order multipart/mixed text/plain text/html
+# modify order for Apple Mail messages with attachments
+# http://wiki.mutt.org/?ConfigTricks
+alternative_order text/plain text/html
+message-hook .                           'unalternative_order *; alternative_order text/plain text/html'
+message-hook '~h "X-Mailer: Apple Mail"' 'unalternative_order *; alternative_order multipart/mixed multipart/related text/plain text/html'
 
 # }}}
 # =============================================================================
