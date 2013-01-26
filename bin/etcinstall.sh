@@ -61,7 +61,6 @@ xlink .etc/lessfilter
 #xlink .etc/mailcap
 xlink .etc/mercurial/hgrc
 xlink .etc/moc
-#xlink .etc/procmail/procmailrc
 xlink .etc/redshift.conf .config/redshift.conf
 xlink .etc/screen/screenrc
 xlink .etc/slrn/slrnrc
@@ -83,6 +82,8 @@ xlink .etc/mail/lbdb
 xlink .etc/mail/msmtprc
 xlink .etc/mail/offlineimaprc
 xlink .etc/mail/t-prot .config/t-prot
+#xlink .etc/procmail/procmailrc
+mkdir -p $HOME/.cache/procmail
 
 xlink .etc/mutt/muttrc
 xlink .etc/mutt/mutt
