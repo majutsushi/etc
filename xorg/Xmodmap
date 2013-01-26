@@ -1,8 +1,6 @@
 !Mode_switch == 3rd level, Multi_key == Compose
 
 ![General]
-pointer = 1 2 8 4 5 6 7 3 9 10 11 12 13
-
 keysym  e = e E EuroSign currency
 keysym  u = u U udiaeresis Udiaeresis
 keysym  o = o O odiaeresis Odiaeresis
