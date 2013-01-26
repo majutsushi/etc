@@ -1721,25 +1721,43 @@ if &term =~ '^rxvt-unicode' || $ORIGTERM =~ '^rxvt-unicode'
 endif
 
 " Change cursor colour or shape in insert mode
+" Some ideas from https://github.com/jszakmeister/vim-togglecursor
 " tmux will only forward escape sequences to the terminal if surrounded by a DCS sequence
 " http://sourceforge.net/mailarchive/forum.php?thread_name=AANLkTinkbdoZ8eNR1X2UobLTeww1jFrvfJxTMfKSq-L%2B%40mail.gmail.com&forum_name=tmux-users
-if exists('$TMUX')
-    if exists('$TERM_PROGRAM') && $TERM_PROGRAM == "iTerm.app"
-        let &t_SI = "\ePtmux;\e\e]50;CursorShape=1\x7\e\\"
-        let &t_EI = "\ePtmux;\e\e]50;CursorShape=0\x7\e\\"
-    else
-        let &t_SI = "\ePtmux;\e\e]12;red\e\e\\\e\\"
-        let &t_EI = "\ePtmux;\e\e]12;yellow\e\e\\\e\\"
-        autocmd VimLeave * :silent !echo -ne "\ePtmux;\e\e]12;yellow\e\e\\\e\\"
-    endif
-elseif &term =~ 'xterm\|rxvt'
-    let &t_SI = "\e]12;red\e\\"
-    let &t_EI = "\e]12;yellow\e\\"
-    autocmd VimLeave * :silent !echo -ne "\e]12;yellow\e\\"
-elseif exists('$TERM_PROGRAM') && $TERM_PROGRAM == "iTerm.app"
-    let &t_SI = "\e]50;CursorShape=1\x7"
-    let &t_EI = "\e]50;CursorShape=0\x7"
+let s:terminal = ''
+if exists('$TERM_PROGRAM') && $TERM_PROGRAM == 'iTerm.app'
+    let s:terminal = 'iterm'
+elseif $ORIGTERM =~ '^rxvt-unicode' || $XTERM_VERSION != ''
+    let s:terminal = 'xterm'
 endif
+
+let s:xterm_normal = "\e]12;yellow\e\\"
+let s:xterm_insert = "\e]12;red\e\\"
+let s:iterm_normal = "\e]50;CursorShape=0\x7"
+let s:iterm_insert = "\e]50;CursorShape=1\x7"
+
+function! s:tmux_escape(code) abort
+    let code = substitute(a:code, "\e", "\e\e", 'g')
+    return "\ePtmux;" . code . "\e\\"
+endfunction
+
+function! s:get_escape(mode) abort
+    if s:terminal == ''
+        return ''
+    endif
+
+    let code = s:{s:terminal}_{a:mode}
+
+    if exists('$TMUX')
+        let code = s:tmux_escape(code)
+    endif
+
+    return code
+endfunction
+
+let &t_SI = s:get_escape('insert')
+let &t_EI = s:get_escape('normal')
+let &t_te = s:get_escape('normal') . &t_te
 
 " Mappings {{{1
 
