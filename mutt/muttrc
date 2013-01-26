@@ -522,7 +522,7 @@ bind index,pager  R  group-reply
 bind index,pager   B          bounce-message
 
 # saving
-macro index,pager  \Cs        "<pipe-message>cat > ~/downloads/" "Save message to a file"
+macro index,pager  \Cs        "<pipe-message>cat > ~/Downloads/" "Save message to a file"
 
 # syncing
 bind index         x    sync-mailbox
