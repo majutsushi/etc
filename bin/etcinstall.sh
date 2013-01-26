@@ -96,6 +96,7 @@ xlink .etc/vim/gvimrc
 xlink .etc/vim/vim
 xlink .etc/vim/vimplaterc
 
+xlink .etc/xorg/fonts.conf.d
 #xlink .etc/xorg/Xmodmap
 #xlink .etc/xorg/Xresources
 #xlink .etc/xorg/xinitrc
