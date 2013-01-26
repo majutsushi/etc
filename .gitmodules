@@ -109,3 +109,6 @@
 [submodule "urxvt/urxvt-font-size"]
 	path = urxvt/urxvt-font-size
 	url = git@github.com:majutsushi/urxvt-font-size.git
+[submodule "vim/vim/bundle/vim-scriptease"]
+	path = vim/vim/bundle/vim-scriptease
+	url = https://github.com/tpope/vim-scriptease.git
