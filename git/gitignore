@@ -28,8 +28,11 @@ cscope.*
 *.log
 *.lol
 *.lot
+*.nav
 *.out
+*.snm
 *.toc
+*.vrb
 
 *.pdf
 
