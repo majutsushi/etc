@@ -1,4 +1,4 @@
-image/*; mutt_bgrun mirage '%s'; test=test -n "$DISPLAY"
+image/*; mutt_bgrun eog '%s'; test=test -n "$DISPLAY"
 application/pdf; mutt_bgrun evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf
 application/pdf; pdftotext '%s' -; nametemplate=%s.pdf; copiousoutput
 application/x-pdf; mutt_bgrun evince '%s'; test=test -n "$DISPLAY"; nametemplate=%s.pdf
