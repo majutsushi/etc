@@ -10,7 +10,7 @@ endif
 if v:version < 703
     let g:pathogen_disabled += ['gundo']
 endif
-call pathogen#infect()
+call pathogen#infect('bundle/{}', '~/src/vim/bundle/{}')
 set runtimepath+=$HOME/.vim/xptpersonal
 
 if !isdirectory($HOME . "/.cache/vim") && exists("*mkdir")
