@@ -28,7 +28,7 @@ export LESS_TERMCAP_me=$'\e[0m'     # end all modes       => turn off all attrs
 [[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
 
 export GREP_OPTIONS='--color=auto'
-export UNZIP=-L
+# export UNZIP=-L # interferes with things like Java class file names
 
 export DEBEMAIL="jan@majutsushi.net"
 export DEBFULLNAME="Jan Larres"
