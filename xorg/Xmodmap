@@ -29,15 +29,6 @@ keysym 2 = 2 at EuroSign EuroSign
 keysym 8 = 8 asterisk degree degree
 
 
-![MacBook]
-keycode  49 = section plusminus
-keycode  94 = grave asciitilde
-! keycode 108 = Insert NoSymbol Pointer_Button3
-! keycode 116 = Mode_switch Multi_key Pointer_Button2
-keycode 104 = Insert NoSymbol Pointer_Button3
-keycode 134 = Mode_switch Multi_key Pointer_Button2
-
-
 !remove Mod1 = Alt_R
 !remove Mod1 = Control_R
 !remove Mod4 = Super_R
