@@ -13,6 +13,32 @@ error() {
     echo -e "\033[31m$1\033[0m"
 }
 
+merge() {
+    BASEFILE=$1
+    if [[ -n "$2" ]]; then
+        TARGET=$2
+    else
+        TARGET=.$(basename "$BASEFILE")
+    fi
+
+    if [[ -f $TARGET ]] && ! head -1 $TARGET | grep -q "*** GENERATED FILE - DO NOT EDIT ***"; then
+        warn "$TARGET is not a generated file"
+        return
+    fi
+
+    rm -f $TARGET
+
+    info "Merging $TARGET"
+
+    cat $BASEFILE.d/header > $TARGET
+    cat $BASEFILE >> $TARGET
+    for part in $BASEFILE.d/*; do
+        if [[ "$(hostname)" == "$(basename $part)" ]]; then
+            cat $part >> $TARGET
+        fi
+    done
+}
+
 xlink() {
     if [[ -n "$3" ]] && ! command -v "$3" >/dev/null 2>&1; then
         warn "$3 is not installed"
