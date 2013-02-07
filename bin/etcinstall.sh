@@ -131,6 +131,7 @@ xlink .etc/xorg/fonts.conf.d
 #xlink .etc/xorg/xsession
 xlink .etc/xorg/xsessionrc
 merge .etc/xorg/Xmodmap
+xmodmap $HOME/.Xmodmap
 
 
 lesskey .etc/lesskey
