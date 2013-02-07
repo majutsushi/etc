@@ -42,6 +42,7 @@ config.status
 
 # byte-compiled files
 *.pyc
+*.pyo
 
 # gcov stuff
 *.gcov
