@@ -21,7 +21,7 @@ merge() {
         TARGET=.$(basename "$BASEFILE")
     fi
 
-    if [[ -f $TARGET ]] && ! head -1 $TARGET | grep -q "*** GENERATED FILE - DO NOT EDIT ***"; then
+    if [[ -f $TARGET ]] && ! head -1 $TARGET | grep -q "\*\*\* GENERATED FILE - DO NOT EDIT \*\*\*"; then
         warn "$TARGET is not a generated file"
         return
     fi
