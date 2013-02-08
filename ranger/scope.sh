@@ -66,7 +66,7 @@ case "$mimetype" in
 	image/*)
 		img2txt --gamma=0.6 --width="$width" "$path" && exit 4 || exit 1;;
 	# Display information about media files:
-	video/* | audio/*)
+	video/* | audio/* | application/ogg)
 		# Use sed to remove spaces so the output fits into the narrow window
 		mediainfo "$path" | sed 's/  \+:/: /;'
 		success && exit 5 || exit 1;;
