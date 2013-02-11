@@ -1,6 +1,8 @@
 " Author       : Jan Larres <jan@majutsushi.net>
 " Website      : http://majutsushi.net
 
+setlocal foldmethod=syntax
+
 imap <silent> <buffer> <C-Space> <C-x><C-u>
 inoremap <expr> <C-x><C-u> pumvisible() ? '<C-x><C-u>' : '<C-x><C-u><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
