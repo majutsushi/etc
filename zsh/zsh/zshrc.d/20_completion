@@ -112,6 +112,8 @@ zstyle ':completion:*:processes'          command 'ps xwww --forest -o pid,%cpu,
 zstyle ':completion:*:kill:*'             force-list always
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 
+zstyle ':completion:*:*:ant:*:targets' call-command true
+
 # complete manual by their section
 zstyle ':completion:*:manuals'   separate-sections true
 zstyle ':completion:*:manuals.*' insert-sections   true
