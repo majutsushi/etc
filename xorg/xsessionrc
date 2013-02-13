@@ -15,4 +15,6 @@ export PATH=$HOME/bin:$HOME/.etc/bin:/usr/games:/var/lib/gems/1.8/bin:$PATH
 # unclutter &
 xset +fp $HOME/.local/share/fonts
 
+. $HOME/.xsessionrc.local
+
 # vim: ft=sh
