@@ -70,7 +70,7 @@ export NETHACKOPTIONS=@$HOME/.etc/nethackrc
 # export AWT_TOOLKIT=MToolkit
 
 export ANT_ARGS="-logger org.apache.tools.ant.listener.AnsiColorLogger"
-export ANT_OPTS="-Dant.logger.defaults=$HOME/.etc/ant/colours"
+export ANT_OPTS="-Dant.logger.defaults=$HOME/.etc/ant/colours -Xmx2048m -XX:MaxPermSize=1024m"
 
 # update session environment variables if they got changed after re-attaching
 # a tmux session
