@@ -1163,6 +1163,9 @@ set tildeop
 set showmatch
 " use two spaces after '.' when joining a line
 set nojoinspaces
+" "alpha", "octal" and/or "hex"; number formats recognized for CTRL-A and
+" CTRL-X commands (local to buffer)
+set nrformats-=octal
 
 " tabs and indenting {{{2
 
