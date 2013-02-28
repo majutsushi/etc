@@ -173,28 +173,28 @@ OPTIONS=menucolors
 #########
 #MENUCOLOR="^[a-zA-Z$] - "=white #may want to enable this if regularly playing priest.. (priests don't see the 'uncursed')
 MENUCOLOR=" blessed"=cyan
-MENUCOLOR=" blessed .* \(weapon in hand\)"=cyan&bold
+MENUCOLOR=" blessed .* \(weapon in hands?\)"=cyan&bold
 MENUCOLOR=" blessed .* \(wielded.*\)"=cyan&bold
 MENUCOLOR=" blessed .* \(being worn\)"=cyan&bold
 MENUCOLOR=" blessed .* \(in quiver\)"=cyan&bold
 MENUCOLOR=" !b"=cyan
-MENUCOLOR=" !b \(weapon in hand\)"=cyan&bold
+MENUCOLOR=" !b \(weapon in hands?\)"=cyan&bold
 MENUCOLOR=" !b \(wielded.*\)"=cyan&bold
 MENUCOLOR=" !b \(being worn\)"=cyan&bold
 MENUCOLOR=" !b \(in quiver\)"=cyan&bold
 
 MENUCOLOR=" uncursed"=green
-MENUCOLOR=" uncursed .* \(weapon in hand\)"=lightgreen
+MENUCOLOR=" uncursed .* \(weapon in hands?\)"=lightgreen
 MENUCOLOR=" uncursed .* \(wielded.*\)"=lightgreen
 MENUCOLOR=" uncursed .* \(being worn\)"=lightgreen
 MENUCOLOR=" uncursed .* \(in quiver\)"=lightgreen
 MENUCOLOR=" !uc"=green
-MENUCOLOR=" !uc \(weapon in hand\)"=lightgreen
+MENUCOLOR=" !uc \(weapon in hands?\)"=lightgreen
 MENUCOLOR=" !uc \(wielded.*\)"=lightgreen
 MENUCOLOR=" !uc \(being worn\)"=lightgreen
 MENUCOLOR=" !uc \(in quiver\)"=lightgreen
 MENUCOLOR=" !nc"=green
-MENUCOLOR=" !nc \(weapon in hand\)"=lightgreen
+MENUCOLOR=" !nc \(weapon in hand?\)"=lightgreen
 MENUCOLOR=" !nc \(wielded.*\)"=lightgreen
 MENUCOLOR=" !nc \(being worn\)"=lightgreen
 MENUCOLOR=" !nc \(in quiver\)"=lightgreen
@@ -203,12 +203,12 @@ MENUCOLOR=" ([-0-9]+:[-0-9]+)"=green #nethack doesn't display "uncursed" if char
 # MENUCOLOR=" [+-][0-9]"=white
 
 MENUCOLOR=" cursed"=red
-MENUCOLOR=" cursed .* \(weapon in hand\)"=orange
+MENUCOLOR=" cursed .* \(weapon in hand?\)"=orange
 MENUCOLOR=" cursed .* \(wielded.*\)"=orange
 MENUCOLOR=" cursed .* \(being worn\)"=orange
 MENUCOLOR=" cursed .* \(in quiver\)"=orange
 MENUCOLOR=" !c"=red
-MENUCOLOR=" !c \(weapon in hand\)"=orange
+MENUCOLOR=" !c \(weapon in hands?\)"=orange
 MENUCOLOR=" !c \(wielded.*\)"=orange
 MENUCOLOR=" !c \(being worn\)"=orange
 MENUCOLOR=" !c \(in quiver\)"=orange
