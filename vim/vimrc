@@ -201,7 +201,11 @@ function! GetFileName()
     elseif bufname('%') == ''
         return '[No Name]'
     else
-        return expand('%:p:~:.')
+        let filename = expand('%:p:~:.')
+        if winwidth(0) - len(filename) < 75
+            let filename = pathshorten(filename)
+        endif
+        return filename
     endif
 endfunction
 
