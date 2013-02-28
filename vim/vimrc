@@ -1383,6 +1383,9 @@ let g:devhelpWordLength = 5
 " EasyMotion {{{2
 let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
 
+" Eclim {{{2
+let g:EclimLoggingDisabled = 1
+
 " FSwitch {{{2
 nnoremap <silent> <Leader>of :FSHere<cr>
 nnoremap <silent> <Leader>ol :FSRight<cr>
