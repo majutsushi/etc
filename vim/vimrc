@@ -393,7 +393,7 @@ command! -bar SudoWrite :
 " Automatically create dir to write file to if it doesn't exist
 function! AutoMkDir()
     let file = expand('<afile>')
-    if !filereadable(file)
+    if file =~# '^[a-z]\+:\/\/'
         " Netrw file or similar, don't try creating the directory
         return
     endif
