@@ -151,6 +151,7 @@ compdef '_files -g "*.(pdf|ps|djv(|u))"' zathura
 
 # menu selection: pick item but stay in the menu (press esc-return)
 bindkey -M menuselect '\e^M' accept-and-menu-complete
+bindkey -M menuselect '^\n'  accept-and-menu-complete
 
 # remove last inserted match
 bindkey -M menuselect '^w' undo
