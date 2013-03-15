@@ -15,6 +15,10 @@ else
     STYLE=darkness
 fi
 
+have() {
+    type -P "$1" > /dev/null
+}
+
 hl() {
     highlight --out-format=xterm256 --style=$STYLE -l "$1"
 }
@@ -30,6 +34,8 @@ if [[ -x "$(which highlight)" ]]; then
         *.c|*.cpp|*.h|*.py|*.sh|*.pl|*.patch|*.r|*.css|*.js|*.java)
             hl "$1"
             ;;
+        *.jar)
+            have deepjarlist && deepjarlist "$1" && exit 0;;&
         *.jar|*.war|*.ear|*.xpi|*.zip)
             unzip -l "$1"
             ;;
