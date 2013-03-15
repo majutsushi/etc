@@ -34,3 +34,17 @@ XPT method " method (..) {}
     `cursor^
 }
 ..XPT
+
+XPT try wrap=what " try .. catch (..) .. finally
+XSET handler=$CL handling $CR
+try {
+    `what^
+}` `catch...^` `finally...{{^ finally {
+    `cursor^
+}`}}^
+XSETm catch...|post
+ catch (`Exception^ `e^) {
+    `handler^
+}` `catch...^
+XSETm END
+..XPT
