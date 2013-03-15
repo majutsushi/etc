@@ -22,7 +22,7 @@ for p in sys.path:
 EOF
 endif
 
-function s:IPython()
+function! s:IPython()
     let g:ScreenShellSendPrefixOld = g:ScreenShellSendPrefix
     let g:ScreenShellSendSuffixOld = g:ScreenShellSendSuffix
     let g:ScreenShellSendPrefix = '%cpaste'
