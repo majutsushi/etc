@@ -35,6 +35,8 @@ function have { type -P "$1" > /dev/null; }
 function success { test ${PIPESTATUS[0]} = 0; }
 
 case "$extension" in
+	jar)
+		have deepjarlist && deepjarlist "$path" && exit 0;;&
 	# Archive extensions:
 	7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
 	rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)
