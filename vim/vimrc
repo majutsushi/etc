@@ -275,6 +275,14 @@ function! StatuslineTrailingSpaceWarning()
 endfunction
 autocmd CursorHold,BufWritePost * unlet! b:statusline_trailing_space_warning
 
+" EclimErrorIndicator() {{{3
+function! EclimErrorIndicator() abort
+    let loclist = filter(getloclist(0), 'bufnr("%") == v:val.bufnr')
+    let errors = filter(copy(loclist), 'tolower(v:val.type) == "e"')
+
+    return len(errors) > 0 ? 'e' : ''
+endfunction
+
 " Default statusline {{{2
 let g:default_stl  = ""
 
@@ -287,6 +295,8 @@ let g:default_stl .= "</CUR>"
 let g:default_stl .= "#[FileName] %{GetFileName()} "
 
 let g:default_stl .= "#[ModFlag]%(%{GetState()} %)#[BufFlag]%w"
+
+let g:default_stl .= "#[Warning]%{EclimErrorIndicator()}"
 
 " File type
 let g:default_stl .= "<CUR>%(#[FileType] %{!empty(&ft) ? &ft : '--'}#[BranchS]%)</CUR>"
