@@ -1285,7 +1285,12 @@ set cedit=<C-O>
 " running make and jumping to errors {{{2
 
 " program used for the ":grep" command (global or local to buffer)
-set grepprg=ack
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor\ --column\ --smart-case
+    set grepformat^=%f:%l:%c:%m
+else
+    set grepprg=ack
+endif
 
 " language specific {{{2
 
