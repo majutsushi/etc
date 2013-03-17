@@ -59,7 +59,6 @@ alias mtr="mtr -t"
 alias fu='sudo $(fc -ln -1) '
 alias tree='tree --dirsfirst -F'
 
-alias a='ack'
 alias da='du -sch'
 alias g="grep"
 alias j='jobs -l'
@@ -75,6 +74,15 @@ alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-pa
 alias x='extract'
 
 is-at-least 4.3 && alias git='hub'
+
+# Ag/Ack
+if have agf; then
+    # only 1 worker thread to have deterministic result order
+    alias a='~/.etc/zsh/sack ag --smart-case --workers 1'
+else
+    alias a='~/.etc/zsh/sack ack'
+fi
+f() { $EDITOR +$(sed -n "$1p" < $XDG_CACHE_HOME/grep_shortcuts) }
 
 # diff
 if have colordiff; then
