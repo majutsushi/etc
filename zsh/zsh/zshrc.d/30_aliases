@@ -76,7 +76,7 @@ alias x='extract'
 is-at-least 4.3 && alias git='hub'
 
 # Ag/Ack
-if have agf; then
+if have ag; then
     # only 1 worker thread to have deterministic result order
     alias a='~/.etc/zsh/sack ag --smart-case --workers 1'
 else
