@@ -14,55 +14,60 @@ error() {
 }
 
 merge() {
-    BASEFILE=$1
-    if [[ -n "$2" ]]; then
-        TARGET=$2
-    else
-        TARGET=.$(basename "$BASEFILE")
-    fi
+    local conffile=$1
+    shift
 
-    if [[ -f $TARGET ]] && ! head -1 $TARGET | grep -q "\*\*\* GENERATED FILE - DO NOT EDIT \*\*\*"; then
-        warn "$TARGET is not a generated file"
+    if [[ $# -ge 1 ]]; then
+        local "$@"
+    fi
+    local target=${target:-.$(basename "$conffile")}
+    local comment=${comment:-#}
+
+    info "Merging $target"
+
+    if [[ -f $target ]] && ! head -1 $target | grep -q "\*\*\* GENERATED FILE - DO NOT EDIT \*\*\*"; then
+        error "$target is not a generated file!"
         return
     fi
 
-    rm -f $TARGET
+    rm -f $target
 
-    info "Merging $TARGET"
-
-    cat $BASEFILE.d/header > $TARGET
-    cat $BASEFILE >> $TARGET
-    for part in $BASEFILE.d/*; do
+    echo "$comment *** GENERATED FILE - DO NOT EDIT ***" > $target
+    cat $conffile >> $target
+    for part in $conffile.d/*; do
         if [[ "$(hostname)" == "$(basename $part)" ]]; then
-            cat $part >> $TARGET
+            cat $part >> $target
         fi
     done
+
+    local localfile=$HOME/.local/etc/$(basename "$conffile")
+    if [[ -f $localfile ]]; then
+        cat $localfile >> $target
+    fi
 }
 
 xlink() {
-    if [[ -n "$3" ]] && ! command -v "$3" >/dev/null 2>&1; then
-        warn "$3 is not installed"
+    local conffile=$1
+    shift
+
+    if [[ $# -ge 1 ]]; then
+        local "$@"
+    fi
+    local target=${target:-.$(basename "$conffile")}
+
+    info "Linking $target"
+
+    if [[ -a "$target" && ! -L "$target" ]]; then
+        error "$target is not a symlink!"
         return
     fi
 
-    if [[ -n "$2" ]]; then
-        TARGET=$2
-    else
-        TARGET=.$(basename "$1")
+    rm -f "$target"
+    local dir=$(dirname "$target")
+    if ! [[ -d "$dir" ]]; then
+        mkdir -p "$dir"
     fi
-
-    if [[ -a "$TARGET" && ! -L "$TARGET" ]]; then
-        error "$TARGET is not a symlink!"
-        return
-    else
-        info "Linking $TARGET"
-        rm -f "$TARGET"
-        DIR=$(dirname "$TARGET")
-        if ! [[ -d "$DIR" ]]; then
-            mkdir -p "$DIR"
-        fi
-        ln -s "$HOME/$1" "$TARGET"
-    fi
+    ln -s "$HOME/$conffile" "$target"
 }
 
 OLDPWD=$PWD
@@ -72,7 +77,7 @@ ln -sf $HOME/.etc/.githooks/* .etc/.git/hooks
 
 xlink .etc/Rprofile
 xlink .etc/ackrc
-xlink .etc/ant/ant.conf .ant/ant.conf
+xlink .etc/ant/ant.conf target=.ant/ant.conf
 xlink .etc/aptitude
 xlink .etc/bibtoolrsc
 xlink .etc/colorgccrc
@@ -88,15 +93,15 @@ xlink .etc/lessfilter
 #xlink .etc/mailcap
 xlink .etc/mercurial/hgrc
 xlink .etc/moc
-xlink .etc/ranger .config/ranger
-xlink .etc/redshift.conf .config/redshift.conf
+xlink .etc/ranger target=.config/ranger
+xlink .etc/redshift.conf target=.config/redshift.conf
 xlink .etc/screen/screenrc
 xlink .etc/slrn/slrnrc
 xlink .etc/taskrc
 xlink .etc/tmux/tmux.conf
 xlink .etc/urxvt
 xlink .etc/xmonad
-xlink .etc/zathurarc .config/zathura/zathurarc
+xlink .etc/zathurarc target=.config/zathura/zathurarc
 xlink .etc/zsh/zshenv
 
 xlink .etc/bash/bashrc
@@ -109,7 +114,7 @@ xlink .etc/emacs/emacs.d
 xlink .etc/mail/lbdb
 xlink .etc/mail/msmtprc
 xlink .etc/mail/offlineimaprc
-xlink .etc/mail/t-prot .config/t-prot
+xlink .etc/mail/t-prot target=.config/t-prot
 #xlink .etc/procmail/procmailrc
 mkdir -p $HOME/.cache/procmail
 
@@ -131,7 +136,7 @@ xlink .etc/xorg/fonts.conf.d
 #xlink .etc/xorg/xinputrc
 #xlink .etc/xorg/xsession
 xlink .etc/xorg/xsessionrc
-merge .etc/xorg/Xmodmap
+merge .etc/xorg/Xmodmap comment=!
 xmodmap $HOME/.Xmodmap
 
 
