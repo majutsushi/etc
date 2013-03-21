@@ -10,6 +10,10 @@ endif
 if v:version < 703
     let g:pathogen_disabled += ['gundo']
 endif
+if !has('gui') && v:version < 703
+    let g:pathogen_disabled += ['csapprox']
+endif
+
 call pathogen#infect('bundle/{}', '~/src/vim/bundle/{}')
 set runtimepath+=$HOME/.vim/xptpersonal
 
@@ -1294,7 +1298,11 @@ syntax enable
 
 let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : 'fg' }
 " must come after terminal color configuration
-colorscheme desert
+if !has('gui') && v:version < 703
+    colorscheme desert256
+else
+    colorscheme desert
+endif
 
 " when to use virtual editing: "block", "insert" and/or "all"
 set virtualedit=all

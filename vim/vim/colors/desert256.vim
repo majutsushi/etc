@@ -1,343 +1,437 @@
-" Vim color file
-" Maintainer: Henry So, Jr. <henryso@panix.com>
+" This scheme was created by CSApproxSnapshot
+" on Fri, 22 Mar 2013
 
-" These are the colors of the "desert" theme by Hans Fugal with a few small
-" modifications (namely that I lowered the intensity of the normal white and
-" made the normal and nontext backgrounds black), modified to work with 88-
-" and 256-color xterms.
-"
-" The original "desert" theme is available as part of the vim distribution or
-" at http://hans.fugal.net/vim/colors/.
-"
-" The real feature of this color scheme, with a wink to the "inkpot" theme, is
-" the programmatic approximation of the gui colors to the palettes of 88- and
-" 256- color xterms.  The functions that do this (folded away, for
-" readability) are calibrated to the colors used for Thomas E. Dickey's xterm
-" (version 200), which is available at http://dickey.his.com/xterm/xterm.html.
-"
-" I struggled with trying to parse the rgb.txt file to avoid the necessity of
-" converting color names to #rrggbb form, but decided it was just not worth
-" the effort.  Maybe someone seeing this may decide otherwise...
-
-set background=dark
-if version > 580
-    " no guarantees for version 5.8 and below, but this makes it stop
-    " complaining
-    hi clear
-    if exists("syntax_on")
-        syntax reset
-    endif
+hi clear
+if exists("syntax_on")
+    syntax reset
 endif
-let g:colors_name="desert256"
 
-if has("gui_running") || &t_Co == 88 || &t_Co == 256
-    " functions {{{
-    " returns an approximate grey index for the given grey level
-    fun <SID>grey_number(x)
-        if &t_Co == 88
-            if a:x < 23
-                return 0
-            elseif a:x < 69
-                return 1
-            elseif a:x < 103
-                return 2
-            elseif a:x < 127
-                return 3
-            elseif a:x < 150
-                return 4
-            elseif a:x < 173
-                return 5
-            elseif a:x < 196
-                return 6
-            elseif a:x < 219
-                return 7
-            elseif a:x < 243
-                return 8
-            else
-                return 9
-            endif
-        else
-            if a:x < 14
-                return 0
-            else
-                let l:n = (a:x - 8) / 10
-                let l:m = (a:x - 8) % 10
-                if l:m < 5
-                    return l:n
-                else
-                    return l:n + 1
-                endif
-            endif
-        endif
-    endfun
-
-    " returns the actual grey level represented by the grey index
-    fun <SID>grey_level(n)
-        if &t_Co == 88
-            if a:n == 0
-                return 0
-            elseif a:n == 1
-                return 46
-            elseif a:n == 2
-                return 92
-            elseif a:n == 3
-                return 115
-            elseif a:n == 4
-                return 139
-            elseif a:n == 5
-                return 162
-            elseif a:n == 6
-                return 185
-            elseif a:n == 7
-                return 208
-            elseif a:n == 8
-                return 231
-            else
-                return 255
-            endif
-        else
-            if a:n == 0
-                return 0
-            else
-                return 8 + (a:n * 10)
-            endif
-        endif
-    endfun
-
-    " returns the palette index for the given grey index
-    fun <SID>grey_color(n)
-        if &t_Co == 88
-            if a:n == 0
-                return 16
-            elseif a:n == 9
-                return 79
-            else
-                return 79 + a:n
-            endif
-        else
-            if a:n == 0
-                return 16
-            elseif a:n == 25
-                return 231
-            else
-                return 231 + a:n
-            endif
-        endif
-    endfun
-
-    " returns an approximate color index for the given color level
-    fun <SID>rgb_number(x)
-        if &t_Co == 88
-            if a:x < 69
-                return 0
-            elseif a:x < 172
-                return 1
-            elseif a:x < 230
-                return 2
-            else
-                return 3
-            endif
-        else
-            if a:x < 75
-                return 0
-            else
-                let l:n = (a:x - 55) / 40
-                let l:m = (a:x - 55) % 40
-                if l:m < 20
-                    return l:n
-                else
-                    return l:n + 1
-                endif
-            endif
-        endif
-    endfun
-
-    " returns the actual color level for the given color index
-    fun <SID>rgb_level(n)
-        if &t_Co == 88
-            if a:n == 0
-                return 0
-            elseif a:n == 1
-                return 139
-            elseif a:n == 2
-                return 205
-            else
-                return 255
-            endif
-        else
-            if a:n == 0
-                return 0
-            else
-                return 55 + (a:n * 40)
-            endif
-        endif
-    endfun
-
-    " returns the palette index for the given R/G/B color indices
-    fun <SID>rgb_color(x, y, z)
-        if &t_Co == 88
-            return 16 + (a:x * 16) + (a:y * 4) + a:z
-        else
-            return 16 + (a:x * 36) + (a:y * 6) + a:z
-        endif
-    endfun
-
-    " returns the palette index to approximate the given R/G/B color levels
-    fun <SID>color(r, g, b)
-        " get the closest grey
-        let l:gx = <SID>grey_number(a:r)
-        let l:gy = <SID>grey_number(a:g)
-        let l:gz = <SID>grey_number(a:b)
-
-        " get the closest color
-        let l:x = <SID>rgb_number(a:r)
-        let l:y = <SID>rgb_number(a:g)
-        let l:z = <SID>rgb_number(a:b)
-
-        if l:gx == l:gy && l:gy == l:gz
-            " there are two possibilities
-            let l:dgr = <SID>grey_level(l:gx) - a:r
-            let l:dgg = <SID>grey_level(l:gy) - a:g
-            let l:dgb = <SID>grey_level(l:gz) - a:b
-            let l:dgrey = (l:dgr * l:dgr) + (l:dgg * l:dgg) + (l:dgb * l:dgb)
-            let l:dr = <SID>rgb_level(l:gx) - a:r
-            let l:dg = <SID>rgb_level(l:gy) - a:g
-            let l:db = <SID>rgb_level(l:gz) - a:b
-            let l:drgb = (l:dr * l:dr) + (l:dg * l:dg) + (l:db * l:db)
-            if l:dgrey < l:drgb
-                " use the grey
-                return <SID>grey_color(l:gx)
-            else
-                " use the color
-                return <SID>rgb_color(l:x, l:y, l:z)
-            endif
-        else
-            " only one possibility
-            return <SID>rgb_color(l:x, l:y, l:z)
-        endif
-    endfun
-
-    " returns the palette index to approximate the 'rrggbb' hex string
-    fun <SID>rgb(rgb)
-        let l:r = ("0x" . strpart(a:rgb, 0, 2)) + 0
-        let l:g = ("0x" . strpart(a:rgb, 2, 2)) + 0
-        let l:b = ("0x" . strpart(a:rgb, 4, 2)) + 0
-
-        return <SID>color(l:r, l:g, l:b)
-    endfun
-
-    " sets the highlighting for the given group
-    fun <SID>X(group, fg, bg, attr)
-        if a:fg != ""
-            exec "hi " . a:group . " guifg=#" . a:fg . " ctermfg=" . <SID>rgb(a:fg)
-        endif
-        if a:bg != ""
-            exec "hi " . a:group . " guibg=#" . a:bg . " ctermbg=" . <SID>rgb(a:bg)
-        endif
-        if a:attr != ""
-            exec "hi " . a:group . " gui=" . a:attr . " cterm=" . a:attr
-        endif
-    endfun
-    " }}}
-
-"    call <SID>X("Normal", "cccccc", "000000", "")
-    call <SID>X("Normal", "eeeeee", "333333", "")
-
-    " highlight groups
-    call <SID>X("Cursor", "708090", "f0e68c", "")
-    "CursorIM
-    "Directory
-    "DiffAdd
-    "DiffChange
-    "DiffDelete
-    "DiffText
-    "ErrorMsg
-    call <SID>X("VertSplit", "c2bfa5", "7f7f7f", "reverse")
-    call <SID>X("Folded", "ffd700", "4d4d4d", "")
-    call <SID>X("FoldColumn", "d2b48c", "4d4d4d", "")
-    call <SID>X("IncSearch", "708090", "f0e68c", "")
-    "LineNr
-    call <SID>X("ModeMsg", "daa520", "", "")
-    call <SID>X("MoreMsg", "2e8b57", "", "")
-    call <SID>X("NonText", "addbe7", "000000", "bold")
-    call <SID>X("Question", "00ff7f", "", "")
-    call <SID>X("Search", "f5deb3", "cd853f", "")
-    call <SID>X("SpecialKey", "9acd32", "", "")
-    call <SID>X("StatusLine", "c2bfa5", "000000", "reverse")
-    call <SID>X("StatusLineNC", "c2bfa5", "7f7f7f", "reverse")
-    call <SID>X("Title", "cd5c5c", "", "")
-    call <SID>X("Visual", "6b8e23", "f0e68c", "reverse")
-    "VisualNOS
-    call <SID>X("WarningMsg", "fa8072", "", "")
-    "WildMenu
-    "Menu
-    "Scrollbar
-    "Tooltip
-
-    " syntax highlighting groups
-    call <SID>X("Comment", "87ceeb", "", "")
-    call <SID>X("Constant", "ffa0a0", "", "")
-    call <SID>X("Identifier", "98fb98", "", "none")
-    call <SID>X("Statement", "f0e68c", "", "bold")
-    call <SID>X("PreProc", "cd5c5c", "", "")
-    call <SID>X("Type", "bdb76b", "", "bold")
-    call <SID>X("Special", "ffdead", "", "")
-    "Underlined
-    call <SID>X("Ignore", "666666", "", "")
-    "Error
-    call <SID>X("Todo", "ff4500", "eeee00", "")
-
-    call <SID>X("User1", "000000", "c2bfa5", "bold")
-    call <SID>X("User2", "990f0f", "c2bfa5", "bold")
-    call <SID>X("User3", "666666", "c2bfa5", "")
-
-    " delete functions {{{
-    delf <SID>X
-    delf <SID>rgb
-    delf <SID>color
-    delf <SID>rgb_color
-    delf <SID>rgb_level
-    delf <SID>rgb_number
-    delf <SID>grey_color
-    delf <SID>grey_level
-    delf <SID>grey_number
-    " }}}
+if v:version < 700
+    let g:colors_name = expand("<sfile>:t:r")
+    command! -nargs=+ CSAHi exe "hi" substitute(substitute(<q-args>, "undercurl", "underline", "g"), "guisp\\S\\+", "", "g")
 else
-    " color terminal definitions
-    hi SpecialKey    ctermfg=darkgreen
-    hi NonText       cterm=bold ctermfg=darkblue
-    hi Directory     ctermfg=darkcyan
-    hi ErrorMsg      cterm=bold ctermfg=7 ctermbg=1
-    hi IncSearch     cterm=NONE ctermfg=yellow ctermbg=green
-    hi Search        cterm=NONE ctermfg=grey ctermbg=blue
-    hi MoreMsg       ctermfg=darkgreen
-    hi ModeMsg       cterm=NONE ctermfg=brown
-    hi LineNr        ctermfg=3
-    hi Question      ctermfg=green
-    hi StatusLine    cterm=bold,reverse
-    hi StatusLineNC  cterm=reverse
-    hi VertSplit     cterm=reverse
-    hi Title         ctermfg=5
-    hi Visual        cterm=reverse
-    hi VisualNOS     cterm=bold,underline
-    hi WarningMsg    ctermfg=1
-    hi WildMenu      ctermfg=0 ctermbg=3
-    hi Folded        ctermfg=darkgrey ctermbg=NONE
-    hi FoldColumn    ctermfg=darkgrey ctermbg=NONE
-    hi DiffAdd       ctermbg=4
-    hi DiffChange    ctermbg=5
-    hi DiffDelete    cterm=bold ctermfg=4 ctermbg=6
-    hi DiffText      cterm=bold ctermbg=1
-    hi Comment       ctermfg=darkcyan
-    hi Constant      ctermfg=brown
-    hi Special       ctermfg=5
-    hi Identifier    ctermfg=6
-    hi Statement     ctermfg=3
-    hi PreProc       ctermfg=5
-    hi Type          ctermfg=2
-    hi Underlined    cterm=underline ctermfg=5
-    hi Ignore        ctermfg=darkgrey
-    hi Error         cterm=bold ctermfg=7 ctermbg=1
+    let g:colors_name = expand("<sfile>:t:r")
+    command! -nargs=+ CSAHi exe "hi" <q-args>
 endif
 
-" vim: set fdl=0 fdm=marker:
+function! s:old_kde()
+  " Konsole only used its own palette up til KDE 4.2.0
+  if executable('kde4-config') && system('kde4-config --kde-version') =~ '^4.[10].'
+    return 1
+  elseif executable('kde-config') && system('kde-config --version') =~# 'KDE: 3.'
+    return 1
+  else
+    return 0
+  endif
+endfunction
+
+if 0
+elseif has("gui_running") || (&t_Co == 256 && (&term ==# "xterm" || &term =~# "^screen") && exists("g:CSApprox_konsole") && g:CSApprox_konsole) || (&term =~? "^konsole" && s:old_kde())
+    CSAHi Normal term=NONE cterm=NONE ctermbg=59 ctermfg=231 gui=NONE guibg=#333333 guifg=#ffffff
+    CSAHi StatusLineLineNumberNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineExpandTabNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineBranchNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileFormat term=NONE cterm=bold ctermbg=234 ctermfg=250 gui=bold guibg=#1c1c1c guifg=#bcbcbc
+    CSAHi StatusLineFileFormatNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineBranchS term=NONE cterm=NONE ctermbg=240 ctermfg=246 gui=NONE guibg=#585858 guifg=#949494
+    CSAHi StatusLineBranchSNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineLinePercent term=NONE cterm=bold ctermbg=187 ctermfg=236 gui=bold guibg=#c2bfa5 guifg=#303030
+    CSAHi StatusLineWarningNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineLineColumn term=NONE cterm=NONE ctermbg=240 ctermfg=250 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi Statement term=bold cterm=bold ctermbg=bg ctermfg=229 gui=bold guibg=bg guifg=#f0e68c
+    CSAHi PreProc term=underline cterm=NONE ctermbg=bg ctermfg=174 gui=NONE guibg=bg guifg=#cd5c5c
+    CSAHi Type term=underline cterm=bold ctermbg=bg ctermfg=186 gui=bold guibg=bg guifg=#bdb76b
+    CSAHi Underlined term=underline cterm=underline ctermbg=bg ctermfg=147 gui=underline guibg=bg guifg=#80a0ff
+    CSAHi Ignore term=NONE cterm=NONE ctermbg=bg ctermfg=102 gui=NONE guibg=bg guifg=#666666
+    CSAHi Error term=reverse cterm=NONE ctermbg=196 ctermfg=231 gui=NONE guibg=#ff0000 guifg=#ffffff
+    CSAHi Todo term=NONE cterm=NONE ctermbg=226 ctermfg=202 gui=NONE guibg=#eeee00 guifg=#ff4500
+    CSAHi StatusLineFileName term=NONE cterm=bold ctermbg=187 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineLinePercentNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileNameNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineLineNumber term=NONE cterm=bold ctermbg=240 ctermfg=250 gui=bold guibg=#585858 guifg=#bcbcbc
+    CSAHi SpecialKey term=bold cterm=NONE ctermbg=bg ctermfg=102 gui=NONE guibg=bg guifg=#666666
+    CSAHi NonText term=bold cterm=bold ctermbg=239 ctermfg=153 gui=bold guibg=#4d4d4d guifg=#add8e6
+    CSAHi Directory term=bold cterm=NONE ctermbg=bg ctermfg=51 gui=NONE guibg=bg guifg=#00ffff
+    CSAHi ErrorMsg term=NONE cterm=NONE ctermbg=196 ctermfg=231 gui=NONE guibg=#ff0000 guifg=#ffffff
+    CSAHi IncSearch term=reverse cterm=reverse ctermbg=109 ctermfg=229 gui=reverse guibg=#f0e68c guifg=#708090
+    CSAHi Search term=reverse cterm=NONE ctermbg=179 ctermfg=224 gui=NONE guibg=#cd853f guifg=#f5deb3
+    CSAHi MoreMsg term=bold cterm=bold ctermbg=bg ctermfg=72 gui=bold guibg=bg guifg=#2e8b57
+    CSAHi ModeMsg term=bold cterm=bold ctermbg=bg ctermfg=179 gui=bold guibg=bg guifg=#daa520
+    CSAHi LineNr term=underline cterm=NONE ctermbg=bg ctermfg=226 gui=NONE guibg=bg guifg=#ffff00
+    CSAHi UtlTag term=NONE cterm=NONE ctermbg=bg ctermfg=fg gui=NONE guibg=bg guifg=fg
+    CSAHi StatusLineError term=NONE cterm=bold ctermbg=240 ctermfg=208 gui=bold guibg=#585858 guifg=#ff5f00
+    CSAHi User1 term=NONE cterm=bold ctermbg=187 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi User2 term=NONE cterm=bold ctermbg=187 ctermfg=124 gui=bold guibg=#c2bfa5 guifg=#990f0f
+    CSAHi User3 term=NONE cterm=NONE ctermbg=187 ctermfg=102 gui=NONE guibg=#c2bfa5 guifg=#666666
+    CSAHi User4 term=NONE cterm=NONE ctermbg=187 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi User5 term=NONE cterm=bold ctermbg=187 ctermfg=124 gui=bold guibg=#c2bfa5 guifg=#990f0f
+    CSAHi User6 term=NONE cterm=bold ctermbg=187 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi SpellRare term=reverse cterm=undercurl ctermbg=bg ctermfg=201 gui=undercurl guibg=bg guifg=fg guisp=#ff00ff
+    CSAHi SpellLocal term=underline cterm=undercurl ctermbg=bg ctermfg=51 gui=undercurl guibg=bg guifg=fg guisp=#00ffff
+    CSAHi Pmenu term=NONE cterm=NONE ctermbg=234 ctermfg=188 gui=NONE guibg=#1c1c1c guifg=#cccccc
+    CSAHi PmenuSel term=NONE cterm=NONE ctermbg=179 ctermfg=231 gui=NONE guibg=#cd853f guifg=#f7f6f5
+    CSAHi PmenuSbar term=NONE cterm=NONE ctermbg=234 ctermfg=231 gui=NONE guibg=#1c1c1c guifg=#ffffff
+    CSAHi PmenuThumb term=NONE cterm=NONE ctermbg=179 ctermfg=231 gui=NONE guibg=#daa520 guifg=#ffffff
+    CSAHi TabLine term=underline cterm=NONE ctermbg=248 ctermfg=59 gui=NONE guibg=#a9a9a9 guifg=#333333
+    CSAHi TabLineSel term=bold cterm=bold ctermbg=bg ctermfg=fg gui=bold guibg=bg guifg=fg
+    CSAHi TabLineFill term=reverse cterm=reverse ctermbg=102 ctermfg=fg gui=reverse guibg=bg guifg=#666666
+    CSAHi CursorColumn term=reverse cterm=NONE ctermbg=102 ctermfg=fg gui=NONE guibg=#666666 guifg=fg
+    CSAHi StatusLineBranch term=NONE cterm=NONE ctermbg=240 ctermfg=250 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi StatusLineLineColumnNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi TagbarSignature term=NONE cterm=NONE ctermbg=bg ctermfg=149 gui=NONE guibg=bg guifg=#9acd32
+    CSAHi TagbarVisibilityProtected term=NONE cterm=NONE ctermbg=bg ctermfg=153 gui=NONE guibg=bg guifg=#87ceeb
+    CSAHi StatusLineWarning term=NONE cterm=bold ctermbg=160 ctermfg=231 gui=bold guibg=#cc0000 guifg=#ffffff
+    CSAHi CursorLineNr term=bold cterm=bold ctermbg=bg ctermfg=226 gui=bold guibg=bg guifg=#ffff00
+    CSAHi Question term=NONE cterm=bold ctermbg=bg ctermfg=48 gui=bold guibg=bg guifg=#00ff7f
+    CSAHi StatusLine term=bold,reverse cterm=NONE ctermbg=187 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineNC term=reverse cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#7f7f7f
+    CSAHi VertSplit term=reverse cterm=NONE ctermbg=187 ctermfg=244 gui=NONE guibg=#c2bfa5 guifg=#7f7f7f
+    CSAHi Title term=bold cterm=bold ctermbg=bg ctermfg=174 gui=bold guibg=bg guifg=#cd5c5c
+    CSAHi Visual term=reverse cterm=NONE ctermbg=107 ctermfg=229 gui=NONE guibg=#6b8e23 guifg=#f0e68c
+    CSAHi VisualNOS term=bold,underline cterm=bold,underline ctermbg=bg ctermfg=fg gui=bold,underline guibg=bg guifg=fg
+    CSAHi WarningMsg term=NONE cterm=NONE ctermbg=bg ctermfg=216 gui=NONE guibg=bg guifg=#fa8072
+    CSAHi WildMenu term=NONE cterm=NONE ctermbg=226 ctermfg=16 gui=NONE guibg=#ffff00 guifg=#000000
+    CSAHi StatusLineErrorNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileType term=NONE cterm=NONE ctermbg=240 ctermfg=250 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi StatusLineFileTypeNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineExpandTab term=NONE cterm=bold ctermbg=240 ctermfg=255 gui=bold guibg=#585858 guifg=#eeeeee
+    CSAHi StatusLineFileEncoding term=NONE cterm=bold ctermbg=234 ctermfg=250 gui=bold guibg=#1c1c1c guifg=#bcbcbc
+    CSAHi StatusLineFileEncodingNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineModeNormal term=NONE cterm=bold ctermbg=106 ctermfg=231 gui=bold guibg=#4e9a06 guifg=#ffffff
+    CSAHi StatusLineBufFlag term=NONE cterm=NONE ctermbg=187 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineBufFlagNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineSeparator term=NONE cterm=NONE ctermbg=234 ctermfg=242 gui=NONE guibg=#1c1c1c guifg=#6c6c6c
+    CSAHi StatusLineSeparatorNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi CursorLine term=underline cterm=NONE ctermbg=102 ctermfg=fg gui=NONE guibg=#666666 guifg=fg
+    CSAHi StatusLineModFlagNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi Cursor term=NONE cterm=NONE ctermbg=229 ctermfg=109 gui=NONE guibg=#f0e68c guifg=#708090
+    CSAHi lCursor term=NONE cterm=NONE ctermbg=231 ctermfg=59 gui=NONE guibg=#ffffff guifg=#333333
+    CSAHi MatchParen term=reverse cterm=NONE ctermbg=37 ctermfg=fg gui=NONE guibg=#008b8b guifg=fg
+    CSAHi Comment term=bold cterm=NONE ctermbg=bg ctermfg=153 gui=NONE guibg=bg guifg=#87ceeb
+    CSAHi Constant term=underline cterm=NONE ctermbg=bg ctermfg=217 gui=NONE guibg=bg guifg=#ffa0a0
+    CSAHi Special term=bold cterm=NONE ctermbg=bg ctermfg=223 gui=NONE guibg=bg guifg=#ffdead
+    CSAHi Identifier term=underline cterm=NONE ctermbg=bg ctermfg=157 gui=NONE guibg=bg guifg=#98fb98
+    CSAHi StatusLineModFlag term=NONE cterm=bold ctermbg=187 ctermfg=160 gui=bold guibg=#c2bfa5 guifg=#cc0000
+    CSAHi StatusLineFunctionName term=NONE cterm=NONE ctermbg=234 ctermfg=247 gui=NONE guibg=#1c1c1c guifg=#9e9e9e
+    CSAHi EasyMotionTargetDefault term=NONE cterm=bold ctermbg=bg ctermfg=196 gui=bold guibg=bg guifg=#ff0000
+    CSAHi EasyMotionShadeDefault term=NONE cterm=NONE ctermbg=bg ctermfg=243 gui=NONE guibg=bg guifg=#777777
+    CSAHi StatusLineFunctionNameNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineModeInsert term=NONE cterm=bold ctermbg=160 ctermfg=231 gui=bold guibg=#cc0000 guifg=#ffffff
+    CSAHi Folded term=NONE cterm=NONE ctermbg=59 ctermfg=220 gui=NONE guibg=#333333 guifg=#ffd700
+    CSAHi FoldColumn term=NONE cterm=NONE ctermbg=59 ctermfg=187 gui=NONE guibg=#333333 guifg=#d2b48c
+    CSAHi DiffAdd term=bold cterm=NONE ctermbg=19 ctermfg=fg gui=NONE guibg=#00008b guifg=fg
+    CSAHi DiffChange term=bold cterm=NONE ctermbg=127 ctermfg=fg gui=NONE guibg=#8b008b guifg=fg
+    CSAHi DiffDelete term=bold cterm=bold ctermbg=37 ctermfg=21 gui=bold guibg=#008b8b guifg=#0000ff
+    CSAHi DiffText term=reverse cterm=bold ctermbg=196 ctermfg=fg gui=bold guibg=#ff0000 guifg=fg
+    CSAHi SignColumn term=NONE cterm=NONE ctermbg=59 ctermfg=51 gui=NONE guibg=#333333 guifg=#00ffff
+    CSAHi Conceal term=NONE cterm=NONE ctermbg=248 ctermfg=252 gui=NONE guibg=#a9a9a9 guifg=#d3d3d3
+    CSAHi SpellBad term=reverse cterm=undercurl ctermbg=bg ctermfg=196 gui=undercurl guibg=bg guifg=fg guisp=#ff0000
+    CSAHi SpellCap term=reverse cterm=undercurl ctermbg=bg ctermfg=21 gui=undercurl guibg=bg guifg=fg guisp=#0000ff
+elseif has("gui_running") || (&t_Co == 256 && (&term ==# "xterm" || &term =~# "^screen") && exists("g:CSApprox_eterm") && g:CSApprox_eterm) || &term =~? "^eterm"
+    CSAHi Normal term=NONE cterm=NONE ctermbg=236 ctermfg=255 gui=NONE guibg=#333333 guifg=#ffffff
+    CSAHi StatusLineLineNumberNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineExpandTabNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineBranchNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileFormat term=NONE cterm=bold ctermbg=234 ctermfg=250 gui=bold guibg=#1c1c1c guifg=#bcbcbc
+    CSAHi StatusLineFileFormatNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineBranchS term=NONE cterm=NONE ctermbg=240 ctermfg=246 gui=NONE guibg=#585858 guifg=#949494
+    CSAHi StatusLineBranchSNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineLinePercent term=NONE cterm=bold ctermbg=224 ctermfg=236 gui=bold guibg=#c2bfa5 guifg=#303030
+    CSAHi StatusLineWarningNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineLineColumn term=NONE cterm=NONE ctermbg=240 ctermfg=250 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi Statement term=bold cterm=bold ctermbg=bg ctermfg=229 gui=bold guibg=bg guifg=#f0e68c
+    CSAHi PreProc term=underline cterm=NONE ctermbg=bg ctermfg=210 gui=NONE guibg=bg guifg=#cd5c5c
+    CSAHi Type term=underline cterm=bold ctermbg=bg ctermfg=187 gui=bold guibg=bg guifg=#bdb76b
+    CSAHi Underlined term=underline cterm=underline ctermbg=bg ctermfg=153 gui=underline guibg=bg guifg=#80a0ff
+    CSAHi Ignore term=NONE cterm=NONE ctermbg=bg ctermfg=241 gui=NONE guibg=bg guifg=#666666
+    CSAHi Error term=reverse cterm=NONE ctermbg=196 ctermfg=255 gui=NONE guibg=#ff0000 guifg=#ffffff
+    CSAHi Todo term=NONE cterm=NONE ctermbg=226 ctermfg=208 gui=NONE guibg=#eeee00 guifg=#ff4500
+    CSAHi StatusLineFileName term=NONE cterm=bold ctermbg=224 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineLinePercentNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileNameNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineLineNumber term=NONE cterm=bold ctermbg=240 ctermfg=250 gui=bold guibg=#585858 guifg=#bcbcbc
+    CSAHi SpecialKey term=bold cterm=NONE ctermbg=bg ctermfg=241 gui=NONE guibg=bg guifg=#666666
+    CSAHi NonText term=bold cterm=bold ctermbg=239 ctermfg=195 gui=bold guibg=#4d4d4d guifg=#add8e6
+    CSAHi Directory term=bold cterm=NONE ctermbg=bg ctermfg=51 gui=NONE guibg=bg guifg=#00ffff
+    CSAHi ErrorMsg term=NONE cterm=NONE ctermbg=196 ctermfg=255 gui=NONE guibg=#ff0000 guifg=#ffffff
+    CSAHi IncSearch term=reverse cterm=reverse ctermbg=145 ctermfg=229 gui=reverse guibg=#f0e68c guifg=#708090
+    CSAHi Search term=reverse cterm=NONE ctermbg=215 ctermfg=230 gui=NONE guibg=#cd853f guifg=#f5deb3
+    CSAHi MoreMsg term=bold cterm=bold ctermbg=bg ctermfg=72 gui=bold guibg=bg guifg=#2e8b57
+    CSAHi ModeMsg term=bold cterm=bold ctermbg=bg ctermfg=221 gui=bold guibg=bg guifg=#daa520
+    CSAHi LineNr term=underline cterm=NONE ctermbg=bg ctermfg=226 gui=NONE guibg=bg guifg=#ffff00
+    CSAHi UtlTag term=NONE cterm=NONE ctermbg=bg ctermfg=fg gui=NONE guibg=bg guifg=fg
+    CSAHi StatusLineError term=NONE cterm=bold ctermbg=240 ctermfg=208 gui=bold guibg=#585858 guifg=#ff5f00
+    CSAHi User1 term=NONE cterm=bold ctermbg=224 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi User2 term=NONE cterm=bold ctermbg=224 ctermfg=160 gui=bold guibg=#c2bfa5 guifg=#990f0f
+    CSAHi User3 term=NONE cterm=NONE ctermbg=224 ctermfg=241 gui=NONE guibg=#c2bfa5 guifg=#666666
+    CSAHi User4 term=NONE cterm=NONE ctermbg=224 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi User5 term=NONE cterm=bold ctermbg=224 ctermfg=160 gui=bold guibg=#c2bfa5 guifg=#990f0f
+    CSAHi User6 term=NONE cterm=bold ctermbg=224 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi SpellRare term=reverse cterm=undercurl ctermbg=bg ctermfg=201 gui=undercurl guibg=bg guifg=fg guisp=#ff00ff
+    CSAHi SpellLocal term=underline cterm=undercurl ctermbg=bg ctermfg=51 gui=undercurl guibg=bg guifg=fg guisp=#00ffff
+    CSAHi Pmenu term=NONE cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#1c1c1c guifg=#cccccc
+    CSAHi PmenuSel term=NONE cterm=NONE ctermbg=215 ctermfg=255 gui=NONE guibg=#cd853f guifg=#f7f6f5
+    CSAHi PmenuSbar term=NONE cterm=NONE ctermbg=234 ctermfg=255 gui=NONE guibg=#1c1c1c guifg=#ffffff
+    CSAHi PmenuThumb term=NONE cterm=NONE ctermbg=221 ctermfg=255 gui=NONE guibg=#daa520 guifg=#ffffff
+    CSAHi TabLine term=underline cterm=NONE ctermbg=248 ctermfg=236 gui=NONE guibg=#a9a9a9 guifg=#333333
+    CSAHi TabLineSel term=bold cterm=bold ctermbg=bg ctermfg=fg gui=bold guibg=bg guifg=fg
+    CSAHi TabLineFill term=reverse cterm=reverse ctermbg=241 ctermfg=fg gui=reverse guibg=bg guifg=#666666
+    CSAHi CursorColumn term=reverse cterm=NONE ctermbg=241 ctermfg=fg gui=NONE guibg=#666666 guifg=fg
+    CSAHi StatusLineBranch term=NONE cterm=NONE ctermbg=240 ctermfg=250 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi StatusLineLineColumnNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi TagbarSignature term=NONE cterm=NONE ctermbg=bg ctermfg=191 gui=NONE guibg=bg guifg=#9acd32
+    CSAHi TagbarVisibilityProtected term=NONE cterm=NONE ctermbg=bg ctermfg=159 gui=NONE guibg=bg guifg=#87ceeb
+    CSAHi StatusLineWarning term=NONE cterm=bold ctermbg=196 ctermfg=255 gui=bold guibg=#cc0000 guifg=#ffffff
+    CSAHi CursorLineNr term=bold cterm=bold ctermbg=bg ctermfg=226 gui=bold guibg=bg guifg=#ffff00
+    CSAHi Question term=NONE cterm=bold ctermbg=bg ctermfg=49 gui=bold guibg=bg guifg=#00ff7f
+    CSAHi StatusLine term=bold,reverse cterm=NONE ctermbg=224 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineNC term=reverse cterm=NONE ctermbg=234 ctermfg=145 gui=NONE guibg=#1c1c1c guifg=#7f7f7f
+    CSAHi VertSplit term=reverse cterm=NONE ctermbg=224 ctermfg=145 gui=NONE guibg=#c2bfa5 guifg=#7f7f7f
+    CSAHi Title term=bold cterm=bold ctermbg=bg ctermfg=210 gui=bold guibg=bg guifg=#cd5c5c
+    CSAHi Visual term=reverse cterm=NONE ctermbg=143 ctermfg=229 gui=NONE guibg=#6b8e23 guifg=#f0e68c
+    CSAHi VisualNOS term=bold,underline cterm=bold,underline ctermbg=bg ctermfg=fg gui=bold,underline guibg=bg guifg=fg
+    CSAHi WarningMsg term=NONE cterm=NONE ctermbg=bg ctermfg=217 gui=NONE guibg=bg guifg=#fa8072
+    CSAHi WildMenu term=NONE cterm=NONE ctermbg=226 ctermfg=16 gui=NONE guibg=#ffff00 guifg=#000000
+    CSAHi StatusLineErrorNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileType term=NONE cterm=NONE ctermbg=240 ctermfg=250 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi StatusLineFileTypeNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineExpandTab term=NONE cterm=bold ctermbg=240 ctermfg=255 gui=bold guibg=#585858 guifg=#eeeeee
+    CSAHi StatusLineFileEncoding term=NONE cterm=bold ctermbg=234 ctermfg=250 gui=bold guibg=#1c1c1c guifg=#bcbcbc
+    CSAHi StatusLineFileEncodingNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineModeNormal term=NONE cterm=bold ctermbg=112 ctermfg=255 gui=bold guibg=#4e9a06 guifg=#ffffff
+    CSAHi StatusLineBufFlag term=NONE cterm=NONE ctermbg=224 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineBufFlagNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineSeparator term=NONE cterm=NONE ctermbg=234 ctermfg=242 gui=NONE guibg=#1c1c1c guifg=#6c6c6c
+    CSAHi StatusLineSeparatorNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi CursorLine term=underline cterm=NONE ctermbg=241 ctermfg=fg gui=NONE guibg=#666666 guifg=fg
+    CSAHi StatusLineModFlagNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi Cursor term=NONE cterm=NONE ctermbg=229 ctermfg=145 gui=NONE guibg=#f0e68c guifg=#708090
+    CSAHi lCursor term=NONE cterm=NONE ctermbg=255 ctermfg=236 gui=NONE guibg=#ffffff guifg=#333333
+    CSAHi MatchParen term=reverse cterm=NONE ctermbg=37 ctermfg=fg gui=NONE guibg=#008b8b guifg=fg
+    CSAHi Comment term=bold cterm=NONE ctermbg=bg ctermfg=159 gui=NONE guibg=bg guifg=#87ceeb
+    CSAHi Constant term=underline cterm=NONE ctermbg=bg ctermfg=224 gui=NONE guibg=bg guifg=#ffa0a0
+    CSAHi Special term=bold cterm=NONE ctermbg=bg ctermfg=230 gui=NONE guibg=bg guifg=#ffdead
+    CSAHi Identifier term=underline cterm=NONE ctermbg=bg ctermfg=194 gui=NONE guibg=bg guifg=#98fb98
+    CSAHi StatusLineModFlag term=NONE cterm=bold ctermbg=224 ctermfg=196 gui=bold guibg=#c2bfa5 guifg=#cc0000
+    CSAHi StatusLineFunctionName term=NONE cterm=NONE ctermbg=234 ctermfg=247 gui=NONE guibg=#1c1c1c guifg=#9e9e9e
+    CSAHi EasyMotionTargetDefault term=NONE cterm=bold ctermbg=bg ctermfg=196 gui=bold guibg=bg guifg=#ff0000
+    CSAHi EasyMotionShadeDefault term=NONE cterm=NONE ctermbg=bg ctermfg=243 gui=NONE guibg=bg guifg=#777777
+    CSAHi StatusLineFunctionNameNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineModeInsert term=NONE cterm=bold ctermbg=196 ctermfg=255 gui=bold guibg=#cc0000 guifg=#ffffff
+    CSAHi Folded term=NONE cterm=NONE ctermbg=236 ctermfg=226 gui=NONE guibg=#333333 guifg=#ffd700
+    CSAHi FoldColumn term=NONE cterm=NONE ctermbg=236 ctermfg=223 gui=NONE guibg=#333333 guifg=#d2b48c
+    CSAHi DiffAdd term=bold cterm=NONE ctermbg=19 ctermfg=fg gui=NONE guibg=#00008b guifg=fg
+    CSAHi DiffChange term=bold cterm=NONE ctermbg=127 ctermfg=fg gui=NONE guibg=#8b008b guifg=fg
+    CSAHi DiffDelete term=bold cterm=bold ctermbg=37 ctermfg=21 gui=bold guibg=#008b8b guifg=#0000ff
+    CSAHi DiffText term=reverse cterm=bold ctermbg=196 ctermfg=fg gui=bold guibg=#ff0000 guifg=fg
+    CSAHi SignColumn term=NONE cterm=NONE ctermbg=236 ctermfg=51 gui=NONE guibg=#333333 guifg=#00ffff
+    CSAHi Conceal term=NONE cterm=NONE ctermbg=248 ctermfg=231 gui=NONE guibg=#a9a9a9 guifg=#d3d3d3
+    CSAHi SpellBad term=reverse cterm=undercurl ctermbg=bg ctermfg=196 gui=undercurl guibg=bg guifg=fg guisp=#ff0000
+    CSAHi SpellCap term=reverse cterm=undercurl ctermbg=bg ctermfg=21 gui=undercurl guibg=bg guifg=fg guisp=#0000ff
+elseif has("gui_running") || &t_Co == 256
+    CSAHi Normal term=NONE cterm=NONE ctermbg=236 ctermfg=231 gui=NONE guibg=#333333 guifg=#ffffff
+    CSAHi StatusLineLineNumberNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineExpandTabNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineBranchNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileFormat term=NONE cterm=bold ctermbg=234 ctermfg=250 gui=bold guibg=#1c1c1c guifg=#bcbcbc
+    CSAHi StatusLineFileFormatNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineBranchS term=NONE cterm=NONE ctermbg=240 ctermfg=246 gui=NONE guibg=#585858 guifg=#949494
+    CSAHi StatusLineBranchSNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineLinePercent term=NONE cterm=bold ctermbg=145 ctermfg=236 gui=bold guibg=#c2bfa5 guifg=#303030
+    CSAHi StatusLineWarningNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineLineColumn term=NONE cterm=NONE ctermbg=240 ctermfg=250 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi Statement term=bold cterm=bold ctermbg=bg ctermfg=222 gui=bold guibg=bg guifg=#f0e68c
+    CSAHi PreProc term=underline cterm=NONE ctermbg=bg ctermfg=167 gui=NONE guibg=bg guifg=#cd5c5c
+    CSAHi Type term=underline cterm=bold ctermbg=bg ctermfg=143 gui=bold guibg=bg guifg=#bdb76b
+    CSAHi Underlined term=underline cterm=underline ctermbg=bg ctermfg=111 gui=underline guibg=bg guifg=#80a0ff
+    CSAHi Ignore term=NONE cterm=NONE ctermbg=bg ctermfg=241 gui=NONE guibg=bg guifg=#666666
+    CSAHi Error term=reverse cterm=NONE ctermbg=196 ctermfg=231 gui=NONE guibg=#ff0000 guifg=#ffffff
+    CSAHi Todo term=NONE cterm=NONE ctermbg=226 ctermfg=202 gui=NONE guibg=#eeee00 guifg=#ff4500
+    CSAHi StatusLineFileName term=NONE cterm=bold ctermbg=145 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineLinePercentNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileNameNC term=NONE cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineLineNumber term=NONE cterm=bold ctermbg=240 ctermfg=250 gui=bold guibg=#585858 guifg=#bcbcbc
+    CSAHi SpecialKey term=bold cterm=NONE ctermbg=bg ctermfg=241 gui=NONE guibg=bg guifg=#666666
+    CSAHi NonText term=bold cterm=bold ctermbg=239 ctermfg=152 gui=bold guibg=#4d4d4d guifg=#add8e6
+    CSAHi Directory term=bold cterm=NONE ctermbg=bg ctermfg=51 gui=NONE guibg=bg guifg=#00ffff
+    CSAHi ErrorMsg term=NONE cterm=NONE ctermbg=196 ctermfg=231 gui=NONE guibg=#ff0000 guifg=#ffffff
+    CSAHi IncSearch term=reverse cterm=reverse ctermbg=66 ctermfg=222 gui=reverse guibg=#f0e68c guifg=#708090
+    CSAHi Search term=reverse cterm=NONE ctermbg=173 ctermfg=223 gui=NONE guibg=#cd853f guifg=#f5deb3
+    CSAHi MoreMsg term=bold cterm=bold ctermbg=bg ctermfg=29 gui=bold guibg=bg guifg=#2e8b57
+    CSAHi ModeMsg term=bold cterm=bold ctermbg=bg ctermfg=178 gui=bold guibg=bg guifg=#daa520
+    CSAHi LineNr term=underline cterm=NONE ctermbg=bg ctermfg=226 gui=NONE guibg=bg guifg=#ffff00
+    CSAHi UtlTag term=NONE cterm=NONE ctermbg=bg ctermfg=fg gui=NONE guibg=bg guifg=fg
+    CSAHi StatusLineError term=NONE cterm=bold ctermbg=240 ctermfg=202 gui=bold guibg=#585858 guifg=#ff5f00
+    CSAHi User1 term=NONE cterm=bold ctermbg=145 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi User2 term=NONE cterm=bold ctermbg=145 ctermfg=88 gui=bold guibg=#c2bfa5 guifg=#990f0f
+    CSAHi User3 term=NONE cterm=NONE ctermbg=145 ctermfg=241 gui=NONE guibg=#c2bfa5 guifg=#666666
+    CSAHi User4 term=NONE cterm=NONE ctermbg=145 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi User5 term=NONE cterm=bold ctermbg=145 ctermfg=88 gui=bold guibg=#c2bfa5 guifg=#990f0f
+    CSAHi User6 term=NONE cterm=bold ctermbg=145 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi SpellRare term=reverse cterm=undercurl ctermbg=bg ctermfg=201 gui=undercurl guibg=bg guifg=fg guisp=#ff00ff
+    CSAHi SpellLocal term=underline cterm=undercurl ctermbg=bg ctermfg=51 gui=undercurl guibg=bg guifg=fg guisp=#00ffff
+    CSAHi Pmenu term=NONE cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#1c1c1c guifg=#cccccc
+    CSAHi PmenuSel term=NONE cterm=NONE ctermbg=173 ctermfg=231 gui=NONE guibg=#cd853f guifg=#f7f6f5
+    CSAHi PmenuSbar term=NONE cterm=NONE ctermbg=234 ctermfg=231 gui=NONE guibg=#1c1c1c guifg=#ffffff
+    CSAHi PmenuThumb term=NONE cterm=NONE ctermbg=178 ctermfg=231 gui=NONE guibg=#daa520 guifg=#ffffff
+    CSAHi TabLine term=underline cterm=NONE ctermbg=248 ctermfg=236 gui=NONE guibg=#a9a9a9 guifg=#333333
+    CSAHi TabLineSel term=bold cterm=bold ctermbg=bg ctermfg=fg gui=bold guibg=bg guifg=fg
+    CSAHi TabLineFill term=reverse cterm=reverse ctermbg=241 ctermfg=fg gui=reverse guibg=bg guifg=#666666
+    CSAHi CursorColumn term=reverse cterm=NONE ctermbg=241 ctermfg=fg gui=NONE guibg=#666666 guifg=fg
+    CSAHi StatusLineBranch term=NONE cterm=NONE ctermbg=240 ctermfg=250 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi StatusLineLineColumnNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi TagbarSignature term=NONE cterm=NONE ctermbg=bg ctermfg=113 gui=NONE guibg=bg guifg=#9acd32
+    CSAHi TagbarVisibilityProtected term=NONE cterm=NONE ctermbg=bg ctermfg=116 gui=NONE guibg=bg guifg=#87ceeb
+    CSAHi StatusLineWarning term=NONE cterm=bold ctermbg=160 ctermfg=231 gui=bold guibg=#cc0000 guifg=#ffffff
+    CSAHi CursorLineNr term=bold cterm=bold ctermbg=bg ctermfg=226 gui=bold guibg=bg guifg=#ffff00
+    CSAHi Question term=NONE cterm=bold ctermbg=bg ctermfg=48 gui=bold guibg=bg guifg=#00ff7f
+    CSAHi StatusLine term=bold,reverse cterm=NONE ctermbg=145 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineNC term=reverse cterm=NONE ctermbg=234 ctermfg=244 gui=NONE guibg=#1c1c1c guifg=#7f7f7f
+    CSAHi VertSplit term=reverse cterm=NONE ctermbg=145 ctermfg=244 gui=NONE guibg=#c2bfa5 guifg=#7f7f7f
+    CSAHi Title term=bold cterm=bold ctermbg=bg ctermfg=167 gui=bold guibg=bg guifg=#cd5c5c
+    CSAHi Visual term=reverse cterm=NONE ctermbg=64 ctermfg=222 gui=NONE guibg=#6b8e23 guifg=#f0e68c
+    CSAHi VisualNOS term=bold,underline cterm=bold,underline ctermbg=bg ctermfg=fg gui=bold,underline guibg=bg guifg=fg
+    CSAHi WarningMsg term=NONE cterm=NONE ctermbg=bg ctermfg=209 gui=NONE guibg=bg guifg=#fa8072
+    CSAHi WildMenu term=NONE cterm=NONE ctermbg=226 ctermfg=16 gui=NONE guibg=#ffff00 guifg=#000000
+    CSAHi StatusLineErrorNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileType term=NONE cterm=NONE ctermbg=240 ctermfg=250 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi StatusLineFileTypeNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineExpandTab term=NONE cterm=bold ctermbg=240 ctermfg=255 gui=bold guibg=#585858 guifg=#eeeeee
+    CSAHi StatusLineFileEncoding term=NONE cterm=bold ctermbg=234 ctermfg=250 gui=bold guibg=#1c1c1c guifg=#bcbcbc
+    CSAHi StatusLineFileEncodingNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineModeNormal term=NONE cterm=bold ctermbg=64 ctermfg=231 gui=bold guibg=#4e9a06 guifg=#ffffff
+    CSAHi StatusLineBufFlag term=NONE cterm=NONE ctermbg=145 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineBufFlagNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineSeparator term=NONE cterm=NONE ctermbg=234 ctermfg=242 gui=NONE guibg=#1c1c1c guifg=#6c6c6c
+    CSAHi StatusLineSeparatorNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi CursorLine term=underline cterm=NONE ctermbg=241 ctermfg=fg gui=NONE guibg=#666666 guifg=fg
+    CSAHi StatusLineModFlagNC term=NONE cterm=NONE ctermbg=234 ctermfg=239 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi Cursor term=NONE cterm=NONE ctermbg=222 ctermfg=66 gui=NONE guibg=#f0e68c guifg=#708090
+    CSAHi lCursor term=NONE cterm=NONE ctermbg=231 ctermfg=236 gui=NONE guibg=#ffffff guifg=#333333
+    CSAHi MatchParen term=reverse cterm=NONE ctermbg=30 ctermfg=fg gui=NONE guibg=#008b8b guifg=fg
+    CSAHi Comment term=bold cterm=NONE ctermbg=bg ctermfg=116 gui=NONE guibg=bg guifg=#87ceeb
+    CSAHi Constant term=underline cterm=NONE ctermbg=bg ctermfg=217 gui=NONE guibg=bg guifg=#ffa0a0
+    CSAHi Special term=bold cterm=NONE ctermbg=bg ctermfg=223 gui=NONE guibg=bg guifg=#ffdead
+    CSAHi Identifier term=underline cterm=NONE ctermbg=bg ctermfg=120 gui=NONE guibg=bg guifg=#98fb98
+    CSAHi StatusLineModFlag term=NONE cterm=bold ctermbg=145 ctermfg=160 gui=bold guibg=#c2bfa5 guifg=#cc0000
+    CSAHi StatusLineFunctionName term=NONE cterm=NONE ctermbg=234 ctermfg=247 gui=NONE guibg=#1c1c1c guifg=#9e9e9e
+    CSAHi EasyMotionTargetDefault term=NONE cterm=bold ctermbg=bg ctermfg=196 gui=bold guibg=bg guifg=#ff0000
+    CSAHi EasyMotionShadeDefault term=NONE cterm=NONE ctermbg=bg ctermfg=243 gui=NONE guibg=bg guifg=#777777
+    CSAHi StatusLineFunctionNameNC term=NONE cterm=NONE ctermbg=232 ctermfg=239 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineModeInsert term=NONE cterm=bold ctermbg=160 ctermfg=231 gui=bold guibg=#cc0000 guifg=#ffffff
+    CSAHi Folded term=NONE cterm=NONE ctermbg=236 ctermfg=220 gui=NONE guibg=#333333 guifg=#ffd700
+    CSAHi FoldColumn term=NONE cterm=NONE ctermbg=236 ctermfg=180 gui=NONE guibg=#333333 guifg=#d2b48c
+    CSAHi DiffAdd term=bold cterm=NONE ctermbg=18 ctermfg=fg gui=NONE guibg=#00008b guifg=fg
+    CSAHi DiffChange term=bold cterm=NONE ctermbg=90 ctermfg=fg gui=NONE guibg=#8b008b guifg=fg
+    CSAHi DiffDelete term=bold cterm=bold ctermbg=30 ctermfg=21 gui=bold guibg=#008b8b guifg=#0000ff
+    CSAHi DiffText term=reverse cterm=bold ctermbg=196 ctermfg=fg gui=bold guibg=#ff0000 guifg=fg
+    CSAHi SignColumn term=NONE cterm=NONE ctermbg=236 ctermfg=51 gui=NONE guibg=#333333 guifg=#00ffff
+    CSAHi Conceal term=NONE cterm=NONE ctermbg=248 ctermfg=252 gui=NONE guibg=#a9a9a9 guifg=#d3d3d3
+    CSAHi SpellBad term=reverse cterm=undercurl ctermbg=bg ctermfg=196 gui=undercurl guibg=bg guifg=fg guisp=#ff0000
+    CSAHi SpellCap term=reverse cterm=undercurl ctermbg=bg ctermfg=21 gui=undercurl guibg=bg guifg=fg guisp=#0000ff
+elseif has("gui_running") || &t_Co == 88
+    CSAHi Normal term=NONE cterm=NONE ctermbg=80 ctermfg=79 gui=NONE guibg=#333333 guifg=#ffffff
+    CSAHi StatusLineLineNumberNC term=NONE cterm=NONE ctermbg=80 ctermfg=83 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineExpandTabNC term=NONE cterm=NONE ctermbg=80 ctermfg=83 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineBranchNC term=NONE cterm=NONE ctermbg=80 ctermfg=81 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileFormat term=NONE cterm=bold ctermbg=80 ctermfg=85 gui=bold guibg=#1c1c1c guifg=#bcbcbc
+    CSAHi StatusLineFileFormatNC term=NONE cterm=NONE ctermbg=16 ctermfg=81 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineBranchS term=NONE cterm=NONE ctermbg=81 ctermfg=83 gui=NONE guibg=#585858 guifg=#949494
+    CSAHi StatusLineBranchSNC term=NONE cterm=NONE ctermbg=80 ctermfg=81 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineLinePercent term=NONE cterm=bold ctermbg=57 ctermfg=80 gui=bold guibg=#c2bfa5 guifg=#303030
+    CSAHi StatusLineWarningNC term=NONE cterm=NONE ctermbg=80 ctermfg=83 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineLineColumn term=NONE cterm=NONE ctermbg=81 ctermfg=85 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi Statement term=bold cterm=bold ctermbg=bg ctermfg=73 gui=bold guibg=bg guifg=#f0e68c
+    CSAHi PreProc term=underline cterm=NONE ctermbg=bg ctermfg=53 gui=NONE guibg=bg guifg=#cd5c5c
+    CSAHi Type term=underline cterm=bold ctermbg=bg ctermfg=57 gui=bold guibg=bg guifg=#bdb76b
+    CSAHi Underlined term=underline cterm=underline ctermbg=bg ctermfg=39 gui=underline guibg=bg guifg=#80a0ff
+    CSAHi Ignore term=NONE cterm=NONE ctermbg=bg ctermfg=81 gui=NONE guibg=bg guifg=#666666
+    CSAHi Error term=reverse cterm=NONE ctermbg=64 ctermfg=79 gui=NONE guibg=#ff0000 guifg=#ffffff
+    CSAHi Todo term=NONE cterm=NONE ctermbg=76 ctermfg=64 gui=NONE guibg=#eeee00 guifg=#ff4500
+    CSAHi StatusLineFileName term=NONE cterm=bold ctermbg=57 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineLinePercentNC term=NONE cterm=NONE ctermbg=80 ctermfg=81 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileNameNC term=NONE cterm=NONE ctermbg=80 ctermfg=83 gui=NONE guibg=#1c1c1c guifg=#808080
+    CSAHi StatusLineLineNumber term=NONE cterm=bold ctermbg=81 ctermfg=85 gui=bold guibg=#585858 guifg=#bcbcbc
+    CSAHi SpecialKey term=bold cterm=NONE ctermbg=bg ctermfg=81 gui=NONE guibg=bg guifg=#666666
+    CSAHi NonText term=bold cterm=bold ctermbg=81 ctermfg=58 gui=bold guibg=#4d4d4d guifg=#add8e6
+    CSAHi Directory term=bold cterm=NONE ctermbg=bg ctermfg=31 gui=NONE guibg=bg guifg=#00ffff
+    CSAHi ErrorMsg term=NONE cterm=NONE ctermbg=64 ctermfg=79 gui=NONE guibg=#ff0000 guifg=#ffffff
+    CSAHi IncSearch term=reverse cterm=reverse ctermbg=37 ctermfg=73 gui=reverse guibg=#f0e68c guifg=#708090
+    CSAHi Search term=reverse cterm=NONE ctermbg=52 ctermfg=74 gui=NONE guibg=#cd853f guifg=#f5deb3
+    CSAHi MoreMsg term=bold cterm=bold ctermbg=bg ctermfg=21 gui=bold guibg=bg guifg=#2e8b57
+    CSAHi ModeMsg term=bold cterm=bold ctermbg=bg ctermfg=52 gui=bold guibg=bg guifg=#daa520
+    CSAHi LineNr term=underline cterm=NONE ctermbg=bg ctermfg=76 gui=NONE guibg=bg guifg=#ffff00
+    CSAHi UtlTag term=NONE cterm=NONE ctermbg=bg ctermfg=fg gui=NONE guibg=bg guifg=fg
+    CSAHi StatusLineError term=NONE cterm=bold ctermbg=81 ctermfg=68 gui=bold guibg=#585858 guifg=#ff5f00
+    CSAHi User1 term=NONE cterm=bold ctermbg=57 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi User2 term=NONE cterm=bold ctermbg=57 ctermfg=32 gui=bold guibg=#c2bfa5 guifg=#990f0f
+    CSAHi User3 term=NONE cterm=NONE ctermbg=57 ctermfg=81 gui=NONE guibg=#c2bfa5 guifg=#666666
+    CSAHi User4 term=NONE cterm=NONE ctermbg=57 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi User5 term=NONE cterm=bold ctermbg=57 ctermfg=32 gui=bold guibg=#c2bfa5 guifg=#990f0f
+    CSAHi User6 term=NONE cterm=bold ctermbg=57 ctermfg=16 gui=bold guibg=#c2bfa5 guifg=#000000
+    CSAHi SpellRare term=reverse cterm=undercurl ctermbg=bg ctermfg=67 gui=undercurl guibg=bg guifg=fg guisp=#ff00ff
+    CSAHi SpellLocal term=underline cterm=undercurl ctermbg=bg ctermfg=31 gui=undercurl guibg=bg guifg=fg guisp=#00ffff
+    CSAHi Pmenu term=NONE cterm=NONE ctermbg=80 ctermfg=58 gui=NONE guibg=#1c1c1c guifg=#cccccc
+    CSAHi PmenuSel term=NONE cterm=NONE ctermbg=52 ctermfg=79 gui=NONE guibg=#cd853f guifg=#f7f6f5
+    CSAHi PmenuSbar term=NONE cterm=NONE ctermbg=80 ctermfg=79 gui=NONE guibg=#1c1c1c guifg=#ffffff
+    CSAHi PmenuThumb term=NONE cterm=NONE ctermbg=52 ctermfg=79 gui=NONE guibg=#daa520 guifg=#ffffff
+    CSAHi TabLine term=underline cterm=NONE ctermbg=84 ctermfg=80 gui=NONE guibg=#a9a9a9 guifg=#333333
+    CSAHi TabLineSel term=bold cterm=bold ctermbg=bg ctermfg=fg gui=bold guibg=bg guifg=fg
+    CSAHi TabLineFill term=reverse cterm=reverse ctermbg=81 ctermfg=fg gui=reverse guibg=bg guifg=#666666
+    CSAHi CursorColumn term=reverse cterm=NONE ctermbg=81 ctermfg=fg gui=NONE guibg=#666666 guifg=fg
+    CSAHi StatusLineBranch term=NONE cterm=NONE ctermbg=81 ctermfg=85 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi StatusLineLineColumnNC term=NONE cterm=NONE ctermbg=80 ctermfg=81 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi TagbarSignature term=NONE cterm=NONE ctermbg=bg ctermfg=40 gui=NONE guibg=bg guifg=#9acd32
+    CSAHi TagbarVisibilityProtected term=NONE cterm=NONE ctermbg=bg ctermfg=43 gui=NONE guibg=bg guifg=#87ceeb
+    CSAHi StatusLineWarning term=NONE cterm=bold ctermbg=48 ctermfg=79 gui=bold guibg=#cc0000 guifg=#ffffff
+    CSAHi CursorLineNr term=bold cterm=bold ctermbg=bg ctermfg=76 gui=bold guibg=bg guifg=#ffff00
+    CSAHi Question term=NONE cterm=bold ctermbg=bg ctermfg=29 gui=bold guibg=bg guifg=#00ff7f
+    CSAHi StatusLine term=bold,reverse cterm=NONE ctermbg=57 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineNC term=reverse cterm=NONE ctermbg=80 ctermfg=82 gui=NONE guibg=#1c1c1c guifg=#7f7f7f
+    CSAHi VertSplit term=reverse cterm=NONE ctermbg=57 ctermfg=82 gui=NONE guibg=#c2bfa5 guifg=#7f7f7f
+    CSAHi Title term=bold cterm=bold ctermbg=bg ctermfg=53 gui=bold guibg=bg guifg=#cd5c5c
+    CSAHi Visual term=reverse cterm=NONE ctermbg=36 ctermfg=73 gui=NONE guibg=#6b8e23 guifg=#f0e68c
+    CSAHi VisualNOS term=bold,underline cterm=bold,underline ctermbg=bg ctermfg=fg gui=bold,underline guibg=bg guifg=fg
+    CSAHi WarningMsg term=NONE cterm=NONE ctermbg=bg ctermfg=69 gui=NONE guibg=bg guifg=#fa8072
+    CSAHi WildMenu term=NONE cterm=NONE ctermbg=76 ctermfg=16 gui=NONE guibg=#ffff00 guifg=#000000
+    CSAHi StatusLineErrorNC term=NONE cterm=NONE ctermbg=80 ctermfg=81 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineFileType term=NONE cterm=NONE ctermbg=81 ctermfg=85 gui=NONE guibg=#585858 guifg=#bcbcbc
+    CSAHi StatusLineFileTypeNC term=NONE cterm=NONE ctermbg=16 ctermfg=81 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineExpandTab term=NONE cterm=bold ctermbg=81 ctermfg=87 gui=bold guibg=#585858 guifg=#eeeeee
+    CSAHi StatusLineFileEncoding term=NONE cterm=bold ctermbg=80 ctermfg=85 gui=bold guibg=#1c1c1c guifg=#bcbcbc
+    CSAHi StatusLineFileEncodingNC term=NONE cterm=NONE ctermbg=16 ctermfg=81 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineModeNormal term=NONE cterm=bold ctermbg=36 ctermfg=79 gui=bold guibg=#4e9a06 guifg=#ffffff
+    CSAHi StatusLineBufFlag term=NONE cterm=NONE ctermbg=57 ctermfg=16 gui=NONE guibg=#c2bfa5 guifg=#000000
+    CSAHi StatusLineBufFlagNC term=NONE cterm=NONE ctermbg=80 ctermfg=81 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi StatusLineSeparator term=NONE cterm=NONE ctermbg=80 ctermfg=82 gui=NONE guibg=#1c1c1c guifg=#6c6c6c
+    CSAHi StatusLineSeparatorNC term=NONE cterm=NONE ctermbg=16 ctermfg=81 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi CursorLine term=underline cterm=NONE ctermbg=81 ctermfg=fg gui=NONE guibg=#666666 guifg=fg
+    CSAHi StatusLineModFlagNC term=NONE cterm=NONE ctermbg=80 ctermfg=81 gui=NONE guibg=#1c1c1c guifg=#4e4e4e
+    CSAHi Cursor term=NONE cterm=NONE ctermbg=73 ctermfg=37 gui=NONE guibg=#f0e68c guifg=#708090
+    CSAHi lCursor term=NONE cterm=NONE ctermbg=79 ctermfg=80 gui=NONE guibg=#ffffff guifg=#333333
+    CSAHi MatchParen term=reverse cterm=NONE ctermbg=21 ctermfg=fg gui=NONE guibg=#008b8b guifg=fg
+    CSAHi Comment term=bold cterm=NONE ctermbg=bg ctermfg=43 gui=NONE guibg=bg guifg=#87ceeb
+    CSAHi Constant term=underline cterm=NONE ctermbg=bg ctermfg=69 gui=NONE guibg=bg guifg=#ffa0a0
+    CSAHi Special term=bold cterm=NONE ctermbg=bg ctermfg=74 gui=NONE guibg=bg guifg=#ffdead
+    CSAHi Identifier term=underline cterm=NONE ctermbg=bg ctermfg=45 gui=NONE guibg=bg guifg=#98fb98
+    CSAHi StatusLineModFlag term=NONE cterm=bold ctermbg=57 ctermfg=48 gui=bold guibg=#c2bfa5 guifg=#cc0000
+    CSAHi StatusLineFunctionName term=NONE cterm=NONE ctermbg=80 ctermfg=84 gui=NONE guibg=#1c1c1c guifg=#9e9e9e
+    CSAHi EasyMotionTargetDefault term=NONE cterm=bold ctermbg=bg ctermfg=64 gui=bold guibg=bg guifg=#ff0000
+    CSAHi EasyMotionShadeDefault term=NONE cterm=NONE ctermbg=bg ctermfg=82 gui=NONE guibg=bg guifg=#777777
+    CSAHi StatusLineFunctionNameNC term=NONE cterm=NONE ctermbg=16 ctermfg=81 gui=NONE guibg=#080808 guifg=#4e4e4e
+    CSAHi StatusLineModeInsert term=NONE cterm=bold ctermbg=48 ctermfg=79 gui=bold guibg=#cc0000 guifg=#ffffff
+    CSAHi Folded term=NONE cterm=NONE ctermbg=80 ctermfg=72 gui=NONE guibg=#333333 guifg=#ffd700
+    CSAHi FoldColumn term=NONE cterm=NONE ctermbg=80 ctermfg=57 gui=NONE guibg=#333333 guifg=#d2b48c
+    CSAHi DiffAdd term=bold cterm=NONE ctermbg=17 ctermfg=fg gui=NONE guibg=#00008b guifg=fg
+    CSAHi DiffChange term=bold cterm=NONE ctermbg=33 ctermfg=fg gui=NONE guibg=#8b008b guifg=fg
+    CSAHi DiffDelete term=bold cterm=bold ctermbg=21 ctermfg=19 gui=bold guibg=#008b8b guifg=#0000ff
+    CSAHi DiffText term=reverse cterm=bold ctermbg=64 ctermfg=fg gui=bold guibg=#ff0000 guifg=fg
+    CSAHi SignColumn term=NONE cterm=NONE ctermbg=80 ctermfg=31 gui=NONE guibg=#333333 guifg=#00ffff
+    CSAHi Conceal term=NONE cterm=NONE ctermbg=84 ctermfg=86 gui=NONE guibg=#a9a9a9 guifg=#d3d3d3
+    CSAHi SpellBad term=reverse cterm=undercurl ctermbg=bg ctermfg=64 gui=undercurl guibg=bg guifg=fg guisp=#ff0000
+    CSAHi SpellCap term=reverse cterm=undercurl ctermbg=bg ctermfg=19 gui=undercurl guibg=bg guifg=fg guisp=#0000ff
+endif
+
+if 1
+    delcommand CSAHi
+endif
