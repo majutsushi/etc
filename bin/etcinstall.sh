@@ -82,7 +82,7 @@ mkdir -p $HOME/.cache/etc
 ln -sf $HOME/.etc/.githooks/* .etc/.git/hooks
 
 xlink .etc/Rprofile
-xlink .etc/ackrc
+merge .etc/ackrc
 xlink .etc/ant/ant.conf target=.ant/ant.conf
 xlink .etc/aptitude
 xlink .etc/bibtoolrsc
