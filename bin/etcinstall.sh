@@ -14,7 +14,7 @@ error() {
 }
 
 merge() {
-    local conffile=$1
+    local conffile=.etc/$1
     shift
 
     if [[ $# -ge 1 ]]; then
@@ -50,7 +50,7 @@ merge() {
 }
 
 xlink() {
-    local conffile=$1
+    local conffile=.etc/$1
     shift
 
     if [[ $# -ge 1 ]]; then
@@ -81,70 +81,70 @@ mkdir -p $HOME/.cache/etc
 
 ln -sf $HOME/.etc/.githooks/* .etc/.git/hooks
 
-xlink .etc/Rprofile
-merge .etc/ackrc
-xlink .etc/ant/ant.conf target=.ant/ant.conf
-xlink .etc/aptitude
-xlink .etc/bibtoolrsc
-xlink .etc/colorgccrc
-xlink .etc/colordiffrc
-xlink .etc/ctags
-xlink .etc/gdbinit
-xlink .etc/indent.pro
-xlink .etc/inputrc
-xlink .etc/irbrc
-xlink .etc/latexmkrc
-xlink .etc/lessfilter
-#xlink .etc/mailcap
-xlink .etc/mercurial/hgrc
-xlink .etc/moc
-xlink .etc/ranger target=.config/ranger
-xlink .etc/redshift.conf target=.config/redshift.conf
-xlink .etc/screen/screenrc
-xlink .etc/slrn/slrnrc
-xlink .etc/taskrc
-xlink .etc/tmux/tmux.conf
-xlink .etc/urxvt
-xlink .etc/xmonad
-xlink .etc/zathurarc target=.config/zathura/zathurarc
-xlink .etc/zsh/zshenv
+xlink Rprofile
+merge ackrc
+xlink ant/ant.conf target=.ant/ant.conf
+xlink aptitude
+xlink bibtoolrsc
+xlink colorgccrc
+xlink colordiffrc
+xlink ctags
+xlink gdbinit
+xlink indent.pro
+xlink inputrc
+xlink irbrc
+xlink latexmkrc
+xlink lessfilter
+#xlink mailcap
+xlink mercurial/hgrc
+xlink moc
+xlink ranger target=.config/ranger
+xlink redshift.conf target=.config/redshift.conf
+xlink screen/screenrc
+xlink slrn/slrnrc
+xlink taskrc
+xlink tmux/tmux.conf
+xlink urxvt
+xlink xmonad
+xlink zathurarc target=.config/zathura/zathurarc
+xlink zsh/zshenv
 
-xlink .etc/bash/bashrc
-xlink .etc/bash/bash_profile
-xlink .etc/bash/bash_logout
+xlink bash/bashrc
+xlink bash/bash_profile
+xlink bash/bash_logout
 
-xlink .etc/emacs/emacs
-xlink .etc/emacs/emacs.d
+xlink emacs/emacs
+xlink emacs/emacs.d
 
-xlink .etc/git/gitconfig
-merge .etc/git/gitignore target=.cache/etc/gitignore
+xlink git/gitconfig
+merge git/gitignore target=.cache/etc/gitignore
 
-xlink .etc/mail/lbdb
-xlink .etc/mail/msmtprc
-xlink .etc/mail/offlineimaprc
-xlink .etc/mail/t-prot target=.config/t-prot
-#xlink .etc/procmail/procmailrc
+xlink mail/lbdb
+xlink mail/msmtprc
+xlink mail/offlineimaprc
+xlink mail/t-prot target=.config/t-prot
+#xlink procmail/procmailrc
 mkdir -p $HOME/.cache/procmail
 
-xlink .etc/mutt/muttrc
-xlink .etc/mutt/mutt
+xlink mutt/muttrc
+xlink mutt/mutt
 
-xlink .etc/pentadactyl/pentadactylrc
-xlink .etc/pentadactyl/pentadactyl
+xlink pentadactyl/pentadactylrc
+xlink pentadactyl/pentadactyl
 
-xlink .etc/vim/vimrc
-xlink .etc/vim/gvimrc
-xlink .etc/vim/vim
-xlink .etc/vim/vimplaterc
+xlink vim/vimrc
+xlink vim/gvimrc
+xlink vim/vim
+xlink vim/vimplaterc
 
-xlink .etc/xorg/fonts.conf.d
-#xlink .etc/xorg/Xresources
-#xlink .etc/xorg/xinitrc
-#xlink .etc/xorg/xinput.d
-#xlink .etc/xorg/xinputrc
-#xlink .etc/xorg/xsession
-xlink .etc/xorg/xsessionrc
-merge .etc/xorg/Xmodmap comment=!
+xlink xorg/fonts.conf.d
+#xlink xorg/Xresources
+#xlink xorg/xinitrc
+#xlink xorg/xinput.d
+#xlink xorg/xinputrc
+#xlink xorg/xsession
+xlink xorg/xsessionrc
+merge xorg/Xmodmap comment=!
 xmodmap $HOME/.Xmodmap
 
 
