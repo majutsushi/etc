@@ -33,15 +33,18 @@ merge() {
     rm -f $target
 
     echo "$comment *** GENERATED FILE - DO NOT EDIT ***" > $target
+    echo "$comment [$(readlink -f $conffile)]" >> $target
     cat $conffile >> $target
     for part in $conffile.d/*; do
         if [[ "$(hostname)" == "$(basename $part)" ]]; then
+            echo -e "\n$comment [$(readlink -f $part)]" >> $target
             cat $part >> $target
         fi
     done
 
     local localfile=$HOME/.local/etc/$(basename "$conffile")
     if [[ -f $localfile ]]; then
+        echo -e "\n$comment [$localfile]" >> $target
         cat $localfile >> $target
     fi
 }
@@ -73,6 +76,9 @@ xlink() {
 OLDPWD=$PWD
 cd $HOME
 
+mkdir -p $HOME/.local/etc
+mkdir -p $HOME/.cache/etc
+
 ln -sf $HOME/.etc/.githooks/* .etc/.git/hooks
 
 xlink .etc/Rprofile
@@ -84,7 +90,6 @@ xlink .etc/colorgccrc
 xlink .etc/colordiffrc
 xlink .etc/ctags
 xlink .etc/gdbinit
-xlink .etc/git/gitconfig
 xlink .etc/indent.pro
 xlink .etc/inputrc
 xlink .etc/irbrc
@@ -110,6 +115,9 @@ xlink .etc/bash/bash_logout
 
 xlink .etc/emacs/emacs
 xlink .etc/emacs/emacs.d
+
+xlink .etc/git/gitconfig
+merge .etc/git/gitignore target=.cache/etc/gitignore
 
 xlink .etc/mail/lbdb
 xlink .etc/mail/msmtprc
