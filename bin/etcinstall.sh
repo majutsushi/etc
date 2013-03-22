@@ -137,33 +137,35 @@ xlink vim/gvimrc
 xlink vim/vim
 xlink vim/vimplaterc
 
-xlink xorg/fonts.conf.d
-#xlink xorg/Xresources
-#xlink xorg/xinitrc
-#xlink xorg/xinput.d
-#xlink xorg/xinputrc
-#xlink xorg/xsession
-xlink xorg/xsessionrc
-merge xorg/Xmodmap comment=!
-xmodmap $HOME/.Xmodmap
-
 
 lesskey .etc/lesskey
 
-FONTDIR=$HOME/.local/share/fonts
-mkdir -p $FONTDIR
-for fontf in .etc/xorg/fonts/*.bdf; do
-    font=$(basename ${fontf})
-    font=${font%.bdf}
-    info "Installing font ${font}"
-    bdftopcf -o $FONTDIR/${font}.pcf ${fontf}
-    gzip -f $FONTDIR/${font}.pcf
-done
-cd $FONTDIR
-mkfontdir
-cd $HOME
-xset -fp $FONTDIR 2> /dev/null
-xset +fp $FONTDIR
+if command -v X >/dev/null; then
+    xlink xorg/fonts.conf.d
+    #xlink xorg/Xresources
+    #xlink xorg/xinitrc
+    #xlink xorg/xinput.d
+    #xlink xorg/xinputrc
+    #xlink xorg/xsession
+    xlink xorg/xsessionrc
+    merge xorg/Xmodmap comment=!
+    xmodmap $HOME/.Xmodmap
+
+    FONTDIR=$HOME/.local/share/fonts
+    mkdir -p $FONTDIR
+    for fontf in .etc/xorg/fonts/*.bdf; do
+        font=$(basename ${fontf})
+        font=${font%.bdf}
+        info "Installing font ${font}"
+        bdftopcf -o $FONTDIR/${font}.pcf ${fontf}
+        gzip -f $FONTDIR/${font}.pcf
+    done
+    cd $FONTDIR
+    mkfontdir
+    cd $HOME
+    xset -fp $FONTDIR 2> /dev/null
+    xset +fp $FONTDIR
+fi
 
 for tinfof in .etc/terminfo/*; do
     tinfo=$(basename ${tinfof})
