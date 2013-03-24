@@ -27,8 +27,8 @@ alias ls='ls  -F'
 alias ll='ls -lF'
 alias l='ls -lAF'
 
-if [[ -f ~/.bashrc.local ]]; then
-    . ~/.bashrc.local
+if [[ -f ~/.local/etc/bashrc ]]; then
+    . ~/.local/etc/bashrc
 fi
 
 case $- in
