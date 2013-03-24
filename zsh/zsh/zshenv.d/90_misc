@@ -1,8 +1,8 @@
 # make sure the value of SHELL is an absolute path
 export SHELL=$(which zsh)
 
-if [[ -f $HOME/.zshenv.local ]]; then
-    source $HOME/.zshenv.local
+if [[ -f $HOME/.local/etc/zshenv ]]; then
+    source $HOME/.local/etc/zshenv
 fi
 
 # vim: filetype=zsh
