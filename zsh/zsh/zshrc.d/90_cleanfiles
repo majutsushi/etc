@@ -5,23 +5,25 @@
 
 typeset -la rmfiles
 
-# rmfiles+=~/plugin131.trace
-# rmfiles+=~/minicom.log
-# rmfiles+=~/.cshrc
-# rmfiles+=~/java.log.*(N)
-rmfiles+=~/unison.log
+# rmfiles+=~/.*.sw[mnop](N)
+rmfiles+=~/.bash_history
 rmfiles+=~/.bzr.log
+# rmfiles+=~/.cshrc
 rmfiles+=~/.fonts.cache-1
 # rmfiles+=~/.gksu.lock
-# rmfiles+=~/.*.sw[mnop](N)
-# rmfiles+=~/.viminfo
-rmfiles+=~/.bash_history
+rmfiles+=~/.less
+rmfiles+=~/.lesshst
+rmfiles+=~/.viminfo
 rmfiles+=~/core
-# rmfiles+=~/nohup.out
-# rmfiles+=~/typescript
-# rmfiles+=~/jpilot.log
-# rmfiles+=~/srtp.log
 # rmfiles+=~/hs_err_pid[0-9]*.log
+# rmfiles+=~/minicom.log
+# rmfiles+=~/java.log.*(N)
+# rmfiles+=~/jpilot.log
+# rmfiles+=~/nohup.out
+# rmfiles+=~/plugin131.trace
+# rmfiles+=~/srtp.log
+# rmfiles+=~/typescript
+rmfiles+=~/unison.log
 
 typeset -la _rmfiles
 
