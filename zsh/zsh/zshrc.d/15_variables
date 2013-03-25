@@ -12,6 +12,11 @@ export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\\: %x
 export LESSHISTFILE=$XDG_CACHE_HOME/lesshst
 export LESSKEY=$XDG_CACHE_HOME/less
 
+export NULLCMD=cat
+export READNULLCMD=${PAGER}
+
+export MANWIDTH=${MANWIDTH:-80}
+
 eval $(dircolors -b $ZDOTDIR/dircolors) 2>/dev/null || :
 
 # http://nion.modprobe.de/blog/archives/572-less-colors-for-man-pages.html
