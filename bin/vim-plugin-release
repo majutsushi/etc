@@ -216,9 +216,9 @@ if __name__ == '__main__':
 
     with open(scrcommfile) as f:
         scrcomment = f.read()
-    os.unlink(scrcommfile)
 
     vimball = make_vimball(scrname)
     login()
     upload_script(scrid, vimball, vimver, scrver, scrcomment)
     os.unlink(vimball)
+    os.unlink(scrcommfile)
