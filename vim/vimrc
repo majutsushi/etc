@@ -1968,30 +1968,16 @@ nnoremap <expr> <leader>co &lines / 4 < 10 ? ':botright copen 10<cr>'
 nnoremap g/ :%s/<C-R>=&ignorecase ? '\c' : '\C'<CR><C-R>///gne<CR>
 
 " search for visually selected text
-xnoremap <silent> * :<C-U>
-              \let old_reg=getreg('"')<bar>
-              \let old_regmode=getregtype('"')<cr>
-              \gvy/<C-R><C-R>=substitute(
-              \escape(@", '\\/.*$^~[]'), '\n', '\\n', 'g')<cr><cr>
-              \:call setreg('"', old_reg, old_regmode)<cr>
-xnoremap <silent> # :<C-U>
-              \let old_reg=getreg('"')<bar>
-              \let old_regmode=getregtype('"')<cr>
-              \gvy?<C-R><C-R>=substitute(
-              \escape(@", '\\/.*$^~[]'), '\n', '\\n', 'g')<cr><cr>
-              \:call setreg('"', old_reg, old_regmode)<cr>
-xnoremap <silent> g* :<C-U>
-              \let old_reg=getreg('"')<bar>
-              \let old_regmode=getregtype('"')<cr>
-              \gvy/<C-R><C-R>=substitute(
-              \escape(@", '\\/.*$^~[]'), '\_s\+', '\\_s\\+', 'g')<cr><cr>
-              \:call setreg('"', old_reg, old_regmode)<cr>
-xnoremap <silent> g# :<C-U>
-              \let old_reg=getreg('"')<bar>
-              \let old_regmode=getregtype('"')<cr>
-              \gvy?<C-R><C-R>=substitute(
-              \escape(@", '\\/.*$^~[]'), '\_s\+', '\\_s\\+', 'g')<cr><cr>
-              \:call setreg('"', old_reg, old_regmode)<cr>
+" http://vimcasts.org/episodes/search-for-the-selected-text/
+function! s:VSetSearch(cmdtype)
+    let temp = @s
+    normal! gv"sy
+    let @/ = '\V' . substitute(escape(@s, a:cmdtype . '\'), '\n', '\\n', 'g')
+    let @s = temp
+endfunction
+
+xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 
 " substitute visual selection
 xnoremap & "*y<Esc>:<c-u>%s/<c-r>=substitute(escape(@*, '\/.*$^~[]'), "\n", '\\n', "g")<cr>/
