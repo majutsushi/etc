@@ -11,4 +11,3 @@ l right-scroll
 ^W word-backspace
 ^P up
 ^N down
-^[ abort

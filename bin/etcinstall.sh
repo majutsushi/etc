@@ -110,7 +110,6 @@ xlink indent.pro
 xlink inputrc
 xlink irbrc
 xlink latexmkrc
-xlink lessfilter
 #xlink mailcap
 xlink mercurial/hgrc
 xlink moc
@@ -153,8 +152,11 @@ xlink vim/gvimrc
 xlink vim/vim
 xlink vim/vimplaterc
 
+xlink less/lessfilter
+merge less/lesskey target=/tmp/lesskey$$
+lesskey /tmp/lesskey$$
+rm /tmp/lesskey$$
 
-lesskey .etc/lesskey
 
 if command -v X >/dev/null; then
     xlink xorg/fonts.conf.d
