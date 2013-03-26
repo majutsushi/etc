@@ -1,3 +1,5 @@
+[[ $HOST == urd ]]
+# --- CUT HERE ---
 keycode  49 = section plusminus
 keycode  94 = grave asciitilde
 ! keycode 108 = Insert NoSymbol Pointer_Button3

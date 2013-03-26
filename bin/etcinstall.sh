@@ -2,6 +2,17 @@
 
 set -e
 
+
+OSNAME=$(uname -s)
+HOST=${HOST:-$(hostname)}
+HOST=${HOST/.*}
+DOMAIN=${DOMAIN:-$(hostname -d 2>&-)}
+if [[ "$DOMAIN" == "" || "$DOMAIN" == "localdomain" || "$DOMAIN" == "(none)" ]]; then
+    DOMAIN=$(grep "^domain " /etc/resolv.conf | cut -d' ' -f2)
+fi
+export OSNAME HOST DOMAIN
+
+
 info() {
     # echo -e "\033[32m$1\033[0m"
     echo -e "$1"
@@ -35,12 +46,17 @@ merge() {
     echo "$comment *** GENERATED FILE - DO NOT EDIT ***" > $target
     echo "$comment [$(readlink -f $conffile)]" >> $target
     cat $conffile >> $target
-    for part in $conffile.d/*; do
-        if [[ "$(hostname)" == "$(basename $part)" ]]; then
-            echo -e "\n$comment [$(readlink -f $part)]" >> $target
-            cat $part >> $target
-        fi
-    done
+
+    if [[ -d $conffile.d ]]; then
+        for part in $conffile.d/??_*; do
+            csplit -s $part '/^# --- CUT HERE ---$/+1'
+            if bash xx00; then
+                echo -e "\n$comment [$(readlink -f $part)]" >> $target
+                cat xx01 >> $target
+            fi
+            rm xx0[01]
+        done
+    fi
 
     local localfile=$HOME/.local/etc/$(basename "$conffile")
     if [[ -f $localfile ]]; then
