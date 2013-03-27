@@ -106,6 +106,7 @@ xlink colorgccrc
 xlink colordiffrc
 xlink ctags
 xlink gdbinit
+xlink gtkrc-2.0
 xlink indent.pro
 xlink inputrc
 xlink irbrc
