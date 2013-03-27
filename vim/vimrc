@@ -1529,6 +1529,7 @@ let g:tagbar_type_idl = {
     \ ]
 \ }
 
+highlight link TagbarHighlight Cursor
 highlight TagbarSignature guifg=yellowgreen
 highlight TagbarVisibilityProtected guifg=SkyBlue
 
