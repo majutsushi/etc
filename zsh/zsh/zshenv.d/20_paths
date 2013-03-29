@@ -28,6 +28,7 @@ fi
 
 path=(
     "$HOME/bin"
+    "$HOME/.bin"
     "$HOME/.etc/bin"
     "$HOME/usr/bin"
     "$HOME/.local/bin"
