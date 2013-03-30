@@ -8,7 +8,6 @@ mailboxes =
 mailboxes =.Todo
 mailboxes =.Waiting
 mailboxes =.Archive
-mailboxes =.accounts
 mailboxes =.sent
 mailboxes =.lists
 mailboxes `for file in ~/Maildir/.lists.*; do echo -n "=$(basename $file) "; done`
