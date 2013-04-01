@@ -121,6 +121,8 @@ __prompt_git_geninfo() {
             rebase="merging"
         elif [ -f "$gitdir/CHERRY_PICK_HEAD" ]; then
             rebase="cherry-picking"
+        elif [ -f "$gitdir/REVERT_HEAD" ]; then
+            rebase="reverting"
         elif [ -f "$gitdir/BISECT_LOG" ]; then
             rebase="bisecting"
         fi
