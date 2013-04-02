@@ -1462,6 +1462,9 @@ let g:quickfixsigns_icons = {}
 " also exclude "'." from buffer and "<>^" from global
 let g:quickfixsigns#marks#buffer = split('abcdefghijkmnoqrstuvwxyz', '\zs')
 let g:quickfixsigns#marks#global = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '\zs')
+let g:quickfixsigns#vcsdiff#highlight = {'ADD' : 'QFS_ADD',
+                                       \ 'DEL' : 'QFS_DEL',
+                                       \ 'CHANGE' : 'QFS_CHANGE'}
 
 " r-plugin {{{2
 if executable('urxvt')
