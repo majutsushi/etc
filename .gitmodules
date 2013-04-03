@@ -133,3 +133,6 @@
 [submodule "vim/vim/bundle/vim-expand-region"]
 	path = vim/vim/bundle/vim-expand-region
 	url = https://github.com/terryma/vim-expand-region.git
+[submodule "vim/vim/bundle/visincr"]
+	path = vim/vim/bundle/visincr
+	url = https://github.com/vim-scripts/VisIncr.git
