@@ -130,3 +130,6 @@
 [submodule "vim/vim/bundle/vim-textobj-space"]
 	path = vim/vim/bundle/vim-textobj-space
 	url = https://github.com/saihoooooooo/vim-textobj-space.git
+[submodule "vim/vim/bundle/vim-expand-region"]
+	path = vim/vim/bundle/vim-expand-region
+	url = https://github.com/terryma/vim-expand-region.git
