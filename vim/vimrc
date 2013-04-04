@@ -1391,6 +1391,22 @@ let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
 " Eclim {{{2
 let g:EclimLoggingDisabled = 1
 
+" expand-region {{{2
+let g:expand_region_text_objects = {
+    \ 'iw'  : 0,
+    \ 'iW'  : 0,
+    \ 'i"'  : 0,
+    \ 'i''' : 0,
+    \ 'i]'  : 1,
+    \ 'ib'  : 1,
+    \ 'iB'  : 1,
+    \ 'il'  : 0,
+    \ 'ip'  : 0,
+    \ 'ie'  : 0,
+    \ 'if'  : 1,
+    \ 'af'  : 1,
+\ }
+
 " FSwitch {{{2
 nnoremap <silent> <Leader>of :FSHere<cr>
 nnoremap <silent> <Leader>ol :FSRight<cr>
