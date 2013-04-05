@@ -136,3 +136,6 @@
 [submodule "vim/vim/bundle/visincr"]
 	path = vim/vim/bundle/visincr
 	url = https://github.com/vim-scripts/VisIncr.git
+[submodule "vim/vim/bundle/vim-signify"]
+	path = vim/vim/bundle/vim-signify
+	url = https://github.com/mhinz/vim-signify.git

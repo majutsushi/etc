@@ -1471,7 +1471,7 @@ let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
 let g:protodefctagsexe = g:ctagsbin
 
 " Quickfixsigns {{{2
-let g:quickfixsigns_classes = ['qfl', 'loc', 'marks', 'vcsdiff', 'breakpoints']
+let g:quickfixsigns_classes = ['qfl', 'loc', 'marks', 'breakpoints']
 let g:quickfixsigns_blacklist_buffer = '\v(^__.*__$)|(^NERD_tree.*)|(^$)'
 let g:quickfixsigns_icons = {}
 " exclude 'p' and 'l' because of xptemplate
@@ -1514,6 +1514,10 @@ augroup END
 augroup ScreenShellExit
     autocmd User * call <SID>ScreenShellListener()
 augroup END
+
+" Signify {{{2
+let g:signify_vcs_list = ['git']
+let g:signify_sign_overwrite = 0
 
 " Splice {{{2
 let g:splice_initial_diff_grid = 1
