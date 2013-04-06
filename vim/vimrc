@@ -1836,6 +1836,9 @@ nnoremap <leader>vb :edit ~/.etc/vim/vim/abbrevs.vim<CR>
 " Control-Space for omnicomplete
 imap <C-Space> <C-X><C-O>
 
+nmap <C-Space> <Plug>(expand_region_expand)
+xmap <C-Space> <Plug>(expand_region_expand)
+
 " for popup-menu completion
 " http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
 inoremap <expr> <C-x><C-o> pumvisible() ? '<C-x><C-o>' : '<C-x><C-o><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
