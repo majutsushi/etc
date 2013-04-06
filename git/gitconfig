@@ -45,6 +45,9 @@
 [diff]
 	tool = vimdiff
 
+[push]
+	default = matching
+
 [fetch]
 	recurseSubmodules = on-demand
 
