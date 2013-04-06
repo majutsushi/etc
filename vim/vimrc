@@ -792,6 +792,27 @@ function! QFDo(command)
     endfor
 endfunction
 
+" QuickfixToggle() {{{2
+" Source: http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
+function! QuickfixToggle()
+    if s:quickfix_is_open
+        cclose
+        let s:quickfix_is_open = 0
+        execute s:quickfix_return_to_window . "wincmd w"
+    else
+        let s:quickfix_return_to_window = winnr()
+        if &lines / 4 < 10
+            botright copen 10
+        else
+            execute 'botright copen ' . &lines / 4
+        endif
+        let s:quickfix_is_open = 1
+    endif
+endfunction
+
+let s:quickfix_is_open = 0
+nnoremap <leader>q :call QuickfixToggle()<cr>
+
 " RunShellCommand() {{{2
 function! s:RunShellCommand(cmdline)
     botright new
@@ -1986,10 +2007,6 @@ inoremap <M-h> <Esc>i
 inoremap <M-l> <Esc>la
 inoremap <M-k> <Esc>gka
 inoremap <M-j> <Esc>gja
-
-" quickfix
-nnoremap <expr> <leader>co &lines / 4 < 10 ? ':botright copen 10<cr>'
-                                         \ : ':botright copen <C-r>=&lines / 4<cr><cr>'
 
 " display the number of matches of current search pattern
 nnoremap g/ :%s/<C-R>=&ignorecase ? '\c' : '\C'<CR><C-R>///gne<CR>
