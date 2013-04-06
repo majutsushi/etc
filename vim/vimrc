@@ -1885,6 +1885,9 @@ inoremap <C-F> <C-X><C-F>
 " create undo break points
 inoremap <C-U> <C-G>u<C-U>
 
+" Uppercase word
+inoremap <M-u> <Esc>gUiwea
+
 " create an undo point after each word
 " imap <Space> <Space><C-G>u
 "inoremap <Tab>   <Tab><C-G>u
