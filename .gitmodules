@@ -22,9 +22,6 @@
 [submodule "vim/vim/bundle/fugitive"]
 	path = vim/vim/bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "vim/vim/bundle/command-t"]
-	path = vim/vim/bundle/command-t
-	url = https://github.com/wincent/Command-T.git
 [submodule "vim/vim/bundle/gundo"]
 	path = vim/vim/bundle/gundo
 	url = https://github.com/sjl/gundo.vim.git
