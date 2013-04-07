@@ -139,3 +139,6 @@
 [submodule "vim/vim/bundle/vim-signify"]
 	path = vim/vim/bundle/vim-signify
 	url = https://github.com/mhinz/vim-signify.git
+[submodule "vim/vim/bundle/jedi-vim"]
+	path = vim/vim/bundle/jedi-vim
+	url = https://github.com/davidhalter/jedi-vim.git
