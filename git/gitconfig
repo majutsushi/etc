@@ -98,6 +98,9 @@
 [instaweb]
 	httpd = webrick
 
+[hub]
+	protocol = https
+
 [gui]
 	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 
