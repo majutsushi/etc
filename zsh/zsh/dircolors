@@ -111,12 +111,15 @@ EXEC 01;32
 .dl 01;35
 .xcf 01;35
 .xwd 01;35
+# video formats
 .wmv 01;35
 .mkv 01;35
 .ogm 01;35
+.ogv 01;35
 # audio formats
 .flac 01;35
 .mp3 01;35
 .mpc 01;35
 .ogg 01;35
+.oga 01;35
 .wav 01;35
