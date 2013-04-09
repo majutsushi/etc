@@ -142,3 +142,6 @@
 [submodule "vim/vim/bundle/vim-commentary"]
 	path = vim/vim/bundle/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
+[submodule "vim/vim/bundle/vim-unimpaired"]
+	path = vim/vim/bundle/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
