@@ -139,3 +139,6 @@
 [submodule "vim/vim/bundle/jedi-vim"]
 	path = vim/vim/bundle/jedi-vim
 	url = https://github.com/davidhalter/jedi-vim.git
+[submodule "vim/vim/bundle/vim-commentary"]
+	path = vim/vim/bundle/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
