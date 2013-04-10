@@ -59,6 +59,7 @@ hi WarningMsg	guifg=salmon
 "hi Tooltip
 hi SignColumn	guibg=grey20
 hi clear ColorColumn
+hi CursorLine	guibg=Grey30
 hi link ColorColumn CursorLine
 
 " syntax highlighting groups
