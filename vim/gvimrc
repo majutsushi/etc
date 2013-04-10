@@ -24,7 +24,7 @@ set guioptions-=L
 set winaltkeys=no
 
 set lines=50
-set columns=80
+set columns=90
 
 " change font size with c-up/down
 nnoremap <silent> <C-Up>   :let &guifont = substitute(&guifont, ' \zs\d\+', '\=eval(submatch(0)+1)', '')<CR>:set guifont?<CR>

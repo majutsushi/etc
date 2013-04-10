@@ -207,7 +207,7 @@ function! GetFileName()
         return '[No Name]'
     else
         let filename = expand('%:p:~:.')
-        if winwidth(0) - len(filename) < 75
+        if winwidth(0) - len(filename) < 65
             let filename = pathshorten(filename)
         endif
         return filename
