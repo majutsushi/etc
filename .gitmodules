@@ -145,3 +145,6 @@
 [submodule "vim/vim/bundle/vim-unimpaired"]
 	path = vim/vim/bundle/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
+[submodule "vim/vim/bundle/vim-characterize"]
+	path = vim/vim/bundle/vim-characterize
+	url = https://github.com/tpope/vim-characterize.git
