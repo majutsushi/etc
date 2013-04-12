@@ -812,7 +812,7 @@ function! QuickfixToggle()
 endfunction
 
 let s:quickfix_is_open = 0
-nnoremap <leader>q :call QuickfixToggle()<cr>
+nnoremap <silent> <leader>q :call QuickfixToggle()<cr>
 
 " RunShellCommand() {{{2
 function! s:RunShellCommand(cmdline)
