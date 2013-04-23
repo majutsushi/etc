@@ -340,6 +340,9 @@ let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileFormat()} %)</CUR>'
 " File encoding
 let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileEncoding()} %)</CUR>'
 
+" BOM
+let g:default_stl .= '<CUR>%(#[FileFormat]%{&bomb ? "BOM" : ""} %)</CUR>'
+
 let g:default_stl .= "#[ExpandTab] "
 
 " ZoomWin state
