@@ -1,0 +1,3 @@
+[[ $HOST == vanadis ]]
+# --- CUT HERE ---
+keycode 108 = Mode_switch Multi_key
