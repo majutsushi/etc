@@ -69,7 +69,6 @@ URxvt.fading: 50
 
 URxvt.geometry: 80x50
 
-URxvt.inputMethod: scim
 URxvt.imLocale: ja_JP.UTF-8
 URxvt.preeditType: OnTheSpot,OverTheSpot,Root,None
 
