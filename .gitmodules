@@ -148,3 +148,6 @@
 [submodule "vim/vim/bundle/vim-characterize"]
 	path = vim/vim/bundle/vim-characterize
 	url = https://github.com/tpope/vim-characterize.git
+[submodule "vim/vim/bundle/tabular"]
+	path = vim/vim/bundle/tabular
+	url = https://github.com/godlygeek/tabular.git
