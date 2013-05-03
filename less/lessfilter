@@ -39,6 +39,15 @@ if [[ -x "$(which highlight)" ]]; then
         *.jar|*.war|*.ear|*.xpi|*.zip)
             unzip -l "$1"
             ;;
+        *.doc)
+            have antiword && antiword "$1" && exit 0
+            have catdoc && catdoc "$1" && exit 0
+            exit 1
+            ;;
+        *.docx)
+            have docx2txt.pl && docx2txt.pl "$1" - && exit 0
+            exit 1
+            ;;
         *)
             if [[ "${filemaps[$MIMETYPE]}" != "" ]]; then
                 hl2 ${filemaps[$MIMETYPE]} "$1"
