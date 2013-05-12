@@ -1,0 +1,4 @@
+command -v ctags &>/dev/null
+# --- CUT HERE ---
+# m h  dom mon dow   command
+30  4  *   *   *     $HOME/.etc/crontab/ctags.sh

@@ -1,0 +1,2 @@
+# m h  dom mon dow   command
+20  4  *   *   *     /usr/sbin/logrotate --state $HOME/.cache/logrotate.status $HOME/.etc/logrotate.conf
