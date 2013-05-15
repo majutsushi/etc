@@ -8,6 +8,7 @@ _dir_cycle() {
     fi
 }
 add-zsh-hook precmd _dir_cycle
+add-zsh-hook preexec _dir_cycle
 
 if [[ -f $HOME/.local/etc/zshrc ]]; then
     source $HOME/.local/etc/zshrc
