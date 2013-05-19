@@ -13,6 +13,7 @@ hgext.git =
 hgext.graphlog =
 hgext.hgk =
 hgext.hgview =
+hgext.histedit =
 hgext.mq =
 hgext.pager =
 hgext.patchbomb =
@@ -23,10 +24,15 @@ hgext.record =
 #hgext.transplant =
 hgshelve = ~/.etc/mercurial/hgext/hgshelve.py
 prompt = ~/.etc/mercurial/hgext/prompt.py
+# bzexport = ~/src/bzexport/bzexport.py
+# mqext = ~/src/mqext
+# trychooser = ~/src/trychooser/trychooser
+# qimportbz = ~/src/qimportbz/
 
 [alias]
 #qstat = stat --rev -`hg qap | wc -l | sed 's/ //g'`:.
 qdiff = diff -r qparent:qtip
+show = log --patch --verbose --rev
 
 [email]
 method = msmtp
@@ -49,5 +55,7 @@ opts.wdiff = -p -U 8 -w -r -N
 
 [pager]
 pager = less
+quiet = True
+attend = annotate, blame, cat, diff, glog, log, pdiff, qdiff, show
 
 %include ~/.config/hgrc.local
