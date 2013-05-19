@@ -50,7 +50,7 @@ case "$1" in
         COMMAND="7z x -o$TMPDIR '$1'"
         ;;
     *.jar|*.war|*.ear|*.xpi|*.zip)
-        COMMAND="unzip -L -d $TMPDIR '$1'"
+        COMMAND="unzip -d $TMPDIR '$1'"
         ;;
     *.deb)
         COMMAND="ar -x '${ARCHIVEFILE}'"
