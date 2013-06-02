@@ -858,6 +858,19 @@ function! SmartTOHtml()
     exe ":bd"
 endfunction
 
+" s:Spelllang() {{{2
+function! s:Spelllang(lang) abort
+    let &spelllang = a:lang
+    let base = substitute(a:lang, '^\([^_]\+\).*', '\1', '')
+    let &spellfile = '~/.vim/spell/' . base . '.utf-8.add'
+endfunction
+function! s:Spelllist(ArgLead, CmdLine, CursorPos) abort
+    let langs = ['en_nz', 'de']
+    return filter(langs, "v:val =~# '^' . a:ArgLead")
+endfunction
+
+command -nargs=1 -complete=customlist,s:Spelllist Spelllang call s:Spelllang(<q-args>)
+
 " SynStack() {{{2
 " Show syntax highlighting groups for word under cursor
 function! SynStack()
@@ -1038,6 +1051,14 @@ set background=dark
 " highlight all matches for the last used search pattern
 set hlsearch
 
+" highlight spelling mistakes
+set nospell
+" list of accepted languages
+set spelllang=en_nz
+" file that "zg" adds good words to
+set spellfile=~/.vim/spell/en.utf-8.add
+" pattern to locate the end of a sentence
+set spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
 " methods used to suggest corrections
 set spellsuggest=best,10
 
@@ -2053,9 +2074,6 @@ nnoremap <silent> zi
     \     setlocal foldenable <Bar>
     \     setlocal foldcolumn=1 <Bar>
     \ endif<CR>
-
-" toggle spelling
-nnoremap <leader>sp :set spell! spelllang=en_nz spell?<CR>
 
 " remove search highlighting
 nnoremap <silent> <C-L> :silent nohl<CR><C-L>
