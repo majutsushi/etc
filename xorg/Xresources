@@ -4,38 +4,39 @@
 
 !*fontList: -*-helvetica-medium-r-normal-*-*-80-*-*-*-*-*-*
 
-
-! *** common terminal settings ***
-*loginShell: true
-
-*foreground: white
-*background: #303030
+! *** colour definitions ***
+#define FOREGROUND white
+#define BACKGROUND #303030
+#define CURSORCOLOR yellow
 ! Black
-*color0:  #2E3436
-*color8:  #555753
+#define COLOR0 #2E3436
+#define COLOR8 #555753
 ! Red
-*color1:  #D75F5F
-*color9:  #ef2929
+#define COLOR1  #D75F5F
+#define COLOR9  #ef2929
 ! Green
-*color2:  #87FF87
-*color10: #8AE234
+#define COLOR2  #87FF87
+#define COLOR10 #8AE234
 ! Yellow
-*color3:  #FFD700
-*color11: #FCE94F
+#define COLOR3  #FFD700
+#define COLOR11 #FCE94F
 ! Blue
-*color4:  #87D7D7
-*color12: #729fcf
+#define COLOR4  #87D7D7
+#define COLOR12 #729fcf
 ! Magenta
-*color5:  #AD7FA8
-*color13: #BB95B7
+#define COLOR5  #AD7FA8
+#define COLOR13 #BB95B7
 ! Cyan
-*color6:  #34E2E2
-*color14: #00FFFF
+#define COLOR6  #34E2E2
+#define COLOR14 #00FFFF
 ! *color6:  #CD853F
 ! *color14: #FFD700
 ! White
-*color7:  #D3D7CF
-*color15: #EEEEEC
+#define COLOR7  #D3D7CF
+#define COLOR15 #EEEEEC
+
+! *** common terminal settings ***
+*loginShell: true
 
 
 ! *** URxvt ***
@@ -65,8 +66,27 @@ URxvt.depth: 24
 !URxvt.tintColor: white
 !URxvt.shading: 15
 
-URxvt.cursorColor: yellow
+URxvt.cursorColor: CURSORCOLOR
 URxvt.underlineColor: yellow
+URxvt.foreground: FOREGROUND
+URxvt.background: BACKGROUND
+URxvt.color0:  COLOR0
+URxvt.color1:  COLOR1
+URxvt.color2:  COLOR2
+URxvt.color3:  COLOR3
+URxvt.color4:  COLOR4
+URxvt.color5:  COLOR5
+URxvt.color6:  COLOR6
+URxvt.color7:  COLOR7
+URxvt.color8:  COLOR8
+URxvt.color9:  COLOR9
+URxvt.color10: COLOR10
+URxvt.color11: COLOR11
+URxvt.color12: COLOR12
+URxvt.color13: COLOR13
+URxvt.color14: COLOR14
+URxvt.color15: COLOR15
+
 URxvt.fading: 50
 
 URxvt.geometry: 80x50
@@ -299,13 +319,35 @@ URxvt.keysym.M-C-S-Return : \033Q13;8~
 
 ! *** XTerm ***
 
+! Is there a way to programatically determine whether xterm has really been
+! compiled with 256 colours?
+XTerm.termName:  xterm-256color
 UXTerm.termName: xterm-256color
-UXTerm*vt100.cursorColor: yellow
-UXTerm*vt100.geometry: 100x50
-UXTerm*vt100.metaSendsEscape: true
-!UXTerm*vt100.utf8: 1
-UXTerm*vt100.visualBell: true
-UXTerm*vt100.translations: #override \
+
+*vt100.cursorColor: CURSORCOLOR
+*vt100.foreground: FOREGROUND
+*vt100.background: BACKGROUND
+*vt100.color0:  COLOR0
+*vt100.color1:  COLOR1
+*vt100.color2:  COLOR2
+*vt100.color3:  COLOR3
+*vt100.color4:  COLOR4
+*vt100.color5:  COLOR5
+*vt100.color6:  COLOR6
+*vt100.color7:  COLOR7
+*vt100.color8:  COLOR8
+*vt100.color9:  COLOR9
+*vt100.color10: COLOR10
+*vt100.color11: COLOR11
+*vt100.color12: COLOR12
+*vt100.color13: COLOR13
+*vt100.color14: COLOR14
+*vt100.color15: COLOR15
+
+*vt100.geometry: 80x50
+*vt100.metaSendsEscape: true
+*vt100.visualBell: true
+*vt100.translations: #override \
     Ctrl <Key>Up:    larger-vt-font() \n\
     Ctrl <Key>Down:  smaller-vt-font() \n\
     Ctrl <Key>space: string(0x1b) string("Q32;5~") \n
