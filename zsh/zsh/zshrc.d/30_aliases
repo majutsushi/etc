@@ -119,6 +119,11 @@ tmux() {
     command tmux "$@"
 }
 
+tmux-echo() {
+    local inner=$(echo -E "$1" | sed -e 's/\\e/\\e\\e/g')
+    echo -e "\ePtmux;${inner}\e\\"
+}
+
 # easily reattach tmux sessions
 # http://blog.plenz.com/2012-01/tmux-session-names.html
 tm() {
