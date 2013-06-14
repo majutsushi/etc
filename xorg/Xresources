@@ -87,7 +87,7 @@ URxvt.color13: COLOR13
 URxvt.color14: COLOR14
 URxvt.color15: COLOR15
 
-URxvt.fading: 50
+URxvt.fading: 30
 
 URxvt.geometry: 80x50
 
