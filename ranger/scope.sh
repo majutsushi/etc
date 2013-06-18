@@ -39,9 +39,6 @@ dump() { echo "$output"; }
 # a common post-processing function used after most commands
 trim() { head -n "$maxln"; }
 
-# wraps highlight to treat exit code 141 (killed by SIGPIPE) as success
-highlight() { command highlight "$@"; test $? = 0 -o $? = 141; }
-
 case "$extension" in
     jar)
         try deepjarlist "$path" && { dump | trim; exit 0; };;&
@@ -79,7 +76,7 @@ esac
 case "$mimetype" in
     # Syntax highlight for text files:
     text/* | */xml)
-        try highlight --out-format=ansi "$path" && { dump | trim; exit 5; } || exit 2;;
+        try pygmentize -f terminal256 -O style=desert "$path" && { dump | trim; exit 5; } || exit 2;;
     # Ascii-previews of images:
     image/*)
         img2txt --gamma=0.6 --width="$width" "$path" && exit 4 || exit 1;;
