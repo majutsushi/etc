@@ -191,6 +191,13 @@ if command -v X >/dev/null; then
     xset +fp $FONTDIR
 fi
 
+if command -v python >/dev/null; then
+    cd .etc/python/lib/desert
+    info "Installing python lib: desert"
+    python setup.py install --user >/dev/null
+    cd $HOME
+fi
+
 for tinfof in .etc/terminfo/*; do
     tinfo=$(basename ${tinfof})
     tinfo=${tinfo%.terminfo}
