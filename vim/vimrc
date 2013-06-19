@@ -1931,6 +1931,12 @@ set pastetoggle=<F3>
 
 nnoremap <S-F2> :call ToggleExpandTab()<CR>
 
+" Indent/dedent/autoindent what you just pasted
+" https://twitter.com/dotvimrc/status/347055253318950913
+nnoremap >< V`]>
+nnoremap <lt>> V`]<
+nnoremap =- V`]=
+
 " copy to/from the x cut-buffer
 nnoremap <S-Insert> "+gP
 xnoremap <S-Insert> "-d"+P
