@@ -70,3 +70,6 @@ function! s:TeX_format()
 endfunction
 
 nnoremap <buffer> <silent> Q :call <SID>TeX_format()<CR>
+
+inoremap <buffer> [[ \begin{
+imap     <buffer> ]] <Plug>LatexCloseCurEnv
