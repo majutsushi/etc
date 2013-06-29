@@ -862,7 +862,7 @@ endfunction
 function! s:Spelllang(lang) abort
     let &spelllang = a:lang
     let base = substitute(a:lang, '^\([^_]\+\).*', '\1', '')
-    let &spellfile = '~/.vim/spell/' . base . '.utf-8.add'
+    let &spellfile = expand('~/.vim/spell/' . base . '.utf-8.add')
 endfunction
 function! s:Spelllist(ArgLead, CmdLine, CursorPos) abort
     let langs = ['en_nz', 'de']
