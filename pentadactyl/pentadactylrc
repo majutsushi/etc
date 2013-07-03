@@ -2,7 +2,7 @@
 
 loadplugins '\.(js|penta)$'
 group user
-set guioptions=bCrsT
+set guioptions=bCrsTn
 set hintkeys=asdfg;lkjh
 set showstatuslinks=command
 
