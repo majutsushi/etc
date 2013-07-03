@@ -34,7 +34,7 @@ class DesertStyle(Style):
         String:             '#ffa0a0',
 
         Generic.Heading:    '#eeeeec bold',
-        Generic.Subheading: '#34e2e2',
+        Generic.Subheading: '#ffd700',
         Generic.Deleted:    '#d75f5f',
         Generic.Inserted:   '#87ff87',
         Generic.Emph:       '#c000c0 underline',

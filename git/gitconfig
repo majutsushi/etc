@@ -43,6 +43,13 @@
 	branch = auto
 	interactive = auto
 
+[color "diff"]
+	meta = white bold
+	frag = yellow
+	func = cyan
+	old  = red
+	new  = green
+
 [diff]
 	tool = vimdiff
 
