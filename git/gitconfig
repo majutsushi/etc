@@ -10,6 +10,7 @@
 	st = status
 	ci = commit
 	co = checkout
+	svn-co = "!f() { git checkout $(git svn find-rev r$1); }; f"
 
 	sl  = log --stat
 	gl  = log --graph --pretty=format:\"%C(yellow)%h%C(red)%d%Creset %s\"
