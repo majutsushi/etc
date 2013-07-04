@@ -91,7 +91,8 @@
 	tab-size = 8
 
 [tig "bind"]
-	generic = y !@sh -c 'echo -n %(commit) | xclip -i -selection clipboard'
+	generic =  y !@sh -c 'echo -n %(commit) | xclip -i -selection clipboard'
+	generic = ^y !@sh -c 'git svn find-rev %(commit) | xclip -i -selection clipboard'
 
 [tig "color"]
 ; General
