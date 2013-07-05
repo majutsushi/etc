@@ -74,7 +74,7 @@
 	conflictstyle = diff3
 
 [tig]
-	author-width = 19
+	author-width = 15
 	blame-options = "-C -C -C"
 	horizontal-scroll = 50%
 	ignore-space = "all"
