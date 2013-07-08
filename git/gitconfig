@@ -92,7 +92,7 @@
 
 [tig "bind"]
 	generic = y !@sh -c 'echo -n %(commit) | xclip -i -selection clipboard'
-	generic = Y !@sh -c 'git svn find-rev %(commit) | xclip -i -selection clipboard'
+	generic = Y !@sh -c 'git svn find-rev %(commit) | tr -d [:cntrl:] | xclip -i -selection clipboard'
 
 [tig "color"]
 ; General
