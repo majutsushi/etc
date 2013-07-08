@@ -19,16 +19,6 @@ export MANWIDTH=${MANWIDTH:-80}
 
 eval $(dircolors -b $ZDOTDIR/dircolors) 2>/dev/null || :
 
-# http://nion.modprobe.de/blog/archives/572-less-colors-for-man-pages.html
-# see 'man 5 termcap'
-export LESS_TERMCAP_md=$'\e[1;31m'  # start bold mode     => bold red
-export LESS_TERMCAP_mb=$'\e[1;31m'  # start blinking      => bold red
-export LESS_TERMCAP_so=$'\e[30;47m' # start standout mode => black on white
-export LESS_TERMCAP_se=$'\e[0m'     # end standout mode   => turn off all attrs
-export LESS_TERMCAP_us=$'\e[1;32m'  # start underlining   => bold green
-export LESS_TERMCAP_ue=$'\e[0m'     # end underlining     => turn off all attrs
-export LESS_TERMCAP_me=$'\e[0m'     # end all modes       => turn off all attrs
-
 # make less more friendly for non-text input files, see lesspipe(1)
 [[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
 

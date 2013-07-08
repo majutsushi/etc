@@ -99,6 +99,27 @@ sshot()    { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desktop/screens
 wp()       { dig +short txt ${1// /_}.wp.dg.cx }
 getlinks() { perl -ne 'while ( m/"((www|ftp|http):\/\/.*?)"/gc ) { print $1, "\n"; }' $* }
 
+man() {
+    # See 'man 5 termcap' for capabilities
+
+    # start bold mode => bold red
+    typeset -x +g LESS_TERMCAP_md=$(tput setaf 1; tput bold)
+    # start underlining => bold green
+    typeset -x +g LESS_TERMCAP_us=$(tput setaf 2; tput bold)
+    # end underlining => turn off all attributes
+    typeset -x +g LESS_TERMCAP_ue=$(tput sgr0)
+    # start standout mode => black on white
+    typeset -x +g LESS_TERMCAP_so=$(tput setaf 0; tput setab 7)
+    # end standout mode => turn off all attrs
+    typeset -x +g LESS_TERMCAP_se=$(tput sgr0)
+
+    # make groff not output ANSI escape sequences directly, but old codes with
+    # backspace that can then be changed with the less codes above
+    typeset -x +g GROFF_NO_SGR=1
+
+    command man "$@"
+}
+
 tmux() {
     # create a cache directory for status script updates, taken from byobu
     if [[ -w /dev/shm ]]; then
