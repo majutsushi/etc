@@ -9,31 +9,14 @@ filemaps[text/x-shellscript]=sh
 filemaps[text/x-diff]=diff
 filemaps[application/xml]=xml
 
-if [[ -f /usr/share/highlight/themes/molokai.style ]]; then
-    STYLE=molokai
-else
-    STYLE=darkness
-fi
-
 have() {
     type -P "$1" > /dev/null
 }
 
-hl() {
-    highlight --out-format=xterm256 --style=$STYLE -l "$1"
-}
+PYG="pygmentize -f terminal256 -O style=desert"
 
-hl2() {
-    highlight --out-format=xterm256 --style=$STYLE --syntax=$1 -l "$2"
-}
-
-MIMETYPE=$(file --mime-type -b $(readlink -f "$1"))
-
-if [[ -x "$(which highlight)" ]]; then
-    case `echo "$1" | tr '[:upper:]' '[:lower:]'` in
-        *.c|*.cpp|*.h|*.py|*.sh|*.pl|*.patch|*.r|*.css|*.js|*.java)
-            hl "$1"
-            ;;
+(
+    case $(echo "$1" | tr '[:upper:]' '[:lower:]') in
         *.jar)
             have deepjarlist && deepjarlist "$1" && exit 0;;&
         *.jar|*.war|*.ear|*.xpi|*.zip)
@@ -48,13 +31,22 @@ if [[ -x "$(which highlight)" ]]; then
             have docx2txt.pl && docx2txt.pl "$1" - && exit 0
             exit 1
             ;;
+        *.tar.gz|*.tgz|*.tar.z|*.tar.dz)
+            tar tzvf "$1" --force-local
+            ;;
+        *.gz|*.z|*.dz)
+            gzip -dc "$1"
+            ;;
         *)
+            $PYG "$1" 2>/dev/null && exit 0
+
+            # Use a whitelist instead of pygmentize's '-g' option to avoid too
+            # many false positives
+            MIMETYPE=$(file --mime-type -b $(readlink -f "$1"))
             if [[ "${filemaps[$MIMETYPE]}" != "" ]]; then
-                hl2 ${filemaps[$MIMETYPE]} "$1"
+                $PYG -l ${filemaps[$MIMETYPE]} "$1"
             else
                 exit 1
             fi
     esac
-else
-    exit 1
-fi
+) 2>/dev/null

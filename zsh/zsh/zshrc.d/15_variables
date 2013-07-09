@@ -19,8 +19,7 @@ export MANWIDTH=${MANWIDTH:-80}
 
 eval $(dircolors -b $ZDOTDIR/dircolors) 2>/dev/null || :
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[[ -x /usr/bin/lesspipe ]] && eval "$(lesspipe)"
+export LESSOPEN="| $HOME/.etc/less/lessfilter %s"
 
 export GREP_OPTIONS='--color=auto'
 # export UNZIP=-L # interferes with things like Java class file names
