@@ -669,7 +669,7 @@ while (s:idx != -1)
     let s:tmp = strpart(s:tmp, s:idx + 1)
     let s:idx = stridx(s:tmp, ':')
     "exec 'ru! ftplugin/vo_' . part . '.vim'
-    exec "runtime! plugins/vo_" . s:part . ".vim"
+    exec "runtime! add-ons/plugins/vo_" . s:part . ".vim"
 endwhile
 
 " The End
