@@ -134,10 +134,6 @@
 [gui]
 	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
 
-[cola]
-	fontui = DejaVu Sans,8,-1,5,50,0,0,0,0,0
-	fontdiff = DejaVu Sans Mono,8,-1,5,50,0,0,0,0,0
-
 [url "ssh://[login]@git.gnome.org/git/"]
 	insteadof = gnome:
 
