@@ -73,6 +73,9 @@
 	tool = splice
 	conflictstyle = diff3
 
+[svn]
+	rmdir = true
+
 [tig]
 	author-width = 15
 	blame-options = "-C -C -C"
