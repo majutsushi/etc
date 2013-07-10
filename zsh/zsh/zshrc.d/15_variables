@@ -4,13 +4,13 @@ export TIMEFMT="%*E real  %*U user  %*S system  %P  %J"
 
 export EDITOR=vim
 export BROWSER=xdg-open
-export MAIL=${MAIL:-/var/mail/$USER}
 
 export PAGER=${PAGER:-less}
 
 export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t'
 export LESSHISTFILE=$XDG_CACHE_HOME/etc/lesshst
 export LESSKEY=$XDG_CACHE_HOME/etc/less
+export LESSOPEN="| $HOME/.etc/less/lessfilter %s"
 
 export NULLCMD=cat
 export READNULLCMD=${PAGER}
@@ -19,18 +19,12 @@ export MANWIDTH=${MANWIDTH:-80}
 
 eval $(dircolors -b $ZDOTDIR/dircolors) 2>/dev/null || :
 
-export LESSOPEN="| $HOME/.etc/less/lessfilter %s"
-
 export GREP_OPTIONS='--color=auto'
-# export UNZIP=-L # interferes with things like Java class file names
 
 export DEBEMAIL="jan@majutsushi.net"
 export DEBFULLNAME="Jan Larres"
 export BTS_CACHE=no
 
-export GDK_USE_XFT=1
-export QT_XFT=1
-#export GTK_IM_MODULE="scim"
 if [[ "$(hostname)" == "gally" ]]; then
     export ALSA_OUTPUT_PORTS="65:0"
     export SCUMMVM_PORT=$ALSA_OUTPUT_PORTS
@@ -39,7 +33,7 @@ elif [[ "$(hostname)" == "urd" ]]; then
     export SCUMMVM_PORT=$ALSA_OUTPUT_PORTS
 fi
 
-export SDL_AUDIODRIVER=alsa
+# export SDL_AUDIODRIVER=alsa
 # export SDL_AUDIODRIVER=dsp # oss
 
 # export TEXMFHOME=$HOME/.texmf
@@ -61,10 +55,6 @@ export GITHUB_USER=majutsushi
 
 export NETHACKOPTIONS=@$HOME/.etc/nethackrc
 
-# for java; XToolkit is the new one, but it doesn't work everywhere
-# export AWT_TOOLKIT=XToolkit
-# export AWT_TOOLKIT=MToolkit
-
 # update session environment variables if they got changed after re-attaching
 # a tmux session
 if [[ -n "$TMUX" ]]; then
@@ -79,7 +69,5 @@ if [[ -n "$TMUX" ]]; then
     }
     add-zsh-hook preexec _update_from_tmux
 fi
-
-# ulimit -c unlimited
 
 # vim: filetype=zsh
