@@ -39,10 +39,6 @@
 
 [color]
 	ui = auto
-	status = auto
-	diff = auto
-	branch = auto
-	interactive = auto
 
 [color "diff"]
 	meta = white bold
