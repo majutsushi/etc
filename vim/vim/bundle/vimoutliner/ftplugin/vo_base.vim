@@ -61,7 +61,6 @@
 "  finish
 "endif
 "let b:did_ftplugin = 1
-let b:current_syntax = "outliner"
 
 " User Preferences {{{1
 
@@ -92,6 +91,9 @@ setlocal foldexpr=MyFoldLevel(v:lnum)
 setlocal indentexpr=
 setlocal nocindent
 setlocal iskeyword=@,39,45,48-57,_,129-255
+
+setlocal formatoptions-=t formatoptions+=crqno
+setlocal comments=sO:\:\ -,mO:\:\ \ ,eO:\:\:,:\:,sO:\>\ -,mO:\>\ \ ,eO:\>\>,:\>
 
 " Vim Outliner Functions {{{1
 
@@ -652,9 +654,6 @@ endif
 " this command needs to be run every time so Vim doesn't forget where to look
 setlocal tags^=$HOME/.vimoutliner/vo_tags.tag
 
-" Added an indication of current syntax as per Dillon Jones' request
-let b:current_syntax = "outliner"
- 
 " Personal configuration options files as per Matej Cepl
 setlocal runtimepath+=$HOME/.vimoutliner,$HOME
 ru! .vimoutlinerrc vimoutlinerrc
