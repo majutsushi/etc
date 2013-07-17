@@ -1482,6 +1482,9 @@ let g:GPGUsePipes = 1
 " Gundo {{{2
 nnoremap <leader>u :GundoToggle<CR>
 
+" Jedi {{{2
+let g:jedi#auto_vim_configuration = 0
+
 " Latex Box {{{2
 let g:LatexBox_completion_close_braces = 0
 "let g:LatexBox_latexmk_options = "-pvc"
