@@ -1566,6 +1566,10 @@ augroup END
 let g:signify_vcs_list = ['git']
 let g:signify_sign_overwrite = 0
 
+highlight SignifySignAdd    gui=bold guifg=#11ee11
+highlight SignifySignDelete gui=bold guifg=#ee1111
+highlight SignifySignChange gui=bold guifg=#eeee11
+
 " Splice {{{2
 let g:splice_initial_diff_grid = 1
 let g:splice_initial_diff_compare = 1
