@@ -54,6 +54,7 @@ compdef _mkdir mcd
 alias grep="grep --extended-regexp --ignore-case"
 alias gdb="gdb -q"
 alias mtr="mtr -t"
+alias diffstat="diffstat -C"
 
 # execute last command as root
 alias fu='sudo $(fc -ln -1) '
