@@ -1812,6 +1812,11 @@ if &term =~ '^rxvt-unicode' || $ORIGTERM =~ '^rxvt-unicode'
     set termbidi
 endif
 
+" Allow color schemes to do bright colors without forcing bold.
+if &t_Co == 8 && $TERM !~# '^linux'
+    set t_Co=16
+endif
+
 " Change cursor colour or shape in insert mode
 " Some ideas from https://github.com/jszakmeister/vim-togglecursor
 " tmux will only forward escape sequences to the terminal if surrounded by a DCS sequence
