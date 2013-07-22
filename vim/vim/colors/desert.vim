@@ -11,13 +11,9 @@
 " :he cterm-colors
 
 set background=dark
-if version > 580
-    " no guarantees for version 5.8 and below, but this makes it stop
-    " complaining
-    hi clear
-    if exists("syntax_on")
-	syntax reset
-    endif
+highlight clear
+if exists("syntax_on")
+    syntax reset
 endif
 let g:colors_name="desert"
 
@@ -27,10 +23,15 @@ hi Normal	guifg=White guibg=grey20
 hi Cursor	guibg=khaki guifg=slategrey
 "hi CursorIM
 "hi Directory
-"hi DiffAdd
-"hi DiffChange
-"hi DiffDelete
-"hi DiffText
+
+hi DiffAdd    guibg=#307030
+hi DiffChange guibg=#723030
+hi DiffDelete guibg=#555555 guifg=#555555
+hi DiffText   guibg=#c44545
+" hi DiffChange guibg=#939133
+" hi DiffDelete guibg=#723030 guifg=#723030
+" hi DiffText   guibg=#d0be25
+
 "hi ErrorMsg
 hi VertSplit	guibg=#c2bfa5 guifg=grey50 gui=none
 "hi VertSplit	guibg=#1c1c1c guifg=grey50 gui=none
@@ -46,9 +47,11 @@ hi Question	guifg=springgreen
 hi Search	guibg=peru guifg=wheat
 " hi SpecialKey	guifg=yellowgreen
 hi SpecialKey	guifg=grey40
+
 hi StatusLine	guibg=#c2bfa5 guifg=black gui=none
 "hi StatusLineNC	guibg=#c2bfa5 guifg=grey50 gui=none
 hi StatusLineNC	guibg=#1c1c1c guifg=grey50 gui=none
+
 hi Title	guifg=indianred
 hi Visual	gui=none guifg=khaki guibg=olivedrab
 "hi VisualNOS
@@ -57,6 +60,7 @@ hi WarningMsg	guifg=salmon
 "hi Menu
 "hi Scrollbar
 "hi Tooltip
+
 hi SignColumn	guibg=grey20
 hi clear ColorColumn
 hi CursorLine	guibg=Grey30
