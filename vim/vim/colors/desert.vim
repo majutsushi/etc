@@ -147,8 +147,4 @@ hi User6	cterm=bold ctermfg=15 ctermbg=8 guibg=#c2bfa5 guifg=black gui=bold
 "hi User6	cterm=bold guibg=DarkGrey guifg=indianred
 "hi User7	cterm=bold guifg=indianred
 
-hi QFS_ADD	guifg=#009900 guibg=NONE
-hi QFS_DEL	guifg=#bbbb00 guibg=NONE
-hi QFS_CHANGE	guifg=#ff2222 guibg=NONE
-
 "vim: sw=4 noexpandtab
