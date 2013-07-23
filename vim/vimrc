@@ -1390,6 +1390,14 @@ let g:CommandTMatchWindowReverse = 1
 " ConqueTerm {{{2
 let g:ConqueTerm_StartMessages = 0
 
+" CSApprox {{{2
+let g:CSApprox_attr_map = {'sp': 'fg'}
+
+let g:CSApprox_hook_desert_post = [
+    \ 'hi DiffAdd ctermbg=28',
+    \ 'hi DiffChange ctermbg=88',
+\]
+
 " Ctrl-P {{{2
 let g:ctrlp_map = '<leader>ff'
 let g:ctrlp_cmd = 'CtrlP'
