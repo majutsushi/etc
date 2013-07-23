@@ -179,6 +179,7 @@ endfunction
 let s:statuscolors = {
     \ 'ModeNormal'   : [[ '#4e9a06', '#ffffff', 'bold'], [                             ]],
     \ 'ModeInsert'   : [[ '#cc0000', '#ffffff', 'bold'], [                             ]],
+    \ 'FilePath'     : [[ '#c2bfa5', '#000000', 'none'], [ '#1c1c1c', '#808080', 'none']],
     \ 'FileName'     : [[ '#c2bfa5', '#000000', 'bold'], [ '#1c1c1c', '#808080', 'none']],
     \ 'ModFlag'      : [[ '#c2bfa5', '#cc0000', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
     \ 'BufFlag'      : [[ '#c2bfa5', '#000000', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
@@ -197,6 +198,24 @@ let s:statuscolors = {
     \ 'Error'        : [[ '#585858', '#ff5f00', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']]
 \ }
 " Helper functions {{{2
+" GetFilePath() {{{3
+function! GetFilePath()
+    if &buftype == 'help' || &buftype == 'quickfix' || bufname('%') == ''
+        return ''
+    else
+        let path = expand('%:p:~:.')
+        if winwidth(0) - len(path) < 65
+            let path = pathshorten(path)
+        endif
+        let path = fnamemodify(path, ':h')
+        if path == '.'
+            return ''
+        else
+            return path . '/'
+        endif
+    endif
+endfunction
+
 " GetFileName() {{{3
 function! GetFileName()
     if &buftype == 'help'
@@ -210,7 +229,7 @@ function! GetFileName()
         if winwidth(0) - len(filename) < 65
             let filename = pathshorten(filename)
         endif
-        return filename
+        return fnamemodify(filename, ':t')
     endif
 endfunction
 
@@ -297,7 +316,7 @@ let g:default_stl .= "%{&paste ? '(paste) ' : ''}"
 let g:default_stl .= "</CUR>"
 
 " File name
-let g:default_stl .= "#[FileName] %{GetFileName()} "
+let g:default_stl .= "#[FilePath] %{GetFilePath()}#[FileName]%{GetFileName()} "
 
 let g:default_stl .= "#[ModFlag]%(%{GetState()} %)#[BufFlag]%w"
 
