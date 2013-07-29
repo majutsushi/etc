@@ -1,3 +1,5 @@
 [[ $HOST == vanadis ]]
 # --- CUT HERE ---
+! Right Alt
 keycode 108 = Mode_switch Multi_key
+remove mod1 = Mode_switch
