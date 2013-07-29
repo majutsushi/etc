@@ -3,8 +3,11 @@ _dir_cycle() {
     local dir="$PWD"
     if ! [[ . -ef "$PWD" ]]; then
         if (cd . && [[ $(pwd) == "$dir" || $(pwd) == "." ]] && ! cd "$dir" &>/dev/null); then
-            echo "Warning: ${dir} does no longer exist"
-            return 1
+            args_arr=(${(z)1})
+            if [[ "$1" == "" || "${args_arr[1]}" != "cd" ]]; then
+                echo "Warning: ${dir} does no longer exist"
+                return 1
+            fi
         else
             cd .
             cd .
