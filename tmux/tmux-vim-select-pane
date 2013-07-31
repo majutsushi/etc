@@ -1,0 +1,15 @@
+#!/bin/bash
+# Like 'tmux select-pane', but if Vim is running in the current pane it sends
+# a '<M-h/j/k/l>' keystroke to Vim instead.
+set -e
+
+cmd="$(tmux display -p '#{pane_current_command}')"
+cmd="$(basename "$cmd" | tr A-Z a-z)"
+
+if [[ "${cmd%m}" == "vi" ]]; then
+    direction="$(echo "${1#-}" | tr 'lLDUR' 'phjkl')"
+    # forward the keystroke to Vim
+    tmux send-keys "M-$direction"
+else
+    tmux select-pane "$@"
+fi
