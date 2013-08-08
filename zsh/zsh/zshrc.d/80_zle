@@ -48,6 +48,10 @@ bindkey '^[w' slash-backward-kill-word
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
+# escape extended-glob characters for git refspecs
+autoload -Uz git-escape-magic
+git-escape-magic
+
 autoload -U insert-files
 zle -N insert-files
 bindkey "^Xf" insert-files
