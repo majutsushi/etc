@@ -208,28 +208,4 @@ zstyle ':completion:current-screen-words-(prefix|anywhere):*' completer _current
 zstyle ':completion:current-screen-words-(prefix|anywhere):*' ignore-line current
 zstyle ':completion:current-screen-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
 
-
-# GitHub 'hub' completion
-if is-at-least 4.3; then
-    # Autoload _git completion functions
-    if declare -f _git > /dev/null; then
-        _git
-    fi
-
-    if declare -f _git_commands > /dev/null; then
-        _hub_commands=(
-            'alias:show shell instructions for wrapping git'
-            'pull-request:open a pull request on GitHub'
-            'fork:fork origin repo on GitHub'
-            'create:create new repo on GitHub for the current project'
-            'browse:browse the project on GitHub'
-            'compare:open GitHub compare view'
-        )
-        # Extend the '_git_commands' function with hub commands
-        # eval "$(declare -f _git_commands | sed -e 's/base_commands=(/base_commands=(${_hub_commands} /')"
-        eval "$(declare -f _git_commands | sed -e 's/main_porcelain_commands=(/main_porcelain_commands=(${_hub_commands} /')"
-    fi
-    compdef hub=git
-fi
-
 # vim: filetype=zsh
