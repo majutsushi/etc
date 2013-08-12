@@ -836,6 +836,23 @@ endfunction
 let s:quickfix_is_open = 0
 nnoremap <silent> <leader>q :call QuickfixToggle()<cr>
 
+" s:RangerChooser() {{{2
+function! s:RangerChooser() abort
+    let tmpfile = tempname()
+    let ranger_cmd = 'ranger --choosefile=' . tmpfile . ' ' . expand('%:p:h')
+    if has('gui_running')
+        execute '!urxvt -geometry 140x40 -e ' . ranger_cmd
+    else
+        execute 'silent !' . ranger_cmd
+    endif
+    if filereadable(tmpfile)
+        execute 'edit ' . system('cat ' . tmpfile)
+        call system('rm ' . tmpfile)
+    endif
+    redraw!
+endfunction
+nnoremap <silent> ,ra :call <SID>RangerChooser()<CR>
+
 " RunShellCommand() {{{2
 function! s:RunShellCommand(cmdline)
     botright new
