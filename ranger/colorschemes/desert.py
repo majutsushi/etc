@@ -69,8 +69,8 @@ class Desert(ColorScheme):
 				if context.selected:
 					attr |= bold
 				if context.marked:
-					attr |= bold
-					fg = yellow
+					fg = 222
+					bg = 64
 			if context.badinfo:
 				if attr & reverse:
 					bg = magenta
