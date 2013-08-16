@@ -652,7 +652,7 @@ if exists("+showtabline")
             let j = 1
             while j <= tabpagewinnr(i,'$')
                 if getbufvar(buflist[j - 1], "&modified") != 0
-                    let mod .= '+'
+                    let mod .= '%#StatusLineModFlag#*'
                     break
                 endif
                 let j = j + 1
