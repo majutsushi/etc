@@ -11,20 +11,41 @@ set window-title-basename true
 
 
 # key bindings
-map <C-[> abort
-map <F11> toggle_fullscreen
-map <C-l> reload
+# map <C-[> abort # Still doesn't work :(
+map [normal]     <F11> toggle_fullscreen
+map [fullscreen] <F11> toggle_fullscreen
+map [normal]     <C-l> reload
+map [fullscreen] <C-l> reload
 
-map e          scroll down
-map y          scroll up
-map R          rotate rotate-ccw
-map <PageUp>   navigate previous
-map <PageDown> navigate next
+map [normal]     e scroll down
+map [fullscreen] e scroll down
+map [normal]     y scroll up
+map [fullscreen] y scroll up
+map [normal]     R rotate rotate-ccw
+map [fullscreen] R rotate rotate-ccw
 
-map <A-1> set "pages-per-row 1"
-map <A-2> set "pages-per-row 2"
-map <C-1> set "first-page-column 1"
-map <C-2> set "first-page-column 2"
+map [normal]     <PageUp>   navigate previous
+map [fullscreen] <PageUp>   navigate previous
+map [normal]     <PageDown> navigate next
+map [fullscreen] <PageDown> navigate next
+
+map [normal]     <A-1> set "first-page-column 1"
+map [fullscreen] <A-1> set "first-page-column 1"
+map [normal]     <A-2> set "first-page-column 2"
+map [fullscreen] <A-2> set "first-page-column 2"
+
+# Why are these only defined for normal mode by default?
+map [fullscreen] a adjust_window best-fit
+map [fullscreen] s adjust_window width
+map [fullscreen] f follow
+map [fullscreen] d toggle_page_mode 2
+map [fullscreen] <Tab> toggle_index
+map [fullscreen] j scroll down
+map [fullscreen] k scroll up
+map [fullscreen] <C-d> scroll half-down
+map [fullscreen] <C-u> scroll half-up
+map [fullscreen] <C-o> jumplist backward
+map [fullscreen] <C-i> jumplist forward
 
 
 # colors
