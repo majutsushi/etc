@@ -1,7 +1,6 @@
 # directory based profiles (from grml)
 
-CHPWD_PROFILE='default'
-function chpwd_profiles() {
+chpwd_profiles() {
     # Say you want certain settings to be active in certain directories.
     # This is what you want.
     #
@@ -25,55 +24,24 @@ function chpwd_profiles() {
     #   /foo/bar/baz
     # So, if you want to make double damn sure a profile works in /foo/bar
     # and everywhere deeper in that tree, just use (|/|/*) and be happy.
-    #
-    # The name of the detected profile will be available in a variable called
-    # 'profile' in your functions. You don't need to do anything, it'll just
-    # be there.
-    #
-    # Then there is the parameter $CHPWD_PROFILE is set to the profile, that
-    # was is currently active. That way you can avoid running code for a
-    # profile that is already active, by running code such as the following
-    # at the start of your function:
-    #
-    # function chpwd_profile_grml() {
-    #     [[ ${profile} == ${CHPWD_PROFILE} ]] && return 1
-    #   ...
-    # }
-    #
-    # The initial value for $CHPWD_PROFILE is 'default'.
-    #
-    # Version requirement:
-    #   This feature requires zsh 4.3.3 or newer.
-    #   If you use this feature and need to know whether it is active in your
-    #   current shell, there are several ways to do that. Here are two simple
-    #   ways:
-    #
-    #   a) If knowing if the profiles feature is active when zsh starts is
-    #      good enough for you, you can put the following snippet into your
-    #      .zshrc.local:
-    #
-    #   (( ${+functions[chpwd_profiles]} )) && print "directory profiles active"
-    #
-    #   b) If that is not good enough, and you would prefer to be notified
-    #      whenever a profile changes, you can solve that by making sure you
-    #      start *every* profile function you create like this:
-    #
-    #   function chpwd_profile_myprofilename() {
-    #       [[ ${profile} == ${CHPWD_PROFILE} ]] && return 1
-    #       print "chpwd(): Switching to profile: $profile"
-    #     ...
-    #   }
-    #
-    #      That makes sure you only get notified if a profile is *changed*,
-    #      not everytime you change directory, which would probably piss
-    #      you off fairly quickly. :-)
-    #
-    # There you go. Now have fun with that.
-    local -x profile
 
-    zstyle -s ":chpwd:profiles:${PWD}" profile profile || profile='default'
-    if (( ${+functions[chpwd_profile_$profile]} )) ; then
-        chpwd_profile_${profile}
+    local profile context
+    local -i reexecute
+
+    context=":chpwd:profiles:$PWD"
+    zstyle -s "$context" profile profile || profile='default'
+    zstyle -T "$context" re-execute && reexecute=1 || reexecute=0
+
+    if (( ${+parameters[CHPWD_PROFILE]} == 0 )); then
+        typeset -g CHPWD_PROFILE
+        local CHPWD_PROFILES_INIT=1
+        (( ${+functions[chpwd_profiles_init]} )) && chpwd_profiles_init
+    elif [[ $profile != $CHPWD_PROFILE ]]; then
+        (( ${+functions[chpwd_leave_profile_$CHPWD_PROFILE]} )) \
+            && chpwd_leave_profile_${CHPWD_PROFILE}
+    fi
+    if (( reexecute )) || [[ $profile != $CHPWD_PROFILE ]]; then
+        (( ${+functions[chpwd_profile_$profile]} )) && chpwd_profile_${profile}
     fi
 
     CHPWD_PROFILE="${profile}"
@@ -81,23 +49,46 @@ function chpwd_profiles() {
 }
 add-zsh-hook chpwd chpwd_profiles
 
-_switch_notify() {
+_switch_check() {
     [[ ${profile} == ${CHPWD_PROFILE} ]] && return 1
+    return 0
+}
+
+_switch_notify() {
     print "chpwd(): Switching to profile: $profile"
     return 0
 }
 
+
+# Profiles
+
 chpwd_profile_default() {
-    _switch_notify || return
-    export HOME=$ORIGHOME
+    _switch_check || return
+    _switch_notify
 }
 
 TESTHOME_BASE=${ORIGHOME}/src/testhomes
 zstyle ":chpwd:profiles:${TESTHOME_BASE}/*" profile testhomes
 chpwd_profile_testhomes() {
-    _switch_notify || return
-    testdir=${${PWD#${TESTHOME_BASE}/}%%/*}
+    local testdir=${${PWD#${TESTHOME_BASE}/}%%/*}
+    if [[ $HOME != $ORIGHOME && $(basename $HOME) == $testdir ]]; then
+        return
+    fi
+    _switch_notify
+    print "Using testhome: $testdir"
     export HOME=${TESTHOME_BASE}/${testdir}
 }
+chpwd_leave_profile_testhomes() {
+    export HOME=$ORIGHOME
+}
+
+
+# Initialisation
+
+chpwd_profiles_init() {
+    CHPWD_PROFILE='default'
+}
+
+chpwd_profiles
 
 # vim: filetype=zsh
