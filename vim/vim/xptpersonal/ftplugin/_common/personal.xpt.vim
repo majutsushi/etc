@@ -16,3 +16,10 @@ XPTemplate priority=personal
 
 XPTvar $SParg ''
 
+XPT dateshort hint=Date\ (Y-m-d)
+`strftime("%Y-%m-%d")^
+..XPT
+
+XPT datefull hint=Date\ (full)
+`strftime("%Y-%m-%d %H:%M:%S %z %Z")^
+..XPT
