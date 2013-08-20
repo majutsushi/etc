@@ -1131,26 +1131,7 @@ set ttyfast
 " show info in the window title
 set title
 " string to restore the title to when exiting Vim
-let &titleold=fnamemodify(&shell, ":t")
-
-" idea from http://ft.bewatermyfriend.org/comp/vim/vimrc.html
-function! GetScreenTitle()
-    let title = 'vim'
-    let file  = expand('%:t')
-    if !empty(file)
-        let title .= '(' . file . ')'
-    endif
-    if !empty($SSH_CLIENT)
-        let title .= '@' . substitute(system('hostname'), '\..*', '', '')
-    endif
-    return title
-endfunction
-if &term =~ '^screen'
-    let &t_ts = "\<Esc>k"
-    let &t_fs = "\<Esc>\\"
-    autocmd BufEnter * let &titlestring = GetScreenTitle()
-endif
-
+let &titleold = fnamemodify(&shell, ":t")
 " disable visual bell
 set t_vb=
 
@@ -1864,6 +1845,28 @@ endif
 if &t_Co == 8 && $TERM !~# '^linux'
     set t_Co=16
 endif
+
+
+" Show current file in xterm title
+" idea from http://ft.bewatermyfriend.org/comp/vim/vimrc.html
+function! s:get_screen_title() abort
+    let title = 'vim'
+    let file  = expand('%:t')
+    if !empty(file)
+        let title .= '(' . file . ')'
+    endif
+    if !empty($SSH_CLIENT)
+        let title .= '@' . substitute(system('hostname'), '\..*', '', '')
+    endif
+    return title
+endfunction
+
+if &term =~ '^xterm\|rxvt\|screen'
+    let &t_ts = "\<Esc>]0;"
+    let &t_fs = "\<Esc>\\"
+    autocmd BufEnter * let &titlestring = s:get_screen_title()
+endif
+
 
 " Change cursor colour or shape in insert mode
 " Some ideas from https://github.com/jszakmeister/vim-togglecursor
