@@ -1,34 +1,18 @@
 if is-at-least 4.3.5; then
 
-__set_screen_title() {
-    if [[ "$TERM" == screen* ]]; then
-        printf "\ek%s\e\\" ${(V)argv}
-    fi
-}
-_update_screen_title() {
+_update_terminal_title() {
     if [[ -n "$1" ]]; then
-        __set_screen_title "${1}"
+        set_terminal_title "${1}"
     elif [[ -n "$SSH_CLIENT" ]]; then
-        __set_screen_title "${(%):-%m}"
+        set_terminal_title "${(%):-%m}"
     else
-        __set_screen_title "zsh"
+        set_terminal_title "zsh"
     fi
 }
-add-zsh-hook precmd _update_screen_title
+add-zsh-hook precmd _update_terminal_title
 
 
-__set_xterm_title() {
-    if [[ "$TERM" == (xterm*|rxvt*|screen*) ]]; then
-        printf "\e]0;%s\e\\" ${(V)argv}
-    fi
-}
-_update_xterm_title() {
-    __set_xterm_title "${(%):-%n@%m: ${1:+${1} | }%~}"
-}
-add-zsh-hook precmd _update_xterm_title
-
-
-__simplify_cmd() {
+_simplify_cmd() {
     # get first word of command that doesn't match the pattern
     local pattern="^(*=*|sudo|(auto)?ssh|-*)"
     local cmd="${1[(wr)${pattern}]}"
@@ -48,7 +32,7 @@ __simplify_cmd() {
 # http://git.madduck.net/v/etc/zsh.git/blob/HEAD:/.zsh/zshrc/85_xtermtitle
 _update_exec_titles() {
     # split up the command line
-    local -a cmd; cmd=(${(z)1})
+    local -a cmd; cmd=(${(z)2})
 
     # Construct a command that will output the desired job number.
     case $cmd[1] in
@@ -57,12 +41,11 @@ _update_exec_titles() {
                 cmd=(builtin jobs -l %+)
             else
                 # Replace the command name, ignore extra args.
-                cmd=(builtin jobs -l ${(Q)cmd[2]})
+                cmd=(builtin jobs -l ${(Q)cmd[1]})
             fi;;
         %*) cmd=(builtin jobs -l ${(Q)cmd[1]});; # Same as "else" above
         *) # Not resuming a job,
-            _update_xterm_title "$cmd"
-            _update_screen_title "$(__simplify_cmd "$cmd")"
+            _update_terminal_title "$(_simplify_cmd "$cmd")"
             return;;                        # so we're all done
     esac
 
@@ -73,8 +56,7 @@ _update_exec_titles() {
     $cmd >>(
         read num rest
         cmd=(${(z)${(e):-\$jt$num}})
-        _update_xterm_title "$cmd"
-        _update_screen_title "$(__simplify_cmd "$cmd")"
+        _update_terminal_title "$(_simplify_cmd "$cmd")"
     )
 }
 add-zsh-hook preexec _update_exec_titles

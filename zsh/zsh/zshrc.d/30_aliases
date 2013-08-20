@@ -101,6 +101,12 @@ sshot()    { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desktop/screens
 wp()       { dig +short txt ${1// /_}.wp.dg.cx }
 getlinks() { perl -ne 'while ( m/"((www|ftp|http):\/\/.*?)"/gc ) { print $1, "\n"; }' $* }
 
+set_terminal_title() {
+    if [[ "$TERM" == (xterm*|rxvt*|screen*) ]]; then
+        printf "\e]0;%s\e\\" ${(V)argv}
+    fi
+}
+
 man() {
     # See 'man 5 termcap' for capabilities
 
@@ -118,6 +124,12 @@ man() {
     # make groff not output ANSI escape sequences directly, but old codes with
     # backspace that can then be changed with the less codes above
     typeset -x +g GROFF_NO_SGR=1
+
+    if (( $#argv == 1 )); then
+        set_terminal_title "man($1)"
+    elif (( $#argv == 2 )); then
+        set_terminal_title "man($2($1))"
+    fi
 
     command man "$@"
 }
