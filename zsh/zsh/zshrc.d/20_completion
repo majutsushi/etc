@@ -105,8 +105,9 @@ zstyle ':completion:*:options'                      description 'yes'
 
 # don't complete backup files as executables
 zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
-zstyle ':completion:*:*:(^rm):*:*' ignored-patterns '*(.o|~)' '#*#(D)'
-zstyle ':completion:*:*:vim:*:*' ignored-patterns '(|**/)tags' '*.aux' '*.pdf'
+zstyle ':completion:*:*:(^rm):*:*' ignored-patterns '*(.o|~)' '#*#(D)' '*.zwc' '*.pyc' '*.pyo'
+zstyle ':completion:*:*:vim:*:*' ignored-patterns $(zstyle -s ':completion:*:*:(^rm):*:*' ignored-patterns pat && echo $pat) \
+    '(|**/)tags' '*.aux' '*.pdf' '*.class'
 
 zstyle ':completion:*:processes'          command 'ps xwww --forest -o pid,%cpu,tty,time,command'
 zstyle ':completion:*:kill:*'             force-list always
