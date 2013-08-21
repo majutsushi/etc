@@ -15,7 +15,9 @@ if [[ -o rcs ]]; then
 
 #  __do_debug && set -x || :
 
-  _DIR=$ZDOTDIR/${${(%):-%1N}#.}.d
+  _BASE=${${(%):-%1N}#.}
+  eval "${(U)_BASE}_INIT=1"
+  _DIR=$ZDOTDIR/${_BASE}.d
   sourcedir $_DIR
 
   if [[ -d $_DIR/parts.d ]]; then
@@ -23,6 +25,8 @@ if [[ -o rcs ]]; then
   fi
 
   unset _DIR
+  eval "unset ${(U)_BASE}_INIT"
+  unset _BASE
 
 #  __do_debug && set +x || :
 fi
