@@ -1852,7 +1852,10 @@ endif
 function! s:get_screen_title() abort
     let title = 'vim'
     let file  = expand('%:t')
-    if !empty(file)
+    if file != ''
+        if len(file) > 15
+            let file = file[:13] . '…'
+        endif
         let title .= '(' . file . ')'
     endif
     if !empty($SSH_CLIENT)
