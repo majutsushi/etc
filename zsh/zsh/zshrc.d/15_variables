@@ -2,7 +2,7 @@ export ORIGHOME=$HOME
 
 export TIMEFMT="%*E real  %*U user  %*S system  %P  %J"
 
-export EDITOR="$(whence vim)"
+export EDITOR=vim
 export VISUAL="$EDITOR"
 export BROWSER=xdg-open
 
