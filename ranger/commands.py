@@ -26,12 +26,19 @@ class movetotrash(Command):
         self.fm.copy_buffer -= set(selected)
         if selected:
             for f in selected:
+                dest = os.path.join(trash_dir, "files", f.basename)
+                basename = f.basename
+                if os.path.exists(dest):
+                    counter = 2
+                    while os.path.exists(dest + "." + str(counter)):
+                        counter += 1
+                    basename += "." + str(counter)
                 with open(os.path.join(trash_dir, "info",
-                                       f.basename + ".trashinfo"), "w") as info:
+                                       basename + ".trashinfo"), "w") as info:
                     info.write(
                         "[Trash Info]\n" +
                         "Path=" + f.path + "\n" +
                         "DeletionDate=" + strftime("%Y-%m-%dT%H:%M:%S") + "\n"
                     )
-                shutil.move(f.path, os.path.join(trash_dir, "files"))
+                shutil.move(f.path, os.path.join(trash_dir, "files", basename))
         self.fm.thistab.ensure_correct_pointer()
