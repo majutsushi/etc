@@ -2,3 +2,4 @@ style "vimfix" {
   bg[NORMAL] = "#333333" # desert grey20, see /usr/share/vim/vimcurrent/rgb.txt
 }
 widget "vim-main-window.*GtkForm" style "vimfix"
+gtk-key-theme-name = "Emacs"
