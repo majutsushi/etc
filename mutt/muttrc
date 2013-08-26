@@ -21,6 +21,9 @@ source ~/.mutt/maildir
 #   set spoolfile=
 #   set imap_user=
 #   set imap_pass=""
+#
+#  set folder=imaps://mail.majutsushi.net/INBOX     # directory with all mail folders
+#  set spoolfile=imaps://mail.majutsushi.net/INBOX
 
   set postponed="=.Drafts"
   set record="=.sent"
