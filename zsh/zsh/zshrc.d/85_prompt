@@ -50,11 +50,19 @@ __prompt_orighome() {
     fi
 }
 
+__prompt_jdk() {
+    [[ -z $JAVA_HOME ]] && return
+    JDK=$(basename $JAVA_HOME)
+    if [[ $JDK != default ]]; then
+        print "${pcol[cyan]}$JDK${pcol[reset]} "
+    fi
+}
+
 LOGO=""
 
 PS1='
 $(__prompt_logo)${pcol[167]}%n ${pcol[reset]}@ ${pcol[220]}%m${pcol[reset]} • ${pcol[green]}%<...<%~%<<${pcol[reset]}$(__prompt_wperm)$(__prompt_vcs)
-%(2L.${pcol[bold]}%L${pcol[reset]} .)%(!.#.$) '
+%(2L.${pcol[bold]}%L${pcol[reset]} .)$(__prompt_jdk)%(!.#.$) '
 
 RPS1='$(__prompt_orighome)$(__prompt_exitcode)$(__prompt_jobs)'
 
