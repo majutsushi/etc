@@ -300,6 +300,4 @@ if [[ -r /etc/debian_version ]] ; then
     compdef _uchange uchange
 fi
 
-alias javabug="sudo sed -i 's/XINERAMA/FAKEEXTN/g' /usr/lib/jvm/java-6-sun/jre/lib/i386/xawt/libmawt.so"
-
 # vim: filetype=zsh
