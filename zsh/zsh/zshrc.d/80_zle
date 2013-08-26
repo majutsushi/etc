@@ -66,6 +66,8 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^[e' edit-command-line
 
+bindkey '^[q' push-line-or-edit
+
 # insert current date
 _insert_datestamp() { LBUFFER+=${(%):-'%D{%Y-%m-%d}'}; }
 zle -N insert-datestamp _insert_datestamp
