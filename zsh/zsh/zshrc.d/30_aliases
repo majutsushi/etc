@@ -300,4 +300,35 @@ if [[ -r /etc/debian_version ]] ; then
     compdef _uchange uchange
 fi
 
+# Easy jdk switching
+JDKS_PATH=${JDKS_PATH:-/opt/jdks}
+for file in ${JDKS_PATH}/{jdk*,default}; do
+    jdk=$(basename "$file")
+    if [[ $jdk == default ]]; then
+        jdk=jdk-default
+    fi
+    eval "$jdk () {
+        if [ -n \"\$*\" ]; then
+            (
+                if [[ $PATH =~ $JDKS_PATH ]]; then
+                    PATH=$(echo $PATH | sed -e 's,:'${JDKS_PATH}'[^:]*,:'$file/bin',g')
+                else
+                    PATH=$file/bin:$PATH
+                fi
+                JAVA_HOME="$file"
+                exec \"\$@\"
+            )
+        else
+            if [[ $PATH =~ $JDKS_PATH ]]; then
+                PATH=$(echo $PATH | sed -e 's,:'${JDKS_PATH}'[^:]*,:'$file/bin',g')
+            else
+                PATH=$file/bin:$PATH
+            fi
+            JAVA_HOME="$file"
+        fi
+
+    }
+    "
+done
+
 # vim: filetype=zsh
