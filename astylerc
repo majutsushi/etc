@@ -1,0 +1,11 @@
+#--style=stroustrup
+--indent=spaces=4
+--brackets=linux # stroustrup?
+--indent-classes
+--indent-switches
+#--indent-namespaces
+--indent-preprocessor
+--break-blocks
+--pad-oper
+--unpad-paren
+--convert-tabs

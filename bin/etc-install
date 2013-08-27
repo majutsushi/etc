@@ -101,6 +101,7 @@ xlink Rprofile
 merge ackrc
 xlink ant/ant.conf target=.ant/ant.conf
 xlink aptitude
+xlink astylerc
 xlink bibtoolrsc
 xlink colorgccrc
 xlink colordiffrc
