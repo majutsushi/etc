@@ -53,7 +53,7 @@ __prompt_orighome() {
 __prompt_jdk() {
     [[ -z $JAVA_HOME ]] && return
     JDK=$(basename $JAVA_HOME)
-    if [[ $JDK != default ]]; then
+    if [[ $JDK != jdk-default ]]; then
         print "${pcol[cyan]}$JDK${pcol[reset]} "
     fi
 }

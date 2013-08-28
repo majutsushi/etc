@@ -302,29 +302,24 @@ fi
 
 # Easy jdk switching
 JDKS_PATH=${JDKS_PATH:-/opt/jdks}
-for file in ${JDKS_PATH}/{jdk*,default}; do
+for file in ${JDKS_PATH}/jdk*; do
     jdk=$(basename "$file")
-    if [[ $jdk == default ]]; then
-        jdk=jdk-default
-    fi
     eval "$jdk () {
-        if [ -n \"\$*\" ]; then
+        local newpath
+        if [[ "'"$PATH"'" =~ "'"$JDKS_PATH"'" ]]; then
+            newpath="'"$(echo "$PATH" | sed -e '"'s,${JDKS_PATH}/jdk[^:]*,$file/bin,g'"')"'"
+        else
+            newpath=\"$file/bin\":"'"$PATH"'"
+        fi
+        if [[ -n \"\$*\" ]]; then
             (
-                if [[ $PATH =~ $JDKS_PATH ]]; then
-                    PATH=$(echo $PATH | sed -e 's,:'${JDKS_PATH}'[^:]*,:'$file/bin',g')
-                else
-                    PATH=$file/bin:$PATH
-                fi
-                JAVA_HOME="$file"
+                PATH="'"$newpath"'"
+                JAVA_HOME=\""$file"\"
                 exec \"\$@\"
             )
         else
-            if [[ $PATH =~ $JDKS_PATH ]]; then
-                PATH=$(echo $PATH | sed -e 's,:'${JDKS_PATH}'[^:]*,:'$file/bin',g')
-            else
-                PATH=$file/bin:$PATH
-            fi
-            JAVA_HOME="$file"
+            PATH="'"$newpath"'"
+            JAVA_HOME=\""$file"\"
         fi
 
     }
