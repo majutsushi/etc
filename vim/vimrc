@@ -907,6 +907,18 @@ endfunction
 
 command -nargs=1 -complete=customlist,s:Spelllist Spelllang call s:Spelllang(<q-args>)
 
+" StripTrailing() {{{2
+function! StripTrailing(pattern) abort
+    let savePos = winsaveview()
+    let saveFoldEnable = &foldenable
+    setlocal nofoldenable
+    execute '%substitute /' . a:pattern . '$//ge'
+    let &l:foldenable = saveFoldEnable
+    call winrestview(savePos)
+endfunction
+command! -bar StripTrailingWhitespace call StripTrailing('\s\+')
+command! -bar StripTrailingCtrlM      call StripTrailing('<C-M>')
+
 " SynStack() {{{2
 " Show syntax highlighting groups for word under cursor
 function! SynStack()
@@ -2014,10 +2026,6 @@ xnoremap <S-Del>    "+d
 inoremap <C-Del>    <C-O>daw
 
 nnoremap <silent> <leader>ga :GNOMEAlignArguments<CR>
-
-" remove trailing whitespace
-nnoremap <leader>rt :%s/\s\+$//<CR>
-xnoremap <leader>rt  :s/\s\+$//<CR>
 
 " indent for C/C++ programs
 nnoremap <leader>i :%!astyle<CR>
