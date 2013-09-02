@@ -65,6 +65,8 @@ if [[ -n "$TMUX" ]]; then
             # only export non-removed variables
             if [[ "${VAR#-}" == "${VAR}" ]]; then
                 export "$VAR"
+            else
+                unset "${VAR#-}"
             fi
         done
     }
