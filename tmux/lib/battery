@@ -1,6 +1,6 @@
 __battery() {
     if command -v acpi >/dev/null 2>&1; then
-        ACPI=$(acpi -b)
+        ACPI=$(acpi -b 2>/dev/null)
         if [ -n "$ACPI" ]; then
             acpi -b | IFS=':, %' read n num state percent rest
 
