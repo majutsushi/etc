@@ -102,7 +102,15 @@ case $state in
         # For the array to be set with correct argument boundaries, the entire
         # set statement needs to be eval'd.  On Cygwin, need to kill \r's output
         # from Java or parsing will fail.
-        eval set -A tmp "${$(ANT_ARGS= ANT_OPTS= _call_program targets "$words[1]" -buildfile $buildfile -projecthelp |
+        local properties
+        if [[ $line =~ "-D" ]]; then
+          # Extract properties from the command line to be able to set them
+          # for the projecthelp execution
+          local normalized="$(echo ${(j: :)line} | sed -r -e 's/-D +/-D/g')"
+          properties=( ${(z)normalized} )
+          properties=( ${(M)properties:#-D*} )
+        fi
+        eval set -A tmp "${$(ANT_ARGS= ANT_OPTS= _call_program targets "$words[1]" ${(e)properties} -buildfile $buildfile -projecthelp |
           while read target desc
           do
             # This loop reads ant -projecthelp output from versions 1.3 to 1.6
