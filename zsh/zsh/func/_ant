@@ -114,8 +114,7 @@ case $state in
           while read target desc
           do
             # This loop reads ant -projecthelp output from versions 1.3 to 1.6
-            # desc=${(q)desc}
-            desc=${desc//\'}
+            desc=${desc//\'/\\\'\\\\\'\\\'} # ugh
             ln="${target}${desc:+:$desc}"
             [[ $target = "" ]] && continue  # skip blank lines
             case $ln in
