@@ -11,105 +11,106 @@ if [[ -z "$1" ]]; then
     return 1
 fi
 
-TMPDIR=zsh-extract-$RANDOM
-ARCHIVEDIR="$(readlink -f ${1:h})"
-ARCHIVEFILE="${1:t}"
-BASENAME=${ARCHIVEFILE:r}
-MOVE=no
+local tmpdir=zsh-extract-$RANDOM
+local archivedir="$(readlink -f ${1:h})"
+local archivefile="${1:t}"
+local basename=${archivefile:r}
+local move=no
+local cmd
 
-mkdir $TMPDIR
+mkdir $tmpdir
 
 case "$1" in
     *.tar.bz2)
-        BASENAME=${BASENAME:r} ;&
+        basename=${basename:r} ;&
     *.tbz2|*.tbz)
-        COMMAND="tar xvj -f '$1' -C $TMPDIR"
+        cmd="tar xvj -f '$1' -C $tmpdir"
         ;;
     *.tar.gz)
-        BASENAME=${BASENAME:r} ;&
+        basename=${basename:r} ;&
     *.tgz)
-        COMMAND="tar xvz -f '$1' -C $TMPDIR"
+        cmd="tar xvz -f '$1' -C $tmpdir"
         ;;
     *.tar.xz|*.tar.lzma)
-        BASENAME=${BASENAME:r} ;&
+        basename=${basename:r} ;&
     *.txz)
-        COMMAND="tar xvJ -f '$1' -C $TMPDIR"
+        cmd="tar xvJ -f '$1' -C $tmpdir"
         ;;
     *.tar)
-        COMMAND="tar xv -f '$1' -C $TMPDIR"
+        cmd="tar xv -f '$1' -C $tmpdir"
         ;;
     *.rar)
-        COMMAND="unrar x '${ARCHIVEFILE}'"
-        MOVE=yes
+        cmd="unrar x '${archivefile}'"
+        move=yes
         ;;
     *.lha|*.lzh)
-        COMMAND="lha x '${ARCHIVEFILE}'"
-        MOVE=yes
+        cmd="lha x '${archivefile}'"
+        move=yes
         ;;
     *.7z)
-        COMMAND="7z x -o$TMPDIR '$1'"
+        cmd="7z x -o$tmpdir '$1'"
         ;;
     *.jar|*.war|*.ear|*.xpi|*.zip)
-        COMMAND="unzip -d $TMPDIR '$1'"
+        cmd="unzip -d $tmpdir '$1'"
         ;;
     *.deb)
-        COMMAND="ar -x '${ARCHIVEFILE}'"
-        MOVE=yes
+        cmd="ar -x '${archivefile}'"
+        move=yes
         ;;
     *.bz2)
-        COMMAND="bzip2 -d -c '$1' > '$BASENAME'"
+        cmd="bzip2 -d -c '$1' > '$basename'"
         ;;
     *.gz|*.Z)
-        COMMAND="gzip -d -c '$1' > '$BASENAME'"
+        cmd="gzip -d -c '$1' > '$basename'"
         ;;
     *.xz|*.lzma)
-        COMMAND="xz -d -c '$1' > '$BASENAME'"
+        cmd="xz -d -c '$1' > '$basename'"
         ;;
     *)
         echo "Unsupported archive type"
-        rmdir $TMPDIR
+        rmdir $tmpdir
         return 1
         ;;
 esac
 
-if [[ $MOVE == yes ]]; then
-    mv "$1" $TMPDIR
-    cd $TMPDIR
-    eval "$COMMAND"
-    RET=$?
-    mv "$ARCHIVEFILE" "$ARCHIVEDIR"
+if [[ $move == yes ]]; then
+    mv "$1" $tmpdir
+    cd $tmpdir
+    eval "$cmd"
+    local RET=$?
+    mv "$archivefile" "$archivedir"
     cd ..
 else
-    eval "$COMMAND"
-    RET=$?
+    eval "$cmd"
+    local RET=$?
 fi
 
 if (( $RET != 0 )); then
-    rmdir $TMPDIR
+    rmdir $tmpdir
     return $RET
 fi
 
 echo
 
-NUMFILES=$(ls $TMPDIR | wc -l)
-if (( $NUMFILES == 0 )); then
-    rmdir $TMPDIR
-    echo "Extracted file to \"$BASENAME\""
-elif (( $NUMFILES == 1 )); then
-    if ! [[ -e "BASENAME" ]]; then
-        FILE="$(basename $TMPDIR/*)"
-        mv "$TMPDIR/$FILE" .
-        rmdir $TMPDIR
-        echo "Extracted \"$FILE\" to current directory"
+local numfiles=$(ls $tmpdir | wc -l)
+if (( $numfiles == 0 )); then
+    rmdir $tmpdir
+    echo "Extracted file to \"$basename\""
+elif (( $numfiles == 1 )); then
+    local file="$(basename $tmpdir/*)"
+    if ! [[ -e "$file" ]]; then
+        mv "$tmpdir/$file" .
+        rmdir $tmpdir
+        echo "Extracted \"$file\" to current directory"
     else
-        echo "Extracted \"$FILE\" to directory \"$TMPDIR\""
+        echo "Extracted \"$file\" to directory \"$tmpdir\""
     fi
 else
-    if ! [[ -e "BASENAME" ]]; then
-        mv $TMPDIR "$BASENAME"
-        echo "Extracted files to directory \"$BASENAME\""
+    if ! [[ -e "$basename" ]]; then
+        mv $tmpdir "$basename"
+        echo "Extracted files to directory \"$basename\""
     else
-        echo "Extracted files to directory \"$TMPDIR\""
+        echo "Extracted files to directory \"$tmpdir\""
     fi
 fi
 
