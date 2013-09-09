@@ -119,7 +119,7 @@ hi Error	cterm=bold ctermfg=7 ctermbg=1
 
 hi TabLine	cterm=underline ctermfg=15 ctermbg=8 guifg=grey20 guibg=DarkGrey gui=none
 hi TabLineSel	cterm=bold gui=bold
-hi TabLineFill	cterm=reverse guifg=grey30
+hi TabLineFill	cterm=none gui=none guifg=grey70 guibg=grey30
 
 " Ubuntu colours
 "hi Pmenu	guibg=black guifg=#aea79f gui=none
