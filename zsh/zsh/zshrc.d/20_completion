@@ -151,8 +151,17 @@ compdef '_files -g "*.(pdf|ps|djv(|u))"' evince
 compdef '_files -g "*.(pdf|ps|djv(|u))"' zathura
 
 # menu selection: pick item but stay in the menu (press esc-return)
-bindkey -M menuselect '\e^M' accept-and-menu-complete
-bindkey -M menuselect '^\n'  accept-and-menu-complete
+# bindkey -M menuselect '\e^M' accept-and-menu-complete
+bindkey -M menuselect '\e^M' accept-and-infer-next-history
+# bindkey -M menuselect '^\n'  accept-and-menu-complete # conflicts with '^J'
+bindkey -M menuselect '\eQ13;5~'  accept-and-menu-complete
+
+bindkey -M menuselect '^j' down-line-or-search
+bindkey -M menuselect '^k' up-line-or-search
+bindkey -M menuselect '^l' forward-char
+bindkey -M menuselect '^h' backward-char
+bindkey -M menuselect '^d' forward-word
+bindkey -M menuselect '^u' backward-word
 
 # remove last inserted match
 bindkey -M menuselect '^w' undo

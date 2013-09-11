@@ -2,8 +2,13 @@
 
 # custom escape code mappings
 bindkey -s '\eQ13;3~' '\e^M'
-bindkey -s '\eQ13;5~' '^\n'
+bindkey -s '\eQ13;5~' '^\n' # conflicts with '^J'
 bindkey -s '\eQ32;5~' '^@'
+
+bindkey "${terminfo[khome]}" beginning-of-line # Home
+bindkey "${terminfo[kend]}"  end-of-line       # End
+bindkey "${terminfo[kich1]}" overwrite-mode    # Insert
+bindkey "${terminfo[kdch1]}" delete-char       # Delete
 
 # also do history expansion on space
 bindkey ' ' magic-space
