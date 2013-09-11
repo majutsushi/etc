@@ -85,7 +85,24 @@ if have ag; then
 else
     alias a='~/.etc/zsh/sack ack'
 fi
-f() { $EDITOR +$(sed -n "$1p" < $XDG_CACHE_HOME/grep_shortcuts) }
+f() {
+    local shortcut="$(sed -n "$1p" < $XDG_CACHE_HOME/grep_shortcuts | awk '
+        {
+            print $1
+            file = $2
+            for (i = 3; i <= NF; i++) {
+                file = file " " $i
+            }
+            print file
+        }
+    ')"
+    shortcut=(${(f)shortcut})
+    local file="${shortcut[2]:a}"
+    local cmd="$EDITOR +${shortcut[1]} \"$file\""
+    # save the actual command in the history
+    print -sr -- ${cmd%%$'\n'}
+    eval $cmd
+}
 
 # diff
 if have colordiff; then

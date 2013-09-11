@@ -20,4 +20,13 @@ HISTFILE=$XDG_CACHE_HOME/zsh/history
 HISTSIZE=5000
 SAVEHIST=10000
 
+_hist_ignore_f() {
+    cmd=(${(z)${1%%$'\n'}})
+    if [[ ${#cmd} -ge 1 && "${cmd[1]}" == "f" ]]; then
+        return 1
+    fi
+    return 0
+}
+add-zsh-hook zshaddhistory _hist_ignore_f
+
 # vim: filetype=zsh
