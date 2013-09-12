@@ -347,6 +347,7 @@ UXTerm.termName: xterm-256color
 *vt100.geometry: 80x50
 *vt100.metaSendsEscape: true
 *vt100.visualBell: true
+*vt100.appcursorDefault: true
 *vt100.translations: #override \
     Ctrl <Key>Up:    larger-vt-font() \n\
     Ctrl <Key>Down:  smaller-vt-font() \n\
