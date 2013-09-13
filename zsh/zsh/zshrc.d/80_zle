@@ -10,6 +10,10 @@ bindkey "${terminfo[kend]}"  end-of-line       # End
 bindkey "${terminfo[kich1]}" overwrite-mode    # Insert
 bindkey "${terminfo[kdch1]}" delete-char       # Delete
 
+# xterm normal cursor keys mode
+bindkey '\e[H' beginning-of-line
+bindkey '\e[F' end-of-line
+
 # also do history expansion on space
 bindkey ' ' magic-space
 
