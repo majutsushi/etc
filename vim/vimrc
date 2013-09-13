@@ -1815,8 +1815,6 @@ if &term =~ '^rxvt-unicode\|xterm\|screen'
 
     execute "set <PageUp>=\e[5;*~"
     execute "set <PageDown>=\e[6;*~"
-    execute "set <Home>=\e[1;*H"
-    execute "set <End>=\e[1;*F"
 
     if &term =~ '^rxvt-unicode\|screen'
         execute "set <xF1>=\e[1;*P"
