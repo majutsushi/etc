@@ -118,6 +118,12 @@ sshot()    { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desktop/screens
 wp()       { dig +short txt ${1// /_}.wp.dg.cx }
 getlinks() { perl -ne 'while ( m/"((www|ftp|http):\/\/.*?)"/gc ) { print $1, "\n"; }' $* }
 
+tea() {
+    local time=${1:-90s}
+    eval "sleep $time"
+    zenity --info --title="Tea is ready" --text="Tea is ready since $(date +%H:%M:%S)"
+}
+
 set_terminal_title() {
     if [[ "$TERM" == (xterm*|rxvt*|screen*) ]]; then
         printf "\e]0;%s\e\\" ${(V)argv}
