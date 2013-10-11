@@ -1424,7 +1424,7 @@ let g:CSApprox_attr_map = {'sp': 'fg'}
 
 let g:CSApprox_hook_desert_post = [
     \ 'hi DiffAdd ctermbg=28',
-    \ 'hi DiffChange ctermbg=88',
+    \ 'hi DiffDelete ctermbg=88 ctermfg=88',
 \]
 
 " Ctrl-P {{{2

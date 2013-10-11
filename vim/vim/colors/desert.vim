@@ -25,9 +25,9 @@ hi Cursor	guibg=khaki guifg=slategrey
 "hi Directory
 
 hi DiffAdd    guibg=#307030
-hi DiffChange guibg=#723030
-hi DiffDelete guibg=#555555 guifg=#555555
-hi DiffText   guibg=#c44545
+hi DiffChange guibg=#2b5b77
+hi DiffDelete guibg=#723030 guifg=#723030
+hi DiffText   guibg=#6c90a6
 " hi DiffChange guibg=#939133
 " hi DiffDelete guibg=#723030 guifg=#723030
 " hi DiffText   guibg=#d0be25
