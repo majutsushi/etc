@@ -1646,7 +1646,9 @@ let g:tagbar_type_idl = {
 
 highlight link TagbarHighlight Cursor
 highlight TagbarSignature guifg=yellowgreen
+highlight TagbarVisibilityPublic guifg=#11ee11
 highlight TagbarVisibilityProtected guifg=SkyBlue
+highlight TagbarVisibilityPrivate guifg=#ee1111
 
 nmap <silent>   <F9> :TagbarOpenAutoClose<CR>
 nmap <silent> <S-F9> :TagbarToggle<CR>
