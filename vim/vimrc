@@ -4,6 +4,7 @@ set encoding=utf-8
 let mapleader=","
 
 let g:pathogen_disabled = []
+let g:pathogen_disabled = ['yankring']
 if !has('python') || !executable('clang')
     let g:pathogen_disabled += ['clang_complete']
 endif
@@ -1194,7 +1195,7 @@ set confirm
 
 " 'unnamed' to use the * register like unnamed register
 " 'autoselect' to always put selected text into register *
-set clipboard=exclude:cons\|linux
+set clipboard=unnamed,unnamedplus,exclude:cons\|linux
 
 " editing text {{{2
 
