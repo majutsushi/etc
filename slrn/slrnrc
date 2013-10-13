@@ -266,7 +266,7 @@ set generate_message_id 1
 set use_recommended_msg_id 0
 
 % the character set used for outgoing articles
-charset outgoing "utf8"
+charset outgoing "utf-8"
 
 % Set this to one if you want the "From:" header in e-mails to be generated
 % from the hostname / username / realname variable.
