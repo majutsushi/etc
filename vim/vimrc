@@ -86,19 +86,6 @@ endif
 " From https://github.com/mitechie/pyvim/blob/master/.vimrc
 autocmd BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 'silent !chmod u+x <afile>' | endif | endif
 
-" Try to detect the correct expandtab setting
-function! s:Detect_et() abort
-    let ntabs =   len(filter(getbufline(winbufnr(0), 1, '$'), "v:val =~ '^\t'"))
-    let nspaces = len(filter(getbufline(winbufnr(0), 1, '$'), "v:val =~ '^ '"))
-    if ntabs > nspaces
-        setlocal noexpandtab
-        setlocal tabstop=8
-        setlocal softtabstop=0
-        setlocal shiftwidth=8
-    endif
-endfunction
-autocmd BufReadPost * call s:Detect_et()
-
 " filetype-specific settings
 autocmd FileType make      setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=0
 autocmd FileType gtkrc     setlocal tabstop=2 shiftwidth=2 softtabstop=2
