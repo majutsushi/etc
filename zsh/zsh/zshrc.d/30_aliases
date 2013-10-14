@@ -240,6 +240,15 @@ upload() {
     done
 }
 
+vim-profile-script() {
+    if [[ "$#" != 2 ]]; then
+        echo "usage: vim-profile-script <scriptpattern> <file to load>"
+        return 1
+    fi
+
+    vim --cmd 'profile start profile.log' --cmd 'profile! file '$1'' "$2"
+}
+
 pdfembedfonts() {
     if [[ $# != 1 ]]; then
         echo "Usage: $0 input.pdf"
