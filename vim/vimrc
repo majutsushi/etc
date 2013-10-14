@@ -265,25 +265,35 @@ function! GetFileEncoding()
     endif
 endfunction
 
-" StatuslineTabWarning() {{{3
+" s:recompute_stl_ws() {{{3
 " Adapted from
 " http://got-ravings.blogspot.com/2008/10/vim-pr0n-statusline-whitespace-flags.html
-function! StatuslineTabWarning()
-    if !exists("b:statusline_tab_warning")
-        let tabs = search('^\t', 'nw') != 0
-        let spaces = search('^ ', 'nw') != 0
+function! s:recompute_stl_ws() abort
+    let tabs = search('^\t', 'nw') != 0
+    let spaces = search('^ ', 'nw') != 0
 
-        if tabs && spaces
-            let b:statusline_tab_warning =  'm'
-        elseif (spaces && !&et) || (tabs && &et)
-            let b:statusline_tab_warning = '!'
-        else
-            let b:statusline_tab_warning = ''
-        endif
+    if tabs && spaces
+        let b:statusline_tab_warning = 'mixed'
+    " elseif (spaces && !&et) || (tabs && &et)
+    "     let b:statusline_tab_warning = 'wrong'
+    else
+        let b:statusline_tab_warning = ''
     endif
-    return b:statusline_tab_warning
 endfunction
-autocmd CursorHold,BufWritePost * unlet! b:statusline_tab_warning
+autocmd BufReadPost,CursorHold,BufWritePost * call s:recompute_stl_ws()
+" StatuslineETString() {{{3
+function! StatuslineETString(error) abort
+    if !exists('b:statusline_tab_warning')
+        call s:recompute_stl_ws()
+    endif
+
+    if b:statusline_tab_warning == 'mixed' && a:error ||
+     \ b:statusline_tab_warning == '' && !a:error
+        return &expandtab ? 'S' : 'T'
+    else
+        return ''
+    endif
+endfunction
 
 " StatuslineTrailingSpaceWarning() {{{3
 " Adapted from
@@ -371,10 +381,9 @@ let g:default_stl .= "%(#[Warning]%{g:zoomwin_stl}#[ExpandTab] %)"
 " Tabstop/indent/whitespace settings
 let g:default_stl .= "%(#[Warning]"
 let g:default_stl .= "%{StatuslineTrailingSpaceWarning()}"
-let g:default_stl .= "%{StatuslineTabWarning()}"
 let g:default_stl .= "#[ExpandTab] %)"
 
-let g:default_stl .= "%{&expandtab ? 'S' : 'T'}"
+let g:default_stl .= "#[Warning]%{StatuslineETString(1)}#[ExpandTab]%{StatuslineETString(0)}"
 let g:default_stl .= "#[LineColumn]:%{&tabstop}:%{&softtabstop}:%{&shiftwidth}"
 
 " Unicode codepoint
