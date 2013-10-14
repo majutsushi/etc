@@ -42,10 +42,12 @@ zle -N insert-last-word smart-insert-last-word
 bindkey '^[#' pound-insert
 
 # define word separators (for stuff like backward-word, forward-word, backward-kill-word,..)
+# also see select-word-style in zshcontrib
 #  WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>' # the default
 #  WORDCHARS=.
 #  WORDCHARS='*?_[]~=&;!#$%^(){}'
 #  WORDCHARS='${WORDCHARS:s@/@}'
+export WORDCHARS="${WORDCHARS}|"
 
 # only slash should be considered as a word separator:
 slash-backward-kill-word() {
