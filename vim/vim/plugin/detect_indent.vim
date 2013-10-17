@@ -36,14 +36,14 @@ function! s:detect_indent() abort
 endfunction
 
 function! s:should_expand() abort
-    let num_spaces = len(filter(getbufline(winbufnr(0), 1, '$'), "v:val =~ '^ '"))
-    let num_tabs =   len(filter(getbufline(winbufnr(0), 1, '$'), "v:val =~ '^\t'"))
+    let num_spaces = len(filter(getline(1, '$'), "v:val =~ '^ '"))
+    let num_tabs =   len(filter(getline(1, '$'), "v:val =~ '^\t'"))
 
     return num_spaces > num_tabs
 endfunction
 
 function! s:get_min_indent() abort
-    let indented = filter(getbufline(winbufnr(0), 1, '$'), "v:val =~ '^ '")
+    let indented = filter(getline(1, '$'), "v:val =~ '^ '")
     call map(indented, "substitute(v:val, '^\\( \\+\\)[^ ]', '\\=len(submatch(1))', '')")
     return min(indented)
 endfunction
