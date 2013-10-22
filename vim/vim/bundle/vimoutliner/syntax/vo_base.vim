@@ -25,29 +25,45 @@ if exists("b:current_syntax")
 endif
 
 " body text
-syntax match Comment "^\t*:.*$"
+syntax match VOBody "^\t*:.*$"
 
 " pre-formatted text
-syntax match PreProc "^\t*;.*$"
+syntax match VOPre "^\t*;.*$"
 
 " tables
-syntax match Function "^\t*|.*$"
+syntax match VOTable "^\t*|.*$"
 
 " wrapping user text
-syntax match Directory "^\t*>.*$"
+syntax match VOWrapping "^\t*>.*$"
 
 " non-wrapping user text
-syntax match LineNr "^\t*<.*$"
+syntax match VONonWrapping "^\t*<.*$"
 
 " headings
-syntax match Normal     "^[^:;|><\t].*$"
-syntax match Identifier "^\t[^:;|><\t].*$"
-syntax match Special    "^\t\{2}[^:;|><\t].*$"
-syntax match Constant   "^\t\{3}[^:;|><\t].*$"
-syntax match Normal     "^\t\{4}[^:;|><\t].*$"
-syntax match Identifier "^\t\{5}[^:;|><\t].*$"
-syntax match Special    "^\t\{6}[^:;|><\t].*$"
-syntax match Constant   "^\t\{7}[^:;|><\t].*$"
-syntax match Normal     "^\t\{8}[^:;|><\t].*$"
+syntax match VOHeading1 "^[^:;|><\t].*$"
+syntax match VOHeading2 "^\t[^:;|><\t].*$"
+syntax match VOHeading3 "^\t\{2}[^:;|><\t].*$"
+syntax match VOHeading4 "^\t\{3}[^:;|><\t].*$"
+syntax match VOHeading5 "^\t\{4}[^:;|><\t].*$"
+syntax match VOHeading6 "^\t\{5}[^:;|><\t].*$"
+syntax match VOHeading7 "^\t\{6}[^:;|><\t].*$"
+syntax match VOHeading8 "^\t\{7}[^:;|><\t].*$"
+syntax match VOHeading9 "^\t\{8}[^:;|><\t].*$"
+
+highlight default link VOBody        Comment
+highlight default link VOPre         PreProc
+highlight default link VOTable       Function
+highlight default link VOWrapping    Directory
+highlight default link VONonWrapping LineNr
+
+highlight default link VOHeading1 Normal
+highlight default link VOHeading2 Identifier
+highlight default link VOHeading3 Special
+highlight default link VOHeading4 Constant
+highlight default link VOHeading5 Normal
+highlight default link VOHeading6 Identifier
+highlight default link VOHeading7 Special
+highlight default link VOHeading8 Constant
+highlight default link VOHeading9 Normal
 
 let b:current_syntax = "vo_base"
