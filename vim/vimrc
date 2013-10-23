@@ -1146,9 +1146,9 @@ set ttymouse=xterm
 " printing {{{2
 
 " list of items that control the format of :hardcopy output
-set printoptions=number:y,paper:A4,left:5pc,right:5pc,top:5pc,bottom:5pc
+set printoptions=paper:A4,left:5pc,right:5pc,top:5pc,bottom:5pc,syntax:a,number:y
 " name of the font to be used for :hardcopy
-set printfont=Monospace\ 8
+set printfont=:h8
 
 " expression used to print the PostScript file for :hardcopy
 set printexpr=PrintFile(v:fname_in)
