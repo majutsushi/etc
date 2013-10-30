@@ -65,4 +65,6 @@ function! s:get_min_indent() abort
     return minindent
 endfunction
 
-autocmd BufReadPost,BufWritePost * call s:detect_indent()
+command -nargs=0 DetectIndent call s:detect_indent()
+
+autocmd BufReadPost * call s:detect_indent()
