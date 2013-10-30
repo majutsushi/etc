@@ -109,7 +109,7 @@ if have colordiff; then
     alias diff='colordiff'
     wdiff() { command wdiff "$@" | colordiff }
 fi
-alias ddiff="diff -Naurd --exclude-from=$HOME/.etc/diffexclude"
+alias ddiff="diff -Naurd --exclude-from=$HOME/.etc/excludes/diff"
 
 echoerr()  { echo "$@" 1>&2 }
 quotify()  { local r="$(sed -e 's/'\''/'\'\\\\\'\''/g')" && echo "'"$r"'" }
