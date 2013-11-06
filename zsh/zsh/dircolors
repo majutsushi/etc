@@ -87,7 +87,7 @@ DOOR                  35;1    # door
 BLK                   33;40;1 # block device driver
 CHR                   33;40;1 # character device driver
 ORPHAN                37;41;1 # symlink to nonexistent file, or non-stat'able file
-SETUID                37;41   # file that is setuid (u+s)
+SETUID                30;41   # file that is setuid (u+s)
 SETGID                30;43   # file that is setgid (g+s)
 CAPABILITY            30;45   # file with capability
 STICKY_OTHER_WRITABLE 31;44   # dir that is sticky and other-writable (+t,o+w)
