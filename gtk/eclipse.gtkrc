@@ -1,0 +1,7 @@
+include "/usr/share/themes/Adwaita/gtk-2.0/gtkrc"
+
+style "eclipse" {
+        font_name = "DejaVu Sans 8"
+}
+
+class "GtkWidget" style "eclipse"
