@@ -5,6 +5,7 @@
 [core]
 	excludesfile = ~/.cache/etc/gitignore
 	fsyncobjectfiles = false
+	autocrlf = input
 
 [alias]
 	st = status
