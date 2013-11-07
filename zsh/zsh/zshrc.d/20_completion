@@ -183,30 +183,26 @@ bindkey "^X^F" complete-files
 # allow the key sequence to continue cycling in menu
 bindkey -M menuselect "^X^F" complete-word
 
-## complete word from currently visible Screen or Tmux buffer.
-# http://git.grml.org/?p=grml-etc-core.git;a=blob;f=etc/zsh/zshrc;h=bf40267af60a9aef5721b63b9fd4a61686e1b15c;hb=HEAD
+## complete word from tmux pane(s)
 # http://blog.plenz.com/2012-01/zsh-complete-words-from-tmux-pane.html
-_current_screen_words() {
-    [[ "$TERM" != screen* ]] && return 1
+# https://gist.github.com/blueyed/6856354
+_tmux_pane_words() {
+    if [[ -z "$TMUX_PANE" ]]; then
+        _message "not running inside tmux!"
+        return 1
+    fi
 
     local expl
     local -U -a words
 
-    # fill array with contents from tmux/screen hardcopy
-    if ((${+TMUX})); then
-        words=( ${(u)=$(tmux capture-pane \; show-buffer \; delete-buffer)} )
-    else
-        local TMPFILE=$(mktemp)
-        trap "rm -f $TMPFILE" EXIT
-        screen -X hardcopy $TMPFILE
-        # screen sucks, it dumps in latin1, apparently always. so recode it
-        # to system charset
-        have recode && recode latin1 $TMPFILE
-        words=( ${(QQ)$(<$TMPFILE)} )
-    fi
-    # remove PREFIX to be completed from that array
-    words[${words[(i)$PREFIX]}]=""
-    _wanted values expl 'words from current screen' compadd -a words
+    # capture current pane first
+    words=( ${(u)=$(tmux capture-pane -J -p)} )
+    for i in $(tmux list-panes -F '#P'); do
+        # skip current pane (handled above)
+        [[ "$TMUX_PANE" = "$i" ]] && continue
+        words+=( ${(u)=$(tmux capture-pane -J -p -t $i)} )
+    done
+    _wanted values expl 'words from current tmux pane' compadd -a words
 }
 zle -C current-screen-words-prefix   complete-word _generic
 zle -C current-screen-words-anywhere complete-word _generic
@@ -214,7 +210,7 @@ bindkey '^[o' current-screen-words-prefix
 bindkey -M menuselect '^[o' complete-word
 bindkey '^[O' current-screen-words-anywhere
 bindkey -M menuselect '^[O' complete-word
-zstyle ':completion:current-screen-words-(prefix|anywhere):*' completer _current_screen_words
+zstyle ':completion:current-screen-words-(prefix|anywhere):*' completer _tmux_pane_words
 zstyle ':completion:current-screen-words-(prefix|anywhere):*' ignore-line current
 zstyle ':completion:current-screen-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
 
