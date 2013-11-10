@@ -40,7 +40,7 @@
 # - m_evolution  search in the Ximan Evolution addressbook.
 # - m_vcf        search a vcard (according to RFC2426) file.
 
-METHODS="m_ldap m_mu m_gpg m_muttalias m_abook"
+METHODS="m_ldap m_mu m_gpg m_muttalias m_goobook"
 
 
 #
