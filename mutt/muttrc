@@ -587,9 +587,12 @@ macro index  P          "<shell-escape>/usr/bin/sa-learn --sync\n" "Sync Spamass
 macro index  ,la        "<limit>~A\n<collapse-all>" "Limit to all messages"
 macro index  ,ll        "<limit>~F | ~N\n" "Limit to new and flagged messages"
 
+# goobook
+macro index,pager A |'goobook add'\n
+
 # abook
-macro index,pager  A  |'abook --add-email'\n
-macro index,pager  B  "!abook<enter>"
+# macro index,pager  A  |'abook --add-email'\n
+# macro index,pager  B  "!abook<enter>"
 
 # gpg
 macro pager  J  "<shell-escape>gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
