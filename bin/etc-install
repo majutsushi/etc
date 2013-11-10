@@ -136,6 +136,7 @@ xlink emacs/emacs.d
 xlink git/gitconfig
 merge git/gitignore target=.cache/etc/gitignore
 
+xlink mail/goobookrc
 xlink mail/lbdb
 xlink mail/msmtprc
 xlink mail/offlineimaprc

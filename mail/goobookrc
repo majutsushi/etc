@@ -1,0 +1,7 @@
+# "#" or ";" at the start of a line makes it a comment.
+[DEFAULT]
+email: jan.larres@gmail.com
+# password: top secret
+cache_filename: ~/.cache/goobook
+cache_expiry_hours: 24
+filter_groupless_contacts: yes
