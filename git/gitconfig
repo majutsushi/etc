@@ -90,6 +90,7 @@
 	split-view-height = 66%
 	status-untracked-dirs = no
 	tab-size = 8
+	vertical-split = "false"
 
 [tig "bind"]
 	generic = y !@sh -c 'echo -n %(commit) | xclip -i -selection clipboard'
