@@ -175,19 +175,19 @@ __prompt_git_flags() {
 
     # show dirty state
     # --ignore-submodules can significantly speed up if submodules are present
-    $GIT diff --no-ext-diff --quiet --exit-code --ignore-submodules || flags+="*"
+    $GIT diff --no-ext-diff --quiet --exit-code --ignore-submodules || flags+="${pcol[red]}*"
     if $GIT rev-parse --quiet --verify HEAD >/dev/null; then
-        $GIT diff-index --cached --quiet HEAD -- || flags+="+"
+        $GIT diff-index --cached --quiet HEAD -- || flags+="${pcol[green]}+"
     else
-        flags+="#"
+        flags+="${pcol[yellow]}#"
     fi
 
     # show stashed changes
-    $GIT rev-parse --verify refs/stash >/dev/null 2>&1 && flags+="$"
+    $GIT rev-parse --verify refs/stash >/dev/null 2>&1 && flags+="${pcol[yellow]}$"
 
     # show untracked files
     if [ -n "$($GIT ls-files --others --exclude-standard)" ]; then
-        flags+="?"
+        flags+="${pcol[cyan]}?"
     fi
 
     echo -n "$COL_FLAGS$flags${pcol[reset]}"
