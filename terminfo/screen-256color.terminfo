@@ -133,6 +133,7 @@ screen-256color|GNU Screen with 256 colors,
 # code_set_init             csin     ci  Init sequence for multiple codesets
 # color_names               colornm  Yw  Give name for color #1
 # column_address            hpa      ch  horizontal position #1, absolute (P)
+	hpa=\E[%i%p1%dG,
 # command_character         cmdch    CC  terminal settable cmd character in prototype !?
 # create_window             cwin     CW  define a window #1 from #2,#3 to #4,#5
 # cursor_address            cup      cm  move to row #1 columns #2
