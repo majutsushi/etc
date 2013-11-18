@@ -72,7 +72,8 @@ endfunction
 
 " Mappings {{{1
 let s:modeMappings = {
-    \ 'c++' : 'cpp'
+    \ 'c++'          : 'cpp',
+    \ 'shell-script' : 'sh'
 \ }
 let s:boolMappings = {
     \ 'nil'   : 0,
