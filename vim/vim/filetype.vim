@@ -13,4 +13,5 @@ augroup filetypedetect
     autocmd BufNewFile,BufReadPost *.gle     setfiletype gle
     autocmd BufNewFile,BufReadPost *.otl.gpg setfiletype vo_base
     autocmd BufNewFile,BufReadPost {.,}tmux.conf setfiletype tmux
+    autocmd BufNewFile,BufReadPost sgc*.dat  setfiletype xml
 augroup END
