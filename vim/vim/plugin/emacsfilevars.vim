@@ -85,7 +85,7 @@ let s:boolMappings = {
 
 " s:ParseEmacsFileVars {{{1
 function s:ParseEmacsFileVars(fname)
-    if ! &modeline
+    if ! &modeline || b:emacs_ignore_file
         return
     endif
 

@@ -101,6 +101,8 @@ augroup END
 autocmd BufNewFile,BufReadPost *mutt/fortunes* setlocal textwidth=76
 autocmd BufWritePost           *mutt/fortunes* silent !strfile <afile> >/dev/null
 
+autocmd BufReadPost emacsfilevars.vim let b:emacs_ignore_file = 1
+
 " Statusline {{{1
 " Adapted from https://github.com/Lokaltog/sync/blob/master/vim/vimrc
 
