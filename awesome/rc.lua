@@ -322,9 +322,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Multimedia keys
-    awful.key({}, "XF86AudioRaiseVolume", function () exec("pactl set-sink-volume -- 0 +5%") end),
-    awful.key({}, "XF86AudioLowerVolume", function () exec("pactl set-sink-volume -- 0 -5%") end),
-    awful.key({}, "XF86AudioMute", function () exec("pactl set-sink-mute 0 toggle") end),
+    awful.key({}, "XF86AudioRaiseVolume", function () pulsew.add( 5) end),
+    awful.key({}, "XF86AudioLowerVolume", function () pulsew.add(-5) end),
+    awful.key({}, "XF86AudioMute", function () pulsew.toggle() end),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
