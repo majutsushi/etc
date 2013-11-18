@@ -102,6 +102,7 @@ merge ackrc
 xlink ant/ant.conf target=.ant/ant.conf
 xlink aptitude
 xlink astylerc
+xlink awesome target=.config/awesome
 xlink bibtoolrsc
 xlink colorgccrc
 xlink colordiffrc

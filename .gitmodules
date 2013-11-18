@@ -158,3 +158,6 @@
 [submodule "vim/vim/bundle/latex-box"]
 	path = vim/vim/bundle/latex-box
 	url = https://github.com/LaTeX-Box-Team/LaTeX-Box.git
+[submodule "awesome/vicious"]
+	path = awesome/vicious
+	url = http://git.sysphere.org/vicious/
