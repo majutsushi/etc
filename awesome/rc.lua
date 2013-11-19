@@ -18,6 +18,7 @@ local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 
 local pulsew = require("pulse/pulse")
+local scratch = require("scratch")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -74,7 +75,8 @@ editor_cmd = terminal .. " -e " .. editor
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
+local altkey = "Mod1"
+local modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
@@ -271,6 +273,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
+    awful.key({ modkey }, "s", function () scratch.drop("urxvt", "top", "left", 600, 600) end),
+    awful.key({ modkey }, "d", function () scratch.pad.toggle() end),
+
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -343,6 +348,7 @@ globalkeys = awful.util.table.join(
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
+    awful.key({ modkey, "Control" }, "d",      function (c) scratch.pad.set(c, 0.60, 0.60, true) end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey,           }, "Return",
         function (c)
