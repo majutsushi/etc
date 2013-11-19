@@ -160,7 +160,7 @@ vol = wibox.widget.textbox()
 vicious.register(vol, pulsew, " $1%", 2)
 vol:buttons(awful.util.table.join(
     awful.button({ }, 1, function () pulsew.toggle() end),
-    awful.button({ }, 3, function () awful.util.spawn("pavucontrol") end),
+    awful.button({ }, 3, function () exec("pavucontrol") end),
     awful.button({ }, 4, function () pulsew.add( 5) end),
     awful.button({ }, 5, function () pulsew.add(-5) end)
 ))
@@ -321,7 +321,7 @@ globalkeys = awful.util.table.join(
               function () awful.client.moveresize( 20,   0,   0,   0) end),
 
     -- Standard functionality
-    awful.key({ modkey, "Control" }, "Return", function () awful.util.spawn(terminal) end),
+    awful.key({ modkey, "Control" }, "Return", function () exec(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
