@@ -341,6 +341,8 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86AudioLowerVolume", function () pulsew.add(-5) end),
     awful.key({}, "XF86AudioMute", function () pulsew.toggle() end),
 
+    awful.key({ altkey, "Control" }, "l", function () exec("gnome-screensaver-command --lock") end),
+
     -- Prompt
     awful.key({ modkey }, "r", function () mypromptbox[mouse.screen]:run() end),
 
