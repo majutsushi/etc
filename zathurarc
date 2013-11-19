@@ -19,8 +19,12 @@ map [fullscreen] <C-l> reload
 
 map [normal]     e scroll down
 map [fullscreen] e scroll down
+map [normal]     <C-e> scroll down
+map [fullscreen] <C-e> scroll down
 map [normal]     y scroll up
 map [fullscreen] y scroll up
+map [normal]     <C-y> scroll up
+map [fullscreen] <C-y> scroll up
 map [normal]     R rotate rotate-ccw
 map [fullscreen] R rotate rotate-ccw
 
@@ -49,5 +53,15 @@ map [fullscreen] <C-i> jumplist forward
 
 
 # colors
-# set statusbar-bg "#00FF00"
-# set statusbar-fg red
+set recolor-darkcolor  "#FFFFFF"
+set recolor-lightcolor "#333333"
+set statusbar-fg "#000000"
+set statusbar-bg "#C2BFA5"
+set inputbar-fg "#FFFFFF"
+set inputbar-bg "#333333"
+set completion-highlight-fg "#F0E68C"
+set completion-highlight-bg "#6B8E23"
+# set highlight-color "#CD853F"
+# set highlight-active-color "#F0E68C"
+set notification-fg "#FFFFFF"
+set notification-bg "#333333"
