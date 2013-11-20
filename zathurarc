@@ -8,6 +8,8 @@ set adjust-open width
 set first-page-column 2
 set window-title-basename true
 # set database sqlite
+set recolor-keephue
+set selection-clipboard clipboard
 
 
 # key bindings
@@ -51,6 +53,7 @@ map [fullscreen] <C-u> scroll half-up
 map [fullscreen] <C-o> jumplist backward
 map [fullscreen] <C-i> jumplist forward
 
+map [index] q quit
 
 # colors
 set recolor-darkcolor  "#FFFFFF"
