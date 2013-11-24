@@ -149,11 +149,10 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- {{{ Wibox
--- separator = widget({ type = "imagebox" })
--- separator.image = image(beautiful.widget_sep)
+separator = wibox.widget.imagebox(beautiful.widget_sep)
 
 -- Create a textclock widget
-mytextclock = awful.widget.textclock()
+mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#bbbbbb">%a %d %b</span> %H:%M')
 
 -- {{{ Volume level
 vol = wibox.widget.textbox()
@@ -240,14 +239,16 @@ for s = 1, screen.count() do
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
+    left_layout:add(mylayoutbox[s])
     left_layout:add(mypromptbox[s])
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(separator)
     right_layout:add(vol)
+    right_layout:add(separator)
     right_layout:add(mytextclock)
-    right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
@@ -340,6 +341,8 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86AudioRaiseVolume", function () pulsew.add( 5) end),
     awful.key({}, "XF86AudioLowerVolume", function () pulsew.add(-5) end),
     awful.key({}, "XF86AudioMute", function () pulsew.toggle() end),
+    awful.key({}, "XF86MonBrightnessUp", function () exec("xbacklight -inc 9", false) end),
+    awful.key({}, "XF86MonBrightnessDown", function () exec("xbacklight -dec 9", false) end),
 
     awful.key({ altkey, "Control" }, "l", function () exec("gnome-screensaver-command --lock") end),
     awful.key({ }, "Print", function () exec("gnome-screenshot --interactive") end),
@@ -453,10 +456,9 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
-    -- Set Firefox to always map on tags number 1 of screen 1.
-    { rule = { class = "Firefox" },
-      properties = { tag = tags[1][1] } },
     { rule = { class = "Plugin-container" },
+      properties = { floating = true } },
+    { rule = { class = "mt32emu" },
       properties = { floating = true } },
 }
 -- }}}

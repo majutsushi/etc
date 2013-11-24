@@ -1,36 +1,28 @@
--------------------------------
---  "Zenburn" awesome theme  --
---    By Adrian C. (anrxc)   --
--------------------------------
-
--- Alternative icon sets and widget icons:
---  * http://awesome.naquadah.org/wiki/Nice_Icons
-
 local awful = require("awful")
 
 -- {{{ Main
 theme = {}
-theme.wallpaper = awful.util.getdir("config") .. "/themes/desert/background.png"
+theme.confdir = awful.util.getdir("config") .. "/themes/desert"
+theme.wallpaper = theme.confdir .. "/background.png"
 -- }}}
 
 -- {{{ Styles
 theme.font      = "sans 8"
 
 -- {{{ Colors
-theme.fg_normal = "#DCDCCC"
-theme.fg_focus  = "#F0DFAF"
-theme.fg_urgent = "#CC9393"
-theme.bg_normal = "#3F3F3F"
+theme.fg_normal = "#FFFFFF"
+theme.bg_normal = "#333333"
+theme.fg_focus  = "#FFFFFF"
 theme.bg_focus  = "#1E2320"
-theme.bg_urgent = "#3F3F3F"
+theme.fg_urgent = "#FF0000"
+theme.bg_urgent = "#333333"
 theme.bg_systray = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
 theme.border_width  = 2
-theme.border_normal = "#3F3F3F"
+theme.border_normal = theme.bg_normal
 theme.border_focus  = "#6B8E23"
-theme.border_marked = "#CC9393"
 -- }}}
 
 -- {{{ Titlebars
@@ -41,11 +33,13 @@ theme.titlebar_bg_normal = "#3F3F3F"
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
--- [taglist|tasklist]_[bg|fg]_[focus|urgent]
+-- taglist_[bg|fg]_[focus|urgent|occupied|empty]
+-- tasklist_[bg|fg]_[focus|urgent]
 -- titlebar_[normal|focus]
 -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- Example:
---theme.taglist_bg_focus = "#CC9393"
+theme.taglist_fg_focus = "#2E3436"
+theme.taglist_bg_focus = "#D3D7CF"
+theme.taglist_fg_empty = "#777777"
 -- }}}
 
 -- {{{ Widgets
@@ -60,7 +54,7 @@ theme.titlebar_bg_normal = "#3F3F3F"
 -- }}}
 
 -- {{{ Mouse finder
-theme.mouse_finder_color = "#CC9393"
+theme.mouse_finder_color = theme.fg_urgent
 -- mouse_finder_[timeout|animate_timeout|radius|factor]
 -- }}}
 
@@ -74,29 +68,31 @@ theme.menu_width  = 100
 
 -- {{{ Icons
 -- {{{ Taglist
-theme.taglist_squares_sel   = "/usr/share/awesome/themes/zenburn/taglist/squarefz.png"
-theme.taglist_squares_unsel = "/usr/share/awesome/themes/zenburn/taglist/squarez.png"
+theme.taglist_squares_sel   = theme.confdir .. "/icons/taglist/squarefz.png"
+theme.taglist_squares_unsel = theme.confdir .. "/icons/taglist/squarez.png"
 --theme.taglist_squares_resize = "false"
 -- }}}
 
+theme.widget_sep = theme.confdir .. "/icons/separator.png"
+
 -- {{{ Misc
-theme.awesome_icon           = "/usr/share/awesome/themes/zenburn/awesome-icon.png"
+theme.awesome_icon           = theme.confdir .. "/icons/awesome-icon.png"
 theme.menu_submenu_icon      = "/usr/share/awesome/themes/default/submenu.png"
 -- }}}
 
 -- {{{ Layout
-theme.layout_tile       = "/usr/share/awesome/themes/zenburn/layouts/tile.png"
+theme.layout_tile       = theme.confdir .. "/icons/layouts/tile.png"
 theme.layout_tileleft   = "/usr/share/awesome/themes/zenburn/layouts/tileleft.png"
-theme.layout_tilebottom = "/usr/share/awesome/themes/zenburn/layouts/tilebottom.png"
+theme.layout_tilebottom = theme.confdir .. "/icons/layouts/tilebottom.png"
 theme.layout_tiletop    = "/usr/share/awesome/themes/zenburn/layouts/tiletop.png"
-theme.layout_fairv      = "/usr/share/awesome/themes/zenburn/layouts/fairv.png"
-theme.layout_fairh      = "/usr/share/awesome/themes/zenburn/layouts/fairh.png"
+theme.layout_fairv      = theme.confdir .. "/icons/layouts/fairv.png"
+theme.layout_fairh      = theme.confdir .. "/icons/layouts/fairh.png"
 theme.layout_spiral     = "/usr/share/awesome/themes/zenburn/layouts/spiral.png"
 theme.layout_dwindle    = "/usr/share/awesome/themes/zenburn/layouts/dwindle.png"
-theme.layout_max        = "/usr/share/awesome/themes/zenburn/layouts/max.png"
+theme.layout_max        = theme.confdir .. "/icons/layouts/max.png"
 theme.layout_fullscreen = "/usr/share/awesome/themes/zenburn/layouts/fullscreen.png"
-theme.layout_magnifier  = "/usr/share/awesome/themes/zenburn/layouts/magnifier.png"
-theme.layout_floating   = "/usr/share/awesome/themes/zenburn/layouts/floating.png"
+theme.layout_magnifier  = theme.confdir .. "/icons/layouts/magnifier.png"
+theme.layout_floating   = theme.confdir .. "/icons/layouts/floating.png"
 -- }}}
 
 -- {{{ Titlebar
