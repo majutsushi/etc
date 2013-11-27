@@ -7,7 +7,7 @@ theme.wallpaper = theme.confdir .. "/background.png"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "sans 8"
+theme.font = "sans 8"
 
 -- {{{ Colors
 theme.fg_normal = "#FFFFFF"
@@ -40,6 +40,10 @@ theme.titlebar_bg_normal = "#3F3F3F"
 theme.taglist_fg_focus = "#2E3436"
 theme.taglist_bg_focus = "#D3D7CF"
 theme.taglist_fg_empty = "#777777"
+
+theme.tooltip_bg_color = theme.bg_normal
+theme.tooltip_border_width = 1
+theme.tooltip_border_color = "#C2BFA5"
 -- }}}
 
 -- {{{ Widgets

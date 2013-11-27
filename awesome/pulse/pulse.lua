@@ -81,7 +81,6 @@ function pulse.add(percent, sink)
 
     local cmd = string.format("set-sink-volume %s 0x%x >/dev/null", sink, vol)
     pacmd(cmd)
-    vicious.force({ pulse })
 end
 
 function pulse.toggle(sink)
@@ -96,7 +95,6 @@ function pulse.toggle(sink)
     local state = { yes = 0, no = 1}
     local cmd = string.format("set-sink-mute %s %d", sink, state[mute])
     pacmd(cmd)
-    vicious.force({ pulse })
 end
 -- }}}
 

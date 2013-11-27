@@ -17,7 +17,7 @@ require("debian.menu")
 local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 
-local pulsew = require("pulse/pulse")
+local pulse = require("pulse")
 local scratch = require("scratch")
 
 -- {{{ Error handling
@@ -154,16 +154,16 @@ separator = wibox.widget.imagebox(beautiful.widget_sep)
 -- Create a textclock widget
 mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#bbbbbb">%a %d %b</span> %H:%M')
 
--- {{{ Volume level
-vol = wibox.widget.textbox()
-vicious.register(vol, pulsew, " $1%", 2)
+vol = pulse.widget()
 vol:buttons(awful.util.table.join(
-    awful.button({ }, 1, function () pulsew.toggle() end),
-    awful.button({ }, 3, function () exec("pavucontrol") end),
-    awful.button({ }, 4, function () pulsew.add( 5) end),
-    awful.button({ }, 5, function () pulsew.add(-5) end)
+    awful.button({ }, 1, function() pulse.pulse.toggle() vicious.force({vol}) end),
+    awful.button({ }, 3, function() awful.util.spawn("pavucontrol") end),
+    awful.button({ }, 4, function() pulse.pulse.add( 5) vicious.force({vol}) end),
+    awful.button({ }, 5, function() pulse.pulse.add(-5) vicious.force({vol}) end)
 ))
--- }}}
+vicious.register(vol, pulse.pulse, function(widget, args)
+    return widget:update(args)
+end, 5)
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -338,9 +338,22 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Multimedia keys
-    awful.key({}, "XF86AudioRaiseVolume", function () pulsew.add( 5) end),
-    awful.key({}, "XF86AudioLowerVolume", function () pulsew.add(-5) end),
-    awful.key({}, "XF86AudioMute", function () pulsew.toggle() end),
+    awful.key({}, "XF86AudioRaiseVolume", function()
+        pulse.pulse.add( 5)
+        vicious.force({vol})
+        vol:notify()
+    end),
+    awful.key({}, "XF86AudioLowerVolume", function()
+        pulse.pulse.add(-5)
+        vicious.force({vol})
+        vol:notify()
+    end),
+    awful.key({}, "XF86AudioMute", function()
+        pulse.pulse.toggle()
+        vicious.force({vol})
+        vol:notify()
+    end),
+
     awful.key({}, "XF86MonBrightnessUp", function () exec("xbacklight -inc 9", false) end),
     awful.key({}, "XF86MonBrightnessDown", function () exec("xbacklight -dec 9", false) end),
 
