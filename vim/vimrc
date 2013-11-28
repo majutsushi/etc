@@ -793,11 +793,11 @@ function! PreviewWordLocal(w, editwinnum)
     endif
 endfun
 
-" QFDo() {{{2
+" QfDo() {{{2
 " http://stackoverflow.com/questions/4792561/how-to-do-search-replace-with-ack-in-vim
 " http://vimcasts.org/episodes/project-wide-find-and-replace/
-command! -nargs=+ QFDo call QFDo(<q-args>)
-function! QFDo(command)
+command! -nargs=+ QfDo call QfDo(<q-args>)
+function! QfDo(command)
     " Create a dictionary so that we can get the list of buffers rather than
     " the list of lines in buffers (easy way to get unique entries)
     let buffer_numbers = {}
@@ -813,6 +813,23 @@ function! QFDo(command)
         update
     endfor
 endfunction
+
+" Qf2Args() {{{2
+" Source: https://github.com/jszakmeister/vimfiles/blob/master/vimrc
+function! s:Qf2Args()
+    let files = {}
+    silent! argdelete *
+    for lines in getqflist()
+        if lines.bufnr > 0
+            let files[bufname(lines.bufnr)] = 1
+        endif
+    endfor
+    for file in keys(files)
+        execute "silent argadd " . file
+    endfor
+endfunction
+
+command! -bar Qf2Args call s:Qf2Args()
 
 " s:RangerChooser() {{{2
 function! s:RangerChooser() abort
