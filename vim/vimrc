@@ -19,6 +19,7 @@ set runtimepath+=$HOME/.vim/xptpersonal
 
 if !isdirectory($HOME . "/.cache/vim") && exists("*mkdir")
     call mkdir($HOME . "/.cache/vim")
+    call mkdir($HOME . "/.cache/vim/swap")
 endif
 
 " search for exuberant ctags
@@ -1281,7 +1282,7 @@ set autoread
 " the swap file {{{2
 
 " list of directories for the swap file
-"set directory=
+let &directory = expand("$HOME/.cache/vim/swap//")
 " number of characters typed to cause a swap file update
 set updatecount=100
 " time in msec after which the swap file will be updated
