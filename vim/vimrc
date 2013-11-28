@@ -1379,10 +1379,6 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Plugin and script options {{{1
 
-" BufExplorer {{{2
-let g:bufExplorerDisableDefaultKeyMapping = 1
-nnoremap <silent> <Leader>b :BufExplorer<CR>
-
 " changelog {{{2
 let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 
@@ -1418,7 +1414,7 @@ let g:CSApprox_hook_desert_post = [
 " Ctrl-P {{{2
 let g:ctrlp_map = '<leader>ff'
 let g:ctrlp_cmd = 'CtrlP'
-nnoremap <silent> <leader>fb :CtrlPBuffer<CR>
+nnoremap <silent> <leader>bb :CtrlPBuffer<CR>
 nnoremap <silent> <leader>ft :CtrlPBufTag<CR>
 
 let g:ctrlp_prompt_mappings = {
