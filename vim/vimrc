@@ -1379,6 +1379,10 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Plugin and script options {{{1
 
+" BufExplorer {{{2
+let g:bufExplorerDisableDefaultKeyMapping = 1
+nnoremap <silent> <Leader>b :BufExplorer<CR>
+
 " changelog {{{2
 let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 
@@ -1911,7 +1915,7 @@ let &t_te = s:get_escape('normal') . &t_te
 " Buffers/Files/Tabs {{{2
 
 " Fast open a buffer by searching for a name
-nnoremap <leader>b :buffers<CR>:buffer<space>
+" nnoremap <leader>b :buffers<CR>:buffer<space>
 
 nnoremap <M-Left>  :tabprevious<CR>
 nnoremap <M-Right> :tabnext<CR>

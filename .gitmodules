@@ -158,3 +158,6 @@
 [submodule "awesome/vicious"]
 	path = awesome/vicious
 	url = http://git.sysphere.org/vicious/
+[submodule "vim/vim/bundle/bufexplorer"]
+	path = vim/vim/bundle/bufexplorer
+	url = https://github.com/jlanzarotta/bufexplorer
