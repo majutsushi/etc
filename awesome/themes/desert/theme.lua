@@ -43,7 +43,7 @@ theme.taglist_fg_empty = "#777777"
 
 theme.tooltip_bg_color = theme.bg_normal
 theme.tooltip_border_width = 1
-theme.tooltip_border_color = "#C2BFA5"
+theme.tooltip_border_color = "#777777"
 -- }}}
 
 -- {{{ Widgets

@@ -152,7 +152,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 separator = wibox.widget.imagebox(beautiful.widget_sep)
 
 -- Create a textclock widget
-mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#bbbbbb">%a %d %b</span> %H:%M')
+mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#999999">%a %d %b</span> %H:%M')
 
 vol = pulse.widget()
 vol:buttons(awful.util.table.join(
