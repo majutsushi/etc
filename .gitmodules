@@ -37,9 +37,6 @@
 [submodule "vim/vim/bundle/vis"]
 	path = vim/vim/bundle/vis
 	url = https://github.com/vim-scripts/vis.git
-[submodule "vim/vim/bundle/yankring"]
-	path = vim/vim/bundle/yankring
-	url = https://github.com/vim-scripts/YankRing.vim.git
 [submodule "vim/vim/bundle/conqueshell"]
 	path = vim/vim/bundle/conqueshell
 	url = https://github.com/vim-scripts/Conque-Shell.git
