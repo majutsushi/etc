@@ -10,6 +10,6 @@ setlocal foldmethod=marker
 setlocal foldmarker=Entering\ directory,Leaving\ directory
 nnoremap <buffer> <silent> zq zM:g/error:/normal zv<CR>
 nnoremap <buffer> <silent> zw zq:g/warning:/normal zv<CR>
-nnoremap <buffer> <silent> q :call QuickfixToggle()<CR>
+nnoremap <buffer> <silent> q :call qftoggle#toggle()<CR>
 
 " normal zq

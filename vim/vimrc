@@ -814,27 +814,6 @@ function! QFDo(command)
     endfor
 endfunction
 
-" QuickfixToggle() {{{2
-" Source: http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
-function! QuickfixToggle()
-    if s:quickfix_is_open
-        cclose
-        let s:quickfix_is_open = 0
-        execute s:quickfix_return_to_window . "wincmd w"
-    else
-        let s:quickfix_return_to_window = winnr()
-        if &lines / 4 < 10
-            botright copen 10
-        else
-            execute 'botright copen ' . &lines / 4
-        endif
-        let s:quickfix_is_open = 1
-    endif
-endfunction
-
-let s:quickfix_is_open = 0
-nnoremap <silent> <leader>q :call QuickfixToggle()<cr>
-
 " s:RangerChooser() {{{2
 function! s:RangerChooser() abort
     let tmpfile = tempname()
@@ -2164,6 +2143,8 @@ nnoremap <M-<> <C-W><
 nnoremap <M-+> <C-W>+
 nnoremap <M--> <C-W>-
 nnoremap <M-=> <C-W>=
+
+nnoremap <silent> <leader>q :call qftoggle#toggle()<cr>
 
 " Command line {{{2
 
