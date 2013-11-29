@@ -40,7 +40,7 @@ set post_object "nntp"
 
 % If non-zero, slrn reads the active file on each startup.  You might want to
 % use this if your network connection is fast or the server has few groups.
-set read_active 1
+set read_active 0
 
 set unsubscribe_new_groups 1
 
