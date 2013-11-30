@@ -78,6 +78,7 @@ theme.taglist_squares_unsel = theme.confdir .. "/icons/taglist/squarez.png"
 -- }}}
 
 theme.widget_sep = theme.confdir .. "/icons/separator.png"
+theme.widget_vol = theme.confdir .. "/icons/volume.png"
 
 -- {{{ Misc
 theme.awesome_icon           = theme.confdir .. "/icons/awesome-icon.png"

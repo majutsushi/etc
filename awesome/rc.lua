@@ -154,14 +154,15 @@ separator = wibox.widget.imagebox(beautiful.widget_sep)
 -- Create a textclock widget
 mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#999999">%a %d %b</span> %H:%M')
 
-vol = pulse.widget()
-vol:buttons(awful.util.table.join(
-    awful.button({ }, 1, function() pulse.pulse.toggle() vicious.force({vol}) end),
+volicon = wibox.widget.imagebox(beautiful.widget_vol)
+volbar = pulse.widget()
+volbar:buttons(awful.util.table.join(
+    awful.button({ }, 1, function() pulse.pulse.toggle() vicious.force({volbar}) end),
     awful.button({ }, 3, function() awful.util.spawn("pavucontrol") end),
-    awful.button({ }, 4, function() pulse.pulse.add( 5) vicious.force({vol}) end),
-    awful.button({ }, 5, function() pulse.pulse.add(-5) vicious.force({vol}) end)
+    awful.button({ }, 4, function() pulse.pulse.add( 5) vicious.force({volbar}) end),
+    awful.button({ }, 5, function() pulse.pulse.add(-5) vicious.force({volbar}) end)
 ))
-vicious.register(vol, pulse.pulse, function(widget, args)
+vicious.register(volbar, pulse.pulse, function(widget, args)
     return widget:update(args)
 end, 5)
 
@@ -246,7 +247,8 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(separator)
-    right_layout:add(vol)
+    right_layout:add(volicon)
+    right_layout:add(volbar)
     right_layout:add(separator)
     right_layout:add(mytextclock)
 
@@ -340,18 +342,18 @@ globalkeys = awful.util.table.join(
     -- Multimedia keys
     awful.key({}, "XF86AudioRaiseVolume", function()
         pulse.pulse.add( 5)
-        vicious.force({vol})
-        vol:notify()
+        vicious.force({volbar})
+        volbar:notify()
     end),
     awful.key({}, "XF86AudioLowerVolume", function()
         pulse.pulse.add(-5)
-        vicious.force({vol})
-        vol:notify()
+        vicious.force({volbar})
+        volbar:notify()
     end),
     awful.key({}, "XF86AudioMute", function()
         pulse.pulse.toggle()
-        vicious.force({vol})
-        vol:notify()
+        vicious.force({volbar})
+        volbar:notify()
     end),
 
     awful.key({}, "XF86MonBrightnessUp", function () exec("xbacklight -inc 9", false) end),
