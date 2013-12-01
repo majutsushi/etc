@@ -109,6 +109,7 @@ xlink colordiffrc
 xlink ctags
 xlink gdbinit
 xlink gtk/gtkrc-2.0
+xlink gtk/gtk-3.0/settings.ini target=.config/gtk-3.0/settings.ini
 xlink indent.pro
 xlink inputrc
 xlink irbrc
