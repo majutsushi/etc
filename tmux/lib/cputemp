@@ -1,12 +1,19 @@
-TEMP_DEVICE=${TEMP_DEVICE:-/sys/class/hwmon/hwmon0/temp2_input}
-
 __cputemp() {
-    local t
-    if [[ -r "$TEMP_DEVICE" ]]; then
-        read t < "$TEMP_DEVICE" && t=$(($t/1000))
-        [[ -n "$t" ]] || return
-        printf "#[fg=yellow,bg=black,bold]%s#[default]#[fg=yellow,bg=black]\260C#[default] " "$t"
+    local devices i t
+
+    if [[ -f $HOME/.local/share/tmux/cputemp ]]; then
+        read devices < $HOME/.local/share/tmux/cputemp
+    else
+        printf "#[fg=yellow,bg=black,bold]X#[default] "
+        return
     fi
+
+    for i in ${~devices}; do
+        [[ -f "$i" ]] || continue
+        read t < "$i" && t=$(($t/1000))
+        [[ -n "$t" ]] || continue
+        printf "#[fg=yellow,bg=black,bold]%s#[default]#[fg=yellow,bg=black]\260C#[default] " "$t"
+    done
 }
 
 # vim: filetype=zsh
