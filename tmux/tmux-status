@@ -3,12 +3,12 @@
 
 setopt sh_word_split
 
-items="cputemp battery"
+ITEMS="cputemp battery"
 
 TMUX_LIBDIR=$HOME/.etc/tmux/lib
 
-if [[ -r $HOME/.local/share/tmux/statusrc ]]; then
-    . $HOME/.local/share/tmux/statusrc
+if [[ -r $HOME/.local/share/tmux-statusrc ]]; then
+    . $HOME/.local/share/tmux-statusrc
 fi
 
 ismac() {
@@ -55,6 +55,6 @@ get_status() {
 
 NOW=$(print -P "%D{%s}")
 
-for item in $items; do
+for item in $ITEMS; do
     get_status "$item"
 done

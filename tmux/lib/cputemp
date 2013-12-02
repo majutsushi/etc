@@ -1,14 +1,12 @@
 __cputemp() {
-    local devices i t
+    local i t
 
-    if [[ -f $HOME/.local/share/tmux/cputemp ]]; then
-        read devices < $HOME/.local/share/tmux/cputemp
-    else
+    if [[ -z $TEMP_DEVICES ]]; then
         printf "#[fg=yellow,bg=black,bold]X#[default] "
         return
     fi
 
-    for i in ${~devices}; do
+    for i in ${~TEMP_DEVICES}; do
         [[ -f "$i" ]] || continue
         read t < "$i" && t=$(($t/1000))
         [[ -n "$t" ]] || continue
