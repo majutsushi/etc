@@ -20,6 +20,7 @@ status_freq() {
     case "$1" in
         battery) echo 61 ;;
         cputemp) echo 19 ;;
+        rhino)   echo 31 ;;
     esac
 }
 

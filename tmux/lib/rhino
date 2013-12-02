@@ -1,0 +1,9 @@
+__rhino() {
+    if jps | grep -Eq '^[[:digit:]]+ Rhino$'; then
+        printf "#[fg=white,bg=colour34,bold]Rhino#[default] "
+    else
+        printf "#[fg=colour8,bold]Rhino#[default] "
+    fi
+}
+
+# vim: filetype=zsh
