@@ -565,8 +565,11 @@ for s = 1, screen.count() do screen[s]:connect_signal("arrange", function ()
                 layout == "floating" then
                 c.border_width = beautiful.border_width
             -- No borders with only one visible client
-            elseif #clients == 1 or layout == "max" then
-                clients[1].border_width = 0
+            elseif #clients == 1 or layout == "max" or
+                #clients == 2 and
+                    (scratch.drop.is_scratch(clients[1]) or
+                     scratch.drop.is_scratch(clients[2])) then
+                c.border_width = 0
             elseif c.fullscreen then
                 -- This doesn't seem to work for some reason ...
                 c.border_width = 0

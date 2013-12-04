@@ -92,6 +92,7 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
             c.ontop = true
             c.above = true
             c.skip_taskbar = true
+            awful.client.property.set(c, "role", "scratchpad")
             if sticky then c.sticky = true end
             if c.titlebar then awful.titlebar.remove(c) end
 
@@ -129,6 +130,10 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
             c:tags(ctags)
         end
     end
+end
+
+function drop.is_scratch(c)
+    return awful.client.property.get(c, "role", "scratchpad")
 end
 
 return setmetatable(drop, { __call = function(_, ...) return toggle(...) end })
