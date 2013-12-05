@@ -10,6 +10,9 @@ function! qftoggle#toggle() abort
 
     if qftoggle#islocwinopen()
         lclose
+        if !s:quickfix_is_open
+            return
+        endif
     endif
 
     if s:quickfix_is_open
