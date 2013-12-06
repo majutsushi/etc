@@ -560,18 +560,14 @@ for s = 1, screen.count() do screen[s]:connect_signal("arrange", function ()
     -- Fine grained borders and floaters control
     if #clients > 0 then
         for _, c in pairs(clients) do
-            -- Floaters always have borders
-            if (awful.client.floating.get(c) and not c.fullscreen) or
-                layout == "floating" then
+            if c.fullscreen or c.name == "plugin-container" then
+                c.border_width = 0
+            elseif awful.client.floating.get(c) or layout == "floating" then
                 c.border_width = beautiful.border_width
-            -- No borders with only one visible client
             elseif #clients == 1 or layout == "max" or
                 #clients == 2 and
-                    (scratch.drop.is_scratch(clients[1]) or
-                     scratch.drop.is_scratch(clients[2])) then
-                c.border_width = 0
-            elseif c.fullscreen then
-                -- This doesn't seem to work for some reason ...
+                    (awful.client.floating.get(clients[1]) or
+                     awful.client.floating.get(clients[2])) then
                 c.border_width = 0
             else
                 c.border_width = beautiful.border_width
