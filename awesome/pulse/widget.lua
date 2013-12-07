@@ -4,8 +4,9 @@ local awful   = require("awful")
 local vicious = require("vicious")
 local naughty = require("naughty")
 local pulse   = require("pulse.pulse")
+local beautiful = require("beautiful")
 
-local colors = { unmuted = "#AECF96", muted = "#FF5656" }
+local colors = {}
 local notifyid = nil
 
 local notifications = {
@@ -97,12 +98,14 @@ function pulsewidget:notify()
     end
 end
 
-local function new()
+local function new(icon)
+    colors = { unmuted = beautiful.fg_widget, muted = "#FF5656" }
+
     local widget = awful.widget.progressbar()
 
     widget:set_width(8)
     widget:set_vertical(true)
-    widget:set_background_color("#494B4F")
+    widget:set_background_color(beautiful.bg_widget)
     widget:set_color(colors.unmuted)
 
     for k, v in pairs(pulsewidget) do
@@ -113,7 +116,7 @@ local function new()
 
     widget.current_level = 0
     widget.muted = false
-    widget.tooltip = awful.tooltip({ objects = { widget } })
+    widget.tooltip = awful.tooltip({ objects = { widget, icon } })
 
     return widget
 end

@@ -162,17 +162,77 @@ separator = wibox.widget.imagebox(beautiful.widget_sep)
 -- Create a textclock widget
 mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#999999">%a %d %b</span> %H:%M')
 
+-- {{{ CPU
+cpuicon = wibox.widget.imagebox(beautiful.widget_cpu)
+cpuwidget = awful.widget.graph()
+cpuwidget:set_width(50)
+cpuwidget:set_background_color(beautiful.bg_widget)
+cpuwidget:set_color(beautiful.fg_widget)
+cpuwidgetm = wibox.layout.mirror(cpuwidget, { vertical = true })
+cpuwidget.tooltip = awful.tooltip({ objects = { cpuwidget, cpuwidgetm, cpuicon } })
+vicious.register(cpuwidget, vicious.widgets.cpu, function(widget, args)
+    local text = string.format("CPU total: %d%%", args[1])
+    for i=2,#args do
+        text = text .. string.format("\nCPU %d: %d%%", i - 1, args[i])
+    end
+    widget.tooltip:set_text(text)
+    return args[1]
+end)
+--- }}}
+
+-- {{{ Memory
+memicon = wibox.widget.imagebox(beautiful.widget_mem)
+memwidget = awful.widget.progressbar()
+memwidget:set_width(8)
+memwidget:set_height(10)
+memwidget:set_vertical(true)
+memwidget:set_background_color(beautiful.bg_widget)
+memwidget:set_border_color(nil)
+memwidget:set_color(beautiful.fg_widget)
+memwidget.tooltip = awful.tooltip({ objects = { memwidget, memicon } })
+vicious.register(memwidget, vicious.widgets.mem, function(widget, args)
+    local text = string.format("Memory: %d / %d MB\nSwap:    %d / %d MB", args[2], args[3], args[5], args[6])
+    widget.tooltip:set_text(text)
+    return args[1]
+end, 13)
+--- }}}
+
+-- Battery
+baticon = wibox.widget.imagebox(beautiful.widget_bat)
+batwidget = wibox.widget.textbox()
+batwidget.tooltip = awful.tooltip({ objects = { batwidget, baticon } })
+vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
+    local text = args[1]
+    if args[1] == "-" or args[1] == "+" then
+        if args[2] < 20 then
+            text = text .. string.format('<span fgcolor="#D75F5F">%d</span>%%', args[2])
+        elseif args[2] < 50 then
+            text = text .. string.format('<span fgcolor="#FFD700">%d</span>%%', args[2])
+        else
+            text = text .. string.format('<span fgcolor="#87FF87">%d</span>%%', args[2])
+        end
+    end
+    local tooltip = string.format("State: %s\nCharge: %d%%\nTime left: %s", args[1], args[2], args[3])
+    widget.tooltip:set_text(tooltip)
+    return text
+end, 61, "BAT0")
+--- }}}
+
+-- {{{ Pulseaudio volume
 volicon = wibox.widget.imagebox(beautiful.widget_vol)
-volbar = pulse.widget()
-volbar:buttons(awful.util.table.join(
+volbar = pulse.widget(volicon)
+volbuttons = awful.util.table.join(
     awful.button({ }, 1, function() pulse.pulse.toggle() vicious.force({volbar}) end),
     awful.button({ }, 3, function() awful.util.spawn("pavucontrol") end),
     awful.button({ }, 4, function() pulse.pulse.add( 5) vicious.force({volbar}) end),
     awful.button({ }, 5, function() pulse.pulse.add(-5) vicious.force({volbar}) end)
-))
+)
+volicon:buttons(volbuttons)
+volbar:buttons(volbuttons)
 vicious.register(volbar, pulse.pulse, function(widget, args)
     return widget:update(args)
 end, 5)
+--- }}}
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -253,11 +313,17 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(separator)
+    right_layout:add(baticon)
+    right_layout:add(batwidget)
+    right_layout:add(cpuicon)
+    right_layout:add(cpuwidgetm)
+    right_layout:add(memicon)
+    right_layout:add(memwidget)
     right_layout:add(volicon)
     right_layout:add(volbar)
     right_layout:add(separator)
+    if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
 
     -- Now bring it all together (with the tasklist in the middle)

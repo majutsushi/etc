@@ -50,10 +50,10 @@ theme.tooltip_border_color = "#777777"
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
---theme.fg_widget        = "#AECF96"
+theme.fg_widget        = "#AECF96"
 --theme.fg_center_widget = "#88A175"
 --theme.fg_end_widget    = "#FF5656"
---theme.bg_widget        = "#494B4F"
+theme.bg_widget        = "#494B4F"
 --theme.border_widget    = "#3F3F3F"
 -- }}}
 
@@ -77,8 +77,11 @@ theme.taglist_squares_unsel = theme.confdir .. "/icons/taglist/squarez.png"
 --theme.taglist_squares_resize = "false"
 -- }}}
 
-theme.widget_sep = theme.confdir .. "/icons/separator.png"
-theme.widget_vol = theme.confdir .. "/icons/volume.png"
+theme.widget_sep = theme.confdir .. "/icons/widgets/separator.png"
+theme.widget_vol = theme.confdir .. "/icons/widgets/volume.png"
+theme.widget_bat = theme.confdir .. "/icons/widgets/battery.png"
+theme.widget_cpu = theme.confdir .. "/icons/widgets/cpu.png"
+theme.widget_mem = theme.confdir .. "/icons/widgets/memory.png"
 
 -- {{{ Misc
 theme.awesome_icon           = theme.confdir .. "/icons/awesome-icon.png"
