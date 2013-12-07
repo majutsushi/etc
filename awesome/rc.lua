@@ -202,7 +202,14 @@ baticon = wibox.widget.imagebox(beautiful.widget_bat)
 batwidget = wibox.widget.textbox()
 batwidget.tooltip = awful.tooltip({ objects = { batwidget, baticon } })
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
-    local text = args[1]
+    local text = ""
+    if args[1] == "-" then
+        text = text .. '<span fgcolor="#D75F5F">↓</span>'
+    elseif args[1] == "+" then
+        text = text .. '<span fgcolor="#87FF87">↑</span>'
+    else
+        text = args[1]
+    end
     if args[1] == "-" or args[1] == "+" then
         if args[2] < 20 then
             text = text .. string.format('<span fgcolor="#D75F5F">%d</span>%%', args[2])
