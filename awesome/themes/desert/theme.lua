@@ -82,7 +82,7 @@ theme.widget_vol = theme.confdir .. "/icons/volume.png"
 
 -- {{{ Misc
 theme.awesome_icon           = theme.confdir .. "/icons/awesome-icon.png"
-theme.menu_submenu_icon      = "/usr/share/awesome/themes/default/submenu.png"
+theme.menu_submenu_icon      = theme.confdir .. "/icons/submenu.png"
 -- }}}
 
 -- {{{ Layout
