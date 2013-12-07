@@ -129,6 +129,14 @@ end
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
+awful.menu.menu_keys = {
+    up =    { "Up", "k" },
+    down =  { "Down", "j" },
+    back =  { "Left", "h" },
+    enter = { "Right", "l" },
+    exec =  { "Return" },
+    close = { "Escape", "q" }
+}
 myawesomemenu = {
     { "manual", terminal .. " -e man awesome" },
     { "edit config", editor_cmd .. " " .. awesome.conffile },
