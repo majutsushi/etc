@@ -287,17 +287,19 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "d",
               function () scratch.pad.toggle() end),
 
-    awful.key({ modkey,           }, "j",
+    awful.key({ modkey }, "j",
         function ()
             awful.client.focus.byidx( 1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "k",
+    awful.key({ modkey }, "k",
         function ()
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
+    awful.key({ modkey }, "w", function ()
+        mymainmenu:show({ coords = { x = 0, y = 0 } })
+    end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j",
