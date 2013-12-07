@@ -197,7 +197,7 @@ vicious.register(memwidget, vicious.widgets.mem, function(widget, args)
 end, 13)
 --- }}}
 
--- Battery
+-- {{{ Battery
 baticon = wibox.widget.imagebox(beautiful.widget_bat)
 batwidget = wibox.widget.textbox()
 batwidget.tooltip = awful.tooltip({ objects = { batwidget, baticon } })
