@@ -217,7 +217,7 @@ memwidget:set_color(beautiful.fg_widget)
 memwidget.tooltip = awful.tooltip({ objects = { memwidget, memicon } })
 memmargin = wibox.layout.margin(memwidget, 0, 0, 1, 1)
 vicious.register(memwidget, vicious.widgets.mem, function(widget, args)
-    local text = string.format("Memory: %d / %d MB\nSwap:    %d / %d MB", args[2], args[3], args[5], args[6])
+    local text = string.format("Memory: %d / %d MB\nSwap:    %d / %d MB", args[2], args[3], args[6], args[7])
     widget.tooltip:set_text(text)
     return args[1]
 end, 13)
