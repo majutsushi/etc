@@ -163,19 +163,42 @@ separator = wibox.widget.imagebox(beautiful.widget_sep)
 mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#999999">%a %d %b</span> %H:%M')
 
 -- {{{ CPU
+local function getcpucolours()
+    local f = io.popen("grep -c processor /proc/cpuinfo")
+    local nprocs = f:read("*all")
+    f:close()
+
+    local colours = { "#ffffff" }
+    local step = math.floor(0xff / nprocs)
+
+    for i = nprocs - 2, 1, -1 do
+        local curval = step * i
+        local newcolour = string.format("#%x%x%x", curval, curval, curval)
+        colours[#colours + 1] = newcolour
+    end
+
+    colours[#colours + 1] = "#000000"
+
+    return colours
+end
 cpuicon = wibox.widget.imagebox(beautiful.widget_cpu)
+cputext = wibox.widget.textbox()
 cpuwidget = awful.widget.graph()
 cpuwidget:set_width(50)
+cpuwidget:set_stack(true)
+cpuwidget:set_max_value(100)
 cpuwidget:set_background_color(beautiful.bg_widget)
-cpuwidget:set_color(beautiful.fg_widget)
+cpuwidget:set_stack_colors(getcpucolours())
 cpuwidgetm = wibox.layout.mirror(cpuwidget, { vertical = true })
 cpuwidget.tooltip = awful.tooltip({ objects = { cpuwidget, cpuwidgetm, cpuicon } })
-vicious.register(cpuwidget, vicious.widgets.cpu, function(widget, args)
+cpumargin = wibox.layout.margin(cpuwidgetm, 0, 0, 1, 1)
+vicious.register(cputext, vicious.widgets.cpu, function(widget, args)
     local text = string.format("CPU total: %d%%", args[1])
-    for i=2,#args do
+    for i = 2, #args do
         text = text .. string.format("\nCPU %d: %d%%", i - 1, args[i])
+        cpuwidget:add_value(args[i], i - 1)
     end
-    widget.tooltip:set_text(text)
+    cpuwidget.tooltip:set_text(text)
     return args[1]
 end)
 --- }}}
@@ -190,6 +213,7 @@ memwidget:set_background_color(beautiful.bg_widget)
 memwidget:set_border_color(nil)
 memwidget:set_color(beautiful.fg_widget)
 memwidget.tooltip = awful.tooltip({ objects = { memwidget, memicon } })
+memmargin = wibox.layout.margin(memwidget, 0, 0, 1, 1)
 vicious.register(memwidget, vicious.widgets.mem, function(widget, args)
     local text = string.format("Memory: %d / %d MB\nSwap:    %d / %d MB", args[2], args[3], args[5], args[6])
     widget.tooltip:set_text(text)
@@ -236,6 +260,7 @@ volbuttons = awful.util.table.join(
 )
 volicon:buttons(volbuttons)
 volbar:buttons(volbuttons)
+volmargin = wibox.layout.margin(volbar, 0, 0, 1, 1)
 vicious.register(volbar, pulse.pulse, function(widget, args)
     return widget:update(args)
 end, 5)
@@ -324,11 +349,11 @@ for s = 1, screen.count() do
     right_layout:add(baticon)
     right_layout:add(batwidget)
     right_layout:add(cpuicon)
-    right_layout:add(cpuwidgetm)
+    right_layout:add(cpumargin)
     right_layout:add(memicon)
-    right_layout:add(memwidget)
+    right_layout:add(memmargin)
     right_layout:add(volicon)
-    right_layout:add(volbar)
+    right_layout:add(volmargin)
     right_layout:add(separator)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)

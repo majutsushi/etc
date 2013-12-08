@@ -50,10 +50,10 @@ theme.tooltip_border_color = "#777777"
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
-theme.fg_widget        = "#AECF96"
+theme.fg_widget        = theme.fg_normal
 --theme.fg_center_widget = "#88A175"
 --theme.fg_end_widget    = "#FF5656"
-theme.bg_widget        = "#494B4F"
+theme.bg_widget        = "#4D4D4D"
 --theme.border_widget    = "#3F3F3F"
 -- }}}
 
