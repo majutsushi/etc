@@ -17,6 +17,8 @@ require("debian.menu")
 local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 
+local eldritch = require("eldritch")
+
 local pulse = require("pulse")
 local scratch = require("scratch")
 
@@ -266,6 +268,23 @@ vicious.register(volbar, pulse.pulse, function(widget, args)
 end, 5)
 --- }}}
 
+-- {{{ Weather
+weatherwidget = wibox.widget.textbox()
+weatherwidget.tooltip = awful.tooltip({ objects = { weatherwidget } })
+vicious.register(weatherwidget, eldritch.widgets.weather, function(widget, args)
+    local text = string.format("City: %s\n", args.name)
+    text = text .. string.format("Updated: %s\n", os.date('%c', args.dt))
+    text = text .. string.format("Conditions: %s\n", args.weather[1].description)
+    text = text .. string.format("Temperature: %d °C\n", args.main.temp)
+    text = text .. string.format("Humidity: %d%%\n", args.main.humidity)
+    text = text .. string.format("Wind: %d°, %d m/s\n", args.wind.deg, args.wind.speed)
+    text = text .. string.format("Sunrise: %s\n", os.date('%H:%M', args.sys.sunrise))
+    text = text .. string.format("Sunset: %s", os.date('%H:%M', args.sys.sunset))
+    widget.tooltip:set_text(text)
+    return args.main.temp .. "°C"
+end, 601, "2179537")
+-- }}}
+
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -354,6 +373,7 @@ for s = 1, screen.count() do
     right_layout:add(memmargin)
     right_layout:add(volicon)
     right_layout:add(volmargin)
+    right_layout:add(weatherwidget)
     right_layout:add(separator)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
