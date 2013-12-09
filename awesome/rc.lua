@@ -63,6 +63,7 @@ local home   = os.getenv("HOME")
 local exec   = awful.util.spawn
 local sexec  = awful.util.spawn_with_shell
 local scount = screen.count()
+local osinfo = vicious.widgets.os()
 
 -- Themes define colours, icons, and wallpapers
 beautiful.init(awful.util.getdir("config") .. "/themes/desert/theme.lua")
@@ -163,6 +164,22 @@ separator = wibox.widget.imagebox(beautiful.widget_sep)
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#999999">%a %d %b</span> %H:%M')
+
+-- {{{ Rhino
+if osinfo[4] == "vanadis" then
+    rhinoicon = wibox.widget.imagebox(beautiful.widget_rhino)
+    rhinoicon.tooltip = awful.tooltip({ objects = { rhinoicon } })
+    vicious.register(rhinoicon, eldritch.widgets.rhino, function(widget, args)
+        if #args == 0 then
+            rhinoicon:set_image(beautiful.widget_rhino)
+        else
+            rhinoicon:set_image(beautiful.widget_rhino_active)
+        end
+        rhinoicon.tooltip:set_text(table.concat(args, "\n"))
+        return ""
+    end, 31)
+end
+-- }}}
 
 -- {{{ CPU
 local function getcpucolours()
@@ -365,6 +382,9 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     right_layout:add(separator)
+    if osinfo[4] == "vanadis" then
+        right_layout:add(rhinoicon)
+    end
     right_layout:add(baticon)
     right_layout:add(batwidget)
     right_layout:add(cpuicon)

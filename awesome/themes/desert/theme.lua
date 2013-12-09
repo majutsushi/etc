@@ -82,6 +82,8 @@ theme.widget_vol = theme.confdir .. "/icons/widgets/volume.png"
 theme.widget_bat = theme.confdir .. "/icons/widgets/battery.png"
 theme.widget_cpu = theme.confdir .. "/icons/widgets/cpu.png"
 theme.widget_mem = theme.confdir .. "/icons/widgets/memory.png"
+theme.widget_rhino = theme.confdir .. "/icons/widgets/rhino.png"
+theme.widget_rhino_active = theme.confdir .. "/icons/widgets/rhino_active.png"
 
 -- {{{ Misc
 theme.awesome_icon           = theme.confdir .. "/icons/awesome-icon.png"
