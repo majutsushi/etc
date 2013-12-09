@@ -286,19 +286,21 @@ end, 5)
 --- }}}
 
 -- {{{ Weather
+weathericon = wibox.widget.imagebox(beautiful.weather_dir .. "01d.png")
 weatherwidget = wibox.widget.textbox()
-weatherwidget.tooltip = awful.tooltip({ objects = { weatherwidget } })
+weatherwidget.tooltip = awful.tooltip({ objects = { weatherwidget, weathericon } })
 vicious.register(weatherwidget, eldritch.widgets.weather, function(widget, args)
-    local text = string.format("City: %s\n", args.name)
-    text = text .. string.format("Updated: %s\n", os.date('%c', args.dt))
-    text = text .. string.format("Conditions: %s\n", args.weather[1].description)
-    text = text .. string.format("Temperature: %s °C\n", args.main.temp)
-    text = text .. string.format("Humidity: %s%%\n", args.main.humidity)
-    text = text .. string.format("Wind: %s°, %s m/s\n", args.wind.deg, args.wind.speed)
-    text = text .. string.format("Sunrise: %s\n", os.date('%H:%M', args.sys.sunrise))
-    text = text .. string.format("Sunset: %s", os.date('%H:%M', args.sys.sunset))
+    local text = string.format("City: %s\n", args.city)
+    text = text .. string.format("Updated: %s\n", args.updated)
+    text = text .. string.format("Sky: %s\n", args.sky)
+    text = text .. string.format("Temperature: %s °C\n", args.temp)
+    text = text .. string.format("Humidity: %s%%\n", args.humid)
+    text = text .. string.format("Wind: %s, %s km/h\n", args.wind.aim, args.wind.kmh)
+    text = text .. string.format("Sunrise: %s\n", os.date('%H:%M', args.sunrise))
+    text = text .. string.format("Sunset: %s", os.date('%H:%M', args.sunset))
     widget.tooltip:set_text(text)
-    return args.main.temp .. "°C"
+    weathericon:set_image(beautiful.weather_dir .. args.icon .. ".png")
+    return args.temp .. "°C"
 end, 601, "2179537")
 -- }}}
 
@@ -393,6 +395,7 @@ for s = 1, screen.count() do
     right_layout:add(memmargin)
     right_layout:add(volicon)
     right_layout:add(volmargin)
+    right_layout:add(weathericon)
     right_layout:add(weatherwidget)
     right_layout:add(separator)
     if s == 1 then right_layout:add(wibox.widget.systray()) end

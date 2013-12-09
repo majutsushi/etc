@@ -85,6 +85,8 @@ theme.widget_mem = theme.confdir .. "/icons/widgets/memory.png"
 theme.widget_rhino = theme.confdir .. "/icons/widgets/rhino.png"
 theme.widget_rhino_active = theme.confdir .. "/icons/widgets/rhino_active.png"
 
+theme.weather_dir = theme.confdir .. "/icons/weather/"
+
 -- {{{ Misc
 theme.awesome_icon           = theme.confdir .. "/icons/awesome-icon.png"
 theme.menu_submenu_icon      = theme.confdir .. "/icons/submenu.png"
