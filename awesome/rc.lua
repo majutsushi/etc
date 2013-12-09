@@ -21,6 +21,7 @@ local eldritch = require("eldritch")
 
 local pulse = require("pulse")
 local scratch = require("scratch")
+local cal = require("cal")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -164,6 +165,8 @@ separator = wibox.widget.imagebox(beautiful.widget_sep)
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#999999">%a %d %b</span> %H:%M')
+
+cal.register(mytextclock, '<b>%s</b>')
 
 -- {{{ Rhino
 if osinfo[4] == "vanadis" then
