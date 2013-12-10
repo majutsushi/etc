@@ -161,3 +161,6 @@
 [submodule "vim/vim/bundle/bufexplorer"]
 	path = vim/vim/bundle/bufexplorer
 	url = https://github.com/jlanzarotta/bufexplorer
+[submodule "awesome/awesome-freedesktop"]
+	path = awesome/awesome-freedesktop
+	url = https://github.com/terceiro/awesome-freedesktop.git

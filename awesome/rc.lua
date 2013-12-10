@@ -11,9 +11,6 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
--- Load Debian menu entries
-require("debian.menu")
-
 local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 
@@ -141,23 +138,39 @@ awful.menu.menu_keys = {
     exec =  { "Return" },
     close = { "Escape", "q" }
 }
-myawesomemenu = {
-    { "manual", terminal .. " -e man awesome" },
-    { "edit config", editor_cmd .. " " .. awesome.conffile },
-    { "restart", awesome.restart },
-    { "quit", awesome.quit }
-}
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "open terminal", terminal }
-                                  }
-                        })
+-- Menubar configuration
+menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+
+-- applications menu
+require('freedesktop.utils')
+freedesktop.utils.terminal = terminal
+freedesktop.utils.icon_theme = { 'Faenza-Darkest', 'Faenza-Dark', 'gnome' }
+require('freedesktop.menu')
+require("debian.menu")
+
+menu_items = freedesktop.menu.new()
+myawesomemenu = {
+   { "manual", terminal .. " -e man awesome",
+     freedesktop.utils.lookup_icon({ icon = 'help' }) },
+   { "edit config", editor_cmd .. " " .. awesome.conffile,
+     freedesktop.utils.lookup_icon({ icon = 'package_settings' }) },
+   { "restart", awesome.restart,
+     freedesktop.utils.lookup_icon({ icon = 'gtk-refresh' }) },
+   { "quit", awesome.quit,
+     freedesktop.utils.lookup_icon({ icon = 'gtk-quit' }) }
+}
+table.insert(menu_items, { "awesome", myawesomemenu,
+                           beautiful.awesome_icon })
+table.insert(menu_items, { "Debian", debian.menu.Debian_menu.Debian,
+                           freedesktop.utils.lookup_icon({ icon = 'debian-logo' }) })
+table.insert(menu_items, { "open terminal", terminal,
+                           freedesktop.utils.lookup_icon({icon = 'terminal'}) })
+
+mymainmenu = awful.menu.new({ items = menu_items, width = 150 })
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- {{{ Wibox
