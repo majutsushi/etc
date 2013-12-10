@@ -31,4 +31,14 @@ function utils.brightness(change)
     end
 end
 
+function utils.font(font, text)
+  return '<span font="' .. tostring(font) .. '">' .. tostring(text) ..'</span>'
+end
+function utils.fgcolor(color, text)
+  return '<span fgcolor="' .. tostring(color) .. '">' .. tostring(text) .. '</span>'
+end
+function utils.bgcolor(color, text)
+  return '<span bgcolor="' .. tostring(color) .. '">' .. tostring(text) .. '</span>'
+end
+
 return utils
