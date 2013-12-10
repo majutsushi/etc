@@ -37,6 +37,7 @@ local function worker(format, warg)
     if jsondata == nil then return _wdata end
 
     local data = json:decode(jsondata)
+    if data == nil then return _wdata end
 
     _wdata.city    = data.name or _wdata.city
     _wdata.updated = os.date('%c', data.dt) or _wdata.updated
