@@ -58,7 +58,7 @@ alias diffstat="diffstat -C"
 
 # execute last command as root
 alias fu='sudo $(fc -ln -1) '
-alias tree='tree --dirsfirst -F'
+alias tree='tree --dirsfirst -F -A'
 
 alias da='du -sch'
 alias g="grep"
