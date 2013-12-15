@@ -198,11 +198,14 @@ end
 -- }}}
 
 -- {{{ CPU
-local function getcpucolours()
+local function getnprocs()
     local f = io.popen("grep -c processor /proc/cpuinfo")
     local nprocs = f:read("*all")
     f:close()
-
+    return nprocs
+end
+nprocs = getnprocs()
+local function getcpucolours()
     local colours = { "#ffffff" }
     local step = math.floor(0xff / nprocs)
 
@@ -216,6 +219,15 @@ local function getcpucolours()
 
     return colours
 end
+local function getcpukeys()
+    local keys = { "Total" }
+
+    for i = 1, nprocs do
+        table.insert(keys, "CPU " .. i)
+    end
+
+    return keys
+end
 cpuicon = wibox.widget.imagebox(beautiful.widget_cpu)
 cputext = wibox.widget.textbox()
 cpuwidget = awful.widget.graph()
@@ -225,15 +237,15 @@ cpuwidget:set_max_value(100)
 cpuwidget:set_background_color(beautiful.bg_widget)
 cpuwidget:set_stack_colors(getcpucolours())
 cpuwidgetm = wibox.layout.mirror(cpuwidget, { vertical = true })
-cpuwidget.tooltip = awful.tooltip({ objects = { cpuwidget, cpuwidgetm, cpuicon } })
+cpuwidget.tooltip = eldritch.tooltip("CPU", getcpukeys(), { cpuwidget, cpuwidgetm, cpuicon })
 cpumargin = wibox.layout.margin(cpuwidgetm, 0, 0, 1, 1)
 vicious.register(cputext, vicious.widgets.cpu, function(widget, args)
-    local text = string.format("CPU total: %d%%", args[1])
+    local values = { args[1] .. "%" }
     for i = 2, #args do
-        text = text .. string.format("\nCPU %d: %d%%", i - 1, args[i])
+        table.insert(values, args[i] .. "%")
         cpuwidget:add_value(args[i], i - 1)
     end
-    cpuwidget.tooltip:set_text(text)
+    cpuwidget.tooltip:update(values)
     return args[1]
 end)
 --- }}}
@@ -247,11 +259,15 @@ memwidget:set_vertical(true)
 memwidget:set_background_color(beautiful.bg_widget)
 memwidget:set_border_color(nil)
 memwidget:set_color(beautiful.fg_widget)
-memwidget.tooltip = awful.tooltip({ objects = { memwidget, memicon } })
+memwidget.tooltip = eldritch.tooltip("Memory",
+                                     { "Memory", "Swap" },
+                                     { memwidget, memicon })
 memmargin = wibox.layout.margin(memwidget, 0, 0, 1, 1)
 vicious.register(memwidget, vicious.widgets.mem, function(widget, args)
-    local text = string.format("Memory: %d / %d MB\nSwap:    %d / %d MB", args[2], args[3], args[6], args[7])
-    widget.tooltip:set_text(text)
+    widget.tooltip:update({
+        string.format("%d / %d MB", args[2], args[3]),
+        string.format("%d / %d MB", args[6], args[7])
+    })
     return args[1]
 end, 13)
 --- }}}
@@ -259,7 +275,9 @@ end, 13)
 -- {{{ Battery
 baticon = wibox.widget.imagebox(beautiful.widget_bat)
 batwidget = wibox.widget.textbox()
-batwidget.tooltip = awful.tooltip({ objects = { batwidget, baticon } })
+batwidget.tooltip = eldritch.tooltip("Battery charge",
+                                     { "State", "Charge", "Time left" },
+                                     { batwidget, baticon })
 vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
     local text = ""
     if args[1] == "-" then
@@ -278,8 +296,7 @@ vicious.register(batwidget, vicious.widgets.bat, function(widget, args)
             text = text .. string.format('<span fgcolor="#87FF87">%d</span>%%', args[2])
         end
     end
-    local tooltip = string.format("State: %s\nCharge: %d%%\nTime left: %s", args[1], args[2], args[3])
-    widget.tooltip:set_text(tooltip)
+    widget.tooltip:update({ args[1], args[2] .. "%", args[3] })
     return text
 end, 61, "BAT0")
 --- }}}
@@ -304,17 +321,22 @@ end, 5)
 -- {{{ Weather
 weathericon = wibox.widget.imagebox(beautiful.weather_dir .. "01d.png")
 weatherwidget = wibox.widget.textbox()
-weatherwidget.tooltip = awful.tooltip({ objects = { weatherwidget, weathericon } })
+weatherwidget.tooltip = eldritch.tooltip(
+    "Weather",
+    {"City", "Updated", "Sky", "Temperature", "Humidity", "Wind", "Sunrise", "Sunset"},
+    { weatherwidget, weathericon }
+)
 vicious.register(weatherwidget, eldritch.widgets.weather, function(widget, args)
-    local text = string.format("City: %s\n", args.city)
-    text = text .. string.format("Updated: %s\n", args.updated)
-    text = text .. string.format("Sky: %s\n", args.sky)
-    text = text .. string.format("Temperature: %s °C\n", args.temp)
-    text = text .. string.format("Humidity: %s%%\n", args.humid)
-    text = text .. string.format("Wind: %s, %s km/h\n", args.wind.aim, args.wind.kmh)
-    text = text .. string.format("Sunrise: %s\n", os.date('%H:%M', args.sunrise))
-    text = text .. string.format("Sunset: %s", os.date('%H:%M', args.sunset))
-    widget.tooltip:set_text(text)
+    widget.tooltip:update({
+        args.city,
+        args.updated,
+        args.sky,
+        string.format("%s °C", args.temp),
+        args.humid .. "%",
+        string.format("%s, %s km/h", args.wind.aim, args.wind.kmh),
+        string.format(os.date('%H:%M', args.sunrise)),
+        string.format(os.date('%H:%M', args.sunset))
+    })
     weathericon:set_image(beautiful.weather_dir .. args.icon .. ".png")
     return args.temp .. "°C"
 end, 601, "2179537")

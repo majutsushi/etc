@@ -40,5 +40,8 @@ end
 function utils.bgcolor(color, text)
   return '<span bgcolor="' .. tostring(color) .. '">' .. tostring(text) .. '</span>'
 end
+function utils.bold(text)
+  return '<span font_weight="bold">' .. tostring(text) .. '</span>'
+end
 
 return utils

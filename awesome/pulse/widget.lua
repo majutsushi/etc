@@ -5,6 +5,7 @@ local vicious = require("vicious")
 local naughty = require("naughty")
 local pulse   = require("pulse.pulse")
 local beautiful = require("beautiful")
+local eldritch = require("eldritch")
 
 local colors = {}
 local notifyid = nil
@@ -33,10 +34,10 @@ function pulsewidget:set_muted(state)
     self.muted = state
     if self.muted then
         self:set_color(colors.muted)
-        self.tooltip:set_text(" [Muted] ")
+        self.tooltip:update({ "[Muted]" })
     else
         self:set_color(colors.unmuted)
-        self.tooltip:set_text(" " .. self.current_level .. "% ")
+        self.tooltip:update({ self.current_level .. "%" })
     end
 end
 
@@ -116,7 +117,7 @@ local function new(icon)
 
     widget.current_level = 0
     widget.muted = false
-    widget.tooltip = awful.tooltip({ objects = { widget, icon } })
+    widget.tooltip = eldritch.tooltip("Volume", { "Level" }, { widget, icon })
 
     return widget
 end

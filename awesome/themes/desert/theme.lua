@@ -42,6 +42,8 @@ theme.taglist_bg_focus = "#D3D7CF"
 theme.taglist_fg_empty = "#777777"
 
 theme.tooltip_bg_color = theme.bg_normal
+theme.tooltip_title_color = "#f0e68c"
+theme.tooltip_key_color = "#98fb98"
 theme.tooltip_border_width = 1
 theme.tooltip_border_color = "#777777"
 -- }}}
