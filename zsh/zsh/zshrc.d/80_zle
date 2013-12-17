@@ -93,7 +93,7 @@ bindkey "^[>" insert-last-word
 
 # run command line as user root via sudo:
 _sudo-command-line() {
-  [[ $BUFFER != sudo\ * ]] && LBUFFER="sudo $LBUFFER"
+    [[ $BUFFER != sudo\ * ]] && LBUFFER="sudo $LBUFFER"
 }
 zle -N sudo-command-line _sudo-command-line
 bindkey "^Xs" sudo-command-line

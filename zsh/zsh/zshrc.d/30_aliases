@@ -194,6 +194,14 @@ __tmux-sessions() {
 }
 compdef __tmux-sessions tm
 
+jkill() { command kill "$@" }
+_jkill() {
+    local -a processes
+    processes=( ${${(f)"$(command jps)"}/ /:} )
+    _describe -t processes 'Java processes' processes "$@"
+}
+compdef _jkill jkill
+
 alert() {
     eval '"$@"'
     local rv=$?
