@@ -71,6 +71,7 @@ autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
 function! IsNotSpecialBuf(buf) abort
     return ((&buftype != "quickfix") &&
           \ !&previewwindow &&
+          \ !&scrollbind &&
           \ (bufname(a:buf) !~ "NERD_tree") &&
           \ (bufname(a:buf) !~ "__Tag_List__") &&
           \ (bufname(a:buf) !~ "__Tagbar__") &&
