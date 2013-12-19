@@ -338,7 +338,7 @@ vicious.register(weatherwidget, eldritch.widgets.weather, function(widget, args)
         string.format(os.date('%H:%M', args.sunset))
     })
     weathericon:set_image(beautiful.weather_dir .. args.icon .. ".png")
-    return args.temp .. "°C"
+    return math.floor(args.temp + 0.5) .. "°C"
 end, 601, "2179537")
 -- }}}
 
