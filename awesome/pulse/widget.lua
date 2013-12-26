@@ -8,22 +8,6 @@ local beautiful = require("beautiful")
 local eldritch = require("eldritch")
 
 local colors = {}
-local notifyid = nil
-
-local notifications = {
-    icons = {
-        -- the first item is the 'muted' icon
-        "/usr/share/icons/Faenza-Dark/status/48/audio-volume-muted.png",
-        -- the rest of the items correspond to intermediate volume levels - you can have as many as you want (but must be >= 1)
-        "/usr/share/icons/Faenza-Dark/status/48/audio-volume-low.png",
-        "/usr/share/icons/Faenza-Dark/status/48/audio-volume-medium.png",
-        "/usr/share/icons/Faenza-Dark/status/48/audio-volume-high.png"
-    },
-    font = "Monospace 11", -- must be a monospace font for the bar to be sized consistently
-    icon_size = 48,
-    bar_size = 19 -- adjust to fit your font if the bar doesn't fit
-}
-
 local pulsewidget = {}
 
 function pulsewidget:set_current_level(level)
@@ -55,48 +39,7 @@ function pulsewidget:update(args, notify)
 end
 
 function pulsewidget:notify()
-    local preset =
-    {
-        height = 75,
-        width = 300,
-        font = notifications.font
-    }
-    local i = 1;
-    while notifications.icons[i + 1] ~= nil do
-        i = i + 1
-    end
-    if i >= 2 then
-        preset.icon_size = notifications.icon_size
-        if self.muted or self.current_level == 0 then
-            preset.icon = notifications.icons[1]
-        elseif self.current_level == 100 then
-            preset.icon = notifications.icons[i]
-        else
-            local int = math.modf(self.current_level / 100 * (i - 1))
-            preset.icon = notifications.icons[int + 2]
-        end
-    end
-    if self.muted then
-        preset.title = "Muted"
-    elseif self.current_level == 0 then
-        preset.title = "0% (muted)"
-        preset.text = "[" .. string.rep(" ", notifications.bar_size) .. "]"
-    elseif self.current_level == 100 then
-        preset.title = "100% (max)"
-        preset.text = "[" .. string.rep("|", notifications.bar_size) .. "]"
-    else
-        local int = math.modf(self.current_level / 100 * notifications.bar_size)
-        preset.title = self.current_level .. "%"
-        preset.text = "[" .. string.rep("|", int) .. string.rep(" ", notifications.bar_size - int) .. "]"
-    end
-    if notifyid ~= nil then
-        notifyid = naughty.notify({
-            replaces_id = notifyid.id,
-            preset = preset
-        })
-    else
-        notifyid = naughty.notify({ preset = preset })
-    end
+    eldritch.osd.notify("Volume", self.current_level)
 end
 
 local function new(icon)
