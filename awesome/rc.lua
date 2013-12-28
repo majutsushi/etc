@@ -151,14 +151,14 @@ require("debian.menu")
 
 menu_items = freedesktop.menu.new()
 myawesomemenu = {
-   { "manual", terminal .. " -e man awesome",
-     freedesktop.utils.lookup_icon({ icon = 'help' }) },
-   { "edit config", editor_cmd .. " " .. awesome.conffile,
-     freedesktop.utils.lookup_icon({ icon = 'package_settings' }) },
-   { "restart", awesome.restart,
-     freedesktop.utils.lookup_icon({ icon = 'gtk-refresh' }) },
-   { "quit", awesome.quit,
-     freedesktop.utils.lookup_icon({ icon = 'gtk-quit' }) }
+    { "manual", terminal .. " -e man awesome",
+      freedesktop.utils.lookup_icon({ icon = 'help' }) },
+    { "edit config", editor_cmd .. " " .. awesome.conffile,
+      freedesktop.utils.lookup_icon({ icon = 'package_settings' }) },
+    { "restart", awesome.restart,
+      freedesktop.utils.lookup_icon({ icon = 'gtk-refresh' }) },
+    { "quit", awesome.quit,
+      freedesktop.utils.lookup_icon({ icon = 'gtk-quit' }) }
 }
 table.insert(menu_items, { "awesome", myawesomemenu,
                            beautiful.awesome_icon })
@@ -337,9 +337,11 @@ vicious.register(weatherwidget, eldritch.widgets.weather, function(widget, args)
         string.format(os.date('%H:%M', args.sunrise)),
         string.format(os.date('%H:%M', args.sunset))
     })
-    weathericon:set_image(beautiful.weather_dir .. args.icon .. ".png")
+    if args.icon then
+        weathericon:set_image(beautiful.weather_dir .. args.icon .. ".png")
+    end
     return math.floor(args.temp + 0.5) .. "°C"
-end, 601, "2179537")
+end, 60, "2179537")
 -- }}}
 
 -- Create a wibox for each screen and add it
