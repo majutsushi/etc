@@ -145,7 +145,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- applications menu
 require('freedesktop.utils')
 freedesktop.utils.terminal = terminal
-freedesktop.utils.icon_theme = { 'Faenza-Darkest', 'Faenza-Dark', 'gnome' }
+-- freedesktop.utils.icon_theme = { 'Faenza-Darkest', 'Faenza-Dark', 'gnome' }
 require('freedesktop.menu')
 require("debian.menu")
 
