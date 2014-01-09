@@ -164,3 +164,6 @@
 [submodule "awesome/awesome-freedesktop"]
 	path = awesome/awesome-freedesktop
 	url = https://github.com/terceiro/awesome-freedesktop.git
+[submodule "vim/vim/bundle/vim-vertical-move"]
+	path = vim/vim/bundle/vim-vertical-move
+	url = https://github.com/bruno-/vim-vertical-move.git

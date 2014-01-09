@@ -1666,6 +1666,13 @@ function! Utl_AddressScheme_mutt(uri, fragment, dispMode)
     return []
 endfunction
 
+" vertical-move {{{2
+let g:vertical_move_default_mapping = 0
+nmap <silent> <leader>j <Plug>(vertical_move_down)
+nmap <silent> <leader>k <Plug>(vertical_move_up)
+xmap <silent> <leader>j <Plug>(vertical_move_down)
+xmap <silent> <leader>k <Plug>(vertical_move_up)
+
 " vimplate {{{2
 let Vimplate = expand('~/.vim/bundle/vimplate/vimplate')
 
