@@ -18,8 +18,10 @@ function! s:syntax_info() abort
 
     " if transparent link isn't the same as the top highlighting link,
     " then indicate it with a leading 'T:'
-    if firstlink != translink
+    if firstlink != translink && firstlink != ''
         let hilink = 'T:' . translink . ' -> ' . firstlink
+    elseif firstlink != translink
+        let hilink = 'T:' . translink
     else
         let hilink = firstlink
     endif
@@ -29,11 +31,11 @@ function! s:syntax_info() abort
     redir END
 
     " trace through the linkages
-    if firstlink != lastlink
+    if firstlink != lastlink && firstlink != ''
         let no_overflow = 0
         let curlink = firstlink
         while curlink != lastlink && no_overflow < 10
-            let nextlink = substitute(hi_out, '^.*\<' . curlink . '\s\+xxx links to \(\a\+\).*$', '\1', '')
+            let nextlink = substitute(hi_out, '^.*\<' . curlink . '\s\+xxx links to \([A-Za-z_]\+\).*$', '\1', '')
             if nextlink =~ '\<start=\|\<cterm[fb]g=\|\<gui[fb]g='
                 let nextlink = substitute(nextlink, '^[ \t\n]*\(\S\+\)\s\+.*$', '\1', '')
                 let hilink = hilink . ' -> ' . nextlink
@@ -47,7 +49,9 @@ function! s:syntax_info() abort
 
     echo 'Synstack:    ' syntaxstack
     echo 'Highlighting:' hilink
-    execute 'highlight ' . lastlink
+    if lastlink != ''
+        execute 'highlight ' . lastlink
+    endif
 endfunction
 
 nnoremap <leader>sy :call <SID>syntax_info()<CR>
