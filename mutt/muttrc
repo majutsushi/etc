@@ -730,21 +730,21 @@ color tree      bright$my_yellow    $my_background  # thread arrows
 # =============================================================================
 # message headers {{{
 
-color hdrdefault $my_cyan    $my_background
-color header     $my_yellow  $my_background  "^from:"
-color header     $my_yellow  $my_background  "^reply-to:"
-color header     $my_yellow  $my_background  "^to:"
-color header     $my_yellow  $my_background  "^cc:"
-color header     $my_yellow  $my_background  "^date:"
-color header     $my_red     $my_background  "^subject:"
-color header     $my_green   $my_background  "^newsgroups:"
-color header     $my_green   $my_background  "^x-mailer:"
-color header     $my_green   $my_background  "^message-id:"
-color header     $my_green   $my_background  "^Organization:"
-color header     $my_green   $my_background  "^Organisation:"
-color header     $my_green   $my_background  "^User-Agent:"
-color header     $my_green   $my_background  "^X-Message-Flag:"
-color header     $my_green   $my_background  "^X-Spam-Status:"
+color hdrdefault $my_cyan   $my_background
+color header     $my_green  $my_background  "^from:"
+color header     $my_yellow $my_background  "^reply-to:"
+color header     $my_yellow $my_background  "^to:"
+color header     $my_yellow $my_background  "^cc:"
+color header     $my_yellow $my_background  "^date:"
+color header     $my_red    $my_background  "^subject:"
+color header     $my_cyan   $my_background  "^newsgroups:"
+color header     $my_cyan   $my_background  "^x-mailer:"
+color header     $my_cyan   $my_background  "^message-id:"
+color header     $my_cyan   $my_background  "^Organization:"
+color header     $my_cyan   $my_background  "^Organisation:"
+color header     $my_cyan   $my_background  "^User-Agent:"
+color header     $my_cyan   $my_background  "^X-Message-Flag:"
+color header     $my_cyan   $my_background  "^X-Spam-Status:"
 
 # }}}
 # =============================================================================
