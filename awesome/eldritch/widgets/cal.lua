@@ -22,7 +22,7 @@ local cal = {}
 
 local tooltip
 local state = { month=nil, year=nil }
-local current_day_format = utils.bold(utils.fgcolor("#98fb98", "%s"))
+local current_day_format = utils.bgcolor("#4d4d4d", utils.fgcolor("#98fb98", "%s"))
 
 local function displayMonth(month, year, weekStart)
     local t = os.time({ year=year, month=month+1, day=0 })
