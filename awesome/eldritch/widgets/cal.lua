@@ -14,8 +14,6 @@
 -- On clicking or by using the mouse wheel the displayed month changes.
 -- Pressing Shift + Mouse click change the year.
 
-local string = { format = string.format }
-local os = { date = os.date, time = os.time }
 local awful = require("awful")
 local beautiful = require("beautiful")
 local utils = require("eldritch.utils")
@@ -23,10 +21,10 @@ local utils = require("eldritch.utils")
 local cal = {}
 
 local tooltip
-local state = {}
+local state = { month=nil, year=nil }
 local current_day_format = utils.bold(utils.fgcolor("#98fb98", "%s"))
 
-function displayMonth(month, year, weekStart)
+local function displayMonth(month, year, weekStart)
     local t = os.time({ year=year, month=month+1, day=0 })
     local d = os.date("*t", t)
     local mthDays, stDay = d.day, (d.wday - d.day - weekStart + 1) % 7
@@ -73,13 +71,47 @@ function displayMonth(month, year, weekStart)
     return header .. "\n" .. lines
 end
 
+local function worldclock()
+    local timezones = {
+        { "New Zealand", "Pacific/Auckland" },
+        { "Germany",     "Europe/Berlin" },
+        { "California",  "US/Pacific" },
+        { "Malaysia",    "Asia/Kuala_Lumpur" }
+    }
+    local titlecolor = beautiful.tooltip_title_color or "#f0e68c"
+
+    local text = ""
+
+    for _, tzinfo in ipairs(timezones) do
+        local f = io.popen("TZ=" .. tzinfo[2] .. " date")
+        text = text .. "\n " .. utils.fgcolor("#98fb98", tzinfo[1])
+        text = text .. "\n " .. f:read("*all")
+        f:close()
+    end
+
+    return text
+end
+
+local function assemble_text(calinfo)
+    local text = calinfo
+    text = text .. "\n" .. worldclock()
+
+    return string.format(utils.font("monospace 10", "%s"), text)
+end
+
+local function switchMonth(delta)
+    state.month = state.month + (delta or 1)
+    local text = assemble_text(displayMonth(state.month, state.year, 2))
+    tooltip:set_text(text)
+end
+
 function cal.register(mywidget)
     if not tooltip then
         tooltip = awful.tooltip({})
         function tooltip:update()
             local month, year = os.date('%m'), os.date('%Y')
-            state = {month, year}
-            tooltip:set_text(string.format(utils.font("monospace 10", "%s"), displayMonth(month, year, 2)))
+            state = { month=month, year=year}
+            tooltip:set_text(assemble_text(displayMonth(month, year, 2)))
         end
         tooltip:update()
     end
@@ -92,8 +124,8 @@ function cal.register(mywidget)
         switchMonth(-1)
     end),
     awful.button({ }, 2, function()
-        state[1] = os.date('%m')
-        state[2] = os.date('%Y')
+        state.month = os.date('%m')
+        state.year  = os.date('%Y')
         switchMonth(0)
     end),
     awful.button({ }, 3, function()
@@ -117,12 +149,6 @@ function cal.register(mywidget)
     awful.button({ 'Shift' }, 5, function()
         switchMonth(12)
     end)))
-end
-
-function switchMonth(delta)
-    state[1] = state[1] + (delta or 1)
-    local text = string.format(utils.font("monospace 10", "%s"), displayMonth(state[1], state[2], 2))
-    tooltip:set_text(text)
 end
 
 return cal
