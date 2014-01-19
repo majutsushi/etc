@@ -85,7 +85,7 @@ local function worldclock()
     local text = ""
 
     for _, tzinfo in ipairs(timezones) do
-        local out = utils.exec("TZ=" .. tzinfo[2] .. " date +'%H:%M_%A_%Z %z'")
+        local out = utils.exec("TZ=" .. tzinfo[2] .. " date +'%H:%M_%A_%Z %:::z'")
         local data = utils.split(utils.trim(out), "_")
 
         text = text .. "\n " .. utils.fgcolor("#98fb98", tzinfo[1])
