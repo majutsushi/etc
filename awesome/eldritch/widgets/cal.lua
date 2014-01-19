@@ -75,18 +75,25 @@ local function worldclock()
     local timezones = {
         { "New Zealand", "Pacific/Auckland" },
         { "Germany",     "Europe/Berlin" },
-        { "California",  "US/Pacific" },
+        { "California",  "America/Los_Angeles" },
         { "Malaysia",    "Asia/Kuala_Lumpur" }
     }
     local titlecolor = beautiful.tooltip_title_color or "#f0e68c"
 
+    local localday = utils.trim(utils.exec("date +'%A'"))
+
     local text = ""
 
     for _, tzinfo in ipairs(timezones) do
-        local f = io.popen("TZ=" .. tzinfo[2] .. " date")
+        local out = utils.exec("TZ=" .. tzinfo[2] .. " date +'%H:%M_%A_%Z %z'")
+        local data = utils.split(utils.trim(out), "_")
+
         text = text .. "\n " .. utils.fgcolor("#98fb98", tzinfo[1])
-        text = text .. "\n " .. f:read("*all")
-        f:close()
+        text = text .. "\n " .. data[1]
+        if data[2] ~= localday then
+            text = text .. " (" .. data[2] .. ")"
+        end
+        text = text .. " " .. data[3] .. "\n"
     end
 
     return text
