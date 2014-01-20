@@ -4,6 +4,9 @@
 
 setlocal foldmethod=syntax
 
+let g:java_highlight_java_lang_ids = 1
+let g:java_comment_strings = 1
+
 noremap <buffer> ]] ]m
 noremap <buffer> ][ ]M
 noremap <buffer> [[ [m
