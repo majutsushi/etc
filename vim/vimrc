@@ -1194,7 +1194,7 @@ set formatoptions+=r " continue comments when pressing <Enter>
 set formatoptions+=n " recognize numbered lists when formatting
 set formatoptions+=2 " use indent of second line in paragraph
 set formatoptions+=l " don't break long lines that were already too long
-if v:version >= 703 && has('patch541')
+if v:version > 703 || v:version == 703 && has('patch541')
     set formatoptions+=j " remove comment markers when joining lines
 endif
 " pattern to recognize a numbered list (local to buffer)
