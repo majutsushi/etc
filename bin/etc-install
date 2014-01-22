@@ -137,6 +137,7 @@ xlink emacs/emacs.d
 
 xlink git/gitconfig
 merge git/gitignore target=.cache/etc/gitignore
+ln -sf $HOME/.cache/etc/gitignore $HOME/.agignore
 
 xlink mail/goobookrc
 xlink mail/lbdb
