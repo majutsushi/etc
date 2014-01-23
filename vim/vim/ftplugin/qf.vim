@@ -1,7 +1,7 @@
 " Author       : Jan Larres <jan@majutsushi.net>
 " Website      : http://majutsushi.net
 
-let b:stl = "#[FileName][Quickfix List]#[FunctionName]"
+let b:stl = "#[FileName]%t #[FileType]%{exists('w:quickfix_title') ? ' ' . w:quickfix_title : ''} #[FunctionName]%=#[LineNumber] %04(%l%)#[LineColumn]:%03(%c%V%) #[LinePercent] %p%%"
 
 nnoremap <buffer> <silent> p <CR><C-W>p
 
