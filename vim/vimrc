@@ -1946,7 +1946,6 @@ nnoremap <M-9> 9gt
 nnoremap <C-W>e :enew<CR>
 
 nnoremap <leader>ve :edit ~/.etc/vim/vimrc<CR>
-nnoremap <leader>vb :edit ~/.etc/vim/vim/abbrevs.vim<CR>
 
 " Text manipulation {{{2
 
@@ -1984,11 +1983,6 @@ inoremap <C-U> <C-G>u<C-U>
 " Uppercase word
 inoremap <M-u> <Esc>gUiwea
 
-" create an undo point after each word
-" imap <Space> <Space><C-G>u
-"inoremap <Tab>   <Tab><C-G>u
-"inoremap <CR>    <CR><C-G>u
-
 " Swap two words
 nnoremap <silent> gW :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
 
@@ -2022,12 +2016,6 @@ inoremap <C-Del>    <C-O>daw
 
 nnoremap <silent> <leader>ga :GNOMEAlignArguments<CR>
 
-" indent for C/C++ programs
-nnoremap <leader>i :%!astyle<CR>
-
-"align map for assignments in R scripts
-xnoremap <leader>ar :Align <-<CR>
-
 " re-select selection after changing indent
 xnoremap > >gv
 xnoremap < <gv
@@ -2046,29 +2034,6 @@ inoremap <M-J> <Esc>:<C-U>
             \ ddp
             \ :<C-U>call setpos('.', oldpos)<CR>
             \ gji
-
-xmap <Leader>t| <Plug>AM_t|
-xmap <Leader>t#   <Plug>AM_t#
-xmap <Leader>t,   <Plug>AM_t,
-xmap <Leader>t:   <Plug>AM_t:
-xmap <Leader>t;   <Plug>AM_t;
-xmap <Leader>t<   <Plug>AM_t<
-xmap <Leader>t=   <Plug>AM_t=
-xmap <Leader>ts,  <Plug>AM_ts,
-xmap <Leader>ts:  <Plug>AM_ts:
-xmap <Leader>ts;  <Plug>AM_ts;
-xmap <Leader>ts<  <Plug>AM_ts<
-xmap <Leader>ts=  <Plug>AM_ts=
-xmap <Leader>w=   <Plug>AM_w=
-xmap <Leader>t?   <Plug>AM_t?
-xmap <Leader>t~   <Plug>AM_t~
-xmap <Leader>t@   <Plug>AM_t@
-xmap <Leader>m=   <Plug>AM_m=
-xmap <Leader>tab  <Plug>AM_tab
-xmap <Leader>tml  <Plug>AM_tml
-xmap <Leader>tsp  <Plug>AM_tsp
-xmap <Leader>tsq  <Plug>AM_tsq
-xmap <Leader>tt   <Plug>AM_tt
 
 " Ctrl-K comma colon (in Insert mode): UTF-8 single-codepoint ellipsis "..."
 " disregard error if (for instance) not in UTF-8
@@ -2207,8 +2172,6 @@ nnoremap <leader>e :execute "Shell " . expand("%:p")<CR>
 nnoremap <silent> <leader>cd :cd %:p:h<cr>
 
 nnoremap <S-F10> :call GenCscopeAndTags()<CR>
-
-nnoremap <silent> <leader>gk :silent !gitk<cr>
 
 "inoremap  <Esc><Right>
 
