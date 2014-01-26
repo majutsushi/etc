@@ -72,19 +72,19 @@ local function displayMonth(month, year, weekStart)
 end
 
 local function worldclock()
-    local timezones = {
-        { "New Zealand", "Pacific/Auckland" },
-        { "Germany",     "Europe/Berlin" },
-        { "California",  "America/Los_Angeles" },
-        { "Malaysia",    "Asia/Kuala_Lumpur" }
-    }
+    -- File format example:
+    --   New Zealand|Pacific/Auckland
+    local tzfile = io.open(os.getenv("HOME") .. "/.config/etc/timezones")
+    if tzfile == nil then
+        return ""
+    end
+
     local titlecolor = beautiful.tooltip_title_color or "#f0e68c"
-
     local localday = utils.trim(utils.exec("date +'%A'"))
-
     local text = ""
 
-    for _, tzinfo in ipairs(timezones) do
+    for line in tzfile:lines() do
+        local tzinfo = utils.split(line, "%|")
         local out = utils.exec("TZ=" .. tzinfo[2] .. " date +'%H:%M_%A_%Z %:::z'")
         local data = utils.split(utils.trim(out), "_")
 
