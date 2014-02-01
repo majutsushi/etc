@@ -19,4 +19,7 @@ highlight HintElem   background: rgba(255, 209, 20, 0.7) !important;
 "highlight CmdOutput  font: normal 14px 'Menlo' !important;
 "highlight CompItem   font: normal 14px 'Menlo' !important;
 
+"cmap -builtin <C-b> <Left>
+"cmap -builtin <C-f> <Right>
+
 " vim: set ft=pentadactyl:
