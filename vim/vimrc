@@ -1535,8 +1535,25 @@ let NERDTreeIgnore = [
 
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-nmap <silent> <F10> :NERDTreeToggle<CR>
-nmap <silent> <leader>nf :NERDTreeFind<CR>
+" s:toggle_nerdtree() {{{3
+function! s:toggle_nerdtree() abort
+    if exists('t:NERDTreeBufName')
+        let nerdtree_open = bufwinnr(t:NERDTreeBufName) != -1
+    else
+        let nerdtree_open = 0
+    endif
+
+    if nerdtree_open
+        NERDTreeClose
+    else
+        NERDTreeFind
+    endif
+endfunction
+" }}}3
+
+nnoremap <silent> <M-n>      :call <SID>toggle_nerdtree()<CR>
+nnoremap <silent> <F10>      :NERDTreeToggle<CR>
+nnoremap <silent> <leader>nf :NERDTreeFind<CR>
 
 " ProtoDef {{{2
 let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
@@ -1638,8 +1655,8 @@ highlight TagbarVisibilityPublic guifg=#11ee11
 highlight TagbarVisibilityProtected guifg=SkyBlue
 highlight TagbarVisibilityPrivate guifg=#ee1111
 
-nmap <silent>   <F9> :TagbarOpenAutoClose<CR>
-nmap <silent> <S-F9> :TagbarToggle<CR>
+nmap <silent> <M-t> :TagbarOpenAutoClose<CR>
+nmap <silent>  <F9> :TagbarToggle<CR>
 
 " TOhtml syntax script {{{2
 let html_use_css = 1
