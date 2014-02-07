@@ -12,6 +12,7 @@ stty -ixon
 
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=100000
+export HISTFILE=$HOME/.cache/bash_history
 export HISTFILESIZE=100000
 shopt -s histappend
 
