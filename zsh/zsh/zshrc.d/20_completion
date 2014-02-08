@@ -34,6 +34,11 @@ zstyle ':completion:*' single-ignored show
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache/
 # activate color-completion
+# see http://www.zsh.org/mla/users/2008/msg00699.html
+# zstyle -e ':completion:*:default' list-colors 'reply=(
+#     "${PREFIX:+=(#bi)($PREFIX:t)(?)*=00=38;5;243='${color[underline]}'}"
+#     ${(s.:.)LS_COLORS}
+# )'
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 zstyle ':completion:*' squeeze-slashes true
@@ -111,7 +116,10 @@ zstyle ':completion:*:*:vim:*:*' ignored-patterns $(zstyle -s ':completion:*:*:(
 
 zstyle ':completion:*:processes'          command 'ps xwww --forest -o pid,%cpu,tty,time,command'
 zstyle ':completion:*:kill:*'             force-list always
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle -e ':completion:*:*:kill:*:processes' list-colors 'reply=(
+    "=(#bi) #([0-9]#) #([^ ]#) #([^ ]#) #([^ ]#) ##*($PREFIX)*=0=1;31=35=36=33=1;32"
+    "=(#bi) #([0-9]#) #([^ ]#) #([^ ]#) #([^ ]#)*=0=1;31=35=36=33"
+)'
 
 zstyle ':completion:*:*:ant:*:targets' call-command true
 
