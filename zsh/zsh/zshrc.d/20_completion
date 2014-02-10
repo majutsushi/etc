@@ -39,7 +39,7 @@ zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache/
 #     "${PREFIX:+=(#bi)($PREFIX:t)(?)*=00=38;5;243='${color[underline]}'}"
 #     ${(s.:.)LS_COLORS}
 # )'
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:default' list-colors 'hi=30;41' 'du=37;41' ${(s.:.)LS_COLORS}
 
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' list-dirs-first true # affects all-files/other-files
