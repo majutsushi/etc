@@ -28,24 +28,19 @@ hi DiffAdd    guibg=#307030
 hi DiffChange guibg=#2b5b77
 hi DiffDelete guibg=#723030 guifg=#723030
 hi DiffText   guibg=#6c90a6
-" hi DiffChange guibg=#939133
-" hi DiffDelete guibg=#723030 guifg=#723030
-" hi DiffText   guibg=#d0be25
 
 "hi ErrorMsg
 hi VertSplit	guibg=#c2bfa5 guifg=#7f7f7f gui=none
-"hi VertSplit	guibg=#1c1c1c guifg=#7f7f7f gui=none
-"hi Folded	guibg=#4d4d4d guifg=#ffd700
 hi Folded	guibg=#333333 guifg=#ffd700
 hi FoldColumn	guibg=#333333 guifg=#d2b48c
 hi IncSearch	guifg=#708090 guibg=#f0e68c
-"hi LineNr
+hi LineNr	guifg=#999999 guibg=#333333
+hi CursorLineNr	guifg=#aaaaaa guibg=#4d4d4d gui=none
 hi ModeMsg	guifg=#daa520
 hi MoreMsg	guifg=#2e8b57
 hi NonText	guifg=#add8e6 guibg=#4d4d4d
 hi Question	guifg=#00ff7f
 hi Search	guibg=#cd853f guifg=#f5deb3
-" hi SpecialKey	guifg=#9acd32
 hi SpecialKey	guifg=#666666
 
 hi StatusLine	guibg=#c2bfa5 guifg=#000000 gui=none
@@ -121,21 +116,10 @@ hi TabLine	cterm=underline ctermfg=15 ctermbg=8 guifg=#333333 guibg=#a9a9a9 gui=
 hi TabLineSel	cterm=bold gui=bold
 hi TabLineFill	cterm=none gui=none guifg=#b3b3b3 guibg=#4d4d4d
 
-" Ubuntu colours
-"hi Pmenu	guibg=#000000 guifg=#aea79f gui=none
-"hi PmenuSel	guibg=#5e2750 guifg=#f7f6f5
-"hi PmenuSbar	guibg=#000000 guifg=#ffffff gui=none
-"hi PmenuThumb	guibg=#dd4814 guifg=#ffffff gui=none
-
 hi Pmenu	guibg=#1c1c1c guifg=#cccccc gui=none
-hi PmenuSel	guibg=#cd853f guifg=#f7f6f5 gui=none
+hi PmenuSel	guifg=#f0e68c guibg=#6b8e23 gui=none
 hi PmenuSbar	guibg=#1c1c1c guifg=#ffffff gui=none
-hi PmenuThumb	guibg=#daa520 guifg=#ffffff gui=none
-
-"hi Pmenu	guibg=#c2bfa5 guifg=#000000 gui=none
-"hi PmenuSel	guibg=#4e9a06 guifg=#ffffff gui=none
-"hi PmenuSbar	guibg=#c2bfa5 guifg=#ffffff gui=none
-"hi PmenuThumb	guibg=#daa520 guifg=#ffffff gui=none
+hi PmenuThumb	guibg=#ffd700 guifg=#ffffff gui=none
 
 hi User1	cterm=bold,reverse guibg=#c2bfa5 guifg=#000000 gui=bold
 hi User2	cterm=bold,reverse guibg=#c2bfa5 guifg=#990f0f gui=bold
