@@ -37,6 +37,9 @@ PYG="pygmentize -f terminal256 -O style=desert"
         *.tar.gz|*.tgz|*.tar.z|*.tar.dz)
             tar tzvf "$1" --force-local
             ;;
+        *.tar.xz|*.tar.lzma|*.txz)
+            tar tJvf "$1" --force-local
+            ;;
         *.tar)
             tar tvf "$1" --force-local
             ;;
