@@ -628,7 +628,7 @@ globalkeys = awful.util.table.join(
 
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f", function (c) c.fullscreen = not c.fullscreen end),
-    awful.key({ modkey, "Shift"   }, "c", function (c) c:kill() end),
+    awful.key({ modkey,           }, "q", function (c) c:kill() end),
     awful.key({ modkey, "Control" }, "d", function (c) scratch.pad.set(c, 0.60, 0.60, true) end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
     awful.key({ modkey,           }, "Return",
