@@ -52,6 +52,8 @@ set cursorline
 autocmd InsertLeave * set cursorline
 autocmd InsertEnter * set nocursorline
 
+autocmd StdinReadPost * set buftype=nofile
+
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
 " screwing up folding when switching between windows.
