@@ -6,6 +6,11 @@
 " \# => closing character
 let s:right_regex = '^\%(\w\|\!\|£\|\$\|_\|["'']\s*\S\)'
 
+" Taken from:
+" https://github.com/Raimondi/delimitMate/issues/138#issuecomment-35458273
+let s:left  = "\<Esc>:undojoin\<CR>i"
+let s:right = "\<C-\>\<C-o>:undojoin\<CR>\<C-\>\<C-o>a"
+
 " s:getcharrel() {{{2
 function! s:getcharrel(pos) abort
     let line = getline('.')
@@ -38,7 +43,7 @@ function! s:HandleOpenParen(char) abort
         return a:char
     endif
 
-    return a:char . b:pairs_conf.parens[a:char] . "\<Left>"
+    return a:char . b:pairs_conf.parens[a:char] . s:left
 endfunction
 
 " s:HandleCloseParen() {{{2
@@ -51,7 +56,7 @@ function! s:HandleCloseParen(char) abort
     endif
 
     if ccur == a:char
-        return "\<Right>"
+        return s:right
     endif
 
     return a:char
@@ -69,7 +74,7 @@ function! s:HandleQuote(char) abort
 
     " Jump out of string
     if ccur == a:char
-        return "\<Right>"
+        return s:right
     endif
 
     " Make quotes smarter
@@ -83,12 +88,10 @@ function! s:HandleQuote(char) abort
     elseif cprev =~# '[[:space:]]' && ccur =~# '[[:space:]]\|\_^\_$' ||
          \ cprev =~# join(keys(b:pairs_conf.parens), '\|') ||
          \ (ccur =~# join(values(b:pairs_conf.parens), '\|') && cprev =~# '[[:space:]]')
-        return a:char . b:pairs_conf.quotes[a:char] . "\<Left>"
+        return a:char . b:pairs_conf.quotes[a:char] . s:left
     else
         return a:char
     end
-
-    return a:char . b:pairs_conf.quotes[a:char] . "\<Left>"
 endfunction
 
 " s:HandleSpace() {{{2
@@ -103,7 +106,7 @@ function! s:HandleSpace() abort
     endif
 
     if has_key(b:pairs_conf.parens, cprev) && ccur == b:pairs_conf.parens[cprev]
-        return expand . "\<Space>\<Space>\<Left>"
+        return expand . "\<Space>\<Space>" . s:left
     else
         return expand . "\<Space>"
     endif
