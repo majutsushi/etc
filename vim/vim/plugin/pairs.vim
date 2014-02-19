@@ -74,11 +74,17 @@ function! s:HandleQuote(char) abort
 
     " Make quotes smarter
     let exclre = '\w\|[^[:punct:][:space:]]'
-    if cprev == a:char || cprev =~# exclre || ccur =~# exclre
+    if cprev == a:char
         return a:char
     elseif &filetype == "vim" && a:char == '"' && getline('.') =~ '^\s*$'
         " Don't insert closing quote if it looks like we're starting a comment
         " in a Vim file
+        return a:char
+    elseif cprev =~# '[[:space:]]' && ccur =~# '[[:space:]]\|\_^\_$' ||
+         \ cprev =~# join(keys(b:pairs_conf.parens), '\|') ||
+         \ (ccur =~# join(values(b:pairs_conf.parens), '\|') && cprev =~# '[[:space:]]')
+        return a:char . b:pairs_conf.quotes[a:char] . "\<Left>"
+    else
         return a:char
     end
 
