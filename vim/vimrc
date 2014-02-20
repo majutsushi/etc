@@ -731,71 +731,6 @@ function! LoadLocalVimrcs()
 endfunction
 autocmd BufNewFile,BufReadPost * call LoadLocalVimrcs()
 
-" PreviewWord() {{{2
-function! PreviewWord(local)
-    " don't do this in the preview window
-    if &previewwindow
-        return
-    endif
-
-    let l:editwinnum = winnr()
-
-    let w = expand("<cword>")
-    if w =~ '\a'
-
-        " Delete any existing highlight before showing another tag
-        silent! wincmd P   " jump to preview window
-        if &previewwindow  " if we really get there...
-            match none     " delete existing highlight
-            silent! exe l:editwinnum . "wincmd w"
-        endif
-
-        if a:local == 1
-            call PreviewWordLocal(w, l:editwinnum)
-        else
-            " Try displaying a matching tag for the word under the cursor
-            try
-                exe "ptjump " . w
-            catch
-                call PreviewWordLocal(w, l:editwinnum)
-            endtry
-        endif
-
-        silent! wincmd P
-        if &previewwindow
-            if has("folding")
-                silent! .foldopen
-            endif
-            call search("$", "b") " to end of previous line
-            let w = substitute(w, '\\', '\\\\', "")
-            call search('\<\V' . w . '\>') " position cursor on match
-            " Add a match highlight to the word at this position
-            hi previewWord term=bold ctermbg=green guibg=green
-            exe 'match previewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
-            normal zz
-            redraw!
-            silent! exe l:editwinnum . "wincmd w"
-        endif
-    endif
-endfun
-
-function! PreviewWordLocal(w, editwinnum)
-    let l:editpath   = expand("%:p")
-
-    let l:eoldline = line(".")
-    let l:eoldcol  = col(".")
-    call searchdecl(a:w, 0, 1)
-    let l:enewline = line(".")
-    let l:enewcol  = col(".")
-    call cursor(l:eoldline, l:eoldcol)
-    exe "pedit " . l:editpath
-    silent! wincmd P
-    if &previewwindow
-        call cursor(l:enewline, l:enewcol)
-        silent! exe a:editwinnum . "wincmd w"
-    endif
-endfun
-
 " QfDo() {{{2
 " http://stackoverflow.com/questions/4792561/how-to-do-search-replace-with-ack-in-vim
 " http://vimcasts.org/episodes/project-wide-find-and-replace/
@@ -1721,10 +1656,6 @@ let g:xptemplate_strict = 0
 let g:xptemplate_highlight='following,next'
 let g:xptemplate_vars = '$author=Jan Larres&$email=jan@majutsushi.net'
 
-" yankring {{{2
-let g:yankring_history_dir = '$HOME/.cache/vim'
-nnoremap <silent> <leader>y :YRShow<CR>
-
 " ZoomWin {{{2
 let g:zoomwin_stl = ''
 function! ZWStatusline(zoomed)
@@ -2135,10 +2066,6 @@ nnoremap <silent> <C-L> :silent nohl<CR><C-L>
 
 " toggle text wrapping
 nnoremap <silent> <leader>w :set invwrap wrap?<CR>
-
-" preview tag definitions
-nnoremap <silent> <leader>pw :call PreviewWord(0)<CR>
-nnoremap <silent> <leader>pl :call PreviewWord(1)<CR>
 
 " Windows {{{2
 
