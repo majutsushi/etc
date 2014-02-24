@@ -6,10 +6,21 @@
 " \# => closing character
 let s:right_regex = '^\%(\w\|\!\|£\|\$\|_\|["'']\s*\S\)'
 
+autocmd InsertLeave * call visualmode(1)
+
 " Taken from:
 " https://github.com/Raimondi/delimitMate/issues/138#issuecomment-35458273
 let s:left  = "\<Esc>:undojoin\<CR>i"
-let s:right = "\<C-\>\<C-o>:undojoin\<CR>\<C-\>\<C-o>a"
+" s:left() {{{2
+function! s:left() abort
+    if mode() == 'i' && visualmode() == ''
+        return "\<Left>"
+    else
+        return "\<Esc>:undojoin\<CR>i"
+    endif
+endfunction
+
+" let s:right = "\<C-\>\<C-o>:undojoin\<CR>\<C-\>\<C-o>a"
 
 " s:getcharrel() {{{2
 function! s:getcharrel(pos) abort
@@ -43,7 +54,7 @@ function! s:HandleOpenParen(char) abort
         return a:char
     endif
 
-    return a:char . b:pairs_conf.parens[a:char] . s:left
+    return a:char . b:pairs_conf.parens[a:char] . s:left()
 endfunction
 
 " s:HandleCloseParen() {{{2
@@ -56,7 +67,7 @@ function! s:HandleCloseParen(char) abort
     endif
 
     if ccur == a:char
-        return s:right
+        return "\<Del>" . a:char
     endif
 
     return a:char
@@ -74,7 +85,7 @@ function! s:HandleQuote(char) abort
 
     " Jump out of string
     if ccur == a:char
-        return s:right
+        return "\<Del>" . a:char
     endif
 
     " Make quotes smarter
@@ -88,7 +99,7 @@ function! s:HandleQuote(char) abort
     elseif cprev =~# '[[:space:]]' && ccur =~# '[[:space:]]\|\_^\_$' ||
          \ cprev =~# join(keys(b:pairs_conf.parens), '\|') ||
          \ (ccur =~# join(values(b:pairs_conf.parens), '\|') && cprev =~# '[[:space:]]')
-        return a:char . b:pairs_conf.quotes[a:char] . s:left
+        return a:char . b:pairs_conf.quotes[a:char] . s:left()
     else
         return a:char
     end
@@ -106,7 +117,7 @@ function! s:HandleSpace() abort
     endif
 
     if has_key(b:pairs_conf.parens, cprev) && ccur == b:pairs_conf.parens[cprev]
-        return expand . "\<Space>\<Space>" . s:left
+        return expand . "\<Space>\<Space>" . s:left()
     else
         return expand . "\<Space>"
     endif
