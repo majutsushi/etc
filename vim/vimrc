@@ -552,6 +552,13 @@ if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
 
+" s:fakemap() {{{2
+function! s:fakemap(target) abort
+    execute 'map <Plug>Fake' . s:fakemap_idx . ' ' . a:target
+    let s:fakemap_idx += 1
+endfunction
+let s:fakemap_idx = 0
+
 " FindAutocmdTouching() {{{2
 " Find autocmds that set certain parameters
 " From https://groups.google.com/group/vim_use/msg/91d0d2bd87ce59e1
@@ -1319,6 +1326,17 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Plugin and script options {{{1
 
+" bufexplorer {{{2
+let g:bufExplorerDisableDefaultKeyMapping=1    " Disable mapping.
+nnoremap <silent> <leader>be :BufExplorer<CR>
+
+" calendar.vim {{{2
+let g:calendar_no_mappings = 1
+
+" cecutil.vim {{{2
+call s:fakemap('<Plug>RestoreWinPosn')
+call s:fakemap('<Plug>SaveWinPosn')
+
 " changelog {{{2
 let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
 
@@ -1391,6 +1409,10 @@ let g:devhelpAssistant = 0
 let g:devhelpSearchKey = '<F7>'
 let g:devhelpWordLength = 5
 
+" DrawIt {{{2
+call s:fakemap('<Plug>DrawItStart')
+call s:fakemap('<Plug>DrawItStop')
+
 " EasyMotion {{{2
 let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -1414,15 +1436,7 @@ let g:expand_region_text_objects = {
 \ }
 
 " FSwitch {{{2
-nnoremap <silent> <Leader>of :FSHere<cr>
-nnoremap <silent> <Leader>ol :FSRight<cr>
-nnoremap <silent> <Leader>oL :FSSplitRight<cr>
-nnoremap <silent> <Leader>oh :FSLeft<cr>
-nnoremap <silent> <Leader>oH :FSSplitLeft<cr>
-nnoremap <silent> <Leader>ok :FSAbove<cr>
-nnoremap <silent> <Leader>oK :FSSplitAbove<cr>
-nnoremap <silent> <Leader>oj :FSBelow<cr>
-nnoremap <silent> <Leader>oJ :FSSplitBelow<cr>
+nnoremap <silent> go :FSHere<cr>
 
 autocmd BufEnter *.c        let b:fswitchdst  = 'h'
 autocmd BufEnter *.c        let b:fswitchlocs = './'
@@ -1440,9 +1454,6 @@ let g:Gitv_OpenHorizontal = 1
 
 " GnuPG {{{2
 let g:GPGUsePipes = 1
-
-" Gundo {{{2
-nnoremap <leader>u :GundoToggle<CR>
 
 " Jedi {{{2
 let g:jedi#auto_vim_configuration = 0
@@ -1490,7 +1501,6 @@ endfunction
 
 nnoremap <silent> <M-n>      :call <SID>toggle_nerdtree()<CR>
 nnoremap <silent> <F10>      :NERDTreeToggle<CR>
-nnoremap <silent> <leader>nf :NERDTreeFind<CR>
 
 " ProtoDef {{{2
 let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
@@ -1548,6 +1558,11 @@ augroup END
 " Signify {{{2
 let g:signify_vcs_list = ['git']
 let g:signify_sign_overwrite = 0
+
+call s:fakemap('<Plug>(signify-next-hunk)')
+call s:fakemap('<Plug>(signify-prev-hunk)')
+call s:fakemap('<Plug>(signify-toggle-highlight)')
+call s:fakemap('<Plug>(signify-toggle)')
 
 highlight SignifySignAdd    gui=bold guifg=#11ee11
 highlight SignifySignDelete gui=bold guifg=#ee1111
@@ -1624,10 +1639,10 @@ endfunction
 
 " vertical-move {{{2
 let g:vertical_move_default_mapping = 0
-nmap <silent> <leader>j <Plug>(vertical_move_down)
-nmap <silent> <leader>k <Plug>(vertical_move_up)
-xmap <silent> <leader>j <Plug>(vertical_move_down)
-xmap <silent> <leader>k <Plug>(vertical_move_up)
+nmap <silent> gj <Plug>(vertical_move_down)
+nmap <silent> gk <Plug>(vertical_move_up)
+xmap <silent> gj <Plug>(vertical_move_down)
+xmap <silent> gk <Plug>(vertical_move_up)
 
 " vimplate {{{2
 let Vimplate = expand('~/.vim/bundle/vimplate/vimplate')
@@ -2063,9 +2078,6 @@ nnoremap <silent> zi
 
 " remove search highlighting
 nnoremap <silent> <C-L> :silent nohl<CR><C-L>
-
-" toggle text wrapping
-nnoremap <silent> <leader>w :set invwrap wrap?<CR>
 
 " Windows {{{2
 
