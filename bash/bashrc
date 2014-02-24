@@ -31,9 +31,9 @@ export PATH=$HOME/bin:$PATH
 
 PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\W\[\e[m\] \[\e[1m\]$\[\e[m\] "
 
-alias ls='ls  -F'
-alias ll='ls -lF'
-alias l='ls -lAF'
+alias ls='ls  -F --color=auto'
+alias ll='ls -lF --color=auto'
+alias l='ls -lAF --color=auto'
 alias vi=vim
 
 if [[ -f ~/.local/etc/bashrc ]]; then
