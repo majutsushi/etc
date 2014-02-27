@@ -1,6 +1,7 @@
 PATH=/bin:/usr/bin:/usr/local/bin:$HOME/bin
 SHELL=/bin/sh
 VERBOSE=off
+COMSAT=off
 MAILDIR=$HOME/Maildir
 DEFAULT=$HOME/Maildir/
 LOGFILE=$HOME/.cache/procmail/procmail.log
@@ -87,6 +88,11 @@ READ=$1
 * 9876543210^0 ^List-post:[	 ]<mailto:\/[^ >`']+
 {
     foldername=.lists.`echo $MATCH | sed -e 's/[\/]/_/g' | tr A-Z a-z | sed -e 's/\./_/g'`/
+
+    # Make sure the directory exists so writing temp files will work
+    :0cw
+    *
+    | mkdir -p $MAILDIR/$foldername
 
     :0
     * READ ?? yes
