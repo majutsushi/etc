@@ -101,7 +101,8 @@ end
 
 local function assemble_text(calinfo)
     local text = calinfo
-    text = text .. "\n" .. worldclock()
+    local separator = utils.fgcolor("#999999", "\n     ——————————————————————     \n")
+    text = text .. "\n" .. separator .. worldclock()
 
     return string.format(utils.font("monospace 10", "%s"), text)
 end
