@@ -1135,6 +1135,7 @@ set textwidth=78
 set backspace=indent,eol,start
 " list of flags that tell how automatic formatting works (local to buffer)
 set formatoptions+=r " continue comments when pressing <Enter>
+set formatoptions-=o " don't continue comments when pressing o/O
 set formatoptions+=n " recognize numbered lists when formatting
 set formatoptions+=2 " use indent of second line in paragraph
 set formatoptions+=l " don't break long lines that were already too long
