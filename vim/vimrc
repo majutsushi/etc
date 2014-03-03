@@ -1414,7 +1414,29 @@ call s:fakemap('<Plug>DrawItStart')
 call s:fakemap('<Plug>DrawItStop')
 
 " EasyMotion {{{2
-let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_keys = 'asdfghjkl;qwertyuiopzxcvbnm/'
+nmap s <Plug>(easymotion-s2)
+xmap s <Plug>(easymotion-s2)
+omap z <Plug>(easymotion-s2)
+
+nmap f <Plug>(easymotion-fl)
+nmap F <Plug>(easymotion-Fl)
+xmap f <Plug>(easymotion-fl)
+xmap F <Plug>(easymotion-Fl)
+omap f <Plug>(easymotion-fl)
+omap F <Plug>(easymotion-Fl)
+nmap t <Plug>(easymotion-tl)
+nmap T <Plug>(easymotion-Tl)
+xmap t <Plug>(easymotion-tl)
+xmap T <Plug>(easymotion-Tl)
+omap t <Plug>(easymotion-tl)
+omap T <Plug>(easymotion-Tl)
+
+" map  / <Plug>(easymotion-sn)
+" omap / <Plug>(easymotion-tn)
+" map  n <Plug>(easymotion-next)
+" map  N <Plug>(easymotion-prev)
 
 " Eclim {{{2
 let g:EclimLoggingDisabled = 1
