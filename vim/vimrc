@@ -1590,6 +1590,27 @@ highlight SignifySignAdd    gui=bold guifg=#11ee11
 highlight SignifySignDelete gui=bold guifg=#ee1111
 highlight SignifySignChange gui=bold guifg=#eeee11
 
+" Sneak {{{2
+" let g:sneak#streak = 1
+" let g:sneak#s_next = 0
+
+" highlight SneakPluginTarget guifg=#f5deb3 guibg=#cd853f gui=bold
+" highlight SneakStreakTarget guifg=#f5deb3 guibg=#cd853f gui=bold
+" highlight SneakStreakMask guifg=#cd853f guibg=#cd853f
+
+" nnoremap <silent> f      :<c-u>call sneak#wrap('', 1, 0, 0)<CR>
+" nnoremap <silent> F      :<c-u>call sneak#wrap('', 1, 1, 0)<CR>
+" xnoremap <silent> f <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 0, 1)<CR>
+" xnoremap <silent> F <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 1, 1)<CR>
+" onoremap <silent> f      :<C-u>call sneak#wrap(v:operator, 1, 0, 1)<CR>
+" onoremap <silent> F      :<C-u>call sneak#wrap(v:operator, 1, 1, 1)<CR>
+" nmap t <Plug>Sneak_t
+" nmap T <Plug>Sneak_T
+" xmap t <Plug>Sneak_t
+" xmap T <Plug>Sneak_T
+" omap t <Plug>Sneak_t
+" omap T <Plug>Sneak_T
+
 " Splice {{{2
 let g:splice_initial_diff_grid = 1
 let g:splice_initial_diff_compare = 1
