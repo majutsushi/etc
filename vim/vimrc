@@ -1472,6 +1472,18 @@ autocmd BufEnter *.h        let b:fswitchlocs = './'
 " automatically delete fugitive buffers when leaving them
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
+" gitgutter {{{2
+let g:gitgutter_map_keys = 0
+let g:gitgutter_escape_grep = 1
+
+nmap [c <Plug>GitGutterPrevHunk
+nmap ]c <Plug>GitGutterNextHunk
+
+highlight GitGutterAdd          gui=bold guifg=#11ee11
+highlight GitGutterDelete       gui=bold guifg=#ee1111
+highlight GitGutterChange       gui=bold guifg=#eeee11
+highlight GitGutterChangeDelete gui=bold guifg=#eeee11
+
 " Gitv {{{2
 let g:Gitv_OpenHorizontal = 1
 
@@ -1577,19 +1589,6 @@ augroup END
 augroup ScreenShellExit
     autocmd User * call <SID>ScreenShellListener()
 augroup END
-
-" Signify {{{2
-let g:signify_vcs_list = ['git']
-let g:signify_sign_overwrite = 0
-
-call s:fakemap('<Plug>(signify-next-hunk)')
-call s:fakemap('<Plug>(signify-prev-hunk)')
-call s:fakemap('<Plug>(signify-toggle-highlight)')
-call s:fakemap('<Plug>(signify-toggle)')
-
-highlight SignifySignAdd    gui=bold guifg=#11ee11
-highlight SignifySignDelete gui=bold guifg=#ee1111
-highlight SignifySignChange gui=bold guifg=#eeee11
 
 " Sneak {{{2
 " let g:sneak#streak = 1
