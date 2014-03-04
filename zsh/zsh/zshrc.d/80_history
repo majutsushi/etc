@@ -17,8 +17,8 @@ setopt hist_ignore_all_dups
 setopt hist_ignore_space
 
 HISTFILE=$XDG_CACHE_HOME/zsh/history
-HISTSIZE=5000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 
 _hist_ignore_f() {
     cmd=(${(z)${1%%$'\n'}})
