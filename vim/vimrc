@@ -1598,18 +1598,19 @@ augroup END
 " highlight SneakStreakTarget guifg=#f5deb3 guibg=#cd853f gui=bold
 " highlight SneakStreakMask guifg=#cd853f guibg=#cd853f
 
-" nnoremap <silent> f      :<c-u>call sneak#wrap('', 1, 0, 0)<CR>
-" nnoremap <silent> F      :<c-u>call sneak#wrap('', 1, 1, 0)<CR>
-" xnoremap <silent> f <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 0, 1)<CR>
-" xnoremap <silent> F <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 1, 1)<CR>
-" onoremap <silent> f      :<C-u>call sneak#wrap(v:operator, 1, 0, 1)<CR>
-" onoremap <silent> F      :<C-u>call sneak#wrap(v:operator, 1, 1, 1)<CR>
-" nmap t <Plug>Sneak_t
-" nmap T <Plug>Sneak_T
-" xmap t <Plug>Sneak_t
-" xmap T <Plug>Sneak_T
-" omap t <Plug>Sneak_t
-" omap T <Plug>Sneak_T
+" nnoremap <silent> f      :<c-u>call sneak#wrap('', 1, 0, 1, 0)<CR>
+" nnoremap <silent> F      :<c-u>call sneak#wrap('', 1, 1, 1, 0)<CR>
+" xnoremap <silent> f <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 0, 1, 1)<CR>
+" xnoremap <silent> F <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 1, 1, 1)<CR>
+" onoremap <silent> f      :<C-u>call sneak#wrap(v:operator, 1, 0, 1, 1)<CR>
+" onoremap <silent> F      :<C-u>call sneak#wrap(v:operator, 1, 1, 1, 1)<CR>
+
+" nnoremap <silent> t      :<c-u>call sneak#wrap('', 1, 0, 0, 0)<CR>
+" nnoremap <silent> T      :<c-u>call sneak#wrap('', 1, 1, 0, 0)<CR>
+" xnoremap <silent> t <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 0, 0, 1)<CR>
+" xnoremap <silent> T <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 1, 0, 1)<CR>
+" onoremap <silent> t      :<C-u>call sneak#wrap(v:operator, 1, 0, 0, 1)<CR>
+" onoremap <silent> T      :<C-u>call sneak#wrap(v:operator, 1, 1, 0, 1)<CR>
 
 " Splice {{{2
 let g:splice_initial_diff_grid = 1
