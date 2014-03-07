@@ -17,6 +17,16 @@ bindkey '\e[F' end-of-line
 # also do history expansion on space
 bindkey ' ' magic-space
 
+# only search local history by default, and all history for isearch
+set-local-history() { zle .set-local-history }
+zle -N set-local-history
+zle-line-init()  { NUMERIC=1 zle set-local-history }
+zle -N zle-line-init
+zle-isearch-update() { NUMERIC=0 zle set-local-history }
+zle -N zle-isearch-update
+zle-isearch-exit()  { NUMERIC=1 zle set-local-history }
+zle -N zle-isearch-exit
+
 autoload up-line-or-beginning-search
 # hack to get zsh highlighting to work for this widget
 _up-line-or-beginning-search() { up-line-or-beginning-search }
@@ -31,7 +41,17 @@ bindkey '^n' down-line-or-beginning-search
 bindkey -M menuselect '^n' down-line-or-search
 
 if is-at-least 4.3; then
+    history-incremental-pattern-search-backward() {
+        NUMERIC=0 zle set-local-history
+        zle .history-incremental-pattern-search-backward "$@"
+    }
+    zle -N history-incremental-pattern-search-backward
     bindkey '^r' history-incremental-pattern-search-backward
+    history-incremental-pattern-search-forward() {
+        NUMERIC=0 zle set-local-history
+        zle .history-incremental-pattern-search-forward "$@"
+    }
+    zle -N history-incremental-pattern-search-forward
     bindkey '^s' history-incremental-pattern-search-forward
 fi
 
