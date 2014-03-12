@@ -340,6 +340,8 @@ unset markers           # put a '+' at the beginning of wrapped lines.
   set pager_stop        # Don't jump to next message at end of message.
 unset prompt_after      # display prompt after exit from pager
   set quote_regexp="^( {0,4}[a-z0-9]*[>|])+"
+  set reflow_text
+  set reflow_wrap=72
   set smart_wrap        # wrap long lines at word boundary.
   set smileys="(>From )|(:[-^]?[][)(><}{|/DP])"
   set tilde             # Internal Pager: ~~~~ at and of message?
@@ -371,11 +373,10 @@ message-hook '~h "X-Mailer: Apple Mail"' 'unalternative_order *; alternative_ord
 # =============================================================================
 # sidebar {{{
 
-#   set sidebar_boundary="._-"
+  set sidebar_delim=" "
+  set sidebar_delim_chars="./"
 # unset sidebar_newmail_only
-# unset sidebar_shorten_hierarchy
 unset sidebar_sort
-  set sidebar_shortpath
   set sidebar_visible
   set sidebar_width=40
 
@@ -697,7 +698,8 @@ color message   $my_white  $my_background  # info messages
 color error     $my_white  color196        # error messages
 
 # color sidebar     white    default
-color sidebar_new $my_red   $my_background
+color sidebar_new     $my_red   $my_background
+color sidebar_flagged $my_yellow   $my_background
 
 # }}}
 # =============================================================================
