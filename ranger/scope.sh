@@ -3,6 +3,8 @@
 # is set to True (by default it's False), this script will be called
 # and its output is displayed in ranger.  ANSI color codes are supported.
 
+shopt -s nocasematch
+
 # NOTES: This script is considered a configuration file.  If you upgrade
 # ranger, it will be left untouched. (You must update it yourself.)
 # Also, ranger disables STDIN here, so interactive scripts won't work properly
@@ -38,6 +40,12 @@ dump() { echo "$output"; }
 
 # a common post-processing function used after most commands
 trim() { head -n "$maxln"; }
+
+case "$path" in
+    *.pcap|*.pcapng|*.pcap.gz|*.pcapng.gz)
+        try tshark -r "$path" && { dump | trim; exit 0; }
+        ;;
+esac
 
 case "$extension" in
     jar)

@@ -17,6 +17,8 @@ PYG="pygmentize -f terminal256 -O style=desert"
 
 (
     case $(echo "$1" | tr '[:upper:]' '[:lower:]') in
+        *.pcap|*.pcapng|*.pcap.gz|*.pcapng.gz)
+            have tshark && tshark -r "$1" && exit 0;;&
         *.jar)
             have deepjarlist && deepjarlist "$1" && exit 0;;&
         *.jar|*.war|*.ear|*.xpi|*.zip)
