@@ -2083,8 +2083,8 @@ inoremap <M-l> <Esc>la
 inoremap <M-k> <Esc>gka
 inoremap <M-j> <Esc>gja
 
-" display the number of matches of current search pattern
-nnoremap g/ :%s/<C-R>=&ignorecase ? '\c' : '\C'<CR><C-R>///gne<CR>
+" Populate the quickfix window with the last search
+nnoremap <silent> g/ :execute 'vimgrep /' . @/ . '/g %'<CR>:call qftoggle#openqfwin()<CR>
 
 " search for visually selected text
 " http://vimcasts.org/episodes/search-for-the-selected-text/

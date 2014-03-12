@@ -20,14 +20,18 @@ function! qftoggle#toggle() abort
         let s:quickfix_is_open = 0
         execute s:quickfix_return_to_window . "wincmd w"
     else
-        let s:quickfix_return_to_window = winnr()
-        if &lines / 4 < 10
-            botright copen 10
-        else
-            execute 'botright copen ' . &lines / 4
-        endif
-        let s:quickfix_is_open = 1
+        call qftoggle#openqfwin()
     endif
+endfunction
+
+function! qftoggle#openqfwin() abort
+    let s:quickfix_return_to_window = winnr()
+    if &lines / 4 < 10
+        botright copen 10
+    else
+        execute 'botright copen ' . &lines / 4
+    endif
+    let s:quickfix_is_open = 1
 endfunction
 
 function! qftoggle#isqfwin() abort
