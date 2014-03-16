@@ -141,6 +141,8 @@ awful.menu.menu_keys = {
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+menubar.show_categories = false
+menubar.menu_gen.all_menu_dirs = { os.getenv('XDG_DATA_HOME') .. '/applications/', '/usr/share/applications/', '/usr/local/share/applications/' }
 
 -- applications menu
 require('freedesktop.utils')
