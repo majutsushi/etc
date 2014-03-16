@@ -32,7 +32,7 @@ _simplify_cmd() {
 # http://git.madduck.net/v/etc/zsh.git/blob/HEAD:/.zsh/zshrc/85_xtermtitle
 _update_exec_titles() {
     # split up the command line
-    local -a cmd; cmd=(${(z)2})
+    local -a cmd; cmd=(${(z)3})
 
     # Construct a command that will output the desired job number.
     case $cmd[1] in
