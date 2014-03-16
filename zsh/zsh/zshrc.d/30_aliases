@@ -34,6 +34,14 @@ alias ls="LC_COLLATE=POSIX ls $_ls_opts"
 alias ll="ls -l"
 alias l="ls -lA"
 
+# list recent files, based on
+# http://www.zsh.org/mla/users/2014/msg00326.html
+lr() {
+    (){
+        l -r --sort=time "${(u)@}"
+    } *(N./mh-${1:-24}) *(N./Om[-${2:-10},-1])
+}
+
 if is_root; then
     INTERACTIVE="-i"
 fi
