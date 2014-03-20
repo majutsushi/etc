@@ -24,4 +24,9 @@ highlight HintElem   background: rgba(255, 209, 20, 0.7) !important;
 "cmap -builtin <C-b> <Left>
 "cmap -builtin <C-f> <Right>
 
+map <A-t> -javascript <<EOF
+let (pref = "extensions.treestyletab.tabbar.position")
+    prefs.set(pref, prefs.get(pref) == "left" ? "top" : "left")
+EOF
+
 " vim: set ft=pentadactyl:
