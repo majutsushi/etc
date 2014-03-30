@@ -136,4 +136,48 @@ function _jump_after_first_word() {
 zle -N _jump_after_first_word
 bindkey '^X1' _jump_after_first_word
 
+help-glob() {
+    zle -M "\
+    /   directories               *      executable plain files
+    .   plain files               r,w,x  owner-readable/writable/executable
+    @   symbolic links            A,I,E  group-readable/writable/executable
+    =   sockets                   R,W,X  world-readable/writable/executable
+    p   named pipes (FIFOs)       s,S,t  setuid/setgid/sticky files
+    %   device files              f[+=-]NNN   files with access rights +/-/= NNN
+    %b  block special files       U,G         owned by effective (U)ser/(G)roup
+    %c  character special files   {u,g}NNN    owned by user, group id 'NNN'
+                                  {u,g}:name: owned by user, group name 'name'
+
+    m[dMwhms][-|+]n files modified up to (-) or before (+) n
+                    days/months/weeks/hours/minutes/seconds (ago)
+    i,I    case insensitive/sensitive
+    ^      negates all qualifiers following it
+    -      operate on symlink targets
+    N      sets the NULL_GLOB option for the current pattern
+    D      sets the GLOB_DOTS option for the current pattern
+    oc     sort by c: name(n)/size(L)/modification time(m)/subdirs first(d)
+    Oc     same as above, but descending
+    [beg[,end]] limit list of returned filenames
+    ,      separate 'or'ed qualifiers
+
+    Pstring   prepend: *(P:-f:) --> -f file1 -f file2
+    estring   execute string as shell code
+
+  print *(m-1)          # Files modified up to a day ago
+  print *(a1)           # Files accessed a day ago
+  print *(@)            # Just symlinks
+  print *(Lk+50)        # Files bigger than 50 kilobytes
+  print *(Lk-50)        # Files smaller than 50 kilobytes
+  print **/*.c          # All *.c files recursively starting in \$PWD
+  print **/*.c~file.c   # Same as above, but excluding 'file.c'
+  print (foo|bar).*     # Files starting with 'foo' or 'bar'
+  print *~*.*           # All Files that do not contain a dot
+  chmod 644 *(.^x)      # make all plain non-executable files publically readable
+  print -l *(.c|.h)     # Lists *.c and *.h
+  print **/*(g:users:)  # Recursively match all files that are owned by group 'users'
+  echo /proc/*/cwd(:h:t:s/self//) # Analogous to >ps ax | awk '{print $1}'<"
+}
+zle -N help-glob
+bindkey '^Xg' help-glob
+
 # vim: filetype=zsh
