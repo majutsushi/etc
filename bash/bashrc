@@ -1,12 +1,16 @@
 # minimal bashrc for starting zsh or in case zsh is not available
 
-[[ -r /etc/bash.bashrc ]] && . /etc/bash.bashrc
-[[ -r /etc/bashrc ]] && . /etc/bashrc
+source_if_exists() {
+    [[ -r $1 ]] && . $1
+}
 
-[[ -r ~/.local/etc/bashenv ]] && . ~/.local/etc/bashenv
+source_if_exists /etc/bash.bashrc
+source_if_exists /etc/bashrc
+
+source_if_exists ~/.local/etc/bashenv
 
 # If not running interactively stop here
-[[ ! $- == *i* ]] && return
+[[ ! $- == *i* ]] && unset -f source_if_exists && return
 
 # disable XON/XOFF flow control (^s/^q)
 stty ixoff
@@ -18,9 +22,7 @@ export HISTFILE=$HOME/.cache/bash_history
 export HISTFILESIZE=100000
 shopt -s histappend
 
-if [[ -f /usr/share/bash-completion/bash_completion ]]; then
-    . /usr/share/bash-completion/bash_completion
-fi
+source_if_exists /usr/share/bash-completion/bash_completion
 
 umask 0022
 
@@ -38,7 +40,9 @@ alias ll='ls -lF --color=auto'
 alias l='ls -lAF --color=auto'
 alias vi=vim
 
-[[ -r ~/.local/etc/bashrc ]] && . ~/.local/etc/bashrc
+source_if_exists ~/.local/etc/bashrc
+
+unset -f source_if_exists
 
 if shopt -q login_shell && command -v zsh &>/dev/null; then
     exec zsh -l
