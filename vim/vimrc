@@ -1441,6 +1441,7 @@ omap T <Plug>(easymotion-Tl)
 
 " Eclim {{{2
 let g:EclimLoggingDisabled = 1
+let g:EclimCompletionMethod = 'omnifunc'
 
 " expand-region {{{2
 let g:expand_region_text_objects = {
