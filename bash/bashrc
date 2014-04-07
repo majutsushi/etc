@@ -3,8 +3,10 @@
 [[ -r /etc/bash.bashrc ]] && . /etc/bash.bashrc
 [[ -r /etc/bashrc ]] && . /etc/bashrc
 
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+[[ -r ~/.local/etc/bashenv ]] && . ~/.local/etc/bashenv
+
+# If not running interactively stop here
+[[ ! $- == *i* ]] && return
 
 # disable XON/XOFF flow control (^s/^q)
 stty ixoff
@@ -36,13 +38,8 @@ alias ll='ls -lF --color=auto'
 alias l='ls -lAF --color=auto'
 alias vi=vim
 
-if [[ -f ~/.local/etc/bashrc ]]; then
-    . ~/.local/etc/bashrc
-fi
+[[ -r ~/.local/etc/bashrc ]] && . ~/.local/etc/bashrc
 
-case $- in
-    *i*) if shopt -q login_shell && command -v zsh &>/dev/null; then
-             exec zsh -l
-         fi
-         ;;
-esac
+if shopt -q login_shell && command -v zsh &>/dev/null; then
+    exec zsh -l
+fi
