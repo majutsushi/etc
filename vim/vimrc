@@ -1929,6 +1929,33 @@ let &t_te = s:get_escape('normal') . &t_te
 
 " Mappings {{{1
 
+" Readline behaviour {{{2
+" Mostly taken from
+" https://github.com/tpope/vim-rsi/blob/master/plugin/rsi.vim
+inoremap        <C-a> <C-o>^
+inoremap   <C-x><C-a> <C-a>
+cnoremap        <C-a> <Home>
+cnoremap   <C-x><C-a> <C-a>
+
+inoremap <expr> <C-b> getline('.')=~'^\s*$'&&col('.')>strlen(getline('.'))?"0\<Lt>C-d>\<Lt>Esc>kJs":"\<Lt>Left>"
+cnoremap        <C-b> <Left>
+
+inoremap <expr> <C-d> col('.')>strlen(getline('.'))?"\<Lt>C-d>":"\<Lt>Del>"
+cnoremap <expr> <C-d> getcmdpos()>strlen(getcmdline())?"\<Lt>C-d>":"\<Lt>Del>"
+
+inoremap <expr> <C-e> col('.')>strlen(getline('.'))\|\|pumvisible()?"\<Lt>C-e>":"\<Lt>End>"
+
+inoremap <expr> <C-f> col('.')>strlen(getline('.'))?"\<Lt>C-f>":"\<Lt>Right>"
+cnoremap <expr> <C-f> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
+
+noremap! <M-b> <S-Left>
+noremap! <M-d> <C-O>dw
+cnoremap <M-d> <S-Right><C-W>
+noremap! <M-BS> <C-W>
+noremap! <M-f> <S-Right>
+noremap! <M-n> <Down>
+noremap! <M-p> <Up>
+
 " Buffers/Files/Tabs {{{2
 
 " Fast open a buffer by searching for a name
@@ -1999,8 +2026,6 @@ nnoremap <silent> gW :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
 " have Y behave analogously to D and C rather than to dd and cc (which is
 " already done by yy):
 nnoremap Y y$
-
-inoremap <C-D> <Del>
 
 nnoremap Q gqip
 
@@ -2073,11 +2098,6 @@ nnoremap k gk
 xnoremap j gj
 xnoremap k gk
 
-" emacs-like c-a/c-e movement
-inoremap        <c-a> <esc>0i
-inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : "\<esc>$a"
-inoremap        <c-b> <left>
-
 " move around in insert mode
 inoremap <M-h> <Esc>i
 inoremap <M-l> <Esc>la
@@ -2144,20 +2164,10 @@ nnoremap <silent> <leader>q :call qftoggle#toggle()<cr>
 
 " Command line {{{2
 
-" emacs-like keys in command line
-cnoremap <C-A> <Home>
-cnoremap <C-E> <End>
-
-cnoremap <C-B> <Left>
-cnoremap <C-F> <Right>
-
-cnoremap <C-D> <Del>
-
-cnoremap <C-P> <Up>
-cnoremap <C-N> <Down>
-
-"cnoremap <Esc><C-B>     <S-Left>
-"cnoremap <Esc><C-F>     <S-Right>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <M-p> <C-p>
+cnoremap <M-n> <C-n>
 
 " expand %% to current directory
 " cabbrev <expr> %% expand('%:~:h')
