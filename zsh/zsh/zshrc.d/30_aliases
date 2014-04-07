@@ -66,7 +66,7 @@ alias diffstat="diffstat -C"
 
 # execute last command as root
 alias fu='sudo $(fc -ln -1) '
-alias tree='tree --dirsfirst -F -A'
+alias t='tree --dirsfirst -F -A -p -h --du'
 
 alias da='du -sch'
 alias g="grep"
@@ -78,7 +78,7 @@ alias pa='ps aux | less'
 alias pu='ps ux | less'
 alias r='ranger'
 alias rot13='tr a-zA-Z n-za-mN-ZA-M'
-alias t='noglob task'
+alias ta='noglob task'
 alias vi='vim'
 alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
 alias x='extract'
