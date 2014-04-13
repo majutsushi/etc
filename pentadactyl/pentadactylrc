@@ -7,6 +7,7 @@ group user
 set guioptions=bCrsTn
 set hintkeys=asdfg;lkjh
 set showstatuslinks=command
+set hlfind
 
 set passkeys+=mail.google.com:'!#*+-./<C-Down><C-s><Enter>?INU[]acefjk lmnopqrsuvxyz',*a,*n,*r,*s,*t,*u,ga,gc,gd,gi,gl,gs,gt,yo
 set strictfocus+=mail.google.com:laissez-faire
@@ -21,8 +22,12 @@ highlight HintElem   background: rgba(255, 209, 20, 0.7) !important;
 "highlight CmdOutput  font: normal 14px 'Menlo' !important;
 "highlight CompItem   font: normal 14px 'Menlo' !important;
 
+highlight Find   background: #d6c149; color: #000;
+
 "cmap -builtin <C-b> <Left>
 "cmap -builtin <C-f> <Right>
+
+nmap -builtin <C-l> <Esc>:nohlfind<CR><C-l>
 
 map <A-t> -javascript <<EOF
 let (pref = "extensions.treestyletab.tabbar.position")
