@@ -52,9 +52,6 @@
 [submodule "vim/vim/bundle/csapprox"]
 	path = vim/vim/bundle/csapprox
 	url = https://github.com/godlygeek/csapprox.git
-[submodule "vim/vim/bundle/clang_complete"]
-	path = vim/vim/bundle/clang_complete
-	url = https://github.com/Rip-Rip/clang_complete.git
 [submodule "vim/vim/bundle/vim-orgmode"]
 	path = vim/vim/bundle/vim-orgmode
 	url = https://github.com/jceb/vim-orgmode.git
@@ -73,10 +70,6 @@
 [submodule "vim/vim/bundle/protodef"]
 	path = vim/vim/bundle/protodef
 	url = https://github.com/derekwyatt/vim-protodef.git
-[submodule "vim/vim/bundle/xptemplate"]
-	path = vim/vim/bundle/xptemplate
-	url = https://github.com/drmingdrmer/xptemplate.git
-	ignore = dirty
 [submodule "vim/vim/bundle/vim-gnupg"]
 	path = vim/vim/bundle/vim-gnupg
 	url = git://gitorious.org/vim-gnupg/vim-gnupg.git
@@ -131,9 +124,6 @@
 [submodule "vim/vim/bundle/visincr"]
 	path = vim/vim/bundle/visincr
 	url = https://github.com/vim-scripts/VisIncr.git
-[submodule "vim/vim/bundle/jedi-vim"]
-	path = vim/vim/bundle/jedi-vim
-	url = https://github.com/davidhalter/jedi-vim.git
 [submodule "vim/vim/bundle/vim-commentary"]
 	path = vim/vim/bundle/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
@@ -167,3 +157,9 @@
 [submodule "vim/vim/bundle/vim-gitgutter"]
 	path = vim/vim/bundle/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "vim/vim/bundle/YouCompleteMe"]
+	path = vim/vim/bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule "vim/vim/bundle/ultisnips"]
+	path = vim/vim/bundle/ultisnips
+	url = https://github.com/SirVer/ultisnips.git

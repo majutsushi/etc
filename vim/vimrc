@@ -4,9 +4,6 @@ set encoding=utf-8
 let mapleader=","
 
 let g:pathogen_disabled = []
-if !has('python') || !executable('clang')
-    let g:pathogen_disabled += ['clang_complete']
-endif
 if v:version < 703
     let g:pathogen_disabled += ['gundo']
 endif
@@ -15,7 +12,6 @@ if !has('gui') && v:version < 703
 endif
 
 call pathogen#infect('bundle/{}', '~/src/vim/bundle/{}')
-set runtimepath+=$HOME/.vim/xptpersonal
 
 if !isdirectory($HOME . "/.cache/vim") && exists("*mkdir")
     call mkdir($HOME . "/.cache/vim")
@@ -1546,9 +1542,8 @@ let g:protodefctagsexe = g:ctagsbin
 let g:quickfixsigns_classes = ['qfl', 'loc', 'marks', 'breakpoints']
 let g:quickfixsigns_blacklist_buffer = '\v(^__.*__$)|(^NERD_tree.*)|(^$)'
 let g:quickfixsigns_icons = {}
-" exclude 'p' and 'l' because of xptemplate
-" also exclude "'." from buffer and "<>^" from global
-let g:quickfixsigns#marks#buffer = split('abcdefghijkmnoqrstuvwxyz', '\zs')
+" exclude "'." from buffer and "<>^" from global
+let g:quickfixsigns#marks#buffer = split('abcdefghijklmnopqrstuvwxyz', '\zs')
 let g:quickfixsigns#marks#global = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '\zs')
 let g:quickfixsigns#vcsdiff#highlight = {'ADD' : 'QFS_ADD',
                                        \ 'DEL' : 'QFS_DEL',
@@ -1661,6 +1656,14 @@ let html_number_lines = 0
 let use_xhtml = 1
 let html_ignore_folding = 1
 
+" UltiSnips {{{2
+let g:UltiSnipsExpandTrigger = "<C-l>"
+let g:UltiSnipsJumpForwardTrigger = "<C-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
+let g:UltiSnipsListSnippets = "<C-h>"
+let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
+let g:snips_author = 'Jan Larres <jan@majutsushi.net>'
+
 " UTL {{{2
 let g:utl_cfg_hdl_scm_http_system = "silent !xdg-open '%u'"
 
@@ -1704,17 +1707,6 @@ autocmd BufNewFile Makefile Vimplate Makefile-C
 let g:voom_tab_key = '<C-Tab>'
 let g:voom_verify_oop = 1
 let g:voom_user_command = "runtime! voom_addons/*.vim"
-
-" xptemplate {{{2
-let g:xptemplate_key = '<Tab>'
-let g:xptemplate_always_show_pum = 0
-"let g:xptemplate_brace_complete = '([{'
-let g:xptemplate_brace_complete = ''
-let g:xptemplate_minimal_prefix = 1
-let g:xptemplate_pum_tab_nav = 1
-let g:xptemplate_strict = 0
-let g:xptemplate_highlight='following,next'
-let g:xptemplate_vars = '$author=Jan Larres&$email=jan@majutsushi.net'
 
 " ZoomWin {{{2
 let g:zoomwin_stl = ''
@@ -1769,8 +1761,7 @@ endif
 " s:MapMetaChars() {{{2
 function! s:MapMetaChars() abort
     let metachars  = '0123456789'
-    " remove g/ç as it conflicts with xptemplate
-    let metachars .= 'abcdefhijklmnopqrstuvwxyz'
+    let metachars .= 'abcdefghijklmnopqrstuvwxyz'
     let metachars .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     let metachars .= '+-='
 
@@ -1994,8 +1985,8 @@ xmap <C-Space> <Plug>(expand_region_expand)
 
 " for popup-menu completion
 " http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
-inoremap <expr> <C-x><C-o> pumvisible() ? '<C-x><C-o>' : '<C-x><C-o><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-inoremap <expr> <C-n>      pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" inoremap <expr> <C-x><C-o> pumvisible() ? '<C-x><C-o>' : '<C-x><C-o><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" inoremap <expr> <C-n>      pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 " http://vim.wikia.com/wiki/Improve_completion_popup_menu
 " inoremap <expr> <Esc>      pumvisible() ? "\<C-E>" : "\<Esc>"
 if v:version > 703 || v:version == 703 && has("patch489")
@@ -2008,14 +1999,11 @@ endif
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>"   : "\<PageUp>"
 
-" insert mode completion
-" inoremap <C-]> <C-X><C-]>
 inoremap <C-F> <C-X><C-F>
-"inoremap <C-D> <C-X><C-D>
-inoremap <C-L> <C-X><C-L>
 
 " create undo break points
-inoremap <C-U> <C-G>u<C-U>
+inoremap <C-u> <C-g>u<C-u>
+inoremap <C-w> <C-g>u<C-w>
 
 " Uppercase word
 inoremap <M-u> <Esc>gUiwea
