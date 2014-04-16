@@ -156,7 +156,6 @@ xlink pentadactyl/pentadactyl
 xlink vim/vimrc
 xlink vim/gvimrc
 xlink vim/vim
-xlink vim/vimplaterc
 
 merge crontab/crontab target=/tmp/crontab$$
 crontab /tmp/crontab$$
