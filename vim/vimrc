@@ -2086,6 +2086,9 @@ xnoremap <silent> [[ ?{<CR>w99[{:<C-U>nohl<CR>gv
 xnoremap <silent> ][ j0?{<CR>w99[{%/{<CR>:<C-U>nohl<CR>gv
 xnoremap <silent> ]] ][
 
+nnoremap ' `
+nnoremap ` '
+
 " move into wrapped lines
 nnoremap j gj
 nnoremap k gk
