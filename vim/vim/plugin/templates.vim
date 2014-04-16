@@ -28,10 +28,12 @@ function! s:load_template() abort
     let report_save = &report
     set report=99999
 
-    %substitute/\(\s*\){%\(\S*\)\_s\+\(\_.\{-}\)\_s*\(\S*\)%}\(\s*\n\?\)/\=s:exec(submatch(1), submatch(2), submatch(3), submatch(4), submatch(5))/ge
-    %substitute/{{\s\+\(.\{-}\)\s\+}}/\=eval(submatch(1))/ge
-
-    let &report = report_save
+    try
+        %substitute/\(\s*\){%\(\S*\)\_s\+\(\_.\{-}\)\_s*\(\S*\)%}\(\s*\n\?\)/\=s:exec(submatch(1), submatch(2), submatch(3), submatch(4), submatch(5))/ge
+        %substitute/{{\s\+\(.\{-}\)\s\+}}/\=eval(submatch(1))/ge
+    finally
+        let &report = report_save
+    endtry
 
     normal! G
 endfunction
