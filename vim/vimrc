@@ -42,28 +42,30 @@ unlet ctagsbins
 " Autocommands {{{1
 
 " remove all autocommands to avoid sourcing them twice
-autocmd!
+augroup vimrc
+    autocmd!
+augroup END
 
 set cursorline
-autocmd InsertLeave * set cursorline
-autocmd InsertEnter * set nocursorline
+autocmd vimrc InsertLeave * set cursorline
+autocmd vimrc InsertEnter * set nocursorline
 
-autocmd StdinReadPost * set buftype=nofile
+autocmd vimrc StdinReadPost * set buftype=nofile
 
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
 " screwing up folding when switching between windows.
-autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+autocmd vimrc InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+autocmd vimrc InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 
 " inspired by https://github.com/kana/vim-tabpagecd
-autocmd TabEnter * if exists('t:cwd') | execute 'cd ' . fnameescape(t:cwd) | endif
-autocmd TabLeave * let t:cwd = getcwd()
+autocmd vimrc TabEnter * if exists('t:cwd') | execute 'cd ' . fnameescape(t:cwd) | endif
+autocmd vimrc TabLeave * let t:cwd = getcwd()
 
-autocmd BufNewFile,BufWritePre * call AutoMkDir()
+autocmd vimrc BufNewFile,BufWritePre * call AutoMkDir()
 
 " create undo break point
-autocmd CursorHoldI * call feedkeys("\<C-G>u", "nt")
+autocmd vimrc CursorHoldI * call feedkeys("\<C-G>u", "nt")
 
 " When switching buffers, preserve window view.
 function! IsNotSpecialBuf(buf) abort
@@ -76,31 +78,34 @@ function! IsNotSpecialBuf(buf) abort
           \ (bufname(a:buf) !~ "fugitive*"))
 endfunction
 if v:version >= 700
-    autocmd BufLeave * if(IsNotSpecialBuf("%")) | let b:winview = winsaveview() | endif
-    autocmd BufEnter * if(exists('b:winview') && IsNotSpecialBuf("%")) | call winrestview(b:winview) | endif
+    autocmd vimrc BufLeave * if IsNotSpecialBuf("%") | let b:winview = winsaveview() | endif
+    autocmd vimrc BufEnter * if (exists('b:winview') && IsNotSpecialBuf("%")) | call winrestview(b:winview) | endif
 endif
 
 " automatically give executable permissions if file begins with #!
 " and contains" '/bin/' in the path
 " From https://github.com/mitechie/pyvim/blob/master/.vimrc
-autocmd BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 'silent !chmod u+x <afile>' | endif | endif
+autocmd vimrc BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 'silent !chmod u+x <afile>' | endif | endif
 
 " filetype-specific settings
-autocmd FileType make      setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=0
-autocmd FileType gtkrc     setlocal tabstop=2 shiftwidth=2 softtabstop=2
-autocmd FileType haskell   compiler ghc
-autocmd FileType ruby      setlocal omnifunc=rubycomplete#Complete
-autocmd FileType gitcommit setlocal textwidth=72
+augroup vimrc
+    autocmd FileType make      setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=0
+    autocmd FileType gtkrc     setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType haskell   compiler ghc
+    autocmd FileType ruby      setlocal omnifunc=rubycomplete#Complete
+    autocmd FileType gitcommit setlocal textwidth=72
+augroup END
 
 augroup commentstrings
+    autocmd!
     autocmd FileType cpp  setlocal commentstring=//%s
     autocmd FileType tmux setlocal commentstring=#%s
 augroup END
 
-autocmd BufNewFile,BufReadPost *mutt/fortunes* setlocal textwidth=76
-autocmd BufWritePost           *mutt/fortunes* silent !strfile <afile> >/dev/null
+autocmd vimrc BufNewFile,BufReadPost *mutt/fortunes* setlocal textwidth=76
+autocmd vimrc BufWritePost           *mutt/fortunes* silent !strfile <afile> >/dev/null
 
-autocmd BufReadPost emacsfilevars.vim let b:emacs_ignore_file = 1
+autocmd vimrc BufReadPost emacsfilevars.vim let b:emacs_ignore_file = 1
 
 " Statusline {{{1
 " Adapted from https://github.com/Lokaltog/sync/blob/master/vim/vimrc
@@ -268,7 +273,7 @@ function! s:recompute_stl_ws() abort
         let b:statusline_tab_warning = ''
     endif
 endfunction
-autocmd BufReadPost,CursorHold,BufWritePost * call s:recompute_stl_ws()
+autocmd vimrc BufReadPost,CursorHold,BufWritePost * call s:recompute_stl_ws()
 " StatuslineETString() {{{3
 function! StatuslineETString(error) abort
     if !exists('b:statusline_tab_warning')
@@ -296,7 +301,7 @@ function! StatuslineTrailingSpaceWarning()
     endif
     return b:statusline_trailing_space_warning
 endfunction
-autocmd CursorHold,BufWritePost * unlet! b:statusline_trailing_space_warning
+autocmd vimrc CursorHold,BufWritePost * unlet! b:statusline_trailing_space_warning
 
 " EclimErrorIndicator() {{{3
 function! EclimErrorIndicator() abort
@@ -732,7 +737,7 @@ function! LoadLocalVimrcs()
         endif
     endfor
 endfunction
-autocmd BufNewFile,BufReadPost * call LoadLocalVimrcs()
+autocmd vimrc BufNewFile,BufReadPost * call LoadLocalVimrcs()
 
 " QfDo() {{{2
 " http://stackoverflow.com/questions/4792561/how-to-do-search-replace-with-ack-in-vim
@@ -905,7 +910,7 @@ function! Timestamp()
         endif
     endfor
 endfunction
-autocmd BufWritePre * call Timestamp()
+autocmd vimrc BufWritePre * call Timestamp()
 
 " ToggleExpandTab() {{{2
 function! ToggleExpandTab()
@@ -1458,16 +1463,18 @@ let g:expand_region_text_objects = {
 " FSwitch {{{2
 nnoremap <silent> go :FSHere<cr>
 
-autocmd BufEnter *.c        let b:fswitchdst  = 'h'
-autocmd BufEnter *.c        let b:fswitchlocs = './'
-autocmd BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
-autocmd BufEnter *.cpp,*.cc let b:fswitchlocs = './'
-autocmd BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
-autocmd BufEnter *.h        let b:fswitchlocs = './'
+augroup vimrc
+    autocmd BufEnter *.c        let b:fswitchdst  = 'h'
+    autocmd BufEnter *.c        let b:fswitchlocs = './'
+    autocmd BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
+    autocmd BufEnter *.cpp,*.cc let b:fswitchlocs = './'
+    autocmd BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
+    autocmd BufEnter *.h        let b:fswitchlocs = './'
+augroup END
 
 " Fugitive {{{2
 " automatically delete fugitive buffers when leaving them
-autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd vimrc BufReadPost fugitive://* set bufhidden=delete
 
 " gitgutter {{{2
 let g:gitgutter_map_keys = 0
@@ -1513,7 +1520,7 @@ let NERDTreeIgnore = [
     \ '\.pdf$'
 \ ]
 
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd vimrc BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " s:toggle_nerdtree() {{{3
 function! s:toggle_nerdtree() abort
@@ -1580,9 +1587,11 @@ endfunction
 
 nnoremap <silent> <leader>ss :ScreenShellVertical<cr>
 augroup ScreenShellEnter
+    autocmd!
     autocmd User * call <SID>ScreenShellListener()
 augroup END
 augroup ScreenShellExit
+    autocmd!
     autocmd User * call <SID>ScreenShellListener()
 augroup END
 
@@ -1875,7 +1884,7 @@ endfunction
 if &term =~ '^xterm\|rxvt\|screen'
     let &t_ts = "\<Esc>]0;"
     let &t_fs = "\<Esc>\\"
-    autocmd BufEnter * let &titlestring = s:get_screen_title()
+    autocmd vimrc BufEnter * let &titlestring = s:get_screen_title()
 endif
 
 
