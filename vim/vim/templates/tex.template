@@ -1,10 +1,12 @@
-[% title=input('Title: ')
-   class=choice('Class: ', 'article', 'scrartcl', 'book', 'scrbook', 'scrlttr2')
--%]
-% [% filename %] -- [% title %]
-% Author:       [% user.firstname %] [% user.lastname %] <[% user.mail %]>
-% Created:      [% date('%Y-%m-%d %H:%M:%S %z %Z') %]
-% Last changed: [% date('%Y-%m-%d %H:%M:%S %z %Z') %]
+{% let s:title = input('Title: ')
+   let classes = ['article', 'scrartcl', 'book', 'scrbook', 'scrlttr2']
+   let class = confirm("Class: ", "&article\n&scrartcl\n&book\nscrb&ook\nscr&lttr2", 2)
+   let s:class = classes[class == 0 ? 1 : (class - 1)]
+%}
+% {{ s:title }}
+% Author:       {{ g:user_name }} <{{ g:user_email }}>
+% Created:      {{ strftime('%Y-%m-%d %H:%M:%S %z %Z') }}
+% Last changed: {{ strftime('%Y-%m-%d %H:%M:%S %z %Z') }}
 
 % Class {{{1
 \documentclass[
@@ -20,7 +22,7 @@
 %    chapterprefix,
 %    bibtotoc,
 %    draft,
-]{[% class %]}
+]{{{ s:class }}}
 % \documentclass[fontsize=12pt,paper=a4]{scrlttr2}
 
 % Packages {{{1
@@ -172,8 +174,8 @@
 %    pdftoolbar=true,         % show Acrobat’s toolbar?
 %    pdfmenubar=true,         % show Acrobat’s menu?
 %    pdffitwindow=true,       % page fit to window when opened
-     pdftitle={[% title %]},  % title
-     pdfauthor={[% user.firstname %] [% user.lastname %]},      % author
+     pdftitle={{{ s:title }}},  % title
+     pdfauthor={{{ g:user_name }}},      % author
 %    pdfsubject={Subject},    % subject of the document
 %    pdfcreator={Creator},    % creator of the document
 %    pdfproducer={Producer},  % producer of the document
@@ -222,9 +224,9 @@
 \newcommand{\janmn}{\email{jan@majutsushi.net}}
 
 
-\author{[% user.firstname %]~[% user.lastname %]\\\janmn}
-%\author{[% user.firstname %]~[% user.lastname %]}
-\title{[% title %]}
+\author{{{ g:user_name }}\\\janmn}
+%\author{{{ g:user_name }}}
+\title{{{ s:title }}}
 
 % Document {{{1
 
@@ -240,7 +242,6 @@
 %\listoftables
 
 
-<+CURSOR+>
 
 
 % Backmatter {{{1

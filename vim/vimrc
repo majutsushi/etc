@@ -3,6 +3,9 @@ set nocompatible
 set encoding=utf-8
 let mapleader=","
 
+let g:user_name = "Jan Larres"
+let g:user_email = "jan@majutsushi.net"
+
 let g:pathogen_disabled = []
 if v:version < 703
     let g:pathogen_disabled += ['gundo']
@@ -1700,17 +1703,6 @@ nmap <silent> gj <Plug>(vertical_move_down)
 nmap <silent> gk <Plug>(vertical_move_up)
 xmap <silent> gj <Plug>(vertical_move_down)
 xmap <silent> gk <Plug>(vertical_move_up)
-
-" vimplate {{{2
-let Vimplate = expand('~/.vim/bundle/vimplate/vimplate')
-
-" setup templates
-autocmd BufNewFile *.tex Vimplate LaTeX
-autocmd BufNewFile *.sh Vimplate shell
-autocmd BufNewFile *.c Vimplate c
-autocmd BufNewFile *.vim Vimplate vim
-autocmd BufNewFile *.rb Vimplate ruby
-autocmd BufNewFile Makefile Vimplate Makefile-C
 
 " voom {{{2
 let g:voom_tab_key = '<C-Tab>'
