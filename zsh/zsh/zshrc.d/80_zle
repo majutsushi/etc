@@ -133,6 +133,26 @@ autoload insert-unicode-char
 zle -N insert-unicode-char
 bindkey '^Xi' insert-unicode-char
 
+
+# http://zshwiki.org/home/examples/zleiab
+typeset -Ag abbreviations
+abbreviations=(
+    'L'  '| less'
+    'G'  '| grep'
+    'ND' '*(/om[1])' # newest directory
+    'NF' '*(.om[1])' # newest file
+)
+magic-abbrev-expand() {
+    local MATCH
+    LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
+    LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
+    zle self-insert
+}
+zle -N magic-abbrev-expand
+bindkey ' ' magic-abbrev-expand
+bindkey -M isearch ' ' self-insert
+
+
 # jump behind the first word on the cmdline to add options
 function _jump_after_first_word() {
     local words
