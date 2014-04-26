@@ -3,24 +3,25 @@
 # and
 # http://git.madduck.net/v/etc/zsh.git/blob/HEAD:/.zsh/zshrc/60_vcsprompt
 
-PV_REFS_PREFIX=" • "
+__pv_refs_prefix=" • "
 
-COL_REFS="${pcol[51]}"
-COL_REFS_DELIM=""
-COL_FLAGS="${pcol[51]}"
-COL_BRANCH="${pcol[220]}"
-COL_REBASE="${pcol[167]}"
-COL_UPSTREAM=""
+__prompt_col_refs="${pcol[51]}"
+__prompt_col_refs_delim=""
+__prompt_col_flags="${pcol[51]}"
+__prompt_col_branch="${pcol[220]}"
+__prompt_col_rebase="${pcol[167]}"
+__prompt_col_upstream=""
 
-GIT=(command git)
+__git_cmd=(command git)
 
-__gitdir () {
-    if [ -n "${__git_dir-}" ]; then
+__gitdir() {
+    if [[ -n "${__git_dir}" ]]; then
         echo "$__git_dir"
-    elif [ -d .git ]; then
+    elif [[ -d .git ]]; then
         echo .git
     else
-        $GIT rev-parse --git-dir 2>/dev/null
+        __git_dir=$($__git_cmd rev-parse --git-dir 2>/dev/null)
+        echo $__git_dir
     fi
 }
 
@@ -31,7 +32,7 @@ __prompt_git_show_upstream() {
     local upstream=git legacy="" verbose=""
 
     # get some config options from git-config
-    local output="$($GIT config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
+    local output="$($__git_cmd config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')"
     while read -r key value; do
         case "$key" in
             bash.showupstream)
@@ -55,7 +56,7 @@ __prompt_git_show_upstream() {
             # get the upstream from the "git-svn-id: ..." in a commit message
             # (git-svn uses essentially the same procedure internally)
             typeset -a svn_upstream
-            svn_upstream=($($GIT log --first-parent -1 \
+            svn_upstream=($($__git_cmd log --first-parent -1 \
                 --grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
             if [[ 0 -ne ${#svn_upstream[@]} ]]; then
                 svn_upstream=${svn_upstream[$((${#svn_upstream[@]} - 1))]}
@@ -78,7 +79,7 @@ __prompt_git_show_upstream() {
     esac
 
     # Find how many commits we are ahead/behind our upstream
-    count="$($GIT rev-list --count --left-right "$upstream"...HEAD 2>/dev/null)"
+    count="$($__git_cmd rev-list --count --left-right "$upstream"...HEAD 2>/dev/null)"
 
     local r=""
     case "$count" in
@@ -94,45 +95,48 @@ __prompt_git_show_upstream() {
             r=" +${count#*	}/-${count%	*}" ;;
     esac
 
-    echo -n "$COL_UPSTREAM$r${pcol[reset]}"
+    if [[ -n "$r" ]]; then
+        echo -n "$__prompt_col_upstream$r${pcol[reset]}"
+    fi
 }
 
 __prompt_git_geninfo() {
+    local gitdir="$(__gitdir)"
     local rebase=""
     local branch=""
     local refs=""
 
-    if [ -f "$gitdir/rebase-merge/interactive" ]; then
+    if [[ -f "$gitdir/rebase-merge/interactive" ]]; then
         rebase="rebase-i"
         branch="$(cat "$gitdir/rebase-merge/head-name")"
-    elif [ -d "$gitdir/rebase-merge" ]; then
+    elif [[ -d "$gitdir/rebase-merge" ]]; then
         rebase="rebase-m"
         branch="$(cat "$gitdir/rebase-merge/head-name")"
     else
-        if [ -d "$gitdir/rebase-apply" ]; then
-            if [ -f "$gitdir/rebase-apply/rebasing" ]; then
+        if [[ -d "$gitdir/rebase-apply" ]]; then
+            if [[ -f "$gitdir/rebase-apply/rebasing" ]]; then
                 rebase="rebase"
-            elif [ -f "$gitdir/rebase-apply/applying" ]; then
+            elif [[ -f "$gitdir/rebase-apply/applying" ]]; then
                 rebase="am"
             else
                 rebase="am/rebase"
             fi
-        elif [ -f "$gitdir/MERGE_HEAD" ]; then
+        elif [[ -f "$gitdir/MERGE_HEAD" ]]; then
             rebase="merging"
-        elif [ -f "$gitdir/CHERRY_PICK_HEAD" ]; then
+        elif [[ -f "$gitdir/CHERRY_PICK_HEAD" ]]; then
             rebase="cherry-picking"
-        elif [ -f "$gitdir/REVERT_HEAD" ]; then
+        elif [[ -f "$gitdir/REVERT_HEAD" ]]; then
             rebase="reverting"
-        elif [ -f "$gitdir/BISECT_LOG" ]; then
+        elif [[ -f "$gitdir/BISECT_LOG" ]]; then
             rebase="bisecting"
         fi
 
-        if branch="$($GIT symbolic-ref HEAD 2>/dev/null)" ||
-            branch="$($GIT describe --tags --exact-match HEAD 2>/dev/null)"; then
+        if branch="$($__git_cmd symbolic-ref HEAD 2>/dev/null)" ||
+            branch="$($__git_cmd describe --tags --exact-match HEAD 2>/dev/null)"; then
             refs="$(__prompt_git_refs)"
-        elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)..."; then
-            if refs=$($GIT describe --all HEAD 2>/dev/null); then
-                refs="${PV_REFS_PREFIX}${COL_REFS}${refs##heads/}${pcol[reset]}"
+        elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)"; then
+            if refs=$($__git_cmd describe --all HEAD 2>/dev/null); then
+                refs="${__pv_refs_prefix}${__prompt_col_refs}${refs##heads/}${pcol[reset]}"
             fi
         else
             branch="unknown"
@@ -149,7 +153,7 @@ __prompt_git_refs() {
     typeset -a refs_arr
     local refs=""
 
-    refs="$($GIT show --pretty=format:%d -s HEAD)"
+    refs="$($__git_cmd show --pretty=format:%d -s HEAD)"
     refs="${refs// }"
     refs="${refs//\(}"
     refs="${refs//\)}"
@@ -158,11 +162,12 @@ __prompt_git_refs() {
     refs_arr=("${(s:,:)refs}")
     refs_arr=(${refs_arr:#HEAD})
     refs_arr=(${refs_arr//${branch#refs\/heads\/}})
+    refs_arr=(${refs_arr:#tag:})
     refs_arr=(${refs_arr//*\/*})
 
     if [[ -n ${(j::)refs_arr} ]]; then
-        refs="$PV_REFS_PREFIX$COL_REFS${(j:,:)refs_arr}"
-        refs="${refs//,/${pcol[reset]}$COL_REFS_DELIM, ${pcol[reset]}$COL_REFS}${pcol[reset]}"
+        refs="$__pv_refs_prefix$__prompt_col_refs${(j:,:)refs_arr}"
+        refs="${refs//,/${pcol[reset]}$__prompt_col_refs_delim, ${pcol[reset]}$__prompt_col_refs}${pcol[reset]}"
     else
         refs=""
     fi
@@ -175,28 +180,28 @@ __prompt_git_flags() {
 
     # show dirty state
     # --ignore-submodules can significantly speed up if submodules are present
-    $GIT diff --no-ext-diff --quiet --exit-code --ignore-submodules || flags+="${pcol[red]}*"
-    if $GIT rev-parse --quiet --verify HEAD >/dev/null; then
-        $GIT diff-index --cached --quiet HEAD -- || flags+="${pcol[green]}+"
+    $__git_cmd diff --no-ext-diff --quiet --exit-code --ignore-submodules || flags+="${pcol[red]}*"
+    if $__git_cmd rev-parse --quiet --verify HEAD >/dev/null; then
+        $__git_cmd diff-index --cached --quiet HEAD -- || flags+="${pcol[green]}+"
     else
         flags+="${pcol[yellow]}#"
     fi
 
     # show stashed changes
-    $GIT rev-parse --verify refs/stash >/dev/null 2>&1 && flags+="${pcol[yellow]}$"
+    $__git_cmd rev-parse --verify refs/stash >/dev/null 2>&1 && flags+="${pcol[yellow]}$"
 
     # show untracked files
-    if [ -n "$($GIT ls-files --others --exclude-standard)" ]; then
+    if [[ -n "$($__git_cmd ls-files --others --exclude-standard)" ]]; then
         flags+="${pcol[cyan]}?"
     fi
 
-    echo -n "$COL_FLAGS$flags${pcol[reset]}"
+    echo -n "$__prompt_col_flags$flags${pcol[reset]}"
 }
 
 __prompt_git() {
     local gitdir="$(__gitdir)"
 
-    if [ -n "$gitdir" ]; then
+    if [[ -n "$gitdir" ]]; then
         typeset -a geninfo
         geninfo=("${(@f)$(__prompt_git_geninfo)}")
 
@@ -205,19 +210,19 @@ __prompt_git() {
         local refs="$geninfo[3]"
 
         if [[ -n "$rebase" ]]; then
-            rebase=" ${COL_REBASE}${rebase}${pcol[reset]}"
+            rebase=" ${__prompt_col_rebase}${rebase}${pcol[reset]}"
         fi
 
         local c=""
         local flags=""
 
-        if [ "true" = "$($GIT rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
-            if [ "true" = "$($GIT rev-parse --is-bare-repository 2>/dev/null)" ]; then
+        if [[ "true" = "$($__git_cmd rev-parse --is-inside-git-dir 2>/dev/null)" ]]; then
+            if [[ "true" = "$($__git_cmd rev-parse --is-bare-repository 2>/dev/null)" ]]; then
                 c="BARE:"
             else
                 branch="GIT_DIR!"
             fi
-        elif [ "true" = "$($GIT rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+        elif [[ "true" = "$($__git_cmd rev-parse --is-inside-work-tree 2>/dev/null)" ]]; then
             flags="$(__prompt_git_flags)"
         fi
 
@@ -226,28 +231,35 @@ __prompt_git() {
             svn="s"
         fi
 
-        local result=""
-        result+=" ±$svn"
-        result+=" $COL_BRANCH$c$branch${pcol[reset]}"
-        result+="$flags"
-        result+="$rebase"
-        result+="$(__prompt_git_show_upstream)"
-        result+="$refs"
+        if [[ -n "${__git_toplevel}" ]]; then
+            local prefix="${${${PWD#${__git_toplevel}}#/}%/}"
+            local toplevel="${(D)__git_toplevel}"
+        else
+            local prefix="${${:-$(git rev-parse --show-prefix 2>/dev/null)}%/}"
+            local toplevel=${(D)PWD%/${prefix}}
+        fi
 
-        echo -n $result
+        _prompt_path="${pcol[green]}${toplevel}${pcol[reset]}"
+        _prompt_path+="±$svn$__prompt_col_branch$c$branch${pcol[reset]}"
+        _prompt_path+="$flags"
+        if [[ -n "$prefix" ]]; then
+            _prompt_path+="${pcol[green]}/${prefix%/}${pcol[reset]}"
+        fi
+
+        _prompt_vcs_info="$rebase$(__prompt_git_show_upstream)$refs"
     fi
 }
 
 __prompt_hg() {
-    hg prompt --angle-brackets "\
-< ☿ $COL_BRANCH<branch>${pcol[reset]}>\
-<$COL_FLAGS<status|modified|unknown>${pcol[reset]}>\
-<$COL_FLAGS<update>${pcol[reset]}>\
-<$PV_REFS_PREFIX$COL_REFS<tags|${pcol[reset]}$COL_REFS_DELIM, ${pcol[reset]}$COL_REFS>${pcol[reset]}>" 2>/dev/null
+    _prompt_path="${pcol[green]}%~${pcol[reset]}"
+    _prompt_vcs_info=$(hg prompt --angle-brackets "\
+< ☿ $__prompt_col_branch<branch>${pcol[reset]}>\
+<$__prompt_col_flags<status|modified|unknown>${pcol[reset]}>\
+<$__prompt_col_flags<update>${pcol[reset]}>\
+<$__pv_refs_prefix$__prompt_col_refs<tags|${pcol[reset]}$__prompt_col_refs_delim, ${pcol[reset]}$__prompt_col_refs>${pcol[reset]}>" 2>/dev/null)
 }
 
-__prompt_vcs_type()
-{
+__prompt_vcs_type() {
     # return the type of the closest repository in the path hierarchy
     local dir
 
@@ -255,27 +267,34 @@ __prompt_vcs_type()
     [[ ! -d "$PWD" ]] && echo NONE && return
 
     while true; do
-        [ -d ${dir}.git ] && echo git && break
-        [ -d "$GIT_DIR" ] && echo git && break
-        [ -d ${dir}.hg ] && echo hg && break
-        [ "$(readlink -f ${dir:-.})" = / ] && echo NONE && break
+        [[ -e "${dir}".git ]] && echo git && echo "${${:-${PWD}/${dir}}:a}" && break
+        [[ -d "$GIT_DIR" ]] && echo git && break
+        [[ -d "${dir}".hg ]] && echo hg && break
+        [[ "$(readlink -f ${dir:-.})" = / ]] && echo NONE && break
         dir="../$dir"
     done
 }
 
 __prompt_vcs() {
-    local type="$(__prompt_vcs_type)"
+    # local type="$(__prompt_vcs_type)"
+    typeset -a typeinfo
+    typeinfo=("${(@f)$(__prompt_vcs_type)}")
+    local type="${typeinfo[1]}"
 
     case "$type" in
         git)
+            __git_toplevel="${typeinfo[2]}"
             __prompt_git
             ;;
         hg)
             __prompt_hg
             ;;
         *)
+            _prompt_path="${pcol[green]}%~${pcol[reset]}"
+            _prompt_vcs_info=""
             ;;
     esac
 }
+add-zsh-hook precmd __prompt_vcs
 
 # vim: filetype=zsh

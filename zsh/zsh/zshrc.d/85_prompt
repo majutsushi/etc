@@ -17,31 +17,31 @@ __prompt_logo() {
     if [[ -z "$SSH_CONNECTION" ]]; then
         return
     fi
-    if [[ -n "$LOGO" ]]; then
-        echo "$LOGO • "
+    if [[ -n "$_prompt_logo" ]]; then
+        echo "$_prompt_logo • "
         return
     fi
-    LOGO="?"
+    _prompt_logo="?"
     if [[ -r /etc/issue ]]; then
         DISTRO=$(grep -m1 "^[a-zA-Z]" /etc/issue)
         case "${DISTRO:l}" in
             *debian*)
-                LOGO="${pcol[161]}@${pcol[reset]}"
+                _prompt_logo="${pcol[161]}@${pcol[reset]}"
                 ;;
             *ubuntu*)
-                # LOGO="${pcol[160]}\\${pcol[208]}o${pcol[yellow]}/${pcol[reset]}"
-                LOGO="${pcol[magenta]}u${pcol[reset]}"
+                # _prompt_logo="${pcol[160]}\\${pcol[208]}o${pcol[yellow]}/${pcol[reset]}"
+                _prompt_logo="${pcol[magenta]}u${pcol[reset]}"
                 ;;
             *arch*)
-                LOGO="${pcol[32]}A${pcol[reset]}"
+                _prompt_logo="${pcol[32]}A${pcol[reset]}"
                 ;;
         esac
     elif ismac; then
-        LOGO="${pcol[246]}X${pcol[reset]}"
+        _prompt_logo="${pcol[246]}X${pcol[reset]}"
     elif uname -s | grep -i netbsd >/dev/null; then
-        LOGO="${pcol[244]}\\${pcol[202]}~${pcol[reset]}"
+        _prompt_logo="${pcol[244]}\\${pcol[202]}~${pcol[reset]}"
     fi
-    echo "$LOGO • "
+    echo "$_prompt_logo • "
 }
 
 __prompt_orighome() {
@@ -52,16 +52,18 @@ __prompt_orighome() {
 
 __prompt_jdk() {
     [[ -z $JAVA_HOME ]] && return
-    JDK=$(basename $JAVA_HOME)
-    if [[ $JDK != jdk-default ]]; then
-        print "${pcol[cyan]}$JDK${pcol[reset]} "
+    local jdk=$(basename $JAVA_HOME)
+    if [[ $jdk != jdk-default ]]; then
+        print "${pcol[cyan]}$jdk${pcol[reset]} "
     fi
 }
 
-LOGO=""
+_prompt_logo=""
+_prompt_path="${pcol[green]}%~${pcol[reset]}"
+_prompt_vcs_info=""
 
 PS1='
-$(__prompt_logo)${pcol[167]}%n ${pcol[reset]}@ ${pcol[220]}%m${pcol[reset]} • ${pcol[green]}%<...<%~%<<${pcol[reset]}$(__prompt_wperm)$(__prompt_vcs)
+$(__prompt_logo)${pcol[167]}%n ${pcol[reset]}@ ${pcol[220]}%m${pcol[reset]} • ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}
 %(2L.${pcol[bold]}%L${pcol[reset]} .)$(__prompt_jdk)%(!.#.$) '
 
 RPS1='$(__prompt_orighome)$(__prompt_exitcode)$(__prompt_jobs)'
