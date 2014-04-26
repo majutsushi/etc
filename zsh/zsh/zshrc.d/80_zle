@@ -14,9 +14,6 @@ bindkey "${terminfo[kdch1]}" delete-char       # Delete
 bindkey '\e[H' beginning-of-line
 bindkey '\e[F' end-of-line
 
-# also do history expansion on space
-bindkey ' ' magic-space
-
 # only search local history by default, and all history for isearch
 set-local-history() { zle .set-local-history }
 zle -N set-local-history
