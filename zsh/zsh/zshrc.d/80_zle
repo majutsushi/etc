@@ -116,10 +116,9 @@ _insert_datestamp() { LBUFFER+=${(%):-'%D{%Y-%m-%d}'}; }
 zle -N insert-datestamp _insert_datestamp
 bindkey '^[t' insert-datestamp
 
-# press esc-m for inserting last typed word again (thanks to caphuso!)
-insert-last-typed-word() { zle insert-last-word -- 0 -1 }
-zle -N insert-last-typed-word
-bindkey "^[m" insert-last-typed-word
+autoload -Uz copy-earlier-word
+zle -N copy-earlier-word
+bindkey "^[m" copy-earlier-word
 
 bindkey "^[>" insert-last-word
 
