@@ -28,10 +28,10 @@ export DEBEMAIL="jan@majutsushi.net"
 export DEBFULLNAME="Jan Larres"
 export BTS_CACHE=no
 
-if [[ "$(hostname)" == "gally" ]]; then
+if [[ "$HOST" == "gally" ]]; then
     export ALSA_OUTPUT_PORTS="65:0"
     export SCUMMVM_PORT=$ALSA_OUTPUT_PORTS
-elif [[ "$(hostname)" == "urd" ]]; then
+elif [[ "$HOST" == "urd" ]]; then
     export ALSA_OUTPUT_PORTS="128:0"
     export SCUMMVM_PORT=$ALSA_OUTPUT_PORTS
 fi
