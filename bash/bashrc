@@ -33,6 +33,7 @@ function bk() {
 export PAGER=less
 export PATH=$HOME/bin:$PATH
 
+PROMPT_COMMAND="history -a"
 PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\W\[\e[m\] \[\e[1m\]$\[\e[m\] "
 
 alias ls='ls  -F --color=auto'
