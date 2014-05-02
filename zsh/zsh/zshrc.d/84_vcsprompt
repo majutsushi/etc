@@ -226,9 +226,8 @@ __prompt_git() {
             flags="$(__prompt_git_flags)"
         fi
 
-        local svn=""
         if [[ -d ${gitdir}/svn ]]; then
-            svn="s"
+            _prompt_vcs_icon+="⚡"
         fi
 
         if [[ -n "${__git_toplevel}" ]]; then
@@ -240,7 +239,7 @@ __prompt_git() {
         fi
 
         _prompt_path="${pcol[green]}${toplevel}${pcol[reset]}"
-        _prompt_path+="±$svn$__prompt_col_branch$c$branch${pcol[reset]}"
+        _prompt_path+="@$__prompt_col_branch$c$branch${pcol[reset]}"
         _prompt_path+="$flags"
         if [[ -n "$prefix" ]]; then
             _prompt_path+="${pcol[green]}/${prefix%/}${pcol[reset]}"
@@ -253,10 +252,45 @@ __prompt_git() {
 __prompt_hg() {
     _prompt_path="${pcol[green]}%~${pcol[reset]}"
     _prompt_vcs_info=$(hg prompt --angle-brackets "\
-< ☿ $__prompt_col_branch<branch>${pcol[reset]}>\
+< • $__prompt_col_branch<branch>${pcol[reset]}>\
 <$__prompt_col_flags<status|modified|unknown>${pcol[reset]}>\
 <$__prompt_col_flags<update>${pcol[reset]}>\
 <$__pv_refs_prefix$__prompt_col_refs<tags|${pcol[reset]}$__prompt_col_refs_delim, ${pcol[reset]}$__prompt_col_refs>${pcol[reset]}>" 2>/dev/null)
+}
+
+__prompt_svn() {
+    local root=$(svn info | sed -n -e 's/Working Copy Root Path: //p')
+    local prefix="${${${PWD#${root}}#/}%/}"
+    root=${(D)root}
+    local rev=$(svnversion -n)
+
+    _prompt_path="${pcol[green]}${root}${pcol[reset]}"
+    _prompt_path+="@${__prompt_col_branch}${rev}${pcol[reset]}"
+
+    typeset -a svnstatus
+    svnstatus=(${(s:,:)${:-$(svn status -u | awk '
+        /^[MDR!]/ { mod++ }
+        /^.M/     { mod++ }
+        /^A/      { add++ }
+        /^?/      { unknown++ }
+        /^C/      { conflict++ }
+        /^.C/     { conflict++ }
+        /^        \*/ { update++ }
+        END { printf("%d,%d,%d,%d,%d", mod, add, unknown, conflict, update) }
+    ')}})
+    local flags=""
+    (( ${svnstatus[1]} > 0 )) && flags+="${pcol[red]}*"
+    (( ${svnstatus[2]} > 0 )) && flags+="${pcol[green]}+"
+    (( ${svnstatus[3]} > 0 )) && flags+="${pcol[cyan]}?"
+    (( ${svnstatus[4]} > 0 )) && flags+="${pcol[bold]}${pcol[red]}!${pcol[reset]}"
+    (( ${svnstatus[5]} > 0 )) && flags+="${pcol[white]}u"
+    _prompt_path+=$flags${pcol[reset]}
+
+    if [[ -n "$prefix" ]]; then
+        _prompt_path+="${pcol[green]}/${prefix}${pcol[reset]}"
+    fi
+
+    _prompt_vcs_info=""
 }
 
 __prompt_vcs_type() {
@@ -270,6 +304,7 @@ __prompt_vcs_type() {
         [[ -e "${dir}".git ]] && echo git && echo "${${:-${PWD}/${dir}}:a}" && break
         [[ -d "$GIT_DIR" ]] && echo git && break
         [[ -d "${dir}".hg ]] && echo hg && break
+        [[ -d "${dir}".svn ]] && echo svn && break
         [[ "$(readlink -f ${dir:-.})" = / ]] && echo NONE && break
         dir="../$dir"
     done
@@ -283,13 +318,20 @@ __prompt_vcs() {
 
     case "$type" in
         git)
+            _prompt_vcs_icon="±"
             __git_toplevel="${typeinfo[2]}"
             __prompt_git
             ;;
         hg)
+            _prompt_vcs_icon="☿"
             __prompt_hg
             ;;
+        svn)
+            _prompt_vcs_icon="⚡"
+            __prompt_svn
+            ;;
         *)
+            _prompt_vcs_icon="•"
             _prompt_path="${pcol[green]}%~${pcol[reset]}"
             _prompt_vcs_info=""
             ;;
