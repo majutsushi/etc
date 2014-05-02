@@ -16,11 +16,12 @@ setopt hist_ignore_all_dups
 # line is a space
 setopt hist_ignore_space
 
-HISTFILE=$XDG_CACHE_HOME/zsh/history
+HISTFILE=$ZSH_CACHEDIR/history
 HISTSIZE=100000
 SAVEHIST=100000
 
 _hist_ignore_f() {
+    typeset -a cmd
     cmd=(${(z)${1%%$'\n'}})
     if [[ ${#cmd} -ge 1 && "${cmd[1]}" == "f" ]]; then
         return 1
@@ -28,5 +29,17 @@ _hist_ignore_f() {
     return 0
 }
 add-zsh-hook zshaddhistory _hist_ignore_f
+
+_append_full_hist() {
+    if [[ "$UID" -ne 0 ]]; then
+        local full_cmd_log="$ZSH_CACHEDIR/history.full/$(date -u "+%Y-%m-%d").log"
+        local cmd=${1%%$'\n'}
+        if [[ -n "$cmd" ]]; then
+            echo "$USER@$HOST:$PWD [$(date -u --iso-8601=seconds)] $cmd" >>| ${full_cmd_log}
+        fi
+        chmod 600 $full_cmd_log
+    fi
+}
+add-zsh-hook zshaddhistory _append_full_hist
 
 # vim: filetype=zsh

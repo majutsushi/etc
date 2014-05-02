@@ -11,7 +11,7 @@ zmodload zsh/complist
 
 # initialize completion system
 autoload -U compinit
-compinit -d $XDG_CACHE_HOME/zsh/zcompdump
+compinit -d $ZSH_CACHEDIR/zcompdump
 
 
 ## general settings
@@ -32,7 +32,7 @@ fi
 zstyle ':completion:*' single-ignored show
 # caching
 zstyle ':completion:*' use-cache yes
-zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache/
+zstyle ':completion:*' cache-path $ZSH_CACHEDIR/zcompcache/
 # activate color-completion
 # see http://www.zsh.org/mla/users/2008/msg00699.html
 # zstyle -e ':completion:*:default' list-colors 'reply=(

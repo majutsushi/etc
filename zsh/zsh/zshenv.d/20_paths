@@ -94,6 +94,8 @@ export XDG_CACHE_HOME=$HOME/.cache
 
 # make sure the cache dir exists
 [[ ! -d $XDG_CACHE_HOME ]] && mkdir $XDG_CACHE_HOME
-[[ ! -d $XDG_CACHE_HOME/zsh ]] && mkdir $XDG_CACHE_HOME/zsh
+export ZSH_CACHEDIR=$XDG_CACHE_HOME/zsh
+[[ ! -d $ZSH_CACHEDIR ]] && mkdir $ZSH_CACHEDIR
+[[ ! -d $ZSH_CACHEDIR/history.full ]] && mkdir $ZSH_CACHEDIR/history.full
 
 # vim: filetype=zsh
