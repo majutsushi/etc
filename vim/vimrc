@@ -1448,6 +1448,10 @@ let g:EclimLoggingDisabled = 1
 let g:EclimCompletionMethod = 'omnifunc'
 
 " expand-region {{{2
+nmap <C-Space> <Plug>(expand_region_expand)
+xmap <C-Space> <Plug>(expand_region_expand)
+xmap _         <Plug>(expand_region_shrink)
+
 let g:expand_region_text_objects = {
     \ 'iw'  : 0,
     \ 'iW'  : 0,
@@ -1621,6 +1625,7 @@ augroup END
 " onoremap <silent> T      :<C-u>call sneak#wrap(v:operator, 1, 1, 0, 1)<CR>
 
 " Splice {{{2
+let g:splice_prefix = '_'
 let g:splice_initial_diff_grid = 1
 let g:splice_initial_diff_compare = 1
 let g:splice_initial_scrollbind_grid = 1
@@ -1980,9 +1985,6 @@ nnoremap <leader>v :edit ~/.etc/vim/vimrc<CR>
 
 " Control-Space for omnicomplete
 imap <C-Space> <C-X><C-O>
-
-nmap <C-Space> <Plug>(expand_region_expand)
-xmap <C-Space> <Plug>(expand_region_expand)
 
 " for popup-menu completion
 " http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
