@@ -1179,9 +1179,14 @@ set tabstop=8     " should always be 8
 " number of spaces used for each step of (auto)indent (local to buffer)
 set shiftwidth=4
 " a <Tab> in an indent inserts 'shiftwidth' spaces
-"set smarttab      " shiftwidth at start of line, tabstop/sts elsewhere
+set smarttab      " shiftwidth at start of line, tabstop/sts elsewhere
 " if non-zero, number of spaces to insert for a <Tab> (local to buffer)
-set softtabstop=4 " WARNING: mixes spaces and tabs if >0 and noexpandtab!
+" WARNING: mixes spaces and tabs if >0 and noexpandtab!
+if v:version > 703 || v:version == 703 && has("patch693")
+    set softtabstop=-1
+else
+    set softtabstop=4
+endif
 " round to 'shiftwidth' for "<<" and ">>"
 set shiftround
 " expand <Tab> to spaces in Insert mode (local to buffer)
