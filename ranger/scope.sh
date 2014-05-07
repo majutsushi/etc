@@ -43,7 +43,7 @@ trim() { head -n "$maxln"; }
 
 case "$path" in
     *.pcap|*.pcapng|*.pcap.gz|*.pcapng.gz)
-        try tshark -r "$path" && { dump | trim; exit 0; }
+        try tshark -t a -r "$path" && { dump | trim; exit 0; }
         ;;
 esac
 
