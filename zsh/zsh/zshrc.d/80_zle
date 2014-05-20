@@ -149,8 +149,11 @@ abbreviations=(
 )
 magic-abbrev-expand() {
     local MATCH
-    LBUFFER=${LBUFFER%%(#m)[_a-zA-Z0-9]#}
-    LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
+    # make sure the abbreviation is preceded by a space
+    if [[ "$LBUFFER" =~ " ([_a-zA-Z0-9]+)$" ]]; then
+        LBUFFER=${LBUFFER%%$match[1]}
+        LBUFFER+=${abbreviations[$match[1]]:-$match[1]}
+    fi
     zle self-insert
 }
 zle -N magic-abbrev-expand
