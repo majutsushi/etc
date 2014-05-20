@@ -3,7 +3,7 @@
 # and
 # http://git.madduck.net/v/etc/zsh.git/blob/HEAD:/.zsh/zshrc/60_vcsprompt
 
-__pv_refs_prefix=" • "
+__pv_refs_prefix=" •"
 
 __prompt_col_refs="${pcol[51]}"
 __prompt_col_refs_delim=""
@@ -136,7 +136,7 @@ __prompt_git_geninfo() {
             refs="$(__prompt_git_refs)"
         elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)"; then
             if refs=$($__git_cmd describe --all HEAD 2>/dev/null); then
-                refs="${__pv_refs_prefix}${__prompt_col_refs}${refs##heads/}${pcol[reset]}"
+                refs=" ${__prompt_col_refs}${refs##heads/}${pcol[reset]}"
             fi
         else
             branch="unknown"
@@ -166,7 +166,7 @@ __prompt_git_refs() {
     refs_arr=(${refs_arr//*\/*})
 
     if [[ -n ${(j::)refs_arr} ]]; then
-        refs="$__pv_refs_prefix$__prompt_col_refs${(j:,:)refs_arr}"
+        refs=" $__prompt_col_refs${(j:,:)refs_arr}"
         refs="${refs//,/${pcol[reset]}$__prompt_col_refs_delim, ${pcol[reset]}$__prompt_col_refs}${pcol[reset]}"
     else
         refs=""
@@ -246,6 +246,9 @@ __prompt_git() {
         fi
 
         _prompt_vcs_info="$rebase$(__prompt_git_show_upstream)$refs"
+        if [[ -n $_prompt_vcs_info ]]; then
+            _prompt_vcs_info="$__pv_refs_prefix$_prompt_vcs_info"
+        fi
     fi
 }
 
@@ -255,7 +258,7 @@ __prompt_hg() {
 < • $__prompt_col_branch<branch>${pcol[reset]}>\
 <$__prompt_col_flags<status|modified|unknown>${pcol[reset]}>\
 <$__prompt_col_flags<update>${pcol[reset]}>\
-<$__pv_refs_prefix$__prompt_col_refs<tags|${pcol[reset]}$__prompt_col_refs_delim, ${pcol[reset]}$__prompt_col_refs>${pcol[reset]}>" 2>/dev/null)
+<$__pv_refs_prefix $__prompt_col_refs<tags|${pcol[reset]}$__prompt_col_refs_delim, ${pcol[reset]}$__prompt_col_refs>${pcol[reset]}>" 2>/dev/null)
 }
 
 __prompt_svn() {
