@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+# ------------------------------------------------------------------------------------------
+# Description
+#   ZLE widget that turns dots into "../".
+#
+# Usage
+#   Bind it to ".":
+#     autoload rationalize-dots
+#     zle -N rationalize-dots
+#     bindkey . rationalize-dots
+#     bindkey -M isearch . self-insert
+# ------------------------------------------------------------------------------------------
+
+[[ $LBUFFER = *.. ]] && LBUFFER+=/.. || LBUFFER+=.
+
+have _zsh_highlight && _zsh_highlight

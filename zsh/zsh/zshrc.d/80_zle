@@ -92,6 +92,11 @@ zle -N slash-backward-kill-word
 # (not the same as ctrl-w!)
 bindkey '^[w' slash-backward-kill-word
 
+autoload rationalize-dots
+zle -N rationalize-dots
+bindkey . rationalize-dots
+bindkey -M isearch . self-insert
+
 # we don't want to quote/espace URLs on our own...
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
