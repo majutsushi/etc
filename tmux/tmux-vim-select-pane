@@ -1,7 +1,6 @@
 #!/bin/bash
 # Like 'tmux select-pane', but if Vim is running in the current pane it sends
 # a '<M-h/j/k/l>' keystroke to Vim instead.
-set -e
 
 cmd="$(tmux display -p '#{pane_title}')"
 
@@ -12,3 +11,5 @@ if [[ "${cmd}" == vim* ]]; then
 else
     tmux select-pane "$@"
 fi
+
+exit 0
