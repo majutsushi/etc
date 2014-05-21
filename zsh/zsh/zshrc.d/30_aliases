@@ -62,13 +62,13 @@ compdef _mkdir mcd
 alias grep="grep --extended-regexp --ignore-case"
 alias gdb="gdb -q"
 alias mtr="mtr -t"
-alias diffstat="diffstat -C"
 
 # execute last command as root
 alias fu='sudo $(fc -ln -1) '
 alias t='tree --dirsfirst -F -A -h --du'
 
 alias da='du -sch'
+alias decolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
 alias g="grep"
 alias j='jobs -l'
 alias jsonpp='python -mjson.tool'
@@ -114,10 +114,13 @@ f() {
 
 # diff
 if have colordiff; then
-    alias diff='colordiff'
-    wdiff() { command wdiff "$@" | colordiff }
+    alias diff='colordiff -Naur'
+    wdiff() { command wdiff --start-insert=$'\e[32m' --end-insert=$'\e[0m' --start-delete=$'\e[31m' --end-delete=$'\e[0m' "$@" }
+else
+    alias diff='diff -Naur'
 fi
-alias ddiff="diff -Naurd --exclude-from=$HOME/.etc/excludes/diff"
+alias ddiff="diff -d --exclude-from=$HOME/.etc/excludes/diff"
+alias diffstat="decolor | diffstat -C"
 
 echoerr()  { echo "$@" 1>&2 }
 quotify()  { local r="$(sed -e 's/'\''/'\'\\\\\'\''/g')" && echo "'"$r"'" }
