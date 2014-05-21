@@ -35,9 +35,9 @@ _append_full_hist() {
         local full_cmd_log="$ZSH_CACHEDIR/history.full/$(date -u "+%Y-%m-%d").log"
         local cmd=${1%%$'\n'}
         if [[ -n "$cmd" ]]; then
-            echo "$USER@$HOST:$PWD [$(date -u --iso-8601=seconds)] $cmd" >>| ${full_cmd_log}
+            echo "$(date -u --iso-8601=seconds) [$USER@$HOST:$PWD] $cmd" >>| ${full_cmd_log}
+            chmod 600 $full_cmd_log
         fi
-        chmod 600 $full_cmd_log
     fi
 }
 add-zsh-hook zshaddhistory _append_full_hist
