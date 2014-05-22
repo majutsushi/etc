@@ -13,7 +13,8 @@ source_if_exists ~/.local/etc/bashenv
 [[ ! $- == *i* ]] && unset -f source_if_exists && return
 
 # disable XON/XOFF flow control (^s/^q)
-stty ixoff
+stty stop ''
+stty -ixoff
 stty -ixon
 
 export HISTCONTROL=ignoredups:erasedups
