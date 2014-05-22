@@ -116,10 +116,10 @@ f() {
 local _diff_opts="-Nurd --exclude-from=$HOME/.etc/excludes/diff"
 if have colordiff; then
     alias diff="colordiff $_diff_opts"
-    wdiff() { command wdiff --start-insert=${fg[green]} --end-insert=${reset_color} --start-delete=${fg[red]} --end-delete=${reset_color} "$@" }
 else
     alias diff="diff $_diff_opts"
 fi
+wdiff() { command wdiff --start-insert=${fg[green]} --end-insert=${reset_color} --start-delete=${fg[red]} --end-delete=${reset_color} "$@" }
 alias diffstat="decolor | diffstat -C"
 
 echoerr()  { echo "$@" 1>&2 }
