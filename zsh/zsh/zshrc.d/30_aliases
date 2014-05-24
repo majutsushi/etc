@@ -206,6 +206,20 @@ __tmux-sessions() {
 }
 compdef __tmux-sessions tm
 
+# based on https://gist.github.com/namuol/9122237
+kill() {
+    typeset -a args
+    args=("${(z)@}")
+    args=(${(@)args##\-*}) # remove 'kill' options
+    typeset -a names
+    names=($(ps --no-headers --format comm $args))
+    if command kill "$@"; then
+        echo
+        echo " (╯°□°）╯︵$(flip "${(j: :)names}")"
+        echo
+    fi
+}
+
 jkill() { command kill "$@" }
 _jkill() {
     local -a processes
