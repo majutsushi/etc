@@ -235,7 +235,7 @@ unset bounce_delivered  # unset => remove Delivered-To: when bouncing.
   set forward_edit=yes
   set forward_format="Fw: %s"
   set forward_quote     # quote forwarded message if not $mime_forward
-  set mime_forward=no         # use MIME when forwarding mails.
+  set mime_forward=ask-no     # use MIME when forwarding mails.
 unset mime_forward_decode     # decode messages when forwarding with MIME
   set mime_forward_rest=yes
 
