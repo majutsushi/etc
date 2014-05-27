@@ -1491,6 +1491,17 @@ let g:LatexBox_completion_close_braces = 0
 "let g:LatexBox_latexmk_options = "-pvc"
 let g:LatexBox_autojump = 1
 
+" Mark {{{2
+nmap gmm <Plug>MarkSet
+xmap gmm <Plug>MarkSet
+nmap gmr <Plug>MarkRegex
+xmap gmr <Plug>MarkRegex
+nmap gmn <Plug>MarkClear
+nmap gm* <Plug>MarkSearchCurrentNext
+nmap gm# <Plug>MarkSearchCurrentPrev
+nmap gm/ <Plug>MarkSearchAnyNext
+nmap gm? <Plug>MarkSearchAnyPrev
+
 " NERD_Tree {{{2
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
