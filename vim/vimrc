@@ -1358,6 +1358,7 @@ let g:CSApprox_hook_desert_post = [
 " Ctrl-P {{{2
 let g:ctrlp_map = '<leader>ff'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 nnoremap <silent> <leader>bb :CtrlPBuffer<CR>
 nnoremap <silent> <leader>ft :CtrlPBufTag<CR>
 

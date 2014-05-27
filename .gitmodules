@@ -166,3 +166,6 @@
 [submodule "vim/vim/bundle/vim-eunuch"]
 	path = vim/vim/bundle/vim-eunuch
 	url = https://github.com/tpope/vim-eunuch.git
+[submodule "vim/vim/bundle/ctrlp-cmatcher"]
+	path = vim/vim/bundle/ctrlp-cmatcher
+	url = https://github.com/JazzCore/ctrlp-cmatcher.git
