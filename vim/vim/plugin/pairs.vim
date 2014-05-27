@@ -11,15 +11,6 @@ autocmd InsertLeave * call visualmode(1)
 " Taken from:
 " https://github.com/Raimondi/delimitMate/issues/138#issuecomment-35458273
 let s:left  = "\<Esc>:undojoin\<CR>i"
-" s:left() {{{2
-function! s:left() abort
-    if mode() == 'i' && visualmode() == ''
-        return "\<Left>"
-    else
-        return "\<Esc>:undojoin\<CR>i"
-    endif
-endfunction
-
 " let s:right = "\<C-\>\<C-o>:undojoin\<CR>\<C-\>\<C-o>a"
 
 " s:getcharrel() {{{2
@@ -36,6 +27,10 @@ endfunction
 
 " s:HandleOpenParen() {{{2
 function! s:HandleOpenParen(char) abort
+    if visualmode() == ''
+        return a:char
+    endif
+
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
@@ -54,11 +49,15 @@ function! s:HandleOpenParen(char) abort
         return a:char
     endif
 
-    return a:char . b:pairs_conf.parens[a:char] . s:left()
+    return a:char . b:pairs_conf.parens[a:char] . s:left
 endfunction
 
 " s:HandleCloseParen() {{{2
 function! s:HandleCloseParen(char) abort
+    if visualmode() == ''
+        return a:char
+    endif
+
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
@@ -75,6 +74,10 @@ endfunction
 
 " s:HandleQuote() {{{2
 function! s:HandleQuote(char) abort
+    if visualmode() == ''
+        return a:char
+    endif
+
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
@@ -99,7 +102,7 @@ function! s:HandleQuote(char) abort
     elseif cprev =~# '[[:space:]]' && ccur =~# '[[:space:]]\|\_^\_$' ||
          \ cprev =~# join(keys(b:pairs_conf.parens), '\|') ||
          \ (ccur =~# join(values(b:pairs_conf.parens), '\|') && cprev =~# '[[:space:]]')
-        return a:char . b:pairs_conf.quotes[a:char] . s:left()
+        return a:char . b:pairs_conf.quotes[a:char] . s:left
     else
         return a:char
     end
@@ -107,6 +110,10 @@ endfunction
 
 " s:HandleSpace() {{{2
 function! s:HandleSpace() abort
+    if visualmode() == ''
+        return "\<Space>"
+    endif
+
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
@@ -117,7 +124,7 @@ function! s:HandleSpace() abort
     endif
 
     if has_key(b:pairs_conf.parens, cprev) && ccur == b:pairs_conf.parens[cprev]
-        return expand . "\<Space>\<Space>" . s:left()
+        return expand . "\<Space>\<Space>" . s:left
     else
         return expand . "\<Space>"
     endif
@@ -127,6 +134,10 @@ inoremap <expr> <silent> <Space> <SID>HandleSpace()
 
 " s:HandleBackSpace() {{{2
 function! s:HandleBackSpace() abort
+    if visualmode() == ''
+        return "\<BS>"
+    endif
+
     let cpprev = s:getcharrel(-2)
     let cprev  = s:getcharrel(-1)
     let ccur   = s:getcharrel(0)
@@ -174,6 +185,10 @@ inoremap <expr> <silent> <BS> <SID>HandleBackSpace()
 
 " s:HandleCR() {{{2
 function! s:HandleCR(...) abort
+    if visualmode() == ''
+        return "\<CR>"
+    endif
+
     let rv = "\<CR>"
     if a:0 > 0
         let maprhs = a:1
