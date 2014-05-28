@@ -774,6 +774,28 @@ function! s:RangerChooser() abort
 endfunction
 nnoremap <silent> ,ra :call <SID>RangerChooser()<CR>
 
+" Redir {{{2
+" Taken from
+" https://github.com/jszakmeister/vimfiles/blob/master/vimrc
+" Redirect to register "x":
+"   Redir @x
+" Redirect to global variable "v":
+"   Redir => v
+" Disable previous redirection (any of these):
+"   Redir
+"   Redir end
+"   Redir END
+" While redirected, the 'more' option is reset to avoid the need
+" to press <Space> after each screen of output.
+command! -nargs=* -bar Redir
+            \ if <q-args> == "" || <q-args> ==? "end" |
+            \     set more |
+            \     redir END |
+            \ else |
+            \     redir <args> |
+            \     set nomore |
+            \ endif
+
 " RunShellCommand() {{{2
 function! s:RunShellCommand(cmdline)
     botright new
