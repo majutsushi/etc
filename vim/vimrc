@@ -2227,8 +2227,14 @@ nnoremap <silent> zi
     \     setlocal foldcolumn=1 <Bar>
     \ endif<CR>
 
-" remove search highlighting
-nnoremap <silent> <C-L> :silent nohl<CR><C-L>
+function! s:refresh_screen() abort
+    if &diff
+        diffupdate
+    endif
+    silent nohlsearch
+    normal! <C-l>
+endfunction
+nnoremap <silent> <C-l> :call <SID>refresh_screen()<CR>
 
 " Windows {{{2
 
