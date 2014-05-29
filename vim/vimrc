@@ -2227,14 +2227,7 @@ nnoremap <silent> zi
     \     setlocal foldcolumn=1 <Bar>
     \ endif<CR>
 
-function! s:refresh_screen() abort
-    if &diff
-        diffupdate
-    endif
-    silent nohlsearch
-    normal! <C-l>
-endfunction
-nnoremap <silent> <C-l> :call <SID>refresh_screen()<CR>
+nnoremap <silent> <C-l> :if &diff <Bar> diffupdate <Bar> endif<CR>:nohlsearch<CR><C-l>
 
 " Windows {{{2
 
