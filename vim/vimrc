@@ -308,6 +308,17 @@ function! StatuslineTrailingSpaceWarning()
 endfunction
 autocmd vimrc CursorHold,BufWritePost * unlet! b:statusline_trailing_space_warning
 
+" StatuslineCurrenttag() {{{3
+function! StatuslineCurrenttag()
+    let rv = ''
+    try
+        let rv = tagbar#currenttag('%s', '')
+    catch /^Vim\%((\a\+)\)\=:E117/
+        " Ignore unknown function error
+    endtry
+    return rv
+endfunction
+
 " EclimErrorIndicator() {{{3
 function! EclimErrorIndicator() abort
     let loclist = filter(getloclist(0), 'bufnr("%") == v:val.bufnr')
@@ -354,7 +365,7 @@ let g:default_stl .= "%<"
 
 " Function name
 " let g:default_stl .= "<CUR>%(%{tagbar#currenttag('%s', '')} %)</CUR>"
-let g:default_stl .= "%(%{tagbar#currenttag('%s', '')} %)"
+let g:default_stl .= "%(%{StatuslineCurrenttag()} %)"
 
 " Current directory
 " let g:default_stl .= "%{fnamemodify(getcwd(), ':~')}"
