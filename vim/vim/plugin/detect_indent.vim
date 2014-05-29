@@ -113,6 +113,10 @@ function! s:apply_if_ready(options) abort
 endfunction
 
 function! s:detect() abort
+    " The help functionality seems to call FileType/modeline in a strange order
+    if &buftype == 'help'
+        return
+    endif
     let options = s:guess(getline(1, 1024))
     if s:apply_if_ready(options)
         return
@@ -151,5 +155,3 @@ augroup detect_indent
     autocmd!
     autocmd FileType * call s:detect()
 augroup END
-
-" vim:set et sw=2:
