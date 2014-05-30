@@ -265,7 +265,10 @@ __prompt_svn() {
     local root=$(svn info | sed -n -e 's/Working Copy Root Path: //p')
     local prefix="${${${PWD#${root}}#/}%/}"
     root=${(D)root}
-    local rev=$(svnversion -n)
+    local rev="$(svnversion -n)"
+    if [[ "$rev" =~ "^[^0-9]" ]]; then
+        rev="?"
+    fi
 
     _prompt_path="${pcol[green]}${root}${pcol[reset]}"
     _prompt_path+="@${__prompt_col_branch}${rev}${pcol[reset]}"
