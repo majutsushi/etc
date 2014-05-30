@@ -11,6 +11,14 @@
 #     bindkey -M isearch . self-insert
 # ------------------------------------------------------------------------------------------
 
-[[ $LBUFFER = *.. ]] && LBUFFER+=/.. || LBUFFER+=.
+[[ "$LBUFFER" == *.. ]] && LBUFFER+=/.. || LBUFFER+=.
 
 have _zsh_highlight && _zsh_highlight
+
+if [[ "$LBUFFER" =~ "/\.\.$" ]]; then
+    typeset -a line
+    line=(${(z)LBUFFER})
+    local dots=$line[$#line]
+
+    zle -M ${(D)dots:a}
+fi
