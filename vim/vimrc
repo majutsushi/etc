@@ -1410,11 +1410,36 @@ let g:CSApprox_hook_desert_post = [
 \]
 
 " Ctrl-P {{{2
-let g:ctrlp_map = '<leader>ff'
+let g:ctrlp_map = ''
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-nnoremap <silent> <leader>bb :CtrlPBuffer<CR>
-nnoremap <silent> <leader>ft :CtrlPBufTag<CR>
+
+" https://github.com/jszakmeister/vimfiles/blob/master/vimrc
+" Define prefix mapping for CtrlP plugin so that buffer-local mappings
+" for CTRL-P (such as in Tagbar) will override all CtrlP plugin mappings.
+nmap <C-P> <SNR>CtrlP.....
+
+" An incomplete mapping should do nothing.
+nnoremap <SNR>CtrlP..... <Nop>
+
+nnoremap <SNR>CtrlP.....<C-B> :<C-U>CtrlPBookmarkDir<CR>
+nnoremap <SNR>CtrlP.....c     :<C-U>CtrlPChange<CR>
+nnoremap <SNR>CtrlP.....C     :<C-U>CtrlPChangeAll<CR>
+nnoremap <SNR>CtrlP.....<C-D> :<C-U>CtrlPDir<CR>
+nnoremap <SNR>CtrlP.....<C-F> :<C-U>CtrlPCurFile<CR>
+nnoremap <SNR>CtrlP.....<C-L> :<C-U>CtrlPLine<CR>
+nnoremap <SNR>CtrlP.....<C-M> :<C-U>CtrlPMRU<CR>
+nnoremap <SNR>CtrlP.....m     :<C-U>CtrlPMixed<CR>
+
+" Mnemonic: "open files"
+nnoremap <SNR>CtrlP.....<C-O> :<C-U>CtrlPBuffer<CR>
+nnoremap <SNR>CtrlP.....<C-P> :<C-U>CtrlP<CR>
+nnoremap <SNR>CtrlP.....<C-Q> :<C-U>CtrlPQuickfix<CR>
+nnoremap <SNR>CtrlP.....<C-R> :<C-U>CtrlPRoot<CR>
+nnoremap <SNR>CtrlP.....<C-T> :<C-U>CtrlPTag<CR>
+nnoremap <SNR>CtrlP.....t     :<C-U>CtrlPBufTag<CR>
+nnoremap <SNR>CtrlP.....T     :<C-U>CtrlPBufTagAll<CR>
+nnoremap <SNR>CtrlP.....<C-U> :<C-U>CtrlPUndo<CR>
 
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_prompt_mappings = {
