@@ -642,7 +642,7 @@ macro compose \ee "Fgpg --encrypt --armor\ny" "encrypt with GnuPG"
 
 bind attach ' ' select-entry
 bind attach  S  save-entry
-message-hook . "macro attach s <save-entry><kill-line>$HOME/Downloads<enter>y<enter>"
+message-hook . "macro attach s <save-entry><kill-line>$HOME/Downloads<enter>y"
 source ~/.etc/mutt/attachsave|
 
 # }}}
