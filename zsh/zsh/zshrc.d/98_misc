@@ -1,25 +1,3 @@
-# handle moved or deleted and then recreated directories
-_dir_cycle() {
-    local dir="$PWD"
-    if ! [[ . -ef "$PWD" ]]; then
-        if (cd . && [[ $(pwd) == "$dir" || $(pwd) == "." ]] && ! cd "$dir" &>/dev/null); then
-            local -a cmd; cmd=(${(z)1})
-            if [[ "$1" == "" || "${cmd[1]}" != "cd" ]]; then
-                echo "Warning: ${dir} does no longer exist"
-                return 1
-            fi
-        else
-            cd .
-            cd .
-            if [[ "$PWD" != "$dir" ]]; then
-                echo "zsh: Directory moved from ${dir/#$HOME/~} to ${PWD/#$HOME/~}"
-            fi
-        fi
-    fi
-}
-add-zsh-hook precmd _dir_cycle
-add-zsh-hook preexec _dir_cycle
-
 if [[ -f $HOME/.local/etc/zshrc ]]; then
     source $HOME/.local/etc/zshrc
 fi
