@@ -484,10 +484,10 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    right_layout:add(separator)
     if osinfo[4] == "vanadis" then
         right_layout:add(rhinoicon)
     end
+    right_layout:add(separator)
     right_layout:add(baticon)
     right_layout:add(batwidget)
     right_layout:add(separator)
@@ -582,7 +582,7 @@ globalkeys = awful.util.table.join(
     -- Standard functionality
     awful.key({ modkey, "Control" }, "Return", function () exec(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    awful.key({ modkey, "Control" }, "q", awesome.quit),
 
     awful.key({ modkey }, "l",     function () awful.tag.incmwfact( 0.05) end),
     awful.key({ modkey }, "h",     function () awful.tag.incmwfact(-0.05) end),
@@ -652,6 +652,7 @@ clientkeys = awful.util.table.join(
         end),
     awful.key({ modkey }, "o", awful.client.movetoscreen),
     awful.key({ modkey }, "t", function (c) c.ontop = not c.ontop end),
+    awful.key({ modkey }, "a", function (c) c.sticky = not c.sticky end),
     awful.key({ modkey }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be
@@ -720,6 +721,7 @@ awful.rules.rules = {
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
+                     raise = true,
                      keys = clientkeys,
                      maximized_vertical = false,
                      maximized_horizontal = false,
