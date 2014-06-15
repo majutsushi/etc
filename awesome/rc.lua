@@ -116,7 +116,7 @@ for s = 1, screen.count() do
         awful.tag.setproperty(tags[s][11], "mwfact", 0.65)
 
         -- Configure 'im' tag (12)
-        awful.tag.setncol(3, tags[s][12])
+        awful.tag.setncol(2, tags[s][12])
         awful.tag.setnmaster(1, tags[s][12])
         awful.tag.setproperty(tags[s][12], "mwfact", 0.55)
 
