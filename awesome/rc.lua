@@ -735,6 +735,8 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "mt32emu" },
       properties = { floating = true } },
+    { rule = { class = "fs-uae" },
+      properties = { floating = true } },
 }
 -- }}}
 
