@@ -43,13 +43,23 @@
 URxvt.font: -xos4-terminus-medium-r-normal--12-120-72-72-c-0-iso10646-1,\
             xft:DejaVu Sans Mono:pixelsize=12,\
             [codeset=JISX0208]xft:TakaoGothic:pixelsize=12,\
-            xft:Code2000:pixelsize=12
+            xft:Everson Mono:pixelsize=12,\
+            xft:Code2000:pixelsize=12,\
+            xft:Code2001:pixelsize=12,\
+            xft:Code2002:pixelsize=12,\
+            xft:Symbola:pixelsize=12
 URxvt.boldFont: -maju-terminus-bold-r-normal--12-120-72-72-c-60-iso10646-1,\
                 xft:DejaVu Sans Mono:weight=bold:pixelsize=12,\
                 [codeset=JISX0208]xft:TakaoGothic:weight=bold:pixelsize=12,\
-                xft:Code2000:weight=bold:pixelsize=12
+                xft:Everson Mono:weight=bold:pixelsize=12,\
+                xft:Code2000:weight=bold:pixelsize=12,\
+                xft:Code2001:weight=bold:pixelsize=12,\
+                xft:Code2002:weight=bold:pixelsize=12,\
+                xft:Symbola:weight=bold:pixelsize=12
 !URxvt.italicFont:
+! Everson Mono:style=Oblique
 !URxvt.boldItalicFont:
+! Everson Mono:style=Bold Oblique
 
 URxvt.reverseVideo: false
 !URxvt.foreground: grey90
