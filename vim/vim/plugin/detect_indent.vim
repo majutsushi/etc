@@ -20,6 +20,11 @@ function! s:guess(lines) abort
             continue
         endif
 
+        " Lines with mixed indent are unreliable
+        if line =~# ' ' && line =~# '\t'
+            continue
+        endif
+
         if line =~# '^\s*/\*'
             let ccomment = 1
         endif
