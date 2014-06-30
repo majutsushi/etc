@@ -110,7 +110,7 @@ end
 local function switchMonth(delta)
     state.month = state.month + (delta or 1)
     local text = assemble_text(displayMonth(state.month, state.year, 2))
-    tooltip:set_text(text)
+    tooltip:set_markup(text)
 end
 
 function cal.register(mywidget)
@@ -119,7 +119,7 @@ function cal.register(mywidget)
         function tooltip:update()
             local month, year = os.date('%m'), os.date('%Y')
             state = { month=month, year=year}
-            tooltip:set_text(assemble_text(displayMonth(month, year, 2)))
+            tooltip:set_markup(assemble_text(displayMonth(month, year, 2)))
         end
         tooltip:update()
     end

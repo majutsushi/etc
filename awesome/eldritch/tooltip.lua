@@ -18,7 +18,7 @@ function _tooltip:update(values)
         body = body .. key .. tostring(values[i]) .. " \n"
     end
 
-    self.tooltip:set_text(utils.font("monospace 10", title .. body))
+    self.tooltip:set_markup(utils.font("monospace 10", title .. body))
 end
 
 local function new(title, keys, objects)

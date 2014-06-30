@@ -193,7 +193,7 @@ if osinfo[4] == "vanadis" then
         else
             rhinoicon:set_image(beautiful.widget_rhino_active)
         end
-        rhinoicon.tooltip:set_text(table.concat(args, "\n"))
+        rhinoicon.tooltip:set_markup(table.concat(args, "\n"))
         return ""
     end, 31)
 end
@@ -446,7 +446,7 @@ local function tasklist_update(w, buttons, label, data, objects)
         end
         bgb:set_bgimage(bg_image)
         ib:set_image(icon)
-        tt:set_text(text)
+        tt:set_markup(text)
         w:add(bgb)
    end
 end
