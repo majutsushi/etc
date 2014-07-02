@@ -1,4 +1,4 @@
-# start screen if not already in it or running a dumb terminal
+# start tmux/screen if not already in it or running a dumb terminal
 
 # 'rxvt' is needed for dvtm
 case $TERM in
@@ -6,6 +6,7 @@ case $TERM in
         ;;
     *) export ORIGTERM=$TERM
        export ORIGCOLORTERM=$COLORTERM
+       unset TMUX
        if have -c tmux; then
            tmux new-session
        else
