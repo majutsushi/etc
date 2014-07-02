@@ -32,6 +32,11 @@
 	up = !git pull && git ll HEAD@{1}..
 	reup = !git pull --rebase && git diff --stat HEAD@{1}.. && git ll HEAD@{1}..
 
+	assume   = update-index --assume-unchanged
+	unassume = update-index --no-assume-unchanged
+	assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
+	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+
 	undo-commit = reset --soft HEAD^
 	; from http://www.die-welt.net/2011/12/git-rocks-even-when-it-sucks/
 	ls-big-files = "!for commit in $(git log --all --pretty=format:%H); do git ls-tree -r -l $commit; done |awk '{print $4 \" \" $5}' |sort -nur | head -n 10"
