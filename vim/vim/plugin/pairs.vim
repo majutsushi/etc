@@ -153,11 +153,11 @@ function! s:HandleBackSpace() abort
          \ has_key(b:pairs_conf.parens, cpprev) && cnext == b:pairs_conf.parens[cpprev]
         " delete padding spaces
         return "\<Delete>\<BS>"
-    elseif getline('.') =~# '^\s*$' && has_key(b:pairs_conf.pairs, lprevc)
+    elseif getline('.') =~# '^$' && has_key(b:pairs_conf.pairs, lprevc)
         " change
         "
         " foo {
-        "     |
+        " |
         " }
         "
         " to
@@ -171,8 +171,9 @@ function! s:HandleBackSpace() abort
         let closepattern = '^\s*[' . closechars . ']$'
 
         if lnext =~# closepattern && lnextc == b:pairs_conf.pairs[lprevc]
-            let delline = col('.') > 1 ? "\<C-U>" : ""
-            return delline . "\<BS>\<Esc>J\<Del>i"
+            " Vim special case, see ':h J'
+            let del = lnextc == ')' ? "" : "\<Del>"
+            return "\<BS>\<Esc>J" . del . "i"
         else
             return "\<BS>"
         endif
