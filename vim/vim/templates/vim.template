@@ -2,7 +2,7 @@
 " Author:  {{ g:user_name }} <{{ g:user_email }}>
 " License: MIT/X11
 
-if &compatible || exists('loaded_{{ s:fname }}')
+if &compatible || exists('g:loaded_{{ s:fname }}')
     finish
 endif
-let loaded_{{ s:fname }} = 1
+let g:loaded_{{ s:fname }} = 1
