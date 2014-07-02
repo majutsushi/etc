@@ -1862,6 +1862,20 @@ let g:voom_tab_key = '<C-Tab>'
 let g:voom_verify_oop = 1
 let g:voom_user_command = "runtime! voom_addons/*.vim"
 
+" YouCompleteMe {{{2
+let g:ycm_filetype_blacklist = {
+    \ 'mail': 1,
+    \ 'markdown': 1,
+    \ 'notes': 1,
+    \ 'vo_base': 1,
+    \ 'pandoc': 1,
+    \ 'tagbar': 1,
+    \ 'text': 1,
+    \ 'qf': 1,
+    \ 'unite': 1,
+    \ 'vimwiki': 1,
+\ }
+
 " ZoomWin {{{2
 let g:zoomwin_stl = ''
 function! ZWStatusline(zoomed)
