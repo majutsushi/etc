@@ -23,7 +23,7 @@ function! s:load_template() abort
         return
     endif
 
-    silent! execute '0read ' . defaults[0]
+    silent! execute 'keepalt 0read ' . defaults[0]
 
     let report_save = &report
     set report=99999
