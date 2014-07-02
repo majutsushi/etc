@@ -22,9 +22,9 @@
 	in = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll ..trunk 2>/dev/null; then git ll ..git-svn; fi; else git ll ..origin; fi"
 	out = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll trunk.. 2>/dev/null; then git ll git-svn..; fi; else git ll origin..; fi"
 
-	d  = diff --patience -B -C -b
-	sd = diff --patience -B -C -b --staged
-	wd = diff --color-words --patience -B -C -b
+	d  = diff -B -C -b
+	sd = diff -B -C -b --staged
+	wd = diff --color-words -B -C -b
 	ws = show --color-words
 	hgp = show --format=\"From: %an <%ae>%n%s%n%b\" -U8
 	branch-diff = !git diff $(git merge-base HEAD master) $1
@@ -51,6 +51,7 @@
 
 [diff]
 	tool = vimdiff
+	algorithm = histogram
 
 [push]
 	default = matching
