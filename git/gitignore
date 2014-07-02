@@ -7,15 +7,18 @@
 *.[ao]
 *.so
 
+# byte-compiled files
+*.class
+*.pyc
+*.pyo
+*.zwc
+
 # vim swap files
 .*.sw?
 
 # tags
 tags
 cscope.*
-
-# zsh compiled files
-*.zwc
 
 # LaTeX stuff
 *.aux
@@ -39,10 +42,6 @@ cscope.*
 # configure stuff
 config.log
 config.status
-
-# byte-compiled files
-*.pyc
-*.pyo
 
 # gcov stuff
 *.gcov
