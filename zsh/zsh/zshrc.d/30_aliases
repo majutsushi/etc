@@ -132,7 +132,7 @@ flip()     { perl -C3 -Mutf8 -lpe '$_=reverse;y/a-zA-Z.['\'',({?!\"<_;‿⁅∴\
 
 tea() {
     local time=${1:-90s}
-    eval "sleep $time"
+    sleep $time
     zenity --info --title="Tea is ready" --text="Tea is ready since $(date +%H:%M:%S)"
 }
 
