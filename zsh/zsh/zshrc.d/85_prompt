@@ -1,9 +1,18 @@
 __prompt_jobs() {
-    echo "%(1j. ${pcol[bold]}${pcol[cyan]}%j${pcol[reset]}.)"
+    echo "%(1j.${pcol[bold]}${pcol[cyan]}%j${pcol[reset]} .)"
 }
 
+typeset -ghi __next_command __last_command
+__inc_command() { (( __next_command++ )) }
+add-zsh-hook preexec __inc_command
 __prompt_exitcode() {
-    echo "%(0?.. ${pcol[bold]}${pcol[red]}%?${pcol[reset]})"
+    if (( __next_command == __last_command )); then
+        echo ""
+    else
+        # This only seems to have effect locally...
+        (( __last_command = __next_command ))
+        echo "%(0?..${pcol[bold]}${pcol[red]}%?${pcol[reset]} )"
+    fi
 }
 
 # test if we have writing permission for the current directory
@@ -64,9 +73,9 @@ _prompt_vcs_info=""
 
 PS1='
 $(__prompt_logo)${pcol[167]}%n ${pcol[reset]}@ ${pcol[220]}%m${pcol[reset]} ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}
-%(2L.${pcol[bold]}%L${pcol[reset]} .)$(__prompt_jdk)%(!.#.$) '
+%(2L.${pcol[bold]}%L${pcol[reset]} .)$(__prompt_jdk)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
 
-RPS1='$(__prompt_orighome)$(__prompt_exitcode)$(__prompt_jobs)'
+RPS1='$(__prompt_orighome)'
 
 PS2="${pcol[bold]}%_${pcol[reset]} %(!.#.>) "
 PS3='?# '         # selection prompt used within a select loop.
