@@ -85,15 +85,34 @@ local function worldclock()
 
     for line in tzfile:lines() do
         local tzinfo = utils.split(line, "%|")
-        local out = utils.exec("TZ=" .. tzinfo[2] .. " date +'%H:%M_%A_%Z %:::z'")
+        local out = utils.exec("TZ=" .. tzinfo[2] .. " date +'%H:%M_%A_%Z'")
         local data = utils.split(utils.trim(out), "_")
 
         text = text .. "\n " .. utils.fgcolor("#98fb98", tzinfo[1])
         text = text .. "\n " .. data[1]
-        if data[2] ~= localday then
-            text = text .. " (" .. data[2] .. ")"
+
+        local tztext = data[3]
+
+        -- Calculate difference to current time zone
+        local tzdiff = utils.exec("TZ=" .. tzinfo[2] .. " date +'%z'") - utils.exec("date +'%z'")
+        if tzdiff ~= 0 then
+            local sign, hours, minutes = string.match(tzdiff, "(-?)(%d%d)(%d%d)")
+            if sign == "" then
+                sign = "+"
+            end
+            tztext = tztext .. " " .. sign .. hours
+            if minutes ~= "00" then
+                tztext = tztext .. ":" .. minutes
+            end
         end
-        text = text .. " " .. data[3] .. "\n"
+
+        if data[2] ~= localday then
+            tztext = tztext .. " (" .. data[2] .. ")"
+        end
+
+        tztext = " " .. utils.fontsize("small", utils.fgcolor("#999999", tztext))
+
+        text = text .. tztext .. "\n"
     end
 
     return text

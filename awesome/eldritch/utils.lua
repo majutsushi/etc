@@ -41,6 +41,9 @@ end
 function utils.font(font, text)
     return '<span font="' .. tostring(font) .. '">' .. tostring(text) ..'</span>'
 end
+function utils.fontsize(size, text)
+    return '<span font_size="' .. tostring(size) .. '">' .. tostring(text) ..'</span>'
+end
 function utils.fgcolor(color, text)
     return '<span fgcolor="' .. tostring(color) .. '">' .. tostring(text) .. '</span>'
 end
