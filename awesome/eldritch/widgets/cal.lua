@@ -96,7 +96,7 @@ local function worldclock()
         -- Calculate difference to current time zone
         local tzdiff = utils.exec("TZ=" .. tzinfo[2] .. " date +'%z'") - utils.exec("date +'%z'")
         if tzdiff ~= 0 then
-            local sign, hours, minutes = string.match(tzdiff, "(-?)(%d%d)(%d%d)")
+            local sign, hours, minutes = string.match(tzdiff, "(-?)(%d?%d)(%d%d)")
             if sign == "" then
                 sign = "+"
             end
