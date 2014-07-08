@@ -131,4 +131,6 @@ hi User6	cterm=bold ctermfg=15 ctermbg=8 guibg=#c2bfa5 guifg=#000000 gui=bold
 "hi User6	cterm=bold guibg=#a9a9a9 guifg=#cd5c5c
 "hi User7	cterm=bold guifg=#cd5c5c
 
+hi CurWord	guibg=#555555
+
 "vim: sw=4 noexpandtab
