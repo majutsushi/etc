@@ -1,5 +1,12 @@
 style "vimfix" {
-  bg[NORMAL] = "#333333" # desert grey20, see /usr/share/vim/vimcurrent/rgb.txt
+    bg[NORMAL] = "#333333" # desert grey20, see /usr/share/vim/vimcurrent/rgb.txt
 }
 widget "vim-main-window.*GtkForm" style "vimfix"
 gtk-key-theme-name = "Emacs"
+
+binding "pidgin-bindings"
+{
+    bind "<ctrl>v"        { "paste" ("text") }
+    bind "<ctrl><shift>v" { "paste" ("html") }
+}
+widget "*pidgin_conv_entry" binding "pidgin-bindings"
