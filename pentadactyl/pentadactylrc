@@ -37,9 +37,8 @@ highlight Find   background: #d6c149; color: #000;
 
 nmap -builtin <C-l> <Esc>:nohlfind<CR><C-l>
 
-map <A-t> -javascript <<EOF
-let (pref = "extensions.treestyletab.tabbar.position")
-    prefs.set(pref, prefs.get(pref) == "left" ? "top" : "left")
-EOF
+command! -javascript toggleontop
+    \ let (pref = "extensions.treestyletab.tabbar.position")
+    \ prefs.set(pref, prefs.get(pref) == "left" ? "top" : "left")
 
 " vim: set ft=pentadactyl:
