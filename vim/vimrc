@@ -1780,6 +1780,10 @@ let g:splice_initial_scrollbind_grid = 1
 let g:splice_initial_scrollbind_compare = 1
 let g:splice_initial_scrollbind_path = 1
 
+" Table mode {{{2
+nmap <expr> <silent>   <Tab> getline('.') =~ '^\s*\|' ? ']\|' :   "\<Tab>"
+nmap <expr> <silent> <S-Tab> getline('.') =~ '^\s*\|' ? '[\|' : "\<S-Tab>"
+
 " Tagbar {{{2
 let g:tagbar_ctags_bin = g:ctagsbin
 let g:tagbar_compact = 1
