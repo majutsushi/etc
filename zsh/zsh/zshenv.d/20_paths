@@ -13,8 +13,7 @@ rationalize_path() {
     foreach dir in "$'"$1"'[@]"
     do
         if [[ -n "$dir" && "$dir" != "." && -d "$dir" && -x "$dir" ]]; then
-            dir=$(cd "$dir" && pwd -P)
-            build=("$build[@]" "$dir")
+            build=("$build[@]" "$dir:A")
         fi
     done
     '"$1"'=( "$build[@]" )
