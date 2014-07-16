@@ -2124,7 +2124,7 @@ noremap! <M-p> <Up>
 " Fast open a buffer by searching for a name
 " nnoremap <leader>b :buffers<CR>:buffer<space>
 
-nnoremap yn :let @+ = expand('%:p')<CR>
+nnoremap yn :let @+ = expand('%:p:~')<CR>
 
 nnoremap <M-Left>  :tabprevious<CR>
 nnoremap <M-Right> :tabnext<CR>
