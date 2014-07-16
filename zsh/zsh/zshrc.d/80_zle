@@ -116,11 +116,6 @@ bindkey '^[e' edit-command-line
 
 bindkey '^[q' push-line-or-edit
 
-# insert current date
-_insert_datestamp() { LBUFFER+=${(%):-'%D{%Y-%m-%d}'}; }
-zle -N insert-datestamp _insert_datestamp
-bindkey '^[t' insert-datestamp
-
 autoload -Uz copy-earlier-word
 zle -N copy-earlier-word
 bindkey "^[m" copy-earlier-word
