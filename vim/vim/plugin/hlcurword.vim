@@ -24,7 +24,7 @@ function! s:hlcurword() abort
         call matchdelete(lastmatch.id)
     endfor
 
-    call matchadd('CurWord', '\V\<' . word . '\>', -50)
+    call matchadd('CurWord', '\V\<' . escape(word, '\') . '\>', -50)
 endfunction
 
 augroup HlCurWord
