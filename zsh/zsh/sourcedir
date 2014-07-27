@@ -12,15 +12,15 @@
 
 sourcedir() {
     if [ ! -d "$1" ]; then
-        error "no such directory: $1"
+        log_error "no such directory: $1"
         return 1
     fi
-#     debug "sourcing directory ${1#$ZDOTDIR/}"
+#     log_debug "sourcing directory ${1#$ZDOTDIR/}"
     for f in "$1"/*(.N,@N); do
         case "$f" in
             *~|*.bak|*.old|*.sw?|*.zwc|*.disabled) continue;;
         esac
-#         debug "  sourcing file $f"
+#         log_debug "  sourcing file $f"
         source "$f"
     done
 }

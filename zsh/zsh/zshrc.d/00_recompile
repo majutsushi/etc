@@ -13,7 +13,7 @@ zrecompile $ZDOTDIR/**/*(/N) | while read pre file post; do
       succeeded*) rm -f "${file%:}".old;;
       *) :;;
     esac
-    info "$pre ${file##$HOME/} $post"
+    log_info "$pre ${file##$HOME/} $post"
   done
 
 # vim:ft=zsh

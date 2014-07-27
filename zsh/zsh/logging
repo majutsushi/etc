@@ -15,22 +15,22 @@ __log() {
 __do_debug() {
   [ -n "${ZDEBUG:-}" ]
 }
-error() {
+log_error() {
   [[ -o xtrace ]] && set +x && local __XTRACE=1
   __log E "$@" 
   [ "${__XTRACE:-}" ] && set -x
 }
-warn() {
+log_warn() {
   [[ -o xtrace ]] && set +x && local __XTRACE=1
   __log W "$@" 
   [ "${__XTRACE:-}" ] && set -x
 }
-info() {
+log_info() {
   [[ -o xtrace ]] && set +x && local __XTRACE=1
   __log I "$@" 
   [ "${__XTRACE:-}" ] && set -x
 }
-debug() {
+log_debug() {
   [[ -o xtrace ]] && set +x && local __XTRACE=1
   __do_debug && __log D "$@" 
   [ "${__XTRACE:-}" ] && set -x

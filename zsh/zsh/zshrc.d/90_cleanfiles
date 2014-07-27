@@ -34,7 +34,7 @@ done
 
 
 if (( $#_rmfiles )); then
-  info "Removing files: ${_rmfiles[@]#$HOME/}..."
+  log_info "Removing files: ${_rmfiles[@]#$HOME/}..."
   rm -f ${_rmfiles[@]}
 fi
 
