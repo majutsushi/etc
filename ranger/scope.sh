@@ -79,6 +79,9 @@ case "$extension" in
     docx)
         try docx2txt.pl "$path" - && { dump | trim; exit 0; }
         ;;
+    scen)
+        try print-scenario --colour "$path"  && { dump; exit 0; }
+        ;;
 esac
 
 case "$mimetype" in
