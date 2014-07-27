@@ -30,15 +30,17 @@ highlight StatusLineBroken color: #333333 !important; background: #ffa0a0 !impor
 "highlight CmdOutput  font: normal 14px 'Menlo' !important;
 "highlight CompItem   font: normal 14px 'Menlo' !important;
 
-highlight Find   background: #d6c149; color: #000;
+highlight Find background: #cd853f; color: #f5deb3;
 
 "cmap -builtin <C-b> <Left>
 "cmap -builtin <C-f> <Right>
 
-nmap -builtin <C-l> <Esc>:nohlfind<CR><C-l>
+nmap -builtin -group user <C-l> <Esc>:nohlfind<CR><C-l>
 
 command! -javascript toggleontop
     \ let (pref = "extensions.treestyletab.tabbar.position")
     \ prefs.set(pref, prefs.get(pref) == "left" ? "top" : "left")
+
+cmap -builtin -group user -javascript <S-Insert> editor.paste('*')
 
 " vim: set ft=pentadactyl:
