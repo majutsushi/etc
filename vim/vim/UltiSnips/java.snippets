@@ -15,7 +15,7 @@ endglobal
 
 snippet if "if" b
 if ($1) {
-	$0
+	${2:${VISUAL}}
 }
 endsnippet
 
@@ -33,31 +33,31 @@ endsnippet
 
 snippet fore "for (each)" b
 for ($1 : $2) {
-	$0
+	${3:${VISUAL}}
 }
 endsnippet
 
 snippet fori "for" b
 for (int ${1:i} = 0; $1 < ${2:10}; $1++) {
-	$0
+	${3:${VISUAL}}
 }
 endsnippet
 
 snippet for "for" b
 for ($1; $2; $3) {
-	$0
+	${4:${VISUAL}}
 }
 endsnippet
 
 snippet wh "while" b
 while ($1) {
-	$0
+	${2:${VISUAL}}
 }
 endsnippet
 
 snippet try "try .. catch" b
 try {
-	$1
+	${1:${VISUAL}}
 } catch (${2:Exception} ${3:e}) {
 	${4:e.printStackTrace();}
 }
@@ -83,7 +83,7 @@ endsnippet
 
 snippet /m(eth)?/ "method" br
 ${1:private} ${2:void} ${3:method}(${4}) ${5:throws $6 }{
-	$0
+	${7:${VISUAL}}
 }
 endsnippet
 
@@ -103,7 +103,7 @@ else:
 	snip.rv = ""`
  **/
 ${1:public} ${2:void} ${3:method}($4) ${5:throws ${6} }{
-	$0
+	${8:${VISUAL}}
 }
 endsnippet
 
