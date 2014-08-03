@@ -1,5 +1,17 @@
 priority -20
 
+snippet if "if"
+if $1
+	${2:${VISUAL}}
+endif
+endsnippet
+
+snippet for "for"
+for $1 in $2
+	${3:${VISUAL}}
+endfor
+endsnippet
+
 snippet fun "function"
 function! ${1:`!v expand('%') =~ 'autoload' ? substitute(matchstr(expand('%:p'),'autoload/\zs.*\ze.vim'),'[/\\]','#','g').'#' : ''`}${2:function_name}(${3}) abort
 	${0:${VISUAL:" body}}
