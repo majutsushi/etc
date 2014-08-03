@@ -60,6 +60,8 @@ autocmd vimrc InsertEnter * set nocursorline
 
 autocmd vimrc StdinReadPost * set buftype=nofile
 
+autocmd vimrc VimResized * execute "normal! \<C-w>="
+
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
 " screwing up folding when switching between windows.
@@ -2338,6 +2340,10 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 " for quick macro playback
 "nnoremap Q @q
+
+" Source current or selected lines
+vnoremap <leader>S y:execute @@<CR>
+nnoremap <leader>S ^vg_y:execute @@<CR>
 
 " run current file as a script
 nnoremap <leader>e :execute "Shell " . expand("%:p")<CR>
