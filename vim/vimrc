@@ -108,9 +108,10 @@ augroup END
 
 augroup commentstrings
     autocmd!
-    autocmd FileType cpp  setlocal commentstring=//%s
-    autocmd FileType tmux setlocal commentstring=#%s
+    autocmd FileType cpp         setlocal commentstring=//%s
+    autocmd FileType gtkrc       setlocal commentstring=#%s
     autocmd FileType pentadactyl setlocal commentstring=\"%s
+    autocmd FileType tmux        setlocal commentstring=#%s
 augroup END
 
 autocmd vimrc BufNewFile,BufReadPost *mutt/fortunes* setlocal textwidth=76
