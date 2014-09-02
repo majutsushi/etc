@@ -10,6 +10,7 @@ set showstatuslinks=command
 set hlfind
 
 set passkeys=mail.google.com:'!#*+-./<C-Down><C-s><Enter>?INU[]acefjk lmnopqrsuvxyz',*a,*n,*r,*s,*t,*u,ga,gc,gd,gi,gl,gs,gt,yo
+set passkeys+='https://stampede.opencloud.com/jira-internal/*':'?[]<Enter>.abcejklmnpuwx',gd,gp,ga,gt,gc,gr
 set strictfocus='chrome:*':laissez-faire,mail.google.com:laissez-faire,*:moderate
 
 group! gmail -locations=https://mail.google.com/*
