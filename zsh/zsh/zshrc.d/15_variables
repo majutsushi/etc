@@ -72,6 +72,7 @@ if [[ -n "$TMUX" ]]; then
             fi
         done
     }
+    add-zsh-hook precmd  _update_from_tmux
     add-zsh-hook preexec _update_from_tmux
 fi
 
