@@ -82,18 +82,12 @@
 	rmdir = true
 
 [tig]
-	author-width = 15
+	main-view = "id date:default author:width=15 commit-title:graph=yes,refs=yes,overflow=no"
 	blame-options = "-C -C -C"
 	horizontal-scroll = 50%
 	ignore-space = "all"
 	line-graphics = "utf-8"
-	line-number-interval = 1
-	show-author = "full"
 	show-changes = yes
-	show-date = "default"
-	show-id = yes
-	show-refs = yes
-	show-rev-graph = yes
 	split-view-height = 66%
 	status-untracked-dirs = no
 	tab-size = 8
@@ -126,7 +120,7 @@
 	; palette-5    = white default
 	; palette-6    = black default
 ; Tree view
-	tree-dir = yellow default bold
+	directory = yellow default bold
 ; Diff view
 	diff-header = white  default bold
 	diff-chunk  = yellow default
