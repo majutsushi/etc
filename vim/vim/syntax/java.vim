@@ -4,7 +4,7 @@
 
 " syntax match javaOperator "[-+&|<>=!\/~.,;:*%&^?()\[\]]"
 syntax match javaOperator "[-+&|<>=!\/~,;:*%&^?()\[\]]"
-syntax match javaFunction '\(new \)\@4<!\<\zs\w\+\ze(' containedin=ALLBUT,javaLineComment,javaComment,javaString
+syntax match javaFunction '\(new \)\@4<!@\@1<!\<\zs\w\+\ze(' containedin=ALLBUT,javaLineComment,javaComment,javaString
 
 highlight link javaOperator Operator
 highlight link javaFunction Function
