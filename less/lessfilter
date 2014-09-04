@@ -13,7 +13,9 @@ have() {
     type -P "$1" > /dev/null
 }
 
-PYG="pygmentize -f terminal256 -O style=desert"
+pyg() {
+    pygmentize -f terminal256 -O style=desert "$@"
+}
 
 (
     case $(echo "$1" | tr '[:upper:]' '[:lower:]') in
@@ -52,8 +54,11 @@ PYG="pygmentize -f terminal256 -O style=desert"
         *.gz|*.z|*.dz)
             gzip -dc "$1"
             ;;
+        *.class)
+            pyg -l java <(javap -private "$1")
+            ;;
         *)
-            $PYG "$1" 2>/dev/null && exit 0
+            pyg "$1" 2>/dev/null && exit 0
 
             # Use a whitelist instead of pygmentize's '-g' option to avoid too
             # many false positives

@@ -41,6 +41,8 @@ dump() { echo "$output"; }
 # a common post-processing function used after most commands
 trim() { head -n "$maxln"; }
 
+pyg() { pygmentize -f terminal256 -O style=desert "$@"; }
+
 case "$path" in
     *.pcap|*.pcapng|*.pcap.gz|*.pcapng.gz)
         try tshark -t a -r "$path" && { dump | trim; exit 0; }
@@ -79,6 +81,9 @@ case "$extension" in
     docx)
         try docx2txt.pl "$path" - && { dump | trim; exit 0; }
         ;;
+    class)
+        try pyg -l java <(javap -private "$path") && { dump; exit 0; }
+        ;;
     scen)
         try print-scenario --colour "$path"  && { dump; exit 0; }
         ;;
@@ -87,7 +92,7 @@ esac
 case "$mimetype" in
     # Syntax highlight for text files:
     text/* | */xml)
-        try pygmentize -f terminal256 -O style=desert "$path" && { dump | trim; exit 5; } || exit 2;;
+        try pyg "$path" && { dump | trim; exit 5; } || exit 2;;
     # Ascii-previews of images:
     image/*)
         img2txt --gamma=0.6 --width="$width" "$path" && exit 4 || exit 1;;
