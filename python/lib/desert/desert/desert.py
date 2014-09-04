@@ -23,9 +23,12 @@ class DesertStyle(Style):
 
         Operator:           'bold #f0e68c',
 
+        # Name.Attribute:     '#98fb98',
         Name.Builtin:       'bold #f0e68c',
         Name.Constant:      '#ffa0a0',
+        Name.Decorator:     '#cd5c5c',
         Name.Entity:        '#ffdead',
+        Name.Function:      '#98fb98',
         Name.Tag:           'bold #f0e68c',
         Name.Variable:      '#98fb98',
 
