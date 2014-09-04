@@ -6,6 +6,9 @@ setopt hash_list_all
 # started. Otherwise it stays there and completion is done from both ends.
 setopt complete_in_word
 
+# complete globs instead of expanding them
+setopt glob_complete
+
 # load fancy menu completion
 zmodload zsh/complist
 
