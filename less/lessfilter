@@ -54,6 +54,10 @@ pyg() {
         *.gz|*.z|*.dz)
             gzip -dc "$1"
             ;;
+        *.7z)
+            have 7z && 7z l "$1" && exit 0
+            exit 1
+            ;;
         *.class)
             pyg -l java <(javap -private "$1")
             ;;
