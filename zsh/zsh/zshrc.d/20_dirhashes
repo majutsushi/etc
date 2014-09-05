@@ -1,15 +1,5 @@
-hash -d deb=/var/cache/apt/archives
 hash -d doc=/usr/share/doc
-hash -d linux=/lib/modules/$(command uname -r)/build/
 hash -d log=/var/log
-hash -d music=/var/lib/mpd/music
-hash -d share=/media/SHARE/share
-hash -d src=/usr/src
-hash -d tt=/usr/share/doc/texttools-doc
-hash -d www=/var/www
-hash -d vuw=~/work/university/VUW/Classes
-hash -d thesis=~/work/university/VUW/Thesis
-hash -d win="/mnt/winxp/Documents and Settings/Jan/Desktop/share"
 
 # zsh_directory_name() {
 #     emulate -L zsh
