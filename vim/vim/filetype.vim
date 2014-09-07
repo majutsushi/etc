@@ -15,4 +15,5 @@ augroup filetypedetect
     autocmd BufNewFile,BufReadPost {.,}tmux.conf setfiletype tmux
     autocmd BufNewFile,BufReadPost sgc*.dat  setfiletype xml
     autocmd BufNewFile,BufReadPost *.gtkrc   setfiletype gtkrc
+    autocmd BufNewFile,BufReadPost *.template setfiletype template
 augroup END
