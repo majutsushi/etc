@@ -5,7 +5,9 @@
 "   {% ex command %}
 "       {%+ ex command %} Dont' remove leading whitespace
 "       {% ex command +%} Dont' remove trailing whitespace
-"   {{ expression }}
+"   {{ expression }} At least one space around the expression is mandatory.
+"   Variables have to be script-local (s:foo) variables.
+"       Variables starting with '__' are reserved.
 
 if &compatible || exists("g:loaded_templates")
     finish
@@ -34,6 +36,9 @@ function! s:load_template() abort
     finally
         let &report = report_save
     endtry
+
+    " Remove template variables from the script namespace
+    call filter(s:, 'v:key =~# "^__"')
 
     normal! G
 endfunction
