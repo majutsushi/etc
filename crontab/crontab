@@ -1,3 +1,3 @@
 # m h  dom mon dow   command
 20  4  *   *   *     /usr/sbin/logrotate --state $HOME/.cache/logrotate.status $HOME/.etc/logrotate.conf
-0   3  *   *   7     command -v fuser >/dev/null 2>&1 && for i in $HOME/.cache/vim/swap/*; do fuser $i >/dev/null 2>&1 || rm $i; done
+0   3  *   *   7     command -v fuser >/dev/null 2>&1 && for i in $HOME/.cache/vim/swap/*; do fuser "$i" >/dev/null 2>&1 || rm "$i"; done
