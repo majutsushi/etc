@@ -262,7 +262,7 @@ __prompt_hg() {
 }
 
 __prompt_svn() {
-    local root=$(svn info | sed -n -e 's/Working Copy Root Path: //p')
+    local root=$(=svn info | sed -n -e 's/Working Copy Root Path: //p')
     local prefix="${${${PWD#${root}}#/}%/}"
     root=${(D)root}
     local rev="$(svnversion -n)"
@@ -274,7 +274,7 @@ __prompt_svn() {
     _prompt_path+="@${__prompt_col_branch}${rev}${pcol[reset]}"
 
     typeset -a svnstatus
-    svnstatus=(${(s:,:)${:-$(svn status -u | awk '
+    svnstatus=(${(s:,:)${:-$(=svn status -u | awk '
         /^[MDR!]/ { mod++ }
         /^.M/     { mod++ }
         /^A/      { add++ }
