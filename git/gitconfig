@@ -137,4 +137,7 @@
 [url "ssh://[login]@git.gnome.org/git/"]
 	insteadof = gnome:
 
+[include]
+	path = ~/.local/etc/gitconfig
+
 # vim: filetype=gitconfig noexpandtab sw=8 sts=8
