@@ -195,6 +195,11 @@ __prompt_git_flags() {
         flags+="${pcol[cyan]}?"
     fi
 
+    # show whether there are any assume-unchanged files
+    if $__git_cmd ls-files -v | command grep -q '^[a-z] '; then
+        flags+=${pcol[reset]}a
+    fi
+
     echo -n "$__prompt_col_flags$flags${pcol[reset]}"
 }
 
