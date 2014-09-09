@@ -62,6 +62,7 @@ compdef _mkdir mcd
 alias grep="grep --extended-regexp --ignore-case"
 alias gdb="gdb -q"
 alias mtr="mtr -t"
+alias ssh="ssh -o 'PermitLocalCommand yes'"
 
 # execute last command as root
 alias fu='sudo $(fc -ln -1) '
