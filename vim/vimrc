@@ -58,6 +58,9 @@ set cursorline
 autocmd vimrc InsertLeave * set cursorline
 autocmd vimrc InsertEnter * set nocursorline
 
+" Copy clipboard contents to + register when entering vim
+autocmd VimEnter * call setreg('+', system('xclip -o -selection clipboard'))
+
 autocmd vimrc StdinReadPost * set buftype=nofile
 
 autocmd vimrc VimResized * execute "normal! \<C-w>="
