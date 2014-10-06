@@ -202,7 +202,7 @@ tm() {
 }
 __tmux-sessions() {
     local -a sessions
-    sessions=( ${${(f)"$(command tmux list-sessions)"}/:[ $'\t']##/:} )
+    sessions=( ${${(f)"$(command tmux list-sessions 2>&-)"}/:[ $'\t']##/:} )
     _describe -t sessions 'sessions' sessions "$@"
 }
 compdef __tmux-sessions tm
