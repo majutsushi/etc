@@ -739,6 +739,8 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "fs-uae" },
       properties = { floating = true } },
+    { rule = { class = "Minecraft.*" },
+      properties = { floating = true } },
 }
 -- }}}
 
