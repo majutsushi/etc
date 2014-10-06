@@ -49,6 +49,8 @@ feh --bg-fill $HOME/media/desk/wallpaper/patterns/mypattern_1280x800.png
 #imwheel -b 006700
 #test -f /#avfs-on
 
+# setxkbmap -model pc105 -layout us -option ctrl:nocaps -option terminate:ctrl_alt_bksp
+
 ## test for an existing bus daemon, just to be safe
 if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
     ## if not found, launch a new one
