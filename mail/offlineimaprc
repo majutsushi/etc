@@ -27,5 +27,6 @@ ssl = yes
 cert_fingerprint = ae225dbd1492054437de8ea1fef38e628f73a4cc
 nametrans = lambda folder: re.sub('^INBOX\.?', '.', folder)
 folderfilter = lambda folder: not re.search('\.(spam|Trash)', folder)
+idlefolders = ['INBOX']
 
 # vim: ft=cfg
