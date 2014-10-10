@@ -58,6 +58,12 @@
 	tool = vimdiff
 	algorithm = histogram
 
+[branch]
+	autosetuprebase = always
+
+[pull]
+	rebase = preserve
+
 [push]
 	default = matching
 
