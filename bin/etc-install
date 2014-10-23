@@ -94,6 +94,7 @@ cd $HOME
 
 mkdir -p $HOME/.local/etc
 mkdir -p $HOME/.cache/etc
+mkdir -p $HOME/.var/{lib,log}
 
 ln -sf $HOME/.etc/.githooks/* .etc/.git/hooks
 
