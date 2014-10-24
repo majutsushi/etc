@@ -72,6 +72,9 @@
 [fetch]
 	recurseSubmodules = on-demand
 
+[tag]
+	sort = version:refname
+
 [mergetool "gvimdiff3"]
 	cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [mergetool "vimdiff3"]
