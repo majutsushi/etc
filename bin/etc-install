@@ -124,6 +124,7 @@ xlink slrn/slrnrc
 xlink taskrc
 xlink tmux/tmux.conf
 xlink urxvt
+xlink weechat
 xlink zathurarc target=.config/zathura/zathurarc
 xlink zsh/zshenv
 
