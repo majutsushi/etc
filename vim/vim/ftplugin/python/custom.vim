@@ -3,7 +3,7 @@
 "setlocal foldmethod=indent
 setlocal omnifunc=pythoncomplete#Complete
 
-setlocal tags+=$HOME/.cache/tags/python27tags
+setlocal tags+=$HOME/.var/lib/tags/python27tags
 
 "setlocal makeprg=python2.6\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 setlocal makeprg=python\ %

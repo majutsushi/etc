@@ -2,4 +2,4 @@
 " Website : http://majutsushi.net
 
 setlocal foldmethod=syntax
-setlocal tags+=~/.cache/tags/systags
+setlocal tags+=~/.var/lib/tags/systags

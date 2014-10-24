@@ -2,7 +2,7 @@
 accounts = Main
 ui = ttyui
 pythonfile = ~/.etc/mail/offlineimap-helpers.py
-metadata = ~/.cache/offlineimap
+metadata = ~/.var/lib/offlineimap
 fsync = False
 
 [Account Main]
