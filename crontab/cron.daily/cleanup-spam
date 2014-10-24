@@ -1,0 +1,5 @@
+#!/bin/sh
+
+test -d $HOME/Maildir || exit 0
+
+zsh -c 'rm -f $HOME/Maildir/.spam/cur/*(N.cM+1)'

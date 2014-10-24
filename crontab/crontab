@@ -1,3 +1,5 @@
 # m h  dom mon dow   command
-20  4  *   *   *     /usr/sbin/logrotate --state $HOME/.cache/logrotate.status $HOME/.etc/logrotate.conf
-0   3  *   *   7     command -v fuser >/dev/null 2>&1 && for i in $HOME/.cache/vim/swap/*; do fuser "$i" >/dev/null 2>&1 || rm "$i"; done
+30  *  *   *   *     $HOME/.etc/crontab/runcrontab hourly
+0   4  *   *   *     $HOME/.etc/crontab/runcrontab daily
+0   5  *   *   7     $HOME/.etc/crontab/runcrontab weekly
+0   6  1   *   *     $HOME/.etc/crontab/runcrontab monthly

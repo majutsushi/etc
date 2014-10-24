@@ -1,5 +1,7 @@
 #!/bin/bash
 
+command -v ctags &>/dev/null || exit 0
+
 TAGDIR=$HOME/.cache/tags
 
 mkdir -p $TAGDIR

@@ -1,6 +1,0 @@
-[[ -d $HOME/Maildir ]] && command -v mu &>/dev/null
-# --- CUT HERE ---
-# m h  dom mon dow   command
-0   *  *   *   *     on_ac_power && mu index -q
-0   4  *   *   *     $HOME/.etc/mail/refreshaddresses.sh
-10  4  *   *   *     zsh -c 'rm -f $HOME/Maildir/.spam/cur/*(N.cM+1)'

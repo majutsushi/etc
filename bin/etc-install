@@ -156,9 +156,7 @@ xlink vim/vimrc
 xlink vim/gvimrc
 xlink vim/vim
 
-merge crontab/crontab target=/tmp/crontab$$
-crontab /tmp/crontab$$
-rm /tmp/crontab$$
+crontab $HOME/.etc/crontab/crontab
 
 xlink less/lessfilter
 merge less/lesskey target=/tmp/lesskey$$
