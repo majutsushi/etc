@@ -67,7 +67,7 @@
 	rebase = preserve
 
 [push]
-	default = matching
+	default = simple
 
 [fetch]
 	recurseSubmodules = on-demand
