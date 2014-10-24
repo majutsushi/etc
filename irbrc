@@ -1,8 +1,7 @@
 #IRB.conf[:AUTO_INDENT] = true
 IRB.conf[:USE_READLINE] = true
 IRB.conf[:SAVE_HISTORY] = 5000
-# IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
-IRB.conf[:HISTORY_FILE] = "#{ENV['XDG_CACHE_HOME']}/irb_history"
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.var/lib/irb_history"
 
 IRB.conf[:PROMPT][:MY_PROMPT] = {
       :PROMPT_I => "%N(%m):%03n:%i> ",

@@ -93,7 +93,6 @@ OLDPWD=$PWD
 cd $HOME
 
 mkdir -p $HOME/.local/etc
-mkdir -p $HOME/.cache/etc
 mkdir -p $HOME/.var/{lib,log}
 
 ln -sf $HOME/.etc/.githooks/* .etc/.git/hooks
@@ -136,8 +135,8 @@ xlink emacs/emacs
 xlink emacs/emacs.d
 
 xlink git/gitconfig
-merge git/gitignore target=.cache/etc/gitignore
-ln -sf $HOME/.cache/etc/gitignore $HOME/.agignore
+merge git/gitignore target=.var/lib/gitignore
+ln -sf $HOME/.var/lib/gitignore $HOME/.agignore
 
 xlink mail/goobookrc
 xlink mail/lbdb
@@ -145,7 +144,7 @@ xlink mail/msmtprc
 xlink mail/offlineimaprc
 xlink mail/t-prot target=.config/t-prot
 #xlink procmail/procmailrc
-mkdir -p $HOME/.cache/procmail
+mkdir -p $HOME/.var/log/procmail
 
 xlink mutt/muttrc
 xlink mutt/mutt

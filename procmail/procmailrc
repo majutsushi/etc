@@ -4,7 +4,7 @@ VERBOSE=off
 COMSAT=off
 MAILDIR=$HOME/Maildir
 DEFAULT=$HOME/Maildir/
-LOGFILE=$HOME/.cache/procmail/procmail.log
+LOGFILE=$HOME/.var/log/procmail/procmail.log
 
 # "yes" if ml mail should be marked as read
 READ=$1

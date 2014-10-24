@@ -9,8 +9,8 @@ export BROWSER=xdg-open
 export PAGER=${PAGER:-less}
 
 export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t'
-export LESSHISTFILE=$XDG_CACHE_HOME/etc/lesshst
-export LESSKEY=$XDG_CACHE_HOME/etc/less
+export LESSHISTFILE=$HOME/.var/lib/lesshst
+export LESSKEY=$HOME/.var/lib/less
 export LESSOPEN="| $HOME/.etc/less/lessfilter %s"
 
 export NULLCMD=cat

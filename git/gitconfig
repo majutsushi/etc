@@ -3,7 +3,7 @@
 	email = jan@majutsushi.net
 
 [core]
-	excludesfile = ~/.cache/etc/gitignore
+	excludesfile = ~/.var/lib/gitignore
 	fsyncobjectfiles = false
 	autocrlf = input
 

@@ -3,7 +3,7 @@
 # set prompt \033[1m(gdb) \033[0m
 set extended-prompt \w - \f\n(gdb) 
 
-set history filename ~/.cache/gdb_history
+set history filename ~/.var/lib/gdb_history
 set history save on
 set history size 1024
 

@@ -16,7 +16,8 @@ setopt hist_ignore_all_dups
 # line is a space
 setopt hist_ignore_space
 
-HISTFILE=$ZSH_CACHEDIR/history
+HISTFILE=$ZSH_VAR_LIB_DIR/history
+[[ ! -d $ZSH_VAR_LIB_DIR/history.full ]] && mkdir $ZSH_VAR_LIB_DIR/history.full
 HISTSIZE=100000
 SAVEHIST=100000
 
@@ -32,7 +33,7 @@ add-zsh-hook zshaddhistory _hist_ignore_f
 
 _append_full_hist() {
     if [[ "$UID" -ne 0 ]]; then
-        local full_cmd_log="$ZSH_CACHEDIR/history.full/$(date -u "+%Y-%m-%d").log"
+        local full_cmd_log="$ZSH_VAR_LIB_DIR/history.full/$(date -u "+%Y-%m-%d").log"
         local cmd=${1%%$'\n'}
         if [[ -n "$cmd" ]]; then
             echo "$(date -u --iso-8601=seconds) [$USER@$HOST:$PWD] $cmd" >>| ${full_cmd_log}

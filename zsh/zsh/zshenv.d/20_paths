@@ -95,6 +95,8 @@ export XDG_CACHE_HOME=$HOME/.cache
 [[ ! -d $XDG_CACHE_HOME ]] && mkdir $XDG_CACHE_HOME
 export ZSH_CACHEDIR=$XDG_CACHE_HOME/zsh
 [[ ! -d $ZSH_CACHEDIR ]] && mkdir $ZSH_CACHEDIR
-[[ ! -d $ZSH_CACHEDIR/history.full ]] && mkdir $ZSH_CACHEDIR/history.full
+
+export ZSH_VAR_LIB_DIR=$HOME/.var/lib/zsh
+[[ ! -d $ZSH_VAR_LIB_DIR ]] && mkdir $ZSH_VAR_LIB_DIR
 
 # vim: filetype=zsh

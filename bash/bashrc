@@ -19,7 +19,7 @@ stty -ixon
 
 HISTCONTROL=ignoredups:erasedups
 HISTSIZE=100000
-HISTFILE=$HOME/.cache/bash_history
+HISTFILE=$HOME/.var/lib/bash_history
 HISTFILESIZE=100000
 shopt -s histappend
 

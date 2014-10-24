@@ -17,9 +17,9 @@ endif
 runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect('bundle/{}', '~/src/vim/bundle/{}')
 
-if !isdirectory($HOME . "/.cache/vim") && exists("*mkdir")
-    call mkdir($HOME . "/.cache/vim")
-    call mkdir($HOME . "/.cache/vim/swap")
+if !isdirectory($HOME . "/.var/lib/vim") && exists("*mkdir")
+    call mkdir($HOME . "/.var/lib/vim")
+    call mkdir($HOME . "/.var/lib/vim/swap")
 endif
 
 " search for exuberant ctags
@@ -1278,7 +1278,7 @@ set autoread
 " the swap file {{{2
 
 " list of directories for the swap file
-let &directory = expand("$HOME/.cache/vim/swap//")
+let &directory = expand("$HOME/.var/lib/vim/swap//")
 " number of characters typed to cause a swap file update
 set updatecount=100
 " time in msec after which the swap file will be updated
@@ -1345,7 +1345,7 @@ set virtualedit=all
 " list of words that specifies what to put in a session file
 set sessionoptions=blank,buffers,curdir,folds,help,slash,tabpages,unix,winsize
 " list that specifies what to write in the viminfo file
-set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.cache/vim/viminfo
+set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.var/lib/vim/viminfo
 
 " see ft-tex-plugin
 let g:tex_flavor = "latex"

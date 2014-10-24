@@ -12,7 +12,7 @@ setopt pushd_minus
 setopt pushd_silent
 
 DIRSTACKSIZE=20
-DIRSTACKFILE=$ZSH_CACHEDIR/zdirs
+DIRSTACKFILE=$ZSH_VAR_LIB_DIR/zdirs
 
 if [[ -f ${DIRSTACKFILE} ]] && [[ ${#dirstack[*]} -eq 0 ]] ; then
     dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
