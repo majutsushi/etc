@@ -2,4 +2,4 @@
 
 command -v mu >/dev/null 2>&1 || exit 0
 
-on_ac_power && mu index -q
+on_ac_power && mu index -q || true
