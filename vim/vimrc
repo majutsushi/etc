@@ -1701,13 +1701,6 @@ let g:quickfixsigns_icons = {}
 " exclude "'." from buffer and "<>^" from global
 let g:quickfixsigns#marks#buffer = split('abcdefghijklmnopqrstuvwxyz', '\zs')
 let g:quickfixsigns#marks#global = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '\zs')
-let g:quickfixsigns#vcsdiff#highlight = {'ADD' : 'QFS_ADD',
-                                       \ 'DEL' : 'QFS_DEL',
-                                       \ 'CHANGE' : 'QFS_CHANGE'}
-
-highlight QFS_ADD    guifg=#009900 guibg=NONE
-highlight QFS_DEL    guifg=#bbbb00 guibg=NONE
-highlight QFS_CHANGE guifg=#ff2222 guibg=NONE
 
 " r-plugin {{{2
 if executable('urxvt')
