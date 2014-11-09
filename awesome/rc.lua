@@ -450,7 +450,7 @@ local function tasklist_update(w, buttons, label, data, objects)
         ib:set_image(icon)
         tt:set_markup(text)
         w:add(bgb)
-   end
+    end
 end
 
 -- }}}
@@ -765,6 +765,10 @@ client.connect_signal("manage", function (c, startup)
             awful.placement.no_overlap(c)
             awful.placement.no_offscreen(c)
         end
+    elseif not c.size_hints.user_position and not c.size_hints.program_position then
+        -- Prevent clients from being unreachable after screen count change
+        -- https://github.com/awesomeWM/awesome/pull/59
+        awful.placement.no_offscreen(c)
     end
 
     local titlebars_enabled = false
