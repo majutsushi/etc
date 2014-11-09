@@ -16,4 +16,5 @@ augroup filetypedetect
     autocmd BufNewFile,BufReadPost sgc*.dat  setfiletype xml
     autocmd BufNewFile,BufReadPost *.gtkrc   setfiletype gtkrc
     autocmd BufNewFile,BufReadPost *.template setfiletype template
+    autocmd BufNewFile,BufReadPost *.adoc,*.asciidoc setfiletype asciidoc
 augroup END
