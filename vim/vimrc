@@ -1020,7 +1020,7 @@ set scrolloff=5
 " long lines wrap
 set wrap
 " wrap long lines at a character in 'breakat' (local to window)
-set linebreak
+set nolinebreak
 " which characters might cause a line break
 "set breakat=\ ^I
 " string to put before wrapped screen lines
