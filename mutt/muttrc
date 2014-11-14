@@ -55,7 +55,7 @@ unset keep_flagged
   set ssl_force_tls
   set ssl_starttls
 #  set ssl_use_sslv2
-  set ssl_use_sslv3
+unset ssl_use_sslv3
   set ssl_use_tlsv1
 #  set ssl_usesystemcerts
   set tmpdir="/tmp"
