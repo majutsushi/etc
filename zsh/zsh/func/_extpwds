@@ -1,0 +1,26 @@
+#autoload
+# Originally from http://www.zsh.org/mla/users/2014/msg01100.html
+
+local -a expl
+local -au dirs
+
+# undo work _main_complete did to remove the tilde
+PREFIX="$IPREFIX$PREFIX"
+IPREFIX=
+SUFFIX="$SUFFIX$ISUFFIX"
+ISUFFIX=
+
+[[ -o magicequalsubst ]] && compset -P '*='
+
+case $OSTYPE in
+    solaris*) dirs=( ${(M)${${(f)"$(pgrep -U $UID -x zsh|xargs pwdx)"}:#$$:*}%%/*} ) ;;
+    linux*) dirs=( /proc/${^$(pidof zsh):#$$}/cwd(N:A) ) ;;
+esac
+dirs=( ${(D)dirs} )
+
+# remove deleted directories that have a dangling symlink
+dirs=( ${dirs//\/proc\/*\/cwd/} )
+
+compstate[pattern_match]='*'
+_wanted directories expl 'current directory from other shells' \
+    compadd -M "r:|/=* r:|=*" -f -a dirs

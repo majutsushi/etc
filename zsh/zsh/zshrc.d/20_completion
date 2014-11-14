@@ -225,4 +225,8 @@ zstyle ':completion:current-screen-words-(prefix|anywhere):*' completer _tmux_pa
 zstyle ':completion:current-screen-words-(prefix|anywhere):*' ignore-line current
 zstyle ':completion:current-screen-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
 
+zle -C extpwds menu-complete _generic
+bindkey "^X^T" extpwds
+zstyle ':completion:extpwds::::' completer _extpwds
+
 # vim: filetype=zsh
