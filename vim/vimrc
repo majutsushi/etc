@@ -1690,6 +1690,17 @@ endpython
     xnoremap gx <C-C>:call <SID>SmartOpen('v')<CR>
 endif
 
+" OrgMode {{{2
+let g:org_todo_keywords = [
+    \ 'TODO(t)',
+    \ 'INPROGRESS(p)',
+    \ '|',
+    \ 'DONE(d)',
+    \ 'WAITING(w)'
+\ ]
+
+highlight link org_shade_stars Ignore
+
 " ProtoDef {{{2
 let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
 let g:protodefctagsexe = g:ctagsbin
