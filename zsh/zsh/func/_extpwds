@@ -23,4 +23,4 @@ dirs=( ${dirs//\/proc\/*\/cwd/} )
 
 compstate[pattern_match]='*'
 _wanted directories expl 'current directory from other shells' \
-    compadd -M "r:|/=* r:|=*" -f -a dirs
+    compadd -M "r:|/=* r:|=*" -Q -f -a dirs
