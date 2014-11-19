@@ -122,7 +122,6 @@ xlink redshift.conf target=.config/redshift.conf
 xlink screen/screenrc
 xlink slrn/slrnrc
 xlink taskrc
-xlink tmux/tmux.conf
 xlink urxvt
 xlink weechat
 xlink zathurarc target=.config/zathura/zathurarc
@@ -138,6 +137,22 @@ xlink emacs/emacs.d
 xlink git/gitconfig
 merge git/gitignore target=.var/lib/gitignore
 ln -sf $HOME/.var/lib/gitignore $HOME/.agignore
+
+xlink tmux/tmux.conf
+info "Installing tmux plugins"
+if ! [[ -d $HOME/.var/lib/tmux/plugins/tpm/.git ]]; then
+    git clone https://github.com/tmux-plugins/tpm.git $HOME/.var/lib/tmux/plugins/tpm
+fi
+if command -v tmux >/dev/null; then
+    if tmux server-info &>/dev/null; then
+        $HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh
+    else
+        tmux start-server
+        tmux new-session -d
+        $HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh
+        tmux kill-server
+    fi
+fi
 
 xlink mail/goobookrc
 xlink mail/lbdb
