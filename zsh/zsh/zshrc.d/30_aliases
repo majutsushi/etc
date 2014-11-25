@@ -407,30 +407,37 @@ if [[ -r /etc/debian_version ]] ; then
     compdef _uchange uchange
 fi
 
-# Easy jdk switching
-JDKS_PATH=${JDKS_PATH:-/opt/jdks}
-for file in ${JDKS_PATH}/jdk*; do
-    jdk=$(basename "$file")
-    eval "$jdk () {
-        local newpath
-        if [[ "'"$PATH"'" =~ "'"$JDKS_PATH"'" ]]; then
-            newpath="'"$(echo "$PATH" | sed -e '"'s,${JDKS_PATH}/jdk[^:]*,$file/bin,g'"')"'"
-        else
-            newpath=\"$file/bin\":"'"$PATH"'"
-        fi
-        if [[ -n \"\$*\" ]]; then
-            (
-                PATH="'"$newpath"'"
-                JAVA_HOME=\""$file"\"
-                exec \"\$@\"
-            )
-        else
-            PATH="'"$newpath"'"
-            JAVA_HOME=\""$file"\"
-        fi
+create-switch-funcs() {
+    local basedir=$1
+    local homevar=$2
 
-    }
-    "
-done
+    local opt
+
+    for file in ${basedir}/*; do
+        opt=$(basename $file)
+        eval "$opt () {
+            typeset -a newpath
+            if [[ "'$PATH'" =~ $basedir ]]; then
+                newpath="'( ${path//#'"${basedir//\//\/}"'*/'"${file}/bin"'} )'"
+            else
+                newpath=( $file/bin "'$path'" )
+            fi
+            if [[ -n \"\$@\" ]]; then
+                (
+                    path="'($newpath)'"
+                    export $homevar=$file
+                    exec \"\$@\"
+                )
+            else
+                path="'($newpath)'"
+                export $homevar=$file
+            fi
+
+        }"
+    done
+}
+
+create-switch-funcs "${JDKS_PATH:-/opt/java}" JAVA_HOME
+create-switch-funcs "${ANT_PATH:-/opt/ant}"   ANT_HOME
 
 # vim: filetype=zsh

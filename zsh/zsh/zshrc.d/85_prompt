@@ -67,13 +67,21 @@ __prompt_jdk() {
     fi
 }
 
+__prompt_ant() {
+    [[ -z $ANT_HOME ]] && return
+    local ant=$(basename $ANT_HOME)
+    if [[ $ant != ant-default ]]; then
+        print "${pcol[cyan]}$ant${pcol[reset]} "
+    fi
+}
+
 _prompt_logo=""
 _prompt_path="${pcol[green]}%~${pcol[reset]}"
 _prompt_vcs_info=""
 
 PS1='
 $(__prompt_logo)${pcol[167]}%n ${pcol[reset]}@ ${pcol[220]}%m${pcol[reset]} ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}
-%(2L.${pcol[bold]}%L${pcol[reset]} .)$(__prompt_jdk)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
+%(2L.${pcol[bold]}%L${pcol[reset]} .)$(__prompt_jdk)$(__prompt_ant)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
 
 RPS1='$(__prompt_orighome)'
 
