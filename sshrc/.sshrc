@@ -1,0 +1,27 @@
+infocmp "$TERM" >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+    TERM="${TERM%-256color}"
+    export TERM
+fi
+
+# disable XON/XOFF flow control (^s/^q)
+stty stop ''
+stty -ixoff
+stty -ixon
+
+if [[ -r "/usr/share/bash-completion/bash_completion" ]]; then
+    . /usr/share/bash-completion/bash_completion
+fi
+
+export PAGER=less
+PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\W\[\e[m\] \[\e[1m\]$\[\e[m\] "
+
+eval "$(dircolors)"
+alias ls='ls  -F --color=auto'
+alias ll='ls -lF --color=auto'
+alias l='ls -lAF --color=auto'
+
+export MYVIMRC="$SSHHOME/.sshrc.d/vimrc"
+export VIMINIT="source $MYVIMRC"
+
+# vim: ft=sh

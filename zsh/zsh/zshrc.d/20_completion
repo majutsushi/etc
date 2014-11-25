@@ -147,6 +147,13 @@ hosts=(
 zstyle ':completion:*:hosts' hosts $hosts
 zstyle ':completion:*:hosts' ignored-patterns 'ip6-*'
 
+# http://unix.stackexchange.com/a/6340/17525
+_sshrc() {
+    local service=ssh
+    _ssh "$@"
+}
+compdef _sshrc sshrc
+
 zstyle ':completion:*:users' ignored-patterns avahi avahi-autoipd backup bin bitlbee \
     cl-builder colord daemon Debian-exim Debian-gdm festival fetchmail games gnats hplip \
     irc lastfm libuuid list lp mail man messagebus minbif mpd news nobody ntp polkituser \

@@ -46,6 +46,8 @@ export RI="-f ansi"
 
 export TERMINFO=$HOME/.terminfo
 
+export SSHHOME=$HOME/.etc/sshrc
+
 export CCACHE_DIR=$XDG_CACHE_HOME/ccache
 export CCACHE_COMPRESS=1
 export CCACHE_HASHDIR=1
