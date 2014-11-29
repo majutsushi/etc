@@ -411,9 +411,11 @@ create-switch-funcs() {
     local basedir=$1
     local homevar=$2
 
+    [[ -d $basedir ]] || return
+
     local opt
 
-    for file in ${basedir}/*; do
+    for file in ${basedir}/*(N); do
         opt=$(basename $file)
         eval "$opt () {
             typeset -a newpath
