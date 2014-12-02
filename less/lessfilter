@@ -68,7 +68,7 @@ pyg() {
             # many false positives
             MIMETYPE=$(file --mime-type -b $(readlink -f "$1"))
             if [[ "${filemaps[$MIMETYPE]}" != "" ]]; then
-                $PYG -l ${filemaps[$MIMETYPE]} "$1"
+                pyg -l ${filemaps[$MIMETYPE]} "$1"
             else
                 exit 1
             fi
