@@ -325,46 +325,6 @@ status() {
     print ""
 }
 
-# wrap some svn commands with a pager and colours
-# originally from
-# http://got-ravings.blogspot.com/2010/10/colorizing-and-autopaging-svn-diffs.html
-svn() {
-    local fg_red=$'\e[31m'
-    local fg_green=$'\e[32m'
-    local fg_yellow=$'\e[33m'
-    local fg_blue=$'\e[34m'
-    local fg_magenta=$'\e[35m'
-    local reset=$'\e[0m'
-
-    if [[ $# -lt 1 ]]; then
-        command svn
-        return
-    fi
-
-    local sub_cmd=$1
-    shift
-
-    if [[ $sub_cmd == diff ]]; then
-        command svn diff "$@" | colordiff | less -RF
-
-    # note that C and M can be preceded by whitespace - see $svn help status
-    elif [[ $sub_cmd =~ ^(status|st)$ ]]; then
-        command svn status "$@" | sed -r -e 's/^(([A-Z]\s+(\+\s+)?)?C .*)$/'$fg_magenta'\1'$reset'/' \
-                                         -e 's/^(\s*M.*)$/'$fg_blue'\1'$reset'/' \
-                                         -e 's/^(A.*)$/'$fg_green'\1'$reset'/' \
-                                         -e 's/^([D!~].*)$/'$fg_red'\1'$reset'/' | less -RF
-    elif [[ $sub_cmd =~ ^(blame|help|h|cat)$ ]]; then
-        command svn $sub_cmd "$@" | less -F
-    elif [[ $sub_cmd == log ]]; then
-        command svn log "$@" | sed -r -e 's/^(.*)\|(.*)\|(.*)\|(.*)$/'${fg_yellow}'\1'$reset'|'${fg_green}'\2'$reset'|'${fg_blue}'\3'$reset'|\4/' \
-                                      -e 's/^(   M .*)/'$fg_blue'\1'$reset'/' \
-                                      -e 's/^(   A .*)/'$fg_green'\1'$reset'/' \
-                                      -e 's/^(   D .*)/'$fg_red'\1'$reset'/' | less -RF
-    else
-        command svn $sub_cmd "$@"
-    fi
-}
-
 # debian stuff
 if [[ -r /etc/debian_version ]] ; then
     alias acs='apt-cache search'
