@@ -220,7 +220,7 @@ function! s:setup_terminfo() abort
     execute "cnoremap <silent> <" . map_focus_in  . "> <c-\\>e<SID>do_cmd_focusgained()<cr>"
 endfunction
 
-function s:do_cmd_focuslost()
+function! s:do_cmd_focuslost()
     let cmd = getcmdline()
     let pos = getcmdpos()
 
@@ -230,7 +230,7 @@ function s:do_cmd_focuslost()
     return cmd
 endfunction
 
-function s:do_cmd_focusgained()
+function! s:do_cmd_focusgained()
     let cmd = getcmdline()
     let pos = getcmdpos()
 
