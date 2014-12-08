@@ -171,6 +171,9 @@ xlink pentadactyl/pentadactyl
 xlink vim/vimrc
 xlink vim/gvimrc
 xlink vim/vim
+if ! [[ -d $HOME/.var/lib/vim/bundles/ ]]; then
+    git clone https://github.com/Shougo/neobundle.vim $HOME/.var/lib/vim/bundles/neobundle.vim
+fi
 
 crontab $HOME/.etc/crontab/crontab
 
