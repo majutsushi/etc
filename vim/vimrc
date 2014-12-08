@@ -67,7 +67,7 @@ NeoBundle 'vim-scripts/gtk-vim-syntax'
 NeoBundle 'vim-scripts/utl.vim'
 NeoBundle 'vim-scripts/vis'
 
-NeoBundleLocal ~/.vim/bundle
+NeoBundleLocal ~/.vim/bundles
 NeoBundleLocal ~/src/vim/bundles
 
 call neobundle#end()
