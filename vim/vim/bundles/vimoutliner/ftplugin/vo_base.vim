@@ -186,11 +186,14 @@ endfunction
 " Compare this heading and the next
 " Return 1: next is greater, 0 next is same, -1 next is less
 function! CompHead(line)
-	let l:thisline=getline(a:line)
-	let l:nextline=getline(NextHead(a:line))
-	if l:thisline <# l:nextline
+	let nexthead = NextHead(a:line)
+	let thisline = getline(a:line)
+	let nextline = getline(nexthead)
+	if indent(a:line) != indent(nexthead)
+		return 0
+	elseif thisline <# nextline
 		return 1
-	elseif l:thisline ># l:nextline
+	elseif thisline ># nextline
 		return -1
 	else
 		return 0
@@ -654,8 +657,6 @@ endif
 " this command needs to be run every time so Vim doesn't forget where to look
 setlocal tags^=$HOME/.vimoutliner/vo_tags.tag
 
-" Personal configuration options files as per Matej Cepl
-setlocal runtimepath+=$HOME/.vimoutliner,$HOME
 ru! .vimoutlinerrc vimoutlinerrc
 " More sophisticated version of the modules loading; thanks to Preben 'Peppe'
 " Guldberg for telling me how to split string and make semi-lists with vim.
