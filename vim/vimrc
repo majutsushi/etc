@@ -27,10 +27,10 @@ NeoBundle 'derekwyatt/vim-protodef'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'ervandew/screen'
 NeoBundle 'godlygeek/csapprox'
-NeoBundle 'godlygeek/tabular'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'jceb/vim-orgmode'
 NeoBundle 'jlanzarotta/bufexplorer'
+NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-indent'
@@ -1531,6 +1531,13 @@ let g:devhelpWordLength = 5
 " DrawIt {{{2
 call s:fakemap('<Plug>DrawItStart')
 call s:fakemap('<Plug>DrawItStop')
+
+" EasyAlign {{{2
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+" nmap ga <Plug>(EasyAlign)
 
 " EasyMotion {{{2
 let g:EasyMotion_do_mapping = 0
