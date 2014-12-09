@@ -42,6 +42,7 @@ NeoBundle 'saihoooooooo/vim-textobj-space'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'sjl/splice.vim'
+NeoBundle 'syngan/vim-vimlint', {'depends' : 'ynkdir/vim-vimlparser'}
 NeoBundle 'terryma/vim-expand-region'
 NeoBundle 'tomtom/quickfixsigns_vim'
 NeoBundle 'tomtom/tlib_vim'
