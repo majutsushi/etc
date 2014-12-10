@@ -3,10 +3,10 @@
 " Original code from
 " https://github.com/jszakmeister/vimfiles/blob/master/vimrc
 
-if &compatible || exists('loaded_foldsearch')
+if &compatible || exists('g:loaded_foldsearch')
     finish
 endif
-let loaded_foldsearch = 1
+let g:loaded_foldsearch = 1
 
 let w:foldsearch_folded = 0
 

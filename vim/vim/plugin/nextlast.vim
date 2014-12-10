@@ -44,7 +44,6 @@ xnoremap iL :<c-u>call <SID>NextTextObject('i', '?')<cr>
 
 function! s:NextTextObject(motion, dir)
     let c = nr2char(getchar())
-    let d = ''
 
     if c ==# "b" || c ==# "(" || c ==# ")"
         let c = "("

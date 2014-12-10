@@ -7,11 +7,11 @@
 " Emacs manual:
 " https://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html
 
-if exists("loaded_emacsfilevars")
+if exists("g:loaded_emacsfilevars")
     finish
 endif
 
-let loaded_emacsfilevars = 1
+let g:loaded_emacsfilevars = 1
 
 if !exists("g:emacs_no_mode")
     let g:emacs_no_mode = 0

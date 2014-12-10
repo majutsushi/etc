@@ -57,7 +57,6 @@ endfunction
 
 " Return 1 if current window's location list window is open.
 function! qftoggle#islocwinopen() abort
-    let curWinNum = winnr()
     let numOpenWindows = winnr("$")
     " Assume location list window is already open.
     let isOpen = 1

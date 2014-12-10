@@ -1,6 +1,8 @@
 " Author:  Jan Larres <jan@majutsushi.net>
 " License: MIT/X11
 
+scriptencoding utf-8
+
 " terminal connection is fast
 set ttyfast
 " show info in the window title

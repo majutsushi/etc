@@ -1,14 +1,11 @@
 " Author       : Jan Larres <jan@majutsushi.net>
 " Website      : https://github.com/majutsushi/
-" Created      : 2012-02-20 14:48:17 +1300 NZDT
-" Last changed : 2012-02-20 14:48:19 +1300 NZDT
-"
 " Based on http://vim.wikia.com/wiki/Make_footnotes_in_vim
 
-if exists("loaded_footnotes")
+if exists("g:loaded_footnotes")
     finish
 endif
-let loaded_footnotes = 1
+let g:loaded_footnotes = 1
 
 let s:cpo_save = &cpo
 set cpo&vim

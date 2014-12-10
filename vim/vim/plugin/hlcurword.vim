@@ -1,10 +1,10 @@
 " Author:  Jan Larres <jan@majutsushi.net>
 " License: MIT/X11
 
-if &compatible || exists('loaded_hlcurword')
+if &compatible || exists('g:loaded_hlcurword')
     finish
 endif
-let loaded_hlcurword = 1
+let g:loaded_hlcurword = 1
 
 if !hlexists('CurWord')
     if &background == 'dark'

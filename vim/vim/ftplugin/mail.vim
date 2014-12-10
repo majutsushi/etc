@@ -2,6 +2,8 @@
 "
 " modified from mail.tgz by Brian Medley
 
+scriptencoding utf-8
+
 " Only do this when not done yet for this buffer
 if exists("b:did_ftplugin_after")
     finish

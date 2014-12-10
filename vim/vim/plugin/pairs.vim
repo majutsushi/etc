@@ -1,6 +1,8 @@
 " pairs.vim -- Smart pairs handling
 " Author       : Jan Larres <jan@majutsushi.net>
 
+scriptencoding utf-8
+
 " Taken from delimitMate
 " \! => opening character
 " \# => closing character
@@ -32,7 +34,6 @@ function! s:HandleOpenParen(char) abort
     endif
 
     let cprev = s:getcharrel(-1)
-    let ccur  = s:getcharrel(0)
 
     " Don't pair escaped characters
     if cprev == '\'
@@ -92,7 +93,6 @@ function! s:HandleQuote(char) abort
     endif
 
     " Make quotes smarter
-    let exclre = '\w\|[^[:punct:][:space:]]'
     if cprev == a:char
         return a:char
     elseif &filetype == "vim" && a:char == '"' && getline('.') =~ '^\s*$'
