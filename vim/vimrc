@@ -38,9 +38,9 @@ NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'mattn/calendar-vim'
+NeoBundleLazy 'mbbill/undotree', {'commands': ['UndotreeToggle']}
 NeoBundle 'saihoooooooo/vim-textobj-space'
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'sjl/gundo.vim'
 NeoBundle 'sjl/splice.vim'
 NeoBundle 'syngan/vim-vimlint', {'depends' : 'ynkdir/vim-vimlparser'}
 NeoBundle 'terryma/vim-expand-region'
@@ -1897,6 +1897,11 @@ let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
 let g:UltiSnipsListSnippets = "<C-h>"
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
 let g:snips_author = 'Jan Larres <jan@majutsushi.net>'
+
+" undotree {{{2
+let g:undotree_WindowLayout = 2
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_DiffCommand = "diff -u"
 
 " UTL {{{2
 let g:utl_cfg_hdl_scm_http_system = "silent !xdg-open '%u'"
