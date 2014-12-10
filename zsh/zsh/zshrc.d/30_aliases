@@ -87,6 +87,11 @@ alias xc='xclip -i -selection clipboard'
 
 is-at-least 4.3 && alias git='hub'
 
+vimlint() {
+    local bundles="$HOME/.var/lib/vim/bundles"
+    "$bundles"/vim-vimlint/bin/vimlint.sh -l "$bundles"/vim-vimlint -p "$bundles"/vim-vimlparser "$@"
+}
+
 # Ag/Ack
 if have ag; then
     # only 1 worker thread to have deterministic result order
