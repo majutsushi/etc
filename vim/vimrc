@@ -21,6 +21,12 @@ NeoBundleLazy 'LaTeX-Box-Team/LaTeX-Box', {
 \ }
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundleLazy 'SirVer/ultisnips', {'autoload': {'insert': 1}}
+if neobundle#tap('ultisnips')
+    function! neobundle#hooks.on_source(bundle)
+        silent! call UltiSnips#FileTypeChanged()
+    endfunction
+    call neobundle#untap()
+endif
 NeoBundleLazy 'Valloric/YouCompleteMe', {
     \ 'augroup': 'youcompletemeStart',
     \ 'autoload': {'insert': 1}
