@@ -59,12 +59,11 @@ NeoBundle 'tpope/vim-unimpaired'
 
 NeoBundle 'https://gitorious.org/vim-gnupg/vim-gnupg.git'
 
-NeoBundle 'vim-scripts/Conque-Shell'
 NeoBundle 'vim-scripts/DrawIt'
-NeoBundle 'vim-scripts/Vim-R-plugin'
+" NeoBundle 'vim-scripts/Vim-R-plugin'
 NeoBundle 'vim-scripts/VisIncr'
 NeoBundle 'vim-scripts/ZoomWin'
-NeoBundle 'vim-scripts/gtk-vim-syntax'
+" NeoBundle 'vim-scripts/gtk-vim-syntax'
 NeoBundle 'vim-scripts/utl.vim'
 NeoBundle 'vim-scripts/vis'
 
@@ -1452,9 +1451,6 @@ let g:completekey = "<c-tab>"
 let g:CommandTMaxFiles = 100000
 let g:CommandTMatchWindowReverse = 1
 
-" ConqueTerm {{{2
-let g:ConqueTerm_StartMessages = 0
-
 " CSApprox {{{2
 let g:CSApprox_attr_map = {'sp': 'fg'}
 
@@ -1786,8 +1782,6 @@ if executable('urxvt')
 else
     let vimrplugin_term = "uxterm"
 endif
-let vimrplugin_conqueplugin = 1
-let vimrplugin_conquevsplit = 1
 let vimrplugin_underscore   = 0
 
 " Screen {{{2
