@@ -15,35 +15,46 @@ call neobundle#begin(expand('~/.var/lib/vim/bundles/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'JazzCore/ctrlp-cmatcher'
-NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
+NeoBundleLazy 'LaTeX-Box-Team/LaTeX-Box', {
+    \ 'autoload': {'filetypes': ['tex']},
+    \ 'external_commands': 'latexmk'
+\ }
 NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'Valloric/YouCompleteMe'
+NeoBundleLazy 'SirVer/ultisnips', {'autoload': {'insert': 1}}
+NeoBundleLazy 'Valloric/YouCompleteMe', {
+    \ 'augroup': 'youcompletemeStart',
+    \ 'autoload': {'insert': 1}
+\ }
 NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'bruno-/vim-vertical-move'
-NeoBundle 'chrisbra/CheckAttach'
-NeoBundle 'derekwyatt/vim-fswitch'
-NeoBundle 'derekwyatt/vim-protodef'
+NeoBundleLazy 'bruno-/vim-vertical-move', {
+    \ 'autoload': {'mappings': ['<Plug>(vertical_move']}}
+NeoBundleLazy 'chrisbra/CheckAttach', {'autoload': {'filetypes': ['mail']}}
+NeoBundleLazy 'derekwyatt/vim-fswitch', {'autolaod': {'filetypes': ['c', 'cpp']}}
+NeoBundleLazy 'derekwyatt/vim-protodef', {'autoload': {'filetypes': ['cpp']}}
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'ervandew/screen'
-NeoBundle 'godlygeek/csapprox'
-NeoBundle 'gregsexton/gitv'
+NeoBundle 'godlygeek/csapprox', {'terminal': 1}
+NeoBundleLazy 'gregsexton/gitv', {'autoload': {'commands': ['Gitv']}}
 NeoBundle 'jceb/vim-orgmode'
-NeoBundle 'jlanzarotta/bufexplorer'
-NeoBundle 'junegunn/vim-easy-align'
+NeoBundleLazy 'jlanzarotta/bufexplorer', {'autoload': {'commands': ['BufExplorer']}}
+NeoBundleLazy 'junegunn/vim-easy-align', {
+    \ 'autoload': {'commands': ['EasyAlign'], 'mappings': '<Plug>(EasyAlign)'}}
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-indent'
 NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kien/ctrlp.vim'
+NeoBundleLazy 'kien/ctrlp.vim', {
+    \ 'autoload': {'commands': ['CtrlP'], 'mappings': '<C-p>'}}
 NeoBundle 'mattn/calendar-vim'
-NeoBundleLazy 'mbbill/undotree', {'commands': ['UndotreeToggle']}
+NeoBundleLazy 'mbbill/undotree', {
+    \ 'autoload': {'commands': ['UndotreeToggle']}}
 NeoBundle 'saihoooooooo/vim-textobj-space'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'sjl/splice.vim'
+NeoBundleLazy 'scrooloose/nerdtree', {
+    \ 'autoload': {'commands': ['NERDTreeToggle', 'NERDTreeFind']}}
+NeoBundleLazy 'sjl/splice.vim', {'autoload': {'commands': ['SpliceInit']}}
 NeoBundle 'syngan/vim-vimlint', {'depends' : 'ynkdir/vim-vimlparser'}
-NeoBundle 'terryma/vim-expand-region'
+NeoBundleLazy 'terryma/vim-expand-region', {'autoload': {'mappings': '<Plug>(expand_region'}}
 NeoBundle 'tomtom/quickfixsigns_vim'
 NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'tpope/vim-characterize'
@@ -59,7 +70,7 @@ NeoBundle 'tpope/vim-unimpaired'
 
 NeoBundle 'https://gitorious.org/vim-gnupg/vim-gnupg.git'
 
-NeoBundle 'vim-scripts/DrawIt'
+NeoBundleLazy 'vim-scripts/DrawIt', {'autoload': {'commands': ['DIstart', 'DrawIt']}}
 " NeoBundle 'vim-scripts/Vim-R-plugin'
 NeoBundle 'vim-scripts/VisIncr'
 NeoBundle 'vim-scripts/ZoomWin'
@@ -1453,6 +1464,7 @@ let g:CommandTMatchWindowReverse = 1
 
 " CSApprox {{{2
 let g:CSApprox_attr_map = {'sp': 'fg'}
+let g:CSApprox_verbose_level = 0 " Disable warnings for <88 colors
 
 let g:CSApprox_hook_desert_post = [
     \ 'hi DiffAdd ctermbg=28',
