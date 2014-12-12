@@ -288,6 +288,12 @@ vim-profile-script() {
 
     vim --cmd 'profile start profile.log' --cmd 'profile! file '$1'' "$2"
 }
+vim-profile-startup() {
+    vim --cmd 'profile start vim-startup-profile.log' \
+        --cmd 'profile func *' \
+        --cmd 'profile file *' \
+        -c 'qa' "$@"
+}
 
 pdfembedfonts() {
     if [[ $# != 1 ]]; then
