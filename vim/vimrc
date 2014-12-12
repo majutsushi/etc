@@ -108,6 +108,7 @@ NeoBundleCheck
 if !isdirectory($HOME . "/.var/lib/vim") && exists("*mkdir")
     call mkdir($HOME . "/.var/lib/vim")
     call mkdir($HOME . "/.var/lib/vim/swap")
+    call mkdir($HOME . "/.var/lib/vim/undo")
 endif
 
 " search for exuberant ctags
@@ -1413,6 +1414,11 @@ set wildignorecase
 " key used to open the command-line window
 set cedit=<C-O>
 
+if has('persistent_undo')
+    set undodir=~/.var/lib/vim/undo/
+    set undofile
+endif
+
 " running make and jumping to errors {{{2
 
 " program used for the ":grep" command (global or local to buffer)
@@ -2104,6 +2110,8 @@ nnoremap <C-W>e :enew<CR>
 nnoremap <leader>v :edit ~/.etc/vim/vimrc<CR>
 
 " Text manipulation {{{2
+
+nnoremap U :earlier 1f<CR>
 
 " Control-Space for omnicomplete
 imap <C-Space> <C-X><C-O>
