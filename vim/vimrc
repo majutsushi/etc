@@ -14,69 +14,82 @@ call neobundle#begin(expand('~/.var/lib/vim/bundles/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+" Navigation
+NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'JazzCore/ctrlp-cmatcher'
-NeoBundleLazy 'LaTeX-Box-Team/LaTeX-Box', {
-    \ 'autoload': {'filetypes': ['tex']},
-    \ 'external_commands': 'latexmk'
+NeoBundle 'scrooloose/nerdtree', {'lazy': 1,
+    \ 'autoload': {'commands': ['NERDTreeToggle', 'NERDTreeFind']}}
+NeoBundle 'Lokaltog/vim-easymotion', {'lazy': 1,
+    \ 'autoload': {'mappings': '<Plug>(easymotion'}}
+NeoBundle 'bruno-/vim-vertical-move', {'lazy': 1,
+    \ 'autoload': {'mappings': ['<Plug>(vertical_move']}}
+NeoBundle 'jlanzarotta/bufexplorer', {'lazy': 1,
+    \ 'autoload': {'commands': ['BufExplorer']}}
+
+" Editing
+NeoBundle 'Valloric/YouCompleteMe', {'lazy': 1,
+    \ 'augroup': 'youcompletemeStart',
+    \ 'autoload': {'insert': 1}
 \ }
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundleLazy 'SirVer/ultisnips', {'autoload': {'insert': 1}}
+NeoBundle 'SirVer/ultisnips', {'lazy': 1, 'autoload': {'insert': 1}}
 if neobundle#tap('ultisnips')
     function! neobundle#hooks.on_source(bundle)
         silent! call UltiSnips#FileTypeChanged()
     endfunction
     call neobundle#untap()
 endif
-NeoBundleLazy 'Valloric/YouCompleteMe', {
-    \ 'augroup': 'youcompletemeStart',
-    \ 'autoload': {'insert': 1}
-\ }
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundleLazy 'bruno-/vim-vertical-move', {
-    \ 'autoload': {'mappings': ['<Plug>(vertical_move']}}
-NeoBundleLazy 'chrisbra/CheckAttach', {'autoload': {'filetypes': ['mail']}}
-NeoBundleLazy 'derekwyatt/vim-fswitch', {'autolaod': {'filetypes': ['c', 'cpp']}}
-NeoBundleLazy 'derekwyatt/vim-protodef', {'autoload': {'filetypes': ['cpp']}}
 NeoBundle 'dhruvasagar/vim-table-mode'
-NeoBundle 'ervandew/screen'
-NeoBundle 'godlygeek/csapprox', {'terminal': 1}
-NeoBundleLazy 'gregsexton/gitv', {'autoload': {'commands': ['Gitv']}}
-NeoBundle 'jceb/vim-orgmode'
-NeoBundleLazy 'jlanzarotta/bufexplorer', {'autoload': {'commands': ['BufExplorer']}}
-NeoBundleLazy 'junegunn/vim-easy-align', {
+NeoBundle 'junegunn/vim-easy-align', {'lazy': 1,
     \ 'autoload': {'commands': ['EasyAlign'], 'mappings': '<Plug>(EasyAlign)'}}
+NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-indent'
 NeoBundle 'kana/vim-textobj-line'
-NeoBundle 'kana/vim-textobj-user'
-NeoBundleLazy 'kien/ctrlp.vim', {
-    \ 'autoload': {'commands': ['CtrlP'], 'mappings': '<C-p>'}}
-NeoBundle 'mattn/calendar-vim'
-NeoBundleLazy 'mbbill/undotree', {
-    \ 'autoload': {'commands': ['UndotreeToggle']}}
 NeoBundle 'saihoooooooo/vim-textobj-space'
-NeoBundleLazy 'scrooloose/nerdtree', {
-    \ 'autoload': {'commands': ['NERDTreeToggle', 'NERDTreeFind']}}
-NeoBundleLazy 'sjl/splice.vim', {'autoload': {'commands': ['SpliceInit']}}
-NeoBundle 'syngan/vim-vimlint', {'depends' : 'ynkdir/vim-vimlparser'}
-NeoBundleLazy 'terryma/vim-expand-region', {'autoload': {'mappings': '<Plug>(expand_region'}}
-NeoBundle 'tomtom/quickfixsigns_vim'
-NeoBundle 'tomtom/tlib_vim'
-NeoBundle 'tpope/vim-characterize'
+NeoBundle 'mattn/calendar-vim'
+NeoBundle 'mbbill/undotree', {'lazy': 1,
+    \ 'autoload': {'commands': ['UndotreeToggle']}}
+NeoBundle 'sjl/splice.vim', {'lazy': 1, 'autoload': {'commands': ['SpliceInit']}}
+NeoBundle 'terryma/vim-expand-region', {'lazy': 1,
+    \ 'autoload': {'mappings': '<Plug>(expand_region'}}
 NeoBundle 'tpope/vim-commentary'
-NeoBundle 'tpope/vim-eunuch'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-markdown'
 NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-scriptease'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
+
+" Filetypes
+NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {
+    \ 'lazy': 1,
+    \ 'autoload': {'filetypes': ['tex']},
+    \ 'external_commands': 'latexmk'
+\ }
+NeoBundle 'chrisbra/CheckAttach', {'lazy': 1, 'autoload': {'filetypes': ['mail']}}
+NeoBundle 'derekwyatt/vim-fswitch', {'lazy': 1, 'autolaod': {'filetypes': ['c', 'cpp']}}
+NeoBundle 'derekwyatt/vim-protodef', {'lazy': 1, 'autoload': {'filetypes': ['cpp']}}
+NeoBundle 'jceb/vim-orgmode'
+NeoBundle 'tpope/vim-markdown'
+
+" Information
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'tomtom/quickfixsigns_vim'
+NeoBundle 'gregsexton/gitv', {'lazy': 1, 'autoload': {'commands': ['Gitv']}}
+NeoBundle 'syngan/vim-vimlint', {'depends' : 'ynkdir/vim-vimlparser'}
+NeoBundle 'tpope/vim-characterize'
+
+" Misc
+NeoBundle 'ervandew/screen'
+NeoBundle 'godlygeek/csapprox', {'terminal': 1}
+NeoBundle 'tomtom/tlib_vim'
+NeoBundle 'tpope/vim-eunuch'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-scriptease'
 NeoBundle 'tpope/vim-unimpaired'
 
 NeoBundle 'https://gitorious.org/vim-gnupg/vim-gnupg.git'
 
-NeoBundleLazy 'vim-scripts/DrawIt', {'autoload': {'commands': ['DIstart', 'DrawIt']}}
+NeoBundle 'vim-scripts/DrawIt', {'lazy': 1,
+    \ 'autoload': {'commands': ['DIstart', 'DrawIt']}}
 " NeoBundle 'vim-scripts/Vim-R-plugin'
 NeoBundle 'vim-scripts/VisIncr'
 NeoBundle 'vim-scripts/ZoomWin'
