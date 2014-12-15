@@ -71,6 +71,7 @@ NeoBundle 'tomtom/quickfixsigns_vim'
 NeoBundle 'gregsexton/gitv', {'lazy': 1, 'autoload': {'commands': ['Gitv']}}
 NeoBundle 'syngan/vim-vimlint', {'depends' : 'ynkdir/vim-vimlparser'}
 NeoBundle 'tpope/vim-characterize'
+NeoBundle 'junegunn/rainbow_parentheses.vim'
 
 " Misc
 NeoBundle 'ervandew/screen'
@@ -1835,6 +1836,29 @@ else
     let vimrplugin_term = "uxterm"
 endif
 let vimrplugin_underscore   = 0
+
+" Rainbow Parentheses {{{2
+let g:rainbow#colors = {
+    \ 'dark': [
+        \ ['178', '#daa520'],
+        \ ['51',  'Cyan'],
+        \ ['196', 'Red'],
+        \ ['29',  '#2e8b57'],
+        \ ['167', '#cd5c5c'],
+        \ ['48',  '#00ff7f'],
+        \ ['201', 'Magenta'],
+        \ ['209', '#fa8072'],
+        \ ['116', '#87ceeb'],
+        \ ['217', '#ffa0a0'],
+        \ ['223', '#ffdead'],
+        \ ['120', '#98fb98'],
+        \ ['222', '#f0e68c'],
+        \ ['143', '#bdb76b'],
+        \ ['111', '#80a0ff'],
+        \ ['241', '#666666'],
+    \ ]
+\ }
+nnoremap gr :RainbowParentheses!!<CR>
 
 " Screen {{{2
 let g:ScreenImpl = 'Tmux'
