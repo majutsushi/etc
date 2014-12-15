@@ -31,13 +31,7 @@ NeoBundle 'Valloric/YouCompleteMe', {'lazy': 1,
     \ 'augroup': 'youcompletemeStart',
     \ 'autoload': {'insert': 1}
 \ }
-NeoBundle 'SirVer/ultisnips', {'lazy': 1, 'autoload': {'insert': 1}}
-if neobundle#tap('ultisnips')
-    function! neobundle#hooks.on_source(bundle)
-        silent! call UltiSnips#FileTypeChanged()
-    endfunction
-    call neobundle#untap()
-endif
+NeoBundle 'SirVer/ultisnips'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'junegunn/vim-easy-align', {'lazy': 1,
     \ 'autoload': {'commands': ['EasyAlign'], 'mappings': '<Plug>(EasyAlign)'}}
