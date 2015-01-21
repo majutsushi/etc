@@ -73,14 +73,16 @@ TERM xterm-debian
 # 30=black 31=red 32=green 33=yellow 34=blue 35=magenta 36=cyan 37=white
 # Background color codes:
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
+# RESET, MULTIHARDLINK and CAPABILITY are only supported in newer coreutils
+# versions.
 NORMAL                0       # no color code at all
 FILE                  0       # regular file: use no color at all
-RESET                 0       # reset to "normal" color
+# RESET                 0       # reset to "normal" color
 DIR                   33;1    # directory
 LINK                  36;1    # symbolic link.  (If you set this to 'target' instead
                               # of a numerical value, the color is as for the file
                               # pointed to.)
-MULTIHARDLINK         0       # regular file with more than one link
+# MULTIHARDLINK         0       # regular file with more than one link
 FIFO                  33;40   # pipe
 SOCK                  35;1    # socket
 DOOR                  35;1    # door
@@ -89,7 +91,7 @@ CHR                   33;40;1 # character device driver
 ORPHAN                37;41;1 # symlink to nonexistent file, or non-stat'able file
 SETUID                30;41   # file that is setuid (u+s)
 SETGID                30;43   # file that is setgid (g+s)
-CAPABILITY            30;45   # file with capability
+# CAPABILITY            30;45   # file with capability
 STICKY_OTHER_WRITABLE 31;44   # dir that is sticky and other-writable (+t,o+w)
 OTHER_WRITABLE        31;43   # dir that is other-writable (o+w) and not sticky
 STICKY                30;44   # dir with the sticky bit set (+t) and not other-writable

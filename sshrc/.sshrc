@@ -21,7 +21,12 @@ alias ls='ls  -F --color=auto'
 alias ll='ls -lF --color=auto'
 alias l='ls -lAF --color=auto'
 
-export MYVIMRC="$SSHHOME/.sshrc.d/vimrc"
+SSHRCD="$SSHHOME/.sshrc.d"
+export MYVIMRC="$SSHRCD/vimrc"
 export VIMINIT="source $MYVIMRC"
+
+export INPUTRC="$SSHRCD/inputrc"
+
+eval $(dircolors -b $SSHRCD/dircolors) 2>/dev/null || :
 
 # vim: ft=sh
