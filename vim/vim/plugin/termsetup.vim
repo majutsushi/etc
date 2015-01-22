@@ -159,8 +159,12 @@ let s:iterm_normal = "\e]50;CursorShape=0\x7"
 let s:iterm_insert = "\e]50;CursorShape=1\x7"
 
 function! s:tmux_escape(code) abort
-    let code = substitute(a:code, "\e", "\e\e", 'g')
-    return "\ePtmux;" . code . "\e\\"
+    if exists('$TMUX')
+        let code = substitute(a:code, "\e", "\e\e", 'g')
+        return "\ePtmux;" . code . "\e\\"
+    else
+        return a:code
+    endif
 endfunction
 
 function! s:get_cursor_escape(mode) abort
@@ -174,11 +178,7 @@ function! s:get_cursor_escape(mode) abort
         return ''
     endif
 
-    let code = s:{terminal}_{a:mode}
-
-    if exists('$TMUX')
-        let code = s:tmux_escape(code)
-    endif
+    let code = s:tmux_escape(s:{terminal}_{a:mode})
 
     return code
 endfunction
