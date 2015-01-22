@@ -117,7 +117,7 @@ URxvt.utmpInhibit: true
 URxvt.modifier: alt
 
 !URxvt.perl-lib: /home/jan/.etc/urxvt/ext
-URxvt.perl-ext-common: default,xim-onthespot,fullscreen,matcher,url-picker,bidi,keyboard-select,clipboard,font-size,keysym-list
+URxvt.perl-ext-common: default,xim-onthespot,fullscreen,matcher,url-picker,bidi,keyboard-select,clipboard,font-size,keysym-list,focus-osc
 
 URxvt.keysym.F11: perl:fullscreen:switch
 

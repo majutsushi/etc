@@ -187,6 +187,10 @@ function! s:setup_terminfo() abort
     let enable_focus_reporting  = "\e[?1004h"
     let disable_focus_reporting = "\e[?1004l"
 
+    " Support the focus-osc urxvt extension
+    let enable_focus_reporting  .= s:tmux_escape("\e]777;focus;on\e\\")
+    let disable_focus_reporting .= s:tmux_escape("\e]777;focus;off\e\\")
+
     let alt_screen    = "\e[?1049h"
     let normal_screen = "\e[?1049l"
 
@@ -207,7 +211,7 @@ function! s:setup_terminfo() abort
     execute "set <" . map_focus_in  . ">=\e[I"
 
     execute "nnoremap <silent> <" . map_focus_out . "> :silent doautocmd FocusLost %<cr>"
-    execute "nnoremap <silent> <" . map_focus_in  . "> :doautocmd FocusGained %<cr>"
+    execute "nnoremap <silent> <" . map_focus_in  . "> :silent doautocmd FocusGained %<cr>"
 
     execute "onoremap <silent> <" . map_focus_out . "> <esc>:silent doautocmd FocusLost %<cr>"
     execute "onoremap <silent> <" . map_focus_in  . "> <esc>:silent doautocmd FocusGained %<cr>"
