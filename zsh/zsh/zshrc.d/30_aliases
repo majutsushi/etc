@@ -136,6 +136,8 @@ wp()       { dig +short txt ${1// /_}.wp.dg.cx }
 getlinks() { perl -ne 'while ( m/"((www|ftp|http):\/\/.*?)"/gc ) { print $1, "\n"; }' $* }
 flip()     { perl -C3 -Mutf8 -lpe '$_=reverse;y/a-zA-Z.['\'',({?!\"<_;‿⁅∴\r/ɐqɔpǝɟƃɥıɾʞ|ɯuodbɹsʇnʌʍxʎzɐqɔpǝɟƃɥıɾʞ|ɯuodbɹsʇnʌʍxʎz˙],'\'')}¿¡,>‾؛⁀⁆∵\n/' <<< "$1" }
 
+prepend_timestamps() { sed "s/^/$(date '+%Y-%m-%d %H:%M:%S') /"; }
+
 tea() {
     local time=${1:-90s}
     sleep $time
