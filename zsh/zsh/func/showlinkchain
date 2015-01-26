@@ -1,0 +1,15 @@
+zmodload -F zsh/stat b:zstat
+
+local args
+
+while [[ -h $1 ]]; do
+    zstat -A args +link $1
+    if [[ -n $args[1] ]]; then
+        print -r - $args[1]
+        set -- $args[1]
+    else
+        break
+    fi
+done
+
+# vim: filetype=zsh
