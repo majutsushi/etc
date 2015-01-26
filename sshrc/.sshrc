@@ -29,4 +29,6 @@ export INPUTRC="$SSHRCD/inputrc"
 
 eval $(dircolors -b $SSHRCD/dircolors) 2>/dev/null || :
 
+echo -e "\e]0;${HOSTNAME}\e\\"
+
 # vim: ft=sh

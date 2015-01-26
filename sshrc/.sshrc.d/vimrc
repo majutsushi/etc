@@ -52,3 +52,7 @@ set wildmode=list:longest,full
 if exists("&wildignorecase")
     set wildignorecase
 endif
+
+highlight Search ctermbg=15 ctermfg=0
+
+nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
