@@ -18,4 +18,5 @@ augroup filetypedetect
     autocmd BufNewFile,BufReadPost *.template setfiletype template
     autocmd BufNewFile,BufReadPost *.adoc,*.asciidoc setfiletype asciidoc
     autocmd BufNewFile,BufReadPost *.vala,*.vapi setfiletype vala
+    autocmd BufNewFile,BufReadPost *.confluence setfiletype confluencewiki
 augroup END
