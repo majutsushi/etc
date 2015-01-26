@@ -26,6 +26,7 @@ function! s:get_new_special_key() abort
 endfunction "}}}
 
 " s:MapMetaChars() {{{
+" This breaks macros that contain an <Esc>: https://github.com/tpope/vim-rsi/issues/13
 function! s:MapMetaChars() abort
     let metachars  = '0123456789'
     let metachars .= 'abcdefghijklmnopqrstuvwxyz'
