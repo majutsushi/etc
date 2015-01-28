@@ -9,6 +9,9 @@ stty stop ''
 stty -ixoff
 stty -ixon
 
+HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
+
 if [[ -r "/usr/share/bash-completion/bash_completion" ]]; then
     . /usr/share/bash-completion/bash_completion
 fi
