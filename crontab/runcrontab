@@ -6,9 +6,9 @@ BASEDIR=$HOME/.etc/crontab
 LOCALBASEDIR=$HOME/.local/etc/crontab
 
 if test -d $BASEDIR/cron.$PERIOD; then
-    nice -n 19 ionice -c2 -n7 run-parts $BASEDIR/cron.$PERIOD
+    chrt --idle 0 ionice -c2 -n7 run-parts $BASEDIR/cron.$PERIOD
 fi
 
 if test -d $LOCALBASEDIR/cron.$PERIOD; then
-    nice -n 19 ionice -c2 -n7 run-parts $LOCALBASEDIR/cron.$PERIOD
+    chrt --idle 0 ionice -c2 -n7 run-parts $LOCALBASEDIR/cron.$PERIOD
 fi
