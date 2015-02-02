@@ -315,7 +315,7 @@ pdfembedfonts() {
 # zsh with perl-regex - use it e.g. via:
 # regcheck '\s\d\.\d{3}\.\d{3} Euro' ' 1.000.000 Euro'
 regcheck() {
-    zmodload -i zsh/pcre
+    zmodload zsh/pcre
     pcre_compile $1 && \
     pcre_match $2 && echo "regex matches" || echo "regex does not match"
 }
