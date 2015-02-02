@@ -32,8 +32,21 @@ if have fzf; then
         LBUFFER=$(fc -l 1 | fzf -e +s +m -n2..,.. | sed "s/^ *[0-9*]* *//")
         zle redisplay
     }
-    zle     -N   fzf-history-widget
-    bindkey '^R' fzf-history-widget
+    zle -N fzf-history-widget
+
+    # allow nesting of C-R, from
+    # http://chneukirchen.org/blog/archive/2013/03/10-fresh-zsh-tricks-you-may-not-know.html
+    autoload -Uz narrow-to-region
+    _history-incremental-preserving-pattern-search-backward() {
+        local state
+        MARK=CURSOR  # magick, else multiple ^R don't work
+        narrow-to-region -p "$LBUFFER${BUFFER:+>>}" -P "${BUFFER:+<<}$RBUFFER" -S state
+        zle end-of-history
+        zle fzf-history-widget
+        narrow-to-region -R state
+    }
+    zle -N _history-incremental-preserving-pattern-search-backward
+    bindkey '^r' _history-incremental-preserving-pattern-search-backward
 fi
 
 
