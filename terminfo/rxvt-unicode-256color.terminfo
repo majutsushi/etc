@@ -111,7 +111,7 @@ rxvt-unicode-256color|rxvt-unicode terminal with 256 colors (X Window System),
 # Strings
 #
 # acs_chars                 acsc     ac  graphics charset pairs, based on vt100
-	acsc=+C\,D-A.B0E``aaffgghFiGjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~-A.B+C\,D0EhFiG,
 # alt_scancode_esc          scesa    S8  Alternate escape for scancode emulation
 # back_tab                  cbt      bt  back tab (P)
 # bell                      bel      bl  audible signal (bell) (P)
@@ -158,14 +158,14 @@ rxvt-unicode-256color|rxvt-unicode terminal with 256 colors (X Window System),
 	cub1=^H,
 # cursor_mem_address        mrcup    CM  memory relative cursor addressing, move to row #1 columns #2
 # cursor_normal             cnorm    ve  make cursor appear normal (undo civis/cvvis)
-	cnorm=\E[?25h,
+	cnorm=\E[?12l\E[?25h,
 # cursor_right              cuf1     nd  non-destructive space (move right one space)
 	cuf1=\E[C,
 # cursor_to_ll              ll       ll  last line, first column (if no cup)
 # cursor_up                 cuu1     up  up one line
 	cuu1=\E[A,
 # cursor_visible            cvvis    vs  make cursor very visible
-	cvvis=\E[?25h,
+	cvvis=\E[?12;25h,
 # define_bit_image_region   defbi    Yx  Define rectangualar bit image region
 # define_char               defc     ZE  Define a character #1, #2 dots wide, descender #3
 # delete_character          dch1     dc  delete character (P*)
@@ -260,12 +260,12 @@ rxvt-unicode-256color|rxvt-unicode terminal with 256 colors (X Window System),
 	flash=\E[?5h$<20/>\E[?5l,
 # form_feed                 ff       ff  hardcopy terminal page eject (P*)
 # from_status_line          fsl      fs  return from status line
-	fsl=^G,
+	fsl=\007,
 # get_mouse                 getm     Gm  Curses should get button events, parameter #1 not documented.
 # goto_window               wingo    WG  go to window #1
 # hangup                    hup      HU  hang-up phone
 # init_1string              is1      i1  initialization string
-	is1=\E[!p,
+	is1=\E[\041p,
 # init_2string              is2      is  initialization string
 	is2=\E[r\E[m\E[2J\E[?7;25h\E[?1;3;4;5;6;9;66;1000;1001;1049l\E[4l,
 # init_3string              is3      i3  initialization string
@@ -588,7 +588,7 @@ rxvt-unicode-256color|rxvt-unicode terminal with 256 colors (X Window System),
 # set_a_foreground          setaf    AF  Set foreground color to #1, using ANSI escape
 	setaf=\E[38;5;%p1%dm,
 # set_attributes            sgr      sa  define video attributes #1-#9 (PG9)
-	sgr=\E[0%?%p6%t;1%;%?%p2%t;4%;%?%p1%p3%|%t;7%;%?%p4%t;5%;%?%p7%t;8%;m%?%p9%t\E(0%e\E(B%;,
+	sgr=\E[%?%p6%t;1%;%?%p2%t;4%;%?%p1%p3%|%t;7%;%?%p4%t;5%;%?%p7%t;8%;m%?%p9%t\E(0%e\E(B%;,
 # set_background            setb     Sb  Set background color #1
 	setb=%?%p1%{7}%>%t\E[48;5;%p1%dm%e\E[4%?%p1%{1}%=%t4%e%p1%{3}%=%t6%e%p1%{4}%=%t1%e%p1%{6}%=%t3%e%p1%d%;m%;,
 # set_bottom_margin         smgb     Zk  Set bottom margin at current line
