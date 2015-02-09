@@ -10,9 +10,6 @@
 BIN=$1
 shift
 
-# File to store the shortcuts so they can be used across terminal / shell sessions
-shortcut_file=$XDG_CACHE_HOME/grep_shortcuts
-
 # Prefixes a shortcut tag to relevant output lines.
 display_shortcuts() {
     # Note that by default ack uses the --nogroup -H option by default when
@@ -61,4 +58,4 @@ remove_escaped_chars() {
     fi
 }
 
-$BIN --color "$@" | tee >/dev/null >(display_shortcuts) >(process_shorcut_paths | remove_escaped_chars > $shortcut_file) | less
+$BIN --color "$@" | tee >/dev/null >(display_shortcuts) >(process_shorcut_paths | remove_escaped_chars > "${SACK_SHORTCUT_FILE}") | less

@@ -64,6 +64,9 @@ export GITHUB_USER=majutsushi
 
 export NETHACKOPTIONS=@$HOME/.etc/nethackrc
 
+export SACK_SHORTCUT_FILE="$XDG_CACHE_HOME/sack_shortcuts/$$"
+mkdir -p "$(dirname "$SACK_SHORTCUT_FILE")"
+
 # update session environment variables if they got changed after re-attaching
 # a tmux session
 if [[ -n "$TMUX" ]]; then

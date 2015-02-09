@@ -100,7 +100,7 @@ else
     alias a='~/.etc/zsh/sack ack'
 fi
 f() {
-    local shortcut="$(sed -n "$1p" < $XDG_CACHE_HOME/grep_shortcuts | awk '
+    local shortcut="$(sed -n "$1p" < "$SACK_SHORTCUT_FILE" | awk '
         {
             print $1
             file = $2
