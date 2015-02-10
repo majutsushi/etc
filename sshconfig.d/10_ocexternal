@@ -1,0 +1,11 @@
+dnsdomainname | grep -q -v opencloud
+# --- CUT HERE ---
+Host yass
+    Hostname yass.opencloud.co.nz
+    User jan
+
+Host vanadis *.ocnz
+    User jan
+    ProxyCommand ssh -W $(echo %h | sed 's/.ocnz//g'):%p yass
+
+# vim: ft=sshconfig
