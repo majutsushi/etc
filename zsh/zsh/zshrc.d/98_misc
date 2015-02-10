@@ -2,4 +2,6 @@ if [[ -f $HOME/.local/etc/zshrc ]]; then
     source $HOME/.local/etc/zshrc
 fi
 
+mkdir -p $HOME/.ssh/sock
+
 # vim: filetype=zsh

@@ -49,7 +49,11 @@ merge() {
         cat $confbase >> $target
     fi
 
+    local localfile=$HOME/.local/etc/$(basename "$confbase")
+
     if [[ -d ${confbase}.d ]]; then
+        [[ -f $localfile ]] && ln -s $localfile ${confbase}.d/50_local || :
+
         for part in ${confbase}.d/??_*; do
             if grep -q '^# --- CUT HERE ---$' $part; then
                 csplit -s $part '/^# --- CUT HERE ---$/+1'
@@ -63,12 +67,13 @@ merge() {
                 cat $part >> $target
             fi
         done
-    fi
 
-    local localfile=$HOME/.local/etc/$(basename "$confbase")
-    if [[ -f $localfile ]]; then
-        echo -e "\n$comment [$localfile]" >> $target
-        cat $localfile >> $target
+        [[ -f ${confbase}.d/50_local ]] && rm ${confbase}.d/50_local || :
+    else
+        if [[ -f $localfile ]]; then
+            echo -e "\n$comment [$localfile]" >> $target
+            cat $localfile >> $target
+        fi
     fi
 }
 
@@ -128,6 +133,7 @@ xlink ranger target=.config/ranger
 xlink redshift.conf target=.config/redshift.conf
 xlink screen/screenrc
 xlink slrn/slrnrc
+merge sshconfig target=.ssh/config
 xlink taskrc
 xlink urxvt
 xlink weechat
