@@ -25,13 +25,13 @@ error() {
 }
 
 merge() {
-    local conffile=.etc/$1
+    local confbase=.etc/$1
     shift
 
     if [[ $# -ge 1 ]]; then
         local "$@"
     fi
-    local target=${target:-.$(basename "$conffile")}
+    local target=${target:-.$(basename "$confbase")}
     local comment=${comment:-#}
 
     info "Merging $target"
@@ -44,21 +44,28 @@ merge() {
     rm -f $target
 
     echo "$comment *** GENERATED FILE - DO NOT EDIT ***" > $target
-    echo "$comment [$(readlink -f $conffile)]" >> $target
-    cat $conffile >> $target
+    if [[ -f ${confbase} ]]; then
+        echo "$comment [$(readlink -f $confbase)]" >> $target
+        cat $confbase >> $target
+    fi
 
-    if [[ -d $conffile.d ]]; then
-        for part in $conffile.d/??_*; do
-            csplit -s $part '/^# --- CUT HERE ---$/+1'
-            if bash xx00; then
+    if [[ -d ${confbase}.d ]]; then
+        for part in ${confbase}.d/??_*; do
+            if grep -q '^# --- CUT HERE ---$' $part; then
+                csplit -s $part '/^# --- CUT HERE ---$/+1'
+                if bash xx00; then
+                    echo -e "\n$comment [$(readlink -f $part)]" >> $target
+                    cat xx01 >> $target
+                fi
+                rm xx0[01]
+            else
                 echo -e "\n$comment [$(readlink -f $part)]" >> $target
-                cat xx01 >> $target
+                cat $part >> $target
             fi
-            rm xx0[01]
         done
     fi
 
-    local localfile=$HOME/.local/etc/$(basename "$conffile")
+    local localfile=$HOME/.local/etc/$(basename "$confbase")
     if [[ -f $localfile ]]; then
         echo -e "\n$comment [$localfile]" >> $target
         cat $localfile >> $target
