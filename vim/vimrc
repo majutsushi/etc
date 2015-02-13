@@ -198,6 +198,7 @@ augroup commentstrings
     autocmd!
     autocmd FileType cfg         setlocal commentstring=#%s
     autocmd FileType cpp         setlocal commentstring=//%s
+    autocmd FileType desktop     setlocal commentstring=#%s
     autocmd FileType gtkrc       setlocal commentstring=#%s
     autocmd FileType pentadactyl setlocal commentstring=\"%s
     autocmd FileType tmux        setlocal commentstring=#%s
