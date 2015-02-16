@@ -25,6 +25,10 @@ function! s:handle_swapfile(filename)
     endif
 
     let swapinfo = s:get_swapinfo(a:filename)
+    if empty(swapinfo)
+        return ''
+    endif
+
     if (swapinfo.running)
         call s:delayed_msg("Switched to existing session")
         call s:goto_session(swapinfo.pid)
@@ -74,7 +78,7 @@ function! s:get_swapinfo(filename) abort
         endif
     endfor
 
-    return infodict[a:filename]
+    return get(infodict, a:filename, {})
 endfunction
 
 function! s:get_env(pid) abort
