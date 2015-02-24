@@ -5,6 +5,11 @@ Host github.com
     ForwardX11 no
     ProxyCommand ssh -W %h:%p yass
 
+Host bitbucket.org
+    User git
+    ForwardX11 no
+    ProxyCommand ssh -W %h:%p yass
+
 Host git.code.sf.net
     ProxyCommand ssh -W %h:%p yass
 
