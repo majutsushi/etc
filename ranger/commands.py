@@ -1,4 +1,5 @@
 from ranger.api.commands import *
+import subprocess
 
 class movetotrash(Command):
     """:movetotrash
@@ -42,3 +43,17 @@ class movetotrash(Command):
                     )
                 shutil.move(f.path, os.path.join(trash_dir, "files", basename))
         self.fm.thistab.ensure_correct_pointer()
+
+class fzfjump(Command):
+    """:fzfjump
+
+    Use fzf to quickly jump to recent dirs
+    """
+    def execute(self):
+        with open("/home/user/jan/.var/lib/zsh/recent-dirs") as f:
+            try:
+                directory = subprocess.check_output(["fzf", "-e", "-s", "+m"], stdin=f).strip()
+                self.fm.cd(directory)
+            except:
+                pass
+            self.fm.ui.redraw_window()
