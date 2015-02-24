@@ -2,3 +2,6 @@
 # Author:       {{ g:user_name }} <{{ g:user_email }}>
 # Created:      {{ strftime('%Y-%m-%d %H:%M:%S %z %Z') }}
 # Last changed: {{ strftime('%Y-%m-%d %H:%M:%S %z %Z') }}
+
+set -eu -o pipefail
+IFS=$'\n\t'
