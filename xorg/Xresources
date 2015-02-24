@@ -319,7 +319,8 @@ URxvt.keysym.M-C-S-F12 : \033[24;8~
 URxvt.keysym.C-space : \033Q32;5~
 
 URxvt.keysym.S-Return     : \033Q13;2~
-URxvt.keysym.M-Return     : \033Q13;3~
+! URxvt.keysym.M-Return     : \033Q13;3~
+URxvt.keysym.M-Return     : \033\n
 URxvt.keysym.M-S-Return   : \033Q13;4~
 URxvt.keysym.C-Return     : \033Q13;5~
 URxvt.keysym.C-S-Return   : \033Q13;6~
