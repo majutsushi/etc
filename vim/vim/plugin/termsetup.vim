@@ -154,8 +154,8 @@ endif
 " http://sourceforge.net/mailarchive/forum.php?thread_name=AANLkTinkbdoZ8eNR1X2UobLTeww1jFrvfJxTMfKSq-L%2B%40mail.gmail.com&forum_name=tmux-users
 let s:xterm_normal = "\e[2 q"
 let s:xterm_insert = "\e[6 q"
-let s:urxvt_normal = "\e]12;yellow\e\\"
-let s:urxvt_insert = "\e]12;red\e\\"
+let s:urxvt_normal = s:xterm_normal
+let s:urxvt_insert = s:xterm_insert
 let s:iterm_normal = "\e]50;CursorShape=0\x7"
 let s:iterm_insert = "\e]50;CursorShape=1\x7"
 
