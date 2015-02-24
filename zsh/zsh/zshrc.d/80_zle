@@ -165,6 +165,14 @@ zle -N magic-abbrev-expand
 bindkey ' ' magic-abbrev-expand
 bindkey -M isearch ' ' self-insert
 
+_normalize_prompt() {
+    [[ -n $TTY && -n $terminfo ]] && {
+        echoti rmacs
+        echoti sgr0
+        echoti cnorm
+    } > $TTY 2> /dev/null
+}
+add-zsh-hook precmd _normalize_prompt
 
 # Bracketed paste mode, taken from
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/safe-paste/safe-paste.plugin.zsh
