@@ -21,6 +21,7 @@ set laststatus=2
 set list
 set listchars=tab:._,trail:.,nbsp:x,precedes:<,extends:>
 set more
+set nrformats-=octal
 " set number
 set ruler
 set smartcase
@@ -28,6 +29,7 @@ set scrolloff=5
 set shortmess=aoOtI
 set showcmd
 set showmode
+set sidescrolloff=5
 set virtualedit=all
 set wrap
 
@@ -36,6 +38,9 @@ set formatoptions-=o " don't continue comments when pressing o/O
 set formatoptions+=n " recognize numbered lists when formatting
 set formatoptions+=2 " use indent of second line in paragraph
 set formatoptions+=l " don't break long lines that were already too long
+if v:version > 703 || v:version == 703 && has("patch541")
+    set formatoptions+=j " Delete comment character when joining commented lines
+endif
 
 set tabstop=8
 set shiftwidth=4
@@ -53,6 +58,11 @@ if exists("&wildignorecase")
     set wildignorecase
 endif
 
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+    runtime! macros/matchit.vim
+endif
+
 highlight Search ctermbg=15 ctermfg=0
 
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
+nnoremap <silent> g/ :execute 'vimgrep /' . @/ . '/g %'<CR>:copen<CR>
