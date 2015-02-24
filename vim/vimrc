@@ -2254,7 +2254,16 @@ inoremap <M-k> <Esc>gka
 inoremap <M-j> <Esc>gja
 
 " Populate the quickfix window with the last search
-nnoremap <silent> g/ :execute 'vimgrep /' . @/ . '/g %'<CR>:call qftoggle#openqfwin()<CR>
+function! s:quickfix_search() abort
+    if &ignorecase && &smartcase && @/ =~# '[A-Z]'
+        let pattern = '\C' . @/
+    else
+        let pattern = @/
+    endif
+    execute 'vimgrep /' . pattern . '/g %'
+    call qftoggle#openqfwin()
+endfunction
+nnoremap <silent> g/ :<C-u>call <SID>quickfix_search()<CR>
 
 " search for visually selected text
 " http://vimcasts.org/episodes/search-for-the-selected-text/
