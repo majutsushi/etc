@@ -2204,6 +2204,12 @@ xnoremap < <gv
 inoremap <M-H> <C-d>
 inoremap <M-L> <C-t>
 
+vmap  <expr>  <Left>   DVB_Drag('left')
+vmap  <expr>  <Right>  DVB_Drag('right')
+vmap  <expr>  <Down>   DVB_Drag('down')
+vmap  <expr>  <Up>     DVB_Drag('up')
+vmap  <expr>  D        DVB_Duplicate()
+
 " Move current line up or down
 inoremap <M-K> <Esc>:<C-U>
             \ let oldpos = getpos('.')<CR>
