@@ -240,6 +240,14 @@ _jkill() {
 }
 compdef _jkill jkill
 
+ant() {
+    if islinux; then
+        chrt --idle 0 ionice -c2 -n7 =ant "$@"
+    else
+        nice -n 19 ionice -c2 -n7 =ant "$@"
+    fi
+}
+
 alert() {
     eval '"$@"'
     local rv=$?
