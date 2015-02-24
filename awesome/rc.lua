@@ -741,6 +741,8 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "Minecraft.*" },
       properties = { floating = true } },
+    { rule = { class = "Steam" },
+      properties = { border_width = 0 } },
 }
 -- }}}
 
@@ -829,7 +831,7 @@ for s = 1, screen.count() do screen[s]:connect_signal("arrange", function ()
     -- Fine grained borders and floaters control
     if #clients > 0 then
         for _, c in pairs(clients) do
-            if c.fullscreen or c.name == "plugin-container" then
+            if c.fullscreen or c.name == "plugin-container" or c.name == "Steam" then
                 c.border_width = 0
             elseif awful.client.floating.get(c) or layout == "floating" then
                 c.border_width = beautiful.border_width
