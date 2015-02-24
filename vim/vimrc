@@ -1123,6 +1123,8 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-
 
 " number of screen lines to show around the cursor
 set scrolloff=5
+" minimal number of columns to keep left and right of the cursor
+set sidescrolloff=5
 
 " long lines wrap
 set wrap
@@ -1195,6 +1197,9 @@ if exists("+showtabline")
     " custom tab pages line
     set tabline=%!GenerateTabLine()
 endif
+
+" maximum number of tab pages to open for -p and "tab all"
+set tabpagemax=50
 
 " using the mouse {{{2
 
@@ -1394,7 +1399,7 @@ set updatetime=2000
 " command line editing {{{2
 
 " how many command lines are remembered
-set history=100
+set history=1000
 
 " specifies how command line completion works
 set wildmode=list:longest,full
