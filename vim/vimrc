@@ -1413,8 +1413,6 @@ set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.sw[po],*.idx,*.hi,*.dvi,*.lof,*.lo
 set wildignorecase
 " command-line completion shows a list of matches
 "set wildmenu
-" key used to open the command-line window
-set cedit=<C-O>
 
 if has('persistent_undo')
     set undodir=~/.var/lib/vim/undo/
