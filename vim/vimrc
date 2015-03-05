@@ -1735,6 +1735,8 @@ nnoremap <silent> <M-n>      :call <SID>toggle_nerdtree()<CR>
 nnoremap <silent> <F10>      :NERDTreeToggle<CR>
 
 " netrw {{{2
+let g:netrw_liststyle = 3
+
 " Taken from https://github.com/jszakmeister/vimfiles/blob/master/vimrc
 
 " Setup xdg-open as the tool to open urls whenever we can, if nothing is set up.
