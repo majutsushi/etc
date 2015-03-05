@@ -37,12 +37,9 @@ function! s:handle_swapfile(filename)
         call s:delayed_msg("Diffing modified swapfile")
         call s:setup_diff(v:swapname)
         return 'e'
-    elseif getftime(v:swapname) < getftime(a:filename)
+    else
         call s:delayed_msg("Deleted old swapfile")
         return 'd'
-    else
-        call s:delayed_msg("Swapfile detected; opening read-only")
-        return 'o'
     endif
 endfunction
 
