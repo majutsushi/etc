@@ -21,6 +21,11 @@ local cmd
 mkdir $tmpdir
 
 case "$1" in
+    *.vba.gz|*.vmb.gz)
+        basename=${basename:r} ;&
+    *.vba|*.vmb)
+        cmd="vim -c 'UseVimball ${tmpdir}' -c quit '$1' && rm '${tmpdir}/.VimballRecord'"
+        ;;
     *.tar.bz2)
         basename=${basename:r} ;&
     *.tbz2|*.tbz)
