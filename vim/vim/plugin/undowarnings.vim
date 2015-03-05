@@ -16,23 +16,23 @@ set cpo&vim
 "=====[ INTERFACE ]==================
 
 " Remap the undo key to warn about stepping back into a buffer's pre-history...
-nnoremap <expr> u  VerifyUndo()
+nnoremap <expr> u <SID>verify_undo()
 
 "=====[ IMPLEMENTATION ]==================
 "
 " Track each buffer's starting position in the undo history...
 augroup UndoWarnings
     autocmd!
-    autocmd BufReadPost,BufNewFile  *   :call Rememberundo_start()
+    autocmd BufReadPost,BufNewFile  *  call s:rememberundo_start()
 augroup END
 
-function! Rememberundo_start ()
+function! s:rememberundo_start ()
     let b:undo_start = exists('b:undo_start') ? b:undo_start : undotree().seq_cur
 endfunction
 
-function! VerifyUndo ()
-    " Nothing to verify if can't undo into previous sesssion...
-    if !exists('*undotree')
+function! s:verify_undo ()
+    " Nothing to verify if can't undo into previous session...
+    if !exists('*undotree') || !exists('b:undo_start')
         return 'u'
     endif
 
