@@ -10,6 +10,7 @@ endif
 
 set autoread
 set backspace=indent,eol,start
+set clipboard=unnamed,unnamedplus,exclude:cons\|linux
 set completeopt=longest,menuone
 set confirm
 set display=lastline
