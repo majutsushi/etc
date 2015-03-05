@@ -23,6 +23,7 @@ eval "$(dircolors)"
 alias ls='ls  -F --color=auto'
 alias ll='ls -lF --color=auto'
 alias l='ls -lAF --color=auto'
+alias vi=vim
 
 SSHRCD="$SSHHOME/.sshrc.d"
 export MYVIMRC="$SSHRCD/vimrc"
