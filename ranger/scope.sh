@@ -87,6 +87,9 @@ case "$extension" in
     scen)
         try print-scenario --colour "$path"  && { dump; exit 0; }
         ;;
+    iso)
+        try isoinfo -l -i "$path"  && { dump; exit 0; }
+        ;;
 esac
 
 case "$mimetype" in
