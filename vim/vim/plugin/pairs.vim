@@ -12,8 +12,8 @@ autocmd InsertLeave * call visualmode(1)
 
 " Taken from:
 " https://github.com/Raimondi/delimitMate/issues/138#issuecomment-35458273
-let s:left  = "\<Esc>:undojoin\<CR>i"
-" let s:right = "\<C-\>\<C-o>:undojoin\<CR>\<C-\>\<C-o>a"
+let s:left  = "\<Esc>:silent! undojoin\<CR>i"
+" let s:right = "\<C-\>\<C-o>:silent! undojoin\<CR>\<C-\>\<C-o>a"
 
 " s:getcharrel() {{{2
 function! s:getcharrel(pos) abort
