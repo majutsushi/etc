@@ -43,7 +43,11 @@ local function update(id)
 
     wdata.city    = data.name or _wdata.city
     wdata.updated = os.date('%c', data.dt) or _wdata.updated
-    wdata.sky     = data.weather[1].description or _wdata.sky
+    if data.weather == nil then
+        wdata.sky = _wdata.sky
+    else
+        wdata.sky = data.weather[1].description or _wdata.sky
+    end
     wdata.temp    = data.main.temp or _wdata.temp
     wdata.humid   = data.main.humidity or _wdata.humid
 
@@ -62,7 +66,11 @@ local function update(id)
 
     wdata.sunrise = data.sys.sunrise or _wdata.sunrise
     wdata.sunset  = data.sys.sunset or _wdata.sunset
-    wdata.icon    = data.weather[1].icon or _wdata.icon
+    if data.weather == nil then
+        wdata.icon = _wdata.icon
+    else
+        wdata.icon = data.weather[1].icon or _wdata.icon
+    end
 end
 
 local function start_updatetimer(id)
