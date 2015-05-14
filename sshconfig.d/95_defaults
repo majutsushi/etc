@@ -1,3 +1,7 @@
+Host github.com
+    ForwardAgent no
+    ForwardX11 no
+
 Host *
     Compression yes
     ControlMaster auto
