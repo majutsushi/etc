@@ -36,6 +36,7 @@ function! s:load_template() abort
     finally
         let &report = report_save
     endtry
+    set nomodified
 
     " Remove template variables from the script namespace
     call filter(s:, 'v:key =~# "^__"')
@@ -51,5 +52,5 @@ endfunction
 
 augroup templates
     autocmd!
-    autocmd BufNewFile * call s:load_template()
+    autocmd FileType * if line('$') == 1 && getline(1) == '' | call s:load_template() | endif
 augroup END
