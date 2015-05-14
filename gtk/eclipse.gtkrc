@@ -1,7 +1,8 @@
-include "/usr/share/themes/Adwaita/gtk-2.0/gtkrc"
+# include "/usr/share/themes/Adwaita/gtk-2.0/gtkrc"
+include "/usr/share/darktable/darktable.gtkrc"
 
 style "eclipse" {
-        font_name = "DejaVu Sans 8"
+    font_name = "DejaVu Sans 8"
 }
 
 class "GtkWidget" style "eclipse"
