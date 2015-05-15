@@ -134,14 +134,11 @@ zstyle ':completion:*:man:*'     menu yes no-select
 # make ./configure completion simpler
 zstyle ':completion:*:*:-command-:*' ignored-patterns './config.*'
 
-# host completion /* add brackets as vim can't parse zsh's complex cmdlines {{{ */
-[[ -r ~/.ssh/known_hosts ]] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
-[[ -r /etc/hosts ]] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
+# host completion
 hosts=(
-    majutsushi.net
-    "$_ssh_hosts[@]"
-    "$_etc_hosts[@]"
-    $HOST
+    ${${${${${(f)"$(<${HOME}/.ssh/known_hosts)"//\[/}//\]:/ }:#[\|]*}%%\ *}%%,*}
+    ${(s: :)${${${(@M)${(f)"$(<${HOME}/.ssh/config)"}:#Host *}#Host }:#*[*?]*}}
+    ${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}
     localhost
 )
 zstyle ':completion:*:hosts' hosts $hosts
