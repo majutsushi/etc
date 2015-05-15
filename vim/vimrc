@@ -290,8 +290,8 @@ let s:statuscolors = {
     \ 'LineNumber'   : [[ '#585858', '#bcbcbc', 'bold'], [ '#1c1c1c', '#808080', 'none']],
     \ 'LineColumn'   : [[ '#585858', '#bcbcbc', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
     \ 'LinePercent'  : [[ '#c2bfa5', '#303030', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
-    \ 'Warning'      : [[ '#cc0000', '#ffffff', 'bold'], [ '#1c1c1c', '#808080', 'none']],
-    \ 'Error'        : [[ '#585858', '#ff5f00', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']]
+    \ 'Error'        : [[ '#cc0000', '#ffffff', 'bold'], [ '#1c1c1c', '#808080', 'none']],
+    \ 'Warning'      : [[ '#585858', '#ff5f00', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']]
 \ }
 " Helper functions {{{2
 " GetFilePath() {{{3
@@ -424,6 +424,14 @@ function! EclimErrorIndicator() abort
     return len(errors) > 0 ? 'e' : ''
 endfunction
 
+" EclimWarningIndicator() {{{3
+function! EclimWarningIndicator() abort
+    let loclist = filter(getloclist(0), 'bufnr("%") == v:val.bufnr')
+    let warnings = filter(copy(loclist), 'tolower(v:val.type) == "w"')
+
+    return len(warnings) > 0 ? 'w' : ''
+endfunction
+
 " Default statusline {{{2
 let g:default_stl  = ""
 
@@ -437,7 +445,8 @@ let g:default_stl .= "#[FilePath] %{GetFilePath()}#[FileName]%{GetFileName()} "
 
 let g:default_stl .= "#[ModFlag]%(%{GetState()} %)#[BufFlag]%w"
 
-let g:default_stl .= "#[Warning]%{EclimErrorIndicator()}"
+let g:default_stl .= "#[Error]%{EclimErrorIndicator()}"
+let g:default_stl .= "#[Warning]%{EclimWarningIndicator()}"
 
 " File type
 let g:default_stl .= "<CUR>%(#[FileType] %{!empty(&ft) ? &ft : '--'}#[BranchS]%)</CUR>"
@@ -451,8 +460,8 @@ let g:default_stl .= "%{exists('g:loaded_fugitive') ? substitute(fugitive#status
 let g:default_stl .= "%) "
 
 " Syntastic
-"let g:default_stl .= "<CUR>%(#[BranchS][>] #[Error]%{substitute(SyntasticStatuslineFlag(), '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', '[>][>][>] SYNTAX \\1 \\2 [>][>][>]', 'i')} %)</CUR>"
-"let g:default_stl .= "<CUR>%(#[BranchS][>] #[Error]%{substitute('[Syntax: line:42 (99)]', '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', 'SYNTAX \\1 \\2', 'i')} %)</CUR>"
+"let g:default_stl .= "<CUR>%(#[BranchS][>] #[Warning]%{substitute(SyntasticStatuslineFlag(), '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', '[>][>][>] SYNTAX \\1 \\2 [>][>][>]', 'i')} %)</CUR>"
+"let g:default_stl .= "<CUR>%(#[BranchS][>] #[Warning]%{substitute('[Syntax: line:42 (99)]', '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', 'SYNTAX \\1 \\2', 'i')} %)</CUR>"
 
 " Padding/HL group
 let g:default_stl .= "#[FunctionName] "
@@ -482,14 +491,14 @@ let g:default_stl .= '<CUR>%(#[FileFormat]%{&bomb ? "BOM" : ""} %)</CUR>'
 let g:default_stl .= "#[ExpandTab] "
 
 " ZoomWin state
-let g:default_stl .= "%(#[Warning]%{g:zoomwin_stl}#[ExpandTab] %)"
+let g:default_stl .= "%(#[Error]%{g:zoomwin_stl}#[ExpandTab] %)"
 
 " Tabstop/indent/whitespace settings
-let g:default_stl .= "%(#[Warning]"
+let g:default_stl .= "%(#[Error]"
 let g:default_stl .= "%{StatuslineTrailingSpaceWarning()}"
 let g:default_stl .= "#[ExpandTab] %)"
 
-let g:default_stl .= "#[Warning]%{StatuslineETString(1)}#[ExpandTab]%{StatuslineETString(0)}"
+let g:default_stl .= "#[Error]%{StatuslineETString(1)}#[ExpandTab]%{StatuslineETString(0)}"
 let g:default_stl .= "#[LineColumn]:%{&tabstop}:%{&softtabstop}:%{&shiftwidth}"
 
 " Unicode codepoint
