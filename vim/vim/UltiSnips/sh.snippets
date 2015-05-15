@@ -89,4 +89,10 @@ ${3:${4/(.+)/trap "/}${4:rm -f '$${1/.*\s//}'}${4/(.+)/" 0               # EXIT\
 
 endsnippet
 
+snippet f "function"
+${1:name}() {
+	${2:${VISUAL}}
+}
+endsnippet
+
 # vim:ft=snippets:
