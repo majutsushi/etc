@@ -140,7 +140,7 @@ anytoany() { print $(( [##$2] $1#$3 )) }
 dectohex() { anytoany 10 16 $1 }
 hextodec() { anytoany 16 10 $1 }
 
-prepend_timestamps() { sed "s/^/$(date '+%Y-%m-%d %H:%M:%S') /"; }
+timestamps() { awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; fflush(); }'; }
 
 tea() {
     local time=${1:-90s}
