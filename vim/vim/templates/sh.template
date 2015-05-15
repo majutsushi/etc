@@ -3,5 +3,8 @@
 # Created:      {{ strftime('%Y-%m-%d %H:%M:%S %z %Z') }}
 # Last changed: {{ strftime('%Y-%m-%d %H:%M:%S %z %Z') }}
 
-set -eu -o pipefail
+set -eEu -o pipefail
 IFS=$'\n\t'
+
+error_handler() { echo "Error: Line ${1} exited with status ${2}"; }
+trap 'error_handler ${LINENO} $?' ERR
