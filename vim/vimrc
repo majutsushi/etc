@@ -1814,7 +1814,7 @@ endpython
             let uri = s:GetSelectedText()
         endif
 
-        call netrw#NetrwBrowseX(l:uri, 0)
+        call netrw#BrowseX(l:uri, 0)
     endfunction
 
     nnoremap gx :call <SID>SmartOpen('n')<CR>
