@@ -237,10 +237,10 @@ __prompt_git() {
 
         if [[ -n "${__git_toplevel}" ]]; then
             local prefix="${${${PWD#${__git_toplevel}}#/}%/}"
-            local toplevel="${(D)__git_toplevel}"
+            local toplevel="${(Q)${(D)__git_toplevel}}"
         else
             local prefix="${${:-$(git rev-parse --show-prefix 2>/dev/null)}%/}"
-            local toplevel=${(D)PWD%/${prefix}}
+            local toplevel="${(Q)${(D)PWD%/${prefix}}}"
         fi
 
         _prompt_path="${pcol[green]}${toplevel}${pcol[reset]}"
