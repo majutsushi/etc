@@ -24,7 +24,6 @@
 	svnl = svn log --oneline --show-commit
 	svn-show = "!f() { git show $(git svn find-rev $1); }; f"
 	svn-co = "!f() { git checkout $(git svn find-rev $1); }; f"
-	oc-clone = "!f() { git svn clone svn://svn --trunk=products/$1 --branches=branches/$1 $1; }; f"
 
 	d  = diff -B -C -b
 	sd = diff -B -C -b --staged
