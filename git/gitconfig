@@ -94,6 +94,7 @@
 [merge]
 	tool = splice
 	conflictstyle = diff3
+	ff = false
 
 [svn]
 	rmdir = true
