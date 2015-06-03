@@ -19,7 +19,7 @@
 	lla = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ai%C(green) %an %C(red)%d %Creset%s\" --all
 	in = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll ..trunk 2>/dev/null; then git ll ..git-svn; fi; else git ll ..@{upstream}; fi"
 	new = "!f() { git ll ${1:-HEAD}@{1}..${1:-HEAD}@{0}; }; f"
-	out = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll trunk.. 2>/dev/null; then git ll git-svn..; fi; else git ll origin..; fi"
+	out = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll trunk.. 2>/dev/null; then git ll git-svn..; fi; else git ll @{upstream}..; fi"
 
 	svnl = svn log --oneline --show-commit
 	svn-show = "!f() { git show $(git svn find-rev $1); }; f"
