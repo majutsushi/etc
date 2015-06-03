@@ -96,6 +96,10 @@
 	conflictstyle = diff3
 	ff = false
 
+[rerere]
+	enabled = true
+	autoupdate = true
+
 [svn]
 	rmdir = true
 
