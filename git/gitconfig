@@ -78,6 +78,9 @@
 [tag]
 	sort = version:refname
 
+[log]
+	date = local
+
 [mergetool "gvimdiff3"]
 	cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [mergetool "vimdiff3"]
@@ -96,7 +99,7 @@
 	rmdir = true
 
 [tig]
-	main-view = "id date:default author:width=15 commit-title:graph=yes,refs=yes,overflow=no"
+	main-view = "id date:local author:width=15 commit-title:graph=yes,refs=yes,overflow=no"
 	blame-options = "-C -C -C"
 	horizontal-scroll = 50%
 	ignore-space = "all"
