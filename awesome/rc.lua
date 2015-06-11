@@ -597,9 +597,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Multimedia keys
-    awful.key({}, "XF86AudioPlay", function()
-        send_mpris_cmd("PlayPause")
-    end),
+    awful.key({}, "XF86AudioPlay", function() send_mpris_cmd("PlayPause") end),
+    awful.key({}, "XF86AudioNext", function() send_mpris_cmd("Next") end),
+    awful.key({}, "XF86AudioPrev", function() send_mpris_cmd("Previous") end),
     awful.key({}, "XF86AudioRaiseVolume", function()
         pulse.pulse.add( 5)
         vicious.force({volbar})
