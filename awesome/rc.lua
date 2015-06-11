@@ -597,6 +597,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Multimedia keys
+    awful.key({}, "XF86AudioPlay", function()
+        send_mpris_cmd("PlayPause")
+    end),
     awful.key({}, "XF86AudioRaiseVolume", function()
         pulse.pulse.add( 5)
         vicious.force({volbar})
@@ -845,6 +848,42 @@ for s = 1, screen.count() do screen[s]:connect_signal("arrange", function ()
         end
     end
 end)
+end
+-- }}}
+
+-- {{{ Utility functions
+function get_first_player()
+    local f = io.popen(
+        "dbus-send " ..
+            "--session " ..
+            "--dest=org.freedesktop.DBus " ..
+            "--type=method_call " ..
+            "--print-reply=literal " ..
+            "/org/freedesktop/DBus " ..
+            "org.freedesktop.DBus.ListNames"
+    )
+    local out = f:read("*all")
+    f:close()
+    s, e = out:find("org.mpris.MediaPlayer2.[^ ]+")
+    if s == nil then
+        return nil
+    end
+    return out:sub(s, e)
+end
+
+function send_mpris_cmd(cmd)
+    local player = get_first_player()
+    if player == nil then
+        naughty.notify({ text = "No running player found" })
+        return
+    end
+    exec(
+        "dbus-send " ..
+            "--type=method_call " ..
+            "--dest=" .. player .. " " ..
+            "/org/mpris/MediaPlayer2 " ..
+            "org.mpris.MediaPlayer2.Player." .. cmd
+    )
 end
 -- }}}
 
