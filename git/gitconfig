@@ -13,10 +13,11 @@
 	co = checkout
 
 	ls  = log --stat
-	lg  = log --graph --pretty=format:\"%C(yellow)%h%C(red)%d%Creset %s\"
-	lga = log --graph --pretty=format:\"%C(yellow)%h%C(red)%d%Creset %s\" --all
-	ll  = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ai%C(green) %an %C(red)%d %Creset%s\"
-	lla = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ai%C(green) %an %C(red)%d %Creset%s\" --all
+	lg  = log --graph --oneline --decorate
+	lga = log --graph --oneline --decorate --all
+	ll  = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ai%C(green) %an %C(auto)%d %Creset%s\"
+	lla = log --graph --pretty=format:\"%C(yellow)%h %C(blue)%ai%C(green) %an %C(auto)%d %Creset%s\" --all
+	log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
 	in = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll ..trunk 2>/dev/null; then git ll ..git-svn; fi; else git ll ..@{upstream}; fi"
 	new = "!f() { git ll ${1:-HEAD}@{1}..${1:-HEAD}@{0}; }; f"
 	out = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll trunk.. 2>/dev/null; then git ll git-svn..; fi; else git ll @{upstream}..; fi"
