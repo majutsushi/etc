@@ -103,6 +103,9 @@
 	conflictstyle = diff3
 	ff = false
 
+[rebase]
+	autostash = true
+
 [rerere]
 	enabled = true
 	autoupdate = true
