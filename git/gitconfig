@@ -37,6 +37,9 @@
 	up = !git pull && git ll HEAD@{1}..
 	reup = !git pull --rebase && git diff --stat HEAD@{1}.. && git ll HEAD@{1}..
 
+	spull = "!f() { git pull \"$@\" && git submodule sync --recursive && git submodule update --init --recursive; }; f"
+	spush = push --recurse-submodules=on-demand
+
 	assume   = update-index --assume-unchanged
 	unassume = update-index --no-assume-unchanged
 	assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
@@ -59,9 +62,13 @@
 	old  = red
 	new  = green
 
+[status]
+	submoduleSummary = true
+
 [diff]
 	tool = vimdiff
 	algorithm = histogram
+	submodule = log
 
 [branch]
 	autosetuprebase = always
