@@ -1,15 +1,20 @@
 [submodule "zsh/zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+	branch = master
 [submodule "zsh/zsh-completions"]
 	path = zsh/zsh-completions
-	url = git://github.com/zsh-users/zsh-completions.git
+	url = https://github.com/zsh-users/zsh-completions.git
+	branch = master
 [submodule "urxvt/urxvt-font-size"]
 	path = urxvt/urxvt-font-size
 	url = git@github.com:majutsushi/urxvt-font-size.git
+	branch = master
 [submodule "awesome/vicious"]
 	path = awesome/vicious
 	url = http://git.sysphere.org/vicious/
+	branch = master
 [submodule "awesome/awesome-freedesktop"]
 	path = awesome/awesome-freedesktop
 	url = https://github.com/terceiro/awesome-freedesktop.git
+	branch = master
