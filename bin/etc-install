@@ -147,8 +147,8 @@ xlink bash/bash_logout
 xlink emacs/emacs
 xlink emacs/emacs.d
 
-xlink git/gitconfig
-merge git/gitignore target=.var/lib/gitignore
+xlink git/gitconfig target=.config/git/config
+merge git/gitignore target=.config/git/ignore
 ln -sf $HOME/.var/lib/gitignore $HOME/.agignore
 
 xlink tmux/tmux.conf
