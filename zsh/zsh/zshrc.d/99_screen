@@ -1,18 +1,15 @@
 # start tmux/screen if not already in it or running a dumb terminal
 
 # 'rxvt' is needed for dvtm
-case $TERM in
-    (screen*|rxvt|dumb|vt100)
-        ;;
-    *) export ORIGTERM=$TERM
-       export ORIGCOLORTERM=$COLORTERM
-       unset TMUX
-       if have -c tmux; then
-           tmux new-session
-       else
-           screen -m
-       fi
-       ;;
-esac
+if [[ ! "$TERM" =~ ^\(screen.*\|rxvt\|dumb\|vt100\)$ ]] && [[ -z "$ZSHRUN" ]]; then
+    export ORIGTERM=$TERM
+    export ORIGCOLORTERM=$COLORTERM
+    unset TMUX
+    if have -c tmux; then
+        tmux new-session
+    else
+        screen -m
+    fi
+fi
 
 # vim: filetype=zsh

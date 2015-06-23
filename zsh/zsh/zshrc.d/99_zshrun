@@ -1,0 +1,34 @@
+# Adapted from:
+# http://www.zsh.org/mla/workers//2015/msg01110.html
+# http://mika.l3ib.org/code/dot-zshrc
+
+if [[ -n "$ZSHRUN" ]]; then
+    PS1=$'%Bzshrun%b %F{9}%~%f> '
+
+    setopt hist_ignore_all_dups
+    unsetopt share_history
+    HISTFILE=$ZSH_VAR_LIB_DIR/zshrun-history
+
+    unset ZSHRUN
+
+    unsetopt correct
+    unsetopt checkjobs
+    setopt nohup
+
+    _accept_and_quit() {
+        local -a buf
+        buf=(${(z)BUFFER})
+        if which $buf[1] >& /dev/null; then
+            print -sr -- "${BUFFER}"
+            print -s
+            zsh -c "${BUFFER}" &|
+            exit
+        else
+            zle -M "Command $buf[1] not found"
+        fi
+    }
+    zle -N _accept_and_quit
+    bindkey "^M" _accept_and_quit
+fi
+
+# vim: filetype=zsh

@@ -624,7 +624,8 @@ globalkeys = awful.util.table.join(
     awful.key({ "Control" }, "Print", function () exec("gnome-screenshot --interactive") end),
 
     -- Prompt
-    awful.key({ modkey }, "r", function () mypromptbox[mouse.screen]:run() end),
+    -- awful.key({ modkey }, "r", function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ modkey }, "r", function () exec("urxvt -name zshrun -geometry 100x10 -e env ZSHRUN=1 zsh") end),
 
     awful.key({ modkey }, "x",
               function ()
@@ -743,6 +744,12 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "Minecraft.*" },
       properties = { floating = true } },
+    { rule = { class = "URxvt", instance = "zshrun" },
+      properties = { floating = true },
+      callback = function (c)
+          awful.placement.centered(c, nil)
+      end
+    },
     { rule = { class = "Steam" },
       properties = { border_width = 0 } },
 }
