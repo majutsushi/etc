@@ -229,6 +229,8 @@ kill() {
         echo
         echo " (╯°□°）╯︵$(flip "${(j: :)names}")"
         echo
+    else
+        return $?
     fi
 }
 
