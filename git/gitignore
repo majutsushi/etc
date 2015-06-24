@@ -52,3 +52,8 @@ config.status
 *.gcda
 *.gcno
 gmon.out
+
+# eclipse
+.classpath
+.project
+.settings/
