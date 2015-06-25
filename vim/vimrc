@@ -2275,7 +2275,7 @@ function! s:quickfix_search() abort
     else
         let pattern = @/
     endif
-    execute 'vimgrep /' . pattern . '/g %'
+    execute 'vimgrep /' . pattern . '/ %'
     call qftoggle#openqfwin()
 endfunction
 nnoremap <silent> g/ :<C-u>call <SID>quickfix_search()<CR>
