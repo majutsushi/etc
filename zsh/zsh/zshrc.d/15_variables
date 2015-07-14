@@ -21,7 +21,6 @@ export MANWIDTH=${MANWIDTH:-80}
 export CLICOLOR=1
 eval $(dircolors -b $ZDOTDIR/dircolors) 2>/dev/null || :
 
-export GREP_OPTIONS='--color=auto'
 export ZIPOPT="--exclude=@$HOME/.etc/excludes/archive"
 export TAR_OPTIONS="--exclude-from $HOME/.etc/excludes/archive"
 
