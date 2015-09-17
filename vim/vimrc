@@ -180,6 +180,10 @@ if v:version >= 700
     autocmd vimrc BufEnter * if (exists('b:winview') && IsNotSpecialBuf("%")) | call winrestview(b:winview) | endif
 endif
 
+" Prevent files with very long pathnames from causing an error when writing
+" the undofile
+autocmd vimrc BufReadPost * if len(substitute(expand('%:p'), '/', '%', 'g')) > 255 | setlocal noundofile | endif
+
 " automatically give executable permissions if file begins with #!
 " and contains" '/bin/' in the path
 " From https://github.com/mitechie/pyvim/blob/master/.vimrc
