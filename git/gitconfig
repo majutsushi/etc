@@ -14,8 +14,8 @@
 	ls  = log --stat
 	lg  = log --graph --oneline --decorate
 	lga = log --graph --oneline --decorate --all
-	ll  = log --graph --pretty=format:\"%C(auto,yellow)%h %C(auto,blue)%ai%C(auto,green) %an %C(auto,auto)%d %Creset%s\"
-	lla = log --graph --pretty=format:\"%C(auto,yellow)%h %C(auto,blue)%ai%C(auto,green) %an %C(auto,auto)%d %Creset%s\" --all
+	ll  = log --graph --pretty=tformat:\"%C(auto,yellow)%h %C(auto,blue)%ai%C(auto,green) %an %C(auto)%d %Creset%s\"
+	lla = log --graph --pretty=tformat:\"%C(auto,yellow)%h %C(auto,blue)%ai%C(auto,green) %an %C(auto)%d %Creset%s\" --all
 	log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
 	in = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll ..trunk 2>/dev/null; then git ll ..git-svn; fi; else git ll ..@{upstream}; fi"
 	new = "!f() { git ll ${1:-HEAD}@{1}..${1:-HEAD}@{0}; }; f"
@@ -46,7 +46,7 @@
 
 	undo-commit = reset --soft HEAD^
 	; from http://www.die-welt.net/2011/12/git-rocks-even-when-it-sucks/
-	ls-big-files = "!for commit in $(git log --all --pretty=format:%H); do git ls-tree -r -l $commit; done |awk '{print $4 \" \" $5}' |sort -nur | head -n 10"
+	ls-big-files = "!for commit in $(git log --all --pretty=tformat:%H); do git ls-tree -r -l $commit; done |awk '{print $4 \" \" $5}' |sort -nur | head -n 10"
 	purge-file = "!f() { [ -z \"$1\" ] && echo \"usage: git purge-file <file>\" && return; echo -n \"WARNING: Dangerous operation! Really purge file from history? [y/N] \"; read ans; [ \"$ans\" = \"y\" ] && git filter-branch -f --prune-empty --index-filter \"git rm -r --cached --ignore-unmatch \\\"$1\\\"\" -- --all; }; f"
 	; from https://gist.github.com/492227
 	lost = "!git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(auto,yellow)%h%Creset %C(auto,blue)%ai%Creset %f' --stdin | awk '/^SHA1/ {sub(\"SHA1: \", \"\"); print}'"
