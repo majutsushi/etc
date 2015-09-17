@@ -3,8 +3,15 @@ dnsdomainname | grep -q -v opencloud
 Host yass
     Hostname yass.opencloud.co.nz
     User jan
+    ExitOnForwardFailure yes
+    # OC Subversion - svn
+    LocalForward 3690 svn:3690
+    LocalForward 3691 storm:3691
+    LocalForward 3692 storm:3692
+    # etc
+    LocalForward 8081 stampede:443
 
-Host vanadis *.ocnz
+Host vanadis sedition storm *.ocnz
     User jan
     ProxyCommand ssh -W $(echo %h | sed 's/.ocnz//g'):%p yass
 
