@@ -354,7 +354,7 @@ status() {
 # debian stuff
 if [[ -r /etc/debian_version ]] ; then
     alias acs='apt-cache search'
-    alias aps='aptitude search'
+    alias aps='aptitude search -F "%c%a%M%S %p %I %Z %v %V"'
     alias acsh='apt-cache show'
     alias acp='apt-cache policy'
     alias afs='apt-file search'
