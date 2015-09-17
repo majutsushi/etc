@@ -160,7 +160,7 @@ __prompt_git_refs() {
 
     # remove redundant info
     refs_arr=("${(s:,:)refs}")
-    refs_arr=(${refs_arr:#HEAD})
+    refs_arr=(${refs_arr:#HEAD*})
     refs_arr=(${refs_arr//${branch#refs\/heads\/}})
     refs_arr=(${refs_arr:#tag:})
     refs_arr=(${refs_arr//*\/*})
