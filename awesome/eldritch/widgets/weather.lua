@@ -39,7 +39,7 @@ local function update(id)
     if jsondata == nil then return end
 
     local data = json:decode(jsondata)
-    if data == nil then return end
+    if data == nil or data.cod ~= 200 then return end
 
     wdata.city    = data.name or _wdata.city
     wdata.updated = os.date('%c', data.dt) or _wdata.updated
