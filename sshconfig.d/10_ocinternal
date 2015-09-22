@@ -1,12 +1,9 @@
 dnsdomainname | grep -q opencloud
 # --- CUT HERE ---
 Host github.com
-    User git
     ProxyCommand ssh -W %h:%p yass
 
 Host bitbucket.org
-    User git
-    ForwardX11 no
     ProxyCommand ssh -W %h:%p yass
 
 Host git.code.sf.net

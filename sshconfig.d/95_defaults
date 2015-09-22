@@ -1,4 +1,10 @@
 Host github.com
+    User git
+    ForwardAgent no
+    ForwardX11 no
+
+Host bitbucket.org
+    User git
     ForwardAgent no
     ForwardX11 no
 
