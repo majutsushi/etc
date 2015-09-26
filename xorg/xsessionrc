@@ -14,6 +14,7 @@ export PATH=$HOME/bin:$HOME/.bin:$HOME/.etc/bin:/usr/games:/var/lib/gems/1.8/bin
 # export GTK_IM_MODULE="scim"
 # export XMODIFIERS='@im=SCIM'
 export DVDCSS_CACHE=$HOME/.var/lib/dvdcss
+export GTK_OVERLAY_SCROLLING=0
 
 # ulimit -c unlimited
 # unclutter &
