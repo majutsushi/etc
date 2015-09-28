@@ -1,35 +1,52 @@
 hash -d doc=/usr/share/doc
 hash -d log=/var/log
 
-# zsh_directory_name() {
-#     emulate -L zsh
-#     setopt extendedglob
-#     local -a match mbegin mend
-#     if [[ $1 = d ]]; then
-#         # turn the directory into a name
-#         if [[ $2 = (#b)(/home/pws/perforce/)([^/]##)* ]]; then
-#             typeset -ga reply
-#             reply=(p:$match[2] $(( ${#match[1]} + ${#match[2]} )) )
-#         else
-#             return 1
-#         fi
-#     elif [[ $1 = n ]]; then
-#         # turn the name into a directory
-#         [[ $2 != (#b)p:(?*) ]] && return 1
-#         typeset -ga reply
-#         reply=(/home/pws/perforce/$match[1])
-#     elif [[ $1 = c ]]; then
-#         # complete names
-#         local expl
-#         local -a dirs
-#         dirs=(/home/pws/perforce/*(/:t))
-#         dirs=(p:${^dirs})
-#         _wanted dynamic-dirs expl 'dynamic directory' compadd -S\] -a dirs
-#         return
-#     else
-#         return 1
-#     fi
-#     return 0
-# }
+# From https://github.com/vincentbernat/zshrc/blob/master/rc/bookmarks.zsh
+#
+# Handle bookmarks. This uses the static named directories feature of
+# zsh. Such directories are declared with `hash -d
+# name=directory`. Both prompt expansion and completion know how to
+# handle them. We populate the hash with directories.
+
+is-at-least 4.3.12 && __() {
+    MARKPATH=$ZSH_VAR_LIB_DIR/marks
+
+    # Populate the hash
+    for link ($MARKPATH/*(N@)) {
+        hash -d -- ${link:t}=${link:A}
+    }
+
+    # Manage bookmarks
+    bookmark() {
+        [[ -d $MARKPATH ]] || mkdir -p $MARKPATH
+        if (( $# == 0 )); then
+            # When no arguments are provided, just display existing
+            # bookmarks
+            for link in $MARKPATH/*(N@); do
+                local markname="$fg[green]${link:t}$reset_color"
+                local markpath="$fg[blue]${link:A}$reset_color"
+                printf "%-30s -> %s\n" $markname $markpath
+            done
+        else
+            # Otherwise, we may want to add a bookmark or delete an
+            # existing one.
+            local -a delete
+            zparseopts -D d=delete
+            if (( $+delete[1] )); then
+                # With `-d`, we delete an existing bookmark
+                command rm $MARKPATH/$1
+            else
+                # Otherwise, add a bookmark to the current
+                # directory. The first argument is the bookmark
+                # name. `.` is special and means the bookmark should
+                # be named after the current directory.
+                local name=$1
+                [[ $name == "." ]] && name=${PWD:t}
+                ln -s $PWD $MARKPATH/$name
+                hash -d -- ${name}=${PWD}
+            fi
+        fi
+    }
+} && __
 
 # vim: filetype=zsh
