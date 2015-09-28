@@ -77,6 +77,10 @@ if is-at-least 4.3; then
     bindkey '^s' history-incremental-pattern-search-forward
 fi
 
+# make incremental search work in completion menus
+bindkey -M menuselect '^r' history-incremental-search-backward
+bindkey -M menuselect '^s' history-incremental-search-forward
+
 autoload smart-insert-last-word
 zle -N insert-last-word smart-insert-last-word
 
