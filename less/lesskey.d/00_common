@@ -1,6 +1,14 @@
 #command
 h left-scroll
 l right-scroll
+^L noaction ^R\eu
+[ prev-file
+] next-file
+Q quit \1
+:cq quit \1
+D noaction j/\^diff|commit|From \n\eu
+# ^s noaction /\^\\s+
+^s noaction /\^       
 
 #line-edit
 ^A home
