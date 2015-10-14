@@ -17,6 +17,8 @@
 	ll  = log --graph --pretty=tformat:\"%C(auto,yellow)%h %C(auto,blue)%ai%C(auto,green) %an %C(auto)%d %Creset%s\"
 	lla = log --graph --pretty=tformat:\"%C(auto,yellow)%h %C(auto,blue)%ai%C(auto,green) %an %C(auto)%d %Creset%s\" --all
 	log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
+	show-upstream-branch = rev-parse --abbrev-ref '@{upstream}'
+	show-push-branch = rev-parse --abbrev-ref '@{push}'
 	in = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll ..trunk 2>/dev/null; then git ll ..git-svn; fi; else git ll ..@{upstream}; fi"
 	new = "!f() { git ll ${1:-HEAD}@{1}..${1:-HEAD}@{0}; }; f"
 	out = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll trunk.. 2>/dev/null; then git ll git-svn..; fi; else git ll @{upstream}..; fi"
