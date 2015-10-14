@@ -239,27 +239,29 @@ help-glob() {
     -      operate on symlink targets
     N      sets the NULL_GLOB option for the current pattern
     D      sets the GLOB_DOTS option for the current pattern
+    n      sets the NUMERIC_GLOB_SORT option for the current pattern
     oc     sort by c: name(n)/size(L)/modification time(m)/subdirs first(d)
     Oc     same as above, but descending
     [beg[,end]] limit list of returned filenames
     ,      separate 'or'ed qualifiers
 
-    Pstring   prepend: *(P:-f:) --> -f file1 -f file2
-    estring   execute string as shell code
+    P:string:   prepend: *(P:-f:) --> -f file1 -f file2
+    e:string:   execute string as shell code and check return status;
+                use "'$REPLY'" and set "'$REPLY'" (string) or "'$reply'" (array)
+                *(e:"''"'"'reply=(${REPLY}{1,2})'"'"''":) --> lonely1 lonely2
 
   print *(m-1)          # Files modified up to a day ago
   print *(a1)           # Files accessed a day ago
   print *(@)            # Just symlinks
   print *(Lk+50)        # Files bigger than 50 kilobytes
   print *(Lk-50)        # Files smaller than 50 kilobytes
-  print **/*.c          # All *.c files recursively starting in \$PWD
   print **/*.c~file.c   # Same as above, but excluding 'file.c'
   print (foo|bar).*     # Files starting with 'foo' or 'bar'
   print *~*.*           # All Files that do not contain a dot
   chmod 644 *(.^x)      # make all plain non-executable files publically readable
   print -l *(.c|.h)     # Lists *.c and *.h
   print **/*(g:users:)  # Recursively match all files that are owned by group 'users'
-  echo /proc/*/cwd(:h:t:s/self//) # Analogous to >ps ax | awk '{print $1}'<"
+  echo /proc/*/cwd(:h:t:s/self//) # Analogous to >ps ax | awk "''"'"'{print $1}'"'"''"<"
 }
 zle -N help-glob
 bindkey '^Xg' help-glob
