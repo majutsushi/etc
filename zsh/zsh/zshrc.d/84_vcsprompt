@@ -153,6 +153,9 @@ __prompt_git_refs() {
     typeset -a refs_arr
     local refs=""
 
+    # prevent error message in repos without any commits
+    $__git_cmd rev-parse --quiet --verify HEAD >/dev/null || return
+
     refs="$($__git_cmd show --pretty=format:%d -s HEAD)"
     refs="${refs// }"
     refs="${refs//\(}"
