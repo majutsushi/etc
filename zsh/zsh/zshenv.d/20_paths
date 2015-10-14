@@ -14,7 +14,7 @@ path=(
     "$HOME/usr/bin"
     "$HOME/.local/bin"
 
-    /var/lib/gems/1.8/bin/
+    /var/lib/gems/*/bin/(Nn[-1])
 
     # Macports
     /opt/local/bin
