@@ -19,8 +19,9 @@ bindkey '^T' fzf-file-widget
 
 # ALT-C - cd into the selected directory
 fzf-cd-widget() {
-    cd "${$(set -o nonomatch; command find * -path '*/\.*' -prune \
-            -o -type d -print 2> /dev/null | fzf):-.}"
+    cd "${$(set -o nonomatch; \
+        command find * \( -path '*/\.*' -o -path '*/ivy/*.cache' -o -name target \) -prune -o -type d -print 2> /dev/null \
+        | fzf):-.}"
     zle reset-prompt
 }
 zle     -N    fzf-cd-widget
