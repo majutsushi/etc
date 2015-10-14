@@ -39,6 +39,25 @@ _process_cmd_time() {
 }
 add-zsh-hook precmd _process_cmd_time
 
+_alert_bg_job_finished() {
+    [[ -z "$__last_cmd" ]] && return
+
+    local urgency
+    local text
+    if (( __last_cmd_exitstatus == 0 )); then
+        urgency=normal
+        text="Background job finished"
+    else
+        urgency=critical
+        text="Background job failed"
+    fi
+
+    if ! is-active-shell && [[ -z "$SSH_CONNECTION" ]]; then
+        notify-send --expire-time=10000 --urgency=$urgency "$text" "$__last_cmd"
+    fi
+}
+add-zsh-hook precmd _alert_bg_job_finished
+
 _clear_last_cmd() {
     __last_cmd=""
 }

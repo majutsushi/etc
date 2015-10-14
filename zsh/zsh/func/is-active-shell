@@ -1,0 +1,19 @@
+[[ -z "${DISPLAY}" ]] && return
+
+local activewin=$(xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)
+local -l curwin="0x$(print $(( [##16] 10#${WINDOWID} )) )"
+
+[[ $activewin != ${curwin} ]] && return 1
+[[ -z "$TMUX" ]] && return 0
+
+local out="$(=tmux list-panes -a -F '#{pane_id} #{pane_active} #{window_id}' | =grep "$TMUX_PANE")"
+local -a paneinfo
+paneinfo=(${(z)out})
+[[ ${paneinfo[2]} == "0" ]] && return 1
+
+out="$(=tmux list-windows -a -F '#{window_id} #{window_active}' | =grep "${paneinfo[3]}")"
+local -a wininfo
+wininfo=(${(z)out})
+[[ ${wininfo[2]} == "1" ]]
+
+# vim: filetype=zsh
