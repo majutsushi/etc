@@ -1,23 +1,5 @@
-# adapted from
-# http://zsh.sourceforge.net/Contrib/startup/users/debbiep/dot.zshenv
 rationalize_path() {
-    # Note that this works only on arrays, not colon-delimited strings.
-    # Not that this is a problem now that there is typeset -T.
-    local dir
-    local build
-    build=()
-    # Evil quoting to survive an eval and to make sure that
-    # this works even with variables containing IFS characters, if I'm
-    # crazy enough to setopt shwordsplit.
-    eval '
-    foreach dir in "$'"$1"'[@]"
-    do
-        if [[ -n "$dir" && "$dir" != "." && -d "$dir" && -x "$dir" ]]; then
-            build=("$build[@]" "$dir:A")
-        fi
-    done
-    '"$1"'=( "$build[@]" )
-    '
+    eval $1'=( ${(u)^'${1}':A}(N-/xe:'\''[[ "$REPLY" != "." ]]'\'':) )'
 }
 
 if [[ -d /opt/intel ]]; then
