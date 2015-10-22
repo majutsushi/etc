@@ -82,6 +82,7 @@
 
 [fetch]
 	recurseSubmodules = on-demand
+	prune = true
 
 [tag]
 	sort = version:refname
