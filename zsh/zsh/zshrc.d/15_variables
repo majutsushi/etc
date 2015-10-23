@@ -70,6 +70,9 @@ mkdir -p "$(dirname "$SACK_SHORTCUT_FILE")"
 # a tmux session
 if [[ -n "$TMUX" ]]; then
     _update_from_tmux() {
+        # Remove need to detach/re-attach after using session in different client
+        # See also https://groups.google.com/forum/#!topic/tmux-users/UZFikgdglJU
+        tmux switch-client
         VARS="$(tmux show-environment)"
         for VAR in ${(f)VARS}; do
             # only export non-removed variables
