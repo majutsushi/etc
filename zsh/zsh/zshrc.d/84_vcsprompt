@@ -88,11 +88,11 @@ __prompt_git_show_upstream() {
         "0	0") # equal to upstream
             r="" ;;
         "0	"*) # ahead of upstream
-            r=" +${count#0	}" ;;
+            r=" ${pcol[green]}↑${pcol[reset]}${count#0	}" ;;
         *"	0") # behind upstream
-            r=" -${count%	0}" ;;
+            r=" ${pcol[red]}↓${pcol[reset]}${count%	0}" ;;
         *)	    # diverged from upstream
-            r=" +${count#*	}/-${count%	*}" ;;
+            r=" ${pcol[green]}↑${pcol[reset]}${count#*	}/${pcol[red]}↓${pcol[reset]}${count%	*}" ;;
     esac
 
     if [[ -n "$r" ]]; then
