@@ -75,12 +75,23 @@ __prompt_ant() {
     fi
 }
 
+__prompt_local() {
+    (( $#_prompt_local == 0 )) && return
+    print " • ${(j: • :)_prompt_local}"
+}
+
 _prompt_logo=""
 _prompt_path="${pcol[green]}%~${pcol[reset]}"
 _prompt_vcs_info=""
+typeset -ga _prompt_local
+
+__prompt_reset_vars() {
+    _prompt_local=()
+}
+add-zsh-hook precmd __prompt_reset_vars
 
 PS1='
-$(__prompt_logo)${pcol[167]}%n${pcol[reset]} @ ${pcol[220]}%m${pcol[reset]} ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}
+$(__prompt_logo)${pcol[167]}%n${pcol[reset]} @ ${pcol[220]}%m${pcol[reset]} ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}$(__prompt_local)
 %(2L.${pcol[bold]}%L${pcol[reset]} .)$(__prompt_jdk)$(__prompt_ant)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
 
 RPS1='$(__prompt_orighome)'
