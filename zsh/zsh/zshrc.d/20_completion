@@ -125,6 +125,8 @@ zstyle -e ':completion:*:*:kill:*:processes' list-colors 'reply=(
 )'
 
 zstyle ':completion:*:complete:git-checkout:*' group-order heads-local
+zstyle ':completion:*:*:git:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
+zstyle ':completion:*:*:hub:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
 
 zstyle ':completion:*:*:ant:*:targets' call-command true
 
