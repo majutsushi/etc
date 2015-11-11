@@ -2,6 +2,6 @@
 
 TARGETSESSION=$1
 
-tmux move-window -t $TARGETSESSION
+tmux move-window -t ${TARGETSESSION}:
 tmux move-window -r
-tmux move-window -r -t $TARGETSESSION
+tmux move-window -r -t ${TARGETSESSION}:
