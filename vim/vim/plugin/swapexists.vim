@@ -79,7 +79,7 @@ function! s:get_swapinfo(filename) abort
 endfunction
 
 function! s:get_env(pid) abort
-    let envlist = split(readfile("/proc/" . a:pid . "/environ", "b")[0], '[\x0]')
+    let envlist = split(join(readfile("/proc/" . a:pid . "/environ", "b"), ''), '[\x0]')
 
     let env = {}
     for entry in envlist
