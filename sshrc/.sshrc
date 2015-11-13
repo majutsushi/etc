@@ -1,6 +1,16 @@
-infocmp "$TERM" >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-    TERM="${TERM%-256color}"
+term_exists() { infocmp "$1" &>/dev/null; }
+if ! term_exists "$TERM"; then
+    if term_exists "${TERM%-256color}"; then
+        TERM="${TERM%-256color}"
+    elif [[ "$TERM" =~ tmux.* ]] && term_exists screen-256color; then
+        TERM=screen-256color
+    elif [[ "$TERM" =~ tmux.* ]] && term_exists screen; then
+        TERM=screen
+    elif term_exists xterm-256color; then
+        TERM=xterm-256color
+    else
+        TERM=xterm
+    fi
     export TERM
 fi
 
