@@ -1999,7 +1999,7 @@ function! Utl_AddressScheme_mutt(uri, fragment, dispMode)
     let delimit = stridx(a:uri, ':')
     let mid     = strpart(a:uri, delimit + 1)
 
-    if $TERM =~# 'screen'
+    if $TERM =~# 'screen\|tmux'
         let cmd = 'screen '
     elseif executable('urxvt')
         let cmd = 'urxvt -e '

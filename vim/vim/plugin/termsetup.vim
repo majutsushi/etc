@@ -50,7 +50,7 @@ function! s:MapExtraKeys() abort
         \ 'M->'     : '>',
         \ 'M-<'     : '<'
     \ }
-    if &term =~ '^xterm\|screen'
+    if &term =~ '^xterm\|screen\|tmux'
         let extramaps['C-Insert'] = '[2;5~'
     elseif &term =~ '^rxvt-unicode'
         let extramaps['C-Insert'] = '[2^'
@@ -70,7 +70,7 @@ function! s:MapExtraKeys() abort
     endfor
 endfunction "}}}
 
-if &term =~ '^rxvt-unicode\|xterm\|screen'
+if &term =~ '^rxvt-unicode\|xterm\|screen\|tmux'
     " see ~/.Xresources and ':h xterm-modifier-keys'
     execute "set <xUp>=\e[1;*A"
     execute "set <xDown>=\e[1;*B"
@@ -80,7 +80,7 @@ if &term =~ '^rxvt-unicode\|xterm\|screen'
     execute "set <PageUp>=\e[5;*~"
     execute "set <PageDown>=\e[6;*~"
 
-    if &term =~ '^rxvt-unicode\|screen'
+    if &term =~ '^rxvt-unicode\|screen\|tmux'
         execute "set <xF1>=\e[1;*P"
         execute "set <xF2>=\e[1;*Q"
         execute "set <xF3>=\e[1;*R"
@@ -140,7 +140,7 @@ function! s:get_screen_title() abort
     return title
 endfunction
 
-if &term =~ '^xterm\|rxvt\|screen'
+if &term =~ '^xterm\|rxvt\|screen\|tmux'
     let &t_ts = "\<Esc>]0;"
     let &t_fs = "\<Esc>\\"
     autocmd vimrc BufEnter * let &titlestring = s:get_screen_title()

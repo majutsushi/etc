@@ -149,7 +149,7 @@ tea() {
 }
 
 set_terminal_title() {
-    if [[ "$TERM" == (xterm*|rxvt*|screen*) ]]; then
+    if [[ "$TERM" == (xterm*|rxvt*|screen*|tmux*) ]]; then
         printf "\e]0;%s\e\\" ${(V)argv}
     fi
 }
