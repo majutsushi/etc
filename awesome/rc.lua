@@ -141,33 +141,24 @@ awful.menu.menu_keys = {
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
-menubar.show_categories = false
-menubar.menu_gen.all_menu_dirs = { os.getenv('XDG_DATA_HOME') .. '/applications/', '/usr/share/applications/', '/usr/local/share/applications/' }
 
 -- applications menu
-require('freedesktop.utils')
-freedesktop.utils.terminal = terminal
--- freedesktop.utils.icon_theme = { 'Faenza-Darkest', 'Faenza-Dark', 'gnome' }
-require('freedesktop.menu')
 require("debian.menu")
+local menugen = require("menugen")
 
-menu_items = freedesktop.menu.new()
+menu_items = menugen.build_menu()
 myawesomemenu = {
-    { "manual", terminal .. " -e man awesome",
-      freedesktop.utils.lookup_icon({ icon = 'help' }) },
-    { "edit config", editor_cmd .. " " .. awesome.conffile,
-      freedesktop.utils.lookup_icon({ icon = 'package_settings' }) },
-    { "restart", awesome.restart,
-      freedesktop.utils.lookup_icon({ icon = 'gtk-refresh' }) },
-    { "quit", awesome.quit,
-      freedesktop.utils.lookup_icon({ icon = 'gtk-quit' }) }
+    { "manual", terminal .. " -e man awesome", nil },
+    { "edit config", editor_cmd .. " " .. awesome.conffile, nil },
+    { "restart", awesome.restart, nil },
+    { "quit", awesome.quit, nil }
 }
 table.insert(menu_items, { "awesome", myawesomemenu,
                            beautiful.awesome_icon })
 table.insert(menu_items, { "Debian", debian.menu.Debian_menu.Debian,
-                           freedesktop.utils.lookup_icon({ icon = 'debian-logo' }) })
+                           "/usr/share/icons/Faenza/places/22/debian-logo.png" })
 table.insert(menu_items, { "open terminal", terminal,
-                           freedesktop.utils.lookup_icon({icon = 'terminal'}) })
+                           "/usr/share/icons/Faenza/apps/16/utilities-terminal.png" })
 
 mymainmenu = awful.menu.new({ items = menu_items, width = 150 })
 

@@ -14,7 +14,3 @@
 	path = awesome/vicious
 	url = http://git.sysphere.org/vicious/
 	branch = master
-[submodule "awesome/awesome-freedesktop"]
-	path = awesome/awesome-freedesktop
-	url = https://github.com/terceiro/awesome-freedesktop.git
-	branch = master
