@@ -52,7 +52,7 @@ _alert_bg_job_finished() {
         text="Background job failed"
     fi
 
-    if ! is-active-shell && [[ -z "$SSH_CONNECTION" ]]; then
+    if [[ -z "$SSH_CONNECTION" ]] && ! is-active-shell; then
         notify-send --expire-time=10000 --urgency=$urgency "$text" "$__last_cmd"
     fi
 }
