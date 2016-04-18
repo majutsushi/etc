@@ -207,6 +207,7 @@ augroup commentstrings
     autocmd FileType desktop     setlocal commentstring=#%s
     autocmd FileType gtkrc       setlocal commentstring=#%s
     autocmd FileType pentadactyl setlocal commentstring=\"%s
+    autocmd FileType pfmain      setlocal commentstring=#%s
     autocmd FileType tmux        setlocal commentstring=#%s
 augroup END
 
