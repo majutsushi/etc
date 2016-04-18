@@ -167,6 +167,7 @@ if command -v tmux >/dev/null; then
     fi
 fi
 
+xlink mail/dovecot.sieve target=.config/dovecot.sieve
 xlink mail/goobookrc
 xlink mail/lbdb
 xlink mail/msmtprc
