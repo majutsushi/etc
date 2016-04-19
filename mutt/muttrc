@@ -540,7 +540,7 @@ macro pager  ,P         "<display-toggle-weed><print-message><display-toggle-wee
 macro index        \Cr  "<enter-command>unset resolve<enter><read-thread><collapse-thread><next-unread><current-middle><enter-command>set resolve<enter>" "Mark the current thread as read"
 macro pager        \Cr  "<exit>\Cr<display-message>" "Mark the current thread as read"
 macro index,pager  \er  "<enter-command>unset resolve<enter><read-subthread><next-unread><current-middle><enter-command>set resolve<enter><display-message>" "Mark the current subthread as read"
-macro index        \Cx  "<enter-command>unset resolve<enter><tag-thread>;<pipe-message>formail -D 500000 $HOME/.cache/killedthreads || true\n<enter-command>set resolve<enter><untag-pattern>.*\n\Cr" "Kill thread"
+macro index        \Cx  "<enter-command>unset resolve<enter><collapse-thread><pipe-message>killthread\n<enter-command>set resolve<enter>\Cr" "Kill thread"
 macro pager        \Cx  "<exit>\Cx<display-message>" "Kill thread"
 macro index       '{'   "<collapse-thread>" "Collapse current thread"
 
