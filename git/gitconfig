@@ -112,6 +112,10 @@
 	enabled = true
 	autoupdate = true
 
+[stash]
+	showPatch = true
+	showStat = true
+
 [svn]
 	rmdir = true
 
