@@ -2322,7 +2322,7 @@ nnoremap <silent> zi
     \     setlocal foldcolumn=1 <Bar>
     \ endif<CR>
 
-nnoremap <silent> <C-l> :if &diff <Bar> diffupdate <Bar> endif<CR>:nohlsearch<CR><C-l>
+nnoremap <silent> <C-l> :if &diff <Bar> diffupdate <Bar> endif<CR>:nohlsearch<CR>:syntax sync fromstart<CR><C-l>
 
 " Windows {{{2
 
