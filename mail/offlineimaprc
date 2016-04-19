@@ -16,18 +16,17 @@ postsynchook = mu index -q
 [Repository Local]
 type = Maildir
 localfolders = ~/Maildir
-nametrans = lambda folder: 'INBOX' + folder
-folderfilter = lambda folder: not re.search('\.(lists|spam)', folder)
+nametrans = lambda folder: 'INBOX' if len(folder) == 0 else re.sub('^.', '', folder)
 
 [Repository Remote]
 type = IMAP
 remotehost = mail.majutsushi.net
-remoteusereval = get_username("mail.majutsushi.net")
-remotepasseval = get_password("mail.majutsushi.net")
+remoteport = 993
+remoteuser = jan
+remotepasseval = get_password()
 ssl = yes
-cert_fingerprint = 08304730f6cddacd9ef6d755bfd4ac796760dfa0
-nametrans = lambda folder: re.sub('^INBOX\.?', '.', folder)
-folderfilter = lambda folder: not re.search('\.(spam|Trash)', folder)
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+nametrans = lambda folder: '' if folder == 'INBOX' else '.' + folder
 idlefolders = ['INBOX']
 
 # vim: ft=cfg
