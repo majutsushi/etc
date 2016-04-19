@@ -10,10 +10,8 @@ let s:right_regex = '^\%(\w\|\!\|£\|\$\|_\|["'']\s*\S\)'
 
 autocmd InsertLeave * call visualmode(1)
 
-" Taken from:
-" https://github.com/Raimondi/delimitMate/issues/138#issuecomment-35458273
-let s:left  = "\<Esc>:silent! undojoin\<CR>i"
-" let s:right = "\<C-\>\<C-o>:silent! undojoin\<CR>\<C-\>\<C-o>a"
+" Use new insertmode-moving without breaking undo introduced by patch 7.4.849
+let s:left  = "\<C-G>U\<Left>"
 
 " s:getcharrel() {{{2
 function! s:getcharrel(pos) abort
@@ -29,10 +27,6 @@ endfunction
 
 " s:HandleOpenParen() {{{2
 function! s:HandleOpenParen(char) abort
-    if visualmode() == ''
-        return a:char
-    endif
-
     let cprev = s:getcharrel(-1)
 
     " Don't pair escaped characters
@@ -55,10 +49,6 @@ endfunction
 
 " s:HandleCloseParen() {{{2
 function! s:HandleCloseParen(char) abort
-    if visualmode() == ''
-        return a:char
-    endif
-
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
@@ -75,10 +65,6 @@ endfunction
 
 " s:HandleQuote() {{{2
 function! s:HandleQuote(char) abort
-    if visualmode() == ''
-        return a:char
-    endif
-
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
@@ -110,10 +96,6 @@ endfunction
 
 " s:HandleSpace() {{{2
 function! s:HandleSpace() abort
-    if visualmode() == ''
-        return "\<Space>"
-    endif
-
     let cprev = s:getcharrel(-1)
     let ccur  = s:getcharrel(0)
 
@@ -134,10 +116,6 @@ inoremap <expr> <silent> <Space> <SID>HandleSpace()
 
 " s:HandleBackSpace() {{{2
 function! s:HandleBackSpace() abort
-    if visualmode() == ''
-        return "\<BS>"
-    endif
-
     let cpprev = s:getcharrel(-2)
     let cprev  = s:getcharrel(-1)
     let ccur   = s:getcharrel(0)
@@ -186,10 +164,6 @@ inoremap <expr> <silent> <BS> <SID>HandleBackSpace()
 
 " s:HandleCR() {{{2
 function! s:HandleCR(...) abort
-    if visualmode() == ''
-        return "\<CR>"
-    endif
-
     let rv = "\<CR>"
     if a:0 > 0
         let maprhs = a:1
