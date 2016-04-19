@@ -84,7 +84,7 @@ alias ta='noglob task'
 alias vi='vim'
 alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
 alias x='extract'
-alias xc='xclip -i -selection clipboard'
+alias xc='perl -pe "chomp if eof" | xclip -i -selection clipboard'
 
 is-at-least 4.3 && alias git='hub'
 
