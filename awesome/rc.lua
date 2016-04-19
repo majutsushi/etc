@@ -863,11 +863,27 @@ function get_first_player()
     )
     local out = f:read("*all")
     f:close()
-    s, e = out:find("org.mpris.MediaPlayer2.[^ ]+")
-    if s == nil then
-        return nil
+
+    for instance in out:gmatch("org.mpris.MediaPlayer2.[^ ]+") do
+        f = io.popen(
+            "dbus-send " ..
+                "--session " ..
+                "--type=method_call " ..
+                "--print-reply=literal " ..
+                "--dest=" .. instance .. " " ..
+                "/org/mpris/MediaPlayer2 " ..
+                "org.freedesktop.DBus.Properties.Get " ..
+                "string:org.mpris.MediaPlayer2.Player " ..
+                "string:PlaybackStatus"
+        )
+        out = f:read("*all")
+        f:close()
+        if out:find("Playing") ~= nil or out:find("Paused") ~= nil then
+            return instance
+        end
     end
-    return out:sub(s, e)
+
+    return nil
 end
 
 function send_mpris_cmd(cmd)
