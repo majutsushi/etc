@@ -79,6 +79,7 @@
 
 [push]
 	default = simple
+	recurseSubmodules = on-demand
 
 [fetch]
 	recurseSubmodules = on-demand
