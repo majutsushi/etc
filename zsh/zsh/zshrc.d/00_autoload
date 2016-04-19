@@ -11,6 +11,7 @@ autoload -U add-zsh-hook
 
 autoload run-help
 autoload run-help-git
+autoload run-help-sudo
 autoload run-help-svn
 
 # vim: filetype=zsh
