@@ -35,13 +35,13 @@ endsnippet
 
 snippet if "if ... then"
 if ${2:[[ ${1:condition} ]]}; then
-	${0:#statements}
+	${0:${VISUAL}}
 fi
 endsnippet
 
 snippet elif "elif .."
 elif ${2:[[ ${1:condition} ]]}; then
-	${0:#statements}
+	${0:${VISUAL}}
 endsnippet
 
 snippet case "case .. esac"
@@ -53,13 +53,13 @@ endsnippet
 
 snippet for "for ... done"
 for (( i = 0; i < ${1:10}; i++ )); do
-	${0:#statements}
+	${0:${VISUAL}}
 done
 endsnippet
 
 snippet forin "for ... in ... done"
 for ${1:i}${2/.+/ in /}${2:words}; do
-	${0:#statements}
+	${0:${VISUAL}}
 done
 endsnippet
 
@@ -71,13 +71,13 @@ endsnippet
 
 snippet while "while .."
 while ${2:[[ ${1:condition} ]]}; do
-	${0:#statements}
+	${0:${VISUAL}}
 done
 endsnippet
 
 snippet until "until .."
 until ${2:[[ ${1:condition} ]]}; do
-	${0:#statements}
+	${0:${VISUAL}}
 done
 endsnippet
 

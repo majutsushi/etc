@@ -460,19 +460,19 @@ endsnippet
 ####################
 snippet if "If" b
 if ${1:condition}:
-	${2:pass}
+	${2:${VISUAL:pass}}
 endsnippet
 
 snippet ife "If / Else" b
 if ${1:condition}:
-	${2:pass}
+	${2:${VISUAL:pass}}
 else:
 	${3:pass}
 endsnippet
 
 snippet ifee "If / Elif / Else" b
 if ${1:condition}:
-	${2:pass}
+	${2:${VISUAL:pass}}
 elif ${3:condition}:
 	${4:pass}
 else:
@@ -485,14 +485,14 @@ endsnippet
 ##########################
 snippet try "Try / Except" b
 try:
-	${1:pass}
+	${1:${VISUAL:pass}}
 except ${2:Exception}, ${3:e}:
 	${4:raise $3}
 endsnippet
 
 snippet try "Try / Except / Else" b
 try:
-	${1:pass}
+	${1:${VISUAL:pass}}
 except ${2:Exception}, ${3:e}:
 	${4:raise $3}
 else:
@@ -501,7 +501,7 @@ endsnippet
 
 snippet try "Try / Except / Finally" b
 try:
-	${1:pass}
+	${1:${VISUAL:pass}}
 except ${2:Exception}, ${3:e}:
 	${4:raise $3}
 finally:
@@ -510,7 +510,7 @@ endsnippet
 
 snippet try "Try / Except / Else / Finally" b
 try:
-	${1:pass}
+	${1:${VISUAL:pass}}
 except${2: ${3:Exception}, ${4:e}}:
 	${5:raise}
 else:
