@@ -89,6 +89,8 @@
 
 [log]
 	date = local
+	follow = true
+	decorate = short
 
 [mergetool "gvimdiff3"]
 	cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
