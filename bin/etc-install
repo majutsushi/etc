@@ -173,8 +173,6 @@ xlink mail/lbdb
 xlink mail/msmtprc
 xlink mail/offlineimaprc
 xlink mail/t-prot target=.config/t-prot
-#xlink procmail/procmailrc
-mkdir -p $HOME/.var/log/procmail
 
 xlink mutt/muttrc
 xlink mutt/mutt
