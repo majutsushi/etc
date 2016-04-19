@@ -1,3 +1,6 @@
+# Only run in interactive shells
+[[ $- == *i* ]] || return 0
+
 term_exists() { infocmp "$1" &>/dev/null; }
 if ! term_exists "$TERM"; then
     if term_exists "${TERM%-256color}"; then
@@ -27,13 +30,15 @@ if [[ -r "/usr/share/bash-completion/bash_completion" ]]; then
 fi
 
 export PAGER=less
+export EDITOR=vi
+export VISUAL=vi
 PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\W\[\e[m\] \[\e[1m\]$\[\e[m\] "
 
 eval "$(dircolors)"
-alias ls='ls  -F --color=auto'
-alias ll='ls -lF --color=auto'
-alias l='ls -lAF --color=auto'
-alias vi=vim
+alias ls='LC_COLLATE=POSIX ls  -F --color=auto --group-directories-first'
+alias ll='LC_COLLATE=POSIX ls -lF --color=auto --group-directories-first'
+alias l='LC_COLLATE=POSIX ls -lAF --color=auto --group-directories-first'
+command -v vim &>/dev/null && alias vi=vim
 
 SSHRCD="$SSHHOME/.sshrc.d"
 export MYVIMRC="$SSHRCD/vimrc"
