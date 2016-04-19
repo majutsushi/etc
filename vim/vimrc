@@ -202,6 +202,7 @@ augroup END
 
 augroup commentstrings
     autocmd!
+    autocmd FileType asciidoc    setlocal commentstring=//%s
     autocmd FileType cfg         setlocal commentstring=#%s
     autocmd FileType cpp         setlocal commentstring=//%s
     autocmd FileType desktop     setlocal commentstring=#%s
