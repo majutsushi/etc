@@ -103,7 +103,7 @@ case "$extension" in
         try docx2txt.pl "$path" - && { dump | trim; exit 0; }
         ;;
     class)
-        try pyg -l java <(javap -private "$path") && { dump; exit 0; }
+        try pyg -l java <(javap -sysinfo -private -constants "$path") && { dump; exit 0; }
         ;;
     scen)
         try print-scenario --colour "$path"  && { dump; exit 0; }
