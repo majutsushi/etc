@@ -17,12 +17,16 @@ if ! term_exists "$TERM"; then
     export TERM
 fi
 
+set -o noclobber
+
+shopt -s checkwinsize
+
 # disable XON/XOFF flow control (^s/^q)
 stty stop ''
 stty -ixoff
 stty -ixon
 
-HISTCONTROL=ignoredups:erasedups
+HISTCONTROL=ignorespace:ignoredups:erasedups
 shopt -s histappend
 
 if [[ -r "/usr/share/bash-completion/bash_completion" ]]; then
@@ -32,7 +36,9 @@ fi
 export PAGER=less
 export EDITOR=vi
 export VISUAL=vi
-PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\W\[\e[m\] \[\e[1m\]$\[\e[m\] "
+
+PROMPT_DIRTRIM=2
+PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\w\[\e[m\] \[\e[1m\]$\[\e[m\] "
 
 eval "$(dircolors)"
 alias ls='LC_COLLATE=POSIX ls  -F --color=auto --group-directories-first'
