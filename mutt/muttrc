@@ -26,7 +26,7 @@ source ~/.mutt/maildir
 #  set spoolfile=imaps://mail.majutsushi.net/INBOX
 
   set postponed="=.Drafts"
-  set record="=.sent"
+  set record="=.Sent"
   set imap_idle
   set imap_authenticators=""
   set imap_check_subscribed
@@ -318,7 +318,7 @@ unset reverse_alias     # use realname from reverse alias lookup
 
 folder-hook .    set sort=threads sort_aux=last-date-received
 folder-hook <    set sort=reverse-date
-folder-hook spam set sort=subject
+folder-hook Spam set sort=subject
 
 folder-hook !<   'push "<collapse-all>"'
 

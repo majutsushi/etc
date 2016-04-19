@@ -8,9 +8,9 @@ mailboxes =
 mailboxes =.Todo
 mailboxes =.Waiting
 mailboxes =.Archive
-mailboxes =.sent
-mailboxes =.lists
+mailboxes =.Sent
+# mailboxes =.lists
 mailboxes `for file in ~/Maildir/.lists.*; do echo -n "=$(basename $file) "; done`
-mailboxes =.spam
+mailboxes =.Spam
 
 # vim: ft=muttrc

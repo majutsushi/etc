@@ -172,7 +172,7 @@ READ=$1
 :0
 * ^X-Spam-Status: Yes
 {
-    foldername=.spam/
+    foldername=.Spam/
     SWITCHRC=$HOME/.etc/procmail/markasread
 }
 
