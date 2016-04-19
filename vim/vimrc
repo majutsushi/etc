@@ -996,16 +996,16 @@ endfunction
 command -nargs=1 -complete=customlist,s:Spelllist Spelllang call s:Spelllang(<q-args>)
 
 " StripTrailing() {{{2
-function! StripTrailing(pattern) abort
+function! StripTrailing(pattern) range abort
     let savePos = winsaveview()
     let saveFoldEnable = &foldenable
     setlocal nofoldenable
-    execute '%substitute /' . a:pattern . '$//ge'
+    execute a:firstline . ',' . a:lastline . 'substitute /' . a:pattern . '$//ge'
     let &l:foldenable = saveFoldEnable
     call winrestview(savePos)
 endfunction
-command! -bar StripTrailingWhitespace call StripTrailing('\s\+')
-command! -bar StripTrailingCtrlM      call StripTrailing('<C-M>')
+command! -bar -range=% StripTrailingWhitespace <line1>,<line2>call StripTrailing('\s\+')
+command! -bar -range=% StripTrailingCtrlM      <line1>,<line2>call StripTrailing('<C-M>')
 
 " Tab2Space/Space2Tab {{{2
 command! -range=% -nargs=0 Tab2Space exec "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', "repeat(' ', ".&ts."), 'g')"
