@@ -19,3 +19,5 @@ target
 .settings
 .project
 ivy-eclipse.properties
+.eclipse-libdirs
+.ivy-eclipse.properties
