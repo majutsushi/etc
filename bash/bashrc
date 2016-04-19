@@ -12,18 +12,24 @@ source_if_exists ~/.local/etc/bashenv
 # If not running interactively stop here
 [[ ! $- == *i* ]] && unset -f source_if_exists && return
 
+set -o noclobber
+
+shopt -s checkwinsize
+
 # disable XON/XOFF flow control (^s/^q)
 stty stop ''
 stty -ixoff
 stty -ixon
 
-HISTCONTROL=ignoredups:erasedups
+HISTCONTROL=ignorespace:ignoredups:erasedups
 HISTSIZE=100000
 HISTFILE=$HOME/.var/lib/bash_history
 HISTFILESIZE=100000
+HISTTIMEFORMAT='%F %T '
 shopt -s histappend
+shopt -s cmdhist
 
-source_if_exists /usr/share/bash-completion/bash_completion
+source_if_exists /etc/bash_completion
 
 umask 0022
 
@@ -35,7 +41,8 @@ export PAGER=less
 export PATH=$HOME/bin:$PATH
 
 PROMPT_COMMAND="history -a"
-PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\W\[\e[m\] \[\e[1m\]$\[\e[m\] "
+PROMPT_DIRTRIM=2
+PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\w\[\e[m\] \[\e[1m\]$\[\e[m\] "
 
 alias ls='ls  -F --color=auto'
 alias ll='ls -lF --color=auto'
