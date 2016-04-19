@@ -22,6 +22,9 @@ fzf-cd-widget() {
     cd "${$(set -o nonomatch; \
         command find * \( -path '*/\.*' -o -path '*/ivy/*.cache' -o -name target \) -prune -o -type d -print 2> /dev/null \
         | fzf):-.}"
+    for func in $precmd_functions; do
+        $func
+    done
     zle reset-prompt
 }
 zle     -N    fzf-cd-widget
