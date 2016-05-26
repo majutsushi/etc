@@ -11,7 +11,7 @@ local -a paneinfo
 paneinfo=(${(z)out})
 [[ ${paneinfo[2]} == "0" ]] && return 1
 
-out="$(=tmux list-windows -a -F '#{window_id} #{window_active}' | =grep "${paneinfo[3]}")"
+out="$(=tmux list-windows -a -F '#{window_id} #{window_active}' | =grep "${paneinfo[3]} ")"
 local -a wininfo
 wininfo=(${(z)out})
 [[ ${wininfo[2]} == "1" ]]
