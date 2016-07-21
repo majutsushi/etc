@@ -56,6 +56,15 @@
 [color]
 	ui = auto
 
+[color "status"]
+	; header = white
+	added = green
+	changed = yellow
+	untracked = cyan
+	branch = yellow
+	nobranch = red
+	unmerged = red bold
+
 [color "diff"]
 	meta = white bold
 	frag = yellow
