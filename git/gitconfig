@@ -79,6 +79,10 @@
 	tool = vimdiff
 	algorithm = histogram
 	submodule = log
+	noprefix = true
+	renames = true
+	compactionHeuristic = true
+	; mnemonicPrefix = true
 
 [branch]
 	autosetuprebase = always
