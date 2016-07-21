@@ -66,8 +66,8 @@
 	unmerged = red bold
 
 [color "diff"]
-	meta = white bold
-	frag = yellow
+	meta = yellow bold
+	frag = magenta bold
 	func = cyan
 	old  = red
 	new  = green
