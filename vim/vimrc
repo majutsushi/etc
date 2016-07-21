@@ -193,6 +193,7 @@ autocmd vimrc BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" |
 
 " filetype-specific settings
 augroup vimrc
+    autocmd FileType asciidoc  setlocal comments=://,b:#,:%,n:>,fb:-,fb:*,fb:.
     autocmd FileType make      setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=0
     autocmd FileType gtkrc     setlocal tabstop=2 shiftwidth=2 softtabstop=2
     autocmd FileType haskell   compiler ghc
