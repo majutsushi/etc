@@ -35,10 +35,10 @@ map [fullscreen] <PageUp>   navigate previous
 map [normal]     <PageDown> navigate next
 map [fullscreen] <PageDown> navigate next
 
-map [normal]     <A-1> set "first-page-column 1"
-map [fullscreen] <A-1> set "first-page-column 1"
-map [normal]     <A-2> set "first-page-column 2"
-map [fullscreen] <A-2> set "first-page-column 2"
+map [normal]     <A-1> set "first-page-column 1:1"
+map [fullscreen] <A-1> set "first-page-column 1:1"
+map [normal]     <A-2> set "first-page-column 1:2"
+map [fullscreen] <A-2> set "first-page-column 1:2"
 
 # Why are these only defined for normal mode by default?
 map [fullscreen] a adjust_window best-fit
