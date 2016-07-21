@@ -14,7 +14,7 @@ zmodload zsh/complist
 
 # initialize completion system
 autoload -U compinit
-compinit -d $ZSH_CACHEDIR/zcompdump
+compinit -d $ZSH_CACHEDIR/zcompdump_${ZSH_VERSION}
 
 
 ## general settings
