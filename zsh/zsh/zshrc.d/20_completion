@@ -48,6 +48,10 @@ zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' list-dirs-first true # affects all-files/other-files
 zstyle ':completion:*' ignore-parents parent pwd
 
+# for _history_complete_word
+zstyle ':completion:history-words:*' range 50000:2000
+zstyle ':completion:history-words:*' remove-all-dups true
+
 # prevent asking with many results
 # zstyle ':completion:*:default' list-prompt '%p'
 zstyle ':completion:*:descriptions' format $'%{\e[0;32m%}completing %B%d%b%{\e[0m%}'
