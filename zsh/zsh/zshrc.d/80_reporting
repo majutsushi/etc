@@ -6,10 +6,12 @@ zmodload zsh/datetime
 
 typeset -g -a __last_cmds
 typeset -g __last_cmd
+typeset -g __last_cmd_dir
 typeset -g __last_cmd_time
 
 _record_cmd() {
     __last_cmd="$1"
+    __last_cmd_dir="${(D)PWD}"
     __last_cmd_time=$(print -P "%D{%s}")
 }
 add-zsh-hook preexec _record_cmd
@@ -43,23 +45,25 @@ _alert_bg_job_finished() {
     [[ -z "$__last_cmd" ]] && return
 
     local urgency
-    local text
+    local summary
     if (( __last_cmd_exitstatus == 0 )); then
         urgency=normal
-        text="Background job finished"
+        summary="Background job finished"
     else
         urgency=critical
-        text="Background job failed"
+        summary="Background job failed"
     fi
 
     if [[ -z "$SSH_CONNECTION" ]] && ! is-active-shell; then
-        notify-send --expire-time=10000 --urgency=$urgency "$text" "$__last_cmd"
+        local body="\$ $__last_cmd\n<span font-style='italic'>${__last_cmd_dir}</span>"
+        notify-send --expire-time=10000 --urgency=$urgency "$summary" "$body"
     fi
 }
 add-zsh-hook precmd _alert_bg_job_finished
 
 _clear_last_cmd() {
     __last_cmd=""
+    __last_cmd_dir=""
 }
 add-zsh-hook precmd _clear_last_cmd
 
