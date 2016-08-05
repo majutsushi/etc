@@ -899,6 +899,7 @@ function send_mpris_cmd(cmd)
             "/org/mpris/MediaPlayer2 " ..
             "org.mpris.MediaPlayer2.Player." .. cmd
     )
+    naughty.notify({ title = cmd, text = player })
 end
 
 -- https://awesomewm.org/wiki/FullScreens
