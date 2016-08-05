@@ -5,6 +5,8 @@ Host github.com
 
 Host bitbucket.org
     User git
+    # BitBucket seems to have disabled connection sharing :/
+    ControlMaster no
     ForwardAgent no
     ForwardX11 no
 
