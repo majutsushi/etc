@@ -10,5 +10,6 @@ local scratch = {} -- module scratch
 
 scratch.pad  = require("scratch.pad")
 scratch.drop = require("scratch.drop")
+scratch.uniqdrop = require("scratch.uniqdrop")
 
 return scratch

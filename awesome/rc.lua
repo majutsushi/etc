@@ -521,7 +521,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "Escape", awful.tag.history.restore),
 
     awful.key({ modkey }, "s",
-              function () scratch.drop("urxvt", "top", "left", 600, 600) end),
+              function () scratch.uniqdrop("urxvt", "top", "left", 600, 600) end),
     awful.key({ modkey }, "d",
               function () scratch.pad.toggle() end),
 
