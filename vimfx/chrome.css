@@ -1,0 +1,9 @@
+@-moz-document url('chrome://browser/content/browser.xul') {
+
+    #VimFxMarkersContainer .marker {
+        /* font-size: 12px !important; /1* Specific font size. *1/ */
+        text-transform: lowercase !important; /* Lowercase text. */
+        /* opacity: 0.8 !important; /1* Semi-transparent. Warning: Might be slow! *1/ */
+    }
+
+}
