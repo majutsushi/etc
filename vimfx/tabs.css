@@ -1,0 +1,40 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+/* Show tab numbers instead of close button for tabs, unless hovering over them */
+#main-window:not([customizing]) #TabsToolbar {
+  counter-reset: tabs-counter;
+}
+#main-window:not([customizing]) .tab-close-button:not([pinned]) {
+  visibility: hidden;
+  display: block;
+  color: inherit;
+  counter-increment: tabs-counter;
+}
+#main-window:not([customizing]) .tab-close-button:not([pinned])::before {
+  content: counter(tabs-counter);
+  visibility: visible;
+  font-weight: normal;
+  font-style: normal;
+}
+#main-window:not([customizing]) .tab-close-button:not(:hover) {
+  background-image: -moz-image-rect(url('chrome://global/skin/icons/close.svg'), 0, 16, 16,
+    0) !important;
+}
+#main-window:not([customizing]) .tabbrowser-tab:hover .tab-close-button {
+  visibility: visible;
+}
+#main-window:not([customizing]) .tabbrowser-tab:hover .tab-close-button::before {
+  visibility: hidden;
+}
+
+
+/* Distinguish between unloaded, unread and normal tabs */
+#main-window:not([customizing]) .tabbrowser-tab[pending] {
+  opacity: 0.6;
+}
+#main-window:not([customizing]) .tabbrowser-tab[unread]:not([VimFx-visited]) {
+  font-style: italic;
+}
+#main-window:not([customizing]) .tabbrowser-tab[unread][VimFx-visited] {
+  font-weight: bold;
+}
