@@ -66,6 +66,16 @@ vimfx.addCommand({
 })
 map('b', 'search_tabs', true)
 
+vimfx.addCommand({
+    name: 'toggle_tabbar',
+    description: 'Toggle tab bar',
+    category: 'tabs',
+}, ({vim}) => {
+    let {window} = vim
+    window.gBrowser.setStripVisibilityTo(!window.gBrowser.getStripVisibility());
+})
+map('M', 'toggle_tabbar', true)
+
 
 // VimFx settings
 
