@@ -64,7 +64,7 @@ vimfx.addCommand({
     commands.focus_location_bar.run(args)
     args.vim.window.gURLBar.value = '% '
 })
-map(',t', 'search_tabs', true)
+map('b', 'search_tabs', true)
 
 
 // VimFx settings
