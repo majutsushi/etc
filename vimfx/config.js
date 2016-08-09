@@ -87,6 +87,7 @@ let {Preferences} = Cu.import('resource://gre/modules/Preferences.jsm', {})
 Preferences.set({
     'browser.link.open_newwindow.restriction': 0,
     'browser.startup.page': 3,
+    'browser.tabs.loadDivertedInBackground': true,
     'browser.urlbar.trimURLs': false,
     'devtools.chrome.enabled': true,
     'devtools.command-button-eyedropper.enabled': true,
