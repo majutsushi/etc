@@ -48,6 +48,8 @@ export TERMINFO=$HOME/.terminfo
 
 export SSHHOME=$HOME/.etc/sshrc
 
+export AUTOSSH_PORT=0
+
 export TMUX_TMPDIR=$XDG_RUNTIME_DIR
 
 export CCACHE_DIR=$XDG_CACHE_HOME/ccache
