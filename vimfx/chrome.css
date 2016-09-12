@@ -1,5 +1,14 @@
 @-moz-document url('chrome://browser/content/browser.xul') {
 
+    /* statuspanel { */
+    /*     max-width: 90% !important */
+    /* } */
+    .statuspanel-label {
+        background: #393f3f !important;
+        color: white !important;
+        /* font-family: "DejaVu Sans Mono" */
+    }
+
     #VimFxMarkersContainer .marker {
         /* font-size: 12px !important; /1* Specific font size. *1/ */
         text-transform: lowercase !important; /* Lowercase text. */
