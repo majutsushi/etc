@@ -1,0 +1,11 @@
+#!/bin/bash
+# https://fedoraproject.org/wiki/Input_device_configuration
+# https://pkg-xorg.alioth.debian.org/howto/configure-input.html
+# http://who-t.blogspot.com.au/2011/03/custom-input-device-configuration-in.html
+# https://luther.ceplovi.cz/blog/2013/04/10/make-yubikey-working-with-non-us-keyboard-layouts/
+
+BASEDIR="$(dirname "$(readlink -f "$0")")"
+
+mkdir -p /etc/X11/xorg.conf.d
+
+cp "$BASEDIR"/*.conf /etc/X11/xorg.conf.d

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+BASEDIR="$(dirname "$(readlink -f "$0")")"
+
+cp "$BASEDIR"/awesome.session /usr/share/gnome-session/sessions/
+cp "$BASEDIR"/awesome.desktop /usr/share/applications/
+cp "$BASEDIR"/awesome-gnome.desktop /usr/share/xsessions/
+cp "$BASEDIR"/gnome-session-awesome /usr/bin/
