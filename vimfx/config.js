@@ -39,6 +39,10 @@ map('u',        'tab_restore')
 map('a/', 'find')
 map('/',  'find_highlight_all')
 
+map('<force><escape> <force><c-[>', 'esc')
+vimfx.set('mode.caret.exit', '<escape> <c-[>')
+vimfx.set('mode.hints.exit', '<escape> <c-[>')
+
 
 // Custom commands
 
