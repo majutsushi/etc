@@ -135,7 +135,7 @@ let loadCss = (uriString) => {
 }
 
 loadCss(`${__dirname}/chrome.css`)
-// loadCss(`${__dirname}/content.css`)
+loadCss(`${__dirname}/content.css`)
 loadCss(`${__dirname}/tabs.css`)
 
 
