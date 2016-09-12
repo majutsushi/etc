@@ -289,10 +289,10 @@ upload() {
         echo "usage: upload file1 file2 ..."
         return 1
     else
-        wput ftp://majutsushi.net/httpdocs/stuff/ "$@"
+        scp "$@" root@majutsushi.net:/var/www/html/stuff/
     fi
     for i in "$@"; do
-        echo "http://majutsushi.net/stuff/${i// /%20}"
+        echo "https://majutsushi.net/stuff/${i// /%20}"
     done
 }
 
