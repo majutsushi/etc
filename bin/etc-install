@@ -227,6 +227,7 @@ if command -v python >/dev/null; then
     cd .etc/python/lib/desert
     info "Installing python lib: desert"
     python setup.py install --user >/dev/null
+    python3 setup.py install --user >/dev/null
     cd $HOME
 fi
 
