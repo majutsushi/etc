@@ -126,7 +126,7 @@
 	ff = false
 
 [rebase]
-	autostash = true
+	autoStash = true
 
 [rerere]
 	enabled = true
