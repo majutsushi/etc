@@ -16,6 +16,9 @@ setopt hist_ignore_all_dups
 # line is a space
 setopt hist_ignore_space
 
+# use proper shell splitting for words read from history
+setopt hist_lex_words
+
 HISTFILE=$ZSH_VAR_LIB_DIR/history
 [[ ! -d $ZSH_VAR_LIB_DIR/history.full ]] && mkdir $ZSH_VAR_LIB_DIR/history.full
 HISTSIZE=100000
