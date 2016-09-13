@@ -85,7 +85,7 @@ autoload smart-insert-last-word
 zle -N insert-last-word smart-insert-last-word
 
 # turn current line into comment and commit
-bindkey '^[#' pound-insert
+bindkey '\e#' pound-insert
 
 autoload -Uz jump-target
 zle -N jump-target
