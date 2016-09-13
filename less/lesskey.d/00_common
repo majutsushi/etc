@@ -9,6 +9,7 @@ Q quit \1
 D noaction j/\^diff|commit|From \n\eu
 # ^s noaction /\^\\s+
 ^s noaction /\^       
+V noaction g|$/usr/bin/vim -\n
 
 #line-edit
 ^A home
