@@ -1,5 +1,5 @@
 rationalize_path() {
-    eval $1'=( ${(u)^'${1}':A}(N-/xe:'\''[[ "$REPLY" != "." ]]'\'':) )'
+    eval $1'=( ${(u)^'${1}':a}(N-/xe:'\''[[ "$REPLY" != "." ]]'\'':) )'
 }
 
 if [[ -d /opt/intel ]]; then
