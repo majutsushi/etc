@@ -255,4 +255,26 @@ zle -C extpwds menu-complete _generic
 bindkey "^X^T" extpwds
 zstyle ':completion:extpwds::::' completer _extpwds
 
+# The standard _tilde function with users removed
+_tilde_no_users () {
+    [[ -n "$compstate[quote]" ]] && return 1
+    local expl suf ret=1
+    if [[ "$SUFFIX" = */* ]]
+    then
+        ISUFFIX="/${SUFFIX#*/}$ISUFFIX"
+        SUFFIX="${SUFFIX%%/*}"
+        suf=(-S '')
+    else
+        suf=(-qS/)
+    fi
+    _tags named-directories directory-stack
+    while _tags; do
+        _requested named-directories expl 'named directory' compadd "$suf[@]" "$@" -k nameddirs && ret=0
+        _requested directory-stack && _directory_stack "$suf[@]" && ret=0
+        (( ret )) || return 0
+    done
+    return ret
+}
+compdef _tilde_no_users -tilde-
+
 # vim: filetype=zsh
