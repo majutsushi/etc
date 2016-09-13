@@ -151,6 +151,15 @@ autoload insert-unicode-char
 zle -N insert-unicode-char
 bindkey '^Xi' insert-unicode-char
 
+# Move by physical lines, like gj/gk in vim
+_physical_up_line()   { zle backward-char -n $COLUMNS }
+_physical_down_line() { zle forward-char  -n $COLUMNS }
+zle -N physical-up-line _physical_up_line
+zle -N physical-down-line _physical_down_line
+# bindkey "\e[1;3A" physical-up-line
+# bindkey "\e[1;3B" physical-down-line
+bindkey "\eK" physical-up-line
+bindkey "\eJ" physical-down-line
 
 # http://zshwiki.org/home/examples/zleiab
 typeset -Ag abbreviations
