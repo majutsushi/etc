@@ -177,9 +177,6 @@ xlink mail/t-prot target=.config/t-prot
 xlink mutt/muttrc
 xlink mutt/mutt
 
-xlink pentadactyl/pentadactylrc
-xlink pentadactyl/pentadactyl
-
 xlink vim/vimrc
 xlink vim/gvimrc
 xlink vim/vim
