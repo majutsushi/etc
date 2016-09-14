@@ -80,6 +80,29 @@ vimfx.addCommand({
 })
 map('M', 'toggle_tabbar', true)
 
+vimfx.addCommand({
+    name: 'goodreads_search',
+    description: 'Search for Amazon book on Goodreads',
+}, ({vim}) => {
+    let {window} = vim
+    let document = window.gBrowser.contentDocument
+    let asin_elements = document.getElementsByName('ASIN');
+    if (asin_elements.length == 0) {
+        asin_elements = document.getElementsByName('ASIN.0');
+    };
+    if (asin_elements.length == 0) {
+        window.alert('Sorry, this doesn\'t appear to be an Amazon book page.');
+    } else {
+        let asin = asin_elements[0].value;
+        if (asin.match(/\D/) === null) {
+            window.gBrowser.addTab('http://www.goodreads.com/review/isbn/' + asin);
+        } else {
+            window.gBrowser.addTab('https://www.goodreads.com/search?q=' + asin);
+        }
+    }
+})
+map('gR', 'goodreads_search', true)
+
 
 // VimFx settings
 
