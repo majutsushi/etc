@@ -22,7 +22,8 @@ if allof (not address :is :domain "from" "github.com",
           anyof (header :regex "list-post" ".*<mailto:([^>]+).*",
                  header :regex "x-mailing-list" ".*<([^>]+).*",
                  header :regex "x-beenthere" "(.*)",
-                 header :regex "x-loop" "(.*)")) {
+                 header :regex "x-loop" "(.*)",
+                 header :regex "mailing-list" "list +([^ ;]+).*")) {
     set :lower "listname" "${1}";
 
     execute :input "${listname}" :output "listname" "tr" [".", "_"];
