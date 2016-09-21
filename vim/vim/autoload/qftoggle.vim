@@ -55,6 +55,11 @@ function! qftoggle#islocwin() abort
     return (&buftype == 'quickfix' && !qftoggle#isqfwin())
 endfunction
 
+function! qftoggle#openlocwin() abort
+    let nitems = len(getloclist(0))
+    execute 'botright lopen ' . min([nitems, &lines / 4])
+endfunction
+
 " Return 1 if current window's location list window is open.
 function! qftoggle#islocwinopen() abort
     let numOpenWindows = winnr("$")
