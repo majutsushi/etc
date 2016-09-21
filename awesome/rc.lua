@@ -170,7 +170,7 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 separator = wibox.widget.imagebox(beautiful.widget_sep)
 
 -- Create a textclock widget
-mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#999999">%a %d %b</span> %H:%M')
+mytextclock = awful.widget.textclock('<span font_size="smaller" fgcolor="#999999">%a %d %b</span> %H:%M', 1)
 
 eldritch.widgets.cal.register(mytextclock)
 
