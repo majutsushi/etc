@@ -1787,23 +1787,61 @@ if has("python") || has("python3")
     let g:netrw_nogx = 1
 
     function! ExtractUrl(text)
-    python << endpython
+    python3 << endpython
 import re
 text = vim.eval("a:text")
 vim.command("let l:result = ''")
 
 # Regex from:
-# <http://daringfireball.net/2010/07/improved_regex_for_matching_urls>
+# http://daringfireball.net/2010/07/improved_regex_for_matching_urls
 # Updated version:
-# <https://gist.github.com/gruber/249502/>
-urlRe = re.compile(
-    ur"(?i)\b("
-    ur"(?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|"
-        ur"[a-z0-9.\-]+[.][a-z]{2,4}/)"
-    ur"(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+"
-    ur"(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|"
-        ur"""[^\s`!()\[\]{};:'".,<>?\u00AB\u00BB\u201C\u201D\u2018\u2019])"""
-    ur")")
+# https://gist.github.com/gruber/8891611
+# https://gist.github.com/winzig/8894715
+urlRe = re.compile(r'''
+(?xi)
+(                           # Capture 1: entire matched URL
+  \b
+  (?:
+    https?:             # URL protocol and colon
+    (?:
+      /{1,3}                        # 1-3 slashes
+      |                             #   or
+      [a-z0-9%]                     # Single letter or digit or '%'
+                                    # (Trying not to match e.g. "URI::Escape")
+    )
+    |                           #   or
+                                # looks like domain name followed by a slash:
+    [a-z0-9.\-]+[.]
+    (?:[a-z]{2,13})
+    /
+  )
+  (?:                           # One or more:
+    [^\s()<>{}\[\]]+                        # Run of non-space, non-()<>{}[]
+    |                               #   or
+    \([^\s()]*?\([^\s()]+\)[^\s()]*?\)  # balanced parens, one level deep: (…(…)…)
+    |
+    (?:\([^\s]+?\))                         # balanced parens, non-recursive: (…)
+  )+
+  (?:                           # End with:
+    \([^\s()]*?\([^\s()]+\)[^\s()]*?\)  # balanced parens, one level deep: (…(…)…)
+    |
+    (?:\([^\s]+?\))                         # balanced parens, non-recursive: (…)
+    |                                   #   or
+    [^\s`!()\[\]{};:'".,<>?«»“”‘’]      # not a space or one of these punct chars
+  )
+  |                 # OR, the following to match naked domains:
+  (?:
+    (?<!@)          # not preceded by a @, avoid matching foo@_gmail.com_
+    [a-z0-9]+
+    (?:[.\-][a-z0-9]+)*
+    [.]
+    (?:[a-z]{2,13})
+    \b
+    /?
+    (?!@)           # not succeeded by a @, avoid matching "foo.na" in "foo.na@example.com"
+  )
+)
+''')
 
 m = urlRe.search(text)
 if m:

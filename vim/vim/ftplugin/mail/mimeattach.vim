@@ -3,8 +3,8 @@
 
 " Python Function here:
 
-python << EOF
-#!/usr/bin/python
+python3 << EOF
+#!/usr/bin/python3
 
 # min length for displaying text files inline.
 # -1 for never inline, 0 for always inline.
@@ -12,7 +12,7 @@ INLINE_LENGTH=150*1024
 
 import sys
 import os
-import StringIO
+import io
 
 # Guess text file encoding from a list of given encodings
 encodinglist=['utf-8']
@@ -150,7 +150,7 @@ def main():
     amail = parse_bare_email(main_text)
     for f in files[1:]:
         attach_file(amail, f)
-    print amail
+    print(amail)
 
 def pAttachFile(paths):
     '''Interface to vim function.'''
@@ -174,13 +174,13 @@ def pAttachFile(paths):
     for path in paths:
         path = os.path.expanduser(path)
         if not os.path.exists(path):
-            print "Error: %s does not exist..." % path
-            print "Error: %s does not exist..." % path
+            print("Error: %s does not exist..." % path)
+            print("Error: %s does not exist..." % path)
             continue
         attach_file(amail, path)
 
     # get back text to vim buffer
-    fp = StringIO.StringIO()
+    fp = io.StringIO()
     g = Generator(fp, mangle_from_=False, maxheaderlen=60)
     g.flatten(amail, False)
     text = fp.getvalue()
@@ -193,7 +193,7 @@ EOF
 " vim function to interface python function. Variable length arguments
 " for input filenames
 function! AttachFile_Func(...)
-python << EOF
+python3 << EOF
 paths = vim.eval('a:000')
 pAttachFile(paths)
 EOF
