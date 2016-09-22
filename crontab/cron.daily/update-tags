@@ -4,7 +4,8 @@ command -v ctags &>/dev/null || exit 0
 
 TAGDIR=$HOME/.var/lib/tags
 
-mkdir -p $TAGDIR
+rm -rf "$TAGDIR"
+mkdir -p "$TAGDIR"
 
 ctags --recurse --excmd=number -f $TAGDIR/systags --extra=+q /usr/include 2> /dev/null
 
