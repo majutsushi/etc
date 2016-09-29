@@ -84,6 +84,11 @@ bindkey -M menuselect '^s' history-incremental-search-forward
 autoload smart-insert-last-word
 zle -N insert-last-word smart-insert-last-word
 
+autoload -Uz transpose-words-match
+zstyle ':zle:transpose-words' word-style shell
+zle -N transpose-words transpose-words-match
+bindkey '\et' transpose-words
+
 # turn current line into comment and commit
 bindkey '\e#' pound-insert
 
