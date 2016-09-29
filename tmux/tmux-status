@@ -7,8 +7,8 @@ ITEMS="cputemp battery"
 
 TMUX_LIBDIR=$HOME/.etc/tmux/lib
 
-if [[ -r $HOME/.local/share/tmux-statusrc ]]; then
-    . $HOME/.local/share/tmux-statusrc
+if [[ -r $HOME/.config/etc/tmux-statusrc ]]; then
+    . $HOME/.config/etc/tmux-statusrc
 fi
 
 ismac() {
