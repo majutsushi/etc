@@ -7,7 +7,8 @@ setopt hash_list_all
 setopt complete_in_word
 
 # complete globs instead of expanding them
-setopt glob_complete
+# use _match instead
+# setopt glob_complete
 
 # load fancy menu completion
 zmodload zsh/complist
@@ -77,6 +78,8 @@ else
         reply=(_oldlist _force_rehash _complete _correct _approximate _ignored)
     fi
 fi'
+zstyle ':completion:*:match:*'     insert-unambiguous pattern
+zstyle ':completion:*:match:*'     match-original true
 zstyle ':completion:*:correct:*'   insert-unambiguous true
 zstyle ':completion:*:correct:*'   original true
 zstyle ':completion:*:correct:*'   max-errors 2
