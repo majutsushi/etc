@@ -1155,7 +1155,7 @@ set showbreak=…
 
 " include "lastline" to show the last line even if it doesn't fit
 " include "uhex" to show unprintable characters as a hex number
-set display=lastline
+set display=lastline,uhex
 " characters to use for the status line, folds and filler lines
 set fillchars=
 " number of lines used for the command-line
