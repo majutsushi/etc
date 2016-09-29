@@ -98,6 +98,9 @@ system-config-printer-applet &
 # redshift
 # btsync
 
+# xinput --set-prop 9 "Device Accel Constant Deceleration" 1
+# xinput --set-prop 9 "Device Accel Velocity Scaling" 5
+
 #
 # finally start the window manager
 #
