@@ -15,3 +15,8 @@
 --regex-xpidl=/^.*[[:blank:]]+attribute[[:space:]]+([a-zA-Z0-9_]+)[[:space:]]+([a-zA-Z0-9_]+);/\2/a,attribute/
 --regex-xpidl=/^.*native[[:blank:]]+([a-zA-Z0-9_]+)\(/\1/t,type/
 --regex-xpidl=/^.*(void|boolean|octet|short|long|long[[:blank:]]+long|unsigned[[:blank:]]+short|unsigned[[:blank:]]+long|unsigned[[:blank:]]+long[[:blank:]]+long|float|double|char|wchar|string|wstring|nsrefcnt)[[:blank:]]+([a-zA-Z0-9_]+)\(/\2/o,operation/
+
+--langdef=rfc
+--langmap=rfc:(rfc*).txt
+--regex-rfc=/^(([[:alpha:]]+.)?[[:digit:].]+)\. /\1/s,section/
+--regex-rfc=/^ +(\[[[:alnum:]]+\])/\1/r,reference/
