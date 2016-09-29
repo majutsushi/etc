@@ -1,0 +1,12 @@
+#!/bin/bash
+# Remove local branches whose upstream branch has been removed by
+# "git fetch --prune" and that have been fully merged
+
+# Only run on branch checkouts
+[[ "$3" == 1 ]] || exit 0
+
+git branch -r | \
+    awk '{print $1}' | \
+    egrep -v -f /dev/stdin <(git branch -vv | grep ': gone\]') | \
+    awk '{print $1}' | \
+    xargs --no-run-if-empty git branch -d || :
