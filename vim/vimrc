@@ -70,6 +70,7 @@ NeoBundle 'derekwyatt/vim-protodef', {'lazy': 1, 'autoload': {'filetypes': ['cpp
 NeoBundle 'jceb/vim-orgmode'
 NeoBundle 'tpope/vim-markdown'
 NeoBundle 'plasticboy/vim-markdown', {'name': 'plasticboy-markdown'}
+NeoBundle 'octol/vim-cpp-enhanced-highlight'
 
 " Information
 NeoBundle 'airblade/vim-gitgutter'
