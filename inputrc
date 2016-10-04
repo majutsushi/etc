@@ -1,13 +1,21 @@
 $include /etc/inputrc
 
+Tab: menu-complete
+# bash >= 4 only
+# "\e[Z": menu-complete-backward
+"\e[Z": "\e-1\C-i"
+
 "\C-j": menu-complete
 # bash >= 4 only
 # "\C-k": menu-complete-backward
 "\C-k": "\e-1\C-j"
+
 "\C-p": history-search-backward
 "\C-n": history-search-forward
+"\ew": unix-filename-rubout
 
 set bell-style visible
+set colored-stats on
 set mark-symlinked-directories on
 set visible-stats on
 
@@ -15,6 +23,7 @@ set completion-ignore-case on
 set completion-map-case on
 set completion-prefix-display-length 2
 set match-hidden-files off
-# set menu-complete-display-prefix on
+set menu-complete-display-prefix on
 set show-all-if-ambiguous on
 set show-all-if-unmodified on
+set skip-completed-text on
