@@ -21,8 +21,8 @@ call neobundle#begin(expand('~/.var/lib/vim/bundles/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Navigation
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'JazzCore/ctrlp-cmatcher'
+NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'FelikZ/ctrlp-py-matcher'
 NeoBundle 'scrooloose/nerdtree', {'lazy': 1,
     \ 'autoload': {'commands': ['NERDTreeToggle', 'NERDTreeFind']}}
 NeoBundle 'Lokaltog/vim-easymotion', {'lazy': 1,
@@ -1538,7 +1538,7 @@ let g:CSApprox_hook_desert_post = [
 " Ctrl-P {{{2
 let g:ctrlp_map = ''
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
 " https://github.com/jszakmeister/vimfiles/blob/master/vimrc
 " Define prefix mapping for CtrlP plugin so that buffer-local mappings
