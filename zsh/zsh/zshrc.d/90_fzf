@@ -72,4 +72,12 @@ j() {
     cd "$(cat "$RECENTDIRS_FILE" | fzf --exact)"
 }
 
+J() {
+    cd "$(hash -d | sed -e 's/^.*=//' | fzf --exact)"
+}
+
+copy-pw() {
+    lpass show --clip --password $(lpass ls | fzf | awk '{print $(NF)}' | sed 's/\]//g')
+}
+
 # vim: filetype=zsh
