@@ -4,7 +4,7 @@ __fsel() {
     command find * \( -path '*/\.*' -o -name target \) -prune \
         -o -type f -print \
         -o -type d -print \
-        -o -type l -print 2> /dev/null | fzf -m | while read item; do
+        -o -type l -print 2> /dev/null | fzf --multi | while read item; do
             printf '%q ' "$item"
         done
     echo
@@ -33,7 +33,7 @@ bindkey '\ec' fzf-cd-widget
 # CTRL-R - Paste the selected command from history into the command line
 if have fzf; then
     fzf-history-widget() {
-        LBUFFER=$(fc -l 1 | fzf -e +s +m -n2..,.. | sed "s/^ *[0-9*]* *//")
+        LBUFFER=$(fc -l 1 | fzf --exact --no-sort --nth=2 --tac | sed "s/^ *[0-9*]* *//")
         zle redisplay
     }
     zle -N fzf-history-widget
@@ -69,7 +69,7 @@ __recentdirs_add() {
 add-zsh-hook chpwd __recentdirs_add
 
 j() {
-    cd "$(cat "$RECENTDIRS_FILE" | fzf -e -s +m)"
+    cd "$(cat "$RECENTDIRS_FILE" | fzf --exact)"
 }
 
 # vim: filetype=zsh
