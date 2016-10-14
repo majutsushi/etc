@@ -42,6 +42,7 @@ if have fzf; then
     # http://chneukirchen.org/blog/archive/2013/03/10-fresh-zsh-tricks-you-may-not-know.html
     autoload -Uz narrow-to-region
     _history-incremental-preserving-pattern-search-backward() {
+        NUMERIC=0 zle set-local-history
         local state
         MARK=CURSOR  # magick, else multiple ^R don't work
         narrow-to-region -p "$LBUFFER${BUFFER:+>>}" -P "${BUFFER:+<<}$RBUFFER" -S state
