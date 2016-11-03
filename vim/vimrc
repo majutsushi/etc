@@ -46,6 +46,7 @@ NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-indent'
 NeoBundle 'kana/vim-textobj-line'
+NeoBundle 'Konfekt/FastFold'
 NeoBundle 'saihoooooooo/vim-textobj-space'
 NeoBundle 'mattn/calendar-vim'
 NeoBundle 'mbbill/undotree', {'lazy': 1,
