@@ -16,7 +16,7 @@ syntax keyword scenSection  ROLES DIALOGS TABLES
 
 syntax region  scenAttribute  start='(' end=')'
 syntax region  scenMetadata   start='\[' end='\]'
-syntax region  scenString     start=+"+ end=+"+
+syntax region  scenString     start=+"+ skip=+\\"+ end=+"+
 
 syntax match   scenMessage "^  \zs[^ }]\+"
 
