@@ -62,7 +62,7 @@
 [color "status"]
 	; header = white
 	added = green
-	changed = yellow
+	changed = red
 	untracked = cyan
 	branch = yellow
 	nobranch = red
