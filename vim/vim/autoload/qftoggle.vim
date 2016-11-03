@@ -63,22 +63,25 @@ endfunction
 " Return 1 if current window's location list window is open.
 function! qftoggle#islocwinopen() abort
     let numOpenWindows = winnr("$")
+    let curwinid = win_getid()
+    let save_cursor = getcurpos()
     " Assume location list window is already open.
-    let isOpen = 1
+    let is_open = 1
     try
         noautocmd lopen
+        call win_gotoid(curwinid)
+        call setpos('.', save_cursor)
     catch /E776:/
         " No location list available; nothing was changed.
-        let isOpen = 0
+        let is_open = 0
     endtry
     if numOpenWindows != winnr("$")
-        " We just opened a new location list window. Revert to original
-        " window and close the newly opened window.
-        noautocmd wincmd p
+        " We just opened a new location list window,
+        " so close it again.
         noautocmd lclose
-        let isOpen = 0
+        let is_open = 0
     endif
-    return isOpen
+    return is_open
 endfunction
 
 let s:quickfix_is_open = 0
