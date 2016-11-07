@@ -39,13 +39,20 @@ function! s:verify_undo ()
     " Are we back at the start of this session (but still with undos possible)???
     let undo_now = undotree().seq_cur
 
+    " Open folds that contain the undo point if configured to do so
+    let suffix = &foldopen =~# 'undo' ? 'zv' : ''
+
     " If so, check whether to undo into pre-history...
     if undo_now > 0 && undo_now == b:undo_start
-        return confirm('',"Undo into previous session? (&Yes\n&No)",1) == 1 ? "\<C-L>u" : "\<C-L>"
+        if confirm('', "Undo into previous session? (&Yes\n&No)", 1) == 1
+            return "\<C-L>u" . suffix
+        else
+            return "\<C-L>"
+        endif
 
     " Otherwise, always undo...
     else
-        return 'u'
+        return 'u' . suffix
     endif
 endfunction
 
