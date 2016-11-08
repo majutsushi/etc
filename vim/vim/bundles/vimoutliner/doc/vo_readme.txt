@@ -149,7 +149,7 @@ INSTALLING AND TESTING VIMOUTLINER                           *vo-install*
                  filetype plugin indent on
                  syntax on
 
-            Your $HOME/.vim/ftplugin/vo_base.vim file should contain
+            Your $HOME/.vim/ftplugin/otl.vim file should contain
             the lines
                  runtime! ftdetect/*.vim
                 
@@ -268,16 +268,16 @@ USING VIMOUTLINER ON OTHER FILE TYPES                    *vo-other-files*
              but Vim plugins are file extension based, meaning that if
              you want to use VimOutliner on a file extension other than
              .otl, you must declare that file extension in
-             $HOME/.vim/ftdetect/vo_base.vim. In this section we'll
+             $HOME/.vim/ftdetect/otl.vim. In this section we'll
              use the .emdl extension (Easy Menu Definition Language)
              as an example.
 
         To enable VimOutliner work with .emdl files, do this:
-            vim $HOME/.vim/ftdetect/vo_base.vim
+            vim $HOME/.vim/ftdetect/otl.vim
             Right below the line reading:
-                au! BufRead,BufNewFile *.otl        setfiletype vo_base
+                au! BufRead,BufNewFile *.otl        setfiletype otl
             Insert the following line:
-                au! BufRead,BufNewFile *.emdl        setfiletype vo_base
+                au! BufRead,BufNewFile *.emdl        setfiletype otl
             Save and exit
             Test with the following:
                 gvim $HOME/vo_test.emdl
@@ -295,17 +295,17 @@ TROUBLESHOOTING                                      *vo-troubleshooting*
             See next question
 
         My ,,b and ,,B don't do anything. How do I fix it?
-            vim $HOME/.vim/ftplugin/vo_base.vim
+            vim $HOME/.vim/ftplugin/otl.vim
             Search for use_space_colon
             Make sure it is set to 0, not 1
             Rerun Vim, and ,,b and ,,B should work
 
         I don't get VimOutliner features on files of extension .whatever
-            vim $HOME/.vim/ftdetect/vo_base.vim
+            vim $HOME/.vim/ftdetect/otl.vim
             Right below the line reading:
-                au! BufRead,BufNewFile *.otl          setfiletype vo_base
+                au! BufRead,BufNewFile *.otl          setfiletype otl
             Insert the following line:
-                au! BufRead,BufNewFile *.whatever     setfiletype vo_base
+                au! BufRead,BufNewFile *.whatever     setfiletype otl
             Save and exit
 
 -------------------------------------------------------------------------
@@ -350,7 +350,7 @@ VIMOUTLINER PHILOSOPHY                                    *vo-philosophy*
         Therefore VimOutliner now prides itself in being a Vim plugin.
         With the VimOutliner package installed, the Vim editor yields the
         VimOutliner feature set for files whose extensions are listed as
-        vo_base types in $HOME/.vim/ftplugin/vo_base.vim.
+        otl types in $HOME/.vim/ftplugin/otl.vim.
         
         The Vim Plugin philosophy yields several benefits:
             Less reliance on Perl, bash and environment vars
@@ -498,7 +498,7 @@ RUNNING VIMOUTLINER                                          *vo-running*
 
         What if ,,b and ,,B don't work
             Change variable use_space_colon from 1 to 0
-                in $HOME/.vim/ftplugin/vo_base.vim
+                in $HOME/.vim/ftplugin/otl.vim
 
         How do I perform a wordcount?
             Use the command :w !wc
