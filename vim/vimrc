@@ -2,6 +2,7 @@
 set nocompatible
 set encoding=utf-8
 let mapleader=","
+let maplocalleader=",,"
 
 let g:user_name = "Jan Larres"
 let g:user_email = "jan@majutsushi.net"
