@@ -1152,6 +1152,8 @@ set number
 
 " "dark" or "light"; the background color brightness
 set background=dark
+" maximum column to look for syntax items
+set synmaxcol=800
 " highlight all matches for the last used search pattern
 set hlsearch
 
