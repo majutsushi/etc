@@ -69,7 +69,6 @@ NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {
 NeoBundle 'chrisbra/CheckAttach', {'lazy': 1, 'autoload': {'filetypes': ['mail']}}
 NeoBundle 'derekwyatt/vim-fswitch', {'lazy': 1, 'autolaod': {'filetypes': ['c', 'cpp']}}
 NeoBundle 'derekwyatt/vim-protodef', {'lazy': 1, 'autoload': {'filetypes': ['cpp']}}
-NeoBundle 'jceb/vim-orgmode'
 NeoBundle 'tpope/vim-markdown'
 NeoBundle 'plasticboy/vim-markdown', {'name': 'plasticboy-markdown'}
 NeoBundle 'octol/vim-cpp-enhanced-highlight'
