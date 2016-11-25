@@ -1,0 +1,18 @@
+# Based on https://github.com/LuRsT/hr/blob/master/hr
+
+emulate -L zsh
+
+local cols="$(tput cols)"
+if (( cols <= 0 )); then
+    cols="${COLUMNS:-80}"
+fi
+
+local word
+for word in "${@:-#}"; do
+    local line=""
+    while (( ${#line} < cols )); do
+        line="$line$word"
+    done
+
+    echo "${line:0:$cols}"
+done
