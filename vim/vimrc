@@ -2262,6 +2262,13 @@ if has("digraphs")
     silent! dig ql 64260 " LATIN SMALL LIGATURE FFL
 endif
 
+" Fold motions
+" https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
+onoremap if :<c-u>normal! [zv]z<cr>
+onoremap af :<c-u>normal! [zV]z<cr>
+vnoremap if :<c-u>normal! ]zv[z<cr>
+vnoremap af :<c-u>normal! ]zV[z<cr>
+
 " Moving around {{{2
 
 " make some jumps more intuitive and don't require the '{' to be in the first
