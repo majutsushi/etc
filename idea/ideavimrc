@@ -8,6 +8,10 @@ set clipboard+=unnamed
 set clipboard+=unnamedplus
 
 nmap <Enter> :action GotoDeclaration<CR>
+
+nmap <C-V><C-N> :action GotoClass<CR>
+nmap <C-V><C-E> :action RecentFiles<CR>
+
 nmap <C-o> :action Back<CR>
 nmap <C-i> :action Forward<CR>
 nmap <C-6> <C-S-6>
