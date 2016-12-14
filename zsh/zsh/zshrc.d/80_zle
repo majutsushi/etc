@@ -196,32 +196,34 @@ _normalize_prompt() {
 }
 add-zsh-hook precmd _normalize_prompt
 
-# Bracketed paste mode, taken from
-# https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/safe-paste/safe-paste.plugin.zsh
-# create a new keymap to use while pasting
-bindkey -N paste
-# make everything in this keymap call our custom widget
-bindkey -R -M paste "^@"-"\M-^?" paste-insert
-bindkey '^[[200~' _start_paste
-bindkey -M paste '^[[201~' _end_paste
-# insert newlines rather than carriage returns when pasting newlines
-bindkey -M paste -s '^M' '^J'
+if ! is-at-least 5.2; then
+    # Bracketed paste mode, taken from
+    # https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/safe-paste/safe-paste.plugin.zsh
+    # create a new keymap to use while pasting
+    bindkey -N paste
+    # make everything in this keymap call our custom widget
+    bindkey -R -M paste "^@"-"\M-^?" paste-insert
+    bindkey '^[[200~' _start_paste
+    bindkey -M paste '^[[201~' _end_paste
+    # insert newlines rather than carriage returns when pasting newlines
+    bindkey -M paste -s '^M' '^J'
 
-zle -N _start_paste
-zle -N _end_paste
-zle -N paste-insert _paste_insert
+    zle -N _start_paste
+    zle -N _end_paste
+    zle -N paste-insert _paste_insert
 
-_start_paste() {
-    bindkey -A paste main
-}
-_end_paste() {
-    bindkey -e
-    LBUFFER+=$_paste_content
-    unset _paste_content
-}
-_paste_insert() {
-    _paste_content+=$KEYS
-}
+    _start_paste() {
+        bindkey -A paste main
+    }
+    _end_paste() {
+        bindkey -e
+        LBUFFER+=$_paste_content
+        unset _paste_content
+    }
+    _paste_insert() {
+        _paste_content+=$KEYS
+    }
+fi
 
 
 # jump behind the first word on the cmdline to add options
