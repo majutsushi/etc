@@ -20,7 +20,7 @@ edfunc() {
 compdef _functions edfunc
 
 
-typeset -a _ls_opts; _ls_opts=(-F)
+typeset -a _ls_opts; _ls_opts=(-F -N)
 if [[ "$TERM" != "dumb" ]]; then
     _ls_opts+="--color=auto"
 fi
