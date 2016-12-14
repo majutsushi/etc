@@ -151,6 +151,7 @@ xlink emacs/emacs.d
 xlink git/gitconfig target=.config/git/config
 merge git/gitignore target=.config/git/ignore
 ln -sf $HOME/.config/git/ignore $HOME/.agignore
+xlink git/tigrc target=.config/tig/config
 
 xlink tmux/tmux.conf
 info "Installing tmux plugins"

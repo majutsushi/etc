@@ -146,50 +146,6 @@
 [svn]
 	rmdir = true
 
-[tig]
-	main-view = "id date:local author:width=15 commit-title:graph=yes,refs=yes,overflow=no"
-	blame-options = "-C -C -C"
-	horizontal-scroll = 50%
-	ignore-space = "all"
-	line-graphics = "utf-8"
-	show-changes = yes
-	split-view-height = 66%
-	status-untracked-dirs = no
-	tab-size = 8
-	vertical-split = "false"
-
-[tig "bind"]
-	generic = y !@sh -c 'echo -n %(commit) | xclip -i -selection clipboard'
-	generic = Y !@sh -c 'git svn find-rev %(commit) | tr -d [:cntrl:] | xclip -i -selection clipboard'
-
-[tig "color"]
-; General
-	default     = default  default
-	cursor      = default  color241
-	status      = green    default
-	title-focus = color16  white
-	title-blur  = color241 white
-	delimiter   = magenta  default
-	line-number = cyan     default
-	id          = yellow   default
-	date        = blue     default
-	author      = green    default
-	mode        = cyan     default
-; Main view
-	graph-commit = blue default
-	; palette-0    = magenta default
-	; palette-1    = yellow default
-	; palette-2    = blue default
-	; palette-3    = green default
-	; palette-4    = cyan default
-	; palette-5    = white default
-	; palette-6    = black default
-; Tree view
-	directory = yellow default bold
-; Diff view
-	diff-header = white  default bold
-	diff-chunk  = yellow default
-
 [web]
 	browser = firefox
 
