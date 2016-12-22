@@ -69,6 +69,7 @@ bind generic on :toggle line-number
 bind generic od :toggle date
 bind generic oa :toggle author
 bind generic og :toggle line-graphics
+bind main    oG :toggle commit-title-graph
 bind generic of :toggle file-name
 bind generic op :toggle ignore-space
 bind generic oi :toggle id
