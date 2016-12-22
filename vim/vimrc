@@ -1733,7 +1733,7 @@ nnoremap <silent> <M-n>      :call <SID>toggle_nerdtree()<CR>
 nnoremap <silent> <F10>      :NERDTreeToggle<CR>
 
 " netrw {{{2
-let g:netrw_liststyle = 3
+let g:netrw_liststyle = 1
 
 " Taken from https://github.com/jszakmeister/vimfiles/blob/master/vimrc
 
