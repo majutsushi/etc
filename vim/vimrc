@@ -59,6 +59,7 @@ NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'terryma/vim-multiple-cursors'
 
 " Filetypes
 NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {
