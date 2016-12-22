@@ -1,14 +1,16 @@
 $include /etc/inputrc
 
-Tab: menu-complete
-# bash >= 4 only
-# "\e[Z": menu-complete-backward
-"\e[Z": "\e-1\C-i"
+$if Bash
+    Tab: menu-complete
+    # bash >= 4 only
+    # "\e[Z": menu-complete-backward
+    "\e[Z": "\e-1\C-i"
 
-"\C-j": menu-complete
-# bash >= 4 only
-# "\C-k": menu-complete-backward
-"\C-k": "\e-1\C-j"
+    "\C-j": menu-complete
+    # bash >= 4 only
+    # "\C-k": menu-complete-backward
+    "\C-k": "\e-1\C-j"
+$endif
 
 "\C-p": history-search-backward
 "\C-n": history-search-forward
