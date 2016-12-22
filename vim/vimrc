@@ -1206,7 +1206,10 @@ set mouse=a
 " "extend", "popup" or "popup_setpos"; what the right mouse button is used for
 set mousemodel=popup
 " "xterm", "xterm2", "dec" or "netterm"; type of mouse
-set ttymouse=xterm
+if !has('nvim')
+    " "xterm", "xterm2", "dec" or "netterm"; type of mouse
+    set ttymouse=xterm
+endif
 
 " printing {{{2
 
@@ -1245,7 +1248,7 @@ set confirm
 
 " 'unnamed' to use the * register like unnamed register
 " 'autoselect' to always put selected text into register *
-set clipboard=unnamed,unnamedplus,exclude:cons\|linux
+set clipboard=unnamed,unnamedplus
 
 " editing text {{{2
 
@@ -1458,7 +1461,11 @@ set virtualedit=all
 " list of words that specifies what to put in a session file
 set sessionoptions=blank,buffers,curdir,folds,help,slash,tabpages,unix,winsize
 " list that specifies what to write in the viminfo file
-set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.var/lib/vim/viminfo
+if has('nvim')
+    set shada=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.var/lib/nvim/main.shada
+else
+    set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.var/lib/vim/viminfo
+endif
 
 " see ft-tex-plugin
 let g:tex_flavor = "latex"
