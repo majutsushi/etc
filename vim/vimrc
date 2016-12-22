@@ -112,6 +112,7 @@ NeoBundleCheck
 
 " search for exuberant ctags
 let ctagsbins  = []
+let ctagsbins += [expand('~/src/ctags/uctags/ctags')]
 let ctagsbins += [expand('~/src/ctags/ctags/dctags')]
 let ctagsbins += ['ctags-exuberant'] " Debian
 let ctagsbins += ['exuberant-ctags']
