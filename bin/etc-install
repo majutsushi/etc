@@ -179,9 +179,7 @@ xlink mail/t-prot target=.config/t-prot
 xlink mutt/muttrc
 xlink mutt/mutt
 
-xlink vim/vimrc
-xlink vim/gvimrc
-xlink vim/vim
+xlink vim
 if ! [[ -d $HOME/.var/lib/vim/bundles/ ]]; then
     git clone https://github.com/Shougo/neobundle.vim $HOME/.var/lib/vim/bundles/neobundle.vim
 fi

@@ -1,7 +1,7 @@
-vim/abbrevs.vim
-vim/systags
-vim/.netrwhist
-vim/cache
-vim/spell
-vim/GetLatest/Installed
-vim/passwords.vim
+abbrevs.vim
+systags
+.netrwhist
+cache
+spell
+GetLatest/Installed
+passwords.vim
