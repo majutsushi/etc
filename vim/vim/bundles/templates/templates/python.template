@@ -24,6 +24,8 @@ def main(args):
 #     if args.verbose:
 #         print(args.echo)
 
+    # docopt
+
     for line in fileinput.input():
         pass
 
