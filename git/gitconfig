@@ -92,7 +92,7 @@
 	submodule = log
 	noprefix = true
 	renames = true
-	compactionHeuristic = true
+	indentHeuristic = true
 	; mnemonicPrefix = true
 
 [branch]
