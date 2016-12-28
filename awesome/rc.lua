@@ -729,8 +729,12 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "pinentry" },
       properties = { floating = true } },
-    { rule = { class = "Plugin-container" },
-      properties = { floating = true } },
+    { rule = { class = "[pP]lugin%-container" },
+      properties = { floating = true },
+      callback = function (c)
+          c.fullscreen = true
+      end
+    },
     { rule = { class = "mt32emu" },
       properties = { floating = true } },
     { rule = { class = "fs-uae" },
@@ -833,7 +837,7 @@ for s = 1, screen.count() do screen[s]:connect_signal("arrange", function ()
     -- Fine grained borders and floaters control
     if #clients > 0 then
         for _, c in pairs(clients) do
-            if c.fullscreen or c.name == "plugin-container" or c.name == "Steam" then
+            if c.fullscreen or c.name:match("[pP]lugin%-container") or c.name == "Steam" then
                 c.border_width = 0
             elseif awful.client.floating.get(c) or layout == "floating" then
                 c.border_width = beautiful.border_width
