@@ -104,55 +104,6 @@ unset pgp_retainable_sigs
   set pgp_auto_decode
 # }}}
 # =============================================================================
-# S/MIME {{{
-
-unset smime_is_default
-  set smime_timeout=1000
-  set smime_ask_cert_label
-  set smime_encrypt_with=""
-
-  # Section A: Key Management
-
-  set smime_default_key=""
-  set smime_decrypt_use_default_key
-  set smime_ca_location="~/.smime/ca-bundle.crt"
-#   set smime_ca_location="/etc/ssl/certs/ca-certificates.crt"
-#   set smime_ca_location="~/.smime/ca-certificates/"
-  set smime_certificates="~/.smime/certificates"
-  set smime_keys="~/.smime/keys"
-  # These are used to extract a certificate from a message.
-  # First generate a PKCS#7 structure from the message.
-  set smime_pk7out_command="openssl smime -verify -in %f -noverify -pk7out"
-  # Extract the included certificate(s) from a PKCS#7 structure.
-  set smime_get_cert_command="openssl pkcs7 -print_certs -in %f"
-  # Extract the signer's certificate only from a S/MIME signature (sender verification)
-  set smime_get_signer_cert_command="openssl smime -verify -in %f -noverify -signer %c -out /dev/null"
-  # This is used to get the email address the certificate was issued to.
-  set smime_get_cert_email_command="openssl x509 -in  %f -noout -email"
-  # Add a certificate to the database using smime_keysng.
-  set smime_import_cert_command="smime_keysng add_cert %f"
-
-  # Section B: Outgoing messages
-
-  # Algorithm to use for encryption.
-  # valid choices are rc2-40, rc2-64, rc2-128, des, des3
-  set smime_encrypt_with="des3"
-  # Encrypt a message. Input file is a MIME entity.
-  set smime_encrypt_command="openssl smime -encrypt -%a -outform DER -in %f %c"
-  # Sign.
-  set smime_sign_command="openssl smime -sign -signer %c -inkey %k -passin stdin -in %f -certfile %i -outform DER"
-
-  # Section C: Incoming messages
-
-  # Decrypt a message. Output is a MIME entity.
-  set smime_decrypt_command="openssl smime -decrypt  -passin stdin -inform DER -in %f -inkey %k -recip %c"
-  # Verify a signature of type multipart/signed
-  set smime_verify_command="openssl smime -verify -inform DER -in %s %C -content %f"
-  # Verify a signature of type application/x-pkcs7-mime
-  set smime_verify_opaque_command="openssl smime -verify -inform DER -in %s %C"
-
-# }}}
-# =============================================================================
 
 # }}}
 ###############################################################################
