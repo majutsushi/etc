@@ -133,11 +133,6 @@ unset text_flowed       # use format=flowed; if set, unset encode_from
 unset use_domain        # add $hostname to all addresses without @host
   set user_agent        # Create User-Agent: Mutt/<Version> header.
 
-folder-hook .    unmy_hdr *
-# folder-hook .    my_hdr From: Jan Larres <jan@majutsushi.net> # interferes with $reverse_name
-send-hook   ~l           my_hdr From: Jan Larres <lists@majutsushi.net>
-# folder-hook lists        my_hdr Reply-To: Jan Larres <jan@majutsushi.net>
-
 # }}}
 # =============================================================================
 # after editing {{{
