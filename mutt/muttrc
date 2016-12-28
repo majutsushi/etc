@@ -84,12 +84,15 @@ unset crypt_autoencrypt
   set crypt_replysign
   set crypt_replysignencrypted
   set crypt_timestamp
+# see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=838361
+unset crypt_use_gpgme
   set crypt_verify_sig
 unset forward_decrypt   # decrypt PGP message, when mime_forward and !mime_fw_d
 
 # =============================================================================
 # PGP {{{
 unset pgp_autoinline  # attempt to send as inline
+  set pgp_encrypt_self=yes
   set pgp_entry_format="%4n %t%f %4l/0x%k %-4a %2c %u"
   set pgp_ignore_subkeys
 unset pgp_long_ids
@@ -204,7 +207,6 @@ unset beep_new          # beep on new mail
   set escape="~"
   set help              # show help in first line of the display
   set history=50
-  set locale="en_NZ"
   set mail_check=90
   set menu_scroll       # scroll on last line of menu (set) or do a nextpage?
 unset meta_key          # Don't interpret Alt-x as ESC x
@@ -319,12 +321,20 @@ message-hook '~h "X-Mailer: Apple Mail"' 'unalternative_order *; alternative_ord
 # =============================================================================
 # sidebar {{{
 
-  set sidebar_delim=" "
   set sidebar_delim_chars="./"
-# unset sidebar_newmail_only
-unset sidebar_sort
+  set sidebar_divider_char=" "
+  # set sidebar_divider_char = '│'
+  set sidebar_folder_indent
+  set sidebar_format="%B%*  %S%?N?(%N)?%?F?[%F]?"
+  # set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+  set sidebar_indent_string=" "
+# unset sidebar_new_mail_only
+  set sidebar_short_path
+  # set sidebar_sort_method=unsorted
   set sidebar_visible
   set sidebar_width=40
+
+  set mail_check_stats
 
 # }}}
 # =============================================================================
@@ -648,6 +658,7 @@ color error     $my_white  color196        # error messages
 # color sidebar     white    default
 color sidebar_new     $my_red   $my_background
 color sidebar_flagged $my_yellow   $my_background
+color sidebar_divider color16  color145
 
 # }}}
 # =============================================================================
