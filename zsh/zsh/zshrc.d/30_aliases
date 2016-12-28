@@ -92,6 +92,10 @@ vimlint() {
     "$bundles"/vim-vimlint/bin/vimlint.sh -l "$bundles"/vim-vimlint -p "$bundles"/vim-vimlparser "$@"
 }
 
+rs() {
+    rsync -avxEHA --delete --delete-excluded --human-readable --progress "$@"
+}
+
 # Ag/Ack
 if have ag; then
     # only 1 worker thread to have deterministic result order
