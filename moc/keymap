@@ -84,7 +84,6 @@ toggle_show_format =	^f
 go_to_playing_file =	^g
 go_to_a_directory =	i
 go_up =			U
-next_search =		^n
 cancel =		^x ESCAPE
 go_url =		o
 volume_10 =		M-1
