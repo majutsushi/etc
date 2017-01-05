@@ -24,13 +24,17 @@ zle -N zle-isearch-exit
 
 zle-line-init()  {
     NUMERIC=1 zle set-local-history
-    # enable bracketed paste mode
-    printf '\e[?2004h'
+    if ! is-at-least 5.2; then
+        # enable bracketed paste mode
+        printf '\e[?2004h'
+    fi
 }
 zle -N zle-line-init
 zle-line-finish()  {
-    # disable bracketed paste mode
-    printf '\e[?2004l'
+    if ! is-at-least 5.2; then
+        # disable bracketed paste mode
+        printf '\e[?2004l'
+    fi
 }
 zle -N zle-line-finish
 
