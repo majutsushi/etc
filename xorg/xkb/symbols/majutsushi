@@ -18,6 +18,10 @@ xkb_symbols "custom" {
 
     key <AC01> { [ a, A, adiaeresis, Adiaeresis ] };
     key <AC02> { [ s, S, ssharp,     section    ] };
+    key <AC06> { [ h, H, Left                   ] };
+    key <AC07> { [ j, J, Down                   ] };
+    key <AC08> { [ k, K, Up                     ] };
+    key <AC09> { [ l, L, Right                  ] };
 
     key <AB03> { [ c,         C,        copyright,  cent           ] };
     key <AB06> { [ n,         N,        ntilde,     Ntilde         ] };
