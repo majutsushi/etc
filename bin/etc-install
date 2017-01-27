@@ -202,8 +202,6 @@ if command -v X >/dev/null; then
     #xlink xorg/xinputrc
     #xlink xorg/xsession
     xlink xorg/xsessionrc
-    merge xorg/Xmodmap comment=!
-    xmodmap $HOME/.Xmodmap
 
     FONTDIR=$HOME/.local/share/fonts
     mkdir -p $FONTDIR

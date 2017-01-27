@@ -1,0 +1,7 @@
+default xkb_keymap "default" {
+        xkb_keycodes  { include "evdev+aliases(qwerty)" };
+        xkb_types     { include "complete"      };
+        xkb_compat    { include "complete"      };
+        xkb_symbols   { include "pc+us+inet(evdev)+level3(ralt_switch_multikey)+ctrl(nocaps)+compose(rwin)+nbsp(level3)+terminate(ctrl_alt_bksp)+majutsushi(custom)"      };
+        xkb_geometry  { include "pc(pc105)"     };
+};

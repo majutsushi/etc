@@ -39,7 +39,6 @@ feh --bg-fill $HOME/media/desk/wallpaper/patterns/mypattern_1280x800.png
 # start some stuff
 #
 #xmodmap -e "pointer = 1 2 6 4 5 8 9 3 7 10 11"
-#xmodmap ~/.Xmodmap
 #xset s off
 #xset -dpms
 #kinput2 -canna &
@@ -49,7 +48,10 @@ feh --bg-fill $HOME/media/desk/wallpaper/patterns/mypattern_1280x800.png
 #imwheel -b 006700
 #test -f /#avfs-on
 
-# setxkbmap -model pc105 -layout us -option ctrl:nocaps -option terminate:ctrl_alt_bksp
+# http://madduck.net/docs/extending-xkb/
+# http://git.madduck.net/v/etc/xsession.git/blob/HEAD:/.xsession.d/01-xkb
+# xkbcomp -w3 -I$HOME/.etc/xorg/xkb ~/.etc/xorg/xkb/keymap/default "${DISPLAY%%.*}"
+
 # localectl set-x11-keymap us pc105 "" "ctrl:nocaps,terminate:ctrl_alt_bksp"
 
 ## test for an existing bus daemon, just to be safe

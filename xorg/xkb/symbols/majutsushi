@@ -1,0 +1,28 @@
+// Key names in /usr/include/X11/keysymdef.h
+
+partial alphanumeric_keys
+xkb_symbols "custom" {
+    key <TLDE> { [ grave, asciitilde, degree,         infinity      ] };
+    key <AE01> { [ 1,     exclam,     onesuperior,    onequarter    ] };
+    key <AE02> { [ 2,     at,         twosuperior,    onehalf       ] };
+    key <AE03> { [ 3,     numbersign, threesuperior,  threequarters ] };
+    key <AE05> { [ 5,     percent,    EuroSign                      ] };
+    key <AE11> { [ minus, underscore, endash,         emdash        ] };
+    key <AE12> { [ equal, plus,       approximate,    plusminus     ] };
+
+    key <AD03> { [ e,            E,          ediaeresis,     Ediaeresis           ] };
+    key <AD07> { [ u,            U,          udiaeresis,     Udiaeresis           ] };
+    key <AD09> { [ o,            O,          odiaeresis,     Odiaeresis           ] };
+    key <AD11> { [ bracketleft,  braceleft,  guillemotleft,  leftdoublequotemark  ] };
+    key <AD12> { [ bracketright, braceright, guillemotright, rightdoublequotemark ] };
+
+    key <AC01> { [ a, A, adiaeresis, Adiaeresis ] };
+    key <AC02> { [ s, S, ssharp,     section    ] };
+
+    key <AB03> { [ c,         C,        copyright,  cent           ] };
+    key <AB06> { [ n,         N,        ntilde,     Ntilde         ] };
+    key <AB07> { [ m,         M,        mu,         mu             ] };
+    key <AB09> { [ period,    greater,  ellipsis,   periodcentered ] };
+    key <AB10> { [ slash,     question, exclamdown, questiondown   ] };
+    key <BKSL> { [ backslash, bar,      notsign,    brokenbar      ] };
+};
