@@ -90,7 +90,7 @@
 	tool = vimdiff
 	algorithm = histogram
 	submodule = log
-	noprefix = true
+	; noprefix = true
 	renames = true
 	indentHeuristic = true
 	; mnemonicPrefix = true
