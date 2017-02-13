@@ -1988,7 +1988,7 @@ augroup END
 " onoremap <silent> T      :<C-u>call sneak#wrap(v:operator, 1, 1, 0, 1)<CR>
 
 " Splice {{{2
-let g:splice_prefix = '_'
+let g:splice_prefix = '`'
 let g:splice_initial_diff_grid = 1
 let g:splice_initial_diff_compare = 1
 let g:splice_initial_scrollbind_grid = 1
