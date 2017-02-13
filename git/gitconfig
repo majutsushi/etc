@@ -124,7 +124,7 @@
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 [mergetool "splice"]
-	cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
+	cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED --cmd 'autocmd VimEnter * SpliceInit'"
 	trustExitCode = true
 
 [merge]
