@@ -1,5 +1,9 @@
 # m h  dom mon dow   command
-30  *  *   *   *     $HOME/.etc/crontab/runcrontab hourly
-0   4  *   *   *     $HOME/.etc/crontab/runcrontab daily
-0   5  *   *   7     $HOME/.etc/crontab/runcrontab weekly
-0   6  1   *   *     $HOME/.etc/crontab/runcrontab monthly
+01  *  *   *   *     $HOME/.etc/crontab/runcrontab hourly
+01  *  *   *   *     test -x /usr/sbin/anacron && /usr/sbin/anacron -t $HOME/.etc/crontab/anacrontab -S $HOME/.var/spool/anacron
+
+
+# fallbacks if anacron is not available
+0   4  *   *   *     test -x /usr/sbin/anacron || $HOME/.etc/crontab/runcrontab daily
+0   5  *   *   7     test -x /usr/sbin/anacron || $HOME/.etc/crontab/runcrontab weekly
+0   6  1   *   *     test -x /usr/sbin/anacron || $HOME/.etc/crontab/runcrontab monthly

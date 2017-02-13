@@ -1,0 +1,4 @@
+# format: period delay job-identifier command
+1           5     cron.daily      $HOME/.etc/crontab/runcrontab daily
+7           10    cron.weekly     $HOME/.etc/crontab/runcrontab weekly
+@monthly    15    cron.monthly    $HOME/.etc/crontab/runcrontab monthly
