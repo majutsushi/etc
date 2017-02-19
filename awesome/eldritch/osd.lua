@@ -2,6 +2,7 @@ local awful = require("awful")
 local naughty = require("naughty")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
+local gears = require("gears")
 
 local osd = {}
 
@@ -22,16 +23,19 @@ local function new(title)
     local titlecolor = beautiful.tooltip_title_color or "#f0e68c"
     title = '<span font_weight="bold" fgcolor="' .. titlecolor .. '">' .. title .. '</span>'
     local titlebox = wibox.widget.textbox(title)
-    local title_m = wibox.layout.margin(titlebox, 5, 5, 5, 5)
+    local title_m = wibox.container.margin(titlebox, 5, 5, 5, 5)
 
     o.percent = wibox.widget.textbox()
-    local percent_m = wibox.layout.margin(o.percent, 5, 5, 5, 5)
+    local percent_m = wibox.container.margin(o.percent, 5, 5, 5, 5)
 
-    o.progress = awful.widget.progressbar()
-    o.progress:set_max_value(100)
-    o.progress:set_width(150)
-    o.progress:set_color("#FFFFFF")
-    local progress_m = wibox.layout.margin(o.progress, 5, 5, 5, 5)
+    o.progress = wibox.widget {
+        max_value        = 100,
+        forced_width     = 150,
+        color            = beautiful.fg_widget,
+        background_color = beautiful.bg_widget,
+        widget           = wibox.widget.progressbar
+    }
+    local progress_m = wibox.container.margin(o.progress, 5, 5, 5, 5)
 
     local layout_bottom = wibox.layout.fixed.horizontal()
     layout_bottom:add(progress_m)
@@ -42,7 +46,7 @@ local function new(title)
     layout:set_bottom(layout_bottom)
     layout:buttons(awful.util.table.join(awful.button({}, 1, function() o:die() end)))
 
-    o.tmr = timer({ timeout = 2 })
+    o.tmr = gears.timer({ timeout = 2 })
     o.tmr:connect_signal("timeout", function() o:die() end)
 
     o.notification = naughty.notify({ height = 50, width = 205, timeout = 0 })

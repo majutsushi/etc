@@ -1,3 +1,5 @@
+local wibox = require("wibox")
+
 local separator = wibox.widget.base.make_widget()
 
 function separator.fit(sep, width, height)

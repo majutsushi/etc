@@ -32,10 +32,12 @@ menu_utils.wm_name = ""
 -- @return awful.menu compliant menu items tree
 function build_menu()
     local result = {}
-    local menulist = menu_gen.generate()
+    local menulist = {}
+    menu_gen.generate(function(result) menulist = result end)
 
     for k, v in pairs(menu_gen.all_categories) do
-        table.insert(result, { k, {}, icon_path .. v["icon_name"] } )
+        -- table.insert(result, { k, {}, icon_path .. v["icon_name"] } )
+        table.insert(result, { k, {} } )
     end
 
     for k, v in ipairs(menulist) do
