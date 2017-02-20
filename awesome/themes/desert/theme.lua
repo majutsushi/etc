@@ -106,6 +106,10 @@ theme.layout_dwindle    = "/usr/share/awesome/themes/zenburn/layouts/dwindle.png
 theme.layout_max        = theme.confdir .. "/icons/layouts/max.png"
 theme.layout_fullscreen = "/usr/share/awesome/themes/zenburn/layouts/fullscreen.png"
 theme.layout_magnifier  = theme.confdir .. "/icons/layouts/magnifier.png"
+theme.layout_cornernw   = theme.confdir .. "/icons/layouts/cornernw.png"
+theme.layout_cornerne   = "/usr/share/awesome/themes/zenburn/layouts/cornerne.png"
+theme.layout_cornersw   = "/usr/share/awesome/themes/zenburn/layouts/cornersw.png"
+theme.layout_cornerse   = "/usr/share/awesome/themes/zenburn/layouts/cornerse.png"
 theme.layout_floating   = theme.confdir .. "/icons/layouts/floating.png"
 -- }}}
 
