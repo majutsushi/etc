@@ -12,5 +12,4 @@
 	branch = master
 [submodule "awesome/vicious"]
 	path = awesome/vicious
-	url = http://git.sysphere.org/vicious/
-	branch = master
+	url = https://github.com/Mic92/vicious
