@@ -68,7 +68,7 @@ case "$path" in
     *.pcap|*.pcapng|*.pcap.gz|*.pcapng.gz)
         try tshark -t a -r "$path" && { dump | trim; exit 0; }
         ;;
-    */cdr_*.log)
+    */cdr_*.log|*/localhost-cdr.log)
         try ~/apps/list-cdrs/list-cdrs.sh "$path" && { dump; exit 0; }
         ;;
 esac
