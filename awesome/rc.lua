@@ -138,7 +138,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock('<span font_size="smaller" fgcolor="#999999">%a %d %b</span> %H:%M', 1)
-eldritch.widgets.cal.register(mytextclock)
+eldritch.applets.cal.register(mytextclock)
 
 -- {{{ Pulseaudio volume
 volicon = wibox.widget.imagebox(beautiful.widget_vol)
@@ -254,13 +254,13 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            osinfo[4] == "vanadis" and eldritch.widgets.rhino(),
-            eldritch.widgets.battery(),
-            eldritch.widgets.cpu(),
-            eldritch.widgets.memory(),
+            osinfo[4] == "vanadis" and eldritch.applets.rhino(),
+            eldritch.applets.battery(),
+            eldritch.applets.cpu(),
+            eldritch.applets.memory(),
             -- volicon,
             -- volmargin,
-            -- eldritch.widgets.weather(),
+            -- eldritch.applets.weather(),
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,

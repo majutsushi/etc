@@ -45,7 +45,7 @@ local function new()
         forced_width     = 50,
         stack            = true,
         max_value        = 100,
-        background_color = beautiful.bg_widget,
+        background_color = beautiful.bg_normal,
         stack_colors     = getcpucolours(nprocs),
         widget           = wibox.widget.graph
     }
@@ -57,14 +57,9 @@ local function new()
         {
             wibox.widget.imagebox(beautiful.widget_cpu),
             {
-                {
-                    graph,
-                    reflection = { horizontal = true, vertical = false },
-                    widget     = wibox.container.mirror,
-                },
-                top    = 1,
-                bottom = 1,
-                widget = wibox.container.margin,
+                graph,
+                reflection = { horizontal = true, vertical = false },
+                widget     = wibox.container.mirror,
             },
             layout = wibox.layout.fixed.horizontal,
         },
