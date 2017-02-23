@@ -30,7 +30,8 @@ local setmetatable = setmetatable
 local capi = {
     mouse = mouse,
     client = client,
-    screen = screen
+    screen = screen,
+    awesome = awesome,
 }
 
 -- Scratchdrop: drop-down applications manager for the awesome window manager
@@ -38,6 +39,29 @@ local drop = {} -- module scratch.drop
 
 
 local dropdown = {}
+
+local xprop = "awful.client.property.scratchpad"
+capi.awesome.register_xproperty(xprop, "boolean")
+
+
+local function get_geometry(vert, horiz, width, height, screen)
+    -- Client geometry and placement
+    local screengeom = capi.screen[screen].workarea
+
+    if width  <= 1 then width  = screengeom.width  * width  end
+    if height <= 1 then height = screengeom.height * height end
+
+    if     horiz == "left"  then x = screengeom.x
+    elseif horiz == "right" then x = screengeom.width - width
+    else   x =  screengeom.x+(screengeom.width-width)/2 end
+
+    if     vert == "bottom" then y = screengeom.height + screengeom.y - height
+    elseif vert == "center" then y = screengeom.y+(screengeom.height-height)/2
+    else   y =  screengeom.y - screengeom.y end
+
+    return { x = x, y = y, width = width, height = height }
+end
+
 
 -- Create a new window for the drop-down application when it doesn't
 -- exist, or toggle between hidden and visible states when it does
@@ -53,6 +77,27 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
     local attach_signal = capi.client.connect_signal    or capi.client.add_signal
     local detach_signal = capi.client.disconnect_signal or capi.client.remove_signal
 
+    local resurrected = false
+
+    -- Check whether there is still an old scratchpad from before a restart
+    if not dropdown[prog] then
+        for _, c in ipairs(client.get()) do
+            if drop.is_scratch(c) then
+                dropdown[prog] = c
+                resurrected = true
+
+                -- Add unmanage signal for scratchdrop program
+                attach_signal("unmanage", function (cl)
+                    if dropdown[prog] == cl then
+                        dropdown[prog] = nil
+                    end
+                end)
+
+                break
+            end
+        end
+    end
+
     if not dropdown[prog] then
         spawnw = function (c)
             dropdown[prog] = c
@@ -65,28 +110,14 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
             end)
 
             -- Scratchdrop clients are floaters
-            awful.client.floating.set(c, true)
-
-            -- Client geometry and placement
-            local screengeom = capi.screen[screen].workarea
-
-            if width  <= 1 then width  = screengeom.width  * width  end
-            if height <= 1 then height = screengeom.height * height end
-
-            if     horiz == "left"  then x = screengeom.x
-            elseif horiz == "right" then x = screengeom.width - width
-            else   x =  screengeom.x+(screengeom.width-width)/2 end
-
-            if     vert == "bottom" then y = screengeom.height + screengeom.y - height
-            elseif vert == "center" then y = screengeom.y+(screengeom.height-height)/2
-            else   y =  screengeom.y - screengeom.y end
+            c.floating = true
 
             -- Client properties
-            c:geometry({ x = x, y = y, width = width, height = height })
+            c:geometry(get_geometry(vert, horiz, width, height, screen))
             c.ontop = true
             c.above = true
             c.skip_taskbar = true
-            awful.client.property.set(c, "role", "scratchpad")
+            c:set_xproperty(xprop, true)
             if sticky then c.sticky = true end
             if c.titlebar then awful.titlebar.remove(c) end
 
@@ -97,7 +128,7 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
 
         -- Add manage signal and spawn the program
         attach_signal("manage", spawnw)
-        awful.util.spawn(prog, false)
+        awful.spawn(prog, false)
     else
         -- Get a running client
         c = dropdown[prog]
@@ -111,7 +142,7 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
 
         -- Switch the client to the current workspace
         if c:isvisible() == false then c.hidden = true
-            awful.client.movetotag(awful.tag.selected(screen), c)
+            c:move_to_tag(screen.selected_tag)
         end
 
         -- Focus and raise if hidden
@@ -130,11 +161,16 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
             end
             c:tags(ctags)
         end
+
+        -- Set correct geometry for resurrected scratchpads
+        if resurrected then
+            c:geometry(get_geometry(vert, horiz, width, height, screen))
+        end
     end
 end
 
 function drop.is_scratch(c)
-    return awful.client.property.get(c, "role", "scratchpad")
+    return c:get_xproperty(xprop) ~= nil
 end
 
 return setmetatable(drop, { __call = function(_, ...) return toggle(...) end })
