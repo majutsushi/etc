@@ -734,6 +734,16 @@ end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
+    -- If the currently focused client is the IDEA input popup,
+    -- don't change focus if the mouse moves over a different client
+    -- due to the popup changing size
+    local f = client.focus
+    if f then
+        if f.class == "jetbrains-idea-ce" and f.type == "dialog" then
+            return
+        end
+    end
+
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
         and awful.client.focus.filter(c) then
         client.focus = c
