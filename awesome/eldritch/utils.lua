@@ -54,6 +54,20 @@ function utils.bold(text)
     return '<span font_weight="bold">' .. tostring(text) .. '</span>'
 end
 
+function utils.merge_tables(t1, t2)
+    local ret = awful.util.table.clone(t1)
+
+    for k, v in pairs(t2) do
+        if type(v) == "table" and ret[k] and type(ret[k]) == "table" then
+            ret[k] = utils.merge_tables(ret[k], v)
+        else
+            ret[k] = v
+        end
+    end
+
+    return ret
+end
+
 -- https://awesomewm.org/wiki/FullScreens
 function utils.fullscreens(c)
     c.floating = not c.floating
