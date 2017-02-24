@@ -2,31 +2,17 @@ local beautiful = require("beautiful")
 local tooltip = require("eldritch.tooltip")
 local vicious = require("vicious")
 local wibox = require("wibox")
+local widgets = require("eldritch.widgets")
 
 local memwidget = {}
 
 local function new()
-    local bar = wibox.widget {
-        background_color = beautiful.bg_widget,
-        border_color     = nil,
-        color            = beautiful.fg_widget,
-        widget           = wibox.widget.progressbar,
-    }
+    local bar = widgets.circularprogressbar()
 
     local widget = wibox.widget {
         {
             wibox.widget.imagebox(beautiful.widget_mem),
-            {
-                {
-                    bar,
-                    forced_width = 8,
-                    direction    = 'east',
-                    widget       = wibox.container.rotate,
-                },
-                top    = 1,
-                bottom = 1,
-                widget = wibox.container.margin,
-            },
+            bar,
             layout = wibox.layout.fixed.horizontal,
         },
         right  = 7,
