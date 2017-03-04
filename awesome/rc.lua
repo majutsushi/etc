@@ -470,6 +470,8 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86MonBrightnessDown", function () eldritch.utils.brightness(-4) end,
               {description="decrease brightness", group="misc"}),
 
+    awful.key({}, "XF86ScreenSaver", function () awful.spawn("slock") end,
+              {description="lock screen", group="misc"}),
     awful.key({ altkey, "Control" }, "l", function () awful.spawn("slock") end,
               {description="lock screen", group="misc"}),
     awful.key({ },           "Print", function () awful.spawn("gnome-screenshot") end,
