@@ -193,7 +193,11 @@ autocmd vimrc BufReadPost * if len(substitute(expand('%:p'), '/', '%', 'g')) > 2
 " automatically give executable permissions if file begins with #!
 " and contains" '/bin/' in the path
 " From https://github.com/mitechie/pyvim/blob/master/.vimrc
-autocmd vimrc BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute 'silent !chmod u+x <afile>' | endif | endif
+" Also check for file being readable to ignore netrw-loaded files.
+autocmd vimrc BufWritePost *
+    \ if getline(1) =~ "^#!" && getline(1) =~ "/bin/" && filereadable('<afile>') |
+    \     execute 'silent !chmod u+x <afile>' |
+    \ endif
 
 " filetype-specific settings
 augroup vimrc
