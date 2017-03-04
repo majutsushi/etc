@@ -44,6 +44,9 @@ fi
 # export RUBYOPT="-w $RUBYOPT"
 export RI="-f ansi"
 
+export GOPATH=$HOME/src/go
+path=( "$path[@]" ${(s,:,):-${GOPATH//://bin:}/bin} )
+
 export TERMINFO=$HOME/.terminfo
 
 export SSHHOME=$HOME/.etc/sshrc
