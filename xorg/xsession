@@ -100,6 +100,9 @@ system-config-printer-applet &
 # redshift
 # btsync
 
+# https://github.com/vincentbernat/awesome-configuration/blob/master/xsession
+# inputplug
+
 # xinput --set-prop 9 "Device Accel Constant Deceleration" 1
 # xinput --set-prop 9 "Device Accel Velocity Scaling" 5
 
