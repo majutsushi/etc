@@ -8,20 +8,26 @@ local icon_path = ""
 
 -- Get active outputs
 local function outputs()
-    local outputs = {}
+    local connected = {}
+    local disconnected = {}
     local xrandr = io.popen("xrandr -q --current")
 
     if xrandr then
         for line in xrandr:lines() do
             local output = line:match("^([%w-]+) connected ")
             if output then
-                outputs[#outputs + 1] = output
+                connected[#connected + 1] = output
+            end
+
+            output = line:match("^([%w-]+) disconnected ")
+            if output then
+                disconnected[#disconnected + 1] = output
             end
         end
         xrandr:close()
     end
 
-    return outputs
+    return connected, disconnected
 end
 
 local function arrange(out)
@@ -50,7 +56,7 @@ local function arrange(out)
 end
 
 -- Create a command to mirror the primary display to the other ones
-local function get_mirror_cmd()
+local function get_mirror_cmd(disconnected)
     local primary_w, primary_h
     local outputs = {}
     local xrandr = io.popen("xrandr -q --current")
@@ -80,14 +86,18 @@ local function get_mirror_cmd()
         cmd = cmd .. " --output " .. o .. " --mode " .. primary_w .. "x" .. primary_h .. " --pos 0x0 --rotate normal"
     end
 
+    for _, o in pairs(disconnected) do
+        cmd = cmd .. " --output " .. o .. " --off"
+    end
+
     return cmd
 end
 
 -- Build available choices
 local function menu()
     local menu = {}
-    local out = outputs()
-    local choices = arrange(out)
+    local connected, disconnected = outputs()
+    local choices = arrange(connected)
 
     for _, choice in pairs(choices) do
         local cmd = "xrandr"
@@ -99,10 +109,13 @@ local function menu()
             end
         end
         -- Disabled outputs
-        for _, o in pairs(out) do
+        for _, o in pairs(connected) do
             if not awful.util.table.hasitem(choice, o) then
                 cmd = cmd .. " --output " .. o .. " --off"
             end
+        end
+        for _, o in pairs(disconnected) do
+            cmd = cmd .. " --output " .. o .. " --off"
         end
 
         local label = ""
@@ -118,8 +131,8 @@ local function menu()
         menu[#menu + 1] = { label, cmd }
     end
 
-    if #out > 1 then
-        local mirror_cmd = get_mirror_cmd()
+    if #connected > 1 then
+        local mirror_cmd = get_mirror_cmd(disconnected)
         if mirror_cmd then
             menu[#menu + 1] = { "Mirror displays", mirror_cmd }
         end
