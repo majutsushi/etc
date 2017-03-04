@@ -309,13 +309,13 @@ psgrep() {
     fi
 }
 
-# upload()  { scp -p $1 cip:public_html/$2 }
 upload() {
     if [[ -z "$1" ]]; then
         echo "usage: upload file1 file2 ..."
         return 1
     else
-        scp "$@" root@majutsushi.net:/var/www/html/stuff/
+        chmod a+r "$@"
+        scp -p "$@" root@majutsushi.net:/var/www/html/stuff/
     fi
     for i in "$@"; do
         echo "https://majutsushi.net/stuff/${i// /%20}"
