@@ -16,6 +16,8 @@ local eldritch = require("eldritch")
 local pulse = require("pulse")
 local scratch = require("scratch")
 
+local xrandr = require("xrandr")
+
 -- Load Debian menu entries
 require("debian.menu")
 
@@ -460,6 +462,8 @@ globalkeys = awful.util.table.join(
         vicious.force({volbar})
         volbar:notify()
     end, {description="mute", group="audio"}),
+
+    awful.key({}, "XF86Display", function() xrandr.xrandr() end),
 
     awful.key({}, "XF86MonBrightnessUp", function () eldritch.utils.brightness(4) end,
               {description="increase brightness", group="misc"}),
