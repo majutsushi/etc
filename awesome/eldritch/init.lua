@@ -7,5 +7,6 @@ return
     tooltip = require("eldritch.tooltip"),
     utils = require("eldritch.utils"),
     widgets = require("eldritch.widgets"),
-    workers = require("eldritch.workers")
+    workers = require("eldritch.workers"),
+    xdg_menu = require("eldritch.xdg_menu")
 }

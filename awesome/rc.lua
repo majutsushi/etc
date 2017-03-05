@@ -10,6 +10,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+local icon_theme = require("menubar.icon_theme")()
 
 local vicious = require("vicious")
 local eldritch = require("eldritch")
@@ -113,19 +114,23 @@ awful.menu.menu_keys = {
 }
 
 myawesomemenu = {
-    { "hotkeys", function() return false, hotkeys_popup.show_help end},
+    { "hotkeys", function() return false, hotkeys_popup.show_help end },
     { "manual", terminal .. " -e man awesome" },
     { "edit config", editor_cmd .. " " .. awesome.conffile },
     { "restart", awesome.restart },
-    { "quit", function() awesome.quit() end}
+    { "quit", function() awesome.quit() end }
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "open terminal", terminal }
-                                  },
-                          width = 150
-                        })
+mymainmenu = eldritch.xdg_menu.build({
+    before = {
+        { "Awesome", myawesomemenu, beautiful.awesome_icon },
+    },
+    after = {
+        { "Debian", debian.menu.Debian_menu.Debian, icon_theme:find_icon_path("emblem-debian") },
+        { "Open terminal", terminal, icon_theme:find_icon_path("utilities-terminal") },
+    },
+    width = 150
+})
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
