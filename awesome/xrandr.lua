@@ -2,9 +2,10 @@
 
 local awful   = require("awful")
 local naughty = require("naughty")
+local icon_theme = require("menubar.icon_theme")()
 
 -- A path to a fancy icon
-local icon_path = ""
+local icon_path = icon_theme:find_icon_path("video-display")
 
 -- Get active outputs
 local function outputs()
@@ -174,7 +175,7 @@ local function xrandr()
         label, action = unpack(next)
     end
     state.cid = naughty.notify({ text = label,
-                                 -- icon = icon_path,
+                                 icon = icon_path,
                                  timeout = 5,
                                  screen = mouse.screen,
                                  replaces_id = state.cid,
