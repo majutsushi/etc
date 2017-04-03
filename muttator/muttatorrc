@@ -1,0 +1,10 @@
+set runtimepath=~/.var/lib/muttator,~/.etc/muttator/muttator
+
+set hintchars=hjklasdfgyuiopqwertnmzxcvb
+
+nnoremap J  Jzo
+nnoremap <C-r> ":emenu Message.Mark.Thread As Read<CR>Jzo"
+
+hi Hint::after -append font-size: 9pt; text-transform: lowercase;
+
+" vim: ft=vim

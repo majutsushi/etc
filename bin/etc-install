@@ -130,6 +130,7 @@ xlink latexmkrc
 #xlink mailcap
 xlink mercurial/hgrc
 xlink moc
+xlink muttator/muttatorrc
 xlink ranger target=.config/ranger
 xlink redshift.conf target=.config/redshift.conf
 xlink screen/screenrc
