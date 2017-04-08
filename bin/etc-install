@@ -121,6 +121,7 @@ xlink colordiffrc
 xlink ctags
 xlink gdbinit
 xlink gtk/gtkrc-2.0
+xlink gtk/gtk-3.0/gtk.css target=.config/gtk-3.0/gtk.css
 xlink gtk/gtk-3.0/settings.ini target=.config/gtk-3.0/settings.ini
 xlink idea/ideavimrc
 xlink indent.pro

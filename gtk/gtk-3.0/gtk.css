@@ -1,0 +1,13 @@
+/* GtkStatusIcon { */
+/*     background-color: #ffffff; */
+/*     color: #ffffff; */
+/*     border-color: #ffffff; */
+/* } */
+
+/* * { */
+/*     -GtkComboBox-appears-as-list: 1; */
+/* } */
+
+window#vim-main-window.background widget.gtk-form {
+    background-color: #333333;
+}
