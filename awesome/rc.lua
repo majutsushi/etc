@@ -607,6 +607,11 @@ awful.rules.rules = {
       end
     },
 
+    { rule = { class = "jetbrains.*" },
+      except = { type = "dialog" },
+      properties = { floating = false }
+    },
+
     -- { rule = { class = "Steam" },
     --   properties = { border_width = 0 } },
 }
@@ -676,7 +681,7 @@ client.connect_signal("mouse::enter", function(c)
     -- due to the popup changing size
     local f = client.focus
     if f then
-        if f.class == "jetbrains-idea-ce" and f.type == "dialog" then
+        if f.class and f.class:match("^jetbrains.*") and f.type == "dialog" then
             return
         end
     end
@@ -689,6 +694,13 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+-- Java hack from https://awesome.naquadah.org/bugs/index.php?do=details&task_id=733
+client.connect_signal("focus", function(c)
+    if c.class and c.class:match("^jetbrains.*") then
+        c:raise()
+    end
+end)
 -- }}}
 
 -- {{{ Arrange signal handler
