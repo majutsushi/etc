@@ -220,6 +220,12 @@ if command -v X >/dev/null; then
     cd $HOME
     xset -fp $FONTDIR 2> /dev/null
     xset +fp $FONTDIR
+
+    if command -v gsettings >/dev/null; then
+        gsettings set org.gtk.Settings.FileChooser startup-mode cwd
+        gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
+        gsettings set org.gnome.settings-daemon.plugins.keyboard active false
+    fi
 fi
 
 if command -v python >/dev/null; then
