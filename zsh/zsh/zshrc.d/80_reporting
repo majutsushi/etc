@@ -57,6 +57,9 @@ _alert_bg_job_finished() {
     if [[ -z "$SSH_CONNECTION" ]] && ! is-active-shell; then
         local body="\$ $__last_cmd\n<span font-style='italic'>${__last_cmd_dir}</span>"
         notify-send --expire-time=10000 --urgency=$urgency "$summary" "$body"
+
+        # set urgent hint on window
+        wmctrl -i -r $WINDOWID -b add,demands_attention
     fi
 }
 add-zsh-hook precmd _alert_bg_job_finished
