@@ -95,7 +95,7 @@ system-config-printer-applet &
 # https://www.mail-archive.com/systemd-devel@lists.freedesktop.org/msg17273.html
 # systemctl --user start lightson@$DISPLAY.service
 
-# obsession
+# lxsession
 # https://github.com/jceb/dex
 # redshift
 # btsync
