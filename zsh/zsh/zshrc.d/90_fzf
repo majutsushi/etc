@@ -77,6 +77,17 @@ J() {
     cd "$(hash -d | sed -e 's/^.*=//' | fzf --exact)"
 }
 
+v() {
+    local viminfo="$HOME/.var/lib/vim/viminfo"
+
+    sed -r -n -e 's/^> //p'  ~/.var/lib/vim/viminfo | tac | while read line; do
+        [[ -f "${line/\~/$HOME/}" ]] || continue
+        [[ "${line//*\//}" == COMMIT_EDITMSG ]] && continue
+
+        echo $line
+    done | fzf
+}
+
 copy-pw() {
     lpass show --clip --password $(lpass ls | fzf | awk '{print $(NF)}' | sed 's/\]//g')
 }
