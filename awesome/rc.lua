@@ -394,7 +394,8 @@ globalkeys = awful.util.table.join(
         volbar:notify()
     end, {description="mute", group="audio"}),
 
-    awful.key({}, "XF86Display", function() xrandr.xrandr() end),
+    awful.key({}, "XF86Display", function() xrandr.xrandr() end,
+              {description="switch between display configs", group="misc"}),
 
     awful.key({}, "XF86MonBrightnessUp", function () eldritch.utils.brightness(4) end,
               {description="increase brightness", group="misc"}),
