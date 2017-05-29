@@ -129,6 +129,8 @@ case "$mimetype" in
         try mediainfo "$path" && { dump | sed 's/  \+:/: /;';  exit 5; }
         exiftool "$path" && exit 5
         ;;
+    application/x-sqlite3)
+        try sqlite3 "$path" ".dump" && { dump | trim; exit 0; } || exit 1;;
 esac
 
 exit 1
