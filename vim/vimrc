@@ -2331,13 +2331,13 @@ nnoremap ' `
 nnoremap ` '
 
 " move into wrapped lines
-nnoremap j gj
-nnoremap k gk
+nnoremap <silent> j gj
+nnoremap <silent> k gk
 "nnoremap $ g$   " conflicts with virtualedit
 "nnoremap 0 g0
 "nnoremap ^ g^
-xnoremap j gj
-xnoremap k gk
+xnoremap <silent> j gj
+xnoremap <silent> k gk
 
 " move around in insert mode
 inoremap <M-h> <Esc>i
