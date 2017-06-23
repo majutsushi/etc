@@ -206,6 +206,8 @@ if command -v X >/dev/null; then
     #xlink xorg/xsession
     xlink xorg/xsessionrc
 
+    xlink icons/Faenza-Darkest target=.local/share/icons/Faenza-Darkest
+
     FONTDIR=$HOME/.local/share/fonts
     mkdir -p $FONTDIR
     for fontf in .etc/xorg/fonts/*.bdf; do
