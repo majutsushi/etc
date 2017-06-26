@@ -84,9 +84,13 @@ function utils.fullscreens(c)
             clientHeight = math.min(clientHeight, screen[s].workarea.height)
             clientWidth = clientWidth + screen[s].workarea.width
         end
-        local t = c:geometry({x = clientX, y = clientY, width = clientWidth, height = clientHeight})
+        local t = c:geometry({ x      = clientX,
+                               y      = clientY,
+                               width  = clientWidth - beautiful.border_width * 2,
+                               height = clientHeight - beautiful.border_width * 2 })
     else
-        --apply the rules to this client so he can return to the right tag if there is a rule for that.
+        -- apply the rules to this client so he can return to the right tag
+        -- if there is a rule for that.
         awful.rules.apply(c)
     end
     -- focus our client
