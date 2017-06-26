@@ -118,6 +118,7 @@ xlink awesome target=.config/awesome
 xlink bibtoolrsc
 xlink colorgccrc
 xlink colordiffrc
+xlink compton.conf target=.config/compton.conf
 xlink ctags
 xlink gdbinit
 xlink gtk/gtkrc-2.0
