@@ -1582,6 +1582,7 @@ let g:ctrlp_lazy_update = 0
 let g:ctrlp_mruf_relative = 0
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript']
 
+let g:ctrlp_buftag_ctags_bin = g:ctagsbin
 let g:ctrlp_buftag_types = {
     \ 'grace' : '--options=' . $HOME . '/.vim/bundle/vim-grace/ctags/grace.cnf --language-force=grace --grace-types=idvtcm'
 \ }
