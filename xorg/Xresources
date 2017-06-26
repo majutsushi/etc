@@ -66,20 +66,19 @@ URxvt.reverseVideo: false
 !URxvt.foreground: white
 
 ! for real transparency
-!URxvt.depth: 32
-!URxvt.background: rgba:0000/0000/0000/dddd
-!URxvt.background: rgba:0000/0000/0000/8888
+URxvt.depth: 32
 ! for fake transparency
-URxvt.depth: 24
-!URxvt.background: #303030
-!URxvt.transparent: true
+! URxvt.depth: 24
+! URxvt.transparent: true
+
+URxvt.blurRadius: 20
 !URxvt.tintColor: white
 !URxvt.shading: 15
 
 URxvt.cursorColor: CURSORCOLOR
 URxvt.underlineColor: yellow
 URxvt.foreground: FOREGROUND
-URxvt.background: BACKGROUND
+URxvt.background: [90]#303030
 URxvt.color0:  COLOR0
 URxvt.color1:  COLOR1
 URxvt.color2:  COLOR2
@@ -97,7 +96,7 @@ URxvt.color13: COLOR13
 URxvt.color14: COLOR14
 URxvt.color15: COLOR15
 
-URxvt.fading: 30
+! URxvt.fading: 30
 
 URxvt.geometry: 80x50
 
