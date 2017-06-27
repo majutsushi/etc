@@ -102,4 +102,7 @@ PS2="${pcol[bold]}%_${pcol[reset]} %(!.#.>) "
 PS3='?# '         # selection prompt used within a select loop.
 PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
 
+# PROMPT_EOL_MARK=%B%S⏎%s%b
+PROMPT_EOL_MARK=%B%S%#%s%b
+
 # vim: filetype=zsh
