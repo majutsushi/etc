@@ -12,6 +12,12 @@ nmap <Enter> :action GotoDeclaration<CR>
 nmap <C-V><C-N> :action GotoClass<CR>
 nmap <C-V><C-E> :action RecentFiles<CR>
 nmap <C-V><C-t> :action Vcs.UpdateProject<CR>
+nmap <C-V><C-o> :action OverrideMethods<CR>
+nmap <C-V><C-p> :action ParameterInfo<CR>
+nmap <C-V><C-u> :action GotoSuperMethod<CR>
+nmap <C-V><C-i> :action ImplementMethods<CR>
+
+imap <C-p> <Esc>:action ParameterInfo<CR>a
 
 nmap <C-t> :action Back<CR>
 " nmap <C-o> :action Back<CR>
