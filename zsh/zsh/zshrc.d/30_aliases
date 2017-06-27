@@ -245,22 +245,40 @@ __tmux-sessions() {
 compdef __tmux-sessions tm
 
 # based on https://gist.github.com/namuol/9122237
-kill() {
+__get_pids() {
     typeset -a args
     args=("${(z)@}")
     args=(${(@)args##\-*}) # remove 'kill' options
-    typeset -a names
-    names=($(ps --no-headers --format comm $args))
-    if command kill "$@"; then
+    print ${args}
+}
+__kill() {
+    local -a names=(${(z)2})
+    if command kill "${(z)1}"; then
         echo
-        echo " (╯°□°）╯︵$(flip "${(j: :)names}")"
+        for name in $names; do
+            echo " (╯°□°）╯︵$(flip "$name")"
+        done
         echo
     else
         return $?
     fi
 }
+kill() {
+    local args="$@"
+    local -a pids=($(__get_pids "$args"))
+    [[ -z "$pids" ]] && echo "No PIDs found" && return 1
+    local -a names=($(ps --no-headers --format comm ${(z)pids}))
+    __kill "$args" "$names"
+}
 
-jkill() { command kill "$@" }
+jkill() {
+    local args="$@"
+    local pids=($(__get_pids "$args"))
+    local pattern="${(j:|:)pids}"
+    local names="$(jps | command grep --extended-regexp '\b'$pattern'\b' | cut -d' ' -f 2)"
+    names=${names//$'\n'/ }
+    __kill "$args" $names
+}
 _jkill() {
     local -a processes
     processes=( ${${(f)"$(command jps)"}/ /:} )
