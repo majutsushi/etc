@@ -223,6 +223,7 @@ if command -v X >/dev/null; then
     cd $HOME
     xset -fp $FONTDIR 2> /dev/null
     xset +fp $FONTDIR
+    fc-cache
 
     if command -v gsettings >/dev/null; then
         gsettings set org.gtk.Settings.FileChooser startup-mode cwd
