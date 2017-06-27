@@ -1,18 +1,67 @@
 ## keybindings (run 'bindkeys' for details, more details via man zshzle)
 
+# Initialization taken from Debian's /etc/zsh/zshrc
+typeset -A key
+key=(
+    BackSpace  "${terminfo[kbs]}"
+    Home       "${terminfo[khome]}"
+    End        "${terminfo[kend]}"
+    Insert     "${terminfo[kich1]}"
+    Delete     "${terminfo[kdch1]}"
+    Up         "${terminfo[kcuu1]}"
+    Down       "${terminfo[kcud1]}"
+    Left       "${terminfo[kcub1]}"
+    Right      "${terminfo[kcuf1]}"
+    PageUp     "${terminfo[kpp]}"
+    PageDown   "${terminfo[knp]}"
+)
+
+function bind2maps () {
+    local i sequence widget
+    local -a maps
+
+    while [[ "$1" != "--" ]]; do
+        maps+=( "$1" )
+        shift
+    done
+    shift
+
+    sequence="${key[$1]}"
+    widget="$2"
+
+    [[ -z "$sequence" ]] && return 1
+
+    for i in "${maps[@]}"; do
+        bindkey -M "$i" "$sequence" "$widget"
+    done
+}
+
+bind2maps emacs             -- BackSpace   backward-delete-char
+bind2maps       viins       -- BackSpace   vi-backward-delete-char
+bind2maps             vicmd -- BackSpace   vi-backward-char
+bind2maps emacs             -- Home        beginning-of-line
+bind2maps       viins vicmd -- Home        vi-beginning-of-line
+bind2maps emacs             -- End         end-of-line
+bind2maps       viins vicmd -- End         vi-end-of-line
+bind2maps emacs viins       -- Insert      overwrite-mode
+bind2maps             vicmd -- Insert      vi-insert
+bind2maps emacs             -- Delete      delete-char
+bind2maps       viins vicmd -- Delete      vi-delete-char
+bind2maps emacs viins vicmd -- Up          up-line-or-history
+bind2maps emacs viins vicmd -- Down        down-line-or-history
+bind2maps emacs             -- Left        backward-char
+bind2maps       viins vicmd -- Left        vi-backward-char
+bind2maps emacs             -- Right       forward-char
+bind2maps       viins vicmd -- Right       vi-forward-char
+
+unfunction bind2maps
+unset key
+
+
 # custom escape code mappings
 bindkey -s '\eQ13;3~' '\e^M'
 bindkey -s '\eQ13;5~' '^\n' # conflicts with '^J'
 bindkey -s '\eQ32;5~' '^@'
-
-bindkey "${terminfo[khome]}" beginning-of-line # Home
-bindkey "${terminfo[kend]}"  end-of-line       # End
-bindkey "${terminfo[kich1]}" overwrite-mode    # Insert
-bindkey "${terminfo[kdch1]}" delete-char       # Delete
-
-# xterm normal cursor keys mode
-bindkey '\e[H' beginning-of-line
-bindkey '\e[F' end-of-line
 
 # only search local history by default, and all history for isearch
 set-local-history() { zle .set-local-history }
@@ -23,6 +72,7 @@ zle-isearch-exit()  { NUMERIC=1 zle set-local-history }
 zle -N zle-isearch-exit
 
 zle-line-init()  {
+    printf '%s' ${terminfo[smkx]}
     NUMERIC=1 zle set-local-history
     if ! is-at-least 5.2; then
         # enable bracketed paste mode
@@ -31,6 +81,7 @@ zle-line-init()  {
 }
 zle -N zle-line-init
 zle-line-finish()  {
+    printf '%s' ${terminfo[rmkx]}
     if ! is-at-least 5.2; then
         # disable bracketed paste mode
         printf '\e[?2004l'
