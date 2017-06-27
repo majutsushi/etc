@@ -20,6 +20,7 @@ syntax match logDate /^=\d\{4}-\d\{2}-\d\{2}/hs=s+1 nextgroup=logTime skipwhite 
 syntax match logProblem /Final non-match/ contained
 syntax match logProblem /does not match/ contained
 syntax match logProblem /Counter \w\+ DID NOT MATCH/ contained
+syntax match logProblem /Found unexpected value/
 
 syntax match summaryLine /summary: .*/ contains=summaryOk,summaryFail
 
