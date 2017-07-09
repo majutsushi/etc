@@ -66,19 +66,19 @@ URxvt.reverseVideo: false
 !URxvt.foreground: white
 
 ! for real transparency
-URxvt.depth: 32
+! URxvt.depth: 32
 ! for fake transparency
-! URxvt.depth: 24
+URxvt.depth: 24
 ! URxvt.transparent: true
 
-URxvt.blurRadius: 20
+! URxvt.blurRadius: 20
 !URxvt.tintColor: white
 !URxvt.shading: 15
 
 URxvt.cursorColor: CURSORCOLOR
 URxvt.underlineColor: yellow
 URxvt.foreground: FOREGROUND
-URxvt.background: [95]#303030
+URxvt.background: BACKGROUND
 URxvt.color0:  COLOR0
 URxvt.color1:  COLOR1
 URxvt.color2:  COLOR2
