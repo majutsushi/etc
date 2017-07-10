@@ -136,7 +136,7 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
 
         -- Move to current screen
         if c.screen ~= screen then
-            awful.client.movetoscreen(c, screen)
+            c:move_to_screen(screen)
             movedscreen = true
         end
 
