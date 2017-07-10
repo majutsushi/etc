@@ -79,7 +79,11 @@ if [[ -n "$TMUX" ]]; then
     _update_from_tmux() {
         # Remove need to detach/re-attach after using session in different client
         # See also https://groups.google.com/forum/#!topic/tmux-users/UZFikgdglJU
-        tmux switch-client
+        if is-at-least 2.4 "$TMUX_VERSION"; then
+            tmux switch-client -t $(tmux display-message -p -F '#{client_name}')
+        else
+            tmux switch-client
+        fi
         VARS="$(tmux show-environment)"
         for VAR in ${(f)VARS}; do
             # only export non-removed variables
