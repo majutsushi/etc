@@ -11,3 +11,7 @@
 window#vim-main-window.background widget.gtk-form {
     background-color: #333333;
 }
+
+menu, .menu {
+    padding: 3px;
+}
