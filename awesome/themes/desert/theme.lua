@@ -20,10 +20,14 @@ theme.bg_systray = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
-theme.border_width  = 2
+theme.border_width  = 0
 theme.border_normal = theme.bg_normal
 theme.border_focus  = "#6B8E23"
 -- }}}
+
+theme.useless_gap = 7
+theme.gap_single_client = false
+-- theme.master_fill_policy = "master_width_factor"
 
 -- {{{ Titlebars
 theme.titlebar_bg_focus  = "#3F3F3F"
@@ -44,7 +48,7 @@ theme.taglist_fg_empty = "#777777"
 theme.tooltip_bg = theme.bg_normal
 theme.tooltip_title_color = "#f0e68c"
 theme.tooltip_key_color = "#98fb98"
-theme.tooltip_border_width = 1
+theme.tooltip_border_width = 0
 theme.tooltip_border_color = "#777777"
 -- }}}
 
