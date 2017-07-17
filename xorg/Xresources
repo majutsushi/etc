@@ -99,6 +99,7 @@ URxvt.color15: COLOR15
 ! URxvt.fading: 30
 
 URxvt.geometry: 80x50
+URxvt.internalBorder: 15
 
 URxvt.imLocale: ja_JP.UTF-8
 URxvt.preeditType: OnTheSpot,OffTheSpot,Root,None
