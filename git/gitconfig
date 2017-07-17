@@ -16,8 +16,8 @@
 	ls  = log --stat
 	lg  = log --graph --oneline --decorate
 	lga = log --graph --oneline --decorate --all
-	ll  = log --graph --pretty=tformat:\"%C(auto,yellow)%h %C(auto,blue)%ai%C(auto,green) %an %C(auto)%d %Creset%s\"
-	lla = log --graph --pretty=tformat:\"%C(auto,yellow)%h %C(auto,blue)%ai%C(auto,green) %an %C(auto)%d %Creset%s\" --all
+	ll  = log --graph --pretty=tformat:\"%C(auto,yellow)%h %C(auto,blue)%ad %C(auto,green)%<(15,trunc)%an %C(auto)%d %Creset%s\"
+	lla = log --graph --pretty=tformat:\"%C(auto,yellow)%h %C(auto,blue)%ad %C(auto,green)%<(15,trunc)%an %C(auto)%d %Creset%s\" --all
 	log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
 	show-upstream-branch = rev-parse --abbrev-ref '@{upstream}'
 	show-push-branch = rev-parse --abbrev-ref '@{push}'
@@ -113,7 +113,7 @@
 	sort = version:refname
 
 [log]
-	date = local
+	date = format-local:"%Y-%m-%d %H:%M"
 	follow = true
 	decorate = short
 
