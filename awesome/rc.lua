@@ -735,4 +735,13 @@ end)
 end
 -- }}}
 
+-- Temporary until https://github.com/awesomeWM/awesome/pull/1914 is available
+awful.tag.object.get_gap = function(t)
+    t = t or awful.screen.focused().selected_tag
+    if t.layout.name == "max" then
+        return 0
+    end
+    return awful.tag.getproperty(t, "useless_gap") or beautiful.useless_gap or 0
+end
+
 -- vim: foldenable foldmethod=marker
