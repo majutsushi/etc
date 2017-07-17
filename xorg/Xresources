@@ -367,12 +367,19 @@ UXTerm.termName: xterm-256color
 
 ! *** ROFI ***
 
+rofi.modi: drun,run,window,ssh
+rofi.bw: 0
+rofi.padding: 10
+rofi.hide-scrollbar: true
+rofi.scroll-method: 1
+rofi.font: DejaVu Sans Mono 14
+! "Separator style (none, dash, solid)"
+rofi.separator-style: none
+
 rofi.color-normal:         #333333,#ffffff,#4d4d4d,#6b8e23,#f0e68c
 rofi.color-urgent:         #333333,#cc0000,#4d4d4d,#cc0000,#fdf6e3
 rofi.color-active:         #333333,#87ceeb,#4d4d4d,#268bd2,#fdf6e3
 rofi.color-window:         #333333,#ffffff
-! "Separator style (none, dash, solid)"
-rofi.separator-style:      dash
 
 
 yeahconsole.term: urxvt
