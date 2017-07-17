@@ -15,4 +15,8 @@
         /* opacity: 0.8 !important; /1* Semi-transparent. Warning: Might be slow! *1/ */
     }
 
+    menupopup {
+        margin-left: 3px;
+        margin-right: 3px;
+    }
 }
