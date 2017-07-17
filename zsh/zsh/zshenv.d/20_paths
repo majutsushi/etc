@@ -14,6 +14,7 @@ path=(
     "$HOME/usr/bin"
     "$HOME/.local/bin"
 
+    "$HOME"/.gem/ruby/*/bin/(Nn[-1])
     /var/lib/gems/*/bin/(Nn[-1])
 
     # Macports
