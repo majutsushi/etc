@@ -54,7 +54,7 @@
 	ls-big-files = "!for commit in $(git log --all --pretty=tformat:%H); do git ls-tree -r -l $commit; done |awk '{print $4 \" \" $5}' |sort -nur | head -n 10"
 	purge-file = "!f() { [ -z \"$1\" ] && echo \"usage: git purge-file <file>\" && return; echo -n \"WARNING: Dangerous operation! Really purge file from history? [y/N] \"; read ans; [ \"$ans\" = \"y\" ] && git filter-branch -f --prune-empty --index-filter \"git rm -r --cached --ignore-unmatch \\\"$1\\\"\" -- --all; }; f"
 	; from https://gist.github.com/492227
-	lost = "!git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(auto,yellow)%h%Creset %C(auto,blue)%ai%Creset %f' --stdin | awk '/^SHA1/ {sub(\"SHA1: \", \"\"); print}'"
+	lost = "!git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %C(blue)%ad%Creset %C(green)%<(15,trunc)%an%Creset %s' --stdin | awk '/^SHA1/ {sub(\"SHA1: \", \"\"); print}'"
 
 [color]
 	ui = auto
