@@ -23,10 +23,6 @@ if header :regex "list-id" "<([^.]+)\.(majutsushi)\.github\.com>" {
 }
 
 if allof (not address :is :domain "from" "github.com",
-          # anyof (header :regex "list-post" ".*<mailto:([^@]+).*",
-          #        header :regex "x-mailing-list" ".*<([^@]+).*",
-          #        header :regex "x-beenthere" "([^@]+).*",
-          #        header :regex "x-loop" "([^@]+).*")) {
           anyof (allof (not header :matches "list-post" "*@reply.github.com*",
                         header :regex "list-post" ".*<mailto:([^>]+).*"),
                  header :regex "x-mailing-list" ".*<([^>]+).*",
