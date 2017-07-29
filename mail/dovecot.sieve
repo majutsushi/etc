@@ -22,6 +22,12 @@ if header :regex "list-id" "<([^.]+)\.(majutsushi)\.github\.com>" {
     stop;
 }
 
+# File Debian bug mail into a common folder
+if header :matches "list-post" "<*@bugs.debian.org>" {
+    fileinto :create "lists.owner@bugs_debian_org";
+    stop;
+}
+
 if allof (not address :is :domain "from" "github.com",
           anyof (allof (not header :matches "list-post" "*@reply.github.com*",
                         header :regex "list-post" ".*<mailto:([^>]+).*"),
