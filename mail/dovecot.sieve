@@ -29,7 +29,7 @@ if header :matches "list-post" "<*@bugs.debian.org>" {
 }
 
 if allof (not address :is :domain "from" "github.com",
-          anyof (allof (not header :matches "list-post" "*@reply.github.com*",
+          anyof (allof (not header :matches "list-post" "*github.com*",
                         header :regex "list-post" ".*<mailto:([^>]+).*"),
                  header :regex "x-mailing-list" ".*<([^>]+).*",
                  header :regex "x-beenthere" "(.*)",
