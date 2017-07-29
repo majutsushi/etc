@@ -14,6 +14,14 @@ if header :contains "X-Spam-Level" "**********" {
     stop;
 }
 
+if header :regex "list-id" "<([^.]+)\.(majutsushi)\.github\.com>" {
+    fileinto :create "GitHub.${2}.${1}";
+    stop;
+} elsif address :is :all "from" "notifications@github.com" {
+    fileinto :create "GitHub.other";
+    stop;
+}
+
 if allof (not address :is :domain "from" "github.com",
           # anyof (header :regex "list-post" ".*<mailto:([^@]+).*",
           #        header :regex "x-mailing-list" ".*<([^@]+).*",
