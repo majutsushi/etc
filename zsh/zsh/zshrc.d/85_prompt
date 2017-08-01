@@ -75,6 +75,11 @@ __prompt_ant() {
     fi
 }
 
+__prompt_nave() {
+    [[ -z "$NAVEVERSION" ]] && return
+    print "${pcol[red]}(nave $NAVEVERSION)${pcol[reset]} "
+}
+
 __prompt_local() {
     (( $#_prompt_local == 0 )) && return
     print " • ${(j: • :)_prompt_local}"
@@ -94,7 +99,7 @@ add-zsh-hook precmd __prompt_reset_vars
 
 PS1='
 $(__prompt_logo)${pcol[167]}%n${pcol[reset]} @ ${pcol[220]}%m${pcol[reset]} ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}$(__prompt_local)${_prompt_local_extra}
-%(2L.${pcol[bold]}%L${pcol[reset]} .)$(__prompt_jdk)$(__prompt_ant)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
+%(2L.${pcol[bold]}%L${pcol[reset]} .)$(__prompt_jdk)$(__prompt_ant)$(__prompt_nave)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
 
 RPS1='$(__prompt_orighome)'
 
