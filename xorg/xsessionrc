@@ -16,6 +16,8 @@ export PATH=$HOME/bin:$HOME/.bin:$HOME/.etc/bin:/usr/games:/var/lib/gems/1.8/bin
 export DVDCSS_CACHE=$HOME/.var/lib/dvdcss
 export GTK_OVERLAY_SCROLLING=0
 
+export IDEA_PROPERTIES="$HOME/.etc/idea/idea.properties"
+
 # ulimit -c unlimited
 # unclutter &
 xset +fp $HOME/.local/share/fonts
