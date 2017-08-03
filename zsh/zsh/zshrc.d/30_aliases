@@ -59,7 +59,7 @@ mcd() { mkdir -p "$@"; cd "$@" }
 compdef _mkdir mcd
 
 # defaults for some programs
-alias grep="grep --color=auto --extended-regexp --ignore-case"
+alias grep="grep --color=auto --extended-regexp"
 alias gdb="gdb -q"
 alias mtr="mtr -t"
 alias ssh="ssh -o 'PermitLocalCommand yes'"
