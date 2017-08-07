@@ -55,6 +55,8 @@ export AUTOSSH_PORT=0
 
 export TMUX_TMPDIR=$XDG_RUNTIME_DIR
 
+export CARGO_HOME=$HOME/.var/lib/cargo
+
 export CCACHE_DIR=$XDG_CACHE_HOME/ccache
 export CCACHE_COMPRESS=1
 export CCACHE_HASHDIR=1
