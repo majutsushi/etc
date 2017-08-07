@@ -1,0 +1,27 @@
+#!/bin/bash
+
+readonly EVENT_TYPE="$1"
+readonly DEVICE_ID="$2"
+readonly DEVICE_TYPE="$3"
+readonly DEVICE_NAME="$4"
+
+readonly SCRIPTDIR="$(cd $(dirname "$0") && pwd -P)"
+readonly LOGGER="logger -t inputplug-hook"
+
+[[ "$EVENT_TYPE" == XIDeviceEnabled ]] || exit 0
+
+case "$DEVICE_TYPE" in
+    XISlaveKeyboard)
+        $LOGGER "Setting custom keymap and symbols"
+        # http://madduck.net/docs/extending-xkb/
+        xkbcomp -w3 -I$HOME/.etc/xorg/xkb ~/.etc/xorg/xkb/keymap/default "${DISPLAY%%.*}"
+        ;;
+    XISlavePointer)
+        case "$DEVICE_NAME" in
+            Microsoft\ Microsoft\ Trackball\ Explorer®)
+                $LOGGER "Remapping trackball buttons"
+                xinput --set-button-map "$DEVICE_ID" 1 2 8 4 5 6 7 3 9 10 11 12 13
+                ;;
+        esac
+        ;;
+esac

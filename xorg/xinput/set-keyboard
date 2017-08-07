@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# http://madduck.net/docs/extending-xkb/
-xkbcomp -w3 -I$HOME/.etc/xorg/xkb ~/.etc/xorg/xkb/keymap/default "${DISPLAY%%.*}"
