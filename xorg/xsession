@@ -48,9 +48,8 @@ feh --bg-fill $HOME/media/desk/wallpaper/patterns/mypattern_1280x800.png
 #imwheel -b 006700
 #test -f /#avfs-on
 
-# http://madduck.net/docs/extending-xkb/
-# http://git.madduck.net/v/etc/xsession.git/blob/HEAD:/.xsession.d/01-xkb
-# xkbcomp -w3 -I$HOME/.etc/xorg/xkb ~/.etc/xorg/xkb/keymap/default "${DISPLAY%%.*}"
+inputplug -c $HOME/.etc/xorg/xinput/inputplug-hook
+$HOME/.etc/xorg/xinput/set-keyboard
 
 # localectl set-x11-keymap us pc105 "" "ctrl:nocaps,terminate:ctrl_alt_bksp"
 
