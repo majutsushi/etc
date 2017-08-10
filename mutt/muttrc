@@ -306,6 +306,7 @@ unignore user-agent: x-agent: x-mailer: x-newsreader:
 unignore newsgroups: posted-to: X-Spam-Status:
 unignore X-Fnord: X-Message-Flag:
 unignore x-label:
+unignore X-GitHub-Sender
 
 # ordering of headers in the pager
 unhdr_order *
