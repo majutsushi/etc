@@ -24,12 +24,15 @@ local function escape(text)
     return text:gsub("[%.%-]", special_chars)
 end
 
-local default_sink = ""
 local cached_sinks = {}
+
+local function get_default_sink()
+    return string.match(pacmd("dump"), "set%-default%-sink ([^\n]+)")
+end
 
 local function get_sink_name(sink)
     if type(sink) == "string" then return sink end
-    if sink == nil then return default_sink end
+    if sink == nil then return get_default_sink() end
 
     local key = sink + 1
 
@@ -97,8 +100,6 @@ function pulse.toggle(sink)
     pacmd(cmd)
 end
 -- }}}
-
-default_sink = string.match(pacmd("dump"), "set%-default%-sink ([^\n]+)")
 
 setmetatable(pulse, { __call = function(_, ...) return worker(...) end })
 
