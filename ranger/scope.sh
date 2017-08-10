@@ -71,6 +71,9 @@ case "$path" in
     */cdr_*.log|*/localhost-cdr.log)
         try ~/apps/list-cdrs/list-cdrs.sh "$path" && { dump; exit 0; }
         ;;
+    *.pcf.gz|*.ttf|*.otf)
+        try fc-query "$path" && { dump; exit 0; }
+        ;;
 esac
 
 case "$extension" in
