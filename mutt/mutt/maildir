@@ -9,7 +9,9 @@ mailboxes =.Todo
 mailboxes =.Waiting
 mailboxes =.Archive
 mailboxes =.Sent
-# mailboxes =.lists
+mailboxes =.GitHub
+mailboxes `for file in ~/Maildir/.GitHub.*; do echo -n "=$(basename $file | sed -r -e 's/(.*)\.[^.]+/\1/') "; echo -n "=$(basename $file) "; done`
+mailboxes =.lists
 mailboxes `for file in ~/Maildir/.lists.*; do echo -n "=$(basename $file) "; done`
 mailboxes =.Spam
 
