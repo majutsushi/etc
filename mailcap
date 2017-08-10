@@ -11,3 +11,4 @@ application/zip; xdg-open '%s'; test=test -n "$DISPLAY"; nametemplate=%s.zip
 application/zip; unzip -l '%s'; nametemplate=%s.zip; copiousoutput
 text/rtf; mutt_bgrun abiword '%s'; test=test -n "$DISPLAY"; nametemplate=%s.rtf
 text/rtf; unrtf --text '%s'; nametemplate=%s.rtf; copiousoutput
+text/html; elinks -force-html -dump -dump-color-mode -1 %s; copiousoutput; description=HTML Text; nametemplate=%s.html
