@@ -82,9 +82,9 @@
 	submoduleSummary = true
 
 [pager]
-	diff = diff-so-fancy | less --pattern '^(Date|added|deleted|modified): '
-	log = diff-so-fancy | less --pattern '^(Date|added|deleted|modified): '
-	show = diff-so-fancy | less --pattern '^(Date|added|deleted|modified): '
+	diff = diff-so-fancy | less
+	log = diff-so-fancy | less
+	show = diff-so-fancy | less
 
 [diff]
 	tool = vimdiff

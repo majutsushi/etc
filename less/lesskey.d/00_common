@@ -6,7 +6,7 @@ l right-scroll
 ] next-file
 Q quit \1
 :cq quit \1
-D noaction j/\^diff|commit|From \n\eu
+D noaction j/\^((diff|commit|Date|From) )|((added|deleted|modified): )\n\eu
 # ^s noaction /\^\\s+
 ^s noaction /\^       
 V noaction g|$/usr/bin/vim -\n
