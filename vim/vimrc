@@ -24,8 +24,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Navigation
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'FelikZ/ctrlp-py-matcher'
-NeoBundle 'scrooloose/nerdtree', {'lazy': 1,
-    \ 'autoload': {'commands': ['NERDTreeToggle', 'NERDTreeFind']}}
+NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Lokaltog/vim-easymotion', {'lazy': 1,
     \ 'autoload': {'mappings': '<Plug>(easymotion'}}
 NeoBundle 'bruno-/vim-vertical-move', {'lazy': 1,
@@ -1710,8 +1709,9 @@ nmap gm? <Plug>MarkSearchAnyPrev
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 "let NERDTreeCaseSensitiveSort = 1
-let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
-let NERDTreeHijackNetrw = 0
+" let NERDTreeChDirMode = 2 " change pwd with nerdtree root change
+" let NERDTreeHijackNetrw = 0
+let NERDTreeCreatePrefix = 'silent keepalt keepjumps'
 let NERDTreeIgnore = [
     \ '\~$',
     \ '\.o$',
@@ -1720,11 +1720,21 @@ let NERDTreeIgnore = [
     \ '\.blg$',
     \ '\.fdb_latexmk$',
     \ '\.log$',
+    \ '\.orig$',
     \ '\.out$',
     \ '\.pdf$'
 \ ]
 
 autocmd vimrc BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" From https://github.com/wincent/wincent/blob/9fcbfb13e97701d2c0f54340f4465536e1381bfb/roles/dotfiles/files/.vim/autoload/autocmds.vim#L5-L10
+function! s:nerdtree_select_last_file()
+    let previous = expand('#:t')
+    if previous != ''
+        call search('\v<' . previous . '>')
+    endif
+endfunction
+autocmd vimrc User NERDTreeInit call s:nerdtree_select_last_file()
 
 " s:toggle_nerdtree() {{{3
 function! s:toggle_nerdtree() abort
@@ -2424,6 +2434,9 @@ cnoremap <M-n> <C-n>
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 " Misc {{{2
+
+ " Like vim-vinegar.
+nnoremap <silent> - :silent edit <C-R>=empty(expand('%')) ? '.' : expand('%:p:h')<CR><CR>
 
 " for quick macro playback
 "nnoremap Q @q
