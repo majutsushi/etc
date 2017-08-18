@@ -42,6 +42,7 @@ hi NonText	guifg=#add8e6 guibg=#4d4d4d
 hi Question	guifg=#00ff7f
 hi Search	guibg=#cd853f guifg=#f5deb3
 hi SpecialKey	guifg=#666666
+hi QuickFixLine	guibg=#408f07 guifg=#ffffff
 
 hi StatusLine	guibg=#c2bfa5 guifg=#000000 gui=none
 "hi StatusLineNC	guibg=#c2bfa5 guifg=#7f7f7f gui=none
