@@ -5,6 +5,8 @@ let b:stl = "#[FileName]%t #[FileType]%{exists('w:quickfix_title') ? ' ' . w:qui
 
 nnoremap <buffer> <silent> p <CR><C-W>p
 
+setlocal nocursorline
+
 " Folding of (gnu)make output.
 setlocal foldmethod=marker
 setlocal foldmarker=Entering\ directory,Leaving\ directory
