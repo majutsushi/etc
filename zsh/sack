@@ -58,4 +58,4 @@ remove_escaped_chars() {
     fi
 }
 
-$BIN --color "$@" | tee >/dev/null >(display_shortcuts) >(process_shorcut_paths | remove_escaped_chars > "${SACK_SHORTCUT_FILE}") | less
+$BIN --color "$@" | tee >/dev/null >(display_shortcuts) >(process_shorcut_paths | remove_escaped_chars > "${SACK_SHORTCUT_FILE}") | less -F
