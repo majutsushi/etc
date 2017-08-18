@@ -2,11 +2,12 @@
 
 partial alphanumeric_keys
 xkb_symbols "custom" {
-    key <TLDE> { [ grave, asciitilde, degree,         infinity      ] };
+    key <TLDE> { [ grave, asciitilde, degree                        ] };
     key <AE01> { [ 1,     exclam,     onesuperior,    onequarter    ] };
     key <AE02> { [ 2,     at,         twosuperior,    onehalf       ] };
     key <AE03> { [ 3,     numbersign, threesuperior,  threequarters ] };
     key <AE05> { [ 5,     percent,    EuroSign                      ] };
+    key <AE08> { [ 8,     asterisk,   infinity                      ] };
     key <AE11> { [ minus, underscore, endash,         emdash        ] };
     key <AE12> { [ equal, plus,       approximate,    plusminus     ] };
 
