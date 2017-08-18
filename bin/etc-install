@@ -228,7 +228,7 @@ if command -v X >/dev/null; then
     if command -v gsettings >/dev/null; then
         gsettings set org.gtk.Settings.FileChooser startup-mode cwd
         gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
-        gsettings set org.gnome.settings-daemon.plugins.keyboard active false
+        gsettings set org.gnome.settings-daemon.plugins.keyboard active false || true
     fi
 fi
 
