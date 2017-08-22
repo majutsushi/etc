@@ -49,32 +49,49 @@ merge() {
         cat $confbase >> $target
     fi
 
-    local localfile=$HOME/.local/etc/$(basename "$confbase")
+    local localbase=$HOME/.local/etc/$(basename "$confbase")
+    local localtarget="$(mktemp -u)"
+    if [[ -f "$localbase" ]]; then
+        echo -e "\n$comment [$(readlink -f "$localbase")]" >> "$localtarget"
+        cat "$localbase" >> "$localtarget"
+    fi
+    if [[ -d "${localbase}.d" ]]; then
+        for part in ${localbase}.d/??_*; do
+            echo -e "\n$comment [$(readlink -f "$part")]" >> "$localtarget"
+            cat "$part" >> "$localtarget"
+        done
+    fi
 
     if [[ -d ${confbase}.d ]]; then
-        [[ -f $localfile ]] && ln -s $localfile ${confbase}.d/50_local || :
+        [[ -f "$localtarget" ]] && ln -s "$localtarget" "${confbase}.d/50_local" || :
 
         for part in ${confbase}.d/??_*; do
             if grep -q '^# --- CUT HERE ---$' $part; then
                 csplit -s $part '/^# --- CUT HERE ---$/+1'
                 if bash xx00; then
-                    echo -e "\n$comment [$(readlink -f $part)]" >> $target
+                    if [[ "$part" != $confbase.d/50_local ]]; then
+                        echo -e "\n$comment [$(readlink -f $part)]" >> $target
+                    fi
                     cat xx01 >> $target
                 fi
                 rm xx0[01]
             else
-                echo -e "\n$comment [$(readlink -f $part)]" >> $target
+                if [[ "$part" != $confbase.d/50_local ]]; then
+                    echo -e "\n$comment [$(readlink -f $part)]" >> $target
+                fi
                 cat $part >> $target
             fi
         done
 
         [[ -f ${confbase}.d/50_local ]] && rm ${confbase}.d/50_local || :
     else
-        if [[ -f $localfile ]]; then
-            echo -e "\n$comment [$localfile]" >> $target
-            cat $localfile >> $target
+        if [[ -f $localtarget ]]; then
+            echo -e "\n$comment [$localtarget]" >> $target
+            cat $localtarget >> $target
         fi
     fi
+
+    [[ -f "$localtarget" ]] && rm "$localtarget" || :
 }
 
 xlink() {
