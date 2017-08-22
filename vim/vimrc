@@ -83,7 +83,6 @@ NeoBundle 'tpope/vim-characterize'
 NeoBundle 'luochen1990/rainbow'
 
 " Misc
-NeoBundle 'ervandew/screen'
 NeoBundle 'godlygeek/csapprox', {'terminal': 1}
 NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'tpope/vim-eunuch'
@@ -95,7 +94,6 @@ NeoBundle 'https://gitorious.org/vim-gnupg/vim-gnupg.git'
 
 NeoBundle 'vim-scripts/DrawIt', {'lazy': 1,
     \ 'autoload': {'commands': ['DIstart', 'DrawIt']}}
-" NeoBundle 'vim-scripts/Vim-R-plugin'
 NeoBundle 'vim-scripts/VisIncr'
 NeoBundle 'vim-scripts/ZoomWin'
 " NeoBundle 'vim-scripts/gtk-vim-syntax'
@@ -1862,14 +1860,6 @@ let g:quickfixsigns_icons = {}
 let g:quickfixsigns#marks#buffer = split('abcdefghijklmnopqrstuvwxyz', '\zs')
 let g:quickfixsigns#marks#global = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '\zs')
 
-" r-plugin {{{2
-if executable('urxvt')
-    let vimrplugin_term_cmd = "urxvt -title R -e"
-else
-    let vimrplugin_term = "uxterm"
-endif
-let vimrplugin_underscore   = 0
-
 " Rainbow Parentheses {{{2
 let g:rainbow_active = 1
 let g:rainbow_conf = {
@@ -1923,31 +1913,6 @@ let g:rainbow_conf = {
 \   }
 \}
 nnoremap <silent> gr :RainbowToggle<CR>
-
-" Screen {{{2
-let g:ScreenImpl = 'Tmux'
-let g:ScreenShellTerminal = 'urxvt'
-let g:ScreenShellExpandTabs = 1
-
-function! s:ScreenShellListener()
-    if g:ScreenShellActive
-        nnoremap <silent> <leader>ss :ScreenSend<cr>
-        xnoremap <silent> <leader>ss :ScreenSend<cr>
-        nnoremap <silent> <leader>sq :ScreenQuit<cr>
-    else
-        nnoremap <silent> <leader>ss :ScreenShellVertical<cr>
-    endif
-endfunction
-
-nnoremap <silent> <leader>ss :ScreenShellVertical<cr>
-augroup ScreenShellEnter
-    autocmd!
-    autocmd User * call <SID>ScreenShellListener()
-augroup END
-augroup ScreenShellExit
-    autocmd!
-    autocmd User * call <SID>ScreenShellListener()
-augroup END
 
 " Splice {{{2
 let g:splice_prefix = '`'
