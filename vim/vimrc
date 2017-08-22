@@ -1495,23 +1495,12 @@ let g:calendar_no_mappings = 1
 call s:fakemap('<Plug>RestoreWinPosn')
 call s:fakemap('<Plug>SaveWinPosn')
 
-" changelog {{{2
-let g:changelog_username = "Jan Larres <jan@majutsushi.net>"
-
 " CheckAttach {{{2
 let g:attach_check_keywords  = '.doc,.pdf,.xls,.ppt,.rtf,.pps'
 let g:attach_check_keywords .= ',attachment,attach,attached,attaching,enclosed'
 let g:attach_check_keywords .= ',anhängen,angehängt,Anhang'
 let g:attach_check_keywords .= ',CV,resume,cover letter'
 let g:checkattach_filebrowser = 'ranger'
-
-" clang_complete {{{2
-let g:clang_auto_select = 1
-let g:clang_use_library = 1
-
-" command-t {{{2
-let g:CommandTMaxFiles = 100000
-let g:CommandTMatchWindowReverse = 1
 
 " CSApprox {{{2
 let g:CSApprox_attr_map = {'sp': 'fg'}
@@ -1625,10 +1614,6 @@ omap z <Plug>(easymotion-s2)
 " map  n <Plug>(easymotion-next)
 " map  N <Plug>(easymotion-prev)
 
-" Eclim {{{2
-let g:EclimLoggingDisabled = 1
-let g:EclimCompletionMethod = 'omnifunc'
-
 " expand-region {{{2
 nmap <C-Space> <Plug>(expand_region_expand)
 xmap <C-Space> <Plug>(expand_region_expand)
@@ -1682,9 +1667,6 @@ let g:Gitv_OpenHorizontal = 1
 
 " GnuPG {{{2
 let g:GPGUsePipes = 1
-
-" Jedi {{{2
-let g:jedi#auto_vim_configuration = 0
 
 " Latex Box {{{2
 let g:LatexBox_completion_close_braces = 0
@@ -1868,17 +1850,6 @@ endpython
     xnoremap gx <C-C>:call <SID>SmartOpen('v')<CR>
 endif
 
-" OrgMode {{{2
-let g:org_todo_keywords = [
-    \ 'TODO(t)',
-    \ 'INPROGRESS(p)',
-    \ '|',
-    \ 'DONE(d)',
-    \ 'WAITING(w)'
-\ ]
-
-highlight link org_shade_stars Ignore
-
 " ProtoDef {{{2
 let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
 let g:protodefctagsexe = g:ctagsbin
@@ -1978,28 +1949,6 @@ augroup ScreenShellExit
     autocmd User * call <SID>ScreenShellListener()
 augroup END
 
-" Sneak {{{2
-" let g:sneak#streak = 1
-" let g:sneak#s_next = 0
-
-" highlight SneakPluginTarget guifg=#f5deb3 guibg=#cd853f gui=bold
-" highlight SneakStreakTarget guifg=#f5deb3 guibg=#cd853f gui=bold
-" highlight SneakStreakMask guifg=#cd853f guibg=#cd853f
-
-" nnoremap <silent> f      :<c-u>call sneak#wrap('', 1, 0, 1, 0)<CR>
-" nnoremap <silent> F      :<c-u>call sneak#wrap('', 1, 1, 1, 0)<CR>
-" xnoremap <silent> f <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 0, 1, 1)<CR>
-" xnoremap <silent> F <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 1, 1, 1)<CR>
-" onoremap <silent> f      :<C-u>call sneak#wrap(v:operator, 1, 0, 1, 1)<CR>
-" onoremap <silent> F      :<C-u>call sneak#wrap(v:operator, 1, 1, 1, 1)<CR>
-
-" nnoremap <silent> t      :<c-u>call sneak#wrap('', 1, 0, 0, 0)<CR>
-" nnoremap <silent> T      :<c-u>call sneak#wrap('', 1, 1, 0, 0)<CR>
-" xnoremap <silent> t <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 0, 0, 1)<CR>
-" xnoremap <silent> T <Esc>:<C-u>call sneak#wrap(visualmode(), 1, 1, 0, 1)<CR>
-" onoremap <silent> t      :<C-u>call sneak#wrap(v:operator, 1, 0, 0, 1)<CR>
-" onoremap <silent> T      :<C-u>call sneak#wrap(v:operator, 1, 1, 0, 1)<CR>
-
 " Splice {{{2
 let g:splice_prefix = '`'
 let g:splice_initial_diff_grid = 1
@@ -2047,12 +1996,6 @@ highlight TagbarVisibilityPrivate guifg=#ee1111
 nmap <silent> <M-t> :TagbarOpenAutoClose<CR>
 nmap <silent>  <F9> :TagbarToggle<CR>
 
-" TOhtml syntax script {{{2
-let html_use_css = 1
-let html_number_lines = 0
-let use_xhtml = 1
-let html_ignore_folding = 1
-
 " UltiSnips {{{2
 let g:UltiSnipsExpandTrigger = "<C-l>"
 let g:UltiSnipsJumpForwardTrigger = "<C-j>"
@@ -2093,11 +2036,6 @@ nmap <silent> gj <Plug>(vertical_move_down)
 nmap <silent> gk <Plug>(vertical_move_up)
 xmap <silent> gj <Plug>(vertical_move_down)
 xmap <silent> gk <Plug>(vertical_move_up)
-
-" voom {{{2
-let g:voom_tab_key = '<C-Tab>'
-let g:voom_verify_oop = 1
-let g:voom_user_command = "runtime! voom_addons/*.vim"
 
 " YouCompleteMe {{{2
 let g:ycm_filetype_blacklist = {
