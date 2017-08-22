@@ -1509,9 +1509,6 @@ let g:checkattach_filebrowser = 'ranger'
 let g:clang_auto_select = 1
 let g:clang_use_library = 1
 
-" code_complete {{{2
-let g:completekey = "<c-tab>"
-
 " command-t {{{2
 let g:CommandTMaxFiles = 100000
 let g:CommandTMatchWindowReverse = 1
