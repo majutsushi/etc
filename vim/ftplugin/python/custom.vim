@@ -21,34 +21,3 @@ for p in sys.path:
         vim.command(r"setlocal path+=%s" % (p.replace(" ", r"\ ")))
 EOF
 endif
-
-function! s:IPython()
-    let g:ScreenShellSendPrefixOld = g:ScreenShellSendPrefix
-    let g:ScreenShellSendSuffixOld = g:ScreenShellSendSuffix
-    let g:ScreenShellSendPrefix = '%cpaste'
-    let g:ScreenShellSendSuffix = '--'
-    let g:ScreenShellSendVarsRestore = 1
-
-    ScreenShellVertical ipython
-endfunction
-
-function! s:ScreenShellListener()
-    if g:ScreenShellActive
-        if g:ScreenShellCmd == 'ipython'
-            nnoremap <silent> <buffer> <leader>ss :ScreenSend<cr>
-            xnoremap <silent> <buffer> <leader>ss :ScreenSend<cr>
-        else
-            nnoremap <silent> <buffer> <leader>ss <Nop>
-        endif
-    else
-        nnoremap <silent> <buffer> <leader>ss :call <SID>IPython()<cr>
-    endif
-endfunction
-
-call s:ScreenShellListener()
-augroup ScreenShellEnter
-    autocmd User <buffer> call <SID>ScreenShellListener()
-augroup END
-augroup ScreenShellExit
-    autocmd User <buffer> call <SID>ScreenShellListener()
-augroup END
