@@ -86,7 +86,6 @@ merge() {
         [[ -f ${confbase}.d/50_local ]] && rm ${confbase}.d/50_local || :
     else
         if [[ -f $localtarget ]]; then
-            echo -e "\n$comment [$localtarget]" >> $target
             cat $localtarget >> $target
         fi
     fi
