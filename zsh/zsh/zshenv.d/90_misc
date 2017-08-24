@@ -4,6 +4,9 @@ export SHELL=$(which zsh)
 if [[ -f $HOME/.local/etc/zshenv ]]; then
     source $HOME/.local/etc/zshenv
 fi
+for file in $HOME/.local/etc/zshenv.d/??_*; do
+    source "$file"
+done
 
 DEBIAN_PREVENT_KEYBOARD_CHANGES=1
 

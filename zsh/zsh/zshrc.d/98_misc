@@ -1,6 +1,9 @@
 if [[ -f $HOME/.local/etc/zshrc ]]; then
     source $HOME/.local/etc/zshrc
 fi
+for file in $HOME/.local/etc/zshrc.d/??_*; do
+    source "$file"
+done
 
 mkdir -p $HOME/.ssh/sock
 
