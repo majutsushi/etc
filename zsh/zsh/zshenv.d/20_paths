@@ -2,11 +2,6 @@ rationalize_path() {
     eval $1'=( ${(u)^'${1}':a}(N-/xe:'\''[[ "$REPLY" != "." ]]'\'':) )'
 }
 
-if [[ -d /opt/intel ]]; then
-    source /opt/intel/cc/10.0.023/bin/iccvars.sh
-    source /opt/intel/idb/10.0.023/bin/idbvars.sh
-fi
-
 path=(
     "$HOME/bin"
     "$HOME/.bin"
@@ -17,10 +12,6 @@ path=(
 
     "$HOME"/.gem/ruby/*/bin/(Nn[-1])
     /var/lib/gems/*/bin/(Nn[-1])
-
-    # Macports
-    /opt/local/bin
-    /opt/local/sbin
 
     "$path[@]"
 
