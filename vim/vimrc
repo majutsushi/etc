@@ -1672,6 +1672,19 @@ let g:LatexBox_completion_close_braces = 0
 let g:LatexBox_autojump = 1
 
 " Mark {{{2
+let g:mwPalettes = {
+    \ 'custom' : [
+        \ { 'guibg': '#A4E57E', 'guifg': 'Black' },
+        \ { 'guibg': '#FFDB72', 'guifg': 'Black' },
+        \ { 'guibg': '#8CCBEA', 'guifg': 'Black' },
+        \ { 'guibg': '#FF7272', 'guifg': 'Black' },
+        \ { 'guibg': '#FFB3FF', 'guifg': 'Black' },
+        \ { 'guibg': '#9999FF', 'guifg': 'Black' },
+    \ ]
+\ }
+
+let g:mwDefaultHighlightingPalette = 'custom'
+
 nmap gmm <Plug>MarkSet
 xmap gmm <Plug>MarkSet
 nmap gmr <Plug>MarkRegex
