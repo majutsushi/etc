@@ -1,3 +1,7 @@
+gtk-icon-theme-name = "Faenza-Darkest"
+gtk-toolbar-style = "icons"
+gtk-theme-name = "Adwaita-dark"
+
 style "vimfix" {
     bg[NORMAL] = "#333333" # desert grey20, see /usr/share/vim/vimcurrent/rgb.txt
 }
