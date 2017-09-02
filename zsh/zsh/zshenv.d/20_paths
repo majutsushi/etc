@@ -54,7 +54,7 @@ typeset -gxU library_path
 
 typeset -gxT LD_LIBRARY_PATH ld_library_path
 ld_library_path=(
-    "$HOME/lib"
+    "$HOME/.local/lib/ld"
     "$ld_library_path[@]"
 )
 rationalize_path ld_library_path

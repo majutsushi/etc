@@ -7,7 +7,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 # Make sure Monday is the first day of the week, as it should be.
 export LC_TIME=en_GB.UTF-8
 
-export LD_LIBRARY_PATH=$HOME/lib
+export LD_LIBRARY_PATH=$HOME/.local/lib/ld
 
 export PATH=$HOME/bin:$HOME/.bin:$HOME/.etc/bin:/usr/games:$PATH
 # export SDL_AUDIODRIVER=dsp
