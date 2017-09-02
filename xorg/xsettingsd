@@ -1,0 +1,53 @@
+# https://www.freedesktop.org/wiki/Specifications/XSettingsRegistry/
+# https://github.com/GNOME/gtk/blob/master/gdk/x11/gdksettings.c
+# https://developer.gnome.org/gtk3/stable/GtkSettings.html
+
+Net/CursorBlink 1
+Net/CursorBlinkTime 1200
+Net/DndDragThreshold 8
+Net/DoubleClickDistance 5
+Net/DoubleClickTime 400
+Net/EnableEventSounds 0
+Net/EnableInputFeedbackSounds 0
+Net/IconThemeName "Faenza-Darkest"
+Net/SoundThemeName "freedesktop"
+Net/ThemeName "Adwaita-dark"
+
+Xft/Antialias 1
+Xft/Hinting 1
+Xft/HintStyle "hintslight"
+Xft/RGBA "rgb"
+# Xft/DPI 96
+
+Gtk/AutoMnemonics 1
+Gtk/CanChangeAccels 0
+Gtk/CursorBlinkTimeout 10
+Gtk/CursorThemeName "Adwaita"
+# Gtk/CursorThemeSize 24
+Gtk/DecorationLayout "menu:close"
+# Gtk/DecorationLayout "menu:minimize,maximize,close"
+Gtk/DialogsUseHeader 1
+Gtk/EnableAccels 1
+Gtk/EnableAnimations 1
+Gtk/EnablePrimaryPaste 1
+Gtk/FontName "Ubuntu 10"
+Gtk/IMModule "gtk-im-context-simple"
+Gtk/KeyThemeName "Emacs"
+Gtk/KeynavUseCaret 0
+# Gtk/Modules "canberra-gtk-module"
+Gtk/PrimaryButtonWarpsSlider 0
+Gtk/RecentFilesEnabled 1
+Gtk/RecentFilesMaxAge -1
+Gtk/ShellShowsAppMenu 0
+Gtk/ShellShowsDesktop 0
+Gtk/ShellShowsMenubar 0
+
+# For older Gtk
+Gtk/ToolbarStyle "icons"
+# Gtk/ToolbarIconSize "small-toolbar"
+
+# For client-side decorated windows
+# minimize, toggle-maximize, menu, lower or none
+Gtk/TitlebarDoubleClick "toggle-maximize"
+Gtk/TitlebarMiddleClick "none"
+Gtk/TitlebarRightClick "menu"

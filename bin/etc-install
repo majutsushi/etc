@@ -221,7 +221,7 @@ if command -v X >/dev/null; then
     #xlink xorg/xinitrc
     #xlink xorg/xinput.d
     #xlink xorg/xinputrc
-    #xlink xorg/xsession
+    xlink xorg/xsession
     xlink xorg/xsessionrc
 
     xlink icons/Faenza-Darkest target=.local/share/icons/Faenza-Darkest

@@ -1,105 +1,38 @@
 #!/bin/bash
-
-#
-# Set default Windowmanager
-#
-if test -z "$WINDOWMANAGER"; then
-    #WINDOWMANAGER=enlightenment
-    #WINDOWMANAGER="deskmenu --quit"
-    WINDOWMANAGER=awesome
-    #WINDOWMANAGER=fluxbox
-fi
-
-xrandr --output LVDS1 --set "scaling mode" "Full aspect"
-
-#. $HOME/.bashrc
-
-# =--> Set Xft DPI to match my X settings
-#      when set here, xsm seems to handle the dpi better
-#
-#echo "Xft.dpi: 84" | xrdb -merge -
-
-# =--> Use nice Xcursor themes
-#
-#echo "Xcursor.theme: redglass" | xrdb -merge -
-#echo "Xcursor.size: 20" | xrdb -merge -
-
-# Pointer appearance
-#   - xcb does not support Xcursor yet
-/usr/bin/xsetroot -cursor_name left_ptr
-
-feh --bg-fill $HOME/media/desk/wallpaper/patterns/mypattern_1280x800.png
-
-#export JAVA_HOME=/opt/java
-#export PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
-#export LIBDIRPATH=$HOME/.lib
-#export GTK_IM_MODULE="scim"
-
-#
-# start some stuff
-#
-#xset s off
-#xset -dpms
-#kinput2 -canna &
-#export XIM_PROGRAM="scim -d"
-#export XMODIFIERS=@im=SCIM
-#xrdb -merge .Xresources
-#test -f /#avfs-on
-
-inputplug -0 -c $HOME/.etc/xorg/inputplug-hook
-
-## test for an existing bus daemon, just to be safe
-if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
-    ## if not found, launch a new one
-    eval `dbus-launch --sh-syntax --exit-with-session`
-    echo "D-Bus per-session daemon address is: $DBUS_SESSION_BUS_ADDRESS"
-fi
-
-gnome-settings-daemon &
-gnome-power-manager &
-/usr/lib/gnome-volume-manager/gnome-volume-manager --sm-disable &
-/usr/lib/gnome-disk-utility/gdu-notification-daemon &
-/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
-gnome-keyring-daemon --start --components=pkcs11 &
-gnome-keyring-daemon --start --components=secrets &
-gnome-keyring-daemon --start --components=ssh &
-#/usr/lib/evolution/2.30/evolution-alarm-notify &
-gnome-screensaver &
-
-/usr/lib/cdemu-daemon/cdemu-daemon.session &
-gpomme &
-smart-notifier &
-xcompmgr -n &
-# kupfer --no-splash &
-
-#gnome-volume-control-applet &
-#alarm-clock-applet &
-bluetooth-applet &
-kerneloops-applet &
-parcellite &
-wicd-gtk &
-system-config-printer-applet &
-
-/home/jan/bin/touchpad.sh &
-#xdg-user-dirs-gtk-update
-
-# xsettingsd
-# https://www.mail-archive.com/systemd-devel@lists.freedesktop.org/msg17272.html
-# systemctl --user import-environment DISPLAY XAUTHORITY
-# https://www.mail-archive.com/systemd-devel@lists.freedesktop.org/msg17273.html
-# systemctl --user start lightson@$DISPLAY.service
-
-# lxsession
-# https://github.com/jceb/dex
-# redshift
-# btsync
-
 # https://github.com/vincentbernat/awesome-configuration/blob/master/xsession
 
-#
-# finally start the window manager
-#
-exec $WINDOWMANAGER
+# . $HOME/.xsessionrc
 
-# call failsafe
-exit 0
+# Redirect output to the syslog instead of ~/.xsession-errors
+# Close stdout and stderr first so all references to the file are gone
+exec 1>&- 2>&-
+exec 1> >(logger -e -t xsession -p user.info    &>/dev/null) \
+     2> >(logger -e -t xsession -p user.warning &>/dev/null)
+logger -e -t xsession -p user.info -f "$HOME/.xsession-errors"
+rm -f "$HOME"/.xsession-errors{,.old}
+
+eval "$(gnome-keyring-daemon --start --components=secrets)"
+/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+
+xset s 600
+xset dpms 0 0 1200
+
+nm-applet &
+pasystray &
+clipit &
+blueman-applet &
+# redshift-gtk & # managed by systemd
+compton -b
+
+xdg-user-dirs-update
+xdg-user-dirs-gtk-update
+
+# https://www.mail-archive.com/systemd-devel@lists.freedesktop.org/msg17272.html
+# https://www.mail-archive.com/systemd-devel@lists.freedesktop.org/msg17273.html
+systemctl --user import-environment
+systemctl --user start lightson@"$DISPLAY".service
+
+"$HOME/.etc/xorg/xsettingsd-setup"
+inputplug -0 -c "$HOME/.etc/xorg/inputplug-hook"
+
+exec awesome

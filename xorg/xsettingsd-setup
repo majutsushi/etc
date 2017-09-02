@@ -1,0 +1,33 @@
+#!/bin/bash
+# based on
+# https://github.com/vincentbernat/awesome-configuration/blob/master/bin/xsettingsd-setup
+
+case $(hostname),$(xrandr --current | \
+                          sed -n 's/\([^ ]*\) connected .*[0-9][0-9]*x[0-9][0-9]*+[0-9][0-9]*+[0-9][0-9]* .*/\1/p' | \
+                          sort | tr '\n' ':') in
+    eilonwy,DP-1:LVDS-1:)
+        dpi=117
+        cursor_size=36
+        ;;
+    *)
+        dpi=96
+        cursor_size=24
+        ;;
+esac
+
+# Build xsettingsd
+cp  ~/.etc/xorg/xsettingsd ~/.config/xsettingsd
+echo Xft/DPI $(( $dpi * 1024 )) >> ~/.config/xsettingsd
+echo Gtk/CursorThemeSize $cursor_size >> ~/.config/xsettingsd
+
+# Signal xsettingsd
+pid=$(xprop -name xsettingsd _NET_WM_PID 2> /dev/null | awk '{print $NF}')
+if [ x"$pid" = x ]; then
+    xsettingsd -c ~/.config/xsettingsd &
+else
+    kill -HUP $pid
+fi
+
+# Also use xrdb for very old stuff (you know, LibreOffice)
+echo Xft.dpi: $dpi | xrdb -merge
+echo Xcursor.size: $cursor_size | xrdb -merge
