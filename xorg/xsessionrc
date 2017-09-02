@@ -9,7 +9,7 @@ export LC_TIME=en_GB.UTF-8
 
 export LD_LIBRARY_PATH=$HOME/lib
 
-export PATH=$HOME/bin:$HOME/.bin:$HOME/.etc/bin:/usr/games:/var/lib/gems/1.8/bin:$PATH
+export PATH=$HOME/bin:$HOME/.bin:$HOME/.etc/bin:/usr/games:$PATH
 # export SDL_AUDIODRIVER=dsp
 # export GTK_IM_MODULE="scim"
 # export XMODIFIERS='@im=SCIM'
