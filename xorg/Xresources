@@ -2,6 +2,9 @@
 !Xft.hinting: 0
 !Xft.hintstyle: hintmedium
 
+!Xcursor.theme: redglass
+!Xcursor.size: 24
+
 !*fontList: -*-helvetica-medium-r-normal-*-*-80-*-*-*-*-*-*
 
 ! *** colour definitions ***
