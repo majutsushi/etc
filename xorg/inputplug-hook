@@ -6,7 +6,7 @@ readonly DEVICE_TYPE="$3"
 readonly DEVICE_NAME="$4"
 
 readonly SCRIPTDIR="$(cd $(dirname "$0") && pwd -P)"
-readonly LOGGER="logger -t inputplug-hook"
+readonly LOGGER="logger -t inputplug-hook -p user.info"
 
 [[ "$EVENT_TYPE" == XIDeviceEnabled ]] || exit 0
 
