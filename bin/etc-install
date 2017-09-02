@@ -215,7 +215,7 @@ rm /tmp/lesskey$$
 
 if command -v X >/dev/null; then
     xlink xorg/fontconfig target=.config/fontconfig
-    xlink xorg/XCompose
+    #xlink xorg/XCompose
     #xlink xorg/Xresources
     #xlink xorg/xinitrc
     #xlink xorg/xinput.d
