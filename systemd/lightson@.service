@@ -1,0 +1,9 @@
+[Unit]
+Description=Lights On
+
+[Service]
+Environment=DISPLAY=%I
+ExecStart=/bin/bash %h/.bin/lightson
+
+[Install]
+WantedBy=default.target

@@ -212,6 +212,7 @@ merge less/lesskey target=/tmp/lesskey$$
 lesskey /tmp/lesskey$$
 rm /tmp/lesskey$$
 
+xlink systemd/lightson@.service target=.config/systemd/user/lightson@.service
 
 if command -v X >/dev/null; then
     xlink xorg/fontconfig target=.config/fontconfig
