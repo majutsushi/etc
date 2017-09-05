@@ -72,6 +72,8 @@ alias t='tree --dirsfirst -F'
 
 alias da='du -sch'
 alias decolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
+alias e='exa -laF --group-directories-first --git'
+alias ee='exa -lF --group-directories-first --git'
 alias g="grep"
 alias jo='jobs -l'
 alias jsonpp='python -mjson.tool'
