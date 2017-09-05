@@ -6,21 +6,30 @@ readonly DEVICE_TYPE="$3"
 readonly DEVICE_NAME="$4"
 
 readonly SCRIPTDIR="$(cd $(dirname "$0") && pwd -P)"
-readonly LOGGER="logger -t inputplug-hook -p user.info"
+
+exec &> >(logger -t inputplug-hook -p user.info)
 
 [[ "$EVENT_TYPE" == XIDeviceEnabled ]] || exit 0
 
 case "$DEVICE_TYPE" in
     XISlaveKeyboard)
-        $LOGGER "Setting custom keymap and symbols"
+        echo "Handling keyboard '$DEVICE_NAME'"
+        echo "Setting custom keymap and symbols"
         # http://madduck.net/docs/extending-xkb/
         xkbcomp -w3 -I$HOME/.etc/xorg/xkb ~/.etc/xorg/xkb/keymap/default "${DISPLAY%%.*}"
         ;;
     XISlavePointer)
+        echo "Handling pointer '$DEVICE_NAME'"
         case "$DEVICE_NAME" in
             Microsoft\ Microsoft\ Trackball\ Explorer®)
-                $LOGGER "Remapping trackball buttons"
+                echo "Remapping trackball buttons"
                 xinput --set-button-map "$DEVICE_ID" 1 2 8 4 5 6 7 3 9 10 11 12 13
+                ;;
+            Microsoft\ \ Microsoft\ Basic\ Optical\ Mouse\ v2.0\ )
+                if [[ $(hostname) == vanadis ]]; then
+                    echo "Enabling left-hand mode on mouse"
+                    xinput set-prop "$DEVICE_ID" "libinput Left Handed Enabled" 1
+                fi
                 ;;
         esac
         ;;
