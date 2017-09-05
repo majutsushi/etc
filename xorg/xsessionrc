@@ -17,6 +17,12 @@ export DVDCSS_CACHE=$HOME/.var/lib/dvdcss
 export GTK_OVERLAY_SCROLLING=0
 export NO_AT_BRIDGE=1
 
+# Necessary for awesome widgets
+if [ -d /opt/java/jdk-default ]; then
+    export PATH=/opt/java/jdk-default/bin:$PATH
+    export JAVA_HOME=/opt/java/jdk-default
+fi
+
 export IDEA_PROPERTIES="$HOME/.etc/idea/idea.properties"
 
 # ulimit -c unlimited
