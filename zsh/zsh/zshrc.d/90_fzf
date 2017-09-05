@@ -56,21 +56,25 @@ fi
 
 
 RECENTDIRS_FILE="$ZSH_VAR_LIB_DIR/recent-dirs"
-__recentdirs_add() {
-    echo "$PWD" >>| "$RECENTDIRS_FILE"
-
-    # remove duplicate directories except for the last occurrence
-    local tmpfile=$(mktemp)
-    trap "rm -f '$tmpfile'" EXIT INT QUIT
-    tac "$RECENTDIRS_FILE" | awk '!x[$0]++' | tac | tail -n 200 >| "$tmpfile"
-    if [[ $? -eq 0 ]]; then
-        mv "$tmpfile" "$RECENTDIRS_FILE"
+chpwd_add_recent_dir() {
+    if [[ "$PWD" != $HOME ]]; then
+        print -P '0\t%D{%s}\t1\t%~' >>| "$RECENTDIRS_FILE"
     fi
 }
-add-zsh-hook chpwd __recentdirs_add
+add-zsh-hook chpwd chpwd_add_recent_dir
 
 j() {
-    cd "$(cat "$RECENTDIRS_FILE" | fzf --exact)"
+    # adapted from http://chneukirchen.org/blog/archive/2017/01/zz-a-smart-and-efficient-directory-changer.html
+    awk -v ${(%):-now='%D{%s}'} < "$RECENTDIRS_FILE" '
+        BEGIN { FS="\t" }
+        function r(t, f) {
+            age = now - t
+            return (age < 3600) ? f * 4 : (age < 86400) ? f * 2 : (age < 604800) ? f / 2 : f / 4
+        }
+        { f[$4] += $3; if ($2 > l[$4]) l[$4] = $2 }
+        END { for (i in f) printf("%d\t%d\t%d\t%s\n", r(l[i], f[i]), l[i], f[i], i) }' | \
+            sort -k2 -n -r | head -n 9000 | sort -n -r -o "$RECENTDIRS_FILE"
+    cd ${~:-"$(cat "$RECENTDIRS_FILE" | cut -d$'\t' -f4- | fzf --exact --no-sort)"}
 }
 
 J() {
