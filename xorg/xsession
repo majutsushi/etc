@@ -23,6 +23,7 @@ clipit &
 blueman-applet &
 # redshift-gtk & # managed by systemd
 compton -b
+[[ -x "$HOME/src/xbanish/xbanish" ]] && "$HOME/src/xbanish/xbanish" &
 
 xdg-user-dirs-update
 xdg-user-dirs-gtk-update
