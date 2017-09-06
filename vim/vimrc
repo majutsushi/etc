@@ -1201,6 +1201,11 @@ endif
 " maximum number of tab pages to open for -p and "tab all"
 set tabpagemax=50
 
+" terminal {{{2
+
+" specifies what the cursor looks like in different modes
+set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+
 " using the mouse {{{2
 
 " list of flags for using the mouse
@@ -1479,6 +1484,12 @@ let g:python_highlight_all = 1
 
 " Highlight conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
+" Neovim {{{2
+
+if has('nvim')
+    set inccommand=nosplit
+endif
 
 " Plugin and script options {{{1
 
@@ -2325,6 +2336,13 @@ nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <M-p> :TmuxNavigatePrevious<cr>
+if has('nvim')
+    tnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+    tnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+    tnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+    tnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+    tnoremap <silent> <M-p> :TmuxNavigatePrevious<cr>
+endif
 
 " Change window size
 nnoremap <M->> <C-W>>
@@ -2367,6 +2385,11 @@ nnoremap <silent> <leader>cd :cd %:p:h<cr>
 nnoremap <S-F10> :call GenCscopeAndTags()<CR>
 
 "inoremap  <Esc><Right>
+
+if has("nvim")
+    " Make escape work in the Neovim terminal.
+    tnoremap <Esc> <C-\><C-n>
+endif
 
 " Modeline {{{1
 " vim:tw=78 expandtab comments=\:\" foldmethod=marker foldenable foldcolumn=1
