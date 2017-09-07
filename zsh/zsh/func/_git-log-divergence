@@ -1,0 +1,8 @@
+#compdef git-log-divergence
+
+branches=(${(f)"$(git for-each-ref --format="%(refname:short)" refs/heads)"})
+_describe -t branches branches branches
+remote_branches=(${(f)"$(git for-each-ref --format="%(refname:short)" refs/remotes)"})
+_describe -t remote_branches 'remote branches' remote_branches
+tags=(${(f)"$(git for-each-ref --format="%(refname:short)" refs/tags)"})
+_describe -t tags tags tags
