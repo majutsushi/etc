@@ -356,6 +356,9 @@ vim-profile-startup() {
         --cmd 'profile file *' \
         -c 'qa' "$@"
 }
+vim-tagbar-debug() {
+    vim --cmd 'let g:disable_tagbar_stl = 1' -c 'TagbarDebug' "$@"
+}
 
 pdfembedfonts() {
     if [[ $# != 1 ]]; then

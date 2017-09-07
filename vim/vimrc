@@ -486,7 +486,9 @@ let g:default_stl .= "%<"
 
 " Function name
 " let g:default_stl .= "<CUR>%(%{tagbar#currenttag('%s', '')} %)</CUR>"
-let g:default_stl .= "%(%{StatuslineCurrenttag()} %)"
+if !get(g:, 'disable_tagbar_stl', 0)
+    let g:default_stl .= "%(%{StatuslineCurrenttag()} %)"
+endif
 
 " Current directory
 " let g:default_stl .= "%{fnamemodify(getcwd(), ':~')}"
