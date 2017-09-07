@@ -2155,19 +2155,20 @@ nnoremap U :earlier 1f<CR>
 " Control-Space for omnicomplete
 imap <C-Space> <C-X><C-O>
 
-" for popup-menu completion
-" http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
-" inoremap <expr> <C-x><C-o> pumvisible() ? '<C-x><C-o>' : '<C-x><C-o><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" inoremap <expr> <C-n>      pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-" http://vim.wikia.com/wiki/Improve_completion_popup_menu
-" inoremap <expr> <Esc>      pumvisible() ? "\<C-E>" : "\<Esc>"
-if v:version > 703 || v:version == 703 && has("patch489")
-    inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<C-]>\<CR>"
-else
-    inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"
-endif
-"inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
-"inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
+" This slightly convoluted approach is necessary to work with newer
+" YouCompleteMe versions
+" Also see https://github.com/vim/vim/issues/2004#issuecomment-324357529
+function! s:handle_cr()
+    if pumvisible()
+        call feedkeys("\<C-y>", 'm')
+        return ''
+    else
+        call feedkeys("\<C-]>\<CR>", 'n')
+        return ''
+    endif
+endfunction
+inoremap <silent> <expr> <CR> <SID>handle_cr()
+
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>"   : "\<PageUp>"
 
