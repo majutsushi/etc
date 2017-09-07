@@ -35,5 +35,8 @@ xprop -root -f _NET_WM_NAME 8u -set _NET_WM_NAME Sawfish
 if [ -f ~/.local/etc/xsessionrc ]; then
     . ~/.local/etc/xsessionrc
 fi
+for file in $HOME/.local/etc/xsessionrc.d/??_*; do
+    . "$file"
+done
 
 # vim: ft=sh
