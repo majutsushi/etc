@@ -45,6 +45,7 @@ zstyle ':completion:*' cache-path $ZSH_CACHEDIR/zcompcache/
 # )'
 zstyle ':completion:*:default' list-colors 'hi=30;41' 'du=37;41' ${(s.:.)LS_COLORS}
 
+zstyle ':completion:*' accept-exact-dirs true
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' list-dirs-first true # affects all-files/other-files
 zstyle ':completion:*' ignore-parents parent pwd
