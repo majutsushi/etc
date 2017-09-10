@@ -139,9 +139,6 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock('<span font_size="smaller" fgcolor="#999999">%a %d %b</span> %H:%M', 1)
@@ -222,6 +219,16 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+local applets = {
+    rhino   = osinfo[4] == "vanadis" and eldritch.applets.rhino(),
+    battery = eldritch.applets.battery(),
+    cpu     = eldritch.applets.cpu(),
+    memory  = eldritch.applets.memory(),
+    -- weather = eldritch.applets.weather(),
+    -- Keyboard map indicator and switcher
+    -- keyboardlayout = awful.widget.keyboardlayout()
+}
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -261,14 +268,14 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            osinfo[4] == "vanadis" and eldritch.applets.rhino(),
-            eldritch.applets.battery(),
-            eldritch.applets.cpu(),
-            eldritch.applets.memory(),
+            applets.rhino,
+            applets.battery,
+            applets.cpu,
+            applets.memory,
             -- volicon,
             -- volmargin,
-            -- eldritch.applets.weather(),
-            mykeyboardlayout,
+            -- applets.weather,
+            -- applets.keyboardlayout,
             wibox.widget.systray(),
             mytextclock,
         },
