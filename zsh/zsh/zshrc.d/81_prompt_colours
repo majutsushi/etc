@@ -1,0 +1,21 @@
+# set up an associative array with all 255 colours
+# These are prompt substitions so only work in places where those are
+# expanded.
+
+typeset -a colours
+colours=("black" "red" "green" "yellow" "blue" "magenta" "cyan" "white")
+
+typeset -gA pcol
+
+for (( i = 1; i < 254; i += 1 )); do
+    pcol[$i]="%{%F{${i}}%}"
+done
+for c in $colours; do
+    pcol[$c]="%{%F{${c}}%}"
+done
+unset i
+
+pcol[bold]="%{%F{bold}%}"
+pcol[reset]="%{%F{reset}%}"
+
+# vim: filetype=zsh
