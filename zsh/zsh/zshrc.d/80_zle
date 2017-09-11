@@ -1,5 +1,7 @@
 ## keybindings (run 'bindkeys' for details, more details via man zshzle)
 
+autoload add-zle-hook-widget
+
 # Initialization taken from Debian's /etc/zsh/zshrc
 typeset -A key
 key=(
@@ -57,6 +59,11 @@ bind2maps       viins vicmd -- Right       vi-forward-char
 unfunction bind2maps
 unset key
 
+line-init-keypad() { printf '%s' ${terminfo[smkx]}; }
+add-zle-hook-widget line-init line-init-keypad
+line-finish-keypad() { printf '%s' ${terminfo[rmkx]}; }
+add-zle-hook-widget line-finish line-finish-keypad
+
 
 # custom escape code mappings
 bindkey -s '\eQ13;3~' '\e^M'
@@ -64,30 +71,12 @@ bindkey -s '\eQ13;5~' '^\n' # conflicts with '^J'
 bindkey -s '\eQ32;5~' '^@'
 
 # only search local history by default, and all history for isearch
-set-local-history() { zle .set-local-history }
-zle -N set-local-history
-zle-isearch-update() { NUMERIC=0 zle set-local-history }
-zle -N zle-isearch-update
-zle-isearch-exit()  { NUMERIC=1 zle set-local-history }
-zle -N zle-isearch-exit
-
-zle-line-init()  {
-    printf '%s' ${terminfo[smkx]}
-    NUMERIC=1 zle set-local-history
-    if ! is-at-least 5.2; then
-        # enable bracketed paste mode
-        printf '\e[?2004h'
-    fi
-}
-zle -N zle-line-init
-zle-line-finish()  {
-    printf '%s' ${terminfo[rmkx]}
-    if ! is-at-least 5.2; then
-        # disable bracketed paste mode
-        printf '\e[?2004l'
-    fi
-}
-zle -N zle-line-finish
+autoload set-local-history
+_unset-local-history() { NUMERIC=0 zle set-local-history }
+add-zle-hook-widget isearch-update _unset-local-history
+_set-local-history() { NUMERIC=1 zle set-local-history }
+add-zle-hook-widget isearch-exit _set-local-history
+add-zle-hook-widget line-init    _set-local-history
 
 autoload up-line-or-beginning-search
 # hack to get zsh highlighting to work for this widget
@@ -250,35 +239,6 @@ _normalize_prompt() {
     } > $TTY 2> /dev/null
 }
 add-zsh-hook precmd _normalize_prompt
-
-if ! is-at-least 5.2; then
-    # Bracketed paste mode, taken from
-    # https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/safe-paste/safe-paste.plugin.zsh
-    # create a new keymap to use while pasting
-    bindkey -N paste
-    # make everything in this keymap call our custom widget
-    bindkey -R -M paste "^@"-"\M-^?" paste-insert
-    bindkey '^[[200~' _start_paste
-    bindkey -M paste '^[[201~' _end_paste
-    # insert newlines rather than carriage returns when pasting newlines
-    bindkey -M paste -s '^M' '^J'
-
-    zle -N _start_paste
-    zle -N _end_paste
-    zle -N paste-insert _paste_insert
-
-    _start_paste() {
-        bindkey -A paste main
-    }
-    _end_paste() {
-        bindkey -e
-        LBUFFER+=$_paste_content
-        unset _paste_content
-    }
-    _paste_insert() {
-        _paste_content+=$KEYS
-    }
-fi
 
 
 # jump behind the first word on the cmdline to add options
