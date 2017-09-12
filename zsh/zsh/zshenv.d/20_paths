@@ -4,6 +4,7 @@ rationalize_path() {
 
 path=(
     "$HOME/bin"
+    "$HOME/apps/bin"
     "$HOME/.bin"
     "$HOME/.etc/bin"
     "$HOME/usr/bin"
