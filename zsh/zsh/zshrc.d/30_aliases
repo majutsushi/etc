@@ -149,12 +149,6 @@ anytoany() { print $(( [##$2] $1#$3 )) }
 dectohex() { anytoany 10 16 $1 }
 hextodec() { anytoany 16 10 $1 }
 
-tea() {
-    local time=${1:-90s}
-    sleep $time
-    zenity --info --title="Tea is ready" --text="Tea is ready since $(date +%H:%M:%S)"
-}
-
 set_terminal_title() {
     if [[ "$TERM" == (xterm*|rxvt*|screen*|tmux*) ]]; then
         printf "\e]0;%s\e\\" ${(V)argv}
