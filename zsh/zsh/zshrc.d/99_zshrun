@@ -18,7 +18,7 @@ if [[ -n "$ZSHRUN" ]]; then
     _accept_and_quit() {
         local -a buf
         buf=(${(z)BUFFER})
-        if which $buf[1] >& /dev/null; then
+        if have -c $buf[1]; then
             print -sr -- "${BUFFER}"
             print -s
             zsh -c "${BUFFER}" &|
