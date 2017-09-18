@@ -1,18 +1,20 @@
 # CTRL-T - Paste the selected file path(s) into the command line
 __fsel() {
     set -o nonomatch
-    command find * \( -path '*/\.*' -o -name target \) -prune \
-        -o -type f -print \
-        -o -type d -print \
-        -o -type l -print 2> /dev/null | fzf --multi | while read item; do
-            printf '%q ' "$item"
-        done
+    eval $FZF_DEFAULT_COMMAND | fzf --multi | while read item; do
+        printf '%q ' "$item"
+    done
+    local ret=$?
     echo
+    return $ret
 }
 
 fzf-file-widget() {
     LBUFFER="${LBUFFER}$(__fsel)"
+    local ret=$?
     zle redisplay
+    typeset -f zle-line-init >/dev/null && zle zle-line-init
+    return $ret
 }
 zle     -N   fzf-file-widget
 bindkey '^T' fzf-file-widget
@@ -22,10 +24,13 @@ fzf-cd-widget() {
     cd "${$(set -o nonomatch; \
         command find * \( -path '*/\.*' -o -path '*/ivy/*.cache' -o -name target \) -prune -o -type d -print 2> /dev/null \
         | fzf):-.}"
+    local ret=$?
     for func in $precmd_functions; do
         $func
     done
     zle reset-prompt
+    typeset -f zle-line-init >/dev/null && zle zle-line-init
+    return $ret
 }
 zle     -N    fzf-cd-widget
 bindkey '\ec' fzf-cd-widget
@@ -33,25 +38,15 @@ bindkey '\ec' fzf-cd-widget
 # CTRL-R - Paste the selected command from history into the command line
 if have fzf; then
     fzf-history-widget() {
-        LBUFFER=$(fc -l 1 | fzf --exact --no-sort --nth=2.. --tac | sed "s/^ *[0-9*]* *//")
+        NUMERIC=0 zle set-local-history
+        LBUFFER+=$(fc -l 1 | fzf --exact --no-sort --nth=2.. --tac --tiebreak=index --bind=ctrl-r:toggle-sort | sed "s/^ *[0-9*]* *//")
+        local ret=$?
         zle redisplay
+        typeset -f zle-line-init >/dev/null && zle zle-line-init
+        return $ret
     }
     zle -N fzf-history-widget
-
-    # allow nesting of C-R, from
-    # http://chneukirchen.org/blog/archive/2013/03/10-fresh-zsh-tricks-you-may-not-know.html
-    autoload -Uz narrow-to-region
-    _history-incremental-preserving-pattern-search-backward() {
-        NUMERIC=0 zle set-local-history
-        local state
-        MARK=CURSOR  # magick, else multiple ^R don't work
-        narrow-to-region -p "$LBUFFER${BUFFER:+>>}" -P "${BUFFER:+<<}$RBUFFER" -S state
-        zle end-of-history
-        zle fzf-history-widget
-        narrow-to-region -R state
-    }
-    zle -N _history-incremental-preserving-pattern-search-backward
-    bindkey '^r' _history-incremental-preserving-pattern-search-backward
+    bindkey '^r' fzf-history-widget
 fi
 
 
@@ -94,6 +89,82 @@ v() {
 
 copy-pw() {
     lpass show --clip --password $(lpass ls | fzf | awk '{print $(NF)}' | sed 's/\]//g')
+}
+
+
+# Git completion from
+# https://gist.github.com/junegunn/8b572b8d4b5eddd8b85e5f4d40f17236
+
+_is_in_git_repo() {
+    git rev-parse HEAD > /dev/null 2>&1
+}
+
+fzf-git() {
+    fzf --height 50% --preview-window right:50% "$@"
+}
+
+_fzf_gf() {
+    _is_in_git_repo || return
+    git -c color.status=always status --short |
+        fzf-git -m --ansi --nth 2..,.. \
+            --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
+        cut -c4- | sed 's/.* -> //'
+}
+
+_fzf_gb() {
+    _is_in_git_repo || return
+    git branch -a --color=always | grep -v '/HEAD\s' | sort |
+        fzf-git --ansi --multi --tac --preview-window right:70% \
+            --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+        sed 's/^..//' | cut -d' ' -f1 |
+        sed 's#^remotes/##'
+}
+
+_fzf_gt() {
+    _is_in_git_repo || return
+    git tag --sort -version:refname |
+        fzf-git --multi --preview-window right:70% \
+            --preview 'git show --color=always {} | head -'$LINES
+}
+
+_fzf_gh() {
+    _is_in_git_repo || return
+    git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
+        fzf-git --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+            --header 'Press CTRL-S to toggle sort' \
+            --preview 'grep -o "[a-f0-9]\{7,\}" <<< {} | xargs git show --color=always | head -'$LINES |
+        grep -o "[a-f0-9]\{7,\}"
+}
+
+_fzf_gr() {
+    _is_in_git_repo || return
+    git remote -v | awk '{print $1 "\t" $2}' | uniq |
+        fzf-git --tac \
+            --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" {1} | head -200' |
+        cut -d$'\t' -f1
+}
+
+join-lines() {
+    local item
+    while read item; do
+        echo -n "${(q)item} "
+    done
+}
+
+bind-git-helper() {
+    local char
+    for c in $@; do
+        eval "fzf-g$c-widget() { local result=\$(_fzf_g$c | join-lines); zle reset-prompt; LBUFFER+=\$result }"
+        eval "zle -N fzf-g$c-widget"
+        eval "bindkey '^g^$c' fzf-g$c-widget"
+    done
+}
+bind-git-helper f b t r h
+unset -f bind-git-helper
+
+
+_fzf_compgen_path() {
+    ag -g "" "$1"
 }
 
 # vim: filetype=zsh

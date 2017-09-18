@@ -65,8 +65,18 @@ export NNTPSERVER=news.gmane.org
 
 export GPG_TTY=$(tty)
 
-export FZF_DEFAULT_COMMAND="find * -path '*/\.*' -prune -o -type f -print -o -type l -print 2> /dev/null"
-export FZF_DEFAULT_OPTS="--exact"
+export FZF_DEFAULT_COMMAND="git ls-tree -r --name-only HEAD || ag --hidden --ignore .git -g ''"
+export FZF_DEFAULT_OPTS="\
+    --exact \
+    --height 40% \
+    --reverse \
+    --preview 'echo {}' \
+    --preview-window down:3:hidden:wrap \
+    --bind '?:toggle-preview' \
+    --bind 'f1:execute(less -+F -f {})' \
+    --bind 'ctrl-y:execute-silent(echo {} | xclip -i -selection clipboard)+abort' \
+    --color fg:-1,bg:-1,hl:2,fg+:11,bg+:-1,hl+:10,info:7,prompt:6,pointer:9,marker:1
+"
 
 export GITHUB_USER=majutsushi
 

@@ -158,11 +158,14 @@ xlink taskrc
 xlink urxvt
 xlink weechat
 xlink zathurarc target=.config/zathura/zathurarc
-xlink zsh/zshenv
 
 xlink bash/bashrc
 xlink bash/bash_profile
 xlink bash/bash_logout
+
+xlink zsh/zshenv
+mkdir -p "$HOME/.local/etc/zshrc.d"
+curl -s -L -o "$HOME/.local/etc/zshrc.d/90_fzf-completion" https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh
 
 xlink emacs/emacs
 xlink emacs/emacs.d
