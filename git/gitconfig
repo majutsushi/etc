@@ -75,9 +75,6 @@
 	old  = red
 	new  = green
 
-[interactive]
-	diffFilter = diff-highlight
-
 [status]
 	submoduleSummary = true
 
