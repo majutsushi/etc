@@ -86,7 +86,7 @@ __prompt_git_show_upstream() {
         "") # no upstream
             r="" ;;
         "0	0") # equal to upstream
-            r="" ;;
+            r=" ${pcol[green]}✓${pcol[reset]}" ;;
         "0	"*) # ahead of upstream
             r=" ${pcol[green]}↑${pcol[reset]}${count#0	}" ;;
         *"	0") # behind upstream
