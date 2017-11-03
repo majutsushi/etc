@@ -59,7 +59,7 @@ mcd() { mkdir -p "$@"; cd "$@" }
 compdef _mkdir mcd
 
 # defaults for some programs
-alias grep="grep --color=auto --extended-regexp"
+alias grep="pager-wrapper grep --color=auto"
 alias gdb="gdb -q"
 alias less="less -F"
 alias mtr="mtr -t"
@@ -74,7 +74,7 @@ alias da='du -sch'
 alias decolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
 alias e='exa -laF --group-directories-first --git'
 alias ee='exa -lF --group-directories-first --git'
-alias g="grep"
+alias g="grep --color=always --extended-regexp"
 alias jo='jobs -l'
 alias jsonpp='python -mjson.tool'
 alias le='/usr/share/vim/vimcurrent/macros/less.sh'
@@ -148,6 +148,14 @@ copy-path() { readlink -f "$1" | xc }
 anytoany() { print $(( [##$2] $1#$3 )) }
 dectohex() { anytoany 10 16 $1 }
 hextodec() { anytoany 16 10 $1 }
+
+pager-wrapper () {
+    if [[ -t 1 ]]; then
+        $@ | less -+c -FRX
+    else
+        $@
+    fi
+}
 
 set_terminal_title() {
     if [[ "$TERM" == (xterm*|rxvt*|screen*|tmux*) ]]; then

@@ -214,7 +214,7 @@ bindkey "\eJ" physical-down-line
 typeset -Ag abbreviations
 abbreviations=(
     'L'  '| less'
-    'G'  '| grep'
+    'G'  '| g'
     'ND' '*(/om[1])' # newest directory
     'NF' '*(.om[1])' # newest file
 )
