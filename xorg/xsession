@@ -28,9 +28,17 @@ compton -b
 xdg-user-dirs-update
 xdg-user-dirs-gtk-update
 
-# https://www.mail-archive.com/systemd-devel@lists.freedesktop.org/msg17272.html
+# copied from /etc/X11/Xsession.d/95dbus_update-activation-env
+(
+     # unset login-session-specifics
+     unset XDG_SEAT
+     unset XDG_SESSION_ID
+     unset XDG_VTNR
+
+     dbus-update-activation-environment --verbose --systemd --all
+)
+
 # https://www.mail-archive.com/systemd-devel@lists.freedesktop.org/msg17273.html
-systemctl --user import-environment
 systemctl --user start lightson@"$DISPLAY".service
 
 "$HOME/.etc/xorg/xsettingsd-setup"
