@@ -24,6 +24,10 @@ local function escape(text)
     return text:gsub("[%.%-]", special_chars)
 end
 
+local function round(num)
+    return math.floor(num + 0.5)
+end
+
 local cached_sinks = {}
 
 local function get_default_sink()
@@ -64,7 +68,7 @@ local function worker(format, sink)
     local vol = tonumber(string.match(data, "set%-sink%-volume " .. escape(sink) .. " (0x[%x]+)"))
     if vol == nil then vol = 0 end
 
-    return { math.floor(vol / 0x10000 * 100), "on"}
+    return { round(vol / 0x10000 * 100), "on"}
 end
 -- }}}
 
@@ -82,7 +86,7 @@ function pulse.add(percent, sink)
     if vol > 0x10000 then vol = 0x10000 end
     if vol < 0 then vol = 0 end
 
-    local cmd = string.format("set-sink-volume %s 0x%x >/dev/null", sink, vol)
+    local cmd = string.format("set-sink-volume %s 0x%x >/dev/null", sink, round(vol))
     pacmd(cmd)
 end
 
