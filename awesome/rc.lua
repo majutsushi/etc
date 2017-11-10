@@ -714,6 +714,25 @@ client.connect_signal("focus", function(c)
         c:raise()
     end
 end)
+
+client.connect_signal("property::geometry", function (c)
+    local clients = awful.client.visible(c.screen)
+    local layout = awful.layout.getname(awful.layout.get(c.screen))
+
+    local should_apply_shape = true
+
+    if c.fullscreen or c.maximized or #clients == 1 or layout == "max" then
+        should_apply_shape = false
+    end
+
+    if should_apply_shape then
+        c.shape = function(cr, w, h)
+            gears.shape.rounded_rect(cr, w, h, 5)
+        end
+    else
+        c.shape = nil
+    end
+end)
 -- }}}
 
 -- {{{ Arrange signal handler
