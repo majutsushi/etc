@@ -13,7 +13,7 @@ export PATH=$HOME/bin:$HOME/.bin:$HOME/.etc/bin:/usr/games:$PATH
 # export SDL_AUDIODRIVER=dsp
 # export GTK_IM_MODULE="scim"
 # export XMODIFIERS='@im=SCIM'
-export DVDCSS_CACHE=$HOME/.var/lib/dvdcss
+export DVDCSS_CACHE=$XDG_CACHE_HOME/dvdcss
 export GTK_OVERLAY_SCROLLING=0
 export NO_AT_BRIDGE=1
 
