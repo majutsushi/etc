@@ -22,7 +22,7 @@ nametrans = lambda folder: 'INBOX' if len(folder) == 0 else re.sub('^.', '', fol
 type = IMAP
 remotehost = mail.majutsushi.net
 remoteport = 993
-remoteuser = jan
+remoteuser = app-eilonwy-keyring
 remotepasseval = get_password()
 ssl = yes
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
