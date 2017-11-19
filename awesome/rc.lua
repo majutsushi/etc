@@ -734,29 +734,30 @@ end)
 -- }}}
 
 -- {{{ Arrange signal handler
-for s = 1, screen.count() do screen[s]:connect_signal("arrange", function ()
-    local clients = awful.client.visible(s)
-    local layout = awful.layout.getname(awful.layout.get(s))
+awful.screen.connect_for_each_screen(function(s)
+    s:connect_signal("arrange", function ()
+        local clients = awful.client.visible(s)
+        local layout = awful.layout.getname(awful.layout.get(s))
 
-    -- Fine grained borders and floaters control
-    if #clients > 0 then
-        for _, c in pairs(clients) do
-            -- if c.fullscreen or c.name == "Steam" or
-            if c.fullscreen or
-                    (c.name ~= nil and c.name:match("[pP]lugin%-container")) then
-                c.border_width = 0
-            elseif c.floating or layout == "floating" then
-                c.border_width = beautiful.border_width
-            elseif #clients == 1 or layout == "max" or
-                #clients == 2 and (clients[1].floating or clients[2].floating) then
-                c.border_width = 0
-            else
-                c.border_width = beautiful.border_width
+        -- Fine grained borders and floaters control
+        if #clients > 0 then
+            for _, c in pairs(clients) do
+                -- if c.fullscreen or c.name == "Steam" or
+                if c.fullscreen or
+                        (c.name ~= nil and c.name:match("[pP]lugin%-container")) then
+                    c.border_width = 0
+                elseif c.floating or layout == "floating" then
+                    c.border_width = beautiful.border_width
+                elseif #clients == 1 or layout == "max" or
+                    #clients == 2 and (clients[1].floating or clients[2].floating) then
+                    c.border_width = 0
+                else
+                    c.border_width = beautiful.border_width
+                end
             end
         end
-    end
+    end)
 end)
-end
 -- }}}
 
 -- Temporary until https://github.com/awesomeWM/awesome/pull/1914 is available
