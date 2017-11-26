@@ -1,7 +1,7 @@
 require "fileinto";
 require "imap4flags";
 require "mailbox";
-# require "mboxmetadata";
+require "mboxmetadata";
 require "regex";
 require "variables";
 require "vnd.dovecot.execute";
@@ -42,16 +42,12 @@ if allof (not address :is :domain "from" "github.com",
 
     if header :matches "references" "?*" {
         set "references" "${1}${2}";
-        # if metadata :matches "INBOX" "/private/killedthreads" "?*" {
-        #     set "killedthreads" "${1}${2}";
-        #     execute :input "${killedthreads}" :output "killed" "checkkilled" ["${references}"];
-        #     if string :is "${killed}" "killed" {
-        #         setflag "killedflag" "\\Seen";
-        #     }
-        # }
-        execute :output "killed" "checkkilled" ["${references}", "/home/jan/Maildir/dovecot-attributes"];
-        if string :is "${killed}" "killed" {
-            setflag "killedflag" "\\Seen";
+        if metadata :matches "INBOX" "/private/killedthreads" "?*" {
+            set "killedthreads" "${1}${2}";
+            execute :input "${killedthreads}" :output "killed" "checkkilled" ["${references}"];
+            if string :is "${killed}" "killed" {
+                setflag "killedflag" "\\Seen";
+            }
         }
     }
 
