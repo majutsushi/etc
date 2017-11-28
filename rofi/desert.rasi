@@ -1,0 +1,67 @@
+configuration {
+    show-icons: true;
+}
+
+* {
+    font: "DejaVu Sans Mono 14";
+    padding: 3px;
+    background-color: #333333;
+    text-color: #ffffff;
+}
+
+#window {
+    border: 0px;
+    border-radius: 5px;
+    spacing: 0;
+}
+
+#button.selected {
+    background-color: #ffffff;
+    text-color: #333333;
+}
+
+#listview {
+    scrollbar: false;
+}
+
+/* #element { */
+/*     border:  0; */
+/*     padding: 1px ; */
+/* } */
+#element.normal.normal {
+    /* background-color: #333333; */
+    text-color:       #ffffff;
+}
+#element.normal.urgent {
+    /* background-color: @urgent-background; */
+    text-color:       #cc0000;
+}
+#element.normal.active {
+    /* background-color: @active-background; */
+    text-color:       #87ceeb;
+}
+#element.selected.normal {
+    background-color: #6b8e23;
+    text-color:       #f0e68c;
+}
+#element.selected.urgent {
+    background-color: #cc0000;
+    text-color:       #fdf6e3;
+}
+#element.selected.active {
+    background-color: #268bd2;
+    text-color:       #fdf6e3;
+}
+#element.alternate.normal {
+    background-color: #4d4d4d;
+    /* text-color:       #ffffff; */
+}
+#element.alternate.urgent {
+    background-color: #4d4d4d;
+    /* text-color:       #ffffff; */
+}
+#element.alternate.active {
+    background-color: #4d4d4d;
+    /* text-color:       #ffffff; */
+}
+
