@@ -151,6 +151,7 @@ xlink moc
 xlink muttator/muttatorrc
 xlink ranger target=.config/ranger
 xlink redshift.conf target=.config/redshift.conf
+xlink rofi target=.config/rofi
 xlink screen/screenrc
 xlink slrn/slrnrc
 merge sshconfig target=.ssh/config
