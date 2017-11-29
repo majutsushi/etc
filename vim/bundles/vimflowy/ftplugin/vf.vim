@@ -48,20 +48,50 @@ function! VfFoldText() abort
 endfunction
 
 
+" Return the line number of the current node.
+" This is only different from the current line when in a note.
+function! s:curnodelinenr() abort
+    return search('^\s*[*-]', 'bcnW')
+endfunction
+
 " Return the line number of the last line of the current subtree
 function! s:subtree_end() abort
-    let line = search('\%>' . line('.') . 'l\%<' . (indent(line('.')) + 2) . 'v[*-]', 'nW') - 1
+    let nodelinenr = s:curnodelinenr()
+    let line = search('\%>' . nodelinenr . 'l\%<' . (indent(nodelinenr) + 2) . 'v[*-]', 'nW') - 1
     return line < 0 ? line('$') : line
 endfunction
+
 
 function! s:add_sibling() abort
     if foldclosed('.') > -1
         call cursor(foldclosed('.'), 1)
     endif
-    " let startline = search(, 'bcnWz')
+    let indent = indent(s:curnodelinenr())
     let endline = s:subtree_end()
-    call append(endline, repeat(' ', indent(line('.'))) . '* ')
+    call append(endline, repeat(' ', indent) . '* ')
     call cursor(endline + 1, 1)
+    call feedkeys('A', 't')
+endfunction
+
+function! s:add_note() abort
+    if foldclosed('.') > -1
+        call cursor(foldclosed('.'), 1)
+    endif
+
+    if s:is_note(line('.') + 1)
+        let prev_line = search('^\s*[*-]', 'nW')
+        if prev_line == 0
+            let prev_line = line('$')
+        else
+            let prev_line -= 1
+        endif
+    else
+        let prev_line = line('.')
+    endif
+
+    let indent = indent(s:curnodelinenr())
+    call append(prev_line, repeat(' ', indent + shiftwidth()))
+    call cursor(prev_line + 1, 1)
     call feedkeys('A', 't')
 endfunction
 
@@ -72,8 +102,20 @@ function! s:indent_subtree(direction) abort
                 \ . (column + (a:direction ? shiftwidth() : -shiftwidth())) . '|'
 endfunction
 
+function! s:toggle_done() abort
+    let nodelinenr = s:curnodelinenr()
+    let line = getline(nodelinenr)
+    if line =~# '^\s*\*'
+        call setline(nodelinenr, substitute(line, '^\s*\zs\*', '-', ''))
+    else
+        call setline(nodelinenr, substitute(line, '^\s*\zs-',  '*', ''))
+    endif
+endfunction
 
-nnoremap <silent> <buffer> <CR> :call <SID>add_sibling()<CR>
+
+nnoremap <silent> <buffer> <CR>   :call <SID>add_sibling()<CR>
+nnoremap <silent> <buffer> <S-CR> :call <SID>add_note()<CR>
+nnoremap <silent> <buffer> <C-CR> :call <SID>toggle_done()<CR>
 
 nnoremap <silent> <buffer> <expr> >>      <SID>indent_subtree(1)
 nnoremap <silent> <buffer> <expr> <<      <SID>indent_subtree(0)
