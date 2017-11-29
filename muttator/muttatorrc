@@ -4,6 +4,7 @@ set hintchars=hjklasdfgyuiopqwertnmzxcvb
 
 nnoremap J  Jzo
 nnoremap <C-r> ":emenu Message.Mark.Thread As Read<CR>Jzo"
+nnoremap <C-t> <Nop>
 
 hi Hint::after -append font-size: 9pt; text-transform: lowercase;
 
