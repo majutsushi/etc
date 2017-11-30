@@ -59,6 +59,7 @@ NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'wellle/targets.vim'
 
 " Filetypes
 NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {
@@ -1986,6 +1987,9 @@ highlight TagbarVisibilityPrivate guifg=#ee1111
 
 nmap <silent> <M-t> :TagbarOpenAutoClose<CR>
 nmap <silent>  <F9> :TagbarToggle<CR>
+
+" Targets {{{2
+let g:targets_nl = 'nL'
 
 " UltiSnips {{{2
 let g:UltiSnipsExpandTrigger = "<C-l>"
