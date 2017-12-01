@@ -97,9 +97,17 @@ endfunction
 
 function! s:indent_subtree(direction) abort
     let endline = s:subtree_end()
-    let column = col('.')
-    return (endline - line('.') + 1) . (a:direction ? '>>' : '<<')
-                \ . (column + (a:direction ? shiftwidth() : -shiftwidth())) . '|'
+
+    " Get range in screen rows, accounting for closed folds
+    let startline_s = winline()
+    let pos = getpos('.')
+    call cursor(endline, 1)
+    let endline_s = winline()
+    call setpos('.', pos)
+    let range = endline_s - startline_s + 1
+
+    return range . (a:direction ? '>>' : '<<')
+                \ . (col('.') + (a:direction ? shiftwidth() : -shiftwidth())) . '|'
 endfunction
 
 function! s:toggle_done() abort
