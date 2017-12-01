@@ -13,3 +13,6 @@
 [submodule "awesome/vicious"]
 	path = awesome/vicious
 	url = https://github.com/Mic92/vicious
+[submodule "zsh/zsh-autosuggestions"]
+	path = zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
