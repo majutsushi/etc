@@ -417,7 +417,7 @@ globalkeys = awful.util.table.join(
               {description="take screenshot interactive", group="misc"}),
 
     -- Prompt
-    awful.key({ modkey }, "p", function () awful.spawn("rofi -show drun") end,
+    awful.key({ modkey }, "p", function () awful.spawn("rofi -show combi") end,
               {description = "run rofi", group = "launcher"}),
     -- awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
     --           {description = "run prompt", group = "launcher"}),

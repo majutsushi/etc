@@ -1,5 +1,6 @@
 configuration {
-	modi: "drun,run,window,ssh";
+	/* modi: "drun,run,window,ssh"; */
+	modi: "combi,ssh";
 /*	width: 50;*/
 /*	lines: 15;*/
 /*	columns: 1;*/
@@ -10,7 +11,7 @@ configuration {
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
-/*	show-icons: false;*/
+	show-icons: true;
 /*	terminal: "rofi-sensible-terminal";*/
 /*	ssh-client: "ssh";*/
 /*	ssh-command: "{terminal} -e {ssh-client} {host}";*/
@@ -29,7 +30,7 @@ configuration {
 /*	auto-select: false;*/
 /*	parse-hosts: false;*/
 /*	parse-known-hosts: true;*/
-/*	combi-modi: "window,run";*/
+	combi-modi: "window,drun,run";
 /*	matching: "normal";*/
 /*	tokenize: true;*/
 /*	m: "-5";*/
@@ -45,7 +46,7 @@ configuration {
 /*	scrollbar-width: 8;*/
 	scroll-method: 1;
 /*	fake-background: "screenshot";*/
-/*	window-format: "{w}    {i}{c}   {t}";*/
+	window-format: "{c}   {t}";
 /*	click-to-exit: true;*/
 /*	show-match: true;*/
 	theme: "~/.config/rofi/desert";
