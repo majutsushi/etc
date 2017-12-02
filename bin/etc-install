@@ -149,6 +149,7 @@ xlink latexmkrc
 xlink mercurial/hgrc
 xlink moc
 xlink muttator/muttatorrc
+xlink ncmpcpp target=.config/ncmpcpp
 xlink ranger target=.config/ranger
 xlink redshift.conf target=.config/redshift.conf
 xlink rofi target=.config/rofi
