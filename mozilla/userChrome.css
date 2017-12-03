@@ -1,0 +1,11 @@
+#TabsToolbar {
+    visibility: collapse;
+}
+
+/* #sidebar-header { */
+/*     display:none; */
+/* } */
+
+#sidebar-switcher-target {
+    font-size: 75%;
+}
