@@ -3,7 +3,8 @@
 
 setopt sh_word_split
 
-ITEMS="cputemp battery"
+# ITEMS="cpu_usage memory loadavg"
+ITEMS=""
 
 TMUX_LIBDIR=$HOME/.etc/tmux/lib
 
@@ -20,6 +21,9 @@ status_freq() {
     case "$1" in
         battery) echo 61 ;;
         cputemp) echo 19 ;;
+        cpu_usage) echo 7 ;;
+        loadavg) echo 61 ;;
+        memory)  echo 19 ;;
         rhino)   echo 31 ;;
     esac
 }
