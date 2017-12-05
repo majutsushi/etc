@@ -1,7 +1,8 @@
 # start tmux/screen if not already in it or running a dumb terminal
 
 # 'rxvt' is needed for dvtm
-if [[ ! "$TERM" =~ ^\(tmux.*\|screen.*\|rxvt\|dumb\|vt100\)$ ]] \
+if [[ ! "$TERM" =~ ^\(screen.*\|rxvt\|dumb\|vt100\)$ ]] \
+   && [[ -z "$TMUX" ]] \
    && [[ -z "$ZSHRUN" ]] && [[ -z "$VIM" ]]; then
     export ORIGTERM=$TERM
     export ORIGCOLORTERM=$COLORTERM
