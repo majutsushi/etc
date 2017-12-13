@@ -1,3 +1,4 @@
+require "editheader";
 require "fileinto";
 require "imap4flags";
 require "mailbox";
@@ -37,6 +38,10 @@ if allof (not address :is :domain "from" "github.com",
                  header :regex "x-loop" "(.*)",
                  header :regex "mailing-list" "list +([^ ;]+).*")) {
     set :lower "listname" "${1}";
+
+    # Occasionally used by spam that gets through
+    deleteheader "x-priority";
+    deleteheader "x-msmail-priority";
 
     execute :input "${listname}" :output "listname" "tr" [".", "_"];
 
