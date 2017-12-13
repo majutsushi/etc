@@ -7,10 +7,7 @@ require "regex";
 require "variables";
 require "vnd.dovecot.execute";
 
-if header :contains "X-Spam-Level" "**********" {
-    discard;
-    stop;
-} elsif header :contains "X-Spam-Flag" "YES" {
+if header :contains "X-Spam-Flag" "YES" {
     fileinto :flags "\\Seen" "Spam";
     stop;
 }
