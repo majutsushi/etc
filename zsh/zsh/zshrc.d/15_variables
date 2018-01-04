@@ -55,7 +55,13 @@ export AUTOSSH_PORT=0
 
 export TMUX_TMPDIR=$XDG_RUNTIME_DIR
 
-export CARGO_HOME=$HOME/.var/lib/cargo
+export RUSTUP_HOME="$HOME/.var/lib/rustup"
+export CARGO_HOME="$HOME/.var/lib/cargo"
+if have rustc; then
+    # Also see https://github.com/rust-lang-nursery/rustup.rs/issues/450
+    manpath+="$(rustc --print sysroot)/share/man"
+    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
 
 export CCACHE_DIR=$XDG_CACHE_HOME/ccache
 export CCACHE_COMPRESS=1
