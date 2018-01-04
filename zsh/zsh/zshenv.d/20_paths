@@ -44,7 +44,7 @@ manpath=(
     "$manpath[@]"
 )
 rationalize_path manpath
-typeset -gxU manpath
+typeset -gxU MANPATH
 
 typeset -gxT LIBRARY_PATH library_path
 library_path=(
