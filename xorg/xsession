@@ -16,6 +16,7 @@ eval "$(gnome-keyring-daemon --start --components=secrets)"
 
 xset s 600
 xset dpms 0 0 1200
+xssproxy &
 
 nm-applet &
 pasystray &
