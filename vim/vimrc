@@ -74,6 +74,7 @@ NeoBundle 'tpope/vim-markdown'
 NeoBundle 'plasticboy/vim-markdown', {'name': 'plasticboy-markdown'}
 NeoBundle 'octol/vim-cpp-enhanced-highlight'
 NeoBundle 'mhinz/vim-rfc'
+NeoBundle 'w0rp/ale'
 
 " Information
 NeoBundle 'airblade/vim-gitgutter'
