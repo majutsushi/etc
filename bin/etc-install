@@ -260,6 +260,8 @@ if command -v python >/dev/null; then
     python setup.py install --user >/dev/null
     python3 setup.py install --user >/dev/null
     cd $HOME
+
+    xlink python/pylintrc target=.config/pylintrc
 fi
 
 for tinfof in .etc/terminfo/*; do
