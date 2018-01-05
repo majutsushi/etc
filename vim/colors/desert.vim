@@ -44,6 +44,11 @@ hi Search	guibg=#cd853f guifg=#f5deb3
 hi SpecialKey	guifg=#666666
 hi QuickFixLine	guibg=#408f07 guifg=#ffffff
 
+hi SpellBad	gui=undercurl guisp=Red
+hi SpellCap	gui=undercurl guisp=#fa8072
+hi SpellRare	gui=undercurl guisp=Magenta
+hi SpellLocal	gui=undercurl guisp=Cyan
+
 hi StatusLine	guibg=#c2bfa5 guifg=#000000 gui=none
 "hi StatusLineNC	guibg=#c2bfa5 guifg=#7f7f7f gui=none
 hi StatusLineNC	guibg=#1c1c1c guifg=#7f7f7f gui=none

@@ -1523,6 +1523,10 @@ let g:CSApprox_verbose_level = 0 " Disable warnings for <88 colors
 let g:CSApprox_hook_desert_post = [
     \ 'hi DiffAdd ctermbg=28',
     \ 'hi DiffDelete ctermbg=88 ctermfg=88',
+    \ 'hi SpellBad cterm=underline',
+    \ 'hi SpellCap cterm=underline',
+    \ 'hi SpellRare cterm=underline',
+    \ 'hi SpellLocal cterm=underline',
 \]
 
 " Ctrl-P {{{2
