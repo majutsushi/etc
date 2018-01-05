@@ -309,7 +309,8 @@ let s:statuscolors = {
     \ 'LineColumn'   : [[ '#585858', '#bcbcbc', 'none'], [ '#1c1c1c', '#4e4e4e', 'none']],
     \ 'LinePercent'  : [[ '#c2bfa5', '#303030', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
     \ 'Error'        : [[ '#cc0000', '#ffffff', 'bold'], [ '#1c1c1c', '#808080', 'none']],
-    \ 'Warning'      : [[ '#585858', '#ff5f00', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']]
+    \ 'Warning'      : [[ '#585858', '#ff5f00', 'bold'], [ '#1c1c1c', '#4e4e4e', 'none']],
+    \ 'Ale'          : [[ '#c2bfa5', '#af0000', 'bold'], [ '#1c1c1c', '#808080', 'none']]
 \ }
 " Helper functions {{{2
 " GetFilePath() {{{3
@@ -434,20 +435,21 @@ function! StatuslineCurrenttag()
     return rv
 endfunction
 
-" EclimErrorIndicator() {{{3
-function! EclimErrorIndicator() abort
-    let loclist = filter(getloclist(0), 'bufnr("%") == v:val.bufnr')
-    let errors = filter(copy(loclist), 'tolower(v:val.type) == "e"')
+" StlAleLinterStatus() {{{3
+function! StlAleLinterStatus() abort
+    let counts = ale#statusline#Count(bufnr(''))
 
-    return len(errors) > 0 ? 'e' : ''
-endfunction
+    if s:ale_linting
+        return '[A] '
+    endif
 
-" EclimWarningIndicator() {{{3
-function! EclimWarningIndicator() abort
-    let loclist = filter(getloclist(0), 'bufnr("%") == v:val.bufnr')
-    let warnings = filter(copy(loclist), 'tolower(v:val.type) == "w"')
-
-    return len(warnings) > 0 ? 'w' : ''
+    return counts.total == 0 ? '' : '[' . join([
+        \ printf('%d', counts.error),
+        \ printf('%d', counts.warning),
+        \ printf('%d', counts.style_error),
+        \ printf('%d', counts.style_warning),
+        \ printf('%d', counts.info),
+    \ ], '/') . '] '
 endfunction
 
 " Default statusline {{{2
@@ -463,8 +465,7 @@ let g:default_stl .= "#[FilePath] %{GetFilePath()}#[FileName]%{GetFileName()} "
 
 let g:default_stl .= "#[ModFlag]%(%{GetState()} %)#[BufFlag]%w"
 
-let g:default_stl .= "#[Error]%{EclimErrorIndicator()}"
-let g:default_stl .= "#[Warning]%{EclimWarningIndicator()}"
+let g:default_stl .= "#[Ale]%{StlAleLinterStatus()}"
 
 " File type
 let g:default_stl .= "<CUR>%(#[FileType] %{!empty(&ft) ? &ft : '--'}#[BranchS]%)</CUR>"
@@ -476,10 +477,6 @@ let g:default_stl .= "<CUR>%(#[FileType]%{&spell ? ':' . &spelllang : ''}#[Branc
 let g:default_stl .= "#[Branch]%("
 let g:default_stl .= "%{exists('g:loaded_fugitive') ? substitute(fugitive#statusline(), '\\[GIT(\\([a-z0-9\\-_\\./:]\\+\\))\\]', '<CUR>:</CUR>\\1', 'gi') : ''}"
 let g:default_stl .= "%) "
-
-" Syntastic
-"let g:default_stl .= "<CUR>%(#[BranchS][>] #[Warning]%{substitute(SyntasticStatuslineFlag(), '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', '[>][>][>] SYNTAX \\1 \\2 [>][>][>]', 'i')} %)</CUR>"
-"let g:default_stl .= "<CUR>%(#[BranchS][>] #[Warning]%{substitute('[Syntax: line:42 (99)]', '\\[Syntax: line:\\(\\d\\+\\) \\((\\(\\d\\+\\))\\)\\?\\]', 'SYNTAX \\1 \\2', 'i')} %)</CUR>"
 
 " Padding/HL group
 let g:default_stl .= "#[FunctionName] "
@@ -1497,6 +1494,15 @@ if has('nvim')
 endif
 
 " Plugin and script options {{{1
+
+" ALE {{{2
+let s:ale_linting = 0
+augroup AleLinting
+    autocmd!
+    autocmd User ALELintPre let s:ale_linting = 1
+    autocmd User ALELintPost let s:ale_linting = 0
+augroup END
+
 
 " bufexplorer {{{2
 let g:bufExplorerDisableDefaultKeyMapping=1    " Disable mapping.
