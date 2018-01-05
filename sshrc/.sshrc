@@ -52,6 +52,11 @@ export VIMINIT="source $MYVIMRC"
 
 export INPUTRC="$SSHRCD/inputrc"
 
+export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t'
+export LESSHISTFILE=$SSHHOME/.lesshst
+export LESSKEY=$SSHHOME/.less
+lesskey "$SSHRCD/lesskey"
+
 eval $(dircolors -b $SSHRCD/dircolors) 2>/dev/null || :
 
 echo -e "\e]0;${HOSTNAME%%.*}\e\\"

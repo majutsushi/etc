@@ -1,0 +1,22 @@
+#command
+h left-scroll
+l right-scroll
+^L noaction ^R\eu
+[ prev-file
+] next-file
+Q quit \1
+:cq quit \1
+D noaction j/\^((diff|commit|Date|From) )|((added|deleted|modified): )\n\eu
+^s noaction /\^       
+V noaction g|$/usr/bin/vim -\n
+
+#line-edit
+^A home
+^E end
+^F right
+^B left
+^D delete
+^W word-backspace
+^P up
+^N down
+^[ abort
