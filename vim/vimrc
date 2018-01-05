@@ -1496,6 +1496,8 @@ endif
 " Plugin and script options {{{1
 
 " ALE {{{2
+let g:ale_lint_delay = 500
+
 let g:ale_linters = {
 \   'python': ['flake8', 'mypy', 'pylint'],
 \}
