@@ -439,7 +439,7 @@ endfunction
 function! StlAleLinterStatus() abort
     let counts = ale#statusline#Count(bufnr(''))
 
-    if s:ale_linting
+    if s:ale_running
         return '[A] '
     endif
 
@@ -1507,11 +1507,11 @@ let g:ale_fixers = {
 let g:ale_python_yapf_executable = 'yapf3'
 " let g:ale_fix_on_save = 1
 
-let s:ale_linting = 0
+let s:ale_running = 0
 augroup AleLinting
     autocmd!
-    autocmd User ALELintPre let s:ale_linting = 1
-    autocmd User ALELintPost let s:ale_linting = 0
+    autocmd User ALELintPre  let s:ale_running = 1 | redrawstatus
+    autocmd User ALELintPost let s:ale_running = 0 | redrawstatus
 augroup END
 
 
