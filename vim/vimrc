@@ -1777,7 +1777,7 @@ let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
 let g:protodefctagsexe = g:ctagsbin
 
 " Quickfixsigns {{{2
-let g:quickfixsigns_classes = ['qfl', 'loc', 'marks', 'breakpoints']
+let g:quickfixsigns_classes = ['qfl', 'marks', 'breakpoints']
 let g:quickfixsigns_blacklist_buffer = '\v(^__.*__$)|(^NERD_tree.*)|(^$)'
 let g:quickfixsigns_icons = {}
 " exclude "'." from buffer and "<>^" from global
