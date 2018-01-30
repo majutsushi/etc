@@ -1,5 +1,13 @@
+# Examples:
+# https://github.com/ClusterHQ/flocker/blob/master/.pylintrc
+# https://github.com/datawire/quark/blob/master/.pylintrc
+
 [MESSAGES CONTROL]
-disable=missing-docstring
+disable=missing-docstring,
+        too-many-arguments,
+        too-many-instance-attributes,
+        too-few-public-methods,
+        invalid-name
 
 [BASIC]
 good-names=i,j,k,ex,Run,_,x,y,id,db,f
