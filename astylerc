@@ -1,6 +1,6 @@
 #--style=stroustrup
 --indent=spaces=4
---brackets=linux # stroustrup?
+--style=linux # stroustrup?
 --indent-classes
 --indent-switches
 #--indent-namespaces
