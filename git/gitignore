@@ -58,3 +58,5 @@ gmon.out
 .classpath
 .project
 .settings/
+
+.mypy_cache/
