@@ -68,7 +68,12 @@ alias ts="ts '%Y-%m-%dT%H:%M:%.S%z'"
 
 # execute last command as root
 alias fu='sudo $(fc -ln -1) '
-alias t='tree --dirsfirst -F'
+
+if have exa; then
+    alias t='exa --group-directories-first --git -F --tree'
+else
+    alias t='tree --dirsfirst -F'
+fi
 
 alias da='du -sch'
 alias decolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
