@@ -49,9 +49,30 @@ hi SpellCap	gui=undercurl guisp=#fa8072
 hi SpellRare	gui=undercurl guisp=Magenta
 hi SpellLocal	gui=undercurl guisp=Cyan
 
-hi StatusLine	guibg=#c2bfa5 guifg=#000000 gui=none
-"hi StatusLineNC	guibg=#c2bfa5 guifg=#7f7f7f gui=none
-hi StatusLineNC	guibg=#1c1c1c guifg=#7f7f7f gui=none
+
+let g:statuscolours = {
+    \ 'NONE'         : [['#c2bfa5', '#000000', 'none'], ['#1c1c1c', '#7f7f7f', 'none']],
+    \ 'ModeNormal'   : [['#4e9a06', '#ffffff', 'bold'], [                            ]],
+    \ 'ModeInsert'   : [['#cc0000', '#ffffff', 'bold'], [                            ]],
+    \ 'FilePath'     : [['#c2bfa5', '#000000', 'none'], ['#1c1c1c', '#808080', 'none']],
+    \ 'FileName'     : [['#c2bfa5', '#000000', 'bold'], ['#1c1c1c', '#808080', 'none']],
+    \ 'ModFlag'      : [['#c2bfa5', '#cc0000', 'bold'], ['#1c1c1c', '#4e4e4e', 'none']],
+    \ 'BufFlag'      : [['#c2bfa5', '#000000', 'none'], ['#1c1c1c', '#4e4e4e', 'none']],
+    \ 'FileType'     : [['#585858', '#bcbcbc', 'none'], ['#080808', '#4e4e4e', 'none']],
+    \ 'Branch'       : [['#585858', '#bcbcbc', 'none'], ['#1c1c1c', '#4e4e4e', 'none']],
+    \ 'BranchS'      : [['#585858', '#949494', 'none'], ['#1c1c1c', '#4e4e4e', 'none']],
+    \ 'FunctionName' : [['#1c1c1c', '#9e9e9e', 'none'], ['#080808', '#4e4e4e', 'none']],
+    \ 'FileFormat'   : [['#1c1c1c', '#bcbcbc', 'bold'], ['#080808', '#4e4e4e', 'none']],
+    \ 'FileEncoding' : [['#1c1c1c', '#bcbcbc', 'bold'], ['#080808', '#4e4e4e', 'none']],
+    \ 'Separator'    : [['#1c1c1c', '#6c6c6c', 'none'], ['#080808', '#4e4e4e', 'none']],
+    \ 'ExpandTab'    : [['#585858', '#eeeeee', 'bold'], ['#1c1c1c', '#808080', 'none']],
+    \ 'LineColumn'   : [['#585858', '#bcbcbc', 'none'], ['#1c1c1c', '#4e4e4e', 'none']],
+    \ 'LinePercent'  : [['#c2bfa5', '#303030', 'bold'], ['#1c1c1c', '#4e4e4e', 'none']],
+    \ 'Error'        : [['#cc0000', '#ffffff', 'bold'], ['#1c1c1c', '#808080', 'none']],
+    \ 'Warning'      : [['#585858', '#ff5f00', 'bold'], ['#1c1c1c', '#4e4e4e', 'none']],
+    \ 'Ale'          : [['#c2bfa5', '#af0000', 'bold'], ['#1c1c1c', '#808080', 'none']],
+\ }
+
 
 hi Title	guifg=#cd5c5c
 hi Visual	gui=none guifg=#f0e68c guibg=#6b8e23
