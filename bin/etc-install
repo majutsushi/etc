@@ -208,6 +208,7 @@ xlink vim target=.config/nvim
 if ! [[ -d $HOME/.var/lib/vim/bundles/ ]]; then
     git clone https://github.com/Shougo/neobundle.vim $HOME/.var/lib/vim/bundles/neobundle.vim
 fi
+xlink vintrc.yaml
 
 mkdir -p $HOME/.var/spool/anacron
 crontab $HOME/.etc/crontab/crontab
