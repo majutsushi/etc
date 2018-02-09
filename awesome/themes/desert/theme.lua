@@ -90,6 +90,8 @@ theme.widget_cpu = theme.confdir .. "/icons/widgets/cpu.png"
 theme.widget_mem = theme.confdir .. "/icons/widgets/memory.png"
 theme.widget_rhino = theme.confdir .. "/icons/widgets/rhino.png"
 theme.widget_rhino_active = theme.confdir .. "/icons/widgets/rhino_active.png"
+theme.widget_docker = theme.confdir .. "/icons/widgets/docker.png"
+theme.widget_docker_active = theme.confdir .. "/icons/widgets/docker_active.png"
 
 theme.weather_dir = theme.confdir .. "/icons/weather/"
 

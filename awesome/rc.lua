@@ -220,6 +220,7 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 local applets = {
+    docker  = eldritch.applets.docker(),
     rhino   = osinfo[4] == "vanadis" and eldritch.applets.rhino(),
     battery = eldritch.applets.battery(),
     cpu     = eldritch.applets.cpu(),
@@ -268,6 +269,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            applets.docker,
             applets.rhino,
             applets.battery,
             applets.cpu,
