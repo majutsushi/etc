@@ -5,6 +5,10 @@ term_exists() { infocmp "$1" &>/dev/null; }
 if ! term_exists "$TERM"; then
     if term_exists "${TERM%-256color}"; then
         TERM="${TERM%-256color}"
+    elif [[ "$TERM" =~ tmux.* ]] && term_exists tmux-256color; then
+        TERM=tmux-256color
+    elif [[ "$TERM" =~ tmux.* ]] && term_exists tmux; then
+        TERM=tmux
     elif [[ "$TERM" =~ tmux.* ]] && term_exists screen-256color; then
         TERM=screen-256color
     elif [[ "$TERM" =~ tmux.* ]] && term_exists screen; then
