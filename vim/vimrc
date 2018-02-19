@@ -1191,6 +1191,7 @@ let g:ale_python_pylint_executable = 'pylint3'
 
 let g:ale_fixers = {
 \   'python': ['isort', 'yapf'],
+\   'rust': ['rustfmt'],
 \}
 let g:ale_python_yapf_executable = 'yapf3'
 " let g:ale_fix_on_save = 1
