@@ -159,10 +159,13 @@ EXEC 32;1
 .xcf  35;1
 .xwd  35;1
 # video formats
-.wmv 35;1
+.flv 35;1
 .mkv 35;1
+.mp4 35;1
 .ogm 35;1
 .ogv 35;1
+.rm  35;1
+.wmv 35;1
 # audio formats
 .flac 35;1
 .mp3  35;1
