@@ -31,6 +31,7 @@ configuration {
 /*	parse-hosts: false;*/
 /*	parse-known-hosts: true;*/
 	combi-modi: "window,drun,run";
+	combi-hide-mode-prefix: true;
 /*	matching: "normal";*/
 /*	tokenize: true;*/
 /*	m: "-5";*/
@@ -46,7 +47,7 @@ configuration {
 /*	scrollbar-width: 8;*/
 	scroll-method: 1;
 /*	fake-background: "screenshot";*/
-	window-format: "{c}   {t}";
+	window-format: "{t}";
 /*	click-to-exit: true;*/
 /*	show-match: true;*/
 	theme: "~/.config/rofi/desert";

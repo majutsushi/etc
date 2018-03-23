@@ -4,7 +4,7 @@ configuration {
 
 * {
     font: "DejaVu Sans Mono 14";
-    padding: 3px;
+    padding: 3px 0px 3px 3px;
     background-color: #333333;
     text-color: #ffffff;
 }
@@ -12,7 +12,25 @@ configuration {
 #window {
     border: 0px;
     border-radius: 5px;
+    padding: 3px 0px 6px 0px;
     spacing: 0;
+}
+
+#mainbox {
+    padding: 3px 0px 3px 0px;
+}
+
+#inputbar {
+    padding: 6px 6px 6px 15px;
+    children: [entry, case-indicator];
+}
+
+#prompt {
+    font: "DejaVu Sans Mono 20";
+}
+
+#entry {
+    font: "DejaVu Sans Mono Bold 20";
 }
 
 #button.selected {
@@ -21,13 +39,14 @@ configuration {
 }
 
 #listview {
-    scrollbar: false;
+    padding: 3px 0px 3px 0px;
+    scrollbar: true;
 }
 
-/* #element { */
-/*     border:  0; */
-/*     padding: 1px ; */
-/* } */
+#element {
+    /* border:  0; */
+    padding: 4px 0px 4px 20px;
+}
 #element.normal.normal {
     /* background-color: #333333; */
     text-color:       #ffffff;
@@ -52,16 +71,20 @@ configuration {
     background-color: #268bd2;
     text-color:       #fdf6e3;
 }
-#element.alternate.normal {
-    background-color: #4d4d4d;
-    /* text-color:       #ffffff; */
-}
-#element.alternate.urgent {
-    background-color: #4d4d4d;
-    /* text-color:       #ffffff; */
-}
-#element.alternate.active {
-    background-color: #4d4d4d;
-    /* text-color:       #ffffff; */
-}
+/* #element.alternate.normal { */
+/*     background-color: #4d4d4d; */
+/*     /1* text-color:       #ffffff; *1/ */
+/* } */
+/* #element.alternate.urgent { */
+/*     background-color: #4d4d4d; */
+/*     /1* text-color:       #ffffff; *1/ */
+/* } */
+/* #element.alternate.active { */
+/*     background-color: #4d4d4d; */
+/*     /1* text-color:       #ffffff; *1/ */
+/* } */
 
+#scrollbar {
+    handle-color: #777777;
+    padding: 0px 6px 0px 10px;
+}
