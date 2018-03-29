@@ -1863,6 +1863,8 @@ vnoremap af :<c-u>normal! ]zV[z<cr>
 
 " Moving around {{{2
 
+nnoremap <silent> <Enter> :YcmCompleter GoTo<CR>
+
 " make some jumps more intuitive and don't require the '{' to be in the first
 " column
 nnoremap <silent> [[ ?{<CR>w99[{:nohl<CR>
