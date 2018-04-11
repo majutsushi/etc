@@ -24,3 +24,10 @@ nmap <C-t> :action Back<CR>
 " nmap <C-i> :action Forward<CR>
 nmap <C-6> <C-S-6>
 nnoremap <C-l> :nohlsearch<CR><C-l>
+
+" Doesn't really work yet due to
+" https://youtrack.jetbrains.com/issue/VIM-510
+nmap <C-Space>   :action EditorSelectWord<CR>
+nmap <C-S-Space> :action EditorUnSelectWord<CR>
+imap <C-Space>   <Esc>:action CodeCompletion<CR>a
+imap <C-S-Space> <Esc>:action SmartTypeCompletion<CR>a
