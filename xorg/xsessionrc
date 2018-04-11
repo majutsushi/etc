@@ -17,6 +17,12 @@ export DVDCSS_CACHE=$XDG_CACHE_HOME/dvdcss
 export GTK_OVERLAY_SCROLLING=0
 export NO_AT_BRIDGE=1
 
+export RUSTUP_HOME="$HOME/.var/lib/rustup"
+export CARGO_HOME="$HOME/.var/lib/cargo"
+if command -v rustc &>/dev/null; then
+    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
+
 # Necessary for awesome widgets
 if [ -d /opt/java/jdk-default ]; then
     export PATH=/opt/java/jdk-default/bin:$PATH
