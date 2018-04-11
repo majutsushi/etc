@@ -43,6 +43,9 @@ export VISUAL=vi
 
 PROMPT_DIRTRIM=2
 PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\w\[\e[m\] \[\e[1m\]$\[\e[m\] "
+if [[ -f /var/run/reboot-required ]]; then
+    PS1="\[\e[31m\]R \[\e[m\]${PS1}"
+fi
 
 eval "$(dircolors)"
 alias ls='LC_COLLATE=POSIX ls  -F --color=auto --group-directories-first'
