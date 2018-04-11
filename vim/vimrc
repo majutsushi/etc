@@ -1185,7 +1185,7 @@ endif
 let g:ale_lint_delay = 500
 
 let g:ale_linters = {
-\   'python': ['flake8', 'mypy', 'pylint'],
+\   'python': ['pylint', 'mypy'],
 \}
 let g:ale_python_pylint_executable = 'pylint3'
 
