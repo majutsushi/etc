@@ -11,6 +11,8 @@ set tree-view   = line-number:no,interval=5 mode author:full file-size date:defa
 set line-graphics = utf-8 # Enum: ascii, default, utf-8
 
 # Settings controlling how content is read from Git
+set status-show-untracked-dirs  = yes           # Show files in untracked directories? (status)
+set status-show-untracked-files = yes           # Show untracked files?
 set ignore-space = all           # Enum: no, all, some, at-eol (diff)
 # set diff-highlight            = true          # String (or bool): Path to diff-highlight script,
                                                 #                   defaults to `diff-highlight`.
