@@ -1187,7 +1187,11 @@ let g:ale_lint_delay = 500
 let g:ale_linters = {
 \   'python': ['pylint', 'mypy'],
 \}
-let g:ale_python_pylint_executable = 'pylint3'
+let g:ale_python_pylint_executable = 'pylint'
+autocmd vimrc FileType python
+    \ if getline(1) =~ '^#!' && getline(1) =~ 'python3' |
+        \ let b:ale_python_pylint_executable = 'pylint3' |
+    \ endif
 
 let g:ale_fixers = {
 \   'python': ['isort', 'yapf'],
