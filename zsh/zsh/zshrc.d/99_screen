@@ -3,6 +3,7 @@
 # 'rxvt' is needed for dvtm
 if [[ ! "$TERM" =~ ^\(screen.*\|rxvt\|dumb\|vt100\)$ ]] \
    && [[ -z "$TMUX" ]] \
+   && [[ -z "$TMUX_DISABLE" ]] \
    && [[ -z "$ZSHRUN" ]] && [[ -z "$VIM" ]]; then
     export ORIGTERM=$TERM
     export ORIGCOLORTERM=$COLORTERM
