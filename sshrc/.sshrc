@@ -50,9 +50,9 @@ export EDITOR=vi
 export VISUAL=vi
 
 PROMPT_DIRTRIM=2
-PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\w\[\e[m\]\n\\$ "
+PS1="\\[\\e[31m\\]\\u\\[\\e[m\\]@\\[\\e[33m\\]\\h\\[\\e[m\\]:\\[\\e[32m\\]\\w\\[\\e[m\\]\\n\\$ "
 if [[ -f /var/run/reboot-required ]]; then
-    PS1="\[\e[31m\]R \[\e[m\]${PS1}"
+    PS1="\\[\\e[31m\\]R \\[\\e[m\\]${PS1}"
 fi
 
 eval "$(dircolors)"
@@ -81,8 +81,8 @@ export GROFF_NO_SGR=1
 
 export CLIFF_FIT_WIDTH=1
 
-eval $(dircolors -b $SSHRCD/dircolors) 2>/dev/null || :
+eval "$(dircolors -b "$SSHRCD"/dircolors)" 2>/dev/null || :
 
-echo -e "\e]0;${HOSTNAME%%.*}\e\\"
+echo -e "\\e]0;${HOSTNAME%%.*}\\e\\"
 
 # vim: ft=sh
