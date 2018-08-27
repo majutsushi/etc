@@ -21,6 +21,14 @@ if ! term_exists "$TERM"; then
     export TERM
 fi
 
+color-log() {
+    sed -r \
+        -e "s/(.*error.*)/$(tput setaf 1)\\1$(tput sgr0)/I" \
+        -e "s/(.*warning.*)/$(tput setaf 3)\\1$(tput sgr0)/I" \
+        -e "s/(.*debug.*)/$(tput setaf 7)\\1$(tput sgr0)/I"
+}
+
+
 set -o noclobber
 
 shopt -s checkwinsize
