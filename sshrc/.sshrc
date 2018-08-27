@@ -72,6 +72,13 @@ export LESSHISTFILE=$SSHHOME/.lesshst
 export LESSKEY=$SSHHOME/.less
 lesskey "$SSHRCD/lesskey"
 
+export LESS_TERMCAP_md=$(tput setaf 1; tput bold)
+export LESS_TERMCAP_us=$(tput setaf 2; tput bold)
+export LESS_TERMCAP_ue=$(tput sgr0)
+export LESS_TERMCAP_so=$(tput setaf 0; tput setab 7)
+export LESS_TERMCAP_se=$(tput sgr0)
+export GROFF_NO_SGR=1
+
 eval $(dircolors -b $SSHRCD/dircolors) 2>/dev/null || :
 
 echo -e "\e]0;${HOSTNAME%%.*}\e\\"
