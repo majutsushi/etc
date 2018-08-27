@@ -79,6 +79,8 @@ export LESS_TERMCAP_so=$(tput setaf 0; tput setab 7)
 export LESS_TERMCAP_se=$(tput sgr0)
 export GROFF_NO_SGR=1
 
+export CLIFF_FIT_WIDTH=1
+
 eval $(dircolors -b $SSHRCD/dircolors) 2>/dev/null || :
 
 echo -e "\e]0;${HOSTNAME%%.*}\e\\"
