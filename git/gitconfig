@@ -74,6 +74,10 @@
 	func = cyan
 	old  = red
 	new  = green
+	oldMoved = 220
+	oldMovedAlternative = 143
+	newMoved = 48
+	newMovedAlternative = 51
 
 [status]
 	submoduleSummary = true
@@ -91,6 +95,8 @@
 	renames = true
 	indentHeuristic = true
 	; mnemonicPrefix = true
+	colorMoved = zebra
+	colorMovedWS = ignore-all-space
 
 [branch]
 	autosetuprebase = always
