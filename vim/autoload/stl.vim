@@ -184,6 +184,7 @@ function! s:ale_status(winnr) abort
                 \ ? 'E'
                 \ : counts.style_warning > 0
                     \ ? 'W' : '_',
+            \ counts.info > 0 ? 'I' : '',
         \ ], '') . ' '
     endif
 
