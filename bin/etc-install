@@ -137,6 +137,7 @@ xlink colordiffrc
 xlink compton.conf target=.config/compton.conf
 xlink ctags
 xlink gdbinit
+xlink gnuplot/gnuplot
 xlink gtk/gtkrc-2.0
 xlink gtk/gtk-3.0/gtk.css target=.config/gtk-3.0/gtk.css
 xlink gtk/gtk-3.0/settings.ini target=.config/gtk-3.0/settings.ini
