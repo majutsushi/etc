@@ -30,6 +30,7 @@ if [ -d /opt/java/jdk-default ]; then
 fi
 
 export IDEA_PROPERTIES="$HOME/.etc/idea/idea.properties"
+export IDEA_VM_OPTIONS="$HOME/.etc/idea/idea64.vmoptions"
 
 # ulimit -c unlimited
 # unclutter &

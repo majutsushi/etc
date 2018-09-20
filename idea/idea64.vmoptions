@@ -1,0 +1,20 @@
+# default
+-Xms128m
+-Xmx750m
+-XX:ReservedCodeCacheSize=240m
+-XX:+UseConcMarkSweepGC
+-XX:SoftRefLRUPolicyMSPerMB=50
+-ea
+-Dsun.io.useCanonCaches=false
+-Djava.net.preferIPv4Stack=true
+-Djdk.http.auth.tunneling.disabledSchemes=""
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:-OmitStackTraceInFastThrow
+-Dawt.useSystemAAFontSettings=lcd
+-Dsun.java2d.renderer=sun.java2d.marlin.MarlinRenderingEngine
+
+# custom
+-Dundo.documentUndoLimit=200
+# -DactionSystem.xWindow.remove.focus.from.nonFocusable.popups=false
+# -Dfocus.follows.mouse.workarounds=true
+# -Dallow.dialog.based.popups=false
