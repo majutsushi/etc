@@ -19,4 +19,5 @@ augroup filetypedetect
     autocmd BufNewFile,BufReadPost *.vala,*.vapi setfiletype vala
     autocmd BufNewFile,BufReadPost *.confluence setfiletype confluencewiki
     autocmd BufNewFile,BufReadPost *.sieve   setfiletype sieve
+    autocmd BufNewFile,BufReadPost *.jobdsl   setfiletype groovy
 augroup END
