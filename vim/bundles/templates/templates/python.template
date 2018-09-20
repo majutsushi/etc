@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 
 try:
     import better_exceptions
-except Exception:
+except ImportError:
     pass
 
 def sigint_handler(signal, frame):
