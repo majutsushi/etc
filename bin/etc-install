@@ -263,6 +263,7 @@ if command -v python >/dev/null; then
     cd $HOME
 
     xlink python/pylintrc target=.config/pylintrc
+    xlink python/mypy.ini
 fi
 
 for tinfof in .etc/terminfo/*; do
