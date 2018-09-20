@@ -39,6 +39,7 @@ stty -ixoff
 stty -ixon
 
 HISTCONTROL=ignorespace:ignoredups:erasedups
+HISTTIMEFORMAT='%F %T '
 shopt -s histappend
 
 if [[ -r "/usr/share/bash-completion/bash_completion" ]]; then
