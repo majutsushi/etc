@@ -4,16 +4,15 @@
 
 import argparse
 import fileinput
+from importlib.util import find_spec
 import sys
 
 import logging
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 log = logging.getLogger(__name__)
 
-try:
+if find_spec('better_exceptions'):
     import better_exceptions
-except ImportError:
-    pass
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Foo")
