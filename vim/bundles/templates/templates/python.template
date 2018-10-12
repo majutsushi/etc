@@ -4,9 +4,7 @@
 
 import argparse
 import fileinput
-import signal
 import sys
-import traceback
 
 import logging
 logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
@@ -16,11 +14,6 @@ try:
     import better_exceptions
 except ImportError:
     pass
-
-def sigint_handler(_signal, frame):
-    print("Caught interrupt in %s; exiting" % frame.f_code.co_name)
-    print(''.join(traceback.format_stack(frame)))
-    sys.exit(1)
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Foo")
@@ -41,5 +34,4 @@ def main(args):
     #     pass
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT, sigint_handler)
     sys.exit(main(parse_args()))
