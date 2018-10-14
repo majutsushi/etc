@@ -14,9 +14,9 @@ rm -f "$HOME"/.xsession-errors{,.old}
 eval "$(gnome-keyring-daemon --start --components=secrets)"
 /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 
-xset s 600
+xset s 600 120
 xset dpms 0 0 1200
-xssproxy &
+xss-lock --notifier="$HOME/.etc/bin/xss-notify" -- slock &
 
 nm-applet &
 pasystray &
@@ -40,7 +40,7 @@ xdg-user-dirs-gtk-update
 )
 
 # https://www.mail-archive.com/systemd-devel@lists.freedesktop.org/msg17273.html
-systemctl --user start lightson@"$DISPLAY".service
+# systemctl --user start lightson@"$DISPLAY".service
 
 "$HOME/.etc/xorg/xsettingsd-setup"
 inputplug -0 -c "$HOME/.etc/xorg/inputplug-hook"
