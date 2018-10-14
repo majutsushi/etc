@@ -1751,7 +1751,12 @@ noremap! <M-p> <Up>
 " Fast open a buffer by searching for a name
 " nnoremap <leader>b :buffers<CR>:buffer<space>
 
-nnoremap yn :let @+ = expand('%:p:~')<CR>
+function! s:copy_filepath() abort
+    let fpath = expand('%:p:~')
+    let @+ = fpath
+    echo "Copied path to clipboard: " . fpath
+endfunction
+nnoremap yn :call <SID>copy_filepath()<CR>
 
 nnoremap <M-Left>  :tabprevious<CR>
 nnoremap <M-Right> :tabnext<CR>
