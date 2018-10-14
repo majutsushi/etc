@@ -143,6 +143,8 @@ URxvt.copyCommand:  xclip -i -selection clipboard
 URxvt.pasteCommand: xclip -o -selection clipboard
 
 URxvt.keysym.C-slash:  font-size:show
+URxvt.keysym.C-S-Up:   font-size:incglobal
+URxvt.keysym.C-S-Down: font-size:decglobal
 
 ! XTerm emulation
 ! URxvt.keysym.Up              : \033[A
