@@ -25,6 +25,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'FelikZ/ctrlp-py-matcher'
 NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'Xuyuanp/nerdtree-git-plugin'
 NeoBundle 'Lokaltog/vim-easymotion', {'lazy': 1,
     \ 'autoload': {'mappings': '<Plug>(easymotion'}}
 NeoBundle 'bruno-/vim-vertical-move', {'lazy': 1,
@@ -1445,6 +1446,19 @@ let NERDTreeIgnore = [
     \ '\.out$',
     \ '\.pdf$'
 \ ]
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "*",
+    \ "Staged"    : "+",
+    \ "Untracked" : "%",
+    \ "Renamed"   : "→",
+    \ "Unmerged"  : "=",
+    \ "Deleted"   : "-",
+    \ "Dirty"     : "*",
+    \ "Clean"     : "✓",
+    \ 'Ignored'   : '○',
+    \ "Unknown"   : "?"
+\ }
 
 autocmd vimrc BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
