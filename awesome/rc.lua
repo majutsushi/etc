@@ -400,6 +400,9 @@ globalkeys = awful.util.table.join(
         vicious.force({volbar})
         volbar:notify()
     end, {description="mute", group="audio"}),
+    awful.key({}, "XF86AudioMicMute", function()
+        pulse.pulse.toggle_mic()
+    end, {description="mute mic", group="audio"}),
 
     awful.key({}, "XF86Display", function() xrandr.xrandr() end,
               {description="switch between display configs", group="misc"}),

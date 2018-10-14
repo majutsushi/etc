@@ -34,6 +34,10 @@ local function get_default_sink()
     return string.match(pacmd("dump"), "set%-default%-sink ([^\n]+)")
 end
 
+local function get_default_source()
+    return string.match(pacmd("dump"), "set%-default%-source ([^\n]+)")
+end
+
 local function get_sink_name(sink)
     if type(sink) == "string" then return sink end
     if sink == nil then return get_default_sink() end
@@ -104,6 +108,20 @@ function pulse.toggle(sink)
     pacmd(cmd)
 end
 -- }}}
+
+function pulse.toggle_mic()
+    local source = get_default_source()
+    if source == nil then return end
+
+    local data = pacmd("dump")
+    local pattern = "set%-source%-mute " .. escape(source) .. " (%a%a%a?)"
+    local mute = string.match(data, pattern)
+
+    -- 0 to enable a source or 1 to mute it.
+    local state = { yes = 0, no = 1}
+    local cmd = string.format("set-source-mute %s %d", source, state[mute])
+    pacmd(cmd)
+end
 
 setmetatable(pulse, { __call = function(_, ...) return worker(...) end })
 
