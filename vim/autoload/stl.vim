@@ -42,6 +42,7 @@ function! stl#update_win(winnr) abort
         let stl .= '#[ExpandTab] '
         let stl .= s:trailing()
         let stl .= s:indent(a:winnr)
+        let stl .= '%0*'
     endif
 
     let stl = substitute(
