@@ -1,0 +1,6 @@
+[Unit]
+Description=status email for %i
+
+[Service]
+Type=oneshot
+ExecStart=%h/.etc/bin/systemd-mail %u %i

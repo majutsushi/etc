@@ -1,0 +1,13 @@
+#!/bin/bash
+
+/usr/sbin/sendmail -t <<ERRMAIL
+To: $1
+From: systemd on $HOSTNAME <root@$HOSTNAME>
+Subject: Unit $2 failed
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+
+$(systemctl --user --lines 0 status --full "$2")
+
+$(journalctl --user-unit "$2" --since="$(systemctl --user show -p ExecMainStartTimestamp "$2" | cut -d= -f 2)")
+ERRMAIL
