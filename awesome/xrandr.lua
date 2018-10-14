@@ -4,8 +4,6 @@ local awful   = require("awful")
 local naughty = require("naughty")
 local icon_theme = require("menubar.icon_theme")()
 
-local rex = require("rex_pcre")
-
 -- A path to a fancy icon
 local icon_path = icon_theme:find_icon_path("video-display")
 
@@ -66,7 +64,7 @@ local function get_mirror_cmd(disconnected)
 
     if xrandr then
         for line in xrandr:lines() do
-            local w, h = rex.match(line, '^[\\w-]+ connected(?: primary)? (\\d+)x(\\d+)')
+            local w, h = line:match("^[%w-]+ connected primary (%d+)x(%d+)")
             if w then
                 primary_w = w
                 primary_h = h
