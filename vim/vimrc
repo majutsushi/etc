@@ -83,6 +83,7 @@ NeoBundle 'gregsexton/gitv', {'lazy': 1, 'autoload': {'commands': ['Gitv']}}
 NeoBundle 'syngan/vim-vimlint', {'depends' : 'ynkdir/vim-vimlparser'}
 NeoBundle 'tpope/vim-characterize'
 NeoBundle 'luochen1990/rainbow'
+NeoBundle 'machakann/vim-highlightedyank'
 
 " Misc
 NeoBundle 'godlygeek/csapprox', {'terminal': 1}
