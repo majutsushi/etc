@@ -76,6 +76,7 @@ command -v vim &>/dev/null && alias vi=vim
 command -v tree &>/dev/null && alias t="tree -F -C"
 
 export SSHRCD="$SSHHOME/.sshrc.d"
+export XDG_CONFIG_HOME="$SSHRCD/config"
 export MYVIMRC="$SSHRCD/vimrc"
 export VIMINIT="source $MYVIMRC"
 

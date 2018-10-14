@@ -1,0 +1,15 @@
+[include]
+	path = config.default
+
+[pager]
+	diff = less -F
+	log = less -F
+	show = less -F
+
+[log]
+	date = iso
+
+[pull]
+	rebase = true
+
+# vim: filetype=gitconfig noexpandtab sw=8 sts=8
