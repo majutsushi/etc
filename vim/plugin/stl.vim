@@ -30,9 +30,9 @@ endfunction
 augroup stl
     autocmd!
     autocmd ColorScheme * call s:set_colours(g:statuscolours)
-    autocmd VimEnter,WinEnter,BufWinEnter * call stl#update()
     autocmd BufReadPost,CursorHold,BufWritePost * call stl#recompute_stl_ts()
     autocmd BufReadPost,CursorHold,BufWritePost * call stl#recompute_stl_ws()
+    autocmd VimEnter,WinEnter,BufWinEnter,CursorHold * call stl#update()
 augroup END
 
 call s:set_colours(g:statuscolours)
