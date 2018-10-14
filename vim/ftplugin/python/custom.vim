@@ -11,6 +11,8 @@ setlocal efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 
 "map <buffer> <leader>e :!python2.6 %<CR>
 
+nnoremap <silent> <buffer> <Enter> :YcmCompleter GoTo<CR>
+
 if has("python3")
 python3 << EOF
 import os
