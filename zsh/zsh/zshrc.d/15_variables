@@ -22,7 +22,7 @@ export CLICOLOR=1
 eval $(dircolors -b $ZDOTDIR/dircolors) 2>/dev/null || :
 
 export ZIPOPT="--exclude=@$HOME/.etc/excludes/archive"
-export TAR_OPTIONS="--exclude-from $HOME/.etc/excludes/archive"
+export TAR_OPTIONS="--exclude-from=$HOME/.etc/excludes/archive --exclude-caches-all --exclude-caches-under"
 
 export DEBEMAIL="jan@majutsushi.net"
 export DEBFULLNAME="Jan Larres"
