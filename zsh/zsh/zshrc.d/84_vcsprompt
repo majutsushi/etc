@@ -195,7 +195,7 @@ __prompt_git_flags() {
 
     # show untracked files
     if [[ -n "$($__git_cmd ls-files --others --exclude-standard)" ]]; then
-        flags+="${pcol[cyan]}?"
+        flags+="${pcol[cyan]}%%"
     fi
 
     # show whether there are any assume-unchanged files
