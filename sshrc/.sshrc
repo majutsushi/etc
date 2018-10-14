@@ -73,6 +73,7 @@ alias ls='LC_COLLATE=POSIX ls  -F --color=auto --group-directories-first'
 alias ll='LC_COLLATE=POSIX ls -lF --color=auto --group-directories-first'
 alias l='LC_COLLATE=POSIX ls -lAF --color=auto --group-directories-first'
 command -v vim &>/dev/null && alias vi=vim
+command -v tree &>/dev/null && alias t="tree -F -C"
 
 SSHRCD="$SSHHOME/.sshrc.d"
 export MYVIMRC="$SSHRCD/vimrc"
