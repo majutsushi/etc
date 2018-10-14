@@ -64,7 +64,7 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
     runtime! macros/matchit.vim
 endif
 
-highlight Search ctermbg=15 ctermfg=0
+highlight Search ctermbg=3 ctermfg=0
 
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 nnoremap <silent> g/ :execute 'vimgrep /' . @/ . '/g %'<CR>:copen<CR>
