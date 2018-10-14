@@ -60,6 +60,7 @@ compdef _mkdir mcd
 
 # defaults for some programs
 alias ffmpeg="ffmpeg -hide_banner"
+alias ffprobe="ffprobe -hide_banner"
 alias grep="pager-wrapper grep --color=auto"
 alias gdb="gdb -q"
 alias less="less -F"
