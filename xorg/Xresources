@@ -77,6 +77,7 @@ URxvt.depth: 24
 ! URxvt.blurRadius: 20
 !URxvt.tintColor: white
 !URxvt.shading: 15
+URxvt.intensityStyles: false
 
 URxvt.cursorColor: CURSORCOLOR
 URxvt.underlineColor: yellow

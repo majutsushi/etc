@@ -41,14 +41,14 @@ class Desert(ColorScheme):
                 fg = red
             if context.directory:
                 attr |= bold
-                fg = yellow
+                fg = 11
             elif context.executable and not \
                     any((context.media, context.container,
                          context.fifo, context.socket)):
                 attr |= bold
-                fg = green
+                fg = 10
             if context.socket:
-                fg = magenta
+                fg = 13
                 attr |= bold
             if context.fifo or context.device:
                 fg = yellow

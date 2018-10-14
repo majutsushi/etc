@@ -80,26 +80,26 @@ TERM xterm-debian
 NORMAL                0       # no color code at all
 FILE                  0       # regular file: use no color at all
 # RESET                 0       # reset to "normal" color
-DIR                   33;1    # directory
-LINK                  36;1    # symbolic link.  (If you set this to 'target' instead
+DIR                   38;5;11;1    # directory
+LINK                  38;5;14;1    # symbolic link.  (If you set this to 'target' instead
                               # of a numerical value, the color is as for the file
                               # pointed to.)
 # MULTIHARDLINK         0       # regular file with more than one link
-FIFO                  33;40   # pipe
-SOCK                  35;1    # socket
-DOOR                  35;1    # door
-BLK                   33;40;1 # block device driver
-CHR                   33;40;1 # character device driver
-ORPHAN                37;41;1 # symlink to nonexistent file, or non-stat'able file
-SETUID                30;41   # file that is setuid (u+s)
-SETGID                30;43   # file that is setgid (g+s)
-# CAPABILITY            30;45   # file with capability
-STICKY_OTHER_WRITABLE 31;44   # dir that is sticky and other-writable (+t,o+w)
-OTHER_WRITABLE        31;43   # dir that is other-writable (o+w) and not sticky
-STICKY                30;44   # dir with the sticky bit set (+t) and not other-writable
+FIFO                  38;5;3;48;5;0   # pipe
+SOCK                  38;5;5;1    # socket
+DOOR                  38;5;5;1    # door
+BLK                   38;5;11;48;5;8;1 # block device driver
+CHR                   38;5;11;48;5;8;1 # character device driver
+ORPHAN                38;5;15;48;5;1;1 # symlink to nonexistent file, or non-stat'able file
+SETUID                38;5;0;48;5;1   # file that is setuid (u+s)
+SETGID                38;5;0;48;5;3   # file that is setgid (g+s)
+# CAPABILITY            38;5;0;48;5;5   # file with capability
+STICKY_OTHER_WRITABLE 38;5;1;48;5;4   # dir that is sticky and other-writable (+t,o+w)
+OTHER_WRITABLE        38;5;1;48;5;3   # dir that is other-writable (o+w) and not sticky
+STICKY                38;5;0;48;5;4   # dir with the sticky bit set (+t) and not other-writable
 
 # This is for files with execute permission:
-EXEC 32;1
+EXEC 38;5;10;1
 
 # List any file extensions like '.gz' or '.tar' that you would like ls
 # to colorize below. Put the extension, a space, and the color init string.
@@ -108,71 +108,71 @@ EXEC 32;1
 # is automatically prepended.
 
 # executables
-.sh  32
-.py  32
-.pl  32
-.cmd 32
-.exe 32
-.com 32
-.btm 32
-.bat 32
+.sh  38;5;2
+.py  38;5;2
+.pl  38;5;2
+.cmd 38;5;2
+.exe 38;5;2
+.com 38;5;2
+.btm 38;5;2
+.bat 38;5;2
 # archives or compressed
-.7z  31;1
-.arj 31;1
-.bz2 31;1
-.deb 31;1
-.ear 31;1
-.gz  31;1
-.jar 31;1
-.lzh 31;1
-.rar 31;1
-.rpm 31;1
-.tar 31
-.tgz 31;1
-.taz 31;1
-.war 31;1
-.xz  31;1
-.z   31;1
-.Z   31;1
-.zip 31;1
+.7z  38;5;1;1
+.arj 38;5;1;1
+.bz2 38;5;1;1
+.deb 38;5;1;1
+.ear 38;5;1;1
+.gz  38;5;1;1
+.jar 38;5;1;1
+.lzh 38;5;1;1
+.rar 38;5;1;1
+.rpm 38;5;1;1
+.tar 38;5;1
+.tgz 38;5;1;1
+.taz 38;5;1;1
+.war 38;5;1;1
+.xz  38;5;1;1
+.z   38;5;1;1
+.Z   38;5;1;1
+.zip 38;5;1;1
 # image formats
-.jpg  35;1
-.JPG  35;1
-.jpeg 35;1
-.gif  35;1
-.bmp  35;1
-.pbm  35;1
-.pgm  35;1
-.ppm  35;1
-.pnm  35;1
-.tga  35;1
-.xbm  35;1
-.xpm  35;1
-.tif  35;1
-.tiff 35;1
-.png  35;1
-.mov  35;1
-.mpg  35;1
-.mpeg 35;1
-.avi  35;1
-.fli  35;1
-.xcf  35;1
-.xwd  35;1
+.jpg  38;5;5;1
+.JPG  38;5;5;1
+.jpeg 38;5;5;1
+.gif  38;5;5;1
+.bmp  38;5;5;1
+.pbm  38;5;5;1
+.pgm  38;5;5;1
+.ppm  38;5;5;1
+.pnm  38;5;5;1
+.tga  38;5;5;1
+.xbm  38;5;5;1
+.xpm  38;5;5;1
+.tif  38;5;5;1
+.tiff 38;5;5;1
+.png  38;5;5;1
+.mov  38;5;5;1
+.mpg  38;5;5;1
+.mpeg 38;5;5;1
+.avi  38;5;5;1
+.fli  38;5;5;1
+.xcf  38;5;5;1
+.xwd  38;5;5;1
 # video formats
-.flv 35;1
-.mkv 35;1
-.mp4 35;1
-.ogm 35;1
-.ogv 35;1
-.rm  35;1
-.wmv 35;1
+.flv 38;5;5;1
+.mkv 38;5;5;1
+.mp4 38;5;5;1
+.ogm 38;5;5;1
+.ogv 38;5;5;1
+.rm  38;5;5;1
+.wmv 38;5;5;1
 # audio formats
-.flac 35;1
-.mp3  35;1
-.mpc  35;1
-.ogg  35;1
-.oga  35;1
-.wav  35;1
+.flac 38;5;5;1
+.mp3  38;5;5;1
+.mpc  38;5;5;1
+.ogg  38;5;5;1
+.oga  38;5;5;1
+.wav  38;5;5;1
 
 # generated and backup files
 *~     38;5;243
