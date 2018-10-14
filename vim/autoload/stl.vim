@@ -144,7 +144,7 @@ function! s:filepath(winnr, is_current) abort
         let rv .= fnamemodify(filename, ':t')
     endif
 
-    return rv . ' '
+    return substitute(rv, '%', '%%', 'g') . ' '
 endfunction
 
 function! s:state(winnr) abort
