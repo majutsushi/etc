@@ -22,6 +22,7 @@ nm-applet &
 pasystray &
 clipit &
 blueman-applet &
+/usr/lib/geoclue-2.0/demos/agent &
 # redshift-gtk & # managed by systemd
 compton -b
 [[ -x "$HOME/src/xbanish/xbanish" ]] && "$HOME/src/xbanish/xbanish" &
