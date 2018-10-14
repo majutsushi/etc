@@ -1,6 +1,18 @@
 # Only run in interactive shells
 [[ $- == *i* ]] || return 0
 
+tmuxrc() {
+    local TMUXDIR=/tmp/sshrctmux
+    if ! [ -d $TMUXDIR ]; then
+        rm -rf $TMUXDIR
+        mkdir -p $TMUXDIR
+    fi
+    rm -rf $TMUXDIR/.sshrc.d
+    cp -r "$SSHHOME"/.sshrc "$SSHHOME"/bashsshrc "$SSHHOME"/sshrc "$SSHHOME"/.sshrc.d "$TMUXDIR"
+    SSHHOME=$TMUXDIR SHELL=$TMUXDIR/bashsshrc /usr/bin/tmux -S "$TMUXDIR"/tmuxserver -f "$SSHRCD"/tmux.conf "$@"
+}
+SHELL=$(which bash)
+
 term_exists() { infocmp "$1" &>/dev/null; }
 if ! term_exists "$TERM"; then
     if term_exists "${TERM%-256color}"; then
