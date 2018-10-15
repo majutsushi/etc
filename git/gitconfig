@@ -75,8 +75,8 @@
 	old  = red
 	new  = green
 	oldMoved = 220
-	oldMovedAlternative = 143
-	newMoved = 48
+	oldMovedAlternative = 208
+	newMoved = 45
 	newMovedAlternative = 51
 
 [status]
