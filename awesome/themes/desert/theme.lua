@@ -102,7 +102,7 @@ theme.menu_submenu_icon      = theme.confdir .. "/icons/submenu.png"
 
 -- {{{ Layout
 theme.layout_tile       = theme.confdir .. "/icons/layouts/tile.png"
-theme.layout_tileleft   = "/usr/share/awesome/themes/zenburn/layouts/tileleft.png"
+theme.layout_tileleft   = theme.confdir .. "/icons/layouts/tileleft.png"
 theme.layout_tilebottom = theme.confdir .. "/icons/layouts/tilebottom.png"
 theme.layout_tiletop    = "/usr/share/awesome/themes/zenburn/layouts/tiletop.png"
 theme.layout_fairv      = theme.confdir .. "/icons/layouts/fairv.png"
