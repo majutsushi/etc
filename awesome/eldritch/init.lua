@@ -1,6 +1,7 @@
 return
 {
     applets = require("eldritch.applets"),
+    image = require("eldritch.image"),
     mpris = require("eldritch.mpris"),
     osd = require("eldritch.osd"),
     separator = require("eldritch.separator"),
