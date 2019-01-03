@@ -1189,10 +1189,10 @@ let g:ale_lint_delay = 500
 let g:ale_linters = {
 \   'python': ['pylint', 'mypy'],
 \}
-let g:ale_python_pylint_executable = 'pylint'
+let g:ale_python_pylint_executable = 'pylint3'
 autocmd vimrc FileType python
-    \ if getline(1) =~ '^#!' && getline(1) =~ 'python3' |
-        \ let b:ale_python_pylint_executable = 'pylint3' |
+    \ if getline(1) =~ '^#!' && getline(1) =~ 'python2' |
+        \ let b:ale_python_pylint_executable = 'pylint' |
     \ endif
 
 let g:ale_fixers = {
