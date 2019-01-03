@@ -23,7 +23,7 @@ pyg() {
             have tshark && tshark -t a -r "$1" && exit 0;;
         *.jar)
             have deepjarlist && deepjarlist "$1" && exit 0;;&
-        *.jar|*.war|*.ear|*.xpi|*.zip)
+        *.jar|*.war|*.ear|*.xpi|*.zip|*.cbz)
             unzip -l "$1"
             ;;
         *.doc)
@@ -56,6 +56,10 @@ pyg() {
             ;;
         *.7z)
             have 7z && 7z l "$1" && exit 0
+            exit 1
+            ;;
+        *.rar|*.cbr)
+            have unrar && unrar l "$1" && exit 0
             exit 1
             ;;
         *.class)
