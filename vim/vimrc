@@ -1106,7 +1106,7 @@ set suffixes=.pdf,.bak,~,.info,.log,.bbl,.blg,.brf,.cb,.ind,.ilg,.inx,.nav,.snm,
 " list of file name extensions added when searching for a file (local to buffer)
 set suffixesadd=.rb
 " list of patterns to ignore files for file name completion
-set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.sw[po],*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.class,*.zwc,obj*/**,target/**
+set wildignore=tags,*.o,CVS,.svn,.git,*.aux,*.sw[po],*.idx,*.hi,*.dvi,*.lof,*.lol,*.toc,*.class,*.zwc,obj*/**,target/**,*.pyc
 " ignore case when completing file names
 set wildignorecase
 " command-line completion shows a list of matches
@@ -1444,7 +1444,8 @@ let NERDTreeIgnore = [
     \ '\.log$',
     \ '\.orig$',
     \ '\.out$',
-    \ '\.pdf$'
+    \ '\.pdf$',
+    \ '\.pyc$'
 \ ]
 
 let g:NERDTreeIndicatorMapCustom = {
