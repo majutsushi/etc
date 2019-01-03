@@ -1187,7 +1187,7 @@ endif
 let g:ale_lint_delay = 500
 
 let g:ale_linters = {
-\   'python': ['pylint', 'mypy'],
+\   'python': ['pylint', 'mypy', 'pycodestyle'],
 \}
 let g:ale_python_pylint_executable = 'pylint3'
 autocmd vimrc FileType python
