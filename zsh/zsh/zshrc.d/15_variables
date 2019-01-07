@@ -1,121 +1,24 @@
-export ORIGHOME=$HOME
+# Used in the prompt
+ORIGHOME=$HOME
 
-export TIMEFMT="%*E real  %*U user  %*S system  %P  %J"
+# For 'time' zsh builtin
+TIMEFMT="%*E real  %*U user  %*S system  %P  %J"
 
-export EDITOR=vim
-export VISUAL="$EDITOR"
-export BROWSER=xdg-open
+NULLCMD=cat
+READNULLCMD=${PAGER}
 
-export PAGER=${PAGER:-less}
+# make sure the cache dir exists
+[[ ! -d $XDG_CACHE_HOME ]] && mkdir $XDG_CACHE_HOME
+ZSH_CACHEDIR=$XDG_CACHE_HOME/zsh
+[[ ! -d $ZSH_CACHEDIR ]] && mkdir $ZSH_CACHEDIR
 
-export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t'
-export LESSHISTFILE=$HOME/.var/lib/lesshst
-export LESSKEY=$HOME/.var/lib/less
-export LESSOPEN="| $HOME/.etc/less/lessfilter %s"
+ZSH_VAR_LIB_DIR=$HOME/.var/lib/zsh
+[[ ! -d $ZSH_VAR_LIB_DIR ]] && mkdir $ZSH_VAR_LIB_DIR
 
-export NULLCMD=cat
-export READNULLCMD=${PAGER}
-
-export MANWIDTH=${MANWIDTH:-80}
-
-export CLICOLOR=1
-eval $(dircolors -b $ZDOTDIR/dircolors) 2>/dev/null || :
-
-export ZIPOPT="--exclude=@$HOME/.etc/excludes/archive"
-export TAR_OPTIONS="--exclude-from=$HOME/.etc/excludes/archive --exclude-caches-all --exclude-caches-under"
-
-export DEBEMAIL="jan@majutsushi.net"
-export DEBFULLNAME="Jan Larres"
-export BTS_CACHE=no
-
-if [[ "$HOST" == "gally" ]]; then
-    export ALSA_OUTPUT_PORTS="65:0"
-    export SCUMMVM_PORT=$ALSA_OUTPUT_PORTS
-elif [[ "$HOST" == "urd" ]]; then
-    export ALSA_OUTPUT_PORTS="128:0"
-    export SCUMMVM_PORT=$ALSA_OUTPUT_PORTS
-fi
-
-# export SDL_AUDIODRIVER=alsa
-# export SDL_AUDIODRIVER=dsp # oss
-
-# export TEXMFHOME=$HOME/.texmf
-
-# export RUBYOPT="-w $RUBYOPT"
-export RI="-f ansi"
-
-export GOPATH=$HOME/src/go
-path=( "$path[@]" ${(s,:,):-${GOPATH//://bin:}/bin} )
-
-export TERMINFO=$HOME/.terminfo
-
-export SSHHOME=$HOME/.etc/sshrc
-
-export AUTOSSH_PORT=0
-
-export TMUX_TMPDIR=$XDG_RUNTIME_DIR
-
-export RUSTUP_HOME="$HOME/.var/lib/rustup"
-export CARGO_HOME="$HOME/.var/lib/cargo"
-if have rustc; then
-    # Also see https://github.com/rust-lang-nursery/rustup.rs/issues/450
-    manpath+="$(rustc --print sysroot)/share/man"
-    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-fi
-
-export CCACHE_DIR=$XDG_CACHE_HOME/ccache
-export CCACHE_COMPRESS=1
-export CCACHE_HASHDIR=1
-
-export CLIFF_FIT_WIDTH=1
-
-export NNTPSERVER=news.gmane.org
 
 export GPG_TTY=$(tty)
 
-export FZF_DEFAULT_COMMAND="git ls-tree -r --name-only HEAD || ag --hidden --ignore .git -g ''"
-export FZF_DEFAULT_OPTS="\
-    --exact \
-    --height 40% \
-    --reverse \
-    --preview 'echo {}' \
-    --preview-window down:3:hidden:wrap \
-    --bind '?:toggle-preview' \
-    --bind 'f1:execute(less -+F -f {})' \
-    --bind 'ctrl-y:execute-silent(echo {} | xclip -i -selection clipboard)+abort' \
-    --color fg:-1,bg:-1,hl:2,fg+:11,bg+:-1,hl+:10,info:7,prompt:6,pointer:9,marker:1
-"
-
-export GITHUB_USER=majutsushi
-
-export NETHACKOPTIONS=@$HOME/.etc/nethackrc
-
 export SACK_SHORTCUT_FILE="$XDG_CACHE_HOME/sack_shortcuts/$$"
 mkdir -p "$(dirname "$SACK_SHORTCUT_FILE")"
-
-# update session environment variables if they got changed after re-attaching
-# a tmux session
-if [[ -n "$TMUX" ]]; then
-    _update_from_tmux() {
-        # Remove need to detach/re-attach after using session in different client
-        # See also https://groups.google.com/forum/#!topic/tmux-users/UZFikgdglJU
-        if is-at-least 2.4 "$TMUX_VERSION"; then
-            tmux switch-client -t $(tmux display-message -p -F '#{client_name}')
-        else
-            tmux switch-client
-        fi
-        VARS="$(tmux show-environment)"
-        for VAR in ${(f)VARS}; do
-            # only export non-removed variables
-            if [[ "${VAR#-}" == "${VAR}" ]]; then
-                export "$VAR"
-            else
-                unset "${VAR#-}"
-            fi
-        done
-    }
-    add-zsh-hook precmd  _update_from_tmux
-    add-zsh-hook preexec _update_from_tmux
-fi
 
 # vim: filetype=zsh

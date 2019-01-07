@@ -1,1 +1,9 @@
-bashrc
+if [[ -r ~/.profile ]]; then
+    . ~/.profile
+fi
+
+if [[ $- == *i* ]] && [[ -r ~/.bashrc ]]; then
+    . ~/.bashrc
+fi
+
+# vim: ft=sh

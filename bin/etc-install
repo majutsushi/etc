@@ -162,6 +162,7 @@ xlink urxvt
 xlink weechat
 xlink zathurarc target=.config/zathura/zathurarc
 
+xlink shell-common/profile
 xlink bash/bashrc
 xlink bash/bash_profile
 xlink bash/bash_logout

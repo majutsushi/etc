@@ -2,77 +2,17 @@ rationalize_path() {
     eval $1'=( ${(u)^'${1}':a}(N-/xe:'\''[[ "$REPLY" != "." ]]'\'':) )'
 }
 
-path=(
-    "$HOME/bin"
-    "$HOME/apps/bin"
-    "$HOME/.bin"
-    "$HOME/.etc/bin"
-    "$HOME/usr/bin"
-    "$HOME/.local/bin"
-    "$HOME/.var/lib/cargo/bin"
-
-    "$HOME"/.gem/ruby/*/bin/(Nn[-1])
-    /var/lib/gems/*/bin/(Nn[-1])
-
-    "$path[@]"
-
-    /usr/local/sbin
-    /sbin
-    /usr/sbin
-)
-rationalize_path path
-typeset -gxU path
-
 fpath=(
     "$ZDOTDIR/func"
     "$HOME/.etc/zsh/zsh-completions/src"
-    "$fpath[@]"
+    $fpath
 )
 rationalize_path fpath
-typeset -gxU fpath
 
 # cdpath=(.. ~)
 rationalize_path cdpath
-typeset -gxU cdpath
-
-if [[ -z "$MANPATH" ]] && have manpath; then
-    MANPATH="$(manpath)"
-fi
-manpath=(
-    "$HOME/usr/man"
-    "$HOME/usr/share/man"
-    "$manpath[@]"
-)
-rationalize_path manpath
-typeset -gxU MANPATH
 
 typeset -gxT LIBRARY_PATH library_path
-library_path=(
-    "$library_path[@]"
-)
-rationalize_path library_path
-typeset -gxU library_path
-
 typeset -gxT LD_LIBRARY_PATH ld_library_path
-ld_library_path=(
-    "$HOME/.local/lib/ld"
-    "$ld_library_path[@]"
-)
-rationalize_path ld_library_path
-typeset -gxU ld_library_path
-
-export XDG_DATA_HOME=$HOME/.local/share
-# export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
-export XDG_CONFIG_HOME=$HOME/.config
-# export XDG_CONFIG_DIRS=/etc/xdg
-export XDG_CACHE_HOME=$HOME/.cache
-
-# make sure the cache dir exists
-[[ ! -d $XDG_CACHE_HOME ]] && mkdir $XDG_CACHE_HOME
-export ZSH_CACHEDIR=$XDG_CACHE_HOME/zsh
-[[ ! -d $ZSH_CACHEDIR ]] && mkdir $ZSH_CACHEDIR
-
-export ZSH_VAR_LIB_DIR=$HOME/.var/lib/zsh
-[[ ! -d $ZSH_VAR_LIB_DIR ]] && mkdir $ZSH_VAR_LIB_DIR
 
 # vim: filetype=zsh

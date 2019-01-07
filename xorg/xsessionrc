@@ -1,51 +1,17 @@
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CONFIG_DIRS=/etc/xdg
-export XDG_CACHE_HOME=$HOME/.cache
+if [ -f ~/.profile ]; then
+    . ~/.profile
+fi
 
-# Make sure Monday is the first day of the week, as it should be.
-export LC_TIME=en_GB.UTF-8
-
-export LD_LIBRARY_PATH=$HOME/.local/lib/ld
-
-export PATH=$HOME/bin:$HOME/.bin:$HOME/.etc/bin:/usr/games:$PATH
-# export SDL_AUDIODRIVER=dsp
-# export GTK_IM_MODULE="scim"
-# export XMODIFIERS='@im=SCIM'
 export DVDCSS_CACHE=$XDG_CACHE_HOME/dvdcss
 export GTK_OVERLAY_SCROLLING=0
 export NO_AT_BRIDGE=1
 
-export RUSTUP_HOME="$HOME/.var/lib/rustup"
-export CARGO_HOME="$HOME/.var/lib/cargo"
-if command -v rustc &>/dev/null; then
-    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-fi
-
-# Necessary for awesome widgets
-if [ -d /opt/java/jdk-default ]; then
-    export PATH=/opt/java/jdk-default/bin:$PATH
-    export JAVA_HOME=/opt/java/jdk-default
-fi
-
 export IDEA_PROPERTIES="$HOME/.etc/idea/idea.properties"
 export IDEA_VM_OPTIONS="$HOME/.etc/idea/idea64.vmoptions"
 
-# ulimit -c unlimited
-# unclutter &
 xset +fp $HOME/.local/share/fonts
 
 # Fix Java menu issues in Awesome
 xprop -root -f _NET_WM_NAME 8u -set _NET_WM_NAME Sawfish
-
-if [ -f ~/.local/etc/xsessionrc ]; then
-    . ~/.local/etc/xsessionrc
-fi
-if [ -d ~/.local/etc/xsessionrc.d ]; then
-    for file in $HOME/.local/etc/xsessionrc.d/??_*; do
-        . "$file"
-    done
-fi
 
 # vim: ft=sh

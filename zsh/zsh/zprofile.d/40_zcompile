@@ -7,7 +7,7 @@ if [ -n "$ZDOTDIR" ] && [ -d "$ZDOTDIR" ]; then
     rm -f $ZDOTDIR/**/*.zwc{,.old}(D.N)
     for f in $ZDOTDIR/*(D.,@) $ZDOTDIR/**/*(.); do
         case "$f:t" in
-            dircolors|.gitignore|.*.sw?) continue;;
+            .gitignore|.*.sw?) continue;;
         esac
         zcompile $f
     done

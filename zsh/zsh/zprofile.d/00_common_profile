@@ -1,0 +1,3 @@
+source "$HOME"/.profile
+
+# vim: filetype=zsh

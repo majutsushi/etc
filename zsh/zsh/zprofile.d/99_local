@@ -1,0 +1,14 @@
+if [[ -f $HOME/.local/etc/zprofile ]]; then
+    source $HOME/.local/etc/zprofile
+fi
+if [[ -d "$HOME/.local/etc/zprofile.d" ]]; then
+    for file in $HOME/.local/etc/zprofile.d/??_*; do
+        source "$file"
+    done
+fi
+
+for patharray in path manpath library_path ld_library_path; do
+    rationalize_path $patharray
+done
+
+# vim: filetype=zsh
