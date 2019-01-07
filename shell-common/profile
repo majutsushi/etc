@@ -106,6 +106,8 @@ if command -v rustc > /dev/null; then
     unset _rust_root
 fi
 
+export PIPENV_VENV_IN_PROJECT=1
+export PIPENV_SHELL_FANCY=1
 
 export CCACHE_DIR=$XDG_CACHE_HOME/ccache
 export CCACHE_COMPRESS=1
