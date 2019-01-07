@@ -1,7 +1,7 @@
 # minimal bashrc for starting zsh or in case zsh is not available
 
 source_if_exists() {
-    [[ -r $1 ]] && . $1
+    [[ -r $1 ]] && . "$1"
 }
 
 source_if_exists /etc/bash.bashrc
@@ -34,12 +34,12 @@ source_if_exists /etc/bash_completion
 umask 0022
 
 function bk() {
-    cp -b ${1} ${1}_$(date --iso-8601=m)
+    cp -b "${1}" "${1}_$(date --iso-8601=m)"
 }
 
 PROMPT_COMMAND="history -a"
 PROMPT_DIRTRIM=2
-PS1="\[\e[31m\]\u\[\e[m\]@\[\e[33m\]\h\[\e[m\]:\[\e[32m\]\w\[\e[m\] \[\e[1m\]$\[\e[m\] "
+PS1="\\[\\e[31m\\]\\u\\[\\e[m\\]@\\[\\e[33m\\]\\h\\[\\e[m\\]:\\[\\e[32m\\]\\w\\[\\e[m\\] \\[\\e[1m\\]$\\[\\e[m\\] "
 
 alias ls='ls  -F --color=auto'
 alias ll='ls -lF --color=auto'
