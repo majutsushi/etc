@@ -220,7 +220,11 @@ merge less/lesskey target=/tmp/lesskey$$
 lesskey /tmp/lesskey$$
 rm /tmp/lesskey$$
 
-xlink systemd/lightson@.service target=.config/systemd/user/lightson@.service
+for file in .etc/systemd/*; do
+    src="${file##.etc/}"
+    filename="$(basename "$src")"
+    xlink "$src" target=.config/systemd/user/"$filename"
+done
 
 if command -v X >/dev/null; then
     xlink xorg/fontconfig target=.config/fontconfig
