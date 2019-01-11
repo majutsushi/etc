@@ -1,5 +1,6 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
+local glib = require("lgi").GLib
 local utils = require("eldritch.utils")
 local vicious = require("vicious")
 local wibox = require("wibox")
@@ -54,7 +55,7 @@ local function new()
             local linedata = utils.split(line, "\t")
 
             local image = linedata[1]
-            local command = linedata[2]
+            local command = glib.markup_escape_text(linedata[2], -1)
             local names = linedata[3]
 
             local tags = gettags(image)
