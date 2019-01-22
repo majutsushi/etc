@@ -642,10 +642,10 @@ awful.rules.rules = {
       end
     },
 
-    { rule = { class = "jetbrains.*" },
-      except = { type = "dialog" },
-      properties = { floating = false }
-    },
+    -- { rule = { class = "jetbrains.*" },
+    --   except = { type = "dialog" },
+    --   properties = { floating = false }
+    -- },
 
     -- { rule = { class = "Steam" },
     --   properties = { border_width = 0 } },
@@ -714,12 +714,12 @@ client.connect_signal("mouse::enter", function(c)
     -- If the currently focused client is the IDEA input popup,
     -- don't change focus if the mouse moves over a different client
     -- due to the popup changing size
-    local f = client.focus
-    if f then
-        if f.class and f.class:match("^jetbrains.*") and f.type == "dialog" then
-            return
-        end
-    end
+    -- local f = client.focus
+    -- if f then
+    --     if f.class and f.class:match("^jetbrains.*") and f.type == "dialog" then
+    --         return
+    --     end
+    -- end
 
     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
         and awful.client.focus.filter(c) then
@@ -736,11 +736,19 @@ client.connect_signal("request::urgent", function(c)
 end)
 
 -- Java hack from https://awesome.naquadah.org/bugs/index.php?do=details&task_id=733
-client.connect_signal("focus", function(c)
-    if c.class and c.class:match("^jetbrains.*") then
-        c:raise()
-    end
-end)
+-- client.connect_signal("focus", function(c)
+--     if c.class and c.class:match("^jetbrains.*") then
+--         c:raise()
+--     end
+-- end)
+
+-- client.connect_signal('request::activate', function(c, context, hints)
+--     print('request::activate 1 ' .. tostring(c) .. ', ' .. tostring(context) .. ', ' .. tostring(hints))
+--     local f = client.focus
+--     if f then
+--         print('request::activate 2 ' .. tostring(f))
+--     end
+-- end)
 
 client.connect_signal("property::geometry", function (c)
     local clients = awful.client.visible(c.screen)
