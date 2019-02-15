@@ -5,11 +5,11 @@
 
 __pv_refs_prefix=" •"
 
-__prompt_col_refs="${pcol[51]}"
+__prompt_col_refs="%F{51}"
 __prompt_col_refs_delim=""
-__prompt_col_flags="${pcol[51]}"
-__prompt_col_branch="${pcol[220]}"
-__prompt_col_rebase="${pcol[167]}"
+__prompt_col_flags="%F{51}"
+__prompt_col_branch="%F{220}"
+__prompt_col_rebase="%F{167}"
 __prompt_col_upstream=""
 
 __git_cmd=(command git)
@@ -86,17 +86,17 @@ __prompt_git_show_upstream() {
         "") # no upstream
             r="" ;;
         "0	0") # equal to upstream
-            r=" ${pcol[green]}✓${pcol[reset]}" ;;
+            r=" %F{green}✓%f" ;;
         "0	"*) # ahead of upstream
-            r=" ${pcol[green]}↑${pcol[reset]}${count#0	}" ;;
+            r=" %F{green}↑%f${count#0	}" ;;
         *"	0") # behind upstream
-            r=" ${pcol[red]}↓${pcol[reset]}${count%	0}" ;;
+            r=" %F{red}↓%f${count%	0}" ;;
         *)	    # diverged from upstream
-            r=" ${pcol[green]}↑${pcol[reset]}${count#*	}/${pcol[red]}↓${pcol[reset]}${count%	*}" ;;
+            r=" %F{green}↑%f${count#*	}/%F{red}↓%f${count%	*}" ;;
     esac
 
     if [[ -n "$r" ]]; then
-        echo -n "$__prompt_col_upstream$r${pcol[reset]}"
+        echo -n "$__prompt_col_upstream$r%f"
     fi
 }
 
@@ -136,7 +136,7 @@ __prompt_git_geninfo() {
             refs="$(__prompt_git_refs)"
         elif branch="$(cut -c1-7 "$gitdir/HEAD" 2>/dev/null)"; then
             if refs=$($__git_cmd describe --all HEAD 2>/dev/null); then
-                refs=" ${__prompt_col_refs}${refs##heads/}${pcol[reset]}"
+                refs=" ${__prompt_col_refs}${refs##heads/}%f"
             fi
         else
             branch="unknown"
@@ -170,7 +170,7 @@ __prompt_git_refs() {
 
     if [[ -n ${(j::)refs_arr} ]]; then
         refs=" $__prompt_col_refs${(j:,:)refs_arr}"
-        refs="${refs//,/${pcol[reset]}$__prompt_col_refs_delim, ${pcol[reset]}$__prompt_col_refs}${pcol[reset]}"
+        refs="${refs//,/%f$__prompt_col_refs_delim, %f$__prompt_col_refs}%f"
     else
         refs=""
     fi
@@ -183,27 +183,27 @@ __prompt_git_flags() {
 
     # show dirty state
     # --ignore-submodules can significantly speed up if submodules are present
-    $__git_cmd diff --no-ext-diff --quiet --exit-code --ignore-submodules || flags+="${pcol[red]}*"
+    $__git_cmd diff --no-ext-diff --quiet --exit-code --ignore-submodules || flags+="%F{red}*"
     if $__git_cmd rev-parse --quiet --verify HEAD >/dev/null; then
-        $__git_cmd diff-index --cached --quiet HEAD -- || flags+="${pcol[green]}+"
+        $__git_cmd diff-index --cached --quiet HEAD -- || flags+="%F{green}+"
     else
-        flags+="${pcol[yellow]}#"
+        flags+="%F{yellow}#"
     fi
 
     # show stashed changes
-    $__git_cmd rev-parse --verify refs/stash >/dev/null 2>&1 && flags+="${pcol[yellow]}$"
+    $__git_cmd rev-parse --verify refs/stash >/dev/null 2>&1 && flags+="%F{yellow}$"
 
     # show untracked files
     if [[ -n "$($__git_cmd ls-files --others --exclude-standard)" ]]; then
-        flags+="${pcol[cyan]}%%"
+        flags+="%F{cyan]}%%"
     fi
 
     # show whether there are any assume-unchanged files
     if $__git_cmd ls-files -v | command grep -q '^[a-z] '; then
-        flags+=${pcol[reset]}a
+        flags+=%fa
     fi
 
-    echo -n "$__prompt_col_flags$flags${pcol[reset]}"
+    echo -n "$__prompt_col_flags$flags%f"
 }
 
 __prompt_git() {
@@ -218,7 +218,7 @@ __prompt_git() {
         local refs="$geninfo[3]"
 
         if [[ -n "$rebase" ]]; then
-            rebase=" ${__prompt_col_rebase}${rebase}${pcol[reset]}"
+            rebase=" ${__prompt_col_rebase}${rebase}%f"
         fi
 
         local c=""
@@ -246,11 +246,11 @@ __prompt_git() {
             local toplevel="${(Q)${(D)PWD%/${prefix}}}"
         fi
 
-        _prompt_path="${pcol[green]}${toplevel}${pcol[reset]}"
-        _prompt_path+="@$__prompt_col_branch$c$branch${pcol[reset]}"
+        _prompt_path="%F{green}${toplevel}%f"
+        _prompt_path+="@$__prompt_col_branch$c$branch%f"
         _prompt_path+="$flags"
         if [[ -n "$prefix" ]]; then
-            _prompt_path+="${pcol[green]}/${prefix%/}${pcol[reset]}"
+            _prompt_path+="%F{green}/${prefix%/}%f"
         fi
 
         _prompt_vcs_info="$rebase$(__prompt_git_show_upstream)$refs"
@@ -261,12 +261,12 @@ __prompt_git() {
 }
 
 __prompt_hg() {
-    _prompt_path="${pcol[green]}%~${pcol[reset]}"
+    _prompt_path="%F{green}%~%f"
     _prompt_vcs_info=$(hg prompt --angle-brackets "\
-< • $__prompt_col_branch<branch>${pcol[reset]}>\
-<$__prompt_col_flags<status|modified|unknown>${pcol[reset]}>\
-<$__prompt_col_flags<update>${pcol[reset]}>\
-<$__pv_refs_prefix $__prompt_col_refs<tags|${pcol[reset]}$__prompt_col_refs_delim, ${pcol[reset]}$__prompt_col_refs>${pcol[reset]}>" 2>/dev/null)
+< • $__prompt_col_branch<branch>%f>\
+<$__prompt_col_flags<status|modified|unknown>%f>\
+<$__prompt_col_flags<update>%f>\
+<$__pv_refs_prefix $__prompt_col_refs<tags|%f$__prompt_col_refs_delim, %f$__prompt_col_refs>%f>" 2>/dev/null)
 }
 
 __prompt_svn() {
@@ -278,8 +278,8 @@ __prompt_svn() {
         rev="?"
     fi
 
-    _prompt_path="${pcol[green]}${root}${pcol[reset]}"
-    _prompt_path+="@${__prompt_col_branch}${rev}${pcol[reset]}"
+    _prompt_path="%F{green}${root}%f"
+    _prompt_path+="@${__prompt_col_branch}${rev}%f"
 
     typeset -a svnstatus
     svnstatus=(${(s:,:)${:-$(=svn status -u | awk '
@@ -293,15 +293,15 @@ __prompt_svn() {
         END { printf("%d,%d,%d,%d,%d", mod, add, unknown, conflict, update) }
     ')}})
     local flags=""
-    (( ${svnstatus[1]} > 0 )) && flags+="${pcol[red]}*"
-    (( ${svnstatus[2]} > 0 )) && flags+="${pcol[green]}+"
-    (( ${svnstatus[3]} > 0 )) && flags+="${pcol[cyan]}?"
-    (( ${svnstatus[4]} > 0 )) && flags+="${pcol[bold]}${pcol[red]}!${pcol[reset]}"
-    (( ${svnstatus[5]} > 0 )) && flags+="${pcol[white]}u"
-    _prompt_path+=$flags${pcol[reset]}
+    (( ${svnstatus[1]} > 0 )) && flags+="%F{red}*"
+    (( ${svnstatus[2]} > 0 )) && flags+="%F{green}+"
+    (( ${svnstatus[3]} > 0 )) && flags+="%F{cyan}?"
+    (( ${svnstatus[4]} > 0 )) && flags+="%F{bold}%F{red}!%f"
+    (( ${svnstatus[5]} > 0 )) && flags+="%F{white}u"
+    _prompt_path+=$flags%f
 
     if [[ -n "$prefix" ]]; then
-        _prompt_path+="${pcol[green]}/${prefix}${pcol[reset]}"
+        _prompt_path+="%F{green}/${prefix}%f"
     fi
 
     _prompt_vcs_info=""
@@ -346,7 +346,7 @@ __prompt_vcs() {
             ;;
         *)
             _prompt_vcs_icon="•"
-            _prompt_path="${pcol[green]}%~${pcol[reset]}"
+            _prompt_path="%F{green}%~%f"
             _prompt_vcs_info=""
             ;;
     esac
