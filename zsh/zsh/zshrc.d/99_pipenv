@@ -1,6 +1,11 @@
 # Ported from https://github.com/kennethreitz/fish-pipenv/blob/master/conf.d/pipenv.fish
 
 if have -c pipenv; then
+    if ! [[ -e "$HOME/.local/etc/zshfunc/_pipenv" ]]; then
+        mkdir -p "$HOME/.local/etc/zshfunc"
+        pipenv --completion > "$HOME/.local/etc/zshfunc/_pipenv"
+    fi
+
     chpwd_pipenv() {
         local pwd_file="$XDG_CACHE_HOME/zsh/pipenv-pwd"
 
