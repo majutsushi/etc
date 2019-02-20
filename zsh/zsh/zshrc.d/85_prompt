@@ -80,6 +80,16 @@ __prompt_nave() {
     print "%F{red}(nave $NAVEVERSION)%f "
 }
 
+__prompt_venv() {
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        if [[ $(basename "$VIRTUAL_ENV") == .venv ]]; then
+            printf "(%s) " "$(basename "$(dirname "$VIRTUAL_ENV")")"
+        else
+            printf "(%s) " "$(basename "$VIRTUAL_ENV")"
+        fi
+    fi
+}
+
 __prompt_local() {
     (( $#_prompt_local == 0 )) && return
     print " • ${(j: • :)_prompt_local}"
@@ -99,7 +109,7 @@ add-zsh-hook precmd __prompt_reset_vars
 
 PS1='
 $(__prompt_logo)%F{167}%n%f @ %F{220}%m%f ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}$(__prompt_local)${_prompt_local_extra}
-%(2L.%B%L%b .)$(__prompt_jdk)$(__prompt_ant)$(__prompt_nave)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
+%(2L.%B%L%b .)$(__prompt_venv)$(__prompt_jdk)$(__prompt_ant)$(__prompt_nave)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
 
 RPS1='$(__prompt_orighome)'
 
@@ -109,5 +119,7 @@ PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i
 
 # PROMPT_EOL_MARK=%B%S⏎%s%b
 PROMPT_EOL_MARK=%B%S%#%s%b
+
+VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # vim: filetype=zsh
