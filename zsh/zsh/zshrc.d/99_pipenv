@@ -1,0 +1,36 @@
+# Ported from https://github.com/kennethreitz/fish-pipenv/blob/master/conf.d/pipenv.fish
+
+if have -c pipenv; then
+    chpwd_pipenv() {
+        local pwd_file="$XDG_CACHE_HOME/zsh/pipenv-pwd"
+
+        if ! [[ -f "$PWD/Pipfile" ]]; then
+            if [[ $PWD != $__pipenv_base_wd/*  ]]; then
+                echo "$PWD" > "$pwd_file"
+                exit
+            fi
+            return
+        fi
+
+        if ! [[ -n "$PIPENV_ACTIVE" ]]; then
+            if pipenv --venv &> /dev/null; then
+                export __pipenv_base_wd="$PWD"
+
+                pipenv shell --fancy
+
+                unset __pipenv_base_wd
+
+                if [[ -f "$pwd_file" ]]; then
+                    local pipenv_pwd
+                    read pipenv_pwd < "$pwd_file"
+                    cd "$pipenv_pwd"
+                    rm "$pwd_file"
+                fi
+            fi
+        fi
+    }
+
+    add-zsh-hook chpwd chpwd_pipenv
+fi
+
+# vim: filetype=zsh
