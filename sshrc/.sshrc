@@ -33,6 +33,41 @@ if ! term_exists "$TERM"; then
     export TERM
 fi
 
+prompt_logo() {
+    local -A colours
+    colours[default]='\[\e[0m\]'
+    colours[black]='\[\e[30m\]'
+    colours[red]='\[\e[31m\]'
+    colours[green]='\[\e[32m\]'
+    colours[yellow]='\[\e[33m\]'
+    colours[blue]='\[\e[34m\]'
+    colours[magenta]='\[\e[35m\]'
+    colours[cyan]='\[\e[36m\]'
+    colours[white]='\[\e[37m\]'
+
+    local logo="?"
+    if [[ -r "/etc/os-release" ]]; then
+        local distro=$(. /etc/os-release && echo "$NAME" | tr '[:upper:]' '[:lower:]')
+        case "$distro" in
+            debian*)
+                logo="${colours[red]}@"
+                ;;
+            ubuntu*)
+                logo="\\[\\e[38;5;202m\\]u"
+                ;;
+            centos*)
+                logo="${colours[green]}*${colours[magenta]}*${colours[yellow]}*${colours[blue]}*"
+                ;;
+        esac
+    fi
+
+    printf "%s%s " "$logo" "${colours[default]}"
+}
+PROMPT_LOGO="$(prompt_logo)"
+
+unset -f term_exists prompt_logo
+
+
 color-log() {
     sed -r \
         -e "s/(.*error.*)/$(tput setaf 1)\\1$(tput sgr0)/I" \
@@ -63,7 +98,7 @@ export EDITOR=vi
 export VISUAL=vi
 
 #PROMPT_DIRTRIM=2
-PS1="\\[\\e[31m\\]\\u\\[\\e[m\\]@\\[\\e[33m\\]\\h\\[\\e[m\\]:\\[\\e[32m\\]\\w\\[\\e[m\\]\\n\\$ "
+PS1="$PROMPT_LOGO\\[\\e[31m\\]\\u\\[\\e[m\\]@\\[\\e[33m\\]\\h\\[\\e[m\\]:\\[\\e[32m\\]\\w\\[\\e[m\\]\\n\\$ "
 if [[ -f /var/run/reboot-required ]]; then
     PS1="\\[\\e[31m\\]R \\[\\e[m\\]${PS1}"
 fi
