@@ -95,7 +95,7 @@ NeoBundle 'tpope/vim-scriptease'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tyru/open-browser.vim'
 
-NeoBundle 'https://gitorious.org/vim-gnupg/vim-gnupg.git'
+NeoBundle 'https://github.com/jamessan/vim-gnupg.git'
 
 NeoBundle 'vim-scripts/DrawIt', {'lazy': 1,
     \ 'autoload': {'commands': ['DIstart', 'DrawIt']}}
