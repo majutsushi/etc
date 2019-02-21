@@ -224,9 +224,9 @@ for file in .etc/systemd/*; do
     src="${file##.etc/}"
     filename="$(basename "$src")"
     xlink "$src" target=.config/systemd/user/"$filename"
-    systemctl --user enable daily.timer
-    systemctl --user start daily.timer
 done
+systemctl --user enable daily.timer
+systemctl --user start daily.timer
 
 if command -v X >/dev/null; then
     xlink xorg/fontconfig target=.config/fontconfig
