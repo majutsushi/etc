@@ -40,7 +40,7 @@ function! stl#update_win(winnr) abort
         let stl .= s:zoomwin()
 
         let stl .= '#[ExpandTab] '
-        let stl .= s:trailing()
+        let stl .= is_current ? s:trailing() : ''
         let stl .= s:indent(a:winnr)
         let stl .= '%0*'
     endif
