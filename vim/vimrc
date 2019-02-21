@@ -1196,7 +1196,7 @@ autocmd vimrc FileType python
     \ endif
 
 let g:ale_fixers = {
-\   'python': ['isort', 'yapf'],
+\   'python': ['isort', 'black'],
 \   'rust': ['rustfmt'],
 \}
 let g:ale_python_yapf_executable = 'yapf3'
