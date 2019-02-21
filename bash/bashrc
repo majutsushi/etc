@@ -28,6 +28,7 @@ HISTFILESIZE=100000
 HISTTIMEFORMAT='%F %T '
 shopt -s histappend
 shopt -s cmdhist
+mkdir -p "$(dirname "$HISTFILE")"
 
 source_if_exists /etc/bash_completion
 
