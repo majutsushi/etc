@@ -14,9 +14,15 @@ rm -f "$HOME"/.xsession-errors{,.old}
 eval "$(gnome-keyring-daemon --start --components=secrets)"
 /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 
-xset s 600 120
-xset dpms 0 0 1200
-xss-lock --notifier="$HOME/.etc/bin/xss-notify" -- slock &
+if systemd-detect-virt -q; then
+     # Running in a VM; no need for monitor management
+     xset s off
+     xset -dpms
+else
+     xset s 600 120
+     xset dpms 0 0 1200
+     xss-lock --notifier="$HOME/.etc/bin/xss-notify" -- slock &
+fi
 
 nm-applet &
 pasystray &
