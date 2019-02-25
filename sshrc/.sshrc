@@ -47,15 +47,15 @@ prompt_logo() {
 
     local logo="?"
     if [[ -r "/etc/os-release" ]]; then
-        local distro=$(. /etc/os-release && echo "$NAME" | tr '[:upper:]' '[:lower:]')
+        local distro=$(. /etc/os-release && echo "$ID")
         case "$distro" in
-            debian*)
+            debian)
                 logo="${colours[red]}@"
                 ;;
-            ubuntu*)
+            ubuntu)
                 logo="\\[\\e[38;5;202m\\]u"
                 ;;
-            centos*)
+            centos)
                 logo="${colours[green]}*${colours[magenta]}*${colours[yellow]}*${colours[blue]}*"
                 ;;
         esac
