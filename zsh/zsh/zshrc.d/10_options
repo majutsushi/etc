@@ -47,6 +47,8 @@ stty -ixon
 
 setopt correct
 
+setopt pipe_fail
+
 # watch for everyone but me and root
 watch=(notme root)
 
