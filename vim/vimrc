@@ -1488,7 +1488,7 @@ function! s:toggle_nerdtree() abort
 endfunction
 " }}}3
 
-nnoremap <silent> <M-n>      :call <SID>toggle_nerdtree()<CR>
+nnoremap <silent> <M-e>      :call <SID>toggle_nerdtree()<CR>
 nnoremap <silent> <F10>      :NERDTreeToggle<CR>
 
 " netrw {{{2
