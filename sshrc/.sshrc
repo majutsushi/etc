@@ -58,6 +58,9 @@ prompt_logo() {
             centos)
                 logo="${colours[green]}*${colours[magenta]}*${colours[yellow]}*${colours[blue]}*"
                 ;;
+            amzn)
+                logo="\\[\\e[38;5;208m\\]⬢"
+                ;;
         esac
     fi
 
