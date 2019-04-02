@@ -72,15 +72,21 @@ alias ts="ts '%Y-%m-%dT%H:%M:%.S%z'"
 alias fu='sudo $(fc -ln -1) '
 
 if have exa; then
-    alias t='exa --group-directories-first --git -F --tree'
+    typeset -a _exa_args
+    _exa_args=(--group-directories-first --git --colour-scale --classify)
+    alias t="exa $_exa_args --tree -l"
+    alias e="exa $_exa_args -la"
+    alias ee="exa $_exa_args -l"
+    alias ls="exa $_exa_args"
+    alias ll=ee
+    alias l=e
+    unset _exa_args
 else
     alias t='tree --dirsfirst -F'
 fi
 
 alias da='du -sch'
 alias decolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
-alias e='exa -laF --group-directories-first --git'
-alias ee='exa -lF --group-directories-first --git'
 alias g="grep --color=always --extended-regexp"
 alias jo='jobs -l'
 alias jsonpp='python -mjson.tool'
