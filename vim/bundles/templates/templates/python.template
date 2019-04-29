@@ -16,10 +16,15 @@ if find_spec('better_exceptions'):
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Foo")
+    parser = argparse.ArgumentParser(description="TODO")  # TODO
     parser.add_argument("echo", help="echo the string you use here")
-    parser.add_argument("-v", "--verbose", action="store_true", default=False,
-                        help="increase output verbosity")
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        default=False,
+        help="increase output verbosity",
+    )
     return parser.parse_args()
 
 
