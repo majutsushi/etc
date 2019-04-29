@@ -126,7 +126,11 @@ endif
 " Show current file in xterm title
 " idea from http://ft.bewatermyfriend.org/comp/vim/vimrc.html
 function! s:get_screen_title() abort
-    let title = 'vim'
+    if has('nvim')
+        let title = 'nvim'
+    else
+        let title = 'vim'
+    endif
     let file  = expand('%:t')
     if file != ''
         if len(file) > 15
@@ -140,7 +144,7 @@ function! s:get_screen_title() abort
     return title
 endfunction
 
-if &term =~ '^xterm\|rxvt\|screen\|tmux'
+if $TERM =~ '^xterm\|rxvt\|screen\|tmux'
     let &t_ts = "\<Esc>]0;"
     let &t_fs = "\<Esc>\\"
     autocmd vimrc BufEnter * let &titlestring = s:get_screen_title()
