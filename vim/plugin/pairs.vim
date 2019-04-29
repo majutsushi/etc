@@ -86,7 +86,8 @@ function! s:HandleQuote(char) abort
         " in a Vim file
         return a:char
     elseif cprev =~# '[[:space:]]' && ccur =~# '[[:space:]]\|\_^\_$' ||
-         \ cprev =~# join(keys(b:pairs_conf.parens), '\|') ||
+         \ cprev =~# join(keys(b:pairs_conf.parens), '\|') &&
+         \   (ccur =~# '[[:space:]]\|\_^\_$\|' . join(values(b:pairs_conf.parens), '\|')) ||
          \ (ccur =~# join(values(b:pairs_conf.parens), '\|') && cprev =~# '[[:space:]]')
         return a:char . b:pairs_conf.quotes[a:char] . s:left
     else
