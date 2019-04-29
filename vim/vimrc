@@ -534,12 +534,11 @@ function! LoadLocalVimrcs()
     let configs = reverse(findfile('.vimrc.local', '.;', -1))
     for config in configs
         if filereadable(config)
-"            execute 'sandbox source ' . config
-            execute 'source ' . config
+            execute 'sandbox source ' . config
         endif
     endfor
 endfunction
-autocmd vimrc BufNewFile,BufReadPost * call LoadLocalVimrcs()
+autocmd vimrc BufNewFile,BufReadPost,FileType * call LoadLocalVimrcs()
 
 " s:profile_script_sort() {{{2
 " From https://github.com/vheon/dotvim/blob/master/autoload/profile.vim
