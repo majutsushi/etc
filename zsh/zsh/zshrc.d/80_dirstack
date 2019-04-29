@@ -17,7 +17,17 @@ DIRSTACKFILE=$ZSH_VAR_LIB_DIR/zdirs
 if [[ -f ${DIRSTACKFILE} ]] && [[ ${#dirstack[*]} -eq 0 ]] ; then
     dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
     # "cd -" won't work after login by just setting $OLDPWD, so
-    [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
+    is_local=1
+    # Check whether the old directory is on a remote filesystem that may hang
+    for mount in $(findmnt -o target -t nfs4 -l | tail -n +2); do
+        if [[ $dirstack[1] =~ ^${mount}(/.*)?$ ]]; then
+            is_local=0
+            break
+        fi
+    done
+    if (( is_local )); then
+        [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
+    fi
 fi
 
 _update_dirstack() {
