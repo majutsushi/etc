@@ -1198,8 +1198,7 @@ let g:ale_fixers = {
 \   'python': ['isort', 'black'],
 \   'rust': ['rustfmt'],
 \}
-let g:ale_python_yapf_executable = 'yapf3'
-" let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 1
 
 let g:ale_running = 0
 augroup AleRunning
