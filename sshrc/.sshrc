@@ -133,6 +133,7 @@ export VIMINIT="source $MYVIMRC"
 export INPUTRC="$SSHRCD/inputrc"
 
 export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t'
+export SYSTEMD_LESS="-F$LESS"
 export LESSHISTFILE=$SSHHOME/.lesshst
 export LESSKEY=$SSHHOME/.less
 lesskey "$SSHRCD/lesskey"
