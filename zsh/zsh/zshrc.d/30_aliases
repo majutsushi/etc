@@ -160,9 +160,9 @@ hextodec() { anytoany 16 10 $1 }
 
 pager-wrapper () {
     if [[ -t 1 ]]; then
-        $@ | less -+c -FRX
+        "$@" | less -+c -FRX
     else
-        $@
+        "$@"
     fi
 }
 
