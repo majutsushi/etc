@@ -20,7 +20,7 @@ set blame-options = -C -C -C      # User-defined options for `tig blame` (git-bl
 
 # Misc
 set ignore-case    = yes           # Ignore case when searching?
-set vertical-split = horizontal    # Enum: horizontal, vertical, auto; Use auto to
+set vertical-split = auto          # Enum: horizontal, vertical, auto; Use auto to
                                    # switch to horizontal split when width allows it
 
 # User-defined commands
@@ -78,6 +78,7 @@ bind generic oi :toggle id
 bind generic ot :toggle commit-title-overflow
 bind generic oF :toggle file-filter
 bind generic or :toggle commit-title-refs
+bind generic ov :toggle vertical-split
 
 bind generic @  none
 bind generic @j :/^@@
