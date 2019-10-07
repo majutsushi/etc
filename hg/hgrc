@@ -1,5 +1,5 @@
 [ui]
-ignore = ~/.etc/mercurial/hgignore
+ignore = ~/.config/hg/hgignore
 merge = splice
 username = Jan Larres <jan@majutsushi.net>
 
@@ -22,8 +22,8 @@ hgext.purge =
 hgext.rebase =
 hgext.record =
 #hgext.transplant =
-hgshelve = ~/.etc/mercurial/hgext/hgshelve.py
-prompt = ~/.etc/mercurial/hgext/prompt.py
+hgshelve = ~/.config/hg/hgext/hgshelve.py
+prompt = ~/.config/hg/hgext/prompt.py
 # bzexport = ~/src/bzexport/bzexport.py
 # mqext = ~/src/mqext
 # trychooser = ~/src/trychooser/trychooser

@@ -147,7 +147,7 @@ xlink inputrc
 xlink irbrc
 xlink latexmkrc
 #xlink mailcap
-xlink mercurial/hgrc
+xlink hg target=.config/hg
 xlink moc
 xlink muttator/muttatorrc
 xlink ncmpcpp target=.config/ncmpcpp
