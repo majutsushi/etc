@@ -198,7 +198,7 @@ fi
 xlink mail/dovecot.sieve target=.config/dovecot.sieve
 xlink mail/goobookrc
 xlink mail/lbdb
-xlink mail/msmtprc
+xlink mail/msmtprc target=.config/msmtp/config
 xlink mail/offlineimaprc
 xlink mail/t-prot target=.config/t-prot
 
