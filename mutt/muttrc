@@ -125,7 +125,6 @@ unset autoedit          # start editor without asking for to, subject,...
   set hdrs              # nohdrs implies not to write my_hdr into mail.
 unset hidden_host       # when set, skip the host name part of hostname
   set indent_string="> "   # change this and I'll kill you!  ;-)
-#   set query_command="abook --mutt-query '%s'"
 #   set query_command="~/bin/mutt-evo-query.rb '%s'"
   set query_command="lbdbq '%s'"
   set recall=ask-no     # ask for using postponed message.
@@ -401,7 +400,6 @@ unset save_empty        # remove mailbox when last message is removed.
 # Groups {{{
 
 group -group sent  -addr `mu cfind --muhome=~/.mu-sent-index --format=mutt-ab | sed -e '1d' | cut -f 1 | tr '\n' ' '`
-group -group abook -addr `. /usr/lib/lbdb/m_abook && m_abook_query @ | cut -f 1 | tr '\n' ' '`
 
 # }}}
 ###############################################################################
@@ -548,10 +546,6 @@ macro index  ,ll        "<limit>~F | ~N\n" "Limit to new and flagged messages"
 # goobook
 macro index,pager A |'goobook add'\n
 
-# abook
-# macro index,pager  A  |'abook --add-email'\n
-# macro index,pager  B  "!abook<enter>"
-
 # gpg
 macro pager  J  "<shell-escape>gpg --keyserver search.keyserver.net --keyserver-options honor-http-proxy --recv-key " "Get PGP Key"
 macro pager  K  "<shell-escape>gpg --lsign-key " "Sign PGP Key"
@@ -669,8 +663,8 @@ color sidebar_divider color16  color145
 # color index     color113        $my_background  ~N    # new mail
 color index     bright$my_white $my_background  ~N    # new mail
 
-color index     color113        $my_background  '!~N (%f sent | %f abook) !%C ml'
-color index     brightcolor113  $my_background  ' ~N (%f sent | %f abook) !%C ml'
+color index     color113        $my_background  '!~N %f sent !%C ml'
+color index     brightcolor113  $my_background  ' ~N %f sent !%C ml'
 
 color index     color250        $my_background  '!~N ~c jan@majutsushi.net'
 color index     brightcolor250  $my_background  ' ~N ~c jan@majutsushi.net'
