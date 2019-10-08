@@ -5,6 +5,7 @@
 [core]
 	fsyncobjectfiles = false
 	autocrlf = input
+	pager = less -F
 	whitespace = blank-at-eol,space-before-tab,tab-in-indent,blank-at-eof,cr-at-eol
 
 [alias]
