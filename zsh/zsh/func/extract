@@ -44,7 +44,7 @@ case "$1" in
     *.tar)
         cmd="tar xv -f '$1' -C $tmpdir"
         ;;
-    *.rar)
+    *.rar|*.cbr)
         cmd="unrar x '${archivefile}'"
         move=yes
         ;;
@@ -55,7 +55,7 @@ case "$1" in
     *.7z)
         cmd="7z x -o$tmpdir '$1'"
         ;;
-    *.jar|*.war|*.ear|*.xpi|*.zip)
+    *.jar|*.war|*.ear|*.xpi|*.zip|*.cbz)
         cmd="unzip -d $tmpdir '$1'"
         ;;
     *.deb)
