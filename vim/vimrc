@@ -94,6 +94,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-scriptease'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'wsdjeg/vim-fetch'
 
 NeoBundle 'https://github.com/jamessan/vim-gnupg.git'
 
