@@ -21,7 +21,12 @@ if systemd-detect-virt -q; then
 else
      xset s 600 120
      xset dpms 0 0 1200
-     xss-lock --notifier="$HOME/.etc/bin/xss-notify" -- slock &
+     if command -v xsecurelock &> /dev/null; then
+          export XSECURELOCK_SAVER=saver_blank
+          xss-lock --notifier="/usr/libexec/xsecurelock/dimmer" -l -- xsecurelock &
+     else
+          xss-lock --notifier="$HOME/.etc/bin/xss-notify" -- slock &
+     fi
 fi
 
 nm-applet &
