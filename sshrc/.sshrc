@@ -82,6 +82,15 @@ color-log() {
 }
 
 
+__rprompt() {
+    printf "%*s\\r" "$(tput cols)" "$(eval echo "$RPROMPT")"
+}
+
+if [[ ! $PROMPT_COMMAND =~ __rprompt ]]; then
+    export PROMPT_COMMAND="__rprompt; ${PROMPT_COMMAND:-:}"
+fi
+
+
 set -o noclobber
 
 shopt -s checkwinsize
