@@ -2,7 +2,7 @@
 
 import os
 
-rc = os.environ["HOME"] + "/.etc/mutt/attachsaverc"
+rc = os.environ["XDG_CONFIG_HOME"] + "/mutt/attachsaverc"
 hook = "message-hook '{}' 'macro attach s <save-entry><kill-line>{}<enter>y<enter>'"
 
 with open(rc) as f:

@@ -1,7 +1,7 @@
 attachsaverc
-mutt/smtp-*
-mutt/imap-*
-mutt/aliases
-mutt/certificates
-mutt/lists
-mutt/*.dat
+smtp-*
+imap-*
+aliases
+certificates
+lists
+*.dat

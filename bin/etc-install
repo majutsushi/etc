@@ -214,8 +214,7 @@ xlink mail/msmtprc target=.config/msmtp/config
 xlink mail/offlineimaprc
 xlink mail/t-prot target=.config/t-prot
 
-xlink mutt/muttrc
-xlink mutt/mutt
+xlink mutt target=.config/mutt
 
 xlink vim
 xlink vim target=.config/nvim

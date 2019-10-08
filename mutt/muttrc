@@ -1,8 +1,15 @@
 ###############################################################################
+# Variables {{{
+
+  set my_muttdir = $XDG_CONFIG_HOME/mutt
+
+# }}}
+###############################################################################
+###############################################################################
 # Alias options {{{
 
-  set alias_file=~/.mutt/aliases
-source ~/.mutt/aliases
+  set alias_file = $my_muttdir/aliases
+source $alias_file
 
 # }}}
 ###############################################################################
@@ -12,7 +19,7 @@ source ~/.mutt/aliases
 # source "gpg -d .muttrc.secure.gpg|"
 # source ~/.mutt/imap-urd
 # source ~/.mutt/imap-majutsushi.net
-source ~/.mutt/maildir
+source $my_muttdir/maildir
 
 # to set:
 #   set smtp_url=""
@@ -37,7 +44,7 @@ source ~/.mutt/maildir
   set imap_peek
   set imap_servernoise
 
-  set certificate_file="~/.mutt/certificates"
+  set certificate_file="$my_muttdir/certificates"
   set connect_timeout=30
 #  set entropy_file=""
   set header_cache="~/.cache/mutt_header/"
@@ -130,7 +137,7 @@ unset hidden_host       # when set, skip the host name part of hostname
   set recall=ask-no     # ask for using postponed message.
   set sig_dashes        # Prepend "-- \n" to the signature
 unset sig_on_top
-  set signature="~/.etc/mutt/sig.sh|"
+  set signature="$my_muttdir/sig.sh|"
 unset text_flowed       # use format=flowed; if set, unset encode_from
 unset use_domain        # add $hostname to all addresses without @host
   set user_agent        # Create User-Agent: Mutt/<Version> header.
@@ -433,7 +440,7 @@ subscribe `cd ~/Maildir && echo .lists.* | sed 's/_/\./g' | sed 's/\.lists\.//g'
 
 # Bindings for editing and reloading the .muttrc
 #macro generic   ,ve   "!screen -t muttrc vi ~/.muttrc\r"
-macro generic   ,vu   "<enter-command>source ~/.muttrc\r" "Source muttrc"
+macro generic   ,vu   "<enter-command>source $my_muttdir/muttrc\r" "Source muttrc"
 #macro generic   ,va   "!screen -t aliases vi ~/.mutt/aliases\r"
 
 macro index,pager i   "<sync-mailbox><change-folder>?<toggle-mailboxes>" "Go to mailbox list"
@@ -513,24 +520,24 @@ macro index,pager  ,w   "<save-message>=.Waiting\n" "Move message to folder 'Wai
 macro index,pager  ,t   "<save-message>=.Todo\n" "Move message to folder 'Todo'"
 
 # search mail with maildir-utils
-macro index  ,s  "<shell-escape>~/.etc/mutt/mu-search<enter><change-folder-readonly>~/.mu/results<enter>" "Search with mu"
+macro index  ,s  "<shell-escape>$my_muttdir/mu-search<enter><change-folder-readonly>~/.mu/results<enter>" "Search with mu"
 
 # add sender to evolution address book
 # macro index,pager  A    "<pipe-message>~/src/add-to-eds/add-to-eds<return>" "Add the sender address to evolution address book"
 
 # capture in org-mode
-macro index,pager  \eR  "<pipe-message>~/.etc/mutt/remember-mail\n" "Capture message in org-mode"
+macro index,pager  \eR  "<pipe-message>$my_muttdir/remember-mail\n" "Capture message in org-mode"
 # save in taskwarrior
-macro index,pager  \eT  "<pipe-message>~/.etc/mutt/task-add\n" "Save message to taskwarrior"
+macro index,pager  \eT  "<pipe-message>$my_muttdir/task-add\n" "Save message to taskwarrior"
 
 # X-Label patch
 ifdef edit-label bind index,pager y edit-label
 
 # labels
 set my_vi=$editor
-macro index y "<enter-command>set editor=\"~/.etc/mutt/editlabel append\"\n<enter-command>unset resolve<enter><edit><sync-mailbox><toggle-new><enter-command>set editor=$my_vi\n<enter-command>set resolve<enter>" "Append label"
+macro index y "<enter-command>set editor=\"$my_muttdir/editlabel append\"\n<enter-command>unset resolve<enter><edit><sync-mailbox><toggle-new><enter-command>set editor=$my_vi\n<enter-command>set resolve<enter>" "Append label"
 macro pager y "<exit>y<display-message>"
-macro index Y "<enter-command>set editor=\"~/.etc/mutt/editlabel menu\"\n<enter-command>unset resolve<enter><edit><sync-mailbox><toggle-new><enter-command>set editor=$my_vi\n<enter-command>unset resolve<enter>" "Edit labels"
+macro index Y "<enter-command>set editor=\"$my_muttdir/editlabel menu\"\n<enter-command>unset resolve<enter><edit><sync-mailbox><toggle-new><enter-command>set editor=$my_vi\n<enter-command>unset resolve<enter>" "Edit labels"
 macro pager Y "<exit>Y<display-message>" "Edit labels"
 macro index \Cy "<limit>~y " "Limit view to label"
 
@@ -594,7 +601,7 @@ macro compose \ee "Fgpg --encrypt --armor\ny" "encrypt with GnuPG"
 bind attach ' ' select-entry
 bind attach  S  save-entry
 message-hook . "macro attach s <save-entry><kill-line>$HOME/Downloads<enter>y"
-source ~/.etc/mutt/attachsave|
+source $my_muttdir/attachsave|
 
 # }}}
 # =============================================================================

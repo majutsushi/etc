@@ -2,9 +2,9 @@
 # 
 # Author       : Jan Larres <jan@majutsushi.net>
 # Created      : 2010-12-04 17:48:23 +1300 NZDT
-# Last changed : 2010-12-04 17:48:23 +1300 NZDT
+# Last changed : 2019-10-08 22:43:20 +1300 NZDT
 
-FORTUNES="$HOME/.mutt/fortunes-en $HOME/.mutt/fortunes-de"
+FORTUNES="$XDG_CONFIG_HOME/mutt/fortunes-en $XDG_CONFIG_HOME/mutt/fortunes-de"
 KEYID=00A0FD5F
 
 ANSWER="y"
