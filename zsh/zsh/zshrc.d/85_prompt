@@ -62,7 +62,7 @@ __prompt_orighome() {
 __prompt_jdk() {
     [[ -z $JAVA_HOME ]] && return
     local jdk=$(basename $JAVA_HOME)
-    if [[ $jdk != jdk-default ]]; then
+    if [[ $jdk != jdk-default ]] && [[ $jdk != current ]]; then
         print "%F{cyan}$jdk%f "
     fi
 }
@@ -70,7 +70,7 @@ __prompt_jdk() {
 __prompt_ant() {
     [[ -z $ANT_HOME ]] && return
     local ant=$(basename $ANT_HOME)
-    if [[ $ant != ant-default ]]; then
+    if [[ $ant != ant-default ]] && [[ $ant != current ]]; then
         print "%F{cyan}$ant%f "
     fi
 }

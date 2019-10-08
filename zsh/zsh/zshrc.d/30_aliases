@@ -442,39 +442,4 @@ if [[ -r /etc/debian_version ]] ; then
     compdef _uchange uchange
 fi
 
-create-switch-funcs() {
-    local basedir=$1
-    local homevar=$2
-
-    [[ -d $basedir ]] || return
-
-    local opt
-
-    for file in ${basedir}/*(N); do
-        opt=$(basename $file)
-        eval "$opt () {
-            typeset -a newpath
-            if [[ "'$PATH'" =~ $basedir ]]; then
-                newpath="'( ${path//#'"${basedir//\//\/}"'*/'"${file}/bin"'} )'"
-            else
-                newpath=( $file/bin "'$path'" )
-            fi
-            if [[ -n \"\$@\" ]]; then
-                (
-                    path="'($newpath)'"
-                    export $homevar=$file
-                    exec \"\$@\"
-                )
-            else
-                path="'($newpath)'"
-                export $homevar=$file
-            fi
-
-        }"
-    done
-}
-
-create-switch-funcs "${JDKS_PATH:-/opt/java}" JAVA_HOME
-create-switch-funcs "${ANT_PATH:-/opt/ant}"   ANT_HOME
-
 # vim: filetype=zsh

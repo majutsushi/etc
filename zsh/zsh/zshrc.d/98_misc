@@ -11,4 +11,6 @@ done
 
 mkdir -p $HOME/.ssh/sock
 
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
 # vim: filetype=zsh
