@@ -52,7 +52,7 @@ end
 beautiful.init(awful.util.get_configuration_dir() .. "themes/desert/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
+terminal = "x-terminal-emulator"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -294,7 +294,7 @@ root.buttons(awful.util.table.join(
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
     awful.key({ modkey }, "s",
-              function () scratch.uniqdrop("urxvt", "top", "left", 600, 600) end,
+              function () scratch.uniqdrop(terminal, "top", "left", 600, 600) end,
               {description="toggle scratch terminal", group="awesome"}),
     awful.key({ modkey }, "d", function () scratch.pad.toggle() end,
               {description="toggle scratch client", group="awesome"}),
