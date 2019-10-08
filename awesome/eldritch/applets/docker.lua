@@ -55,8 +55,14 @@ local function new()
             local linedata = utils.split(line, "\t")
 
             local image = linedata[1]
-            local command = glib.markup_escape_text(linedata[2], -1)
             local names = linedata[3]
+
+            local max_len = 100
+            local command = linedata[2]
+            if command:len() > max_len then
+                command = command:sub(1, max_len - 1) .. "…"
+            end
+            command = glib.markup_escape_text(command, -1)
 
             local tags = gettags(image)
 
