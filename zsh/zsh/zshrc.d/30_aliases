@@ -112,12 +112,7 @@ rs() {
     rsync -avxEHA --delete --delete-excluded --human-readable --progress "$@"
 }
 
-# Ag/Ack
-if have ag; then
-    alias a='~/.etc/zsh/sack ag --smart-case'
-else
-    alias a='~/.etc/zsh/sack ack'
-fi
+alias a='~/.etc/zsh/sack ag --smart-case'
 f() {
     local shortcut="$(sed -n "$1p" < "$SACK_SHORTCUT_FILE" | awk '
         {

@@ -138,7 +138,6 @@ mkdir -p "$HOME"/.var/{lib,log}
 ln -sf "$HOME"/.etc/.githooks/* .etc/.git/hooks
 
 xlink Rprofile
-merge ackrc
 xlink ant/ant.conf target=.ant/ant.conf
 xlink aptitude
 xlink astylerc

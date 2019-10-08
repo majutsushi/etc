@@ -1123,8 +1123,6 @@ endif
 if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor\ --column\ --smart-case
     set grepformat^=%f:%l:%c:%m
-else
-    set grepprg=ack
 endif
 
 " language specific {{{2
