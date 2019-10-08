@@ -1,6 +1,10 @@
 #!/bin/bash
 
-set -e
+set -eEu -o pipefail
+IFS=$'\n\t'
+
+error_handler() { echo "Error: Line ${1} exited with status ${2}"; }
+trap 'error_handler ${LINENO} $?' ERR
 
 
 OSNAME=$(uname -s)
@@ -36,61 +40,68 @@ merge() {
 
     info "Merging $target"
 
-    if [[ -f $target ]] && ! head -1 $target | grep -q "\*\*\* GENERATED FILE - DO NOT EDIT \*\*\*"; then
+    if [[ -f $target ]] && ! head -1 "$target" | grep -q "\*\*\* GENERATED FILE - DO NOT EDIT \*\*\*"; then
         error "$target is not a generated file!"
         return
     fi
 
-    rm -f $target
+    rm -f "$target"
 
-    echo "$comment *** GENERATED FILE - DO NOT EDIT ***" > $target
+    echo "$comment *** GENERATED FILE - DO NOT EDIT ***" > "$target"
     if [[ -f ${confbase} ]]; then
-        echo "$comment [$(readlink -f $confbase)]" >> $target
-        cat $confbase >> $target
+        echo "$comment [$(readlink -f "$confbase")]" >> "$target"
+        cat "$confbase" >> "$target"
     fi
 
-    local localbase=$HOME/.local/etc/$(basename "$confbase")
-    local localtarget="$(mktemp -u)"
+    local localbase localtarget
+    localbase=$HOME/.local/etc/$(basename "$confbase")
+    localtarget="$(mktemp -u)"
     if [[ -f "$localbase" ]]; then
         echo -e "\n$comment [$(readlink -f "$localbase")]" >> "$localtarget"
         cat "$localbase" >> "$localtarget"
     fi
     if [[ -d "${localbase}.d" ]]; then
-        for part in ${localbase}.d/??_*; do
+        for part in "${localbase}.d"/??_*; do
             echo -e "\n$comment [$(readlink -f "$part")]" >> "$localtarget"
             cat "$part" >> "$localtarget"
         done
     fi
 
     if [[ -d ${confbase}.d ]]; then
-        [[ -f "$localtarget" ]] && ln -s "$localtarget" "${confbase}.d/50_local" || :
+        if [[ -f "$localtarget" ]]; then
+            ln -s "$localtarget" "${confbase}.d/50_local"
+        fi
 
-        for part in ${confbase}.d/??_*; do
-            if grep -q '^# --- CUT HERE ---$' $part; then
-                csplit -s $part '/^# --- CUT HERE ---$/+1'
+        for part in "${confbase}.d"/??_*; do
+            if grep -q '^# --- CUT HERE ---$' "$part"; then
+                csplit -s "$part" '/^# --- CUT HERE ---$/+1'
                 if bash xx00; then
                     if [[ "$part" != $confbase.d/50_local ]]; then
-                        echo -e "\n$comment [$(readlink -f $part)]" >> $target
+                        echo -e "\n$comment [$(readlink -f "$part")]" >> "$target"
                     fi
-                    cat xx01 >> $target
+                    cat xx01 >> "$target"
                 fi
                 rm xx0[01]
             else
                 if [[ "$part" != $confbase.d/50_local ]]; then
-                    echo -e "\n$comment [$(readlink -f $part)]" >> $target
+                    echo -e "\n$comment [$(readlink -f "$part")]" >> "$target"
                 fi
-                cat $part >> $target
+                cat "$part" >> "$target"
             fi
         done
 
-        [[ -f ${confbase}.d/50_local ]] && rm ${confbase}.d/50_local || :
+        if [[ -f ${confbase}.d/50_local ]]; then
+            rm "${confbase}.d/50_local"
+        fi
     else
         if [[ -f $localtarget ]]; then
-            cat $localtarget >> $target
+            cat "$localtarget" >> "$target"
         fi
     fi
 
-    [[ -f "$localtarget" ]] && rm "$localtarget" || :
+    if [[ -f "$localtarget" ]]; then
+        rm "$localtarget"
+    fi
 }
 
 xlink() {
@@ -110,7 +121,8 @@ xlink() {
     fi
 
     rm -f "$target"
-    local dir=$(dirname "$target")
+    local dir
+    dir=$(dirname "$target")
     if ! [[ -d "$dir" ]]; then
         mkdir -p "$dir"
     fi
@@ -118,12 +130,12 @@ xlink() {
 }
 
 OLDPWD=$PWD
-cd $HOME
+cd "$HOME"
 
-mkdir -p $HOME/.local/etc
-mkdir -p $HOME/.var/{lib,log}
+mkdir -p "$HOME/.local/etc"
+mkdir -p "$HOME"/.var/{lib,log}
 
-ln -sf $HOME/.etc/.githooks/* .etc/.git/hooks
+ln -sf "$HOME"/.etc/.githooks/* .etc/.git/hooks
 
 xlink Rprofile
 merge ackrc
@@ -176,21 +188,21 @@ xlink emacs/emacs.d
 
 xlink git/gitconfig target=.config/git/config
 merge git/gitignore target=.config/git/ignore
-ln -sf $HOME/.config/git/ignore $HOME/.agignore
+ln -sf "$HOME/.config/git/ignore" "$HOME/.agignore"
 xlink git/tigrc target=.config/tig/config
 
 xlink tmux/tmux.conf
 info "Installing tmux plugins"
 if ! [[ -d $HOME/.var/lib/tmux/plugins/tpm/.git ]]; then
-    git clone https://github.com/tmux-plugins/tpm.git $HOME/.var/lib/tmux/plugins/tpm
+    git clone https://github.com/tmux-plugins/tpm.git "$HOME/.var/lib/tmux/plugins/tpm"
 fi
 if command -v tmux >/dev/null; then
     if tmux server-info &>/dev/null; then
-        $HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh
+        "$HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh"
     else
         tmux start-server
         tmux new-session -d
-        $HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh
+        "$HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh"
         tmux kill-server
     fi
 fi
@@ -208,12 +220,12 @@ xlink mutt/mutt
 xlink vim
 xlink vim target=.config/nvim
 if ! [[ -d $HOME/.var/lib/vim/bundles/ ]]; then
-    git clone https://github.com/Shougo/neobundle.vim $HOME/.var/lib/vim/bundles/neobundle.vim
+    git clone https://github.com/Shougo/neobundle.vim "$HOME/.var/lib/vim/bundles/neobundle.vim"
 fi
 xlink vintrc.yaml
 
-mkdir -p $HOME/.var/spool/anacron
-crontab $HOME/.etc/crontab/crontab
+mkdir -p "$HOME/.var/spool/anacron"
+crontab "$HOME/.etc/crontab/crontab"
 
 xlink less/lessfilter
 merge less/lesskey target=/tmp/lesskey$$
@@ -241,19 +253,19 @@ if command -v X >/dev/null; then
     xlink icons/Faenza-Darkest target=.local/share/icons/Faenza-Darkest
 
     FONTDIR=$HOME/.local/share/fonts
-    mkdir -p $FONTDIR
+    mkdir -p "$FONTDIR"
     for fontf in .etc/xorg/fonts/*.bdf; do
-        font=$(basename ${fontf})
+        font=$(basename "${fontf}")
         font=${font%.bdf}
         info "Installing font ${font}"
-        bdftopcf -o $FONTDIR/${font}.pcf ${fontf}
-        gzip -f $FONTDIR/${font}.pcf
+        bdftopcf -o "$FONTDIR/${font}.pcf" "${fontf}"
+        gzip -f "$FONTDIR/${font}.pcf"
     done
-    cd $FONTDIR
+    cd "$FONTDIR"
     mkfontdir
-    cd $HOME
-    xset -fp $FONTDIR 2> /dev/null
-    xset +fp $FONTDIR
+    cd "$HOME"
+    xset -fp "$FONTDIR" 2> /dev/null
+    xset +fp "$FONTDIR"
     fc-cache
 
     if command -v gsettings >/dev/null; then
@@ -268,27 +280,27 @@ if command -v python >/dev/null; then
     info "Installing python lib: desert"
     python setup.py install --user >/dev/null
     python3 setup.py install --user >/dev/null
-    cd $HOME
+    cd "$HOME"
 
     xlink python/pylintrc target=.config/pylintrc
     xlink python/mypy.ini
 fi
 
 for tinfof in .etc/terminfo/*; do
-    tinfo=$(basename ${tinfof})
+    tinfo=$(basename "${tinfof}")
     tinfo=${tinfo%.terminfo}
     info "Compiling terminfo ${tinfo}"
-    tic $tinfof
+    tic "$tinfof"
 
     # also install termcap data if the shell is linked against it
-    if ldd $(which bash) | grep -q libtermcap; then
+    if ldd "$(command -v bash)" | grep -q libtermcap; then
         info "termcap in use, appending ${tinfo} to ~/.termcap"
         if [[ -f .termcap ]] && ! grep -qE "^${tinfo}\|" .termcap; then
-            tic -C -T ${tinfof} >> .termcap
+            tic -C -T "${tinfof}" >> .termcap
         else
-            tic -C -T ${tinfof} > .termcap
+            tic -C -T "${tinfof}" > .termcap
         fi
     fi
 done
 
-cd $OLDPWD
+cd "$OLDPWD"
