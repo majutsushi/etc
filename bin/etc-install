@@ -164,10 +164,8 @@ xlink ncmpcpp target=.config/ncmpcpp
 xlink ranger target=.config/ranger
 xlink redshift.conf target=.config/redshift.conf
 xlink rofi target=.config/rofi
-xlink screen/screenrc
 xlink slrn/slrnrc
 merge sshconfig target=.ssh/config
-xlink taskrc
 xlink urxvt
 xlink weechat target=.config/weechat
 xlink zathurarc target=.config/zathura/zathurarc
