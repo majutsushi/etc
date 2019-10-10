@@ -221,20 +221,8 @@ man() {
 }
 
 tmux() {
-    # create a cache directory for status script updates, taken from byobu
-    if [[ -w /dev/shm ]]; then
-        for dir in /dev/shm/tmux-${USER}-*; do
-            if [[ -d "$dir" ]] && [[ -O "$dir" ]]; then
-                export TMUX_CACHE="$dir"
-                break
-            fi
-        done
-        if [[ ! -d "$TMUX_CACHE" ]] || [[ ! -O "$TMUX_CACHE" ]]; then
-            export TMUX_CACHE=$(mktemp -d /dev/shm/tmux-$USER-XXXXXXXX)
-        fi
-    else
-        export TMUX_CACHE="$XDG_CACHE_HOME/tmux"
-    fi
+    # create a cache directory for status script updates
+    TMUX_CACHE="$XDG_RUNTIME_DIR"/tmux-cache
     mkdir -p "$TMUX_CACHE/status" "$TMUX_CACHE/.last"
 
     command tmux -f ~/.etc/tmux/tmux.conf "$@"
