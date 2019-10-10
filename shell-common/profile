@@ -1,5 +1,7 @@
 #!/bin/sh
 # The shebang is just to get shellcheck to use POSIX rules
+#
+# https://github.com/grawity/dotfiles/blob/master/.environ.notes
 
 _add_to_path() {
     # This is non-POSIX but works in dash
@@ -87,13 +89,31 @@ export RI="-f ansi"
 export GOPATH=$HOME/src/go
 _add_to_path post PATH "$GOPATH/bin"
 
-export TERMINFO=$HOME/.terminfo
+export TERMINFO=$XDG_DATA_HOME/terminfo
 
 export SSHHOME=$HOME/.etc/sshrc
 
 export AUTOSSH_PORT=0
 
 export TMUX_TMPDIR=$XDG_RUNTIME_DIR
+
+export ARTISTIC_STYLE_OPTIONS="$HOME"/.etc/astylerc
+export BIBTOOLRSC="$HOME"/.etc/bibtoolrsc
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+export INPUTRC="$XDG_CONFIG_HOME"/inputrc
+export IPYTHONDIR="$XDG_CONFIG_HOME"/ipython
+export PYLINTHOME="$XDG_CACHE_HOME"/pylint
+export SQLITE_HISTORY="$HOME"/.var/lib/sqlite_history
+export WEECHAT_HOME="$XDG_CONFIG_HOME"/weechat
+export WINEPREFIX="$XDG_DATA_HOME"/wine/prefixes/default
+
+export MAILCAP="$HOME/.etc/mailcap"	# elinks, w3m
+export MAILCAPS="$MAILCAP:/etc/mailcap"			# Mutt, pine
+
+export PSQLRC="$XDG_CONFIG_HOME/pg/psqlrc"
+export PGPASSFILE="$XDG_CONFIG_HOME/pg/pgpass"
+export PGSERVICEFILE="$XDG_CONFIG_HOME/pg/pg_service.conf"
+export PSQL_HISTORY="$XDG_CACHE_HOME/psql_history"
 
 export RUSTUP_HOME="$HOME/.var/lib/rustup"
 export CARGO_HOME="$HOME/.var/lib/cargo"

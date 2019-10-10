@@ -64,6 +64,7 @@ alias ffprobe="ffprobe -hide_banner"
 alias grep="pager-wrapper grep --color=auto"
 alias gdb="gdb -q"
 alias less="less -F"
+alias mocp="padsp -M mocp --moc-dir $HOME/.etc/moc --sound-driver OSS"
 alias mtr="mtr -t"
 alias ssh="ssh -o 'PermitLocalCommand yes'"
 alias ts="ts '%Y-%m-%dT%H:%M:%.S%z'"
@@ -236,7 +237,7 @@ tmux() {
     fi
     mkdir -p "$TMUX_CACHE/status" "$TMUX_CACHE/.last"
 
-    command tmux "$@"
+    command tmux -f ~/.etc/tmux/tmux.conf "$@"
 }
 
 tmux-echo() {

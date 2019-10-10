@@ -4,7 +4,9 @@ fi
 
 export DVDCSS_CACHE=$XDG_CACHE_HOME/dvdcss
 export GTK_OVERLAY_SCROLLING=0
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 export NO_AT_BRIDGE=1
+export GRAMPSHOME="$XDG_DATA_HOME"
 
 export IDEA_PROPERTIES="$HOME/.etc/idea/idea.properties"
 export IDEA_VM_OPTIONS="$HOME/.etc/idea/idea64.vmoptions"

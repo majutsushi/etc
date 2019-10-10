@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# https://wiki.archlinux.org/index.php/XDG_Base_Directory
+# https://github.com/grawity/dotfiles/blob/master/.dotfiles.notes
 
 set -eEu -o pipefail
 IFS=$'\n\t'
@@ -140,26 +143,22 @@ ln -sf "$HOME"/.etc/.githooks/* .etc/.git/hooks
 xlink Rprofile
 xlink ant/ant.conf target=.ant/ant.conf
 xlink aptitude
-xlink astylerc
 xlink awesome target=.config/awesome
-xlink bibtoolrsc
 xlink colorgccrc
 xlink colordiffrc
 xlink compton.conf target=.config/compton.conf
 xlink ctags
 xlink gdbinit
 xlink gnuplot/gnuplot
-xlink gtk/gtkrc-2.0
+xlink gtk/gtkrc-2.0 target=.config/gtk-2.0/gtkrc
 xlink gtk/gtk-3.0/gtk.css target=.config/gtk-3.0/gtk.css
 xlink gtk/gtk-3.0/settings.ini target=.config/gtk-3.0/settings.ini
 xlink idea/ideavimrc
 xlink indent.pro
-xlink inputrc
+xlink inputrc target=.config/inputrc
 xlink irbrc
 xlink latexmkrc
-#xlink mailcap
 xlink hg target=.config/hg
-xlink moc
 xlink muttator/muttatorrc
 xlink ncmpcpp target=.config/ncmpcpp
 xlink ranger target=.config/ranger
@@ -170,7 +169,7 @@ xlink slrn/slrnrc
 merge sshconfig target=.ssh/config
 xlink taskrc
 xlink urxvt
-xlink weechat
+xlink weechat target=.config/weechat
 xlink zathurarc target=.config/zathura/zathurarc
 
 xlink shell-common/profile
@@ -191,12 +190,12 @@ ln -sf "$HOME/.config/git/ignore" "$HOME/.agignore"
 xlink git/tigrc target=.config/tig/config
 mkdir -p "$XDG_DATA_HOME/tig"
 
-xlink tmux/tmux.conf
 info "Installing tmux plugins"
 if ! [[ -d $HOME/.var/lib/tmux/plugins/tpm/.git ]]; then
     git clone https://github.com/tmux-plugins/tpm.git "$HOME/.var/lib/tmux/plugins/tpm"
 fi
 if command -v tmux >/dev/null; then
+    tmux() { command tmux -f "$HOME/.etc/tmux/tmux.conf" "$@"; }
     if tmux server-info &>/dev/null; then
         "$HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh"
     else
@@ -282,7 +281,7 @@ if command -v python >/dev/null; then
     cd "$HOME"
 
     xlink python/pylintrc target=.config/pylintrc
-    xlink python/mypy.ini
+    xlink python/mypy.ini target=.config/mypy/config
 fi
 
 for tinfof in .etc/terminfo/*; do
