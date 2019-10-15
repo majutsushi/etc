@@ -1187,6 +1187,7 @@ let g:ale_lint_delay = 500
 let g:ale_linters = {
 \   'python': ['pylint', 'mypy', 'pycodestyle'],
 \}
+let g:ale_python_pylint_auto_pipenv = 1
 
 let g:ale_fixers = {
 \   'python': ['isort', 'black'],
