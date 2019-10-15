@@ -15,7 +15,7 @@ HOST=${HOST:-$(hostname)}
 HOST=${HOST/.*}
 DOMAIN=${DOMAIN:-$(hostname -d 2>&-)}
 if [[ "$DOMAIN" == "" || "$DOMAIN" == "localdomain" || "$DOMAIN" == "(none)" ]]; then
-    DOMAIN=$(grep "^domain " /etc/resolv.conf | cut -d' ' -f2)
+    DOMAIN=$(grep "^domain " /etc/resolv.conf | cut -d' ' -f2 || echo "")
 fi
 export OSNAME HOST DOMAIN
 
