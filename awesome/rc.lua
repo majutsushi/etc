@@ -225,6 +225,7 @@ local applets = {
     battery = eldritch.applets.battery(),
     cpu     = eldritch.applets.cpu(),
     memory  = eldritch.applets.memory(),
+    notifhist  = eldritch.applets.notifhist.new(),
     -- weather = eldritch.applets.weather(),
     -- Keyboard map indicator and switcher
     -- keyboardlayout = awful.widget.keyboardlayout()
@@ -274,6 +275,7 @@ awful.screen.connect_for_each_screen(function(s)
             applets.battery,
             applets.cpu,
             applets.memory,
+            applets.notifhist,
             -- volicon,
             -- volmargin,
             -- applets.weather,
@@ -556,6 +558,7 @@ root.keys(globalkeys)
 -- https://github.com/doronbehar/.config_awesome/commit/923d35d47f5fd5ce04054624b34f593c54eece22
 -- https://github.com/doronbehar/.config_awesome/commit/8406b4bc06c75048f2b4b0b983faf282f4bbdf75
 naughty.config.notify_callback = function(args)
+    eldritch.applets.notifhist.add_notification(args)
     return args
 end
 naughty.config.icon_dirs = { '/usr/share/icons/gnome/', '/usr/share/pixmaps/', '/usr/share/icons/hicolor/' }
