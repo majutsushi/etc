@@ -45,6 +45,10 @@ theme.taglist_fg_focus = "#2E3436"
 theme.taglist_bg_focus = "#D3D7CF"
 theme.taglist_fg_empty = "#777777"
 
+theme.notification_font = "sans 10"
+theme.notification_max_width = 700
+theme.notification_icon_size = 128
+
 theme.tooltip_bg = theme.bg_normal
 theme.tooltip_title_color = "#f0e68c"
 theme.tooltip_key_color = "#98fb98"

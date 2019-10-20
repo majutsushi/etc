@@ -556,19 +556,9 @@ root.keys(globalkeys)
 -- https://github.com/doronbehar/.config_awesome/commit/923d35d47f5fd5ce04054624b34f593c54eece22
 -- https://github.com/doronbehar/.config_awesome/commit/8406b4bc06c75048f2b4b0b983faf282f4bbdf75
 naughty.config.notify_callback = function(args)
-    if args.icon then
-        if type(args.icon) == "string" then
-            icon_fpath = string.gsub(args.icon, "^file://", "", 1)
-            if gears.filesystem.file_readable(icon_fpath) then
-                local icon_width, icon_height = eldritch.image.width_and_height(icon_fpath)
-                if icon_width > 250 and icon_height > 250 then
-                    args.icon_size = 250
-                end
-            end
-        end
-    end
     return args
 end
+naughty.config.icon_dirs = { '/usr/share/icons/gnome/', '/usr/share/pixmaps/', '/usr/share/icons/hicolor/' }
 -- }}}
 
 -- {{{ Rules
