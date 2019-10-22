@@ -101,6 +101,7 @@ theme.widget_notifhist = theme.confdir .. "/icons/widgets/notifhist.png"
 theme.weather_dir = theme.confdir .. "/icons/weather/"
 
 -- {{{ Misc
+theme.icon_theme = "Faenza-Darkest"
 theme.awesome_icon           = theme.confdir .. "/icons/awesome-icon.png"
 theme.menu_submenu_icon      = theme.confdir .. "/icons/submenu.png"
 -- }}}
