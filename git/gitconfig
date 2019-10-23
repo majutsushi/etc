@@ -103,7 +103,7 @@
 	autosetuprebase = always
 
 [pull]
-	rebase = preserve
+	rebase = merges
 
 [push]
 	default = simple
