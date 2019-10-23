@@ -176,7 +176,9 @@ xlink bash/bash_profile
 xlink bash/bash_logout
 
 xlink zsh/zshenv
-fast-theme "$HOME/.etc/zsh/zsh/overlay.ini"
+if ! [[ -d "$HOME/.var/lib/zsh/zplugin" ]]; then
+    git clone https://github.com/zdharma/zplugin.git "$HOME/.var/lib/zsh/zplugin/bin"
+fi
 
 xlink emacs/emacs
 xlink emacs/emacs.d
