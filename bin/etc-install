@@ -176,8 +176,7 @@ xlink bash/bash_profile
 xlink bash/bash_logout
 
 xlink zsh/zshenv
-mkdir -p "$HOME/.local/etc/zshrc.d"
-curl -s -L -o "$HOME/.local/etc/zshrc.d/90_fzf-completion" https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh
+fast-theme "$HOME/.etc/zsh/zsh/overlay.ini"
 
 xlink emacs/emacs
 xlink emacs/emacs.d

@@ -1,0 +1,32 @@
+ZPLUGIN_DIR=$HOME/.var/lib/zsh/zplugin
+
+typeset -gAH ZPLGM
+ZPLGM[BIN_DIR]=$ZPLUGIN_DIR/bin
+ZPLGM[HOME_DIR]=$ZPLUGIN_DIR
+ZPLGM[ZCOMPDUMP_PATH]=$ZCOMPDUMP
+
+source $ZPLUGIN_DIR/bin/zplugin.zsh
+
+zplugin ice wait lucid blockf atpull'zplugin creinstall -q .'
+zplugin light zsh-users/zsh-completions
+
+zplugin ice wait lucid atinit"zpcompinit; zpcdreplay"
+zplugin light zdharma/fast-syntax-highlighting
+
+zplugin ice wait lucid atload"_zsh_autosuggest_start"
+zplugin light zsh-users/zsh-autosuggestions
+
+zplugin ice from"gh-r" as"program"
+zplugin light junegunn/fzf-bin
+zplugin snippet https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
+
+zplugin ice from"gh-r" as"program" mv"fd* -> fd" pick"fd/fd"
+zplugin light sharkdp/fd
+
+zplugin ice from"gh-r" as"program" mv"exa* -> exa"
+zplugin light ogham/exa
+
+zplugin ice as"completion"
+zplugin snippet https://github.com/bazelbuild/bazel/blob/master/scripts/zsh_completion/_bazel
+
+# vim: filetype=zsh

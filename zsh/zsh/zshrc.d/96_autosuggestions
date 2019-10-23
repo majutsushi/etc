@@ -1,5 +1,3 @@
-source "$HOME/.etc/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
-
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=247
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 

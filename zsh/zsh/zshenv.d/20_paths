@@ -5,7 +5,6 @@ rationalize_path() {
 fpath=(
     "$HOME/.local/etc/zshfunc"
     "$ZDOTDIR/func"
-    "$HOME/.etc/zsh/zsh-completions/src"
     $fpath
 )
 rationalize_path fpath
