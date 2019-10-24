@@ -35,7 +35,6 @@ _add_to_path pre PATH "$HOME/.local/bin"
 _add_to_path pre PATH "$HOME/usr/bin"
 _add_to_path pre PATH "$HOME/.etc/bin"
 _add_to_path pre PATH "$HOME/.bin"
-_add_to_path pre PATH "$HOME/apps/bin"
 
 _add_to_path post PATH /usr/local/sbin
 _add_to_path post PATH /sbin
