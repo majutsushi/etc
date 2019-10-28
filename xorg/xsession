@@ -29,17 +29,10 @@ else
      fi
 fi
 
-nm-applet &
-pasystray &
+dex -a -e Awesome
 clipit &
-blueman-applet &
-# /usr/lib/geoclue-2.0/demos/agent &
-# redshift-gtk & # managed by systemd
 compton -b
 [[ -x "$HOME/src/xbanish/xbanish" ]] && "$HOME/src/xbanish/xbanish" &
-
-xdg-user-dirs-update
-xdg-user-dirs-gtk-update
 
 # copied from /etc/X11/Xsession.d/95dbus_update-activation-env
 (
