@@ -122,7 +122,7 @@ URxvt.utmpInhibit: true
 URxvt.modifier: alt
 
 !URxvt.perl-lib: /home/jan/.etc/urxvt/ext
-URxvt.perl-ext-common: default,xim-onthespot,fullscreen,matcher,url-picker,bidi,keyboard-select,clipboard,font-size,keysym-list,focus-osc
+URxvt.perl-ext-common: default,xim-onthespot,fullscreen,matcher,url-picker,keyboard-select,clipboard,font-size,keysym-list,focus-osc
 
 URxvt.keysym.F11: perl:fullscreen:switch
 
@@ -131,9 +131,6 @@ URxvt.keysym.F11: perl:fullscreen:switch
 URxvt.keysym.C-M-u: perl:url-picker
 URxvt.urlLauncher: firefox
 URxvt.underlineURLs: true
-
-URxvt.bidi.enabled:  1
-URxvt.keysym.C-M-b: perl:bidi toggle show
 
 ! URxvt.keysym.M-Escape: perl:keyboard-select:activate
 ! URxvt.keysym.M-s:      perl:keyboard-select:search
