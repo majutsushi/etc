@@ -141,6 +141,12 @@ Hidden=true
 EOF
 }
 
+check-program() {
+    if ! command -v "$1" > /dev/null; then
+        warn "$1 is not installed"
+    fi
+}
+
 
 OLDPWD=$PWD
 cd "$HOME"
@@ -284,6 +290,14 @@ if command -v X >/dev/null; then
         gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
         gsettings set org.gnome.settings-daemon.plugins.keyboard active false || true
     fi
+
+    check-program awesome
+    check-program dex
+    check-program inputplug
+    check-program xclip
+    check-program xsecurelock
+    check-program xsettingsd
+    check-program xss-lock
 fi
 
 if command -v python >/dev/null; then
@@ -313,5 +327,18 @@ for tinfof in .etc/terminfo/*; do
         fi
     fi
 done
+
+if ! locale -a | command grep -q en_GB.utf8; then
+    warn "en_GB.utf8 locale must be installed"
+fi
+
+(
+    set +eE
+    cd "$HOME/.etc"
+    if (( $(git submodule status | grep -c '^-') != 0 )); then
+        warn "Some submodules are not initialized"
+    fi
+)
+
 
 cd "$OLDPWD"
