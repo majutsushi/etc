@@ -10,7 +10,7 @@ source $ZPLUGIN_DIR/bin/zplugin.zsh
 zplugin ice wait lucid blockf atpull'zplugin creinstall -q .'
 zplugin light zsh-users/zsh-completions
 
-zplugin ice wait lucid atinit"zpcompinit; zpcdreplay"
+zplugin ice wait lucid
 zplugin light zdharma/fast-syntax-highlighting
 
 zplugin ice wait lucid atload"_zsh_autosuggest_start"
