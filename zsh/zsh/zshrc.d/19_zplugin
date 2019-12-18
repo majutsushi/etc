@@ -34,6 +34,9 @@ zplugin light go-jira/jira
 zplugin ice from"gh-r" as"program" mv"fx* -> fx"
 zplugin light antonmedv/fx
 
+zplugin ice from"gh-r" as"program" mv"yq* -> yq"
+zplugin light mikefarah/yq
+
 zplugin ice as"program"
 zplugin snippet https://github.com/eikenb/terminal-colors/blob/master/terminal-colors
 
