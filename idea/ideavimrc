@@ -3,6 +3,7 @@ set smartcase
 set incsearch
 set hlsearch
 set surround
+set ideajoin
 
 set clipboard+=unnamed
 set clipboard+=unnamedplus
