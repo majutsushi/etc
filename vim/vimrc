@@ -108,6 +108,7 @@ NeoBundle 'vim-scripts/vis'
 
 NeoBundleLocal ~/.vim/bundles
 NeoBundleLocal ~/src/vim/bundles
+call neobundle#local(expand("$MSW_REPO_DIR/tools/tools"), {}, ["vim"])
 
 call neobundle#end()
 
