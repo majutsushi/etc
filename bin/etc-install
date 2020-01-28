@@ -169,7 +169,7 @@ xlink gnuplot/gnuplot
 xlink gtk/gtkrc-2.0 target=.config/gtk-2.0/gtkrc
 xlink gtk/gtk-3.0/gtk.css target=.config/gtk-3.0/gtk.css
 xlink gtk/gtk-3.0/settings.ini target=.config/gtk-3.0/settings.ini
-xlink idea/ideavimrc
+xlink idea/ideavimrc target=.config/ideavim/ideavimrc
 xlink indent.pro
 xlink inputrc target=.config/inputrc
 xlink irbrc
