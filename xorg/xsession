@@ -31,7 +31,13 @@ fi
 
 dex -a -e Awesome
 clipit &
-compton -b
+
+if [[ $(systemd-detect-virt) == "oracle" ]]; then
+     compton --config "$HOME/.etc/compton-vbox.conf" -b
+else
+     compton -b
+fi
+
 [[ -x "$HOME/src/xbanish/xbanish" ]] && "$HOME/src/xbanish/xbanish" &
 
 # copied from /etc/X11/Xsession.d/95dbus_update-activation-env
