@@ -294,7 +294,11 @@ if command -v X >/dev/null; then
     check-program awesome
     check-program dex
     check-program inputplug
+    check-program notify-send
+    check-program rofi
+    check-program wmctrl
     check-program xclip
+    check-program xinput
     check-program xsecurelock
     check-program xsettingsd
     check-program xss-lock
