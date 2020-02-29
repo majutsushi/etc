@@ -2,10 +2,8 @@
 # based on
 # https://github.com/vincentbernat/awesome-configuration/blob/master/bin/xsettingsd-setup
 
-case $(hostname),$(xrandr --current | \
-                          sed -n 's/\([^ ]*\) connected .*[0-9][0-9]*x[0-9][0-9]*+[0-9][0-9]*+[0-9][0-9]* .*/\1/p' | \
-                          sort | tr '\n' ':') in
-    eilonwy,DP-1:LVDS-1:)
+case $(autorandr --detected) in
+    home)
         dpi=117
         cursor_size=36
         ;;

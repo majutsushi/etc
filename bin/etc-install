@@ -291,6 +291,7 @@ if command -v X >/dev/null; then
         gsettings set org.gnome.settings-daemon.plugins.keyboard active false || true
     fi
 
+    check-program autorandr
     check-program awesome
     check-program dex
     check-program inputplug
