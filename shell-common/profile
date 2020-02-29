@@ -105,7 +105,7 @@ export IPYTHONDIR="$XDG_CONFIG_HOME"/ipython
 export PYLINTHOME="$XDG_CACHE_HOME"/pylint
 export SQLITE_HISTORY="$HOME"/.var/lib/sqlite_history
 export WEECHAT_HOME="$XDG_CONFIG_HOME"/weechat
-export WINEPREFIX="$XDG_DATA_HOME"/wine/prefixes/default
+# export WINEPREFIX="$XDG_DATA_HOME"/wine/prefixes/default
 
 export MAILCAP="$HOME/.etc/mailcap"	# elinks, w3m
 export MAILCAPS="$MAILCAP:/etc/mailcap"			# Mutt, pine
