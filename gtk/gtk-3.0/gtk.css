@@ -15,3 +15,10 @@ window#vim-main-window.background widget.gtk-form {
 menu, .menu {
     padding: 3px;
 }
+
+VteTerminal,
+TerminalScreen,
+vte-terminal {
+    padding: 15px 15px 15px 15px;
+    -VteTerminal-inner-border: 15px 15px 15px 15px;
+}
