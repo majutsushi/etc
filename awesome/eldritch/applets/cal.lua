@@ -84,17 +84,16 @@ local function worldclock()
     local text = ""
 
     for line in tzfile:lines() do
-        local tzinfo = utils.split(line, "%|")
-        local out = utils.exec("TZ=" .. tzinfo[2] .. " date +'%H:%M_%A_%Z'")
+        local out = utils.exec("TZ=" .. line .. " date +'%H:%M_%A_%Z'")
         local data = utils.split(utils.trim(out), "_")
 
-        text = text .. "\n " .. utils.fgcolor("#98fb98", tzinfo[1])
+        text = text .. "\n " .. utils.fgcolor("#98fb98", line)
         text = text .. "\n " .. data[1]
 
         local tztext = data[3]
 
         -- Calculate difference to current time zone
-        local tzdiff = utils.exec("TZ=" .. tzinfo[2] .. " date +'%z'") - utils.exec("date +'%z'")
+        local tzdiff = utils.exec("TZ=" .. line .. " date +'%z'") - utils.exec("date +'%z'")
         if tzdiff ~= 0 then
             local sign, hours, minutes = string.match(tzdiff, "(-?)(%d?%d)(%d%d)")
             if sign == "" then
