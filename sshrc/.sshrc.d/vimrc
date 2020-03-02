@@ -68,3 +68,4 @@ highlight Search ctermbg=3 ctermfg=0
 
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 nnoremap <silent> g/ :execute 'vimgrep /' . @/ . '/g %'<CR>:copen<CR>
+nnoremap Y y$
