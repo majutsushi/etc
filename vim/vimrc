@@ -1378,8 +1378,8 @@ autocmd vimrc BufReadPost fugitive://* set bufhidden=delete
 let g:gitgutter_map_keys = 0
 let g:gitgutter_escape_grep = 1
 
-nmap [c <Plug>GitGutterPrevHunk
-nmap ]c <Plug>GitGutterNextHunk
+nmap [c <Plug>(GitGutterPrevHunk)
+nmap ]c <Plug>(GitGutterNextHunk)
 
 highlight GitGutterAdd          gui=bold guifg=#11ee11
 highlight GitGutterDelete       gui=bold guifg=#ee1111
