@@ -212,36 +212,34 @@ bindkey "^X^F" complete-files
 # allow the key sequence to continue cycling in menu
 bindkey -M menuselect "^X^F" complete-word
 
-## complete word from tmux pane(s)
-# http://blog.plenz.com/2012-01/zsh-complete-words-from-tmux-pane.html
-# https://gist.github.com/blueyed/6856354
-_tmux_pane_words() {
+# Complete paths from tmux pane
+# Originally based on https://gist.github.com/blueyed/6856354
+_tmux_pane_paths() {
     if [[ -z "$TMUX_PANE" ]]; then
         _message "not running inside tmux!"
         return 1
     fi
 
     local expl
-    local -U -a words
+    local -U -a paths
 
-    # capture current pane first
-    words=( ${(u)=$(tmux capture-pane -J -p)} )
-    for i in $(tmux list-panes -F '#P'); do
-        # skip current pane (handled above)
-        [[ "$TMUX_PANE" = "$i" ]] && continue
-        words+=( ${(u)=$(tmux capture-pane -J -p -t $i)} )
-    done
-    _wanted values expl 'words from current tmux pane' compadd -a words
+    _tmux_capture_pane() {
+        tmux capture-pane -J -p -S -100 |
+            sed -n -r -e 's/.*(^|\s+)([a-zA-Z0-9/._~-]*\/[a-zA-Z0-9/._-]*).*/\2/gp'
+    }
+
+    paths=( ${(u)$(_tmux_capture_pane)} )
+    _wanted values expl 'paths from current tmux pane' compadd -a paths
 }
-zle -C current-screen-words-prefix   complete-word _generic
-zle -C current-screen-words-anywhere complete-word _generic
-bindkey '^[o' current-screen-words-prefix
-bindkey -M menuselect '^[o' complete-word
-bindkey '^[O' current-screen-words-anywhere
-bindkey -M menuselect '^[O' complete-word
-zstyle ':completion:current-screen-words-(prefix|anywhere):*' completer _tmux_pane_words
-zstyle ':completion:current-screen-words-(prefix|anywhere):*' ignore-line current
-zstyle ':completion:current-screen-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
+zle -C tmux-pane-paths-prefix   complete-word _generic
+zle -C tmux-pane-paths-anywhere complete-word _generic
+bindkey '^X^Pp' tmux-pane-paths-prefix
+bindkey '^X^PP' tmux-pane-paths-anywhere
+zstyle ':completion:tmux-pane-paths-(prefix|anywhere):*' completer _tmux_pane_paths
+zstyle ':completion:tmux-pane-paths-(prefix|anywhere):*' ignore-line current
+# Display the (interactive) menu on first execution of the hotkey.
+zstyle ':completion:tmux-pane-paths-(prefix|anywhere):*' menu yes select
+zstyle ':completion:tmux-pane-paths-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
 
 # modified from http://www.zsh.org/mla/users/2015/msg00081.html
 # and http://www.zsh.org/mla/workers/2016/msg00659.html
