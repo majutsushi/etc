@@ -34,7 +34,7 @@ NeoBundle 'jlanzarotta/bufexplorer', {'lazy': 1,
     \ 'autoload': {'commands': ['BufExplorer']}}
 
 " Editing
-NeoBundle 'Valloric/YouCompleteMe', {'lazy': 1,
+NeoBundle 'ycm-core/YouCompleteMe', {'lazy': 1,
     \ 'augroup': 'youcompletemeStart',
     \ 'autoload': {'insert': 1}
 \ }
@@ -75,7 +75,7 @@ NeoBundle 'tpope/vim-markdown'
 NeoBundle 'plasticboy/vim-markdown', {'name': 'plasticboy-markdown'}
 NeoBundle 'octol/vim-cpp-enhanced-highlight'
 NeoBundle 'mhinz/vim-rfc'
-NeoBundle 'w0rp/ale'
+NeoBundle 'dense-analysis/ale'
 
 " Information
 NeoBundle 'airblade/vim-gitgutter'
