@@ -282,7 +282,7 @@ jkill() {
 }
 _jkill() {
     local -a processes
-    processes=( ${${(f)"$(command jps)"}/ /:} )
+    processes=( ${${(f)"$(command jps -l)"}/ /:} )
     _describe -t processes 'Java processes' processes "$@"
 }
 compdef _jkill jkill
