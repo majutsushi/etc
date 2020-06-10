@@ -158,6 +158,7 @@ zle -N slash-backward-kill-word
 # press esc-w (meta-w) to delete a word until its last '/'
 # (not the same as ctrl-w!)
 bindkey '^[w' slash-backward-kill-word
+bindkey '^\b' slash-backward-kill-word
 
 autoload rationalize-dots
 zle -N rationalize-dots
