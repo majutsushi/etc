@@ -103,6 +103,7 @@ fzf-git() {
     fzf --height 50% --preview-window right:50% "$@"
 }
 
+# files
 _fzf_gf() {
     _is_in_git_repo || return
     git -c color.status=always status --short |
@@ -111,6 +112,7 @@ _fzf_gf() {
         cut -c4- | sed 's/.* -> //'
 }
 
+# branches
 _fzf_gb() {
     _is_in_git_repo || return
     git branch -a --color=always | grep -v '/HEAD\s' | sort |
@@ -120,6 +122,7 @@ _fzf_gb() {
         sed 's#^remotes/##'
 }
 
+# tags
 _fzf_gt() {
     _is_in_git_repo || return
     git tag --sort -version:refname |
@@ -127,6 +130,7 @@ _fzf_gt() {
             --preview 'git show --color=always {} | head -'$LINES
 }
 
+# hashes
 _fzf_gh() {
     _is_in_git_repo || return
     git log --date=short --format="%C(green)%C(bold)%cd %C(auto)%h%d %s (%an)" --graph --color=always |
@@ -136,6 +140,7 @@ _fzf_gh() {
         grep -o "[a-f0-9]\{7,\}"
 }
 
+# remotes
 _fzf_gr() {
     _is_in_git_repo || return
     git remote -v | awk '{print $1 "\t" $2}' | uniq |
