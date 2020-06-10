@@ -187,8 +187,6 @@ autoload -Uz copy-earlier-word
 zle -N copy-earlier-word
 bindkey "^[m" copy-earlier-word
 
-bindkey "^[>" insert-last-word
-
 # run command line as user root via sudo:
 _sudo-command-line() {
     [[ $BUFFER != sudo\ * ]] && LBUFFER="sudo $LBUFFER"
