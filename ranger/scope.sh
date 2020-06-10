@@ -117,6 +117,9 @@ case "$extension" in
     iso)
         try isoinfo -l -i "$path"  && { dump; exit 0; }
         ;;
+    json)
+        try jq . "$path" && { dump; exit 0; }
+        ;;
 esac
 
 case "$mimetype" in
