@@ -85,6 +85,7 @@ NeoBundle 'syngan/vim-vimlint', {'depends' : 'ynkdir/vim-vimlparser'}
 NeoBundle 'tpope/vim-characterize'
 NeoBundle 'luochen1990/rainbow'
 NeoBundle 'machakann/vim-highlightedyank'
+NeoBundle 'Konfekt/vim-keyword-lookup'
 
 " Misc
 NeoBundle 'godlygeek/csapprox', {'terminal': 1}
