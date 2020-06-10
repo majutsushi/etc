@@ -206,12 +206,12 @@ ln -sf "$HOME/.config/git/ignore" "$HOME/.agignore"
 xlink git/tigrc target=.config/tig/config
 mkdir -p "$XDG_DATA_HOME/tig"
 
+xlink tmux/tmux.conf
 info "Installing tmux plugins"
 if ! [[ -d $HOME/.var/lib/tmux/plugins/tpm/.git ]]; then
     git clone https://github.com/tmux-plugins/tpm.git "$HOME/.var/lib/tmux/plugins/tpm"
 fi
 if command -v tmux >/dev/null; then
-    tmux() { command tmux -f "$HOME/.etc/tmux/tmux.conf" "$@"; }
     if tmux server-info &>/dev/null; then
         "$HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh"
     else
