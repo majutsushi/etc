@@ -194,23 +194,6 @@ cd() {
 }
 
 man() {
-    # See 'man 5 termcap' for capabilities
-
-    # start bold mode => bold red
-    typeset -x +g LESS_TERMCAP_md=$(tput setaf 9; tput bold)
-    # start underlining => bold green
-    typeset -x +g LESS_TERMCAP_us=$(tput setaf 10; tput bold)
-    # end underlining => turn off all attributes
-    typeset -x +g LESS_TERMCAP_ue=$(tput sgr0)
-    # start standout mode => black on white
-    typeset -x +g LESS_TERMCAP_so=$(tput setaf 0; tput setab 7)
-    # end standout mode => turn off all attrs
-    typeset -x +g LESS_TERMCAP_se=$(tput sgr0)
-
-    # make groff not output ANSI escape sequences directly, but old codes with
-    # backspace that can then be changed with the less codes above
-    typeset -x +g GROFF_NO_SGR=1
-
     if (( $#argv == 1 )); then
         set_terminal_title "man($1)"
     elif (( $#argv == 2 )); then
