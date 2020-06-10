@@ -30,5 +30,7 @@ nnoremap <C-l> :nohlsearch<CR><C-l>
 " https://youtrack.jetbrains.com/issue/VIM-510
 nmap <C-Space>   :action EditorSelectWord<CR>
 nmap <C-S-Space> :action EditorUnSelectWord<CR>
+vmap <C-Space>   :action EditorSelectWord<CR>
+vmap <C-S-Space> :action EditorUnSelectWord<CR>
 imap <C-Space>   <Esc>:action CodeCompletion<CR>a
 imap <C-S-Space> <Esc>:action SmartTypeCompletion<CR>a
