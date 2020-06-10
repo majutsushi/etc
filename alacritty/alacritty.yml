@@ -657,3 +657,11 @@ key_bindings:
   - { key: F11,      mods: Super,   chars: "\x1b[23;3~"                      }
   - { key: F12,      mods: Super,   chars: "\x1b[24;3~"                      }
   - { key: NumpadEnter,             chars: "\n"                              }
+
+  # Map private escape sequences so vim can remap them
+  # https://en.wikipedia.org/wiki/C0_and_C1_control_codes
+  # https://en.wikipedia.org/wiki/ANSI_escape_code
+  - { key: Return,   mods: Shift,   chars: "\x1bQ13;2~"                      }
+  - { key: Return,   mods: Control, chars: "\x1bQ13;5~"                      }
+  - { key: Space,    mods: Shift,   chars: "\x1bQ32;2~"                      }
+  - { key: Space,    mods: Control, chars: "\x1bQ32;5~"                      }
