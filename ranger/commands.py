@@ -1,9 +1,11 @@
 import os
+import re
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 from time import strftime
+from typing import Iterable, Optional
 
 from ranger.api.commands import Command
 
@@ -72,3 +74,31 @@ class fzfjump(Command):
             )
             self.fm.cd(directory)
             self.fm.ui.redraw_window()
+
+
+class scp(Command):
+    def execute(self) -> None:
+        if self.arg(1):
+            scpcmd = ["scp", "-r"]
+            scpcmd.extend([f.realpath for f in self.fm.thistab.get_selection()])
+            scpcmd.append(self.arg(1))
+            self.fm.execute_command(scpcmd)
+            self.fm.notify("Uploaded!")
+
+    def tab(self, tabnum: int) -> Optional[Iterable]:
+        try:
+            with open(Path.home() / ".ssh/config") as file:
+                host_lines = (line for line in file if re.match("^Host ", line))
+                hosts_set = set()
+                for line in host_lines:
+                    hosts_set |= set(line.split()[1:])
+        except IOError:
+            print("Can't open ssh config")
+            return None
+
+        hosts = sorted(list(hosts_set))
+        # remove any wildcard host settings since they're not real servers
+        hosts = [host for host in hosts if host.find("*") == -1]
+        query = self.arg(1) or ""
+        matching_hosts = [host for host in hosts if host.startswith(query)]
+        return (self.start(1) + host + ":" for host in matching_hosts)
