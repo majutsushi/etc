@@ -50,7 +50,7 @@ function! s:MapExtraKeys() abort
         \ 'M->'     : '>',
         \ 'M-<'     : '<'
     \ }
-    if &term =~ '^xterm\|screen\|tmux'
+    if &term =~ '^xterm\|screen\|tmux\|alacritty'
         let extramaps['C-Insert'] = '[2;5~'
     elseif &term =~ '^rxvt-unicode'
         let extramaps['C-Insert'] = '[2^'
@@ -70,7 +70,7 @@ function! s:MapExtraKeys() abort
     endfor
 endfunction "}}}
 
-if &term =~ '^rxvt-unicode\|xterm\|screen\|tmux'
+if &term =~ '^rxvt-unicode\|xterm\|screen\|tmux\|alacritty'
     " see ~/.Xresources and ':h xterm-modifier-keys'
     execute "set <xUp>=\e[1;*A"
     execute "set <xDown>=\e[1;*B"
@@ -80,7 +80,7 @@ if &term =~ '^rxvt-unicode\|xterm\|screen\|tmux'
     execute "set <PageUp>=\e[5;*~"
     execute "set <PageDown>=\e[6;*~"
 
-    if &term =~ '^rxvt-unicode\|screen\|tmux'
+    if &term =~ '^rxvt-unicode\|screen\|tmux\|alacritty'
         execute "set <xF1>=\e[1;*P"
         execute "set <xF2>=\e[1;*Q"
         execute "set <xF3>=\e[1;*R"
@@ -144,7 +144,7 @@ function! s:get_screen_title() abort
     return title
 endfunction
 
-if $TERM =~ '^xterm\|rxvt\|screen\|tmux'
+if $TERM =~ '^xterm\|rxvt\|screen\|tmux\|alacritty'
     let &t_ts = "\<Esc>]0;"
     let &t_fs = "\<Esc>\\"
     autocmd vimrc BufEnter * let &titlestring = s:get_screen_title()
@@ -175,7 +175,7 @@ endfunction
 function! s:get_cursor_escape(mode) abort
     if exists('$ITERM_PROFILE')
         let terminal = 'iterm'
-    elseif $XTERM_VERSION != ''
+    elseif $XTERM_VERSION != '' || $ALACRITTY_LOG != ''
         let terminal = 'xterm'
     elseif $ORIGTERM =~ '^rxvt-unicode'
         let terminal = 'urxvt'
