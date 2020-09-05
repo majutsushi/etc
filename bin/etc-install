@@ -163,7 +163,6 @@ xlink aptitude
 xlink awesome target=.config/awesome
 xlink colorgccrc
 xlink colordiffrc
-xlink compton.conf target=.config/compton.conf
 xlink ctags
 xlink gdbinit
 xlink gnuplot/gnuplot

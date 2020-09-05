@@ -33,9 +33,9 @@ dex -a -e Awesome
 clipit &
 
 if [[ $(systemd-detect-virt) == "oracle" ]]; then
-     compton --config "$HOME/.etc/compton-vbox.conf" -b
+     picom --config "$HOME/.etc/picom-vbox.conf" -b
 else
-     compton -b
+     picom --config "$HOME/.etc/picom.conf" -b
 fi
 
 [[ -x "$HOME/src/xbanish/xbanish" ]] && "$HOME/src/xbanish/xbanish" &
