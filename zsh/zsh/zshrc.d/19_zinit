@@ -1,0 +1,73 @@
+ZINIT_DIR=$HOME/.var/lib/zsh/zinit
+
+typeset -gAH ZINIT
+ZINIT[BIN_DIR]=$ZINIT_DIR/bin
+ZINIT[HOME_DIR]=$ZINIT_DIR
+ZINIT[ZCOMPDUMP_PATH]=$ZCOMPDUMP
+
+source $ZINIT_DIR/bin/zinit.zsh
+
+zinit ice wait lucid blockf atpull'zinit creinstall -q .'
+zinit light zsh-users/zsh-completions
+
+zinit ice wait lucid
+zinit light zdharma/fast-syntax-highlighting
+
+zinit ice wait lucid atload"_zsh_autosuggest_start"
+zinit light zsh-users/zsh-autosuggestions
+
+zinit ice from"gh-r" as"program"
+zinit light junegunn/fzf-bin
+zinit ice as"program"
+zinit snippet https://github.com/junegunn/fzf/blob/master/bin/fzf-tmux
+zinit snippet https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
+
+zinit ice from"gh-r" as"program" mv"fd* -> fd" pick"fd/fd"
+zinit light sharkdp/fd
+
+zinit ice from"gh-r" as"program" mv"exa* -> exa"
+zinit light ogham/exa
+
+zinit ice from"gh-r" as"program" mv"jira* -> jira"
+zinit light go-jira/jira
+
+zinit ice from"gh-r" as"program" mv"fx* -> fx"
+zinit light antonmedv/fx
+
+zinit ice from"gh-r" as"program" mv"yq* -> yq"
+zinit light mikefarah/yq
+
+zinit ice as"program"
+zinit snippet https://github.com/eikenb/terminal-colors/blob/master/terminal-colors
+
+zinit ice as"program"
+zinit snippet https://github.com/grawity/code/blob/master/term/xterm-color-chooser
+
+zinit ice as"program"
+zinit snippet https://github.com/Russell91/sshrc/blob/master/sshrc
+
+zinit ice as"program"
+zinit snippet https://github.com/stephencelis/ghi/blob/master/ghi
+
+zinit ice as"program"
+zinit snippet https://github.com/jeffkaufman/icdiff/blob/master/icdiff
+
+zinit ice as"program"
+zinit snippet https://git.kitenet.net/index.cgi/moreutils.git/plain/ts
+
+zinit ice as"program"
+zinit snippet https://github.com/holman/spark/blob/master/spark
+
+zinit ice as"program"
+zinit snippet https://github.com/so-fancy/diff-so-fancy/blob/master/third_party/build_fatpack/diff-so-fancy
+
+zinit ice as"program"
+zinit snippet https://github.com/bill-auger/git-branch-status/blob/master/git-branch-status
+
+zinit ice as"program"
+zinit snippet https://github.com/mviereck/x11docker/blob/master/x11docker
+
+zinit ice as"completion"
+zinit snippet https://github.com/bazelbuild/bazel/blob/master/scripts/zsh_completion/_bazel
+
+# vim: filetype=zsh

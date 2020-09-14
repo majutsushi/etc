@@ -192,8 +192,8 @@ xlink bash/bash_profile
 xlink bash/bash_logout
 
 xlink zsh/zshenv
-if ! [[ -d "$HOME/.var/lib/zsh/zplugin" ]]; then
-    git clone https://github.com/zdharma/zplugin.git "$HOME/.var/lib/zsh/zplugin/bin"
+if ! [[ -d "$HOME/.var/lib/zsh/zinit" ]]; then
+    git clone https://github.com/zdharma/zinit.git "$HOME/.var/lib/zsh/zinit/bin"
 fi
 
 xlink emacs/emacs
