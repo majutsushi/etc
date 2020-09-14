@@ -44,9 +44,6 @@ zinit ice as"program"
 zinit snippet https://github.com/grawity/code/blob/master/term/xterm-color-chooser
 
 zinit ice as"program"
-zinit snippet https://github.com/Russell91/sshrc/blob/master/sshrc
-
-zinit ice as"program"
 zinit snippet https://github.com/stephencelis/ghi/blob/master/ghi
 
 zinit ice as"program"
