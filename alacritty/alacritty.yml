@@ -10,7 +10,7 @@ window:
     y: 15
 
   # Spread additional padding evenly around the terminal content.
-  dynamic_padding: false
+  dynamic_padding: true
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -111,7 +111,7 @@ selection:
 
 mouse:
   # If this is `true`, the cursor is temporarily hidden when typing.
-  hide_when_typing: false
+  hide_when_typing: true
 
 key_bindings:
   # Map private escape sequences so vim can remap them
