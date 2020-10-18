@@ -1192,7 +1192,7 @@ let g:ale_linters = {
 let g:ale_python_pylint_auto_pipenv = 1
 
 let g:ale_fixers = {
-\   'python': ['black', 'reorder-python-imports'],
+\   'python': ['black', 'isort'],
 \   'rust': ['rustfmt'],
 \}
 let g:ale_fix_on_save = 1

@@ -329,6 +329,7 @@ if command -v python >/dev/null; then
 
     xlink python/pylintrc target=.config/pylintrc
     xlink python/mypy.ini target=.config/mypy/config
+    xlink python/isort.cfg
 fi
 
 for tinfof in .etc/terminfo/*; do
