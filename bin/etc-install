@@ -157,7 +157,6 @@ mkdir -p "$HOME"/.var/{lib,log}
 ln -sf "$HOME"/.etc/.githooks/* .etc/.git/hooks
 
 xlink Rprofile
-xlink alacritty target=.config/alacritty
 xlink ant/ant.conf target=.ant/ant.conf
 xlink aptitude
 xlink awesome target=.config/awesome
@@ -194,6 +193,20 @@ xlink bash/bash_logout
 xlink zsh/zshenv
 if ! [[ -d "$HOME/.var/lib/zsh/zinit" ]]; then
     git clone https://github.com/zdharma/zinit.git "$HOME/.var/lib/zsh/zinit/bin"
+fi
+
+if ! [[ -e "$XDG_CONFIG_HOME/alacritty/alacritty.yml" ]]; then
+    echo "Generating Alacritty config"
+    mkdir -p "$XDG_CONFIG_HOME/alacritty"
+    cat > "$XDG_CONFIG_HOME/alacritty/alacritty.yml" << EOF
+import:
+    - $HOME/.etc/alacritty/alacritty.yml
+    - $XDG_CONFIG_HOME/alacritty/theme.yaml
+EOF
+    cat > "$XDG_CONFIG_HOME/alacritty/theme.yaml" << EOF
+import:
+    - $HOME/.etc/alacritty/desert-theme.yaml
+EOF
 fi
 
 xlink emacs/emacs
