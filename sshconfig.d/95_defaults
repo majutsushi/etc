@@ -27,7 +27,6 @@ Host *
     ServerAliveCountMax 3
     ServerAliveInterval 30
     TCPKeepAlive yes
-    UseRoaming no
 
 # https://stribika.github.io/2015/01/04/secure-secure-shell.html
 # vim: ft=sshconfig
