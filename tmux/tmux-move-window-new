@@ -4,7 +4,7 @@ SOURCEWIN="$1"
 
 NUMSESSIONS=$(tmux list-sessions | wc -l)
 
-echo 'local awful = require("awful") awful.util.spawn("urxvt")' | awesome-client
+echo 'local awful = require("awful") awful.util.spawn("x-terminal-emulator")' | awesome-client
 
 while (( $(tmux list-sessions | wc -l) == NUMSESSIONS )); do
     sleep 0.1
