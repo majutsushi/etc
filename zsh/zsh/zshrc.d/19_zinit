@@ -28,6 +28,9 @@ zinit light sharkdp/fd
 zinit ice from"gh-r" as"program" mv"exa* -> exa"
 zinit light ogham/exa
 
+zinit ice from"gh-r" as"program"
+zinit light tomnomnom/gron
+
 zinit ice from"gh-r" as"program" mv"jira* -> jira"
 zinit light go-jira/jira
 
