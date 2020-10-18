@@ -52,10 +52,10 @@ class movetotrash(Command):
         self.fm.thistab.ensure_correct_pointer()
 
 
-class fzfjump(Command):
-    """:fzfjump
+class fzfrecent(Command):
+    """ :fzfrecent
 
-    Use fzf to quickly jump to recent dirs
+        Use fzf to quickly jump to recent dirs
     """
 
     def execute(self) -> None:
@@ -74,6 +74,35 @@ class fzfjump(Command):
             )
             self.fm.cd(directory)
             self.fm.ui.redraw_window()
+
+
+class fzfjump(Command):
+    """ :fzfjump
+
+        Find a file using fzf.
+
+        With a prefix argument select only directories.
+    """
+
+    def execute(self) -> None:
+        if self.quantifier:
+            # match only directories
+            command = r"find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+                -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
+        else:
+            # match files and directories
+            command = r"find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
+                -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
+        fzf = self.fm.execute_command(
+            command, universal_newlines=True, stdout=subprocess.PIPE
+        )
+        stdout, _ = fzf.communicate()
+        if fzf.returncode == 0:
+            fzf_file = os.path.abspath(stdout.rstrip("\n"))
+            if os.path.isdir(fzf_file):
+                self.fm.cd(fzf_file)
+            else:
+                self.fm.select_file(fzf_file)
 
 
 class scp(Command):
