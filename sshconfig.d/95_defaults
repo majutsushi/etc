@@ -6,9 +6,6 @@ Host bitbucket.org
     # BitBucket seems to have disabled connection sharing :/
     ControlMaster no
 
-Host sedition sedition.opencloud.co.nz
-    KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1
-
 Host console.gandi.net
     KexAlgorithms +diffie-hellman-group14-sha1
 
