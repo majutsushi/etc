@@ -28,6 +28,9 @@ zinit light sharkdp/fd
 zinit ice from"gh-r" as"program" mv"exa* -> exa"
 zinit light ogham/exa
 
+zinit ice from"gh-r" as"program" pick"delta-*/delta"
+zinit light dandavison/delta
+
 zinit ice from"gh-r" as"program"
 zinit light tomnomnom/gron
 
@@ -50,16 +53,10 @@ zinit ice as"program"
 zinit snippet https://github.com/stephencelis/ghi/blob/master/ghi
 
 zinit ice as"program"
-zinit snippet https://github.com/jeffkaufman/icdiff/blob/master/icdiff
-
-zinit ice as"program"
 zinit snippet https://git.kitenet.net/index.cgi/moreutils.git/plain/ts
 
 zinit ice as"program"
 zinit snippet https://github.com/holman/spark/blob/master/spark
-
-zinit ice as"program"
-zinit snippet https://github.com/so-fancy/diff-so-fancy/blob/master/third_party/build_fatpack/diff-so-fancy
 
 zinit ice as"program"
 zinit snippet https://github.com/bill-auger/git-branch-status/blob/master/git-branch-status

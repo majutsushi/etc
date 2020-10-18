@@ -33,7 +33,6 @@
 	d  = diff -B -C -b
 	sd = diff -B -C -b --staged
 	wd = diff --color-words -B -C -b
-	icdiff = "!f() { git difftool --no-prompt --extcmd icdiff \"$@\" | less -R; }; f"
 	patch = --no-pager diff --no-color
 	ws = show --color-words
 	branch-diff = !git diff $(git merge-base HEAD master) $1
@@ -83,9 +82,9 @@
 	submoduleSummary = true
 
 [pager]
-	diff = diff-so-fancy | less -F
-	log = diff-so-fancy | less -F
-	show = diff-so-fancy | less -F
+	diff = delta
+	log = delta
+	show = delta
 
 [diff]
 	tool = vimdiff
@@ -160,6 +159,29 @@
 
 [gui]
 	fontdiff = -family terminus -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+
+[delta]
+	features = line-numbers decorations
+	; syntax-theme = Monokai Extended
+	syntax-theme = zenburn
+	minus-style = syntax "#3f0001"
+	minus-emph-style = syntax "#af0000"
+	plus-style = syntax "#003800"
+	plus-emph-style = syntax "#008700"
+
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+	file-decoration-style = none
+	hunk-header-decoration-style = blue box
+
+[delta "line-numbers"]
+	line-numbers = true
+	line-numbers-zero-style = "#999999"
+	line-numbers-left-style = blue
+	line-numbers-right-style = blue
+	line-numbers-minus-style = "#af0000"
+	line-numbers-plus-style = "#008700"
 
 [url "ssh://[login]@git.gnome.org/git/"]
 	insteadof = gnome:
