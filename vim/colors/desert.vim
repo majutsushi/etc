@@ -1,15 +1,3 @@
-" Vim color file
-" Maintainer:	Hans Fugal <hans@fugal.net>
-" Last Change:	$Date: 2004/06/13 19:30:30 $
-" Last Change:	$Date: 2004/06/13 19:30:30 $
-" URL:		http://hans.fugal.net/vim/colors/desert.vim
-" Version:	$Id: desert.vim,v 1.1 2004/06/13 19:30:30 vimboss Exp $
-
-" cool help screens
-" :he group-name
-" :he highlight-groups
-" :he cterm-colors
-
 set background=dark
 highlight clear
 if exists("syntax_on")
@@ -26,28 +14,29 @@ hi Cursor	guibg=#f0e68c guifg=#708090
 
 hi DiffAdd    guibg=#307030
 hi DiffChange guibg=#2b5b77
-hi DiffDelete guibg=#723030 guifg=#723030
-hi DiffText   guibg=#6c90a6
+hi DiffDelete guibg=#723030 guifg=#723030 gui=bold cterm=bold
+hi DiffText   guibg=#6c90a6               gui=bold cterm=bold
 
 "hi ErrorMsg
-hi VertSplit	guibg=#c2bfa5 guifg=#7f7f7f gui=none
+hi VertSplit	guibg=#c2bfa5 guifg=#7f7f7f gui=none cterm=none
 hi Folded	guibg=#333333 guifg=#ffd700
 hi FoldColumn	guibg=#333333 guifg=#d2b48c
-hi IncSearch	guifg=#708090 guibg=#f0e68c
+hi IncSearch	guifg=#708090 guibg=#f0e68c gui=none cterm=none
 hi LineNr	guifg=#999999 guibg=#333333
-hi CursorLineNr	guifg=#aaaaaa guibg=#4d4d4d gui=none
-hi ModeMsg	guifg=#daa520
+hi CursorLine                 guibg=#4d4d4d gui=none cterm=none
+hi CursorLineNr	guifg=#aaaaaa guibg=#4d4d4d gui=none cterm=none
+hi ModeMsg	guifg=#daa520               gui=bold cterm=bold
 hi MoreMsg	guifg=#2e8b57
-hi NonText	guifg=#add8e6 guibg=#4d4d4d
-hi Question	guifg=#00ff7f
+hi NonText	guifg=#add8e6 guibg=#4d4d4d gui=bold cterm=bold
+hi Question	guifg=#00ff7f               gui=bold cterm=bold
 hi Search	guibg=#cd853f guifg=#f5deb3
 hi SpecialKey	guifg=#666666
 hi QuickFixLine	guibg=#408f07 guifg=#ffffff
 
-hi SpellBad	gui=undercurl guisp=Red
-hi SpellCap	gui=undercurl guisp=#fa8072
-hi SpellRare	gui=undercurl guisp=Magenta
-hi SpellLocal	gui=undercurl guisp=Cyan
+hi SpellBad	gui=undercurl guisp=Red     cterm=underline
+hi SpellCap	gui=undercurl guisp=#fa8072 cterm=underline
+hi SpellRare	gui=undercurl guisp=Magenta cterm=underline
+hi SpellLocal	gui=undercurl guisp=Cyan    cterm=underline
 
 
 let g:statuscolours = {
@@ -74,8 +63,8 @@ let g:statuscolours = {
 \ }
 
 
-hi Title	guifg=#cd5c5c
-hi Visual	gui=none guifg=#f0e68c guibg=#6b8e23
+hi Title	guifg=#cd5c5c               gui=bold cterm=bold
+hi Visual	guifg=#f0e68c guibg=#6b8e23 gui=none cterm=none
 "hi VisualNOS
 hi WarningMsg	guifg=#fa8072
 "hi WildMenu
@@ -89,57 +78,20 @@ hi CursorLine	guibg=#4d4d4d
 hi link ColorColumn CursorLine
 
 " syntax highlighting groups
-hi Comment	guifg=#87ceeb
+hi Comment	guifg=#87d7d7
 hi Constant	guifg=#ffa0a0
-hi Identifier	guifg=#98fb98
-hi Statement	guifg=#f0e68c
+hi Identifier	guifg=#98fb98 gui=none cterm=none
+hi Statement	guifg=#f0e68c gui=bold cterm=bold
 hi PreProc	guifg=#cd5c5c
-hi Type		guifg=#bdb76b
+hi Type		guifg=#bdb76b gui=bold cterm=bold
 hi Special	guifg=#ffdead
 "hi Underlined
 "hi Ignore	guifg=bg
-hi Ignore	guifg=#666666
-"hi Error
+hi Ignore	guifg=#666666 gui=none cterm=none
+hi Error	guifg=#ffffff guibg=#ff0000 gui=none cterm=none
 hi Todo		guifg=#ff4500 guibg=#eeee00
 
-" color terminal definitions
-hi SpecialKey	ctermfg=darkgreen
-hi NonText	cterm=bold ctermfg=darkblue
-hi Directory	ctermfg=darkcyan
-hi ErrorMsg	cterm=bold ctermfg=7 ctermbg=1
-hi IncSearch	cterm=NONE ctermfg=yellow ctermbg=green
-hi Search	cterm=NONE ctermfg=grey ctermbg=blue
-hi MoreMsg	ctermfg=darkgreen
-hi ModeMsg	cterm=NONE ctermfg=brown
-hi LineNr	ctermfg=3
-hi Question	ctermfg=green
-hi StatusLine	cterm=bold,reverse
-hi StatusLineNC	cterm=reverse
-hi VertSplit	cterm=reverse
-hi Title	ctermfg=5
-hi Visual	cterm=reverse
-hi VisualNOS	cterm=bold,underline
-hi WarningMsg	ctermfg=1
-hi WildMenu	ctermfg=0 ctermbg=3
-hi Folded	ctermfg=darkgrey ctermbg=NONE
-hi FoldColumn	ctermfg=darkgrey ctermbg=NONE
-hi DiffAdd	ctermbg=4
-hi DiffChange	ctermbg=5
-hi DiffDelete	cterm=bold ctermfg=4 ctermbg=6
-hi DiffText	cterm=bold ctermbg=1
-hi Comment	ctermfg=darkcyan
-hi Constant	ctermfg=brown
-hi Special	ctermfg=5
-hi Identifier	ctermfg=6
-hi Statement	ctermfg=3
-hi PreProc	ctermfg=5
-hi Type		ctermfg=2
-hi Underlined	cterm=underline ctermfg=5
-hi Ignore	cterm=bold ctermfg=7
-hi Ignore	ctermfg=darkgrey
-hi Error	cterm=bold ctermfg=7 ctermbg=1
-
-hi TabLine	cterm=underline ctermfg=15 ctermbg=8 guifg=#333333 guibg=#a9a9a9 gui=none
+hi TabLine	cterm=underline guifg=#333333 guibg=#a9a9a9 gui=none
 hi TabLineSel	cterm=bold gui=bold
 hi TabLineFill	cterm=none gui=none guifg=#b3b3b3 guibg=#4d4d4d
 
@@ -152,9 +104,9 @@ hi User1	cterm=bold,reverse guibg=#c2bfa5 guifg=#000000 gui=bold
 hi User2	cterm=bold,reverse guibg=#c2bfa5 guifg=#990f0f gui=bold
 hi User3	cterm=bold,reverse guibg=#c2bfa5 guifg=#666666 gui=none
 
-hi User4	cterm=underline ctermfg=15 ctermbg=8 guibg=#c2bfa5 guifg=#000000
+hi User4	cterm=underline guibg=#c2bfa5 guifg=#000000
 hi User5	cterm=bold guibg=#c2bfa5 guifg=#990f0f gui=bold
-hi User6	cterm=bold ctermfg=15 ctermbg=8 guibg=#c2bfa5 guifg=#000000 gui=bold
+hi User6	cterm=bold guibg=#c2bfa5 guifg=#000000 gui=bold
 "hi User6	cterm=bold guibg=#a9a9a9 guifg=#cd5c5c
 "hi User7	cterm=bold guifg=#cd5c5c
 

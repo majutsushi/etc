@@ -15,14 +15,16 @@ function! s:set_colours(colours) abort
             exec 'hi StatusLine' . name .
                \ ' guibg=' . colours['c'][0] .
                \ ' guifg=' . colours['c'][1] .
-               \ ' gui='   . colours['c'][2]
+               \ ' gui='   . colours['c'][2] .
+               \ ' cterm=' . colours['c'][2]
         endif
 
         if exists("colours['nc'][0]")
             exec 'hi StatusLine' . name . 'NC' .
                \ ' guibg=' . colours['nc'][0] .
                \ ' guifg=' . colours['nc'][1] .
-               \ ' gui='   . colours['nc'][2]
+               \ ' gui='   . colours['nc'][2] .
+               \ ' cterm=' . colours['nc'][2]
         endif
     endfor
 endfunction

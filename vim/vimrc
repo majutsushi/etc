@@ -88,7 +88,6 @@ NeoBundle 'machakann/vim-highlightedyank'
 NeoBundle 'Konfekt/vim-keyword-lookup'
 
 " Misc
-NeoBundle 'godlygeek/csapprox', {'terminal': 1}
 NeoBundle 'tomtom/tlib_vim'
 NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'tpope/vim-fugitive'
@@ -852,6 +851,8 @@ set background=dark
 set synmaxcol=800
 " highlight all matches for the last used search pattern
 set hlsearch
+" use GUI colors for the terminal
+set termguicolors
 
 " highlight spelling mistakes
 set nospell
@@ -1145,13 +1146,7 @@ set fileencodings=ucs-bom,utf-8,default,latin1
 filetype plugin indent on
 syntax enable
 
-let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : 'fg' }
-" must come after terminal color configuration
-if !has('gui') && v:version < 703
-    colorscheme desert256
-else
-    colorscheme desert
-endif
+colorscheme desert
 
 " when to use virtual editing: "block", "insert" and/or "all"
 set virtualedit=all
@@ -1222,19 +1217,6 @@ let g:attach_check_keywords .= ',attachment,attach,attached,attaching,enclosed'
 let g:attach_check_keywords .= ',anhängen,angehängt,Anhang'
 let g:attach_check_keywords .= ',CV,resume,cover letter'
 let g:checkattach_filebrowser = 'ranger'
-
-" CSApprox {{{2
-let g:CSApprox_attr_map = {'sp': 'fg'}
-let g:CSApprox_verbose_level = 0 " Disable warnings for <88 colors
-
-let g:CSApprox_hook_desert_post = [
-    \ 'hi DiffAdd ctermbg=28',
-    \ 'hi DiffDelete ctermbg=88 ctermfg=88',
-    \ 'hi SpellBad cterm=underline',
-    \ 'hi SpellCap cterm=underline',
-    \ 'hi SpellRare cterm=underline',
-    \ 'hi SpellLocal cterm=underline',
-\]
 
 " Ctrl-P {{{2
 let g:ctrlp_map = ''

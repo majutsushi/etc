@@ -122,6 +122,10 @@ if &t_Co == 8 && $TERM !~# '^linux'
     set t_Co=16
 endif
 
+" See :h xterm-true-color
+let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+
 
 " Show current file in xterm title
 " idea from http://ft.bewatermyfriend.org/comp/vim/vimrc.html
