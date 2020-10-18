@@ -63,7 +63,7 @@ pyg() {
             exit 1
             ;;
         *.class)
-            pyg -l java <(javap -private "$1")
+            pyg -l java <(javap -sysinfo -private -constants "$1")
             ;;
         *.iso)
             have isoinfo && isoinfo -l -i "$1" && exit 0
