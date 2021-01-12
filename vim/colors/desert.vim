@@ -1,4 +1,3 @@
-set background=dark
 highlight clear
 if exists("syntax_on")
     syntax reset
@@ -10,7 +9,7 @@ hi Normal	guifg=#ffffff guibg=#333333
 " highlight groups
 hi Cursor	guibg=#f0e68c guifg=#708090
 "hi CursorIM
-"hi Directory
+hi Directory    guifg=Cyan
 
 hi DiffAdd    guibg=#307030
 hi DiffChange guibg=#2b5b77
@@ -39,7 +38,7 @@ hi SpellRare	gui=undercurl guisp=Magenta cterm=underline
 hi SpellLocal	gui=undercurl guisp=Cyan    cterm=underline
 
 
-let g:statuscolours = {
+let g:desert_statuscolours = {
     \ 'NONE'         : [['#c2bfa5', '#000000', 'none'], ['#1c1c1c', '#7f7f7f', 'none']],
     \ 'ModeNormal'   : [['#4e9a06', '#ffffff', 'bold'], [                            ]],
     \ 'ModeInsert'   : [['#cc0000', '#ffffff', 'bold'], [                            ]],
@@ -111,5 +110,18 @@ hi User6	cterm=bold guibg=#c2bfa5 guifg=#000000 gui=bold
 "hi User7	cterm=bold guifg=#cd5c5c
 
 hi CurWord	guibg=#555555
+
+" GitGutter
+highlight GitGutterAdd          gui=bold guifg=#11ee11
+highlight GitGutterDelete       gui=bold guifg=#ee1111
+highlight GitGutterChange       gui=bold guifg=#eeee11
+highlight GitGutterChangeDelete gui=bold guifg=#eeee11
+
+" Tagbar
+highlight link TagbarHighlight Cursor
+highlight TagbarSignature guifg=yellowgreen
+highlight TagbarVisibilityPublic guifg=#11ee11
+highlight TagbarVisibilityProtected guifg=SkyBlue
+highlight TagbarVisibilityPrivate guifg=#ee1111
 
 "vim: sw=4 noexpandtab

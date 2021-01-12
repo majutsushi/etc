@@ -29,12 +29,21 @@ function! s:set_colours(colours) abort
     endfor
 endfunction
 
+function! s:get_statuscolours(theme) abort
+    let normalized = substitute(a:theme, '-', '_', 'g')
+    if has_key(g:, normalized . '_statuscolours')
+        return g:{normalized}_statuscolours
+    else
+        return {}
+    endif
+endfunction
+
 augroup stl
     autocmd!
-    autocmd ColorScheme * call s:set_colours(g:statuscolours)
+    autocmd ColorScheme * call s:set_colours(s:get_statuscolours(expand('<amatch>')))
     autocmd BufReadPost,CursorHold,BufWritePost * call stl#recompute_stl_ts()
     autocmd BufReadPost,CursorHold,BufWritePost * call stl#recompute_stl_ws()
     autocmd VimEnter,WinEnter,BufWinEnter,CursorHold * call stl#update()
 augroup END
 
-call s:set_colours(g:statuscolours)
+call s:set_colours(s:get_statuscolours(g:colors_name))

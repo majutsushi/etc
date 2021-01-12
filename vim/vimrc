@@ -95,6 +95,7 @@ NeoBundle 'tpope/vim-scriptease'
 NeoBundle 'tpope/vim-unimpaired'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'wsdjeg/vim-fetch'
+NeoBundle 'hzchirs/vim-material'
 
 NeoBundle 'https://github.com/jamessan/vim-gnupg.git'
 
@@ -845,8 +846,6 @@ set number
 
 " syntax, highlighting and spelling {{{2
 
-" "dark" or "light"; the background color brightness
-set background=dark
 " maximum column to look for syntax items
 set synmaxcol=800
 " highlight all matches for the last used search pattern
@@ -1146,8 +1145,6 @@ set fileencodings=ucs-bom,utf-8,default,latin1
 filetype plugin indent on
 syntax enable
 
-colorscheme desert
-
 " when to use virtual editing: "block", "insert" and/or "all"
 set virtualedit=all
 " list of words that specifies what to put in a session file
@@ -1175,6 +1172,32 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 if has('nvim')
     set inccommand=nosplit
 endif
+
+" Colorscheme {{{1
+let g:vim_material_statuscolours = {
+    \ 'NONE'         : [['#c2bfa5', '#000000', 'none'], ['#1c1c1c', '#7f7f7f', 'none']],
+    \ 'ModeNormal'   : [['#39adb5', '#fafafa', 'bold'], [                            ]],
+    \ 'ModeInsert'   : [['#7c4dff', '#fafafa', 'bold'], [                            ]],
+    \ 'FilePath'     : [['#b0bec5', '#000000', 'none'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'FileName'     : [['#b0bec5', '#000000', 'bold'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'ModFlag'      : [['#b0bec5', '#e53935', 'bold'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'BufFlag'      : [['#b0bec5', '#000000', 'none'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'FileType'     : [['#c2bfa5', '#000000', 'none'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'Branch'       : [['#c2bfa5', '#000000', 'none'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'BranchS'      : [['#c2bfa5', '#000000', 'none'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'FunctionName' : [['#ebf4f3', '#90a4ae', 'none'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'FileFormat'   : [['#ebf4f3', '#90a4ae', 'bold'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'FileEncoding' : [['#ebf4f3', '#90a4ae', 'bold'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'Separator'    : [['#ebf4f3', '#90a4ae', 'none'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'ExpandTab'    : [['#c2bfa5', '#111111', 'bold'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'LineColumn'   : [['#c2bfa5', '#000000', 'none'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'LinePercent'  : [['#c2bfa5', '#303030', 'bold'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'Error'        : [['#e53935', '#fafafa', 'bold'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'Warning'      : [['#ffb62c', '#fafafa', 'bold'], ['#ebf4f3', '#90a4ae', 'none']],
+    \ 'Ale'          : [['#b0bec5', '#e53935', 'bold'], ['#ebf4f3', '#90a4ae', 'none']],
+\ }
+
+colorscheme desert
 
 " Plugin and script options {{{1
 
@@ -1363,11 +1386,6 @@ let g:gitgutter_escape_grep = 1
 
 nmap [c <Plug>(GitGutterPrevHunk)
 nmap ]c <Plug>(GitGutterNextHunk)
-
-highlight GitGutterAdd          gui=bold guifg=#11ee11
-highlight GitGutterDelete       gui=bold guifg=#ee1111
-highlight GitGutterChange       gui=bold guifg=#eeee11
-highlight GitGutterChangeDelete gui=bold guifg=#eeee11
 
 " Gitv {{{2
 let g:Gitv_OpenHorizontal = 1
@@ -1578,12 +1596,6 @@ let g:tagbar_type_idl = {
         \ 'o:operations'
     \ ]
 \ }
-
-highlight link TagbarHighlight Cursor
-highlight TagbarSignature guifg=yellowgreen
-highlight TagbarVisibilityPublic guifg=#11ee11
-highlight TagbarVisibilityProtected guifg=SkyBlue
-highlight TagbarVisibilityPrivate guifg=#ee1111
 
 nmap <silent> <M-t> :TagbarOpenAutoClose<CR>
 nmap <silent>  <F9> :TagbarToggle<CR>
