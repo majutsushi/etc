@@ -106,7 +106,7 @@ bind generic <C-w><C-w> view-next
 # Colors
 # ------
 
-color cursor        default   color241
+color cursor        default   default  reverse
 color id            yellow    default
 color title-blur    color241  white
 color title-focus   color16   white
