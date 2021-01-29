@@ -137,6 +137,8 @@ case "$mimetype" in
         ;;
     application/x-sqlite3)
         try sqlite3 "$path" ".dump" && { dump | trim; exit 0; } || exit 1;;
+    application/csv)
+        trim < "$path"; exit 0;;
 esac
 
 exit 1
