@@ -362,5 +362,10 @@ fi
     fi
 )
 
+if command -v rustup > /dev/null; then
+    rustup completions zsh rustup >| ~/.local/etc/zshfunc/_rustup
+    rustup completions zsh cargo >| ~/.local/etc/zshfunc/_cargo
+fi
+
 
 cd "$OLDPWD"
