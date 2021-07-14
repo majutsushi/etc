@@ -170,10 +170,12 @@ EXEC 38;5;10;1
 .wmv 38;5;5;1
 # audio formats
 .flac 38;5;5;1
+.m4a  38;5;5;1
 .mp3  38;5;5;1
 .mpc  38;5;5;1
 .ogg  38;5;5;1
 .oga  38;5;5;1
+.opus 38;5;5;1
 .wav  38;5;5;1
 
 # generated and backup files
