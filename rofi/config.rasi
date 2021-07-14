@@ -30,7 +30,7 @@ configuration {
 /*	auto-select: false;*/
 /*	parse-hosts: false;*/
 /*	parse-known-hosts: true;*/
-	combi-modi: "window,drun,run";
+	combi-modi: "drun,run";
 	combi-hide-mode-prefix: true;
 /*	matching: "normal";*/
 /*	tokenize: true;*/
