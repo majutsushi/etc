@@ -108,7 +108,7 @@ __prompt_reset_vars() {
 add-zsh-hook precmd __prompt_reset_vars
 
 PS1='
-$(__prompt_logo)%F{167}%n%f @ %F{220}%m%f ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}$(__prompt_local)${_prompt_local_extra}
+$(__prompt_logo)%F{red}%n%f @ %F{yellow}%m%f ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}$(__prompt_local)${_prompt_local_extra}
 %(2L.%B%L%b .)$(__prompt_venv)$(__prompt_jdk)$(__prompt_ant)$(__prompt_nave)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
 
 RPS1='$(__prompt_orighome)'
