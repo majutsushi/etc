@@ -5,7 +5,7 @@ readonly DEVICE_ID="$2"
 readonly DEVICE_TYPE="$3"
 readonly DEVICE_NAME="$4"
 
-readonly SCRIPTDIR="$(cd $(dirname "$0") && pwd -P)"
+readonly SCRIPTDIR="$(cd "$(dirname "$0")" && pwd -P)"
 
 exec &> >(logger -t inputplug-hook -p user.info)
 
@@ -16,7 +16,7 @@ case "$DEVICE_TYPE" in
         echo "Handling keyboard '$DEVICE_NAME'"
         echo "Setting custom keymap and symbols"
         # http://madduck.net/docs/extending-xkb/
-        xkbcomp -w3 -I$HOME/.etc/xorg/xkb ~/.etc/xorg/xkb/keymap/default "${DISPLAY%%.*}"
+        xkbcomp -w3 "-I$HOME/.etc/xorg/xkb" ~/.etc/xorg/xkb/keymap/default "${DISPLAY%%.*}"
         ;;
     XISlavePointer)
         echo "Handling pointer '$DEVICE_NAME'"
@@ -34,3 +34,7 @@ case "$DEVICE_TYPE" in
         esac
         ;;
 esac
+
+if [[ -f "$HOME/.local/etc/inputplug" ]]; then
+    . "$HOME/.local/etc/inputplug"
+fi
