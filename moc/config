@@ -258,10 +258,10 @@ ASCIILines		= no
 
 # FastDirs, these allow you to jump directly to a directory, the key bindings
 # are in the keymap file.
-Fastdir1 = /home/jan/Music/unprocessed
-Fastdir2 = /home/jan/Downloads
-Fastdir3 = /home/jan
-Fastdir4 = /net/kodi/media/music
+Fastdir1 = /home/jan/Downloads
+Fastdir2 = /net/kodi/media/music
+#Fastdir3 = /home/jan
+#Fastdir4 =
 #Fastdir5 =
 #Fastdir6 =
 #Fastdir7 =
