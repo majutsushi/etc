@@ -1208,6 +1208,7 @@ let g:ale_linters = {
 \   'python': ['mypy', 'pylint'],
 \}
 let g:ale_python_pylint_auto_pipenv = 1
+let g:ale_rust_cargo_use_clippy = 1
 
 let g:ale_fixers = {
 \   'python': ['black', 'isort'],
