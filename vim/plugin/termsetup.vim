@@ -44,8 +44,11 @@ function! s:MapExtraKeys() abort
     " do this: http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
     let extramaps = {
         \ 'S-CR'    : 'Q13;2~',
+        \ 'M-CR'    : 'Q13;3~',
         \ 'C-CR'    : 'Q13;5~',
         \ 'C-S-CR'  : 'Q13;6~',
+        \ 'S-Space' : 'Q32;2~',
+        \ 'M-Space' : 'Q32;3~',
         \ 'C-Space' : 'Q32;5~',
         \ 'M->'     : '>',
         \ 'M-<'     : '<'
