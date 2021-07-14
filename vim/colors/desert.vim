@@ -32,10 +32,10 @@ hi Search	guibg=#cd853f guifg=#f5deb3
 hi SpecialKey	guifg=#666666
 hi QuickFixLine	guibg=#408f07 guifg=#ffffff
 
-hi SpellBad	gui=undercurl guisp=Red     cterm=underline
-hi SpellCap	gui=undercurl guisp=#fa8072 cterm=underline
-hi SpellRare	gui=undercurl guisp=Magenta cterm=underline
-hi SpellLocal	gui=undercurl guisp=Cyan    cterm=underline
+hi SpellBad	gui=undercurl guisp=Red     cterm=underline ctermbg=88
+hi SpellCap	gui=undercurl guisp=#fa8072 cterm=underline ctermbg=94
+hi SpellRare	gui=undercurl guisp=Magenta cterm=underline ctermbg=201
+hi SpellLocal	gui=undercurl guisp=Cyan    cterm=underline ctermbg=33
 
 
 let g:desert_statuscolours = {
