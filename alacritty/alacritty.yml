@@ -12,6 +12,8 @@ window:
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
 
+  decorations: none
+
 scrolling:
   # Maximum number of lines in the scrollback buffer.
   # Specifying '0' will disable scrolling.
