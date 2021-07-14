@@ -54,7 +54,7 @@ _alert_bg_job_finished() {
         summary="Background job failed"
     fi
 
-    if [[ -z "$SSH_CONNECTION" ]] && ! is-active-shell; then
+    if [[ -z "$SSH_CONNECTION" ]] && [[ "$TERM_PROGRAM" != vscode ]] && ! is-active-shell; then
         local body="\$ $__last_cmd\n<span font-style='italic'>${__last_cmd_dir}</span>"
         notify-send --expire-time=10000 --urgency=$urgency "$summary" "$body"
 
