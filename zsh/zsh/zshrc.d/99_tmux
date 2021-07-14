@@ -1,4 +1,4 @@
-# start tmux/screen if not already in it or running a dumb terminal
+# start tmux if not already in it or running a dumb terminal
 
 # 'rxvt' is needed for dvtm
 if [[ ! "$TERM" =~ ^\(screen.*\|rxvt\|dumb\|vt100\)$ ]] \
@@ -8,11 +8,7 @@ if [[ ! "$TERM" =~ ^\(screen.*\|rxvt\|dumb\|vt100\)$ ]] \
     export ORIGTERM=$TERM
     export ORIGCOLORTERM=$COLORTERM
     unset TMUX
-    if have -c tmux; then
-        tmux new-session
-    else
-        screen -m
-    fi
+    tmux new-session
 fi
 
 # update session environment variables if they got changed after re-attaching
