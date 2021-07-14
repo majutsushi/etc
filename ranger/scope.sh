@@ -120,6 +120,10 @@ case "$extension" in
     json)
         try jq . "$path" && { dump; exit 0; }
         ;;
+    mp3)
+        # Not all MP3 files are recognized as audio
+        try mediainfo "$path" && { dump | sed 's/  \+:/: /;';  exit 5; }
+        ;;
 esac
 
 case "$mimetype" in
