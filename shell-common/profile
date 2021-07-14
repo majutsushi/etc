@@ -43,6 +43,7 @@ _add_to_path post PATH /usr/sbin
 if [ -z "$MANPATH" ]; then
     MANPATH="$(manpath)"
 fi
+export MANPATH
 
 export LD_LIBRARY_PATH=$HOME/.local/lib/ld
 
