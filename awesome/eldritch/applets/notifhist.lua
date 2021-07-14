@@ -11,12 +11,6 @@ notifhist.notifications = {}
 
 function notifhist.add_notification(data)
     if not data.title and not data.text then return end
-    if not type(data.text) == "string" then return end
-
-    -- Don't add duplicate items
-    for _, val in ipairs(notifhist.notifications) do
-        if data.title == val.title and data.text == val.text then return end
-    end
 
     table.insert(notifhist.notifications, {
         title = data.title or data.appname,
