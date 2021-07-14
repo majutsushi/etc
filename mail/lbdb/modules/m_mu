@@ -2,7 +2,7 @@
 
 m_mu_query()
 {
-    mu cfind --muhome=~/.mu-sent-index --format=mutt-ab "$@" 2>/dev/null \
+    mu cfind --muhome="$XDG_CACHE_HOME/mu-sent-index" --format=mutt-ab "$@" 2>/dev/null \
     | awk 'BEGIN {
                FS = "\t"
                OFS = "\t"

@@ -406,7 +406,7 @@ unset save_empty        # remove mailbox when last message is removed.
 ###############################################################################
 # Groups {{{
 
-group -group sent  -addr `mu cfind --muhome=~/.mu-sent-index --format=mutt-ab | sed -e '1d' | cut -f 1 | tr '\n' ' '`
+group -group sent  -addr `mu cfind --muhome=~/.cache/mu-sent-index --format=mutt-ab | sed -e '1d' | cut -f 1 | tr '\n' ' '`
 
 # }}}
 ###############################################################################

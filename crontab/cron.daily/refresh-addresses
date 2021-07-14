@@ -2,11 +2,10 @@
 
 command -v mu >/dev/null 2>&1 || exit 0
 
-# Set up an array with outboxes
-# sentboxes=( "~/Maildir/cur" "~/Maildir/.Archive" "~/Maildir/.Sent" )
-sentboxes=( "~/Maildir/.Sent" )
+INDEX_DIR="$HOME/.cache/mu-sent-index"
 
-# Run mu on each of them
-for dir in "${sentboxes[@]}"; do
-    mu index --maildir="${dir}" --muhome=~/.mu-sent-index --quiet
-done
+if ! [[ -d $INDEX_DIR ]]; then
+    mu init --maildir="~/Maildir/.Sent" --muhome="$INDEX_DIR"
+fi
+
+mu index --muhome="$INDEX_DIR" --quiet
