@@ -3,6 +3,7 @@ Host github.com
 
 Host bitbucket.org
     User git
+    IdentityFile ~/.ssh/id_ed25519
     # BitBucket seems to have disabled connection sharing :/
     ControlMaster no
 
