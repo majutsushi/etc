@@ -31,6 +31,12 @@ export XDG_CONFIG_HOME=$HOME/.config
 # export XDG_CONFIG_DIRS=/etc/xdg
 export XDG_CACHE_HOME=$HOME/.cache
 
+export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
+_add_to_path pre PATH "$PYENV_ROOT/bin"
+if command -v pyenv > /dev/null; then
+    eval "$(pyenv init --path)"
+fi
+
 _add_to_path pre PATH "$HOME/.local/bin"
 _add_to_path pre PATH "$HOME/usr/bin"
 _add_to_path pre PATH "$HOME/.etc/bin"

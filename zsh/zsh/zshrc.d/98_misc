@@ -2,6 +2,11 @@ if have direnv; then
     eval "$(direnv hook zsh)"
 fi
 
+if have pyenv; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
+
 if [[ -f $HOME/.local/etc/zshrc ]]; then
     source $HOME/.local/etc/zshrc
 fi
