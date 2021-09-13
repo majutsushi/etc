@@ -1502,6 +1502,7 @@ let g:protodefctagsexe = g:ctagsbin
 let g:quickfixsigns_classes = ['qfl', 'marks', 'breakpoints']
 let g:quickfixsigns_blacklist_buffer = '\v(^__.*__$)|(^NERD_tree.*)|(^$)'
 let g:quickfixsigns_icons = {}
+let g:quickfixsigns_echo_map = '<Leader><Leader>q'
 " exclude "'." from buffer and "<>^" from global
 let g:quickfixsigns#marks#buffer = split('abcdefghijklmnopqrstuvwxyz', '\zs')
 let g:quickfixsigns#marks#global = split('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '\zs')
