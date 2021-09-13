@@ -278,13 +278,6 @@ ant() {
     fi
 }
 
-alert() {
-    eval '"$@"'
-    local rv=$?
-    notify-send -i gnome-terminal "[$rv] command '$@' finished"
-    return $rv
-}
-
 alias ls_colors='echo $LS_COLORS | tr : '\''\n'\'' | sed '\''s/\(.*\)=\(.*\)/\x1b[\2m\1\t\2\x1b[0m/'\'''
 
 # Function Usage: doc packagename
