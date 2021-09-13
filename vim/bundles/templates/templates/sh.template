@@ -5,6 +5,7 @@
 
 set -eEu -o pipefail
 IFS=$'\n\t'
+PS4='+\t '
 
 error_handler() { echo "Error: Line ${1} exited with status ${2}"; }
 trap 'error_handler ${LINENO} $?' ERR
