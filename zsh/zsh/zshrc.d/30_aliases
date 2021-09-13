@@ -250,7 +250,7 @@ __kill() {
 kill() {
     local args="$@"
     local -a pids=($(__get_pids "$args"))
-    [[ -z "$pids" ]] && echo "No PIDs found" && return 1
+    [[ -z "$pids" ]] && echo "No PIDs found" >&2 && return 1
     local -a names=($(ps --no-headers --format comm ${(z)pids}))
     __kill "$args" "$names"
 }
