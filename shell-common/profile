@@ -168,7 +168,7 @@ export FZF_DEFAULT_OPTS="\
     --preview-window down:3:hidden:wrap \
     --bind '?:toggle-preview' \
     --bind 'f1:execute(less -+F -f {})' \
-    --bind 'ctrl-y:execute-silent(echo {} | xclip -i -selection clipboard)+abort' \
+    --bind 'ctrl-y:execute-silent(echo {} | clipboard-copy)+abort' \
     --color fg:-1,bg:-1,hl:2,fg+:11,bg+:-1,hl+:10,info:7,prompt:6,pointer:9,marker:1
 "
 
