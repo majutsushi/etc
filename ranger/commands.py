@@ -1,4 +1,5 @@
 import os
+import platform
 import re
 import shutil
 import subprocess
@@ -13,7 +14,7 @@ from ranger.api.commands import Command
 class movetotrash(Command):
     """:movetotrash
 
-    Moves the selection or the current file to the XDG trash.
+    Moves the selection or the current file to the trash.
     """
 
     def execute(self) -> None:
@@ -26,36 +27,44 @@ class movetotrash(Command):
             )
             return
 
-        try:
-            trash_dir = Path(os.environ["XDG_DATA_HOME"]) / "Trash"
-        except KeyError:
-            trash_dir = Path(os.environ["HOME"]) / ".local" / "share" / "Trash"
-
         selected = self.fm.thistab.get_selection()
         self.fm.copy_buffer -= set(selected)
+
         if selected:
-            for f in selected:
-                dest = trash_dir / "files" / f.basename
-                basename = f.basename
-                if dest.exists():
-                    counter = 2
-                    while os.path.exists(os.fspath(dest) + "." + str(counter)):
-                        counter += 1
-                    basename += "." + str(counter)
-                with open(trash_dir / "info" / (basename + ".trashinfo"), "w") as info:
-                    info.write(
-                        "[Trash Info]\n"
-                        + f"Path={f.path}\n"
-                        + f"DeletionDate={strftime('%Y-%m-%dT%H:%M:%S')}\n"
-                    )
-                shutil.move(f.path, trash_dir / "files" / basename)
+            if platform.system() == "Linux":
+                try:
+                    trash_dir = Path(os.environ["XDG_DATA_HOME"]) / "Trash"
+                except KeyError:
+                    trash_dir = Path(os.environ["HOME"]) / ".local" / "share" / "Trash"
+
+                for f in selected:
+                    dest = trash_dir / "files" / f.basename
+                    basename = f.basename
+                    if dest.exists():
+                        counter = 2
+                        while os.path.exists(os.fspath(dest) + "." + str(counter)):
+                            counter += 1
+                        basename += "." + str(counter)
+                    with open(
+                        trash_dir / "info" / (basename + ".trashinfo"), "w"
+                    ) as info:
+                        info.write(
+                            "[Trash Info]\n"
+                            + f"Path={f.path}\n"
+                            + f"DeletionDate={strftime('%Y-%m-%dT%H:%M:%S')}\n"
+                        )
+                    shutil.move(f.path, trash_dir / "files" / basename)
+
+            elif platform.system() == "Darwin":
+                self.fm.execute_command(["trash"] + [f.path for f in selected])
+
         self.fm.thistab.ensure_correct_pointer()
 
 
 class fzfrecent(Command):
-    """ :fzfrecent
+    """:fzfrecent
 
-        Use fzf to quickly jump to recent dirs
+    Use fzf to quickly jump to recent dirs
     """
 
     def execute(self) -> None:
@@ -77,11 +86,11 @@ class fzfrecent(Command):
 
 
 class fzfjump(Command):
-    """ :fzfjump
+    """:fzfjump
 
-        Find a file using fzf.
+    Find a file using fzf.
 
-        With a prefix argument select only directories.
+    With a prefix argument select only directories.
     """
 
     def execute(self) -> None:
