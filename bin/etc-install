@@ -281,7 +281,6 @@ done
 systemctl --user enable daily.timer
 systemctl --user start daily.timer
 
-python3 -m pip install ueberzug
 
 if command -v X >/dev/null; then
     xlink xorg/fontconfig target=.config/fontconfig
@@ -316,6 +315,8 @@ if command -v X >/dev/null; then
         gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
         gsettings set org.gnome.settings-daemon.plugins.keyboard active false || true
     fi
+
+    python3 -m pip install ueberzug
 
     check-program autorandr
     check-program awesome
