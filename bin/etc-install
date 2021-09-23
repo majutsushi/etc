@@ -190,6 +190,7 @@ xlink redshift.conf target=.config/redshift.conf
 xlink rofi target=.config/rofi
 xlink slrn/slrnrc
 merge sshconfig target=.ssh/config
+mkdir -p .ssh/sock
 xlink urxvt
 xlink weechat target=.config/weechat
 xlink zathurarc target=.config/zathura/zathurarc
