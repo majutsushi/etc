@@ -135,6 +135,7 @@ xlink() {
 disable-autostart() {
     local filename=${1}.desktop
     info "Disabling autostart for $filename"
+    mkdir -p "$HOME/.config/autostart"
     cat > "$HOME/.config/autostart/${filename}" << EOF
 [Desktop Entry]
 Hidden=true
