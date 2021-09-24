@@ -102,8 +102,6 @@ alias vi='vim'
 alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
 alias x='extract'
 
-is-at-least 4.3 && alias git='hub'
-
 vimlint() {
     local bundles="$HOME/.var/lib/vim/bundles"
     "$bundles"/vim-vimlint/bin/vimlint.sh -l "$bundles"/vim-vimlint -p "$bundles"/vim-vimlparser "$@"
