@@ -1444,7 +1444,7 @@ let NERDTreeIgnore = [
     \ '\.pyc$'
 \ ]
 
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "*",
     \ "Staged"    : "+",
     \ "Untracked" : "%",
