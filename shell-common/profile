@@ -161,7 +161,7 @@ export CLIFF_FIT_WIDTH=1
 
 export NNTPSERVER=news.gmane.org
 
-export FZF_DEFAULT_COMMAND="git ls-tree -r --name-only HEAD || ag --hidden --ignore .git -g ''"
+export FZF_DEFAULT_COMMAND="ag --hidden --ignore .git -g ''"
 export FZF_DEFAULT_OPTS="\
     --exact \
     --height 40% \
