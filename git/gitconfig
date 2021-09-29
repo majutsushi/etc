@@ -97,6 +97,9 @@
 	colorMoved = zebra
 	colorMovedWS = ignore-all-space
 
+[init]
+	defaultBranch = main
+
 [branch]
 	autosetuprebase = always
 
