@@ -7,11 +7,8 @@ let maplocalleader=",,"
 let g:user_name = "Jan Larres"
 let g:user_email = "jan@majutsushi.net"
 
-if !isdirectory($HOME . "/.var/lib/vim") && exists("*mkdir")
-    call mkdir($HOME . "/.var/lib/vim")
-    call mkdir($HOME . "/.var/lib/vim/swap")
-    call mkdir($HOME . "/.var/lib/vim/undo")
-endif
+call mkdir($HOME . "/.var/lib/vim/swap", "p")
+call mkdir($HOME . "/.var/lib/vim/undo", "p")
 
 if has('vim_starting')
     set runtimepath+=~/.var/lib/vim/bundles/neobundle.vim/
