@@ -65,6 +65,8 @@ merge() {
     fi
     if [[ -d "${localbase}.d" ]]; then
         for part in "${localbase}.d"/??_*; do
+            # Protect against empty directories; nullglob is potentially dangerous
+            [[ -e "$part" ]] || continue
             echo -e "\n$comment [$(readlink -f "$part")]" >> "$localtarget"
             cat "$part" >> "$localtarget"
         done

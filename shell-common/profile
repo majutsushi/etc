@@ -191,6 +191,8 @@ if [ -f ~/.local/etc/profile ]; then
 fi
 if [ -d ~/.local/etc/profile.d ]; then
     for file in "$HOME"/.local/etc/profile.d/??_*; do
+        # Protect against empty directories
+        [ -e "$file" ] || continue
         _source "$file"
     done
 fi

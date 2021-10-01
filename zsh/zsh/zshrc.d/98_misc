@@ -11,7 +11,7 @@ if [[ -f $HOME/.local/etc/zshrc ]]; then
     source $HOME/.local/etc/zshrc
 fi
 if [[ -d $HOME/.local/etc/zshrc.d ]]; then
-    for file in $HOME/.local/etc/zshrc.d/??_*; do
+    for file in $HOME/.local/etc/zshrc.d/??_*(N); do
         source "$file"
     done
 fi
