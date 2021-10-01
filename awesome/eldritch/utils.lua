@@ -35,10 +35,24 @@ function utils.trim(s)
 end
 
 function utils.brightness(change)
-    awful.util.pread("xbacklight -inc " .. change)
-    local value = math.floor(awful.util.pread("xbacklight -get"))
+    local arg
+    if change < 0 then
+        arg = "-U"
+    else
+        arg = "-A"
+    end
 
-    osd.notify("Brightness", value)
+    awful.spawn.easy_async(
+        "light " .. arg .. " " .. tostring(math.abs(change)),
+        function(stdout, stderr, reason, exit_code)
+            awful.spawn.easy_async(
+                "light -G",
+                function(stdout, stderr, reason, exit_code)
+                    osd.notify("Brightness", math.floor(tonumber(stdout) + 0.5))
+                end
+            )
+        end
+    )
 end
 
 function utils.font(font, text)

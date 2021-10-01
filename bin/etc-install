@@ -322,6 +322,7 @@ if command -v X >/dev/null; then
     check-program awesome
     check-program dex
     check-program inputplug
+    check-program light
     check-program notify-send
     check-program rofi
     check-program wmctrl
