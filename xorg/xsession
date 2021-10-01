@@ -56,4 +56,6 @@ fi
 "$HOME/.etc/xorg/xsettingsd-setup"
 inputplug -0 -c "$HOME/.etc/xorg/inputplug-hook"
 
+keynav daemonize
+
 exec logger-wrapper awesome
