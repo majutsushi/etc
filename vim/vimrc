@@ -1656,6 +1656,7 @@ let g:ycm_filetype_blacklist = {
     \ 'unite': 1,
     \ 'vimwiki': 1,
 \ }
+nnoremap <M-CR> :YcmCompleter FixIt<CR>
 
 " ZoomWin {{{2
 let g:zoomwin_zoomed = 0
