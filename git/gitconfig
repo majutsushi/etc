@@ -8,6 +8,9 @@
 	pager = less -F
 	whitespace = blank-at-eol,space-before-tab,tab-in-indent,blank-at-eof,cr-at-eol
 
+[feature]
+	manyFiles = true
+
 [alias]
 	st = status -sb
 	ci = commit
