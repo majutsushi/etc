@@ -149,6 +149,9 @@ if command -v rustc > /dev/null; then
     _add_to_path post MANPATH "$_rust_root/share/man"
     unset _rust_root
 fi
+if command -v sccache > /dev/null; then
+    export RUSTC_WRAPPER=sccache
+fi
 
 export PIPENV_VENV_IN_PROJECT=1
 export PIPENV_SHELL_FANCY=1
