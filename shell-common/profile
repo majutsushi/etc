@@ -147,7 +147,6 @@ if command -v rustc > /dev/null; then
     # Also see https://github.com/rust-lang-nursery/rustup.rs/issues/450
     _rust_root="$(rustc --print sysroot)"
     _add_to_path post MANPATH "$_rust_root/share/man"
-    export RUST_SRC_PATH="$_rust_root/lib/rustlib/src/rust/src"
     unset _rust_root
 fi
 
