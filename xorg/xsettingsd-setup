@@ -15,15 +15,15 @@ esac
 
 # Build xsettingsd
 cp  ~/.etc/xorg/xsettingsd ~/.config/xsettingsd
-echo Xft/DPI $(( $dpi * 1024 )) >> ~/.config/xsettingsd
+echo Xft/DPI $(( dpi * 1024 )) >> ~/.config/xsettingsd
 echo Gtk/CursorThemeSize $cursor_size >> ~/.config/xsettingsd
 
 # Signal xsettingsd
 pid=$(xprop -name xsettingsd _NET_WM_PID 2> /dev/null | awk '{print $NF}')
-if [ x"$pid" = x ]; then
+if [[ "$pid" == "" ]]; then
     xsettingsd -c ~/.config/xsettingsd &
 else
-    kill -HUP $pid
+    kill -HUP "$pid"
 fi
 
 # Also use xrdb for very old stuff (you know, LibreOffice)
