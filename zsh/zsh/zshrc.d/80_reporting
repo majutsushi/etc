@@ -55,11 +55,16 @@ _alert_bg_job_finished() {
     fi
 
     if [[ -z "$SSH_CONNECTION" ]] && [[ "$TERM_PROGRAM" != vscode ]] && ! is-active-shell; then
-        local body="\$ $__last_cmd\n<span font-style='italic'>${__last_cmd_dir}</span>"
-        notify-send --expire-time=10000 --urgency=$urgency "$summary" "$body"
+        if islinux; then
+            local body="\$ $__last_cmd\n<span font-style='italic'>${__last_cmd_dir}</span>"
+            notify-send --expire-time=10000 --urgency=$urgency "$summary" "$body"
 
-        # set urgent hint on window
-        wmctrl -i -r $WINDOWID -b add,demands_attention
+            # set urgent hint on window
+            wmctrl -i -r $WINDOWID -b add,demands_attention
+        elif ismac; then
+            osascript -e "display notification \"\$ ${__last_cmd//\\/\\\\}\" with title \"$summary\" subtitle \"$__last_cmd_dir\""
+            tmux-echo '\e]1337;RequestAttention=yes\a'
+        fi
     fi
 }
 add-zsh-hook precmd _alert_bg_job_finished

@@ -210,7 +210,11 @@ tmux() {
 }
 
 tmux-echo() {
-    echo -e "\ePtmux;${1//\\e/\\e\\e}\e\\"
+    if [[ -n "$TMUX" ]]; then
+        echo -e "\ePtmux;${1//\\e/\\e\\e}\e\\"
+    else
+        echo -e "$1"
+    fi
 }
 
 # easily reattach tmux sessions
