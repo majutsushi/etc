@@ -60,3 +60,4 @@ gmon.out
 .settings/
 
 .mypy_cache/
+.venv/
