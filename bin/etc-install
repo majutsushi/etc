@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # https://wiki.archlinux.org/index.php/XDG_Base_Directory
 # https://github.com/grawity/dotfiles/blob/master/.dotfiles.notes

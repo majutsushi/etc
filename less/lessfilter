@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 have() {
     type -P "$1" > /dev/null
