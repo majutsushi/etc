@@ -48,10 +48,10 @@ _alert_bg_job_finished() {
     local summary
     if (( __last_cmd_exitstatus == 0 )); then
         urgency=normal
-        summary="Background job finished"
+        summary="✅ Background job finished"
     else
         urgency=critical
-        summary="Background job failed"
+        summary="❌ Background job failed"
     fi
 
     if [[ -z "$SSH_CONNECTION" ]] && [[ "$TERM_PROGRAM" != vscode ]] && ! is-active-shell; then
