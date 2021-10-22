@@ -82,11 +82,8 @@ __prompt_nave() {
 
 __prompt_venv() {
     if [[ -n "$VIRTUAL_ENV" ]]; then
-        if [[ $(basename "$VIRTUAL_ENV") == .venv ]]; then
-            printf "(%s) " "$(basename "$(dirname "$VIRTUAL_ENV")")"
-        else
-            printf "(%s) " "$(basename "$VIRTUAL_ENV")"
-        fi
+        local version=$(python --version | awk '{ print $2 }')
+        printf " 🐍 %s" $version
     fi
 }
 
@@ -108,8 +105,8 @@ __prompt_reset_vars() {
 add-zsh-hook precmd __prompt_reset_vars
 
 PS1='
-$(__prompt_logo)%F{red}%n%f @ %F{yellow}%m%f ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}$(__prompt_local)${_prompt_local_extra}
-%(2L.%B%L%b .)$(__prompt_venv)$(__prompt_jdk)$(__prompt_ant)$(__prompt_nave)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
+$(__prompt_logo)%F{red}%n%f @ %F{yellow}%m%f ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}$(__prompt_venv)$(__prompt_local)${_prompt_local_extra}
+%(2L.%B%L%b .)$(__prompt_jdk)$(__prompt_ant)$(__prompt_nave)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
 
 RPS1='$(__prompt_orighome)'
 
