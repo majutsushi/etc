@@ -16,9 +16,9 @@ _add_to_path() {
         *)
             case $pos in
                 pre)
-                    eval "$pathvar=$dir:\$$pathvar" ;;
+                    eval "$pathvar='$dir':\$$pathvar" ;;
                 post)
-                    eval "$pathvar=\$$pathvar:$dir" ;;
+                    eval "$pathvar=\$$pathvar:'$dir'" ;;
             esac
             ;;
     esac
