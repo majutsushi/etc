@@ -343,23 +343,6 @@ if command -v python3 >/dev/null; then
     xlink python/isort.cfg
 fi
 
-for tinfof in .etc/terminfo/*; do
-    tinfo=$(basename "${tinfof}")
-    tinfo=${tinfo%.terminfo}
-    info "Compiling terminfo ${tinfo}"
-    tic "$tinfof"
-
-    # also install termcap data if the shell is linked against it
-    if ldd "$(command -v bash)" | grep -q libtermcap; then
-        info "termcap in use, appending ${tinfo} to ~/.termcap"
-        if [[ -f .termcap ]] && ! grep -qE "^${tinfo}\|" .termcap; then
-            tic -C -T "${tinfof}" >> .termcap
-        else
-            tic -C -T "${tinfof}" > .termcap
-        fi
-    fi
-done
-
 if ! locale -a | command grep -q en_GB.UTF-8; then
     warn "en_GB.UTF-8 locale must be installed"
 fi
