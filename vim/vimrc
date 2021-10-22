@@ -1458,7 +1458,8 @@ let NERDTreeIgnore = [
     \ '\.orig$',
     \ '\.out$',
     \ '\.pdf$',
-    \ '\.pyc$'
+    \ '\.pyc$',
+    \ '\.zwc$'
 \ ]
 
 let g:NERDTreeGitStatusIndicatorMapCustom = {
