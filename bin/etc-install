@@ -275,14 +275,15 @@ disable-autostart mpd
 disable-autostart mpdris2
 disable-autostart tracker-store
 
-for file in .etc/systemd/*; do
-    src="${file##.etc/}"
-    filename="$(basename "$src")"
-    xlink "$src" target=.config/systemd/user/"$filename"
-done
-systemctl --user enable daily.timer
-systemctl --user start daily.timer
-
+if command -v systemctl >/dev/null; then
+    for file in .etc/systemd/*; do
+        src="${file##.etc/}"
+        filename="$(basename "$src")"
+        xlink "$src" target=.config/systemd/user/"$filename"
+    done
+    systemctl --user enable daily.timer
+    systemctl --user start daily.timer
+fi
 
 if command -v X >/dev/null; then
     xlink xorg/fontconfig target=.config/fontconfig
