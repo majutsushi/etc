@@ -1,20 +1,11 @@
 #!/bin/bash
 
-declare -A filemaps
-
-filemaps[text/x-c]=c
-filemaps[text/x-perl]=perl
-filemaps[text/x-python]=python
-filemaps[text/x-shellscript]=sh
-filemaps[text/x-diff]=diff
-filemaps[application/xml]=xml
-
 have() {
     type -P "$1" > /dev/null
 }
 
-pyg() {
-    pygmentize -f terminal256 -O style=desert "$@"
+hl() {
+    bat --color always --style changes,numbers "$@"
 }
 
 (
@@ -63,22 +54,14 @@ pyg() {
             exit 1
             ;;
         *.class)
-            pyg -l java <(javap -sysinfo -private -constants "$1")
+            hl -l java <(javap -sysinfo -private -constants "$1")
             ;;
         *.iso)
             have isoinfo && isoinfo -l -i "$1" && exit 0
             exit 1
             ;;
         *)
-            pyg "$1" 2>/dev/null && exit 0
-
-            # Use a whitelist instead of pygmentize's '-g' option to avoid too
-            # many false positives
-            MIMETYPE=$(file --mime-type -b $(readlink -f "$1"))
-            if [[ "${filemaps[$MIMETYPE]}" != "" ]]; then
-                pyg -l ${filemaps[$MIMETYPE]} "$1"
-            else
-                exit 1
-            fi
+            hl "$1" 2>/dev/null && exit 0
+            exit 1
     esac
 ) 2>/dev/null

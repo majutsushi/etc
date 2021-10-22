@@ -337,13 +337,7 @@ if command -v X >/dev/null; then
     check-program xss-lock
 fi
 
-if command -v python >/dev/null; then
-    cd .etc/python/lib/desert
-    info "Installing python lib: desert"
-    python setup.py install --user >/dev/null
-    python3 setup.py install --user >/dev/null
-    cd "$HOME"
-
+if command -v python3 >/dev/null; then
     xlink python/pylintrc target=.config/pylintrc
     xlink python/mypy.ini target=.config/mypy/config
     xlink python/isort.cfg

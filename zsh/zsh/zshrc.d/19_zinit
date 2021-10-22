@@ -25,6 +25,9 @@ zinit snippet https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
 zinit ice from"gh-r" as"program" mv"fd* -> fd" pick"fd/fd"
 zinit light sharkdp/fd
 
+zinit ice from"gh-r" as"program" pick"bat*/bat"
+zinit light sharkdp/bat
+
 zinit ice from"gh-r" as"program" mv"exa* -> exa"
 zinit light ogham/exa
 
