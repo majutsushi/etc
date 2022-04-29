@@ -109,8 +109,13 @@ if [[ -r "/usr/share/bash-completion/bash_completion" ]]; then
 fi
 
 export PAGER=less
-export EDITOR=vi
-export VISUAL=vi
+if command -v vim >/dev/null; then
+    export EDITOR=vim
+    export VISUAL=vim
+else
+    export EDITOR=vi
+    export VISUAL=vi
+fi
 
 #PROMPT_DIRTRIM=2
 PS1="$PROMPT_LOGO\\[\\e[31m\\]\\u\\[\\e[m\\]@\\[\\e[33m\\]\\h\\[\\e[m\\]:\\[\\e[32m\\]\\w\\[\\e[m\\]\\n\\$ "
