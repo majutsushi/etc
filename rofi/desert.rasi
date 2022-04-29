@@ -1,6 +1,6 @@
-configuration {
-    show-icons: true;
-}
+/* configuration { */
+/*     show-icons: true; */
+/* } */
 
 * {
     font: "DejaVu Sans Mono 14";
@@ -9,82 +9,91 @@ configuration {
     text-color: #ffffff;
 }
 
-#window {
+window {
     border: 0px;
     border-radius: 5px;
     padding: 3px 0px 6px 0px;
     spacing: 0;
 }
 
-#mainbox {
+mainbox {
     padding: 3px 0px 3px 0px;
 }
 
-#inputbar {
+inputbar {
     padding: 6px 6px 6px 15px;
     children: [entry, case-indicator];
 }
 
-#prompt {
+prompt {
     font: "DejaVu Sans Mono 20";
 }
 
-#entry {
+entry {
     font: "DejaVu Sans Mono Bold 20";
 }
 
-#button.selected {
+button.selected {
     background-color: #ffffff;
     text-color: #333333;
 }
 
-#listview {
+listview {
     padding: 3px 0px 3px 0px;
     scrollbar: true;
 }
 
-#element {
+element {
     /* border:  0; */
     padding: 4px 0px 4px 20px;
 }
-#element.normal.normal {
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+}
+element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+    size: 1em;
+}
+element.normal.normal {
     /* background-color: #333333; */
     text-color:       #ffffff;
 }
-#element.normal.urgent {
+element.normal.urgent {
     /* background-color: @urgent-background; */
     text-color:       #cc0000;
 }
-#element.normal.active {
+element.normal.active {
     /* background-color: @active-background; */
     text-color:       #87ceeb;
 }
-#element.selected.normal {
+element.selected.normal {
     background-color: #6b8e23;
     text-color:       #f0e68c;
 }
-#element.selected.urgent {
+element.selected.urgent {
     background-color: #cc0000;
     text-color:       #fdf6e3;
 }
-#element.selected.active {
+element.selected.active {
     background-color: #268bd2;
     text-color:       #fdf6e3;
 }
-/* #element.alternate.normal { */
+/* element.alternate.normal { */
 /*     background-color: #4d4d4d; */
 /*     /1* text-color:       #ffffff; *1/ */
 /* } */
-/* #element.alternate.urgent { */
+/* element.alternate.urgent { */
 /*     background-color: #4d4d4d; */
 /*     /1* text-color:       #ffffff; *1/ */
 /* } */
-/* #element.alternate.active { */
+/* element.alternate.active { */
 /*     background-color: #4d4d4d; */
 /*     /1* text-color:       #ffffff; *1/ */
 /* } */
 
-#scrollbar {
+scrollbar {
     handle-color: #777777;
     padding: 0px 6px 0px 10px;
 }

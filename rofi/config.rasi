@@ -50,7 +50,7 @@ configuration {
 	window-format: "{t}";
 /*	click-to-exit: true;*/
 /*	show-match: true;*/
-	theme: "~/.config/rofi/desert";
+	/* theme: "~/.config/rofi/desert"; */
 	/* theme: "arthur"; */
 	/* color-normal: "#333333,#ffffff,#4d4d4d,#6b8e23,#f0e68c"; */
 	/* color-urgent: "#333333,#cc0000,#4d4d4d,#cc0000,#fdf6e3"; */
@@ -137,3 +137,5 @@ configuration {
 /*	me-accept-entry: "MouseD1";*/
 /*	me-accept-custom: "Control+MouseD1";*/
 }
+
+@theme "desert"
