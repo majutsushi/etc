@@ -83,7 +83,7 @@ __prompt_nave() {
 __prompt_venv() {
     if [[ -n "$VIRTUAL_ENV" ]]; then
         local version=$(python --version | awk '{ print $2 }')
-        printf " 🐍 %s" $version
+        printf " • 🐍 %s" $version
     fi
 }
 
