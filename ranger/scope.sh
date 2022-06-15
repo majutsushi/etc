@@ -4,6 +4,7 @@
 # output is displayed in ranger.  ANSI color codes are supported.
 
 shopt -s nocasematch
+set -o pipefail
 
 # NOTES: This script is considered a configuration file.  If you upgrade
 # ranger, it will be left untouched. (You must update it yourself.)
@@ -37,7 +38,7 @@ extension=$(echo "${path##*.}" | tr "[:upper:]" "[:lower:]")
 # Functions:
 # runs a command and saves its output into $output.  Useful if you need
 # the return value AND want to use the output in a pipe
-try() { output=$(eval '"$@"'); }
+try() { output=$(eval '"$@"' | trim); }
 
 # writes the output of the previously used "try" command
 dump() { echo "$output"; }
@@ -66,7 +67,7 @@ fi
 
 case "$path" in
     *.pcap|*.pcapng|*.pcap.gz|*.pcapng.gz)
-        try tshark -t a -r "$path" && { dump | trim; exit 0; }
+        try tshark -t a -r "$path" && { dump; exit 0; }
         ;;
     */cdr_*.log|*/localhost-cdr.log)
         try ~/apps/list-cdrs/list-cdrs.sh "$path" && { dump; exit 0; }
@@ -78,35 +79,35 @@ esac
 
 case "$extension" in
     jar)
-        try deepjarlist "$path" && { dump | trim; exit 0; };;&
+        try deepjarlist "$path" && { dump; exit 0; };;&
     # Archive extensions:
     7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
     rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)
-        try als "$path" && { dump | trim; exit 0; }
-        try acat "$path" && { dump | trim; exit 3; }
-        try bsdtar -lf "$path" && { dump | trim; exit 0; }
+        try als "$path" && { dump; exit 0; }
+        try acat "$path" && { dump; exit 3; }
+        try bsdtar -lf "$path" && { dump; exit 0; }
         exit 1;;
     rar)
-        try unrar -p- lt "$path" && { dump | trim; exit 0; } || exit 1;;
+        try unrar -p- lt "$path" && { dump; exit 0; } || exit 1;;
     # PDF documents:
     pdf)
         try pdftotext -l 10 -nopgbrk -q "$path" - && \
-            { dump | trim | fmt -s -w $width; exit 0; } || exit 1;;
+            { dump | fmt -s -w $width; exit 0; } || exit 1;;
     # BitTorrent Files
     torrent)
-        try transmission-show "$path" && { dump | trim; exit 5; } || exit 1;;
+        try transmission-show "$path" && { dump; exit 5; } || exit 1;;
     # HTML Pages:
     htm|html|xhtml)
-        try w3m    -dump "$path" && { dump | trim | fmt -s -w $width; exit 4; }
-        try lynx   -dump "$path" && { dump | trim | fmt -s -w $width; exit 4; }
-        try elinks -dump "$path" && { dump | trim | fmt -s -w $width; exit 4; }
+        try w3m    -dump "$path" && { dump | fmt -s -w $width; exit 4; }
+        try lynx   -dump "$path" && { dump | fmt -s -w $width; exit 4; }
+        try elinks -dump "$path" && { dump | fmt -s -w $width; exit 4; }
         ;; # fall back to highlight/cat if the text browsers fail
     doc)
-        try antiword "$path" && { dump | trim; exit 0; }
-        try catdoc   "$path" && { dump | trim; exit 0; }
+        try antiword "$path" && { dump; exit 0; }
+        try catdoc   "$path" && { dump; exit 0; }
         ;;
     docx)
-        try docx2txt.pl "$path" - && { dump | trim; exit 0; }
+        try docx2txt.pl "$path" - && { dump; exit 0; }
         ;;
     class)
         try hl -l java <(javap -sysinfo -private -constants "$path") && { dump; exit 0; }
@@ -129,7 +130,7 @@ esac
 case "$mimetype" in
     # Syntax highlight for text files:
     text/* | */xml)
-        try hl "$path" && { dump | trim; exit 5; } || exit 2;;
+        try hl "$path" && { dump; exit 5; } || exit 2;;
     # Ascii-previews of images:
     image/*)
         img2txt --gamma=0.6 --width="$width" "$path" && exit 4 || exit 1;;
@@ -140,7 +141,7 @@ case "$mimetype" in
         exiftool "$path" && exit 5
         ;;
     application/x-sqlite3)
-        try sqlite3 "$path" ".dump" && { dump | trim; exit 0; } || exit 1;;
+        try sqlite3 "$path" ".dump" && { dump; exit 0; } || exit 1;;
     application/csv)
         trim < "$path"; exit 0;;
 esac
