@@ -64,6 +64,14 @@ prompt_logo() {
                 logo="${prompt_colour_red}🍓"
                 ;;
         esac
+    elif [[ -r "/etc/issue" ]]; then
+        local issue
+        IFS="" read -r issue < /etc/issue
+        case "$issue" in
+            Red\ Hat\ Enterprise*)
+                logo="${prompt_colour_red}RH"
+                ;;
+        esac
     fi
 
     printf "%s%s " "$logo" "${prompt_colour_default}"
