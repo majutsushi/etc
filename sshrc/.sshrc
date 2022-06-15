@@ -1,16 +1,15 @@
 # Only run in interactive shells
 [[ $- == *i* ]] || return 0
 
-declare -A prompt_colours
-prompt_colours[default]='\[\e[0m\]'
-prompt_colours[black]='\[\e[30m\]'
-prompt_colours[red]='\[\e[31m\]'
-prompt_colours[green]='\[\e[32m\]'
-prompt_colours[yellow]='\[\e[33m\]'
-prompt_colours[blue]='\[\e[34m\]'
-prompt_colours[magenta]='\[\e[35m\]'
-prompt_colours[cyan]='\[\e[36m\]'
-prompt_colours[white]='\[\e[37m\]'
+prompt_colour_default='\[\e[0m\]'
+prompt_colour_black='\[\e[30m\]'
+prompt_colour_red='\[\e[31m\]'
+prompt_colour_green='\[\e[32m\]'
+prompt_colour_yellow='\[\e[33m\]'
+prompt_colour_blue='\[\e[34m\]'
+prompt_colour_magenta='\[\e[35m\]'
+prompt_colour_cyan='\[\e[36m\]'
+prompt_colour_white='\[\e[37m\]'
 
 tmuxrc() {
     local TMUXDIR=/tmp/sshrctmux
@@ -50,24 +49,24 @@ prompt_logo() {
         local distro=$(. /etc/os-release && echo "$ID")
         case "$distro" in
             debian)
-                logo="${prompt_colours[red]}@"
+                logo="${prompt_colour_red}@"
                 ;;
             ubuntu)
                 logo="\\[\\e[38;5;202m\\]u"
                 ;;
             centos)
-                logo="${prompt_colours[green]}*${prompt_colours[magenta]}*${prompt_colours[yellow]}*${prompt_colours[blue]}*"
+                logo="${prompt_colour_green}*${prompt_colour_magenta}*${prompt_colour_yellow}*${prompt_colour_blue}*"
                 ;;
             amzn)
                 logo="\\[\\e[38;5;208m\\]⬢"
                 ;;
             raspbian)
-                logo="${prompt_colours[red]}🍓"
+                logo="${prompt_colour_red}🍓"
                 ;;
         esac
     fi
 
-    printf "%s%s " "$logo" "${prompt_colours[default]}"
+    printf "%s%s " "$logo" "${prompt_colour_default}"
 }
 PROMPT_LOGO="$(prompt_logo)"
 
@@ -87,16 +86,16 @@ __prompt_command() {
 
     PS1=""
     if [[ -f /var/run/reboot-required ]]; then
-        PS1+="${prompt_colours[red]}R ${prompt_colours[default]}"
+        PS1+="${prompt_colour_red}R ${prompt_colour_default}"
     fi
     PS1+="$PROMPT_LOGO"
-    PS1+="${prompt_colours[red]}\u${prompt_colours[default]}@${prompt_colours[yellow]}\h${prompt_colours[default]}"
+    PS1+="${prompt_colour_red}\u${prompt_colour_default}@${prompt_colour_yellow}\h${prompt_colour_default}"
     PS1+=":"
-    PS1+="${prompt_colours[green]}\w${prompt_colours[default]}"
+    PS1+="${prompt_colour_green}\w${prompt_colour_default}"
     PS1+="\n"
 
     if (( exit_code != 0 )); then
-        PS1+="${prompt_colours[red]}$exit_code ${prompt_colours[default]}"
+        PS1+="${prompt_colour_red}$exit_code ${prompt_colour_default}"
     fi
     PS1+="\$ "
 }
@@ -134,9 +133,15 @@ else
     export VISUAL=vi
 fi
 
-alias ls='LC_COLLATE=POSIX ls  -Fh --color=auto --group-directories-first'
-alias ll='LC_COLLATE=POSIX ls -lFh --color=auto --group-directories-first'
-alias l='LC_COLLATE=POSIX ls -lAFh --color=auto --group-directories-first'
+if ls --help | grep -q -- --group-directories-first; then
+    alias ls='LC_COLLATE=POSIX ls  -Fh --color=auto --group-directories-first'
+    alias ll='LC_COLLATE=POSIX ls -lFh --color=auto --group-directories-first'
+    alias l='LC_COLLATE=POSIX ls -lAFh --color=auto --group-directories-first'
+else
+    alias ls='LC_COLLATE=POSIX ls  -Fh --color=auto'
+    alias ll='LC_COLLATE=POSIX ls -lFh --color=auto'
+    alias l='LC_COLLATE=POSIX ls -lAFh --color=auto'
+fi
 command -v vim &>/dev/null && alias vi=vim
 command -v tree &>/dev/null && alias t="tree -F -C"
 
