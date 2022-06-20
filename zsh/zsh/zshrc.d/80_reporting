@@ -4,7 +4,6 @@
 
 zmodload zsh/datetime
 
-typeset -g -a __last_cmds
 typeset -g __last_cmd
 typeset -g __last_cmd_dir
 typeset -g __last_cmd_time
@@ -15,31 +14,6 @@ _record_cmd() {
     __last_cmd_time=$(print -P "%D{%s}")
 }
 add-zsh-hook preexec _record_cmd
-
-_process_cmd_time() {
-    [[ -z "$__last_cmd" ]] && return
-    local curtime=$(print -P "%D{%s}")
-    local timedelta=$(( curtime - __last_cmd_time ))
-
-    local hours=$(( timedelta / 3600 ))
-    local minutes=$(( timedelta / 60 % 60 ))
-    local seconds=$(( timedelta % 60 ))
-
-    local entry=""
-    if (( $hours == 0 )) && (( $minutes == 0 )); then
-        entry+="${(l:8:)seconds}"
-    elif (( $hours == 0 )); then
-        entry+="${(l:5:)minutes}:${(l:2::0:)seconds}"
-    else
-        entry+="${(l:2:)hours}:${(l:2::0:)minutes}:${(l:2::0:)seconds}"
-    fi
-
-    entry+="  $(strftime '%T' $__last_cmd_time) - $(strftime '%T' $curtime)  $__last_cmd_exitstatus  $__last_cmd"
-
-    __last_cmds+=( $entry )
-    (( ${#__last_cmds} > 10 )) && shift __last_cmds
-}
-add-zsh-hook precmd _process_cmd_time
 
 _alert_bg_job_finished() {
     [[ -z "$__last_cmd" ]] && return
@@ -75,9 +49,5 @@ _clear_last_cmd() {
 }
 add-zsh-hook precmd _clear_last_cmd
 
-
-timerecords() {
-    print -l ${__last_cmds}
-}
 
 # vim: filetype=zsh

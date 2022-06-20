@@ -1,112 +1,11 @@
-__prompt_jobs() {
-    echo "%(1j.%B%F{cyan}%j%f%b .)"
-}
-
-typeset -ghi __next_command __last_command
-__inc_command() { (( __next_command++ )) }
-add-zsh-hook preexec __inc_command
-__prompt_exitcode() {
-    if (( __next_command == __last_command )); then
-        echo ""
-    else
-        # This only seems to have effect locally...
-        (( __last_command = __next_command ))
-        echo "%(0?..%B%F{red}%?%f%b )"
-    fi
-}
-
-# test if we have writing permission for the current directory
-__prompt_wperm() {
-    if ! [[ -w "$PWD" ]]; then
-        echo "%B%F{red}!%f%b"
-    fi
-}
-
-__prompt_logo() {
-    if [[ -z "$SSH_CONNECTION" ]]; then
-        return
-    fi
-    if [[ -n "$_prompt_logo" ]]; then
-        echo "$_prompt_logo • "
-        return
-    fi
-    _prompt_logo="?"
-    if [[ -r /etc/issue ]]; then
-        DISTRO=$(grep -m1 "^[a-zA-Z]" /etc/issue)
-        case "${DISTRO:l}" in
-            *debian*)
-                _prompt_logo="%F{161}@%f"
-                ;;
-            *ubuntu*)
-                # _prompt_logo="%F{160}\\%F{208}o%F{yellow}/%f"
-                _prompt_logo="%F{magenta}u%f"
-                ;;
-            *arch*)
-                _prompt_logo="%F{32}A%f"
-                ;;
-        esac
-    elif ismac; then
-        _prompt_logo="%F{246}X%f"
-    elif uname -s | grep -i netbsd >/dev/null; then
-        _prompt_logo="%F{244}\\%F{202}~%f"
-    fi
-    echo "$_prompt_logo • "
-}
-
 __prompt_orighome() {
     if [[ $HOME != $ORIGHOME ]]; then
         print "%F{246}${PWD/$ORIGHOME/\~}%f"
     fi
 }
 
-__prompt_jdk() {
-    [[ -z $JAVA_HOME ]] && return
-    local jdk=$(basename $JAVA_HOME)
-    if [[ $jdk != jdk-default ]] && [[ $jdk != current ]]; then
-        print "%F{cyan}$jdk%f "
-    fi
-}
-
-__prompt_ant() {
-    [[ -z $ANT_HOME ]] && return
-    local ant=$(basename $ANT_HOME)
-    if [[ $ant != ant-default ]] && [[ $ant != current ]]; then
-        print "%F{cyan}$ant%f "
-    fi
-}
-
-__prompt_nave() {
-    [[ -z "$NAVEVERSION" ]] && return
-    print "%F{red}(nave $NAVEVERSION)%f "
-}
-
-__prompt_venv() {
-    if [[ -n "$VIRTUAL_ENV" ]]; then
-        local version=$(python --version | awk '{ print $2 }')
-        printf " • 🐍 %s" $version
-    fi
-}
-
-__prompt_local() {
-    (( $#_prompt_local == 0 )) && return
-    print " • ${(j: • :)_prompt_local}"
-}
-
-_prompt_logo=""
-_prompt_path="%F{green}%~%f"
-_prompt_vcs_info=""
-typeset -ga _prompt_local
-_prompt_local_extra=""
-
-__prompt_reset_vars() {
-    _prompt_local=()
-    _prompt_local_extra=""
-}
-add-zsh-hook precmd __prompt_reset_vars
-
-PS1='
-$(__prompt_logo)%F{red}%n%f @ %F{yellow}%m%f ${_prompt_vcs_icon} ${_prompt_path}$(__prompt_wperm)${_prompt_vcs_info}$(__prompt_venv)$(__prompt_local)${_prompt_local_extra}
-%(2L.%B%L%b .)$(__prompt_jdk)$(__prompt_ant)$(__prompt_nave)$(__prompt_exitcode)$(__prompt_jobs)%(!.#.$) '
+export STARSHIP_CONFIG=$HOME/.etc/starship.toml
+eval "$(starship init zsh)"
 
 RPS1='$(__prompt_orighome)'
 
@@ -115,7 +14,5 @@ PS3='?# '         # selection prompt used within a select loop.
 PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
 
 PROMPT_EOL_MARK=%B⏎%b
-
-VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # vim: filetype=zsh

@@ -1,0 +1,51 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+
+[character]
+format = "$symbol "
+success_symbol = '[\$](default)'
+error_symbol = '[\$](red)'
+
+[directory]
+style = "green"
+repo_root_style = "yellow"
+truncate_to_repo = false
+
+[git_branch]
+format = "@ [$branch(:$remote_branch)]($style) "
+style = "bold yellow"
+
+[git_status]
+style = "default"
+conflicted = "[=](red)"
+ahead = "[⇡](cyan)${count}"
+behind = "[⇣](cyan)${count}"
+diverged = "[⇡](cyan)${ahead_count}[⇣](cyan)${behind_count}"
+up_to_date = "[✓](green)"
+untracked = "[?](cyan)"
+stashed = "[$](yellow)"
+modified = "[*](red)"
+staged = "[+](green)"
+renamed = "[»](cyan)"
+deleted = "[✘](red)"
+
+[hostname]
+ssh_only = true
+format = "[$ssh_symbol$hostname]($style) • "
+style = "cyan"
+
+[rlang]
+# Disable for now because of .Rprofile in home dir
+disabled = true
+
+[shlvl]
+disabled = false
+
+[status]
+disabled = false
+symbol = ""
+
+[username]
+show_always = false
+format = "[$user]($style) • "

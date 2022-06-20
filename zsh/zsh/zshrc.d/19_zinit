@@ -17,6 +17,9 @@ zinit ice wait lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
 zinit ice from"gh-r" as"program"
+zinit light starship/starship
+
+zinit ice from"gh-r" as"program"
 zinit light junegunn/fzf-bin
 zinit ice as"program"
 zinit snippet https://github.com/junegunn/fzf/blob/master/bin/fzf-tmux
