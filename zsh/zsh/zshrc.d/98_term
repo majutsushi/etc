@@ -1,6 +1,0 @@
-# For some crazy reason gnome-terminal lies about its identity.
-if [[ $TERM == xterm && $COLORTERM == gnome-terminal ]]; then
-    TERM=gnome-256color
-fi
-
-# vim: filetype=zsh
