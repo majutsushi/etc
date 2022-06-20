@@ -14,6 +14,8 @@ zinit ice wait lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=0
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=247
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 zinit ice wait lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
