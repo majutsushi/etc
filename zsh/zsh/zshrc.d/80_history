@@ -39,7 +39,7 @@ _hist_ignore_f() {
 add-zsh-hook zshaddhistory _hist_ignore_f
 
 _append_full_hist() {
-    if [[ "$UID" -ne 0 ]]; then
+    if [[ "$UID" -ne 0 && $1 != $'\n' ]]; then
         local cmd=${1%%$'\n'}
         [[ "$cmd" =~ "^ +" ]] && return # imitate hist_ignore_space
         local log_dir="$(print -P "$ZSH_VAR_LIB_DIR/history.full/%D{%Y}/%D{%m}")"
