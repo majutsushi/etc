@@ -22,7 +22,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit light romkatv/zsh-prompt-benchmark
 
-zinit ice from"gh-r" as"program"
+zinit ice from"gh-r" as"program" bpick"*.tar.gz"
 zinit light starship/starship
 
 zinit ice from"gh-r" as"program"
