@@ -13,6 +13,7 @@ zinit light zsh-users/zsh-completions
 zinit ice wait lucid
 zinit light zdharma-continuum/fast-syntax-highlighting
 
+ZSH_AUTOSUGGEST_MANUAL_REBIND=0
 zinit ice wait lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
