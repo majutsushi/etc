@@ -16,6 +16,9 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit ice wait lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
+zinit ice wait lucid
+zinit light romkatv/zsh-prompt-benchmark
+
 zinit ice from"gh-r" as"program"
 zinit light starship/starship
 
