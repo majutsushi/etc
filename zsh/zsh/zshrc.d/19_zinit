@@ -44,6 +44,9 @@ zinit ice from"gh-r" as"program" pick"delta-*/delta"
 zinit light dandavison/delta
 
 zinit ice from"gh-r" as"program"
+zinit light PaulJuliusMartinez/jless
+
+zinit ice from"gh-r" as"program"
 zinit light tomnomnom/gron
 
 zinit ice from"gh-r" as"program" mv"jira* -> jira"
