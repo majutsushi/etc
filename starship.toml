@@ -10,7 +10,10 @@ error_symbol = '[\$](red)'
 [directory]
 style = "green"
 repo_root_style = "yellow"
+truncation_length = 20
 truncate_to_repo = false
+truncation_symbol = "…/"
+fish_style_pwd_dir_length = 2
 
 [git_branch]
 format = "@ [$branch(:$remote_branch)]($style) "
