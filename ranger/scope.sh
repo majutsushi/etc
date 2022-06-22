@@ -119,7 +119,7 @@ case "$extension" in
         try isoinfo -l -i "$path"  && { dump; exit 0; }
         ;;
     json)
-        try jq . "$path" && { dump; exit 0; }
+        try jq --color-output . "$path" && { dump; exit 0; }
         ;;
     mp3)
         # Not all MP3 files are recognized as audio
