@@ -144,6 +144,9 @@ case "$mimetype" in
         try sqlite3 "$path" ".dump" && { dump; exit 0; } || exit 1;;
     application/csv)
         trim < "$path"; exit 0;;
+    application/json)
+        try jq --color-output . "$path" && { dump; exit 0; }
+        ;;
 esac
 
 exit 1
