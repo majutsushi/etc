@@ -37,7 +37,7 @@
 	d  = diff -B -C -b
 	sd = diff -B -C -b --staged
 	wd = diff --color-words -B -C -b
-	patch = --no-pager diff --no-color
+	patch = !git --no-pager diff --no-color
 	ws = show --color-words
 	branch-diff = !git diff $(git merge-base HEAD master) $1
 	bclean = "!f() { git branch --merged ${1:-master} | grep -v " ${1:-master}$" | xargs -r git branch -d; }; f"
