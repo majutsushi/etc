@@ -294,7 +294,7 @@ psgrep() {
         echo "Usage: psgrep <keyword>" >&2 ; return 1
     else
         ps xauwww | head -n1
-        ps xauwww | grep -v "grep.*$1" | grep $1
+        ps xauwww | grep -v "grep.*$1" | grep $1 --color=always
     fi
 }
 
