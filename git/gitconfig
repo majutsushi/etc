@@ -6,9 +6,11 @@
 	autocrlf = input
 	pager = less -F
 	whitespace = blank-at-eol,space-before-tab,tab-in-indent,blank-at-eof,cr-at-eol
+	untrackedCache = true
 
 [feature]
-	manyFiles = true
+	# JGit only supports index version 4 in v5.9+
+	manyFiles = false
 
 [alias]
 	st = status -sb
