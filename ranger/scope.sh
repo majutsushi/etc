@@ -58,7 +58,13 @@ if [ "$preview_images" = "True" ]; then
         # image files (unless overriden as above), but might fail for
         # unsupported types.
         image/*)
-            exit 7;;
+            if command -v ueberzug >/dev/null && [[ -n "$DISPLAY" ]]; then
+                exit 7
+            else
+                catimg -w $(( width * 2 )) -r 2 -t "$path"
+                exit 4
+            fi
+            ;;
         # Image preview for video, disabled by default.:
         ###video/*)
         ###    ffmpegthumbnailer -i "$path" -o "$cached" -s 0 && exit 6 || exit 1;;
