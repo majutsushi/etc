@@ -38,6 +38,10 @@ ssh_only = true
 format = "[$ssh_symbol$hostname]($style) • "
 style = "cyan"
 
+[java]
+style = "bright-purple"
+detect_files = ["pom.xml", "build.gradle.kts", "build.sbt", ".java-version", ".deps.edn", "project.clj", "build.boot", "build.xml"]
+
 [rlang]
 # Disable for now because of .Rprofile in home dir
 disabled = true
