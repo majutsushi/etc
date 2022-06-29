@@ -12,6 +12,9 @@
 	# JGit only supports index version 4 in v5.9+
 	manyFiles = false
 
+[transfer]
+	credentialsInUrl = die
+
 [alias]
 	st = status -sb
 	ci = commit
