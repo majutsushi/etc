@@ -68,6 +68,12 @@ prompt_logo() {
         local issue
         IFS="" read -r issue < /etc/issue
         case "$issue" in
+            Debian*)
+                logo="${prompt_colour_red}@"
+                ;;
+            Ubuntu*)
+                logo="\\[\\e[38;5;202m\\]u"
+                ;;
             Red\ Hat\ Enterprise*)
                 logo="${prompt_colour_red}RH"
                 ;;
