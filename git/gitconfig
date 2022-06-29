@@ -129,6 +129,9 @@
 	follow = true
 	decorate = short
 
+[mergetool]
+	hideResolved = true
+	keepBackup = false
 [mergetool "gvimdiff3"]
 	cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [mergetool "vimdiff3"]
