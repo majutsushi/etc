@@ -3,6 +3,14 @@
 #
 # https://github.com/grawity/dotfiles/blob/master/.environ.notes
 
+if ! type ismac >/dev/null 2>&1; then
+    ismac() {
+        [ "$(uname -s)" = Darwin ]
+        # Redefine the function to not call an external command every time
+        eval "ismac() { return $?; }"
+    }
+fi
+
 _add_to_path() {
     # This is non-POSIX but works in dash
     local pos="$1"
@@ -47,14 +55,29 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_CONFIG_HOME=$HOME/.config
 # export XDG_CONFIG_DIRS=/etc/xdg
 export XDG_STATE_HOME=$HOME/.local/state
-export XDG_CACHE_HOME=$HOME/.cache
+if ismac; then
+    export XDG_CACHE_HOME=$HOME/Library/Caches
+else
+    export XDG_CACHE_HOME=$HOME/.cache
+fi
+if ismac; then
+    export XDG_RUNTIME_DIR=$TMPDIR
+fi
 
 export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
-_add_to_path pre PATH "$PYENV_ROOT/bin"
+if [ -d "$PYENV_ROOT/bin" ]; then
+    _add_to_path pre PATH "$PYENV_ROOT/bin"
+fi
 if command -v pyenv > /dev/null; then
     eval "$(pyenv init --path)"
 fi
 
+if [ -n "$HOMEBREW_PREFIX" ]; then
+    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
+    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-getopt/libexec/gnubin"
+    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin"
+    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin"
+fi
 _add_to_path pre PATH "$HOME/.local/bin"
 _add_to_path pre PATH "$HOME/usr/bin"
 _add_to_path pre PATH "$HOME/.etc/bin"
