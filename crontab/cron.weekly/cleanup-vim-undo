@@ -1,3 +1,3 @@
 #!/bin/bash
 
-find $HOME/.var/lib/vim/undo -type f -mtime +100 -delete
+find "$HOME/.var/lib/vim/undo" -type f -mtime +100 -delete

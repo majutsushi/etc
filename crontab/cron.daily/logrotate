@@ -1,3 +1,5 @@
 #!/bin/sh
 
-/usr/sbin/logrotate --state $HOME/.var/lib/logrotate.status $HOME/.etc/logrotate.conf
+[ -x /usr/sbin/logrotate ] || exit 0
+
+/usr/sbin/logrotate --state "$HOME/.var/lib/logrotate.status" "$HOME/.etc/logrotate.conf"

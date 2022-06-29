@@ -4,6 +4,6 @@ command -v fuser >/dev/null 2>&1 || exit 0
 
 shopt -s nullglob
 
-for i in $HOME/.var/lib/vim/swap/*; do
+for i in "$HOME/.var/lib/vim/swap"/*; do
     fuser "$i" >/dev/null 2>&1 || rm -f "$i"
 done
