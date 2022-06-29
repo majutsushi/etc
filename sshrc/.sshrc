@@ -170,7 +170,7 @@ export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.
 export SYSTEMD_LESS="-F$LESS"
 export LESSHISTFILE=$SSHHOME/.lesshst
 export LESSKEY=$SSHHOME/.less
-lesskey "$SSHRCD/lesskey"
+lesskey "$SSHRCD/lesskey" 2>/dev/null
 
 export LESS_TERMCAP_md=$(tput setaf 1; tput bold)
 export LESS_TERMCAP_us=$(tput setaf 2; tput bold)
