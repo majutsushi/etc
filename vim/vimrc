@@ -1195,20 +1195,12 @@ let g:vim_material_statuscolours = {
 \ }
 
 function! s:determine_colorscheme() abort
-    let local_dir = expand("~/.local/etc/vim")
-    if !filereadable(local_dir)
-        call mkdir(local_dir, "p")
-    endif
-
-    let cs_file = local_dir . "/colorscheme.txt"
-    if filereadable(cs_file)
-        let ftime = getftime(cs_file)
-        if ftime > g:colorscheme_ftime
-            let scheme = readfile(cs_file)[0]
-            execute 'colorscheme' scheme
-            let g:colorscheme_ftime = ftime
-        endif
+    call system(["is-dark-mode"])
+    if v:shell_error
+        set background=light
+        colorscheme vim-material
     else
+        set background=dark
         colorscheme desert
     endif
 endfunction
