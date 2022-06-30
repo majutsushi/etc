@@ -61,7 +61,6 @@ compdef _mkdir mcd
 # defaults for some programs
 alias ffmpeg="ffmpeg -hide_banner"
 alias ffprobe="ffprobe -hide_banner"
-alias grep="pager-wrapper grep --color=auto"
 alias gdb="gdb -q"
 alias less="less -F"
 alias mocp="padsp -M mocp --moc-dir $HOME/.etc/moc --sound-driver OSS"
@@ -88,7 +87,7 @@ fi
 
 alias da='du -sch'
 alias decolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
-alias g="grep --color=always --extended-regexp"
+alias g="pager-wrapper grep --color=always --extended-regexp"
 alias jo='jobs -l'
 alias jsonpp='python -mjson.tool'
 alias le='/usr/share/vim/vimcurrent/macros/less.sh'
