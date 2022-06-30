@@ -1,12 +1,28 @@
+" Ideas: https://github.com/sdaschner/dotfiles/blob/master/.ideavimrc
+
 set ignorecase
 set smartcase
+
 set incsearch
 set hlsearch
-set surround
+
+set showmode
+set showcmd
+
+set NERDTree
+let g:NERDTreeMapActivateNode='l'
+let g:NERDTreeMapJumpParent='h'
+
+set ideamarks
 set ideajoin
+set idearefactormode=keep
+set surround
 
 set clipboard+=unnamed
 set clipboard+=unnamedplus
+
+set scrolloff=5
+set sidescrolloff=5
 
 nmap <Enter> <Action>(GotoDeclaration)
 
