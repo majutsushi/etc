@@ -6,7 +6,8 @@ if [[ ! "$TERM" =~ ^\(screen.*\|rxvt\|dumb\|vt100\)$ ]] \
    && [[ -z "$TMUX_DISABLE" ]] \
    && [[ -z "$ZSHRUN" ]] \
    && [[ -z "$VIM" ]] \
-   && [[ -z "$TERM_PROGRAM" ]]; then
+   && [[ "$TERM_PROGRAM" != vscode ]] \
+   && [[ "$TERMINAL_EMULATOR" != JetBrains-JediTerm ]]; then
     export ORIGTERM=$TERM
     export ORIGCOLORTERM=$COLORTERM
     unset TMUX
