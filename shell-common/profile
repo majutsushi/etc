@@ -216,6 +216,7 @@ export FZF_DEFAULT_OPTS="\
     --preview 'echo {}' \
     --preview-window down:3:hidden:wrap \
     --bind '?:toggle-preview' \
+    --bind 'ctrl-l:preview:bat --plain --color always {}' \
     --bind 'f1:execute(less -+F -f {})' \
     --bind 'ctrl-y:execute-silent(echo {} | clipboard-copy)+abort' \
     --color fg:-1,bg:-1,hl:2,fg+:11,bg+:-1,hl+:10,info:7,prompt:6,pointer:9,marker:1
