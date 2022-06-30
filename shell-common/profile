@@ -1,5 +1,6 @@
 #!/bin/sh
 # The shebang is just to get shellcheck to use POSIX rules
+# shellcheck disable=SC3043
 #
 # https://github.com/grawity/dotfiles/blob/master/.environ.notes
 
@@ -35,6 +36,7 @@ _add_to_path() {
 
 # This wrapper makes the filename of the sourced file available as $1 in the file
 _source() {
+    # shellcheck source=/dev/null
     . "$1"
 }
 
@@ -50,18 +52,18 @@ if [ -d ~/.local/etc/profile.d ]; then
 fi
 
 
-export XDG_DATA_HOME=$HOME/.local/share
+export XDG_DATA_HOME="$HOME/.local/share"
 # export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
-export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CONFIG_HOME="$HOME/.config"
 # export XDG_CONFIG_DIRS=/etc/xdg
-export XDG_STATE_HOME=$HOME/.local/state
+export XDG_STATE_HOME="$HOME/.local/state"
 if ismac; then
-    export XDG_CACHE_HOME=$HOME/Library/Caches
+    export XDG_CACHE_HOME="$HOME/Library/Caches"
 else
-    export XDG_CACHE_HOME=$HOME/.cache
+    export XDG_CACHE_HOME="$HOME/.cache"
 fi
 if ismac; then
-    export XDG_RUNTIME_DIR=$TMPDIR
+    export XDG_RUNTIME_DIR="$TMPDIR"
 fi
 
 export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
@@ -92,7 +94,7 @@ if [ -z "$MANPATH" ]; then
 fi
 export MANPATH
 
-export LD_LIBRARY_PATH=$HOME/.local/lib/ld
+export LD_LIBRARY_PATH="$HOME/.local/lib/ld"
 
 
 # Make sure Monday is the first day of the week, as it should be.
@@ -104,30 +106,32 @@ export EDITOR=vim
 export VISUAL="$EDITOR"
 export BROWSER=xdg-open
 
-export PAGER=${PAGER:-less}
+export PAGER="${PAGER:-less}"
 
 export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t'
 export SYSTEMD_LESS="-F$LESS"
-export LESSHISTFILE=$HOME/.var/lib/lesshst
-export LESSKEY=$HOME/.var/lib/less
+export LESSHISTFILE="$HOME/.var/lib/lesshst"
+export LESSKEY="$HOME/.var/lib/less"
 export LESSOPEN="| $HOME/.etc/less/lessfilter %s"
 
 # See 'man 5 termcap' for capabilities
 # start bold mode => bold red
-export LESS_TERMCAP_md=$(tput setaf 9; tput bold)
+LESS_TERMCAP_md="$(tput setaf 9; tput bold)"
 # start underlining => bold green
-export LESS_TERMCAP_us=$(tput setaf 10; tput bold)
+LESS_TERMCAP_us="$(tput setaf 10; tput bold)"
 # end underlining => turn off all attributes
-export LESS_TERMCAP_ue=$(tput sgr0)
+LESS_TERMCAP_ue="$(tput sgr0)"
 # start standout mode => black on white
-export LESS_TERMCAP_so=$(tput setaf 0; tput setab 7)
+LESS_TERMCAP_so="$(tput setaf 0; tput setab 7)"
 # end standout mode => turn off all attrs
-export LESS_TERMCAP_se=$(tput sgr0)
+LESS_TERMCAP_se="$(tput sgr0)"
+export LESS_TERMCAP_md LESS_TERMCAP_us LESS_TERMCAP_ue LESS_TERMCAP_so LESS_TERMCAP_se
+
 # make groff not output ANSI escape sequences directly, but old codes with
 # backspace that can then be changed with the less codes above
 export GROFF_NO_SGR=1
 
-export MANWIDTH=${MANWIDTH:-80}
+export MANWIDTH="${MANWIDTH:-80}"
 
 export CLICOLOR=1
 eval "$(dircolors -b "$HOME/.etc/shell-common/dircolors")" 2>/dev/null || :
@@ -151,16 +155,16 @@ fi
 # export RUBYOPT="-w $RUBYOPT"
 export RI="-f ansi"
 
-export GOPATH=$HOME/src/go
+export GOPATH="$HOME/src/go"
 _add_to_path post PATH "$GOPATH/bin"
 
-export TERMINFO=$XDG_DATA_HOME/terminfo
+export TERMINFO="$XDG_DATA_HOME/terminfo"
 
-export SSHHOME=$HOME/.etc/sshrc
+export SSHHOME="$HOME/.etc/sshrc"
 
 export AUTOSSH_PORT=0
 
-export TMUX_TMPDIR=$XDG_RUNTIME_DIR
+export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 
 export ARTISTIC_STYLE_OPTIONS="$HOME"/.etc/astylerc
 export BIBTOOLRSC="$HOME"/.etc/bibtoolrsc
@@ -196,7 +200,7 @@ fi
 export PIPENV_VENV_IN_PROJECT=1
 export PIPENV_SHELL_FANCY=1
 
-export CCACHE_DIR=$XDG_CACHE_HOME/ccache
+export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
 export CCACHE_COMPRESS=1
 export CCACHE_HASHDIR=1
 
@@ -221,7 +225,7 @@ export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
 
 export GITHUB_USER=majutsushi
 
-export NETHACKOPTIONS=@$HOME/.etc/nethackrc
+export NETHACKOPTIONS="@$HOME/.etc/nethackrc"
 
 
 # Make sure this is first in PATH
