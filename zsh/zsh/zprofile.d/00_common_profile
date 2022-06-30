@@ -1,3 +1,14 @@
+if ismac && [[ -x /usr/libexec/path_helper ]]; then
+    # Clear the path because the path_helper run in /etc/zprofile will have
+    # messed up the order. Running it here again with an empty PATH will then
+    # just populate it with the default values.
+    # This is important when running tmux with a login shell.
+    # https://superuser.com/a/583502
+    # https://gist.github.com/ekreutz/995bb95e428358b9efa2b2f80b02143c
+    PATH=
+    eval $(/usr/libexec/path_helper -s)
+fi
+
 emulate sh -c 'source "$HOME"/.profile'
 
 # vim: filetype=zsh
