@@ -29,25 +29,16 @@
 	log-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
 	show-upstream-branch = rev-parse --abbrev-ref '@{upstream}'
 	show-push-branch = rev-parse --abbrev-ref '@{push}'
-	in = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll ..trunk 2>/dev/null; then git ll ..git-svn; fi; else git ll ..@{upstream}; fi"
+	in = "!git ll ..@{upstream}"
 	new = "!f() { git ll ${1:-HEAD}@{1}..${1:-HEAD}@{0}; }; f"
-	out = "!if git-config --get-regexp svn-remote >/dev/null 2>&1; then if ! git ll trunk.. 2>/dev/null; then git ll git-svn..; fi; else git ll @{push}..; fi"
-
-	svnl = svn log --oneline --show-commit
-	svn-show = "!f() { git show $(git svn find-rev $1); }; f"
-	svn-co = "!f() { git checkout $(git svn find-rev $1); }; f"
+	out = "!git ll @{push}.."
 
 	d  = diff -B -C -b
 	sd = diff -B -C -b --staged
 	wd = diff --color-words -B -C -b
 	patch = !git --no-pager diff --no-color
 	ws = show --color-words
-	branch-diff = !git diff $(git merge-base HEAD master) $1
-	bclean = "!f() { git branch --merged ${1:-master} | grep -v " ${1:-master}$" | xargs -r git branch -d; }; f"
 	diffcommit = !"bash -c \"nvim -d <(git show --stat-width=300 --stat-name-width=275 -p \"$1\") <(git show --stat-width=300 --stat-name-width=275 -p \"$2\")\""
-
-	up = !git pull && git ll HEAD@{1}..
-	reup = !git pull --rebase && git diff --stat HEAD@{1}.. && git ll HEAD@{1}..
 
 	spull = "!f() { git pull \"$@\" && git submodule sync --recursive && git submodule update --init --recursive; }; f"
 	spush = push --recurse-submodules=on-demand
