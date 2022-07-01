@@ -23,6 +23,8 @@ set ignore-case    = yes           # Ignore case when searching?
 set vertical-split = auto          # Enum: horizontal, vertical, auto; Use auto to
                                    # switch to horizontal split when width allows it
 
+bind generic D :toggle word-diff
+
 # User-defined commands
 # ---------------------
 bind generic y @sh -c 'printf %(commit) | clipboard-copy'
