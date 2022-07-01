@@ -87,13 +87,13 @@ case "$extension" in
     jar)
         try deepjarlist "$path" && { dump; exit 0; };;&
     # Archive extensions:
-    7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
+    7z|a|ace|alz|arc|arj|bz|bz2|cab|cbz|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
     rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)
         try als "$path" && { dump; exit 0; }
         try acat "$path" && { dump; exit 3; }
         try bsdtar -lf "$path" && { dump; exit 0; }
         exit 1;;
-    rar)
+    rar|cbr)
         try unrar -p- lt "$path" && { dump; exit 0; } || exit 1;;
     # PDF documents:
     pdf)
