@@ -11,7 +11,11 @@
 #     bindkey -M isearch . self-insert
 # ------------------------------------------------------------------------------------------
 
-[[ "$LBUFFER" =~ "(^|[ /])\.\." ]] && LBUFFER+=/.. || LBUFFER+=.
+case $LBUFFER in
+    (./..|* ./..) LBUFFER+='.' ;;  # In Go: "go list ./..."
+    (..|*[ /=]..) LBUFFER+='/..' ;;
+    (*) LBUFFER+='.' ;;
+esac
 
 have _zsh_highlight && _zsh_highlight
 
