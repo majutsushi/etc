@@ -15,7 +15,7 @@ import signal
 import sys
 import textwrap
 from pathlib import Path
-from subprocess import CalledProcessError, check_output
+from subprocess import CalledProcessError, check_output, run
 
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -42,7 +42,8 @@ def main(args: argparse.Namespace) -> int:
 
     handle_alacritty(is_dark)
     handle_vim(is_dark)
-    handle_gtk(is_dark)
+    handle_xsettings(is_dark)
+    handle_gnome(is_dark)
 
     return 0
 
@@ -74,7 +75,7 @@ def handle_vim(is_dark: bool) -> None:
     scheme_file.write_text(dark_theme if is_dark else light_theme)
 
 
-def handle_gtk(is_dark: bool) -> None:
+def handle_xsettings(is_dark: bool) -> None:
     light_theme = "Adwaita"
     dark_theme = "Adwaita-dark"
 
@@ -95,6 +96,20 @@ def handle_gtk(is_dark: bool) -> None:
     xsettingsd_conf.write_text(settings)
 
     os.kill(pid, signal.SIGHUP)
+
+
+def handle_gnome(is_dark: bool) -> None:
+    scheme = "prefer-dark" if is_dark else "default"
+    run(
+        [
+            "gsettings",
+            "set",
+            "org.gnome.desktop.interface",
+            "color-scheme",
+            scheme,
+        ],
+        check=True,
+    )
 
 
 if __name__ == "__main__":
