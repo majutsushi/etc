@@ -5,7 +5,13 @@ have() {
 }
 
 hl() {
-    bat --color always --style changes,numbers "$@"
+    local theme
+    if is-dark-mode; then
+        theme="Monokai Extended"
+    else
+        theme="Monokai Extended Light"
+    fi
+    bat --color always --theme "$theme" --style changes,numbers "$@"
 }
 
 (
