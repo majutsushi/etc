@@ -12,4 +12,7 @@ fi
 
 DEBIAN_PREVENT_KEYBOARD_CHANGES=1
 
+# Disable shell sessions in macOS's Terminal app
+SHELL_SESSIONS_DISABLE=1
+
 # vim: filetype=zsh
