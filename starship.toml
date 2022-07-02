@@ -2,6 +2,9 @@
 
 add_newline = true
 
+[battery]
+disabled = true
+
 [character]
 format = "$symbol "
 success_symbol = '[\$](default)'
