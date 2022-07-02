@@ -1195,7 +1195,11 @@ let g:vim_material_statuscolours = {
 \ }
 
 function! s:determine_colorscheme() abort
-    call system(["is-dark-mode"])
+    if has('nvim')
+        call system(["is-dark-mode"])
+    else
+        call system("is-dark-mode")
+    endif
     if v:shell_error
         set background=light
         colorscheme vim-material
