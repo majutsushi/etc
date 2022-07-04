@@ -31,10 +31,6 @@ NeoBundle 'jlanzarotta/bufexplorer', {'lazy': 1,
     \ 'autoload': {'commands': ['BufExplorer']}}
 
 " Editing
-NeoBundle 'ycm-core/YouCompleteMe', {'lazy': 1,
-    \ 'augroup': 'youcompletemeStart',
-    \ 'autoload': {'insert': 1}
-\ }
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'junegunn/vim-easy-align', {'lazy': 1,
@@ -46,7 +42,6 @@ NeoBundle 'kana/vim-textobj-indent'
 NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'Konfekt/FastFold'
 NeoBundle 'saihoooooooo/vim-textobj-space'
-NeoBundle 'mattn/calendar-vim'
 NeoBundle 'mbbill/undotree', {'lazy': 1,
     \ 'autoload': {'commands': ['UndotreeToggle']}}
 NeoBundle 'sjl/splice.vim', {'lazy': 1, 'autoload': {'commands': ['SpliceInit']}}
@@ -60,24 +55,13 @@ NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'wellle/targets.vim'
 
 " Filetypes
-NeoBundle 'LaTeX-Box-Team/LaTeX-Box', {
-    \ 'lazy': 1,
-    \ 'autoload': {'filetypes': ['tex']},
-    \ 'external_commands': 'latexmk'
-\ }
-NeoBundle 'chrisbra/CheckAttach', {'lazy': 1, 'autoload': {'filetypes': ['mail']}}
-NeoBundle 'derekwyatt/vim-fswitch', {'lazy': 1, 'autolaod': {'filetypes': ['c', 'cpp']}}
-NeoBundle 'derekwyatt/vim-protodef', {'lazy': 1, 'autoload': {'filetypes': ['cpp']}}
-NeoBundle 'tpope/vim-markdown'
 NeoBundle 'plasticboy/vim-markdown', {'name': 'plasticboy-markdown'}
-NeoBundle 'octol/vim-cpp-enhanced-highlight'
 NeoBundle 'mhinz/vim-rfc'
 NeoBundle 'dense-analysis/ale'
 
 " Information
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'tomtom/quickfixsigns_vim'
-NeoBundle 'gregsexton/gitv', {'lazy': 1, 'autoload': {'commands': ['Gitv']}}
 NeoBundle 'syngan/vim-vimlint', {'depends' : 'ynkdir/vim-vimlparser'}
 NeoBundle 'tpope/vim-characterize'
 NeoBundle 'luochen1990/rainbow'
@@ -96,13 +80,7 @@ NeoBundle 'hzchirs/vim-material'
 
 NeoBundle 'https://github.com/jamessan/vim-gnupg.git'
 
-NeoBundle 'vim-scripts/DrawIt', {'lazy': 1,
-    \ 'autoload': {'commands': ['DIstart', 'DrawIt']}}
-NeoBundle 'vim-scripts/VisIncr'
 NeoBundle 'vim-scripts/ZoomWin'
-" NeoBundle 'vim-scripts/gtk-vim-syntax'
-NeoBundle 'vim-scripts/utl.vim'
-NeoBundle 'vim-scripts/vis'
 
 NeoBundleLocal ~/.vim/bundles
 NeoBundleLocal ~/src/vim/bundles
@@ -1241,19 +1219,9 @@ augroup END
 let g:bufExplorerDisableDefaultKeyMapping=1    " Disable mapping.
 nnoremap <silent> <leader>be :BufExplorer<CR>
 
-" calendar.vim {{{2
-let g:calendar_no_mappings = 1
-
 " cecutil.vim {{{2
 call s:fakemap('<Plug>RestoreWinPosn')
 call s:fakemap('<Plug>SaveWinPosn')
-
-" CheckAttach {{{2
-let g:attach_check_keywords  = '.doc,.pdf,.xls,.ppt,.rtf,.pps'
-let g:attach_check_keywords .= ',attachment,attach,attached,attaching,enclosed'
-let g:attach_check_keywords .= ',anhängen,angehängt,Anhang'
-let g:attach_check_keywords .= ',CV,resume,cover letter'
-let g:checkattach_filebrowser = 'ranger'
 
 " Ctrl-P {{{2
 let g:ctrlp_map = ''
@@ -1322,10 +1290,6 @@ let g:devhelpAssistant = 0
 let g:devhelpSearchKey = '<F7>'
 let g:devhelpWordLength = 5
 
-" DrawIt {{{2
-call s:fakemap('<Plug>DrawItStart')
-call s:fakemap('<Plug>DrawItStop')
-
 " EasyAlign {{{2
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vmap <Enter> <Plug>(EasyAlign)
@@ -1378,18 +1342,6 @@ let g:expand_region_text_objects = {
     \ 'af'  : 1,
 \ }
 
-" FSwitch {{{2
-nnoremap <silent> go :FSHere<cr>
-
-augroup vimrc
-    autocmd BufEnter *.c        let b:fswitchdst  = 'h'
-    autocmd BufEnter *.c        let b:fswitchlocs = './'
-    autocmd BufEnter *.cpp,*.cc let b:fswitchdst  = 'h,hpp'
-    autocmd BufEnter *.cpp,*.cc let b:fswitchlocs = './'
-    autocmd BufEnter *.h        let b:fswitchdst  = 'cpp,cc,c'
-    autocmd BufEnter *.h        let b:fswitchlocs = './'
-augroup END
-
 " Fugitive {{{2
 " automatically delete fugitive buffers when leaving them
 autocmd vimrc BufReadPost fugitive://* set bufhidden=delete
@@ -1401,16 +1353,8 @@ let g:gitgutter_escape_grep = 1
 nmap [c <Plug>(GitGutterPrevHunk)
 nmap ]c <Plug>(GitGutterNextHunk)
 
-" Gitv {{{2
-let g:Gitv_OpenHorizontal = 1
-
 " GnuPG {{{2
 let g:GPGUsePipes = 1
-
-" Latex Box {{{2
-let g:LatexBox_completion_close_braces = 0
-"let g:LatexBox_latexmk_options = "-pvc"
-let g:LatexBox_autojump = 1
 
 " Mark {{{2
 let g:mwPalettes = {
@@ -1507,10 +1451,6 @@ let g:netrw_liststyle = 1
 let g:netrw_nogx = 1
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
-
-" ProtoDef {{{2
-let g:protodefprotogetter = expand('~/.vim/bundle/protodef/pullproto.pl')
-let g:protodefctagsexe = g:ctagsbin
 
 " Quickfixsigns {{{2
 let g:quickfixsigns_classes = ['qfl', 'marks', 'breakpoints']
@@ -1632,48 +1572,12 @@ let g:undotree_WindowLayout = 2
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_DiffCommand = "diff -u"
 
-" UTL {{{2
-let g:utl_cfg_hdl_scm_http_system = "silent !xdg-open '%u'"
-
-function! Utl_AddressScheme_mutt(uri, fragment, dispMode)
-    let delimit = stridx(a:uri, ':')
-    let mid     = strpart(a:uri, delimit + 1)
-
-    if $TERM =~# 'screen\|tmux'
-        let cmd = 'screen '
-    elseif executable('urxvt')
-        let cmd = 'urxvt -e '
-    else
-        let cmd = 'xterm -e '
-    endif
-
-    let cmd .= expand('~/.etc/bin/mutt-open') . ' ' . mid
-    call system(cmd)
-
-    return []
-endfunction
-
 " vertical-move {{{2
 let g:vertical_move_default_mapping = 0
 nmap <silent> gj <Plug>(vertical_move_down)
 nmap <silent> gk <Plug>(vertical_move_up)
 xmap <silent> gj <Plug>(vertical_move_down)
 xmap <silent> gk <Plug>(vertical_move_up)
-
-" YouCompleteMe {{{2
-let g:ycm_filetype_blacklist = {
-    \ 'mail': 1,
-    \ 'markdown': 1,
-    \ 'notes': 1,
-    \ 'vo_base': 1,
-    \ 'pandoc': 1,
-    \ 'tagbar': 1,
-    \ 'text': 1,
-    \ 'qf': 1,
-    \ 'unite': 1,
-    \ 'vimwiki': 1,
-\ }
-nnoremap <M-CR> :YcmCompleter FixIt<CR>
 
 " ZoomWin {{{2
 let g:zoomwin_zoomed = 0
