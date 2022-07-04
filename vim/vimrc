@@ -10,86 +10,86 @@ let g:user_email = "jan@majutsushi.net"
 call mkdir($HOME . "/.var/lib/vim/swap", "p")
 call mkdir($HOME . "/.var/lib/vim/undo", "p")
 
+let plugin_dir = '~/.var/lib/vim/plugged'
+if empty(glob(plugin_dir . '/vim-plug/autoload/plug.vim'))
+    silent execute '!curl -fLo ' . plugin_dir . '/vim-plug/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 if has('vim_starting')
-    set runtimepath+=~/.var/lib/vim/bundles/neobundle.vim/
+    set runtimepath+=~/.var/lib/vim/plugged/vim-plug/
 endif
 
-call neobundle#begin(expand('~/.var/lib/vim/bundles/'))
-
-NeoBundleFetch 'Shougo/neobundle.vim'
+call plug#begin(plugin_dir)
 
 " Navigation
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'FelikZ/ctrlp-py-matcher'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
-NeoBundle 'Lokaltog/vim-easymotion', {'lazy': 1,
-    \ 'autoload': {'mappings': '<Plug>(easymotion'}}
-NeoBundle 'bruno-/vim-vertical-move', {'lazy': 1,
-    \ 'autoload': {'mappings': ['<Plug>(vertical_move']}}
-NeoBundle 'jlanzarotta/bufexplorer', {'lazy': 1,
-    \ 'autoload': {'commands': ['BufExplorer']}}
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Lokaltog/vim-easymotion', {'on': '<Plug>(easymotion'}
+Plug 'bruno-/vim-vertical-move', {'on': '<Plug>(vertical_move'}
+Plug 'jlanzarotta/bufexplorer', {'on': 'BufExplorer'}
 
 " Editing
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'dhruvasagar/vim-table-mode'
-NeoBundle 'junegunn/vim-easy-align', {'lazy': 1,
-    \ 'autoload': {'commands': ['EasyAlign'], 'mappings': '<Plug>(EasyAlign)'}}
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kana/vim-textobj-entire'
-NeoBundle 'kana/vim-textobj-function'
-NeoBundle 'kana/vim-textobj-indent'
-NeoBundle 'kana/vim-textobj-line'
-NeoBundle 'Konfekt/FastFold'
-NeoBundle 'saihoooooooo/vim-textobj-space'
-NeoBundle 'mbbill/undotree', {'lazy': 1,
-    \ 'autoload': {'commands': ['UndotreeToggle']}}
-NeoBundle 'sjl/splice.vim', {'lazy': 1, 'autoload': {'commands': ['SpliceInit']}}
-NeoBundle 'terryma/vim-expand-region', {'lazy': 1,
-    \ 'autoload': {'mappings': '<Plug>(expand_region'}}
-NeoBundle 'tpope/vim-commentary'
-NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-speeddating'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'wellle/targets.vim'
+Plug 'SirVer/ultisnips'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'junegunn/vim-easy-align', {'on': ['EasyAlign', '<Plug>(EasyAlign)']}
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-function'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-line'
+Plug 'Konfekt/FastFold'
+Plug 'saihoooooooo/vim-textobj-space'
+Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
+Plug 'sjl/splice.vim', {'on': 'SpliceInit'}
+Plug 'terryma/vim-expand-region', {'on': '<Plug>(expand_region'}
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'wellle/targets.vim'
 
 " Filetypes
-NeoBundle 'plasticboy/vim-markdown', {'name': 'plasticboy-markdown'}
-NeoBundle 'mhinz/vim-rfc'
-NeoBundle 'dense-analysis/ale'
+Plug 'preservim/vim-markdown'
+Plug 'mhinz/vim-rfc'
+Plug 'dense-analysis/ale'
 
 " Information
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'tomtom/quickfixsigns_vim'
-NeoBundle 'syngan/vim-vimlint', {'depends' : 'ynkdir/vim-vimlparser'}
-NeoBundle 'tpope/vim-characterize'
-NeoBundle 'luochen1990/rainbow'
-NeoBundle 'machakann/vim-highlightedyank'
-NeoBundle 'Konfekt/vim-keyword-lookup'
+Plug 'airblade/vim-gitgutter'
+Plug 'tomtom/quickfixsigns_vim'
+Plug 'ynkdir/vim-vimlparser'
+Plug 'syngan/vim-vimlint'
+Plug 'tpope/vim-characterize'
+Plug 'luochen1990/rainbow'
+Plug 'machakann/vim-highlightedyank'
+Plug 'Konfekt/vim-keyword-lookup'
 
 " Misc
-NeoBundle 'tomtom/tlib_vim'
-NeoBundle 'tpope/vim-eunuch'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-scriptease'
-NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'wsdjeg/vim-fetch'
-NeoBundle 'hzchirs/vim-material'
+Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-scriptease'
+Plug 'tpope/vim-unimpaired'
+Plug 'tyru/open-browser.vim'
+Plug 'wsdjeg/vim-fetch'
+Plug 'hzchirs/vim-material'
 
-NeoBundle 'https://github.com/jamessan/vim-gnupg.git'
+Plug 'jamessan/vim-gnupg'
 
-NeoBundle 'vim-scripts/ZoomWin'
+Plug 'vim-scripts/ZoomWin'
 
-NeoBundleLocal ~/.vim/bundles
-NeoBundleLocal ~/src/vim/bundles
-call neobundle#local(expand("$MSW_REPO_DIR/tools/tools"), {}, ["vim"])
+for bundle_path in glob('~/.vim/bundles/*', 0, 1)
+    call plug#(bundle_path)
+endfor
+for bundle_path in glob('~/src/vim/bundles/*', 0, 1)
+    call plug#(bundle_path)
+endfor
+unlet bundle_path
 
-call neobundle#end()
+call plug#end()
 
-" Prompt for installing not installed bundles
-NeoBundleCheck
 
 " search for exuberant ctags
 let ctagsbins  = []
