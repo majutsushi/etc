@@ -111,7 +111,6 @@ export PAGER="${PAGER:-less}"
 export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t'
 export SYSTEMD_LESS="-F$LESS"
 export LESSHISTFILE="$HOME/.var/lib/lesshst"
-export LESSKEY="$HOME/.var/lib/less"
 export LESSOPEN="| $HOME/.etc/less/lessfilter %s"
 
 # See 'man 5 termcap' for capabilities

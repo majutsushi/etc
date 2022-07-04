@@ -268,9 +268,7 @@ mkdir -p "$HOME/.var/spool/anacron"
 crontab "$HOME/.etc/crontab/crontab"
 
 xlink less/lessfilter
-merge less/lesskey target=/tmp/lesskey$$
-lesskey /tmp/lesskey$$
-rm /tmp/lesskey$$
+xlink less/lesskey target=.config/lesskey
 
 disable-autostart mpd
 disable-autostart mpdris2

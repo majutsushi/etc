@@ -20,3 +20,5 @@ V noaction g|$/usr/bin/vim -\n
 ^W word-backspace
 ^P up
 ^N down
+
+^[ abort

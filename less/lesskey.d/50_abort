@@ -1,3 +1,0 @@
-[[ $(less --version | head -1 | cut -d' ' -f 2) -ge 443 ]]
-# --- CUT HERE ---
-^[ abort
