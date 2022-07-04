@@ -135,7 +135,7 @@
 [mergetool "imediff"]
 	cmd = imediff -o \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [mergetool "splice"]
-	cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED --cmd 'autocmd VimEnter * SpliceInit'"
+	cmd = "nvim -f $BASE $LOCAL $REMOTE $MERGED --cmd 'autocmd VimEnter * SpliceInit'"
 	trustExitCode = true
 [mergetool "idea"]
 	cmd = idea merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\" --wait

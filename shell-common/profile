@@ -102,7 +102,7 @@ if locale -a | command grep -q en_GB.UTF-8; then
     export LC_TIME=en_GB.UTF-8
 fi
 
-export EDITOR=vim
+export EDITOR=nvim
 export VISUAL="$EDITOR"
 export BROWSER=xdg-open
 
