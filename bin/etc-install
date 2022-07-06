@@ -339,7 +339,7 @@ if command -v python3 >/dev/null; then
     xlink python/isort.cfg
 fi
 
-if ! locale -a | command grep -q en_GB.UTF-8; then
+if ! locale -a | command grep -q -E -i 'en_GB\.UTF-?8'; then
     warn "en_GB.UTF-8 locale must be installed"
 fi
 
