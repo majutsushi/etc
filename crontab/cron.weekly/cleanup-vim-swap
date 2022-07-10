@@ -2,8 +2,15 @@
 
 command -v lsof >/dev/null 2>&1 || exit 0
 
+# shellcheck source=/dev/null
+. ~/.profile
+
 shopt -s nullglob
 
-for i in "$HOME/.var/lib/vim/swap"/*; do
+for i in "$XDG_STATE_HOME/vim/swap"/*; do
+    lsof -F p "$i" >/dev/null 2>&1 || rm -f "$i"
+done
+
+for i in "$XDG_STATE_HOME/nvim/swap"/*; do
     lsof -F p "$i" >/dev/null 2>&1 || rm -f "$i"
 done

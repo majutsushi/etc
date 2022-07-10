@@ -7,8 +7,11 @@ let maplocalleader=",,"
 let g:user_name = "Jan Larres"
 let g:user_email = "jan@majutsushi.net"
 
-call mkdir($HOME . "/.var/lib/vim/swap", "p")
-call mkdir($HOME . "/.var/lib/vim/undo", "p")
+if !has('nvim')
+    call mkdir(expand("$XDG_STATE_HOME/vim/backup"), "p")
+    call mkdir(expand("$XDG_STATE_HOME/vim/swap"), "p")
+    call mkdir(expand("$XDG_STATE_HOME/vim/undo"), "p")
+endif
 
 let plugin_dir = '~/.var/lib/vim/plugged'
 if empty(glob(plugin_dir . '/vim-plug/autoload/plug.vim'))
@@ -1053,7 +1056,11 @@ set fileformats=unix,dos,mac
 " keep a backup after overwriting a file
 "set backup
 " list of directories to put backup files in
-"set backupdir= " where to put backup files
+if has('nvim')
+    set backupdir=.,$XDG_STATE_HOME/nvim/backup//
+else
+    set backupdir=.,$XDG_STATE_HOME/vim/backup//
+endif
 
 " automatically read a file when it was modified outside of Vim
 " (global or local to buffer)
@@ -1065,7 +1072,11 @@ set autoread
 " the swap file {{{2
 
 " list of directories for the swap file
-let &directory = expand("$HOME/.var/lib/vim/swap//")
+if has('nvim')
+    set directory=$XDG_STATE_HOME/nvim/swap//
+else
+    set directory=$XDG_STATE_HOME/vim/swap//
+endif
 " number of characters typed to cause a swap file update
 set updatecount=100
 " time in msec after which the swap file will be updated
@@ -1089,8 +1100,11 @@ set wildignorecase
 " command-line completion shows a list of matches
 "set wildmenu
 
-if has('persistent_undo')
-    set undodir=~/.var/lib/vim/undo/
+if has('nvim')
+    set undodir=$XDG_STATE_HOME/nvim/undo//
+    set undofile
+elseif has('persistent_undo')
+    set undodir=$XDG_STATE_HOME/vim/undo/
     set undofile
 endif
 
@@ -1126,9 +1140,9 @@ set virtualedit=all
 set sessionoptions=blank,buffers,curdir,folds,help,slash,tabpages,unix,winsize
 " list that specifies what to write in the viminfo file
 if has('nvim')
-    set shada=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.var/lib/nvim/main.shada
+    set shada=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n$XDG_STATE_HOME/nvim/main.shada
 else
-    set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n~/.var/lib/vim/viminfo
+    set viminfo=!,'20,<50,h,r/tmp,r/mnt,r/media,s50,n$XDG_STATE_HOME/vim/viminfo
 endif
 
 " see ft-tex-plugin
