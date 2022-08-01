@@ -145,6 +145,30 @@ zstyle ':completion:*:man:*'     menu yes no-select
 # make ./configure completion simpler
 zstyle ':completion:*:*:-command-:*' ignored-patterns './config.*'
 
+
+lazycomplete() {
+    local cmd="$1"
+    local completer="$2"
+
+    eval "\
+_lazycomplete_$cmd() {
+    compdef -d $cmd
+    unfunction _lazycomplete_$cmd
+    eval \"_$cmd() {
+        \$($completer)
+    }\"
+    compdef _$cmd $cmd
+}
+"
+    compdef _lazycomplete_$cmd $cmd
+}
+if have rustup; then
+    lazycomplete rustup "rustup completions zsh rustup"
+    lazycomplete cargo "rustup completions zsh cargo"
+fi
+have poetry && lazycomplete poetry "poetry completions zsh"
+
+
 # host completion
 hosts=(
     ${${${${${(f)"$(<${HOME}/.ssh/known_hosts)"//\[/}//\]:/ }:#[\|]*}%%\ *}%%,*}
