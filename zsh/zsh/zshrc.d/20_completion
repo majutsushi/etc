@@ -158,6 +158,7 @@ _lazycomplete_$cmd() {
         \$($completer)
     }\"
     compdef _$cmd $cmd
+    _$cmd
 }
 "
     compdef _lazycomplete_$cmd $cmd
