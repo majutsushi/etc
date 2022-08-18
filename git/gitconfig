@@ -20,6 +20,7 @@
 	ci = commit
 	co = checkout
 	br = branch
+	dft = difftool
 
 	ls  = log --stat
 	lg  = log --graph --oneline --decorate
@@ -84,9 +85,10 @@
 	diff = delta
 	log = delta
 	show = delta
+	difftool = true
 
 [diff]
-	tool = vimdiff
+	tool = difftastic
 	algorithm = histogram
 	submodule = log
 	; noprefix = true
@@ -95,6 +97,12 @@
 	; mnemonicPrefix = true
 	colorMoved = zebra
 	colorMovedWS = ignore-all-space
+
+[difftool]
+	prompt = false
+
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"
 
 [init]
 	defaultBranch = main
