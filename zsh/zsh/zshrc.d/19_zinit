@@ -26,6 +26,9 @@ zinit ice from"gh-r" as"program" bpick"*.tar.gz"
 zinit light starship/starship
 
 zinit ice from"gh-r" as"program"
+zinit light dimo414/bkt
+
+zinit ice from"gh-r" as"program"
 zinit light junegunn/fzf-bin
 zinit ice as"program"
 zinit snippet https://github.com/junegunn/fzf/blob/master/bin/fzf-tmux
