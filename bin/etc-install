@@ -174,6 +174,7 @@ xlink awesome target=.config/awesome
 xlink colorgccrc
 xlink colordiffrc
 xlink ctags
+xlink digrc
 xlink gdbinit
 xlink gnuplot/gnuplot
 xlink gtk/gtkrc-2.0 target=.config/gtk-2.0/gtkrc
