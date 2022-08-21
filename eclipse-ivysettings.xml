@@ -1,7 +1,0 @@
-<ivysettings>
-    <settings defaultResolver="default"/>
-    <caches defaultCacheDir="${user.home}/.cache/ivy-eclipse"/>
-    <resolvers>
-        <ibiblio name="default" m2compatible="true" />
-    </resolvers>
-</ivysettings>

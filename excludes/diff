@@ -18,7 +18,4 @@ target
 .classpath
 .settings
 .project
-ivy-eclipse.properties
-.eclipse-libdirs
-.ivy-eclipse.properties
 ivy-cache
