@@ -186,7 +186,6 @@ xlink inputrc target=.config/inputrc
 xlink irbrc
 xlink latexmkrc
 xlink hg target=.config/hg
-xlink muttator/muttatorrc
 xlink ncmpcpp target=.config/ncmpcpp
 xlink ranger target=.config/ranger
 xlink redshift.conf target=.config/redshift.conf
