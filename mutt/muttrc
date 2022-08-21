@@ -525,8 +525,6 @@ macro index  ,s  "<shell-escape>$my_muttdir/mu-search<enter><change-folder-reado
 # add sender to evolution address book
 # macro index,pager  A    "<pipe-message>~/src/add-to-eds/add-to-eds<return>" "Add the sender address to evolution address book"
 
-# capture in org-mode
-macro index,pager  \eR  "<pipe-message>$my_muttdir/remember-mail\n" "Capture message in org-mode"
 # save in taskwarrior
 macro index,pager  \eT  "<pipe-message>$my_muttdir/task-add\n" "Save message to taskwarrior"
 

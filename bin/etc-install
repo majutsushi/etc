@@ -223,9 +223,6 @@ import:
 EOF
 fi
 
-xlink emacs/emacs
-xlink emacs/emacs.d
-
 xlink git/gitconfig target=.config/git/config
 merge git/gitignore target=.config/git/ignore
 xlink git/attributes target=.config/git/attributes
