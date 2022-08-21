@@ -171,7 +171,6 @@ xlink Rprofile
 xlink ant/ant.conf target=.ant/ant.conf
 xlink aptitude
 xlink awesome target=.config/awesome
-xlink colorgccrc
 xlink colordiffrc
 xlink ctags
 xlink digrc
