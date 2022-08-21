@@ -168,7 +168,6 @@ export AUTOSSH_PORT=0
 
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 
-export ARTISTIC_STYLE_OPTIONS="$HOME"/.etc/astylerc
 export BIBTOOLRSC="$HOME"/.etc/bibtoolrsc
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export INPUTRC="$XDG_CONFIG_HOME"/inputrc
