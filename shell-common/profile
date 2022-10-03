@@ -76,7 +76,7 @@ fi
 
 if [ -n "$HOMEBREW_PREFIX" ]; then
     _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
-    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-getopt/libexec/gnubin"
+    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-getopt/bin"
     _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin"
     _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin"
 fi
