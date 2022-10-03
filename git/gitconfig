@@ -148,6 +148,8 @@
 [mergetool "idea"]
 	cmd = idea merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\" --wait
 	; trustExitCode = true
+[mergetool "code"]
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [merge]
 	tool = splice
