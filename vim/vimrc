@@ -1186,6 +1186,65 @@ let g:vim_material_statuscolours = {
     \ 'Ale'          : [['#b0bec5', '#e53935', 'bold'], ['#ebf4f3', '#90a4ae', 'none']],
 \ }
 
+" Based on https://github.com/altercation/solarized/issues/102#issuecomment-275269574
+" and https://github.com/xolox/vim-colorscheme-switcher
+
+if !exists('s:known_links')
+    let s:known_links = {}
+endif
+
+function! s:find_links() " {{{1
+    " Find and remember links between highlighting groups.
+    redir => listing
+    try
+        silent highlight
+    finally
+        redir END
+    endtry
+    for line in split(listing, "\n")
+        let tokens = split(line)
+        " We're looking for lines like "String xxx links to Constant" in the
+        " output of the :highlight command.
+        if len(tokens) == 5 && tokens[1] == 'xxx' && tokens[2] == 'links' && tokens[3] == 'to'
+            let fromgroup = tokens[0]
+            let togroup = tokens[4]
+            let s:known_links[fromgroup] = togroup
+        endif
+    endfor
+endfunction
+
+function! s:restore_links() " {{{1
+    " Restore broken links between highlighting groups.
+    redir => listing
+    try
+        silent highlight
+    finally
+        redir END
+    endtry
+    let num_restored = 0
+    for line in split(listing, "\n")
+        let tokens = split(line)
+        " We're looking for lines like "String xxx cleared" in the
+        " output of the :highlight command.
+        if len(tokens) == 3 && tokens[1] == 'xxx' && tokens[2] == 'cleared'
+            let fromgroup = tokens[0]
+            let togroup = get(s:known_links, fromgroup, '')
+            if !empty(togroup)
+                execute 'hi link' fromgroup togroup
+                let num_restored += 1
+            endif
+        endif
+    endfor
+endfunction
+
+function! s:accurate_colorscheme(colo_name)
+    call s:find_links()
+    exec "colorscheme " a:colo_name
+    call s:restore_links()
+endfunction
+
+command! -nargs=1 -complete=color MyColorscheme call s:accurate_colorscheme(<q-args>)
+
 function! s:determine_colorscheme() abort
     if has('nvim')
         call system(["is-dark-mode"])
@@ -1193,16 +1252,22 @@ function! s:determine_colorscheme() abort
         call system("is-dark-mode")
     endif
     if v:shell_error
-        set background=light
-        colorscheme vim-material
+        if get(g:, "colors_name", "") != "vim-material"
+            set background=light
+            call s:accurate_colorscheme("vim-material")
+        endif
     else
-        set background=dark
-        colorscheme desert
+        if get(g:, "colors_name", "") != "desert"
+            set background=dark
+            call s:accurate_colorscheme("desert")
+        endif
     endif
 endfunction
 let g:colorscheme_ftime = 0
 call s:determine_colorscheme()
 autocmd vimrc CursorHold,CursorHoldI * nested call s:determine_colorscheme()
+" Workaround for some highlighting issues
+autocmd ColorScheme * exe 'set filetype=' . &filetype
 
 " Plugin and script options {{{1
 
