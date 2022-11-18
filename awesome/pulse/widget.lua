@@ -1,9 +1,6 @@
 -- Based on https://awesome.naquadah.org/wiki/Rman%27s_Simple_Volume_Widget
 
 local wibox   = require("wibox")
-local vicious = require("vicious")
-local naughty = require("naughty")
-local pulse   = require("pulse.pulse")
 local beautiful = require("beautiful")
 local eldritch = require("eldritch")
 

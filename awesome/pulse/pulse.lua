@@ -5,18 +5,18 @@
 --  * (c) 2013, Jan Larres <jan@majutsushi.net>
 ---------------------------------------------------
 
-local vicious = require("vicious")
+local utils = require("eldritch.utils")
 
 -- Pulse: provides volume levels of requested pulseaudio sinks and methods to
 -- change them
 local pulse = {}
 
 -- {{{ Helper functions
-local function pacmd(args)
-    local f = io.popen("pacmd " .. args)
+local function pactl(args)
+    local f = io.popen("pactl " .. args)
     local out = f:read("*all")
     f:close()
-    return out
+    return utils.trim(out)
 end
 
 local function escape(text)
@@ -27,100 +27,41 @@ end
 local function round(num)
     return math.floor(num + 0.5)
 end
-
-local cached_sinks = {}
-
-local function get_default_sink()
-    return string.match(pacmd("dump"), "set%-default%-sink ([^\n]+)")
-end
-
-local function get_default_source()
-    return string.match(pacmd("dump"), "set%-default%-source ([^\n]+)")
-end
-
-local function get_sink_name(sink)
-    if type(sink) == "string" then return sink end
-    if sink == nil then return get_default_sink() end
-
-    local key = sink + 1
-
-    -- Cache requests
-    if not cached_sinks[key] then
-        local line = pacmd("list-sinks")
-        for s in string.gmatch(line, "name: <(.-)>") do
-            table.insert(cached_sinks, s)
-        end
-    end
-
-    return cached_sinks[key]
-end
 -- }}}
 
 -- {{{ Pulseaudio widget type
-local function worker(format, sink)
-    sink = get_sink_name(sink)
-    if sink == nil then return {0, "unknown"} end
-
-    -- Get sink data
-    local data = pacmd("dump")
-
+local function worker(format)
     -- If mute return 0 (not "Mute") so we don't break progressbars
-    if string.find(data,"set%-sink%-mute " .. escape(sink) .. " yes") then
-    return {0, "off"}
+    if string.find(pactl("get-sink-mute @DEFAULT_SINK@"), "Mute: yes") then
+        return {0, "off"}
     end
 
-    local vol = tonumber(string.match(data, "set%-sink%-volume " .. escape(sink) .. " (0x[%x]+)"))
+    local out = pactl("get-sink-volume @DEFAULT_SINK@")
+    local vol = tonumber(string.match(out, "([%d]+)%%"))
     if vol == nil then vol = 0 end
 
-    return { round(vol / 0x10000 * 100), "on"}
+    return { vol, "on"}
 end
 -- }}}
 
 -- {{{ Volume control helper
-function pulse.add(percent, sink)
-    sink = get_sink_name(sink)
-    if sink == nil then return end
-
-    local data = pacmd("dump")
-
-    local pattern = "set%-sink%-volume " .. escape(sink) .. " (0x[%x]+)"
-    local initial_vol =  tonumber(string.match(data, pattern))
-
-    local vol = initial_vol + percent / 100 * 0x10000
-    if vol > 0x10000 then vol = 0x10000 end
-    if vol < 0 then vol = 0 end
-
-    local cmd = string.format("set-sink-volume %s 0x%x >/dev/null", sink, round(vol))
-    pacmd(cmd)
+function pulse.add(percent)
+    local s
+    if percent > 0 then
+        s = "+" .. percent
+    else
+        s = tostring(percent)
+    end
+    pactl("set-sink-volume @DEFAULT_SINK@ " .. s .. "%")
 end
 
-function pulse.toggle(sink)
-    sink = get_sink_name(sink)
-    if sink == nil then return end
-
-    local data = pacmd("dump")
-    local pattern = "set%-sink%-mute " .. escape(sink) .. " (%a%a%a?)"
-    local mute = string.match(data, pattern)
-
-    -- 0 to enable a sink or 1 to mute it.
-    local state = { yes = 0, no = 1}
-    local cmd = string.format("set-sink-mute %s %d", sink, state[mute])
-    pacmd(cmd)
+function pulse.toggle()
+    pactl("set-sink-mute @DEFAULT_SINK@ toggle")
 end
 -- }}}
 
 function pulse.toggle_mic()
-    local source = get_default_source()
-    if source == nil then return end
-
-    local data = pacmd("dump")
-    local pattern = "set%-source%-mute " .. escape(source) .. " (%a%a%a?)"
-    local mute = string.match(data, pattern)
-
-    -- 0 to enable a source or 1 to mute it.
-    local state = { yes = 0, no = 1}
-    local cmd = string.format("set-source-mute %s %d", source, state[mute])
-    pacmd(cmd)
+    pactl("set-source-mute @DEFAULT_SOURCE@ toggle")
 end
 
 setmetatable(pulse, { __call = function(_, ...) return worker(...) end })
