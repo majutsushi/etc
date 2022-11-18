@@ -14,6 +14,13 @@ hl() {
     bat --color always --theme "$theme" --style changes,numbers "$@"
 }
 
+mimetype=$(file --mime-type -Lb "$1")
+
+case "$mimetype" in
+    application/vnd.sqlite3)
+        have sqlite3 && sqlite3 "$1" ".dump" && exit 0;;
+esac
+
 (
     case $(echo "$1" | tr '[:upper:]' '[:lower:]') in
         *.pcap|*.pcapng|*.pcap.gz|*.pcapng.gz)
