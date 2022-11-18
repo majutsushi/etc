@@ -57,6 +57,10 @@ disabled = false
 
 [status]
 disabled = false
+format = '[$symbol$status( \($common_meaning$signal_name\))]($style) '
+pipestatus = true
+pipestatus_format = '\[$pipestatus\] => [$status( \($common_meaning$signal_name\))]($style) '
+pipestatus_segment_format = '[$symbol$status(\($common_meaning$signal_name\))]($style)'
 symbol = ""
 
 [username]
