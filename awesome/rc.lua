@@ -558,11 +558,6 @@ root.keys(globalkeys)
 -- }}}
 
 -- {{{ Notifications configuration
--- The following callback function makes sure that no matter what size a
--- notification wants to present an icon, its size won't be greater than 250
--- pixels.
--- https://github.com/doronbehar/.config_awesome/commit/923d35d47f5fd5ce04054624b34f593c54eece22
--- https://github.com/doronbehar/.config_awesome/commit/8406b4bc06c75048f2b4b0b983faf282f4bbdf75
 naughty.config.notify_callback = function(args)
     eldritch.applets.notifhist.add_notification(args)
     return args
