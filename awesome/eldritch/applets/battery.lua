@@ -6,7 +6,7 @@ local wibox = require("wibox")
 local batwidget = {}
 
 local function new()
-    textbox = wibox.widget.textbox()
+    local textbox = wibox.widget.textbox()
 
     local widget = wibox.widget {
         {
@@ -18,9 +18,11 @@ local function new()
         widget = wibox.container.margin
     }
 
-    textbox.tooltip = tooltip("Battery charge",
-                              { "State", "Charge", "Time left" },
-                              { widget })
+    textbox.tooltip = tooltip(
+        "Battery charge",
+        { "State", "Charge", "Time left" },
+        { widget }
+    )
 
     vicious.register(textbox, vicious.widgets.bat, function(widget, args)
         local text = ""
@@ -47,4 +49,4 @@ local function new()
     return widget
 end
 
-return setmetatable(batwidget, { __call = function(_, ...) return new(...) end })
+return setmetatable(batwidget, { __call = function(_, ...) return new() end })

@@ -41,23 +41,23 @@ local dropdown = {}
 
 -- Create a new window for the drop-down application when it doesn't
 -- exist, or toggle between hidden and visible states when it does
-function toggle(prog, vert, horiz, width, height, sticky, screen)
-    vert   = vert   or "top"
-    horiz  = horiz  or "center"
-    width  = width  or 1
+local function toggle(prog, vert, horiz, width, height, sticky, screen)
+    vert   = vert or "top"
+    horiz  = horiz or "center"
+    width  = width or 1
     height = height or 0.25
     sticky = sticky or false
     screen = screen or capi.mouse.screen
 
     -- Determine signal usage in this version of awesome
-    local attach_signal = capi.client.connect_signal    or capi.client.add_signal
+    local attach_signal = capi.client.connect_signal or capi.client.add_signal
     local detach_signal = capi.client.disconnect_signal or capi.client.remove_signal
 
     if not dropdown[prog] then
         dropdown[prog] = {}
 
         -- Add unmanage signal for scratchdrop programs
-        attach_signal("unmanage", function (c)
+        attach_signal("unmanage", function(c)
             for scr, cl in pairs(dropdown[prog]) do
                 if cl == c then
                     dropdown[prog][scr] = nil
@@ -67,7 +67,8 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
     end
 
     if not dropdown[prog][screen] then
-        spawnw = function (c)
+        local spawnw
+        spawnw = function(c)
             dropdown[prog][screen] = c
 
             -- Scratchdrop clients are floaters
@@ -76,16 +77,17 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
             -- Client geometry and placement
             local screengeom = capi.screen[screen].workarea
 
-            if width  <= 1 then width  = screengeom.width  * width  end
+            if width <= 1 then width = screengeom.width * width end
             if height <= 1 then height = screengeom.height * height end
 
-            if     horiz == "left"  then x = screengeom.x
+            local x, y
+            if horiz == "left" then x = screengeom.x
             elseif horiz == "right" then x = screengeom.width - width
-            else   x =  screengeom.x+(screengeom.width-width)/2 end
+            else x = screengeom.x + (screengeom.width - width) / 2 end
 
-            if     vert == "bottom" then y = screengeom.height + screengeom.y - height
-            elseif vert == "center" then y = screengeom.y+(screengeom.height-height)/2
-            else   y =  screengeom.y - screengeom.y end
+            if vert == "bottom" then y = screengeom.height + screengeom.y - height
+            elseif vert == "center" then y = screengeom.y + (screengeom.height - height) / 2
+            else y = screengeom.y - screengeom.y end
 
             -- Client properties
             c:geometry({ x = x, y = y, width = width, height = height })
@@ -106,7 +108,7 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
         awful.util.spawn(prog, false)
     else
         -- Get a running client
-        c = dropdown[prog][screen]
+        local c = dropdown[prog][screen]
 
         -- Switch the client to the current workspace
         if c:isvisible() == false then c.hidden = true
@@ -116,7 +118,7 @@ function toggle(prog, vert, horiz, width, height, sticky, screen)
         -- Focus and raise if hidden
         if c.hidden then
             -- Make sure it is centered
-            if vert  == "center" then awful.placement.center_vertical(c)   end
+            if vert == "center" then awful.placement.center_vertical(c) end
             if horiz == "center" then awful.placement.center_horizontal(c) end
             c.hidden = false
             c:raise()

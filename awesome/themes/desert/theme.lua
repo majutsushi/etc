@@ -1,7 +1,7 @@
 local awful = require("awful")
 
 -- {{{ Main
-theme = {}
+local theme = {}
 theme.confdir = awful.util.getdir("config") .. "/themes/desert"
 theme.wallpaper = theme.confdir .. "/background.png"
 -- }}}
@@ -10,12 +10,12 @@ theme.wallpaper = theme.confdir .. "/background.png"
 theme.font = "sans 8"
 
 -- {{{ Colors
-theme.fg_normal = "#FFFFFF"
-theme.bg_normal = "#333333"
-theme.fg_focus  = "#FFFFFF"
-theme.bg_focus  = "#1E2320"
-theme.fg_urgent = "#FF0000"
-theme.bg_urgent = "#333333"
+theme.fg_normal  = "#FFFFFF"
+theme.bg_normal  = "#333333"
+theme.fg_focus   = "#FFFFFF"
+theme.bg_focus   = "#1E2320"
+theme.fg_urgent  = "#FF0000"
+theme.bg_urgent  = "#333333"
 theme.bg_systray = theme.bg_normal
 -- }}}
 
@@ -60,10 +60,10 @@ theme.tooltip_border_color = "#777777"
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
-theme.fg_widget        = theme.fg_normal
+theme.fg_widget = theme.fg_normal
 --theme.fg_center_widget = "#88A175"
 --theme.fg_end_widget    = "#FF5656"
-theme.bg_widget        = "#4D4D4D"
+theme.bg_widget = "#4D4D4D"
 --theme.border_widget    = "#3F3F3F"
 -- }}}
 
@@ -101,9 +101,9 @@ theme.widget_docker_active = theme.confdir .. "/icons/widgets/docker_active.png"
 theme.widget_notifhist = theme.confdir .. "/icons/widgets/notifhist.png"
 
 -- {{{ Misc
-theme.icon_theme = "Faenza-Darkest"
-theme.awesome_icon           = theme.confdir .. "/icons/awesome-icon.png"
-theme.menu_submenu_icon      = theme.confdir .. "/icons/submenu.png"
+theme.icon_theme        = "Faenza-Darkest"
+theme.awesome_icon      = theme.confdir .. "/icons/awesome-icon.png"
+theme.menu_submenu_icon = theme.confdir .. "/icons/submenu.png"
 -- }}}
 
 -- {{{ Layout
@@ -129,23 +129,23 @@ theme.layout_floating   = theme.confdir .. "/icons/layouts/floating.png"
 theme.titlebar_close_button_focus  = "/usr/share/awesome/themes/zenburn/titlebar/close_focus.png"
 theme.titlebar_close_button_normal = "/usr/share/awesome/themes/zenburn/titlebar/close_normal.png"
 
-theme.titlebar_ontop_button_focus_active  = "/usr/share/awesome/themes/zenburn/titlebar/ontop_focus_active.png"
-theme.titlebar_ontop_button_normal_active = "/usr/share/awesome/themes/zenburn/titlebar/ontop_normal_active.png"
+theme.titlebar_ontop_button_focus_active    = "/usr/share/awesome/themes/zenburn/titlebar/ontop_focus_active.png"
+theme.titlebar_ontop_button_normal_active   = "/usr/share/awesome/themes/zenburn/titlebar/ontop_normal_active.png"
 theme.titlebar_ontop_button_focus_inactive  = "/usr/share/awesome/themes/zenburn/titlebar/ontop_focus_inactive.png"
 theme.titlebar_ontop_button_normal_inactive = "/usr/share/awesome/themes/zenburn/titlebar/ontop_normal_inactive.png"
 
-theme.titlebar_sticky_button_focus_active  = "/usr/share/awesome/themes/zenburn/titlebar/sticky_focus_active.png"
-theme.titlebar_sticky_button_normal_active = "/usr/share/awesome/themes/zenburn/titlebar/sticky_normal_active.png"
+theme.titlebar_sticky_button_focus_active    = "/usr/share/awesome/themes/zenburn/titlebar/sticky_focus_active.png"
+theme.titlebar_sticky_button_normal_active   = "/usr/share/awesome/themes/zenburn/titlebar/sticky_normal_active.png"
 theme.titlebar_sticky_button_focus_inactive  = "/usr/share/awesome/themes/zenburn/titlebar/sticky_focus_inactive.png"
 theme.titlebar_sticky_button_normal_inactive = "/usr/share/awesome/themes/zenburn/titlebar/sticky_normal_inactive.png"
 
-theme.titlebar_floating_button_focus_active  = "/usr/share/awesome/themes/zenburn/titlebar/floating_focus_active.png"
-theme.titlebar_floating_button_normal_active = "/usr/share/awesome/themes/zenburn/titlebar/floating_normal_active.png"
+theme.titlebar_floating_button_focus_active    = "/usr/share/awesome/themes/zenburn/titlebar/floating_focus_active.png"
+theme.titlebar_floating_button_normal_active   = "/usr/share/awesome/themes/zenburn/titlebar/floating_normal_active.png"
 theme.titlebar_floating_button_focus_inactive  = "/usr/share/awesome/themes/zenburn/titlebar/floating_focus_inactive.png"
 theme.titlebar_floating_button_normal_inactive = "/usr/share/awesome/themes/zenburn/titlebar/floating_normal_inactive.png"
 
-theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/zenburn/titlebar/maximized_focus_active.png"
-theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/zenburn/titlebar/maximized_normal_active.png"
+theme.titlebar_maximized_button_focus_active    = "/usr/share/awesome/themes/zenburn/titlebar/maximized_focus_active.png"
+theme.titlebar_maximized_button_normal_active   = "/usr/share/awesome/themes/zenburn/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_inactive  = "/usr/share/awesome/themes/zenburn/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = "/usr/share/awesome/themes/zenburn/titlebar/maximized_normal_inactive.png"
 -- }}}

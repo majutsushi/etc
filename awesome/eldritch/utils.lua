@@ -57,17 +57,21 @@ function utils.brightness(change)
 end
 
 function utils.font(font, text)
-    return '<span font="' .. tostring(font) .. '">' .. tostring(text) ..'</span>'
+    return '<span font="' .. tostring(font) .. '">' .. tostring(text) .. '</span>'
 end
+
 function utils.fontsize(size, text)
-    return '<span font_size="' .. tostring(size) .. '">' .. tostring(text) ..'</span>'
+    return '<span font_size="' .. tostring(size) .. '">' .. tostring(text) .. '</span>'
 end
+
 function utils.fgcolor(color, text)
     return '<span fgcolor="' .. tostring(color) .. '">' .. tostring(text) .. '</span>'
 end
+
 function utils.bgcolor(color, text)
     return '<span bgcolor="' .. tostring(color) .. '">' .. tostring(text) .. '</span>'
 end
+
 function utils.bold(text)
     return '<span font_weight="bold">' .. tostring(text) .. '</span>'
 end
@@ -99,10 +103,12 @@ function utils.fullscreens(c)
             clientHeight = math.min(clientHeight, screen[s].workarea.height)
             clientWidth = clientWidth + screen[s].workarea.width
         end
-        local t = c:geometry({ x      = clientX,
-                               y      = clientY,
-                               width  = clientWidth - beautiful.border_width * 2,
-                               height = clientHeight - beautiful.border_width * 2 })
+        local t = c:geometry({
+            x      = clientX,
+            y      = clientY,
+            width  = clientWidth - beautiful.border_width * 2,
+            height = clientHeight - beautiful.border_width * 2
+        })
     else
         -- apply the rules to this client so he can return to the right tag
         -- if there is a rule for that.
@@ -170,7 +176,7 @@ function utils.tasklist_update(w, buttons, label, data, objects)
         bgb:set_bg(bg)
         if type(bg_image) == "function" then
             -- TODO: Why does this pass nil as an argument?
-            bg_image = bg_image(tb,o,nil,objects,i)
+            bg_image = bg_image(tb, o, nil, objects, i)
         end
         bgb:set_bgimage(bg_image)
         if icon then

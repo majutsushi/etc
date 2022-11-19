@@ -2,6 +2,7 @@ local rhino = {}
 
 local function worker(format, warg)
     local f = io.popen("jps | grep -E '^[[:digit:]]+ Rhino$'")
+    if f == nil then return {} end
     -- local rhinos = f:read("*all")
 
     local rhinos = {}

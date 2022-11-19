@@ -30,4 +30,4 @@ local function new()
     return widget
 end
 
-return setmetatable(rhinowidget, { __call = function(_, ...) return new(...) end })
+return setmetatable(rhinowidget, { __call = function(_, ...) return new() end })

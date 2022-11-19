@@ -24,7 +24,6 @@ function notifhist.add_notification(data)
     end
 end
 
-
 function notifhist.new()
     local icon = wibox.widget.imagebox(beautiful.widget_notifhist)
 
@@ -36,6 +35,7 @@ function notifhist.new()
     icon.tooltip = awful.tooltip({ objects = { widget } })
     function icon.tooltip.update()
         local items = {}
+        local text
 
         for _, val in ipairs(notifhist.notifications) do
             if val.title then
@@ -58,12 +58,12 @@ function notifhist.new()
 
         icon.tooltip:set_markup(text)
     end
+
     icon.tooltip:update()
 
     widget:connect_signal("mouse::enter", icon.tooltip.update)
 
     return widget
 end
-
 
 return notifhist

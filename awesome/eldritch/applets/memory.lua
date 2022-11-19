@@ -19,9 +19,11 @@ local function new()
         widget = wibox.container.margin
     }
 
-    bar.tooltip = tooltip("Memory",
-                          { "Memory", "Swap" },
-                          { widget })
+    bar.tooltip = tooltip(
+        "Memory",
+        { "Memory", "Swap" },
+        { widget }
+    )
 
     vicious.register(bar, vicious.widgets.mem, function(widget, args)
         widget.tooltip:update({
@@ -34,4 +36,4 @@ local function new()
     return widget
 end
 
-return setmetatable(memwidget, { __call = function(_, ...) return new(...) end })
+return setmetatable(memwidget, { __call = function(_, ...) return new() end })

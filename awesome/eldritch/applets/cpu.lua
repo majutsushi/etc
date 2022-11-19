@@ -1,16 +1,13 @@
 local beautiful = require("beautiful")
 local tooltip = require("eldritch.tooltip")
+local utils = require("eldritch.utils")
 local vicious = require("vicious")
 local wibox = require("wibox")
 
 local cpuwidget = {}
 
 local function getnprocs()
-    local f = io.popen("grep -c processor /proc/cpuinfo")
-    local nprocs = f:read("*all")
-    f:close()
-
-    return nprocs
+    return utils.exec("grep -c processor /proc/cpuinfo")
 end
 
 local function getcpucolours(nprocs)
@@ -82,4 +79,4 @@ local function new()
     return widget
 end
 
-return setmetatable(cpuwidget, { __call = function(_, ...) return new(...) end })
+return setmetatable(cpuwidget, { __call = function(_, ...) return new() end })

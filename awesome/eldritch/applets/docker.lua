@@ -12,12 +12,7 @@ local imagecolor = beautiful.tooltip_title_color or "#f0e68c"
 local headercolor = beautiful.tooltip_key_color or "#98fb98"
 
 local function gettags(image)
-    local f = io.popen("docker image inspect --format='{{.RepoTags}}' " .. image)
-
-    local tags = f:read()
-
-    f:close()
-
+    local tags = utils.exec("docker image inspect --format='{{.RepoTags}}' " .. image)
     tags = tags:sub(2, -2)
 
     local rv = {}
@@ -48,6 +43,7 @@ local function new()
 
     function icon.tooltip.update()
         local f = io.popen("docker ps --format='{{.Image}}\t{{.Command}}\t{{.Names}}' --no-trunc")
+        if f == nil then return end
 
         local data = {}
 
@@ -94,4 +90,4 @@ local function new()
     return widget
 end
 
-return setmetatable(dockerwidget, { __call = function(_, ...) return new(...) end })
+return setmetatable(dockerwidget, { __call = function(_, ...) return new() end })
