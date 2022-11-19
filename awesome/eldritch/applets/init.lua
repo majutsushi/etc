@@ -6,6 +6,5 @@ return {
     inhibit = require("eldritch.applets.inhibit"),
     memory = require("eldritch.applets.memory"),
     notifhist = require("eldritch.applets.notifhist"),
-    rhino = require("eldritch.applets.rhino"),
-    weather = require("eldritch.applets.weather"),
+    rhino = require("eldritch.applets.rhino")
 }

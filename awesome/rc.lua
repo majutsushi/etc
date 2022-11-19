@@ -227,7 +227,6 @@ local applets = {
     cpu       = eldritch.applets.cpu(),
     memory    = eldritch.applets.memory(),
     notifhist = eldritch.applets.notifhist.new(),
-    -- weather = eldritch.applets.weather(),
     -- Keyboard map indicator and switcher
     -- keyboardlayout = awful.widget.keyboardlayout()
 }
@@ -284,7 +283,6 @@ awful.screen.connect_for_each_screen(function(s)
             applets.notifhist,
             -- volicon,
             -- volmargin,
-            -- applets.weather,
             -- applets.keyboardlayout,
             wibox.widget.systray(),
             mytextclock,
