@@ -9,6 +9,7 @@ local utils = {}
 
 function utils.exec(cmd)
     local f = io.popen(cmd)
+    if f == nil then return "" end
     local out = f:read("*all")
     f:close()
     return out
