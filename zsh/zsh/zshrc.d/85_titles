@@ -1,5 +1,3 @@
-if is-at-least 4.3.5; then
-
 _update_terminal_title() {
     if [[ -n "$1" ]]; then
         set_terminal_title "${1}"
@@ -60,46 +58,5 @@ _update_exec_titles() {
     )
 }
 add-zsh-hook preexec _update_exec_titles
-
-
-# Old version
-else # < 4.3.5
-
-_old_precmd_title() {
-    # adjust screen window title
-    if [[ "$TERM" == screen* ]]; then
-        if [[ -n "$SSH_CLIENT" ]]; then
-            print -nP "\ek%m\e\\"
-        else
-            print -n "\ekzsh\e\\"
-        fi
-    fi
-
-    # adjust title of xterm
-    # see http://www.faqs.org/docs/Linux-mini/Xterm-Title.html
-    case $TERM in (xterm*|rxvt*|screen*)
-        print -nP "\e]0;%n@%m: %~\e\\"
-        ;;
-    esac
-}
-add-zsh-hook precmd _old_precmd_title
-
-_old_preexec_title() {
-    # get the name of the program currently running and hostname of local machine
-    # set screen window title if running in a screen
-    if [[ "$TERM" == screen* ]]; then
-        local CMD="${1[(wr)^(*=*|sudo|(auto)?ssh|-*)]//*\//}${SSH_CLIENT:+@${HOST//.*/}}"
-        print -nr $'\ek'$CMD$'\e\\'
-    fi
-
-    # adjust title of xterm
-    case $TERM in (xterm*|rxvt*|screen*)
-        print -nr $'\e]0;'${USER}@${HOST}: $1$'\e\\'
-        ;;
-    esac
-}
-add-zsh-hook preexec _old_preexec_title
-
-fi
 
 # vim: filetype=zsh
