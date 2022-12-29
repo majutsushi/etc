@@ -73,6 +73,10 @@ esac
             have isoinfo && isoinfo -l -i "$1" && exit 0
             exit 1
             ;;
+        *.md|*.markdown)
+            have mdcat && mdcat "$1" && exit 0
+            exit 1
+            ;;
         *)
             hl "$1" 2>/dev/null && exit 0
             exit 1

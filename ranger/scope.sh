@@ -131,6 +131,9 @@ case "$extension" in
         # Not all MP3 files are recognized as audio
         try mediainfo "$path" && { dump | sed 's/  \+:/: /;';  exit 5; }
         ;;
+    md|markdown)
+        try mdcat "$path" && { dump; exit 0; }
+        ;;
 esac
 
 case "$mimetype" in
