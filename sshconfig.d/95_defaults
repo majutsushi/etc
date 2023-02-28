@@ -6,6 +6,7 @@ Host bitbucket.org
     IdentityFile ~/.ssh/id_ed25519
     # BitBucket seems to have disabled connection sharing :/
     ControlMaster no
+    HostKeyAlgorithms +ssh-rsa
 
 Host console.gandi.net
     KexAlgorithms +diffie-hellman-group14-sha1
