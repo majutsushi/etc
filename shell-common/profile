@@ -182,9 +182,9 @@ export WEECHAT_HOME="$XDG_CONFIG_HOME"/weechat
 export MAILCAP="$HOME/.etc/mailcap"	# elinks, w3m
 export MAILCAPS="$MAILCAP:/etc/mailcap"			# Mutt, pine
 
-export PSQLRC="$XDG_CONFIG_HOME/pg/psqlrc"
-export PGPASSFILE="$XDG_CONFIG_HOME/pg/pgpass"
-export PGSERVICEFILE="$XDG_CONFIG_HOME/pg/pg_service.conf"
+export PSQLRC="$XDG_CONFIG_HOME/psqlrc"
+export PGPASSFILE="$XDG_DATA_HOME/postgresql/pgpass"
+export PGSERVICEFILE="$XDG_DATA_HOME/postgresql/pg_service.conf"
 export PSQL_HISTORY="$XDG_CACHE_HOME/psql_history"
 
 export RUSTUP_HOME="$HOME/.var/lib/rustup"

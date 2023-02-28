@@ -1,0 +1,37 @@
+\set QUIET on
+
+\set ON_ERROR_ROLLBACK interactive
+\set COMP_KEYWORD_CASE upper
+\set HISTCONTROL ignoreboth
+\set VERBOSITY verbose
+
+
+-- Prompt1 / Prompt2 / Prompt3
+-- %M : The full host name (with domain name) of the database server, or [local] if the connection is over a Unix domain socket, or [local:/dir/name], if the Unix domain socket is not at the compiled in default location.
+-- %m : The host name of the database server, truncated at the first dot, or [local] if the connection is over a Unix domain socket.
+-- %> : The port number at which the database server is listening.
+-- %n : The database session user name. (The expansion of this value might change during a database session as the result of the command SET SESSION AUTHORIZATION.)
+-- %/ : The name of the current database.
+-- %~ : Like %/, but the output is ~ (tilde) if the database is your default database.
+-- %# : If the session user is a database superuser, then a #, otherwise a >. (The expansion of this value might change during a database session as the result of the command SET SESSION AUTHORIZATION.)
+-- %p : The process ID of the backend currently connected to.
+-- %R : In prompt 1 normally =, but @ if the session is in an inactive branch of a conditional block, or ^ if in single-line mode, or ! if the session is disconnected from the database (which can happen if \connect fails). In prompt 2 %R is replaced by a character that depends on why psql expects more input: - if the command simply wasn't terminated yet, but * if there is an unfinished /* ... */ comment, a single quote if there is an unfinished quoted string, a double quote if there is an unfinished quoted identifier, a dollar sign if there is an unfinished dollar-quoted string, or ( if there is an unmatched left parenthesis. In prompt 3 %R doesn't produce anything.
+-- %x : Transaction status: an empty string when not in a transaction block, or * when in a transaction block, or ! when in a failed transaction block, or ? when the transaction state is indeterminate (for example, because there is no connection).
+-- %l : The line number inside the current statement, starting from 1.
+-- %digits : The character with the indicated octal code is substituted.
+-- %:name: : The value of the psql variable name. See Variables, above, for details.
+-- %`command` : The output of command, similar to ordinary “back-tick” substitution.
+-- %[ ... %] : Terminal control characters
+-- %w : Whitespace of the same width as the most recent output of PROMPT1. This can be used as a PROMPT2 setting, so that multi-line statements are aligned with the first line, but there is no visible secondary prompt.
+
+-- \set PROMPT1 '%[%033]0;%/%007%]%[%033[1;35m%][%`date +%H:%M:%S`]%[%033[0m%] %[%033[34m%]%n %[%033[32m%]%m %[%033[33m%]%~ %[%033[0;40m%]%[%033[K%]%[%033[0m%]\n\n%[%033[0m%]%R%x%# %[%033[0m%]'
+\set PROMPT1 '%[%033[33m%]%n%[%033[0m%]@%[%033[32m%]%m%[%033[0m%]/%[%033[34m%]%/%[%033[0m%] %R%x%# '
+\set PROMPT2 '%[%033[33m%]%n%[%033[0m%]@%[%033[32m%]%m%[%033[0m%]/%[%033[34m%]%/%[%033[0m%] %R%x%# '
+
+
+\pset null '(null)'
+\pset linestyle unicode
+\pset border 2
+\pset format wrapped
+
+\set QUIET off

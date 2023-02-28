@@ -186,6 +186,7 @@ xlink irbrc
 xlink latexmkrc
 xlink hg target=.config/hg
 xlink ncmpcpp target=.config/ncmpcpp
+xlink psqlrc target=.config/psqlrc
 xlink ranger target=.config/ranger
 xlink redshift.conf target=.config/redshift.conf
 xlink rofi target=.config/rofi
