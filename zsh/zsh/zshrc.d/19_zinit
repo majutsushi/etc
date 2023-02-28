@@ -67,6 +67,9 @@ zinit light antonmedv/fx
 zinit ice from"gh-r" as"program" mv"yq* -> yq"
 zinit light mikefarah/yq
 
+zinit ice from"gh-r" as"program"
+zinit light ms-jpq/sad
+
 zinit ice as"program"
 zinit snippet https://github.com/eikenb/terminal-colors/blob/master/terminal-colors
 
