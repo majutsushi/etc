@@ -312,8 +312,6 @@ if command -v X >/dev/null; then
         gsettings set org.gnome.settings-daemon.plugins.keyboard active false || true
     fi
 
-    python3 -m pip install ueberzug
-
     check-program autorandr
     check-program awesome
     check-program dex
