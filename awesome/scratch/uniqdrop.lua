@@ -58,7 +58,7 @@ local function get_geometry(vert, horiz, width, height, screen)
 
     if vert == "bottom" then y = screengeom.height + screengeom.y - height
     elseif vert == "center" then y = screengeom.y + (screengeom.height - height) / 2
-    else y = screengeom.y - screengeom.y end
+    else y = screengeom.y end
 
     return { x = x, y = y, width = width, height = height }
 end
@@ -77,14 +77,11 @@ local function toggle(prog, vert, horiz, width, height, sticky, screen)
     local attach_signal = capi.client.connect_signal or capi.client.add_signal
     local detach_signal = capi.client.disconnect_signal or capi.client.remove_signal
 
-    local resurrected = false
-
     -- Check whether there is still an old scratchpad from before a restart
     if not dropdown[prog] then
         for _, c in ipairs(client.get()) do
             if drop.is_scratch(c) then
                 dropdown[prog] = c
-                resurrected = true
 
                 -- Add unmanage signal for scratchdrop program
                 attach_signal("unmanage", function(cl)
@@ -148,9 +145,8 @@ local function toggle(prog, vert, horiz, width, height, sticky, screen)
 
         -- Focus and raise if hidden
         if c.hidden then
-            -- Make sure it is centered
-            if vert == "center" then awful.placement.center_vertical(c) end
-            if horiz == "center" then awful.placement.center_horizontal(c) end
+            -- Set correct geometry in case of a restart or change in monitor configuration
+            c:geometry(get_geometry(vert, horiz, c:geometry().width, c:geometry().height, screen))
             c.hidden = false
             c:raise()
             capi.client.focus = c
@@ -161,11 +157,6 @@ local function toggle(prog, vert, horiz, width, height, sticky, screen)
                 ctags[i] = nil
             end
             c:tags(ctags)
-        end
-
-        -- Set correct geometry for resurrected scratchpads
-        if resurrected then
-            c:geometry(get_geometry(vert, horiz, width, height, screen))
         end
     end
 end
