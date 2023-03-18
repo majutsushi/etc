@@ -95,4 +95,9 @@ ${1:name}() {
 }
 endsnippet
 
+snippet scriptdir "Scriptdir"
+readonly SCRIPTDIR="$(cd "$(dirname "\$0")" && pwd -P)"
+
+endsnippet
+
 # vim:ft=snippets:
