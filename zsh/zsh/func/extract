@@ -71,6 +71,9 @@ case "$1" in
     *.xz|*.lzma)
         cmd="xz -d -c '$1' > '$basename'"
         ;;
+    *.rpm)
+        cmd="rpm2cpio '$1' | (cd '$tmpdir'; cpio -idmv)"
+        ;;
     *)
         echo "Unsupported archive type"
         rmdir $tmpdir
