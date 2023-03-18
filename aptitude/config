@@ -11,7 +11,7 @@ aptitude::UI::Styles::ChangelogNewerVersion "";
 aptitude::UI::Styles::ChangelogNewerVersion::set "bold";
 aptitude::UI::Styles::Default "";
 aptitude::UI::Styles::Default::fg "white";
-aptitude::UI::Styles::Default::bg "default";
+aptitude::UI::Styles::Default::bg "black";
 aptitude::UI::Styles::DepBroken "";
 aptitude::UI::Styles::DepBroken::fg "black";
 aptitude::UI::Styles::DepBroken::bg "red";
