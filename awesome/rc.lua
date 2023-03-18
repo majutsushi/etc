@@ -394,11 +394,11 @@ local globalkeys = awful.util.table.join(
         { description = "restore minimized", group = "client" }),
 
     -- Multimedia keys
-    awful.key({}, "XF86AudioPlay", function() eldritch.mpris.send_cmd("PlayPause") end,
+    awful.key({}, "XF86AudioPlay", function() eldritch.mpris.send_cmd("play-pause") end,
         { description = "toggle play/pause", group = "audio" }),
-    awful.key({}, "XF86AudioNext", function() eldritch.mpris.send_cmd("Next") end,
+    awful.key({}, "XF86AudioNext", function() eldritch.mpris.send_cmd("next") end,
         { description = "next", group = "audio" }),
-    awful.key({}, "XF86AudioPrev", function() eldritch.mpris.send_cmd("Previous") end,
+    awful.key({}, "XF86AudioPrev", function() eldritch.mpris.send_cmd("previous") end,
         { description = "previous", group = "audio" }),
     awful.key({}, "XF86AudioRaiseVolume", function()
         pulse.pulse.add(5)
