@@ -1,0 +1,19 @@
+emulate -L zsh
+
+local destination=${@[-1]}
+local host=${destination##*@}
+
+echo Pinging $host ...
+while ! ping -c 1 -W 1 $host > /dev/null; do
+    sleep 1
+    echo Pinging $host ...
+done && while ! sshrc \
+                    -o StrictHostKeyChecking=no \
+                    -o UserKnownHostsFile=/dev/null \
+                    -o LogLevel=error \
+                    -o ConnectTimeout=2 \
+                    "$@"; do
+    sleep 1
+done
+
+# vim: filetype=zsh
