@@ -18,11 +18,13 @@ Host *
     ControlMaster auto
     ControlPath ~/.ssh/sock/%r@%h:%p
     ControlPersist 180
+    EnableEscapeCommandline yes
     ForwardAgent no
     ForwardX11 no
     HostKeyAlgorithms -*ecdsa*,*nist*,rsa-*
     IdentitiesOnly yes
     # IdentityFile ~/.ssh/id_rsa
+    Include ~/.local/etc/sshconfig.d/*.conf
     KexAlgorithms -*nist*,diffie-hellman-*-sha1
     LocalCommand echo -e "\e]0;%h\e\\"
     MACs -*-md5,*-md5-*,*-sha1,*-sha1-*,umac-64*

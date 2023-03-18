@@ -191,7 +191,7 @@ xlink ranger target=.config/ranger
 xlink redshift.conf target=.config/redshift.conf
 xlink rofi target=.config/rofi
 xlink slrn/slrnrc
-merge sshconfig target=.ssh/config
+xlink sshconfig target=.ssh/config
 mkdir -p .ssh/sock
 xlink urxvt
 xlink weechat target=.config/weechat
