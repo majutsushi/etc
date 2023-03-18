@@ -175,6 +175,7 @@ xlink colordiffrc
 xlink ctags
 xlink digrc
 xlink gdbinit
+xlink gitui target=.config/gitui
 xlink gnuplot/gnuplot
 xlink gtk/gtkrc-2.0 target=.config/gtk-2.0/gtkrc
 xlink gtk/gtk-3.0/gtk.css target=.config/gtk-3.0/gtk.css

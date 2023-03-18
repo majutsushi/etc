@@ -47,6 +47,9 @@ zinit ice from"gh-r" as"program" pick"delta-*/delta"
 zinit light dandavison/delta
 
 zinit ice from"gh-r" as"program"
+zinit light extrawurst/gitui
+
+zinit ice from"gh-r" as"program"
 zinit light Wilfred/difftastic
 
 zinit ice from"gh-r" as"program"
