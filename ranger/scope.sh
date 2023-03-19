@@ -79,7 +79,7 @@ case "$path" in
         try ~/apps/list-cdrs/list-cdrs.sh "$path" && { dump; exit 0; }
         ;;
     *.pcf.gz|*.ttf|*.otf)
-        try fc-query "$path" && { dump; exit 0; }
+        try otfinfo --info "$path" && { dump; exit 0; }
         ;;
 esac
 
