@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+#
+# This script is meant to be put into a directory pointed to by core.hooksPath
+# in Git 2.9.
+# Then for each hook you want to support, create a directory "hookname.d" and
+# a symlink "hookname -> stub", and put all scripts for that hook into the
+# hookname.d directory.
+#
+# This script supports executing scripts from three different hook
+# directories, in ascending order of priority:
+#   - The directory this script is in
+#   - $GIT_CUSTOM_HOOKS_DIR
+#   - $GIT_DIR/hooks
+#
+# The hook-specific scripts found in those directories will be merged and
+# executed in alphabetic order, with hooks in higher-priority directories
+# overriding hooks in lower-priority directories.
+
+
+set -eEu -o pipefail
+
+# Array of the supported hook directories in ascending order of priority
+declare -a HOOKDIRS
+HOOKDIRS+=("$(cd "$(dirname "$0")" && pwd)")
+[[ -n "${GIT_CUSTOM_HOOKS_DIR:-}" ]] && HOOKDIRS+=("$GIT_CUSTOM_HOOKS_DIR")
+[[ -n "${GIT_DIR:-}" ]] && HOOKDIRS+=("$GIT_DIR/hooks")
+
+# The Git name of the hook to execute
+HOOKNAME=$(basename "$0")
+
+# Associative array of the hook scripts to run
+#   - Key is the basename of the file
+#   - Value is the full path to the file
+declare -A TO_RUN
+
+# Assemble the array of scripts to run. Since the keys are the basenames of
+# the scripts, scripts with the same name in higher-priority directories will
+# override scripts in lower-priority directories. This allows replacing or
+# disabling standard hooks without explicit support from the scripts.
+for dir in "${HOOKDIRS[@]}"; do
+    hookdir="${dir}/${HOOKNAME}.d"
+    if [[ -d "$hookdir" ]]; then
+        for hook in "$hookdir"/*; do
+            hookname="$(basename "$hook")"
+            TO_RUN[$hookname]="$hook"
+        done
+    fi
+done
+
+# Iterate over the script array in alphabetic order, running all the scripts
+# that have the executable bit set.
+for key in "${!TO_RUN[@]}"; do
+    echo "$key"
+done | sort | while read -r hookname; do
+    hookscript="${TO_RUN["$hookname"]}"
+    if [[ -f "$hookscript" && -x "$hookscript" ]]; then
+        "$hookscript" "$@"
+    fi
+done

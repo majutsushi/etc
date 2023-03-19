@@ -4,6 +4,7 @@
 
 [core]
 	autocrlf = input
+	hooksPath = ~/.etc/git/hooks
 	pager = less -F
 	whitespace = blank-at-eol,space-before-tab,tab-in-indent,blank-at-eof,cr-at-eol
 	untrackedCache = true

@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -eEu -o pipefail
+IFS=$'\n\t'
+
+error_handler() { echo "Error: Line ${1} exited with status ${2}"; }
+trap 'error_handler ${LINENO} $?' ERR
+
+
+if [[ "$1" != "committed" ]]; then
+    exit
+fi
+
+while read -r LINE; do
+    IFS=' ' read -r -a ARRAY <<< "$LINE"
+
+    OLD_REF="${ARRAY[0]}"
+    NEW_REF="${ARRAY[1]}"
+    REF_NAME="${ARRAY[2]}"
+
+    # We're only interested in local, proper branches
+    if ! [[ "$REF_NAME" =~ refs/heads/* ]]; then
+        continue
+    fi
+
+    # We're only interested in new branches, which have an all-zeroes old ref
+    if [[ "$OLD_REF" != "0000000000000000000000000000000000000000" ]]; then
+        continue
+    fi
+
+    # If the new ref is all zeroes then it is getting deleted
+    if [[ "$NEW_REF" == "0000000000000000000000000000000000000000" ]]; then
+        continue
+    fi
+
+    NEW_BRANCH=${REF_NAME##*/}
+    OLD_BRANCH=$(git symbolic-ref --short -q HEAD) || true
+
+    if [[ -z "$OLD_BRANCH" ]] || [[ "$OLD_BRANCH" == "$NEW_BRANCH" ]]; then
+        continue
+    fi
+
+    git config branch."${NEW_BRANCH}".mergeBranch "$OLD_BRANCH"
+done

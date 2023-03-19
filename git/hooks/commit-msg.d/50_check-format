@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -eEu -o pipefail
+IFS=$'\n\t'
+
+error_handler() { echo "Error: Line ${1} exited with status ${2}"; }
+trap 'error_handler ${LINENO} $?' ERR
+
+
+error() {
+    echo ERROR: "$1" >&2
+
+    echo "To edit the commit message and try the commit again run:" >&2
+    echo "  git commit -F '$MSGFILE' -e" >&2
+
+    exit 1
+}
+
+warn() {
+    echo WARNING: "$@"
+}
+
+MSGFILE="$1"
+
+if ! grep -q -E -v '^(#.*| *)$' "$MSGFILE"; then
+    # Empty commit message, nothing to do
+    exit 0
+fi
+
+if [[ $(head -1 "$MSGFILE" | sed -n -e 's/.*\(.\)$/\1/p') == "." ]]; then
+    warn "Summary should not end with a period, please remove it by running 'git commit --amend'"
+fi
+
+if (( $(head -1 "$MSGFILE" | wc -c) > 101 )); then
+    error "Summary should not be longer than 100 characters, please rephrase it"
+fi
+
+if (( $(head -1 "$MSGFILE" | wc -c) > 81 )); then
+    warn "Summary is longer than 80 characters, please try rephrasing it by running 'git commit --amend'"
+fi
+
+if (( $(cat "$MSGFILE" | sed -e '/# ------------------------ >8 ------------------------/,$d' | grep -v '^#' | wc -l) > 1 )) && ! grep -v '^#' "$MSGFILE" | head -2 | tail -1 | grep '^$'; then
+    error "The second line in a commit message must be empty"
+fi
