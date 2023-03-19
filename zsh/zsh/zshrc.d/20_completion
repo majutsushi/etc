@@ -135,8 +135,6 @@ zstyle -e ':completion:*:processes' list-colors 'reply=(
 zstyle ':completion:*:complete:git-checkout:*' group-order heads-local
 zstyle ':completion:*:*:git:*' user-commands ${${(M)${(k)commands}:#git-*}/git-/}
 
-zstyle ':completion:*:*:ant:*:targets' call-command true
-
 # complete manual by their section
 zstyle ':completion:*:manuals'   separate-sections true
 zstyle ':completion:*:manuals.*' insert-sections   true
