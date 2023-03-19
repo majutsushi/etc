@@ -186,6 +186,7 @@ xlink inputrc target=.config/inputrc
 xlink irbrc
 xlink latexmkrc
 xlink hg target=.config/hg
+xlink ncdu target=.config/ncdu
 xlink ncmpcpp target=.config/ncmpcpp
 xlink psqlrc target=.config/psqlrc
 xlink ranger target=.config/ranger
