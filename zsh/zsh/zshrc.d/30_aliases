@@ -378,7 +378,6 @@ if [[ -r /etc/debian_version ]] ; then
     alias afs='apt-file search'
     alias api="$SUDO aptitude install"
     alias dbp='dpkg-buildpackage'
-    alias muttbts='bts --mailreader="mutt -f %s" --mbox show'
     alias aptitude-just-recommended='aptitude -o "Aptitude::Pkg-Display-Limit=!?reverse-depends(~i) ~M !?essential"'
     alias aptitude-also-via-dependency='aptitude -o "Aptitude::Pkg-Display-Limit=~i !~M ?reverse-depends(~i) !?essential"'
 

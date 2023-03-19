@@ -165,8 +165,6 @@ cd "$HOME"
 mkdir -p "$HOME/.local/etc"
 mkdir -p "$HOME"/.var/{lib,log}
 
-ln -sf "$HOME"/.etc/.githooks/* .etc/.git/hooks
-
 xlink Rprofile
 xlink aptitude
 xlink awesome target=.config/awesome
@@ -191,7 +189,6 @@ xlink psqlrc target=.config/psqlrc
 xlink ranger target=.config/ranger
 xlink redshift.conf target=.config/redshift.conf
 xlink rofi target=.config/rofi
-xlink slrn/slrnrc
 xlink sshconfig target=.ssh/config
 mkdir -p .ssh/sock
 xlink urxvt
@@ -246,13 +243,7 @@ if command -v tmux >/dev/null; then
 fi
 
 xlink mail/dovecot.sieve target=.config/dovecot.sieve
-xlink mail/goobookrc
-xlink mail/lbdb
-xlink mail/msmtprc target=.config/msmtp/config
-xlink mail/t-prot target=.config/t-prot
 xlink offlineimap target=.config/offlineimap
-
-xlink mutt target=.config/mutt
 
 xlink vim
 xlink vim target=.config/nvim

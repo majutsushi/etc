@@ -180,9 +180,6 @@ export SQLITE_HISTORY="$HOME"/.var/lib/sqlite_history
 export WEECHAT_HOME="$XDG_CONFIG_HOME"/weechat
 # export WINEPREFIX="$XDG_DATA_HOME"/wine/prefixes/default
 
-export MAILCAP="$HOME/.etc/mailcap"	# elinks, w3m
-export MAILCAPS="$MAILCAP:/etc/mailcap"			# Mutt, pine
-
 export PSQLRC="$XDG_CONFIG_HOME/psqlrc"
 export PGPASSFILE="$XDG_DATA_HOME/postgresql/pgpass"
 export PGSERVICEFILE="$XDG_DATA_HOME/postgresql/pg_service.conf"

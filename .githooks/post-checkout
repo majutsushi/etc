@@ -1,8 +1,0 @@
-#!/bin/sh
-
-chmod 600 $HOME/.etc/mail/msmtprc
-
-if command -v strfile >/dev/null 2>&1; then
-    strfile mutt/mutt/fortunes-de >/dev/null
-    strfile mutt/mutt/fortunes-en >/dev/null
-fi

@@ -205,9 +205,6 @@ augroup commentstrings
     autocmd FileType tmux        setlocal commentstring=#%s
 augroup END
 
-autocmd vimrc BufNewFile,BufReadPost *mutt/fortunes* setlocal textwidth=76
-autocmd vimrc BufWritePost           *mutt/fortunes* silent !strfile <afile> >/dev/null
-
 autocmd vimrc BufReadPost emacsfilevars.vim let b:emacs_ignore_file = 1
 
 " Functions {{{1
