@@ -61,7 +61,7 @@ if [ "$preview_images" = "True" ]; then
             if command -v ueberzug >/dev/null && [[ -n "$DISPLAY" ]]; then
                 exit 7
             else
-                catimg -w $(( width * 2 )) -r 2 -t "$path"
+                chafa --colors 240 --size "${width}x${height}" "$path"
                 exit 4
             fi
             ;;
