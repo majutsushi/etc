@@ -2,6 +2,3 @@
 	path = urxvt/urxvt-font-size
 	url = git@github.com:majutsushi/urxvt-font-size.git
 	branch = master
-[submodule "awesome/vicious"]
-	path = awesome/vicious
-	url = https://github.com/Mic92/vicious
