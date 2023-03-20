@@ -223,8 +223,6 @@ xlink git/gitconfig target=.config/git/config
 merge git/gitignore target=.config/git/ignore
 xlink git/attributes target=.config/git/attributes
 ln -sf "$HOME/.config/git/ignore" "$HOME/.agignore"
-xlink git/tigrc target=.config/tig/config
-mkdir -p "$XDG_DATA_HOME/tig"
 
 xlink tmux/tmux.conf
 info "Installing tmux plugins"
