@@ -1,7 +1,0 @@
-# https://github.com/leoboiko/pointless-xcompose
-# https://github.com/kragen/xcompose
-include "%L"
-
-<Multi_key> <o> <c>                     : "©"   copyright # COPYRIGHT SIGN
-
-# vim: ft=conf
