@@ -4,7 +4,7 @@ OnFailure=status-mail@%n.service
 
 [Service]
 Type=oneshot
-ExecStart=%h/.etc/bin/daily-cleanup
+ExecStart=bash ${DOTFILES}/bin/daily-cleanup
 
 [Install]
 WantedBy=daily.target

@@ -14,7 +14,7 @@ case $(autorandr --detected) in
 esac
 
 # Build xsettingsd
-cp  ~/.etc/xorg/xsettingsd ~/.config/xsettingsd
+cp  "$DOTFILES/xorg/xsettingsd" ~/.config/xsettingsd
 echo Xft/DPI $(( dpi * 1024 )) >> ~/.config/xsettingsd
 echo Gtk/CursorThemeSize $cursor_size >> ~/.config/xsettingsd
 

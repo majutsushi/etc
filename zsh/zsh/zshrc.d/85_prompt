@@ -4,7 +4,7 @@ __prompt_orighome() {
     fi
 }
 
-export STARSHIP_CONFIG=$HOME/.etc/starship.toml
+export STARSHIP_CONFIG=$DOTFILES/starship.toml
 eval "$(starship init zsh)"
 
 RPS1='$(__prompt_orighome)'

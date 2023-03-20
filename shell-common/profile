@@ -68,6 +68,8 @@ if ismac; then
     export XDG_RUNTIME_DIR="$TMPDIR"
 fi
 
+export DOTFILES="$HOME/.etc"
+
 export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
 if [ -d "$PYENV_ROOT/bin" ]; then
     _add_to_path pre PATH "$PYENV_ROOT/bin"
@@ -85,7 +87,7 @@ if [ -n "$HOMEBREW_PREFIX" ]; then
 fi
 _add_to_path pre PATH "$HOME/.local/bin"
 _add_to_path pre PATH "$HOME/usr/bin"
-_add_to_path pre PATH "$HOME/.etc/bin"
+_add_to_path pre PATH "$DOTFILES/bin"
 _add_to_path pre PATH "$HOME/.bin"
 
 _add_to_path post PATH /usr/local/sbin
@@ -114,7 +116,7 @@ export PAGER="${PAGER:-less}"
 export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t'
 export SYSTEMD_LESS="-F$LESS"
 export LESSHISTFILE="$HOME/.var/lib/lesshst"
-export LESSOPEN="| $HOME/.etc/less/lessfilter %s"
+export LESSOPEN="| $DOTFILES/less/lessfilter %s"
 
 # Don't run tput if sourced from non-terminal places like crontab
 if [ -n "$TERM" ] && [ "$TERM" != dumb ]; then
@@ -139,10 +141,10 @@ export GROFF_NO_SGR=1
 export MANWIDTH="${MANWIDTH:-80}"
 
 export CLICOLOR=1
-eval "$(dircolors -b "$HOME/.etc/shell-common/dircolors")" 2>/dev/null || :
+eval "$(dircolors -b "$DOTFILES/shell-common/dircolors")" 2>/dev/null || :
 
-export ZIPOPT="--exclude=@$HOME/.etc/excludes/archive"
-export TAR_OPTIONS="--exclude-from=$HOME/.etc/excludes/archive --exclude-caches-all --exclude-caches-under"
+export ZIPOPT="--exclude=@$DOTFILES/excludes/archive"
+export TAR_OPTIONS="--exclude-from=$DOTFILES/excludes/archive --exclude-caches-all --exclude-caches-under"
 
 export DEBEMAIL="jan@majutsushi.net"
 export DEBFULLNAME="Jan Larres"
@@ -165,13 +167,13 @@ _add_to_path post PATH "$GOPATH/bin"
 
 export TERMINFO="$XDG_DATA_HOME/terminfo"
 
-export SSHHOME="$HOME/.etc/sshrc"
+export SSHHOME="$DOTFILES/sshrc"
 
 export AUTOSSH_PORT=0
 
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 
-export BIBTOOLRSC="$HOME"/.etc/bibtoolrsc
+export BIBTOOLRSC="$DOTFILES/bibtoolrsc"
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export INPUTRC="$XDG_CONFIG_HOME"/inputrc
 export IPYTHONDIR="$XDG_CONFIG_HOME"/ipython
@@ -229,7 +231,7 @@ export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
 
 export GITHUB_USER=majutsushi
 
-export NETHACKOPTIONS="@$HOME/.etc/nethackrc"
+export NETHACKOPTIONS="@$DOTFILES/nethackrc"
 
 
 # Make sure this is first in PATH

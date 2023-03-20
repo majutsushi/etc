@@ -25,7 +25,7 @@ else
           export XSECURELOCK_SAVER=saver_blank
           xss-lock --notifier="/usr/libexec/xsecurelock/dimmer" -l -- xsecurelock &
      else
-          xss-lock --notifier="$HOME/.etc/bin/xss-notify" -- slock &
+          xss-lock --notifier="$DOTFILES/bin/xss-notify" -- slock &
      fi
 fi
 
@@ -34,9 +34,9 @@ clipit &
 xbanish &
 
 if [[ $(systemd-detect-virt) == "oracle" ]]; then
-     picom --config "$HOME/.etc/picom-vbox.conf" -b
+     picom --config "$DOTFILES/picom-vbox.conf" -b
 else
-     picom --config "$HOME/.etc/picom.conf" -b
+     picom --config "$DOTFILES/picom.conf" -b
 fi
 
 # copied from /etc/X11/Xsession.d/95dbus_update-activation-env
@@ -52,8 +52,8 @@ fi
 # https://www.mail-archive.com/systemd-devel@lists.freedesktop.org/msg17273.html
 # systemctl --user start lightson@"$DISPLAY".service
 
-"$HOME/.etc/xorg/xsettingsd-setup"
-inputplug -0 -c "$HOME/.etc/xorg/inputplug-hook"
+"$DOTFILES/xorg/xsettingsd-setup"
+inputplug -0 -c "$DOTFILES/xorg/inputplug-hook"
 
 keynav daemonize
 

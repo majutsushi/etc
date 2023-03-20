@@ -8,8 +8,8 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 export NO_AT_BRIDGE=1
 export GRAMPSHOME="$XDG_DATA_HOME"
 
-export IDEA_PROPERTIES="$HOME/.etc/idea/idea.properties"
-export IDEA_VM_OPTIONS="$HOME/.etc/idea/idea64.vmoptions"
+export IDEA_PROPERTIES="$DOTFILES/idea/idea.properties"
+export IDEA_VM_OPTIONS="$DOTFILES/idea/idea64.vmoptions"
 
 xset +fp $HOME/.local/share/fonts
 

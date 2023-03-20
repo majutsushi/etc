@@ -1766,7 +1766,7 @@ nnoremap <M-9> 9gt
 
 nnoremap <C-W>e :enew<CR>
 
-nnoremap <leader>v :edit ~/.etc/vim/vimrc<CR>
+nnoremap <leader>v :edit $DOTFILES/vim/vimrc<CR>
 
 " Text manipulation {{{2
 

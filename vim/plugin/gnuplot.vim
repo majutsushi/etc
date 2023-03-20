@@ -2,7 +2,7 @@
 " Author:  Jan Larres <jan@majutsushi.net>
 " Website: http://majutsushi.net
 
-let s:theme_default = expand('~/.etc/gnuplot/grey.gnuplot')
+let s:theme_default = expand('$DOTFILES/gnuplot/grey.gnuplot')
 
 if !exists('g:gnuplot_theme') && filereadable(s:theme_default)
     let g:gnuplot_theme = s:theme_default
