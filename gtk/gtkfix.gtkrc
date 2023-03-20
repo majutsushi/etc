@@ -1,8 +1,0 @@
-include "/usr/share/themes/Adwaita/gtk-2.0/gtkrc"
-
-style "default"
-{
-    GtkTreeView::odd_row_color = "#eeeeee"
-}
-
-class "GtkWidget" style "default"
