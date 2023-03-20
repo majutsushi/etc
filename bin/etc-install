@@ -219,9 +219,7 @@ import:
 EOF
 fi
 
-xlink git/gitconfig target=.config/git/config
-merge git/gitignore target=.config/git/ignore
-xlink git/attributes target=.config/git/attributes
+xlink git target=.config/git
 ln -sf "$HOME/.config/git/ignore" "$HOME/.agignore"
 
 xlink tmux/tmux.conf
