@@ -271,22 +271,6 @@ if command -v X >/dev/null; then
 
     xlink icons/Faenza-Darkest target=.local/share/icons/Faenza-Darkest
 
-    FONTDIR=$HOME/.local/share/fonts
-    mkdir -p "$FONTDIR"
-    for fontf in .etc/xorg/fonts/*.bdf; do
-        font=$(basename "${fontf}")
-        font=${font%.bdf}
-        info "Installing font ${font}"
-        bdftopcf -o "$FONTDIR/${font}.pcf" "${fontf}"
-        gzip -f "$FONTDIR/${font}.pcf"
-    done
-    cd "$FONTDIR"
-    mkfontdir
-    cd "$HOME"
-    xset -fp "$FONTDIR" 2> /dev/null
-    xset +fp "$FONTDIR"
-    fc-cache
-
     if command -v gsettings >/dev/null; then
         gsettings set org.gtk.Settings.FileChooser startup-mode cwd
         gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
