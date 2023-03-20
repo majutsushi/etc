@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# shellcheck source=/dev/null
-. ~/.profile
-
-find "$XDG_STATE_HOME/vim/undo" -type f -mtime +100 -delete
-find "$XDG_STATE_HOME/nvim/undo" -type f -mtime +100 -delete

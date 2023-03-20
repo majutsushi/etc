@@ -1,5 +1,0 @@
-#!/bin/sh
-
-command -v trash-empty >/dev/null 2>&1 || exit 0
-
-trash-empty 30

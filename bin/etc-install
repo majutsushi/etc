@@ -249,9 +249,6 @@ xlink vim
 xlink vim target=.config/nvim
 xlink vintrc.yaml
 
-mkdir -p "$HOME/.var/spool/anacron"
-crontab "$HOME/.etc/crontab/crontab"
-
 xlink less/lessfilter
 xlink less/lesskey target=.config/lesskey
 
@@ -267,6 +264,7 @@ if command -v systemctl >/dev/null; then
     done
     systemctl --user enable daily.timer
     systemctl --user start daily.timer
+    systemctl --user enable daily-cleanup.service
 fi
 
 if command -v X >/dev/null; then

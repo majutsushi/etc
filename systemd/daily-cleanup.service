@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily cleanup
+OnFailure=status-mail@%n.service
+
+[Service]
+Type=oneshot
+ExecStart=%h/.etc/bin/daily-cleanup
+
+[Install]
+WantedBy=daily.target

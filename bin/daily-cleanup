@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -eEu -o pipefail
+IFS=$'\n\t'
+PS4='+\t '
+
+error_handler() { echo "Error: Line ${1} exited with status ${2}"; }
+trap 'error_handler ${LINENO} $?' ERR
+
+[[ "${TRACE:-0}" == "1" ]] && set -x
+
+
+shopt -s nullglob
+
+# Remove old files from the trash
+if command -v trash-empty >/dev/null 2>&1; then
+    trash-empty 30
+fi
+
+# Remove unused Vim swap files
+if command -v lsof >/dev/null 2>&1; then
+    for i in "$XDG_STATE_HOME/vim/swap"/*; do
+        lsof -F p "$i" >/dev/null 2>&1 || rm -f "$i"
+    done
+
+    for i in "$XDG_STATE_HOME/nvim/swap"/*; do
+        lsof -F p "$i" >/dev/null 2>&1 || rm -f "$i"
+    done
+fi
+
+# Remove old Vim undo files
+find "$XDG_STATE_HOME/vim/undo" -type f -mtime +100 -delete
+find "$XDG_STATE_HOME/nvim/undo" -type f -mtime +100 -delete
