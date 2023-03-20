@@ -1,7 +1,0 @@
-__loadavg() {
-    local graph
-    graph="$(byobu-ugraph -m 0 -x 1 -p 3 "(cat /proc/loadavg | cut -d' ' -f 1-3 | sed -e 's/ /\n/g'; echo)")"
-    print "[${graph}]"
-}
-
-# vim: filetype=zsh

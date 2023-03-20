@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+# Takes some code from byobu and is therefore released under the GPLv3
+
+ITEMS="cpu_usage memory loadavg"
+
+TMUX_CACHE="$SSHRCCLEANUP/cache/tmux"
+mkdir -p "$TMUX_CACHE"/{status,.last}
+
+status_freq() {
+    case "$1" in
+        cpu_usage) echo 7 ;;
+        loadavg) echo 61 ;;
+        memory)  echo 19 ;;
+    esac
+}
+
+
+_get_cpu_diff() {
+    local _id user nice system idle iowait irq softirq steal _guest _guest_nice
+
+    read -r _id user nice system idle iowait irq softirq steal _guest _guest_nice <<EOF
+$1
+EOF
+
+    local prev_idle=$(( idle + iowait ))
+    local prev_nonidle=$(( user + nice + system + irq + softirq + steal ))
+    local prev_total=$(( prev_idle + prev_nonidle ))
+
+    read -r _id user nice system idle iowait irq softirq steal _guest _guest_nice <<EOF
+$2
+EOF
+
+    local cur_idle=$(( idle + iowait ))
+    local cur_nonidle=$(( user + nice + system + irq + softirq + steal ))
+    local cur_total=$(( cur_idle + cur_nonidle ))
+
+    local idle_diff=$(( cur_idle - prev_idle ))
+    local total_diff=$(( cur_total - prev_total ))
+
+    local percent=$(( (total_diff - idle_diff) * 100 / total_diff ))
+
+    printf "%s" $percent
+}
+
+__cpu_usage() {
+    local cpu_usage_cache="$TMUX_CACHE/.cpu_usage"
+    touch "$cpu_usage_cache"
+
+    local last current diff
+    last=$(< "$cpu_usage_cache")
+    current="$(grep 'cpu ' /proc/stat)"
+    diff="$(_get_cpu_diff "$last" "$current")"
+
+    echo "$current" >| "$cpu_usage_cache"
+
+    printf "#[fg=brightblack,bg=yellow,bold]%2s#[default]#[fg=brightblack,bg=yellow]%%#[default] " "$diff"
+}
+
+
+_print_bar() {
+    local current=$1
+    local max=$2
+
+    local quotient i
+
+    # Don't use bc, it's apparently not always installed (like on RPis)
+    quotient=$(awk '{ printf "%.4f \n", $1/$2 }' <<< "$current $max")
+    i=$(echo | awk \
+      -v quotient="$quotient" \
+      -v glyph_count=8 \
+      '{
+          x= int( (quotient * glyph_count) ) - 1;
+          x = (x > (glyph_count-1) ? (glyph_count-1) : x);
+          if ( x < 0 ) x = 0;
+          printf("%d", x);
+       }')
+
+    local graph_bars=(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
+    echo -n "${graph_bars[$i]}"
+}
+
+__loadavg() {
+    local ncpus
+    ncpus=$(grep -c '^processor' /proc/cpuinfo)
+    read -r val1 val2 val3 _nprocs _last_pid < /proc/loadavg
+
+    echo -n "["
+    for val in $val1 $val2 $val3; do
+        _print_bar "$val" "$ncpus"
+    done
+    echo -n "]"
+}
+
+
+__memory() {
+    local free="" total="" buffers="" cached=""
+    local kb_main_used=0 buffers_plus_cached=0 fo_buffers=0
+    while read -r tok val _unit; do
+        case "$tok" in
+            MemTotal:) total=${val};;
+            MemFree:) free=${val};;
+            Buffers:) buffers=${val};;
+            Cached:) cached=${val};;
+        esac
+        [[ -n "${free}" && -n "${total}" && -n "${buffers}" && -n "${cached}" ]] && break;
+    done < /proc/meminfo
+
+    kb_main_used=$(( total - free ))
+    buffers_plus_cached=$(( buffers + cached ))
+    # "free output" buffers and cache (output from 'free')
+    fo_buffers=$(( kb_main_used - buffers_plus_cached ))
+    usage=$(( 100 * fo_buffers / total ))
+
+    if (( usage > 90 )); then
+        color="#[fg=#ff5f87,bg=#5f8700,bold]"
+    else
+        color="#[fg=brightwhite,bg=#5f8700,bold]"
+    fi
+
+    printf "%2s%s#[default]#[fg=brightwhite,bg=#5f8700]%%#[default] " "$color" "$usage"
+}
+
+
+get_status() {
+    function="$1"
+
+    local cachepath="$TMUX_CACHE/status/$function"
+    local lastpath="$TMUX_CACHE/.last/$function"
+    local lastrun=0
+    [[ -r "$lastpath" ]] && read -r lastrun < "$lastpath"
+
+    freq=$(status_freq "$function")
+    local expiry=$(( lastrun + freq ))
+
+    # Update cache now, if necessary
+    if (( NOW >= expiry )) || (( lastrun == 0 )); then
+        "__$function" > "$cachepath".new
+    fi
+    # Check if we have data in the cache
+    if [[ -s "$cachepath".new ]]; then
+        # Looks like we have an updated cache, use it
+        mv -f "$cachepath".new "$cachepath"
+        printf "%s" "$NOW" > "$lastpath"
+        IFS= read -r line < "$cachepath"; printf "%s" "$line"
+    elif [[ -s "$cachepath" ]]; then
+        # New cache is empty, but we have data from our last run, use it
+        IFS= read -r line < "$cachepath"; printf "%s" "$line"
+    fi
+}
+
+
+NOW=$(printf '%(%s)T' -1)
+
+for item in $ITEMS; do
+    get_status "$item"
+done

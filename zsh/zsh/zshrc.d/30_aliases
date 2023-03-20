@@ -201,10 +201,6 @@ man() {
 }
 
 tmux() {
-    # create a cache directory for status script updates
-    TMUX_CACHE="$XDG_RUNTIME_DIR"/tmux-cache
-    mkdir -p "$TMUX_CACHE/status" "$TMUX_CACHE/.last"
-
     command tmux -f ~/.etc/tmux/tmux.conf "$@"
 }
 
