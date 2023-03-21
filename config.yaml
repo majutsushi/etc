@@ -1,0 +1,245 @@
+# https://wiki.archlinux.org/index.php/XDG_Base_Directory
+# https://github.com/grawity/dotfiles/blob/master/.dotfiles.notes
+# https://github.com/davla/dotfiles
+actions:
+  pre:
+    # https://github.com/deadc0de6/dotdrop/issues/315
+    # Unfortunately this logs an error in each case
+    has_command: 'command -v "{0}" >/dev/null'
+  ln: 'ln -sf "{0}" "{1}"'
+  mkdir: 'mkdir -p "{0}"'
+  disable_autostart: |
+    mkdir -p "$HOME/.config/autostart"
+    cat > "$HOME/.config/autostart/{0}" << EOF
+    [Desktop Entry]
+    Hidden=true
+    EOF
+  alacritty_gen: |
+    if ! [ -e "$XDG_CONFIG_HOME/alacritty/alacritty.yml" ]; then
+        mkdir -p "$XDG_CONFIG_HOME/alacritty"
+        cat > "$XDG_CONFIG_HOME/alacritty/alacritty.yml" << EOF
+    import:
+        - $XDG_CONFIG_HOME/alacritty/base.yml
+        - $XDG_CONFIG_HOME/alacritty/theme.yaml
+    EOF
+        cat > "$XDG_CONFIG_HOME/alacritty/theme.yaml" << EOF
+    import:
+        - $XDG_CONFIG_HOME/alacritty/desert-theme.yaml
+    EOF
+    fi
+  systemd_setup: |
+    systemctl --user daemon-reload
+    systemctl --user enable --now daily.timer
+    systemctl --user enable daily-cleanup.service
+  tmux_plugin_install: |
+    if ! [ -d $HOME/.var/lib/tmux/plugins/tpm/.git ]; then
+        git clone https://github.com/tmux-plugins/tpm.git "$HOME/.var/lib/tmux/plugins/tpm"
+    fi
+    if command -v tmux >/dev/null; then
+        if tmux server-info >/dev/null 2>&1; then
+            "$HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh"
+        else
+            tmux start-server
+            tmux new-session -d
+            "$HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh"
+            tmux kill-server
+        fi
+    fi
+  zinit_clone: |
+    if ! [ -d "$HOME/.var/lib/zsh/zinit" ]; then
+        git clone https://github.com/zdharma-continuum/zinit.git "$HOME/.var/lib/zsh/zinit/bin"
+    fi
+  gnome_settings: |
+    if command -v gsettings >/dev/null; then
+        gsettings set org.gtk.Settings.FileChooser startup-mode cwd
+        gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
+    fi
+config:
+  backup: true
+  banner: false
+  create: true
+  dotpath: dotfiles
+  keepdot: false
+  link_dotfile_default: absolute
+  link_on_import: absolute
+  longkey: true
+dynvariables:
+  mozpath: find ~/.mozilla/firefox -name '*.default'
+dotfiles:
+  d_alacritty:
+    src: alacritty
+    dst: ~/.config/alacritty
+    link: link_children
+    actions:
+      - alacritty_gen
+  d_awesome:
+    src: awesome
+    dst: ~/.config/awesome
+  d_git:
+    src: git
+    dst: ~/.config/git
+    actions:
+      - ln "$HOME/.config/git/ignore" "$HOME/.agignore"
+  d_gitui:
+    src: gitui
+    dst: ~/.config/gitui
+  d_hg:
+    src: hg
+    dst: ~/.config/hg
+  d_icons:
+    src: icons
+    dst: ~/.local/share/icons
+    link: link_children
+  d_ncdu:
+    src: ncdu
+    dst: ~/.config/ncdu
+  d_ncmpcpp:
+    src: ncmpcpp
+    dst: ~/.config/ncmpcpp
+  d_offlineimap:
+    src: offlineimap
+    dst: ~/.config/offlineimap
+  d_ranger:
+    src: ranger
+    dst: ~/.config/ranger
+  d_rofi:
+    src: rofi
+    dst: ~/.config/rofi
+  d_systemd:
+    src: systemd
+    dst: ~/.config/systemd/user
+    link: link_children
+    actions:
+      - systemd_setup
+  d_urxvt:
+    src: urxvt
+    dst: ~/.urxvt
+  d_weechat:
+    src: weechat
+    dst: ~/.config/weechat
+  f_colordiffrc:
+    src: colordiffrc
+    dst: ~/.colordiffrc
+  f_ctags:
+    src: ctags
+    dst: ~/.ctags
+  f_digrc:
+    src: digrc
+    dst: ~/.digrc
+  f_gdbinit:
+    src: gdbinit
+    dst: ~/.gdbinit
+  f_gnuplot:
+    src: gnuplot/gnuplot
+    dst: ~/.gnuplot
+    link: nolink
+  f_gtkrc2:
+    src: gtk/gtkrc-2.0
+    dst: ~/.config/gtk-2.0/gtkrc
+  f_gtk3:
+    src: gtk/gtk-3.0/gtk.css
+    dst: ~/.config/gtk-3.0/gtk.css
+  f_ideavimrc:
+    src: idea/ideavimrc
+    dst: ~/.config/ideavim/ideavimrc
+  f_inputrc:
+    src: inputrc
+    dst: ~/.config/inputrc
+  f_irbrc:
+    src: irbrc
+    dst: ~/.irbrc
+  f_latexmkrc:
+    src: latexmkrc
+    dst: ~/.latexmkrc
+  f_lessfilter:
+    src: less/lessfilter
+    dst: ~/.config/lessfilter
+  f_lesskey:
+    src: less/lesskey
+    dst: ~/.config/lesskey
+  f_profile:
+    src: shell-common/profile
+    dst: ~/.profile
+    link: nolink
+  f_psqlrc:
+    src: psqlrc
+    dst: ~/.config/psqlrc
+  f_redshift:
+    src: redshift.conf
+    dst: ~/.config/redshift.conf
+  f_rprofile:
+    src: Rprofile
+    dst: ~/.Rprofile
+  f_sshconfig:
+    src: ssh_config
+    dst: ~/.ssh/config
+    actions:
+      - mkdir "$HOME/.ssh/sock"
+  f_tmuxconf:
+    src: tmux/tmux.conf
+    dst: ~/.tmux.conf
+    actions:
+      - tmux_plugin_install
+  f_zathura:
+    src: zathurarc
+    dst: ~/.config/zathura/zathurarc
+  f_zshenv:
+    src: zsh/zshenv
+    dst: ~/.zshenv
+    actions:
+      - zinit_clone
+  # Bash
+  f_bashrc:
+    src: bash/bashrc
+    dst: ~/.bashrc
+  f_bash_profile:
+    src: bash/bash_profile
+    dst: ~/.bash_profile
+  f_bash_logout:
+    src: bash/bash_logout
+    dst: ~/.bash_logout
+  # Firefox
+  f_user_js:
+    src: mozilla/user.js
+    dst: "{{@@ mozpath @@}}/user.js"
+  f_userchrome_css:
+    src: mozilla/userChrome.css
+    dst: "{{@@ mozpath @@}}/chrome/userChrome.css"
+  # Python
+  f_isort:
+    src: python/isort.cfg
+    dst: ~/.isort.cfg
+  f_mypy:
+    src: python/mypy.ini
+    dst: ~/.config/mypy/config
+  f_pylintrc:
+    src: python/pylintrc
+    dst: ~/.config/pylintrc
+  # Vim
+  d_nvim:
+    src: vim
+    dst: ~/.config/nvim
+  d_vim:
+    src: vim
+    dst: ~/.vim
+  f_vintrv:
+    src: vintrc.yaml
+    dst: ~/.vintrc.yaml
+  # X
+  d_fontconfig:
+    src: xorg/fontconfig
+    dst: ~/.config/fontconfig
+    # actions:
+    #   - has_command X
+  f_xsession:
+    src: xorg/xsession
+    dst: ~/.xsession
+  f_xsessionrc:
+    src: xorg/xsessionrc
+    dst: ~/.xsessionrc
+profiles:
+  default:
+    dotfiles:
+      - ALL
+    actions:
+      - gnome_settings

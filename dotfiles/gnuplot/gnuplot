@@ -1,0 +1,1 @@
+load "{{@@ _dotdrop_dotpath @@}}/gnuplot/grey.gnuplot"

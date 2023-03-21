@@ -3,4 +3,4 @@ Description=status email for %i
 
 [Service]
 Type=oneshot
-ExecStart=bash ${DOTFILES}/bin/systemd-mail %u %i
+ExecStart=bash ${DOTFILES}/../bin/systemd-mail %u@%H %i

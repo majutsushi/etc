@@ -3,6 +3,8 @@
 # shellcheck disable=SC3043
 #
 # https://github.com/grawity/dotfiles/blob/master/.environ.notes
+#
+# *** {{@@ header() @@}} ***
 
 if ! type ismac >/dev/null 2>&1; then
     ismac() {
@@ -68,7 +70,9 @@ if ismac; then
     export XDG_RUNTIME_DIR="$TMPDIR"
 fi
 
-export DOTFILES="$HOME/.etc"
+export DOTFILES="{{@@ _dotdrop_dotpath @@}}"
+export DOTDROP_CONFIG="{{@@ _dotdrop_cfgpath @@}}"
+export DOTDROP_PROFILE=default
 
 export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
 if [ -d "$PYENV_ROOT/bin" ]; then
@@ -87,7 +91,6 @@ if [ -n "$HOMEBREW_PREFIX" ]; then
 fi
 _add_to_path pre PATH "$HOME/.local/bin"
 _add_to_path pre PATH "$HOME/usr/bin"
-_add_to_path pre PATH "$DOTFILES/bin"
 _add_to_path pre PATH "$HOME/.bin"
 
 _add_to_path post PATH /usr/local/sbin
