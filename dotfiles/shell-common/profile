@@ -6,15 +6,10 @@
 #
 # *** {{@@ header() @@}} ***
 
-if ! type ismac >/dev/null 2>&1; then
-    ismac() {
-        [ "$(uname -s)" = Darwin ]
-        local ret=$?
-        # Redefine the function to not call an external command every time
-        eval "ismac() { return $ret; }"
-        return $ret
-    }
-fi
+ismac() {
+    # shellcheck disable=SC2050
+    [ "{{@@ os @@}}" = darwin ]
+}
 
 _add_to_path() {
     # This is non-POSIX but works in dash
