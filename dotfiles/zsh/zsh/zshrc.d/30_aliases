@@ -110,7 +110,7 @@ rs() {
     rsync -avxEHA --delete --delete-excluded --human-readable --progress "$@"
 }
 
-alias a="$DOTFILES/zsh/sack ag --smart-case"
+alias a="$DOTFILES/zsh/sack rg --color always --line-number --no-heading"
 f() {
     local shortcut="$(sed -n "$1p" < "$SACK_SHORTCUT_FILE" | awk '
         {

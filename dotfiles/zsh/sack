@@ -47,15 +47,7 @@ process_shorcut_paths() {
 # Remove the escaped characters that get piped from ack in order to preserve
 # colored output to stdout
 remove_escaped_chars() {
-    # Need to do a check for the OS, because Linux uses a different sed
-    # than OS X
-    OS=$(uname)
-
-    if [[ $OS == "Linux" ]]; then
-        sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
-    elif [[ $OS == "Darwin" ]]; then
-        sed -E "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
-    fi
+    sed -E "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
 }
 
-$BIN --color "$@" | tee >/dev/null >(display_shortcuts) >(process_shorcut_paths | remove_escaped_chars > "${SACK_SHORTCUT_FILE}") | less -F
+$BIN "$@" | tee >/dev/null >(display_shortcuts) >(process_shorcut_paths | remove_escaped_chars > "${SACK_SHORTCUT_FILE}") | less -F
