@@ -1,4 +1,0 @@
-[submodule "urxvt/urxvt-font-size"]
-	path = urxvt/urxvt-font-size
-	url = git@github.com:majutsushi/urxvt-font-size.git
-	branch = master
