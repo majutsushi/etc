@@ -168,6 +168,7 @@ export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export INPUTRC="$XDG_CONFIG_HOME"/inputrc
 export IPYTHONDIR="$XDG_CONFIG_HOME"/ipython
 export PYLINTHOME="$XDG_CACHE_HOME"/pylint
+export RIPGREP_CONFIG_PATH="$DOTFILES/ripgreprc"
 export SQLITE_HISTORY="$HOME"/.var/lib/sqlite_history
 export TIGRC_USER="$DOTFILES"/tigrc
 export WEECHAT_HOME="$XDG_CONFIG_HOME"/weechat
