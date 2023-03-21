@@ -210,17 +210,11 @@ export CLIFF_FIT_WIDTH=1
 export NNTPSERVER=news.gmane.org
 
 export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git --type file"
-export FZF_DEFAULT_OPTS="\
-    --exact \
-    --height 40% \
-    --reverse \
-    --preview 'echo {}' \
-    --preview-window down:3:hidden:wrap \
-    --bind '?:toggle-preview' \
-    --bind 'ctrl-l:preview:bat --plain --color always {}' \
-    --bind 'f1:execute(less -+F -f {})' \
-    --bind 'ctrl-y:execute-silent(echo {} | clipboard-copy)+abort' \
-    --color fg:-1,bg:-1,hl:2,fg+:11,bg+:-1,hl+:10,info:7,prompt:6,pointer:9,marker:1
+export FZF_DEFAULT_OPTS="
+    --exact
+    --reverse
+    --bind 'ctrl-y:execute-silent(echo {} | clipboard-copy)+abort'
+    --color fg:-1,bg:-1,hl:green,fg+:bright-yellow,bg+:-1,hl+:bright-green,prompt:cyan,pointer:bright-red,marker:red
 "
 
 export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
