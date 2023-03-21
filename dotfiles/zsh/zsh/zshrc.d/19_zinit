@@ -25,21 +25,6 @@ zinit light romkatv/zsh-prompt-benchmark
 zinit ice from"gh-r" as"program" bpick"*.tar.gz"
 zinit light starship/starship
 
-zinit ice from"gh-r" as"program"
-zinit light dimo414/bkt
-
-zinit ice from"gh-r" as"program"
-zinit light junegunn/fzf-bin
-zinit ice as"program"
-zinit snippet https://github.com/junegunn/fzf/blob/master/bin/fzf-tmux
-zinit snippet https://github.com/junegunn/fzf/blob/master/shell/completion.zsh
-
-zinit ice from"gh-r" as"program" mv"fd* -> fd" pick"fd/fd"
-zinit light sharkdp/fd
-
-zinit ice from"gh-r" as"program" pick"bat*/bat"
-zinit light sharkdp/bat
-
 zinit ice from"gh-r" as"program" mv"exa* -> exa"
 zinit light ogham/exa
 
@@ -54,9 +39,6 @@ zinit light Wilfred/difftastic
 
 zinit ice from"gh-r" as"program"
 zinit light PaulJuliusMartinez/jless
-
-zinit ice from"gh-r" as"program"
-zinit light tomnomnom/gron
 
 zinit ice from"gh-r" as"program" pick"mdcat-*/mdcat"
 zinit light swsnr/mdcat
@@ -82,8 +64,6 @@ zinit snippet https://github.com/grawity/code/blob/master/term/xterm-color-choos
 zinit ice as"program"
 zinit snippet https://github.com/stephencelis/ghi/blob/master/ghi
 
-zinit ice as"program"
-zinit snippet https://git.kitenet.net/index.cgi/moreutils.git/plain/ts
 
 zinit ice as"program"
 zinit snippet https://github.com/holman/spark/blob/master/spark

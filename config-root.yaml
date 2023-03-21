@@ -10,12 +10,18 @@ actions:
     apt-get install \
       autorandr \
       awesome \
+      bat \
       dex \
+      fd-find \
+      fzf \
+      gron \
       inputplug \
       keynav \
       light \
       libnotify-bin \
+      moreutils \
       playerctl \
+      ripgrep \
       rofi \
       wmctrl \
       xclip \

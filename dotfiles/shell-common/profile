@@ -84,6 +84,10 @@ if [ -n "$HOMEBREW_PREFIX" ]; then
     _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin"
     _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin"
 fi
+
+# Necessary for fd-find on Debian
+_add_to_path pre PATH "/usr/lib/cargo/bin"
+
 _add_to_path pre PATH "$HOME/.local/bin"
 _add_to_path pre PATH "$HOME/usr/bin"
 _add_to_path pre PATH "$HOME/.bin"
