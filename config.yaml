@@ -209,15 +209,12 @@ dotfiles:
     src: mozilla/userChrome.css
     dst: "{{@@ mozpath @@}}/chrome/userChrome.css"
   # Python
-  f_isort:
-    src: python/isort.cfg
-    dst: ~/.isort.cfg
+  d_ruff:
+    src: ruff
+    dst: ~/.config/ruff
   f_mypy:
     src: python/mypy.ini
     dst: ~/.config/mypy/config
-  f_pylintrc:
-    src: python/pylintrc
-    dst: ~/.config/pylintrc
   # Vim
   d_nvim:
     src: vim

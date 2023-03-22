@@ -1,0 +1,59 @@
+[tool.ruff]
+# https://beta.ruff.rs/docs/rules/
+select = [
+  # pyflakes
+  "F",
+  # pycodestyle
+  "E",
+  "W",
+  # mccabe
+  "C90",
+  # isort
+  "I",
+  # pep8-naming
+  "N",
+  # pyupgrade
+  "UP",
+  # flake8-2020
+  "YTT",
+  # flake8-bandit
+  "S",
+  # flake8-blind-except
+  "BLE",
+  # flake8-bugbear
+  "B",
+  # flake8-builtins
+  "A",
+  # flake8-comprehensions
+  "C4",
+  # flake8-datetimez
+  "DTZ",
+  # flake8-executable
+  "EXE",
+  # flake8-implicit-str-concat
+  "ISC",
+  # flake8-logging-format
+  "G",
+  # flake8-pie
+  "PIE",
+  # flake8-pytest-style
+  "PT",
+  # flake8-return
+  "RET",
+  # flake8-simplify
+  "SIM",
+  # flake8-type-checking
+  "TCH",
+  # flake8-unused-arguments
+  "ARG",
+  # flake8-use-pathlib
+  "PTH",
+  # pygrep-hooks
+  "PGH003", "PGH004",
+  # pylint
+  "PLE", "PLR", "PLW",
+  # tryceratops
+  "TRY",
+  # Ruff-specific rules
+  "RUF",
+]

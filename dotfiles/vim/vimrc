@@ -1272,13 +1272,13 @@ autocmd ColorScheme * exe 'set filetype=' . &filetype
 let g:ale_lint_delay = 500
 
 let g:ale_linters = {
-\   'python': ['mypy', 'pylint'],
+\   'python': ['mypy', 'ruff'],
 \}
 let g:ale_python_pylint_auto_pipenv = 1
 let g:ale_rust_cargo_use_clippy = 1
 
 let g:ale_fixers = {
-\   'python': ['black', 'isort'],
+\   'python': ['black', 'ruff'],
 \   'rust': ['rustfmt'],
 \}
 let g:ale_fix_on_save = 1
