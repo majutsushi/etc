@@ -46,6 +46,7 @@ config:
   banner: false
   create: true
   dotpath: dotfiles-root
+  force_chmod: true
   keepdot: false
   link_dotfile_default: nolink
   link_on_import: nolink
@@ -54,6 +55,10 @@ dotfiles:
   f_aptitude:
     src: aptitude/config
     dst: /root/.aptitude/config
+  f_sudo_insults:
+    src: insults
+    dst: /etc/sudoers.d/insults
+    chmod: 440
 profiles:
   default:
     dotfiles:
