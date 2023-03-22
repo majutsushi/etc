@@ -83,6 +83,9 @@ dotfiles:
   d_gitui:
     src: gitui
     dst: ~/.config/gitui
+    link: link_children
+    actions:
+      - ln "$HOME/.config/gitui/theme-dark.ron" "$HOME/.config/gitui/theme.ron"
   d_hg:
     src: hg
     dst: ~/.config/hg
