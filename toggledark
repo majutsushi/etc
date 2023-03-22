@@ -47,6 +47,7 @@ def main(args: argparse.Namespace) -> int:
     handle_vim(is_dark)
     handle_xsettings(is_dark)
     handle_gnome(is_dark)
+    handle_gitui(is_dark)
 
     return 0
 
@@ -113,6 +114,14 @@ def handle_gnome(is_dark: bool) -> None:
         ],
         check=True,
     )
+
+
+def handle_gitui(is_dark: bool) -> None:
+    theme = "theme-dark.ron" if is_dark else "theme-light.ron"
+    link_path = XDG_CONFIG_HOME / "gitui" / "theme.ron"
+    if link_path.exists():
+        link_path.unlink()
+    link_path.symlink_to(XDG_CONFIG_HOME / "gitui" / theme)
 
 
 if __name__ == "__main__":
