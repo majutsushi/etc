@@ -113,7 +113,7 @@ case "$extension" in
         try catdoc   "$path" && { dump; exit 0; }
         ;;
     docx)
-        try docx2txt.pl "$path" - && { dump; exit 0; }
+        try docx2txt "$path" - && { dump; exit 0; }
         ;;
     class)
         try hl -l java <(javap -sysinfo -private -constants "$path") && { dump; exit 0; }

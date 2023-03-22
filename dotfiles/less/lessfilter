@@ -36,7 +36,7 @@ esac
             exit 1
             ;;
         *.docx)
-            have docx2txt.pl && docx2txt.pl "$1" - && exit 0
+            have docx2txt && docx2txt "$1" - && exit 0
             exit 1
             ;;
         *.scen)
