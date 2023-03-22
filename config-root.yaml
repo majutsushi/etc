@@ -34,6 +34,13 @@ actions:
       sed -Ei "s/#\\s*$LOCALE/$LOCALE/" /etc/locale.gen
     done
     locale-gen
+  tzupdate: |
+    curl -s -o /usr/local/bin/tzupdate https://raw.githubusercontent.com/cdown/tzupdate/develop/tzupdate.py
+    chmod 755 /usr/local/bin/tzupdate
+    sed -i -E -e 's,^#!/usr/bin/env python$,#!/usr/bin/env python3,' /usr/local/bin/tzupdate
+    cp {{@@ _dotdrop_dotpath @@}}/tzupdate/99-tzupdate /etc/NetworkManager/dispatcher.d/
+    mkdir -p /etc/sudoers.d/
+    cp {{@@ _dotdrop_dotpath @@}}/tzupdate/tzupdate /etc/sudoers.d/
 config:
   backup: true
   banner: false
@@ -54,3 +61,4 @@ profiles:
     actions:
       - packages
       - locale_gen
+      - tzupdate

@@ -1,0 +1,3 @@
+ALL ALL=(root) NOPASSWD: /usr/local/bin/tzupdate
+
+# vim: ft=sudoers

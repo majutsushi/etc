@@ -1,0 +1,12 @@
+#!/bin/bash
+
+IFACE="$1"
+ACTION="$2"
+
+[[ "$IFACE" == tun* ]] && exit 0
+
+# [[ "$CONNECTION_ID" == some-vpn ]] && exit 0
+
+if [[ "$ACTION" == up ]]; then
+    sudo tzupdate
+fi
