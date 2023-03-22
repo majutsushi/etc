@@ -1,0 +1,42 @@
+clear
+daemonize
+ctrl+alt+semicolon start
+Escape end
+ctrl+bracketleft end
+q record ~/.keynav_macros
+shift+at playback
+a history-back
+h cut-left
+j cut-down
+k cut-up
+l cut-right
+shift+h move-left
+shift+j move-down
+shift+k move-up
+shift+l move-right
+space warp,click 1,end
+Return warp,click 1,end
+semicolon warp,end
+w warp
+t windowzoom
+c cursorzoom 300 300
+e grid-nav toggle
+1 click 1
+2 click 2
+3 click 3
+ctrl+h cut-left
+ctrl+j cut-down
+ctrl+k cut-up
+ctrl+l cut-right
+y cut-left,cut-up
+u cut-right,cut-up
+b cut-left,cut-down
+n cut-right,cut-down
+shift+y move-left,move-up
+shift+u move-right,move-up
+shift+b move-left,move-down
+shift+n move-right,move-down
+ctrl+y cut-left,cut-up
+ctrl+u cut-right,cut-up
+ctrl+b cut-left,cut-down
+ctrl+n cut-right,cut-down

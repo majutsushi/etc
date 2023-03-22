@@ -55,6 +55,7 @@ fi
 "$DOTFILES/xorg/xsettingsd-setup"
 inputplug -0 -c "$DOTFILES/xorg/inputplug-hook"
 
-keynav daemonize
+# Wayland alternative: https://github.com/rvaiya/warpd
+keynav "loadconfig $DOTFILES/keynavrc"
 
 exec logger-wrapper awesome
