@@ -58,10 +58,6 @@ v() {
     done | fzf
 }
 
-copy-pw() {
-    lpass show --clip --password $(lpass ls | fzf | awk '{print $(NF)}' | sed 's/\]//g')
-}
-
 
 # For https://github.com/junegunn/fzf-git.sh
 _fzf_git_fzf() {
