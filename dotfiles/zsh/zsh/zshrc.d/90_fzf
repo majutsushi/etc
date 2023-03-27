@@ -32,7 +32,9 @@ chpwd_add_recent_dir() {
         print -P '0\t%D{%s}\t1\t%~' >>| "$RECENTDIRS_FILE"
     fi
 }
-add-zsh-hook chpwd chpwd_add_recent_dir
+if [[ "$INCOGNITO" != 1 ]]; then
+    add-zsh-hook chpwd chpwd_add_recent_dir
+fi
 
 j() {
     # adapted from http://chneukirchen.org/blog/archive/2017/01/zz-a-smart-and-efficient-directory-changer.html

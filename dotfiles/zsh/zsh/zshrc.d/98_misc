@@ -1,4 +1,6 @@
-eval "$(atuin init zsh)"
+if [[ "$INCOGNITO" != 1 ]]; then
+    eval "$(atuin init zsh)"
+fi
 
 if have direnv; then
     eval "$(direnv hook zsh)"

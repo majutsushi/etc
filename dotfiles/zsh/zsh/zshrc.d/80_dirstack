@@ -41,6 +41,8 @@ _update_dirstack() {
         uprint my_stack >! ${DIRSTACKFILE}
     fi
 }
-add-zsh-hook chpwd _update_dirstack
+if [[ "$INCOGNITO" != 1 ]]; then
+    add-zsh-hook chpwd _update_dirstack
+fi
 
 # vim: filetype=zsh

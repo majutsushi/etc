@@ -19,7 +19,11 @@ setopt hist_ignore_space
 # use proper shell splitting for words read from history
 setopt hist_lex_words
 
-HISTFILE=$ZSH_VAR_LIB_DIR/history
+if [[ "$INCOGNITO" == 1 ]]; then
+    unset HISTFILE
+else
+    HISTFILE=$ZSH_VAR_LIB_DIR/history
+fi
 HISTSIZE=100000
 SAVEHIST=100000
 

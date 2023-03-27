@@ -18,6 +18,11 @@ truncate_to_repo = false
 truncation_symbol = "…/"
 fish_style_pwd_dir_length = 2
 
+[env_var.INCOGNITO]
+variable = "INCOGNITO"
+format = "🕵️ "
+description = "Incognito mode"
+
 [git_branch]
 format = "@ [$branch(:$remote_branch)]($style) "
 style = "bold yellow"

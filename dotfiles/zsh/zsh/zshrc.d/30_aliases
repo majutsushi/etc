@@ -126,17 +126,21 @@ f() {
     local file="${shortcut[2]:a}"
     local cmd="$EDITOR +${shortcut[1]} \"$file\""
 
-    # save the actual command in the history
-    print -sr -- ${cmd%%$'\n'}
+    if [[ "$INCOGNITO" != 1 ]]; then
+        # save the actual command in the history
+        print -sr -- ${cmd%%$'\n'}
 
-    local atuin_id
-    atuin_id=$(atuin history start -- "$cmd")
+        local atuin_id
+        atuin_id=$(atuin history start -- "$cmd")
+    fi
 
     eval $cmd
 
-    local EXIT="$?"
-    [[ -z "${id}" ]] && return
-    (RUST_LOG=error atuin history end --exit $EXIT -- $id &) >/dev/null 2>&1
+    if [[ "$INCOGNITO" != 1 ]]; then
+        local EXIT="$?"
+        [[ -z "${id}" ]] && return
+        (RUST_LOG=error atuin history end --exit $EXIT -- $id &) >/dev/null 2>&1
+    fi
 }
 
 # diff
@@ -163,6 +167,10 @@ copy-path() { readlink -f "$1" | xc }
 anytoany() { print $(( [##$2] $1#$3 )) }
 dectohex() { anytoany 10 16 $1 }
 hextodec() { anytoany 16 10 $1 }
+
+incognito() {
+    INCOGNITO=1 zsh
+}
 
 pager-wrapper () {
     if [[ -t 1 ]]; then
