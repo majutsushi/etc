@@ -35,11 +35,7 @@ fi
 _update_dirstack() {
     local -ax my_stack
     my_stack=( ${PWD} ${dirstack} )
-    if is-at-least 4.2; then
-        builtin print -l ${(u)my_stack} >! ${DIRSTACKFILE}
-    else
-        uprint my_stack >! ${DIRSTACKFILE}
-    fi
+    builtin print -l ${(u)my_stack} >! ${DIRSTACKFILE}
 }
 if [[ "$INCOGNITO" != 1 ]]; then
     add-zsh-hook chpwd _update_dirstack

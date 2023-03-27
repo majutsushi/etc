@@ -27,11 +27,7 @@ zstyle ':completion:*' menu select=1
 # provide verbose completion information
 zstyle ':completion:*' verbose true
 # match uppercase from lowercase
-if is-at-least 4.3; then
-    zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
-else
-    zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-fi
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 # show ignored matches if we really want to
 zstyle ':completion:*' single-ignored show
 # caching
@@ -218,15 +214,13 @@ bindkey -M menuselect '^w' undo
 
 # http://stackoverflow.com/a/844299/102250
 # show dots while completion is working
-if is-at-least 5.4.0; then
-    expand-or-complete-with-dots() {
-        echo -ne "\e[31m......\e[0m"
-        zle expand-or-complete
-        zle redisplay
-    }
-    zle -N expand-or-complete-with-dots
-    bindkey "^I" expand-or-complete-with-dots
-fi
+expand-or-complete-with-dots() {
+    echo -ne "\e[31m......\e[0m"
+    zle expand-or-complete
+    zle redisplay
+}
+zle -N expand-or-complete-with-dots
+bindkey "^I" expand-or-complete-with-dots
 
 # force file completion
 zle -C complete-files complete-word _generic

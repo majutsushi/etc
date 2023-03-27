@@ -91,35 +91,35 @@ zle -N down-line-or-beginning-search _down-line-or-beginning-search
 bindkey '^n' down-line-or-beginning-search
 bindkey -M menuselect '^n' down-line-or-search
 
-if is-at-least 4.3; then
-    history-incremental-pattern-search-backward() {
-        NUMERIC=0 zle set-local-history
-        zle .history-incremental-pattern-search-backward "$@"
-    }
-    zle -N history-incremental-pattern-search-backward
 
-    # allow nesting of C-R, from
-    # http://chneukirchen.org/blog/archive/2013/03/10-fresh-zsh-tricks-you-may-not-know.html
-    autoload -Uz narrow-to-region
-    _history-incremental-preserving-pattern-search-backward() {
-        local state
-        MARK=CURSOR  # magick, else multiple ^R don't work
-        narrow-to-region -p "$LBUFFER${BUFFER:+>>}" -P "${BUFFER:+<<}$RBUFFER" -S state
-        zle end-of-history
-        zle history-incremental-pattern-search-backward
-        narrow-to-region -R state
-    }
-    zle -N _history-incremental-preserving-pattern-search-backward
-    bindkey '^r' _history-incremental-preserving-pattern-search-backward
-    bindkey -M isearch '^r' history-incremental-pattern-search-backward
+history-incremental-pattern-search-backward() {
+    NUMERIC=0 zle set-local-history
+    zle .history-incremental-pattern-search-backward "$@"
+}
+zle -N history-incremental-pattern-search-backward
 
-    history-incremental-pattern-search-forward() {
-        NUMERIC=0 zle set-local-history
-        zle .history-incremental-pattern-search-forward "$@"
-    }
-    zle -N history-incremental-pattern-search-forward
-    bindkey '^s' history-incremental-pattern-search-forward
-fi
+# allow nesting of C-R, from
+# http://chneukirchen.org/blog/archive/2013/03/10-fresh-zsh-tricks-you-may-not-know.html
+autoload -Uz narrow-to-region
+_history-incremental-preserving-pattern-search-backward() {
+    local state
+    MARK=CURSOR  # magick, else multiple ^R don't work
+    narrow-to-region -p "$LBUFFER${BUFFER:+>>}" -P "${BUFFER:+<<}$RBUFFER" -S state
+    zle end-of-history
+    zle history-incremental-pattern-search-backward
+    narrow-to-region -R state
+}
+zle -N _history-incremental-preserving-pattern-search-backward
+bindkey '^r' _history-incremental-preserving-pattern-search-backward
+bindkey -M isearch '^r' history-incremental-pattern-search-backward
+
+history-incremental-pattern-search-forward() {
+    NUMERIC=0 zle set-local-history
+    zle .history-incremental-pattern-search-forward "$@"
+}
+zle -N history-incremental-pattern-search-forward
+bindkey '^s' history-incremental-pattern-search-forward
+
 
 # make incremental search work in completion menus
 bindkey -M menuselect '^r' history-incremental-search-backward
