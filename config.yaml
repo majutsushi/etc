@@ -72,6 +72,9 @@ dotfiles:
     link: link_children
     actions:
       - alacritty_gen
+  d_atuin:
+    src: atuin
+    dst: ~/.config/atuin
   d_awesome:
     src: awesome
     dst: ~/.config/awesome

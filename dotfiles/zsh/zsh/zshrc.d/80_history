@@ -19,12 +19,7 @@ setopt hist_ignore_space
 # use proper shell splitting for words read from history
 setopt hist_lex_words
 
-# per-directory history ideas:
-# https://github.com/jimhester/per-directory-history
-# https://github.com/ericfreese/zsh-cwd-history
-
 HISTFILE=$ZSH_VAR_LIB_DIR/history
-[[ ! -d $ZSH_VAR_LIB_DIR/history.full ]] && mkdir $ZSH_VAR_LIB_DIR/history.full
 HISTSIZE=100000
 SAVEHIST=100000
 
@@ -37,20 +32,5 @@ _hist_ignore_f() {
     return 0
 }
 add-zsh-hook zshaddhistory _hist_ignore_f
-
-_append_full_hist() {
-    if [[ "$UID" -ne 0 && $1 != $'\n' ]]; then
-        local cmd=${1%%$'\n'}
-        [[ "$cmd" =~ "^ +" ]] && return # imitate hist_ignore_space
-        local log_dir="$(print -P "$ZSH_VAR_LIB_DIR/history.full/%D{%Y}/%D{%m}")"
-        mkdir -p "$log_dir"
-        local full_cmd_log="$(print -P "${log_dir}/%D{%Y-%m-%d}.log")"
-        if [[ -n "$cmd" ]]; then
-            echo "$(date -u --iso-8601=seconds) [$USER@$HOST:$PWD] $cmd" >>| ${full_cmd_log}
-            chmod 600 $full_cmd_log
-        fi
-    fi
-}
-add-zsh-hook zshaddhistory _append_full_hist
 
 # vim: filetype=zsh

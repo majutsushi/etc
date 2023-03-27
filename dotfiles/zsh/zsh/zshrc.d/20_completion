@@ -165,6 +165,7 @@ if have rustup; then
     lazycomplete rustup "rustup completions zsh rustup"
     lazycomplete cargo "rustup completions zsh cargo"
 fi
+have atuin && lazycomplete atuin "atuin gen-completions --shell zsh"
 have poetry && lazycomplete poetry "poetry completions zsh"
 
 

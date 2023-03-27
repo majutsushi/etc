@@ -1,3 +1,5 @@
+eval "$(atuin init zsh)"
+
 if have direnv; then
     eval "$(direnv hook zsh)"
 fi

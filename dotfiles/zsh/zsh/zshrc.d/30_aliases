@@ -125,9 +125,18 @@ f() {
     shortcut=(${(f)shortcut})
     local file="${shortcut[2]:a}"
     local cmd="$EDITOR +${shortcut[1]} \"$file\""
+
     # save the actual command in the history
     print -sr -- ${cmd%%$'\n'}
+
+    local atuin_id
+    atuin_id=$(atuin history start -- "$cmd")
+
     eval $cmd
+
+    local EXIT="$?"
+    [[ -z "${id}" ]] && return
+    (RUST_LOG=error atuin history end --exit $EXIT -- $id &) >/dev/null 2>&1
 }
 
 # diff
