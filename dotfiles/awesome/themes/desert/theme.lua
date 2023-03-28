@@ -3,7 +3,9 @@ local awful = require("awful")
 -- {{{ Main
 local theme = {}
 theme.confdir = awful.util.getdir("config") .. "/themes/desert"
-theme.wallpaper = theme.confdir .. "/background.png"
+theme.wallpaper_dark = theme.confdir .. "/background.png"
+theme.wallpaper_light = theme.confdir .. "/background-light.png"
+theme.wallpaper = theme.wallpaper_dark
 -- }}}
 
 -- {{{ Styles
@@ -21,8 +23,12 @@ theme.bg_systray = theme.bg_normal
 
 -- {{{ Borders
 theme.border_width  = 0
-theme.border_normal = theme.bg_normal
-theme.border_focus  = "#6B8E23"
+theme.border_normal_dark = "#333333"
+theme.border_focus_dark  = "#6B8E23"
+theme.border_normal_light = "#FAFAFA"
+theme.border_focus_light  = "#39ADB5"
+theme.border_normal = theme.border_normal_dark
+theme.border_focus  = theme.border_focus_dark
 -- }}}
 
 theme.useless_gap = 7

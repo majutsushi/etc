@@ -658,6 +658,30 @@ awful.rules.rules = {
 -- }}}
 
 -- {{{ Signals
+
+awesome.connect_signal("toggle_dark", function(is_dark)
+    if is_dark then
+        beautiful.border_normal = beautiful.border_normal_dark
+        beautiful.border_focus = beautiful.border_focus_dark
+        beautiful.wallpaper = beautiful.wallpaper_dark
+    else
+        beautiful.border_normal = beautiful.border_normal_light
+        beautiful.border_focus = beautiful.border_focus_light
+        beautiful.wallpaper = beautiful.wallpaper_light
+    end
+
+    for s in screen do
+        set_wallpaper(s)
+        for _, c in pairs(s.all_clients) do
+            if c == client.focus then
+                c.border_color = beautiful.border_focus
+            else
+                c.border_color = beautiful.border_normal
+            end
+        end
+    end
+end)
+
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function(c)
     -- Set the windows at the slave,
