@@ -212,13 +212,13 @@ local tasklist_buttons = awful.util.table.join(
     end)
 )
 
-local function set_wallpaper(s)
+local function set_wallpaper(s, is_dark)
     -- Wallpaper
     if beautiful.wallpaper then
         local wallpaper = beautiful.wallpaper
         -- If wallpaper is a function, call it with the screen
         if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
+            wallpaper = wallpaper(s, is_dark)
         end
         gears.wallpaper.maximized(wallpaper, s, true)
     end
@@ -663,15 +663,13 @@ awesome.connect_signal("toggle_dark", function(is_dark)
     if is_dark then
         beautiful.border_normal = beautiful.border_normal_dark
         beautiful.border_focus = beautiful.border_focus_dark
-        beautiful.wallpaper = beautiful.wallpaper_dark
     else
         beautiful.border_normal = beautiful.border_normal_light
         beautiful.border_focus = beautiful.border_focus_light
-        beautiful.wallpaper = beautiful.wallpaper_light
     end
 
     for s in screen do
-        set_wallpaper(s)
+        set_wallpaper(s, is_dark)
         for _, c in pairs(s.all_clients) do
             if c == client.focus then
                 c.border_color = beautiful.border_focus

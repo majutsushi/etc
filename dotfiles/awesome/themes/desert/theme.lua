@@ -3,9 +3,11 @@ local awful = require("awful")
 -- {{{ Main
 local theme = {}
 theme.confdir = awful.util.getdir("config") .. "/themes/desert"
-theme.wallpaper_dark = theme.confdir .. "/background.png"
-theme.wallpaper_light = theme.confdir .. "/background-light.png"
-theme.wallpaper = theme.wallpaper_dark
+theme.wallpaper = function(s, is_dark)
+    local orientation = s.geometry["height"] > s.geometry["width"] and "vert" or "horiz"
+    local colour = is_dark and "dark" or "light"
+    return theme.confdir .. "/background-" .. orientation .. "-" .. colour .. ".png"
+end
 -- }}}
 
 -- {{{ Styles
