@@ -31,6 +31,7 @@ actions:
     systemctl --user daemon-reload
     systemctl --user enable --now daily.timer
     systemctl --user enable daily-cleanup.service
+    systemctl --user enable --now weekly.timer
   tmux_plugin_install: |
     if ! [ -d $HOME/.var/lib/tmux/plugins/tpm/.git ]; then
         git clone https://github.com/tmux-plugins/tpm.git "$HOME/.var/lib/tmux/plugins/tpm"

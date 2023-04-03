@@ -1,0 +1,10 @@
+[Unit]
+Description=Weekly timer
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+Unit=weekly.target
+
+[Install]
+WantedBy=timers.target
