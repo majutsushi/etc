@@ -370,18 +370,6 @@ lcheck() {
     fi
 }
 
-# display system state
-status() {
-    print ""
-    print "Date..: "$(date "+%Y-%m-%d %H:%M:%S")""
-    print "Shell.: Zsh $ZSH_VERSION (PID = $$, $SHLVL nests)"
-    print "Term..: $TTY ($TERM), $BAUD bauds, $COLUMNS x $LINES chars"
-    print "Login.: $LOGNAME (UID = $EUID) on $HOST"
-    print "System: $(cat /etc/[A-Za-z]*[_-][rv]e[lr]*)"
-    print "Uptime:$(uptime)"
-    print ""
-}
-
 # debian stuff
 if [[ -r /etc/debian_version ]] ; then
     alias acs='apt-cache search'
