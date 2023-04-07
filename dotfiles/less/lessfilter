@@ -1,78 +1,172 @@
 #!/usr/bin/env bash
+# Ideas:
+# https://github.com/ranger/ranger/blob/master/ranger/data/scope.sh
+# https://github.com/wofr06/lesspipe/blob/lesspipe/lesspipe.sh
 
-have() {
+has_cmd() {
     type -P "$1" > /dev/null
+}
+
+try() {
+    if has_cmd "$1"; then
+        "$@"
+    else
+        echo "No $1 available"
+    fi
 }
 
 hl() {
     bat --color always --style changes,numbers "$@"
 }
 
-mimetype=$(file --mime-type -Lb "$1")
+# Slightly modified from the bundled lesspipe
+iso_list() {
+    local opts=()
+    isoinfo -d -i "$1"
+    isoinfo -d -i "$1" | grep -q ^Rock\.Ridge && opts+=("-R")
+    isoinfo -d -i "$1" | grep -q ^Joliet && opts+=("-J")
+    echo
+    isoinfo -f "${opts[@]}" -i "$1"
+}
 
-case "$mimetype" in
+
+# If a ':' is appended, just display the original file
+if [[ "$1" == *: ]]; then
+    cat "${1%:}"
+    exit 0
+fi
+
+FILE_PATH="$(readlink -f "$1")"
+
+# Use shared-mime-info database if possible
+if has_cmd gio; then
+    MIME_TYPE=$(gio info --attributes=standard::content-type "$FILE_PATH" | tail -n 1 | cut -d" " -f4)
+else
+    MIME_TYPE=$(file --mime-type --dereference --brief "$FILE_PATH" 2> /dev/null)
+fi
+
+BASENAME=$(basename "$FILE_PATH" | tr '[:upper:]' '[:lower:]')
+
+case "$MIME_TYPE" in
+    application/epub+zip)
+        if has_cmd mdcat; then
+            try pandoc -s -t markdown "$FILE_PATH" | mdcat
+        else
+            try pandoc -s -t plain "$FILE_PATH"
+        fi
+        ;;
+    application/*java-archive | application/zip | application/*+zip)
+        case "$BASENAME" in
+            *.egg)
+                unzip -p "$FILE_PATH" EGG-INFO/PKG-INFO | \
+                    sed '/^Description:/,/^\S/{/^Description:/d; /^\S/b; d}'
+                echo
+                unzip -v "$FILE_PATH"
+                ;;
+            *.xpi)
+                unzip -p "$FILE_PATH" manifest.json | \
+                    try jq --color-output '. | {name,version,description,author}'
+                echo
+                unzip -v "$FILE_PATH"
+                ;;
+            *)
+                unzip -l "$FILE_PATH"
+        esac ;;
+    application/json | application/*+json)
+        try jq --color-output . "$FILE_PATH" ;;
+    application/msword)
+        if has_cmd wvText; then wvText "$FILE_PATH" /dev/stdout
+        elif has_cmd antiword; then antiword "$FILE_PATH"
+        elif has_cmd catdoc; then catdoc "$FILE_PATH"
+        else echo "No wvText, antiword or catdoc available"; fi ;;
+    application/pdf)
+        try pdftotext -layout -nopgbrk -q "$FILE_PATH" - ;;
+    application/vnd.debian.binary-package)
+        echo "$FILE_PATH"; dpkg --info "$FILE_PATH"
+        echo
+        echo '*** Contents:'; dpkg-deb --contents "$FILE_PATH"
+        ;;
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document)
+        try docx2txt "$FILE_PATH" - ;;
     application/vnd.sqlite3)
-        have sqlite3 && sqlite3 "$1" ".dump" && exit 0;;
+        try sqlite3 "file:${FILE_PATH}?mode=ro" ".schema" -header -column ;;
+    application/x-7z-compressed)
+        try 7z l "$FILE_PATH" ;;
+    application/x-archive)
+        try ar tv "$FILE_PATH" ;;
+    application/x-bittorrent)
+        try transmission-show "$FILE_PATH" ;;
+    application/x-cd-image | application/x-iso9660-image)
+        if has_cmd isoinfo; then iso_list "$FILE_PATH"
+        else echo "No isoinfo available"; fi ;;
+    application/x-executable | application/x-pie-executable | application/x-sharedlib)
+        try readelf -WCa "${FILE_PATH}" ;;
+    application/x-java | application/x-java-applet)
+        if has_cmd procyon; then
+            if is-dark-mode; then
+                JDK_JAVA_OPTIONS='-DAnsi=true' procyon "$FILE_PATH" 2>/dev/null
+            else
+                JDK_JAVA_OPTIONS='-DAnsi=true' procyon --light "$FILE_PATH" 2>/dev/null
+            fi
+        elif has_cmd javap; then
+            hl -l java <(javap -sysinfo -private -constants "$FILE_PATH")
+        fi
+        ;;
+    application/x-rar | application/vnd.rar | application/vnd.comicbook-rar)
+        try unrar l "$FILE_PATH" ;;
+    application/x-troff-man)
+        MAN_KEEP_FORMATTING=1 man --local-file "$FILE_PATH" ;;
+    audio/*)
+        try mediainfo "$FILE_PATH" ;;
+    font/otf | font/ttf | font/sfnt | application/vnd.ms-opentype)
+        try otfinfo --info "$FILE_PATH" ;;
+    image/*)
+        try mediainfo "$FILE_PATH" ;;
+    message/rfc822)
+        try mu view "$FILE_PATH" ;;
+    text/csv)
+        try csvlook "$FILE_PATH" ;;
+    text/html)
+        if has_cmd w3m; then w3m -dump "$FILE_PATH"
+        elif has_cmd lynx; then lynx -dump -- "$FILE_PATH"
+        elif has_cmd elinks; then elinks -dump "$FILE_PATH"
+        else echo "No w3m, lynx, or elinks available"; fi ;;
+    text/rtf)
+        try unrtf --text "$FILE_PATH" ;;
+    text/x-patch | text/x-diff)
+        if has_cmd diffstat; then
+            diffstat -C "$FILE_PATH"
+            echo
+        fi
+        hl "$FILE_PATH"
+        ;;
+    video/*)
+        try mediainfo "$FILE_PATH" ;;
+    *)
+        case "$BASENAME" in
+            *.crt | *.pem)
+                try openssl x509 -hash -text -noout -in "$FILE_PATH" ;;
+            *.crl)
+                try openssl crl -hash -text -noout -in "$FILE_PATH" ;;
+            *.csr)
+                try openssl req -text -noout -in "$FILE_PATH" ;;
+            *.md | *.markdown)
+                try mdcat "$FILE_PATH" ;;
+            *.pcap | *.pcapng | *.pcap.* | *.pcapng.*)
+                try tshark -t a -r "$FILE_PATH" ;;
+            *.tar | *.tar.* | *.tgz)
+                tar tvf "$FILE_PATH" --force-local ;;
+            # These need to come after the tar matches
+            *.gz | *.z | *.dz)
+                gzip -dc "$FILE_PATH" ;;
+            *.xz)
+                try xz -dc "$FILE_PATH" ;;
+            *)
+                MIME_ENC=$(file --mime-encoding --dereference --brief "$FILE_PATH")
+                if [[ "$MIME_ENC" != binary ]]; then
+                    hl "$FILE_PATH"
+                else
+                    xfile "$FILE_PATH"
+                fi
+        esac
 esac
-
-(
-    case $(echo "$1" | tr '[:upper:]' '[:lower:]') in
-        *.pcap|*.pcapng|*.pcap.gz|*.pcapng.gz)
-            have tshark && tshark -t a -r "$1" && exit 0;;
-        *.jar)
-            have deepjarlist && deepjarlist "$1" && exit 0;;&
-        *.jar|*.war|*.ear|*.xpi|*.zip|*.cbz)
-            unzip -l "$1"
-            ;;
-        *.doc)
-            have antiword && antiword "$1" && exit 0
-            have catdoc && catdoc "$1" && exit 0
-            exit 1
-            ;;
-        *.docx)
-            have docx2txt && docx2txt "$1" - && exit 0
-            exit 1
-            ;;
-        *.scen)
-            have print-scenario && print-scenario --colour "$1" && exit 0
-            exit 1
-            ;;
-        *.tar.bz2|*.tbz|*.tbz2)
-            tar tjvf "$1" --force-local
-            ;;
-        *.tar.gz|*.tgz|*.tar.z|*.tar.dz)
-            tar tzvf "$1" --force-local
-            ;;
-        *.tar.xz|*.tar.lzma|*.txz)
-            tar tJvf "$1" --force-local
-            ;;
-        *.tar)
-            tar tvf "$1" --force-local
-            ;;
-        *.gz|*.z|*.dz)
-            gzip -dc "$1"
-            ;;
-        *.7z)
-            have 7z && 7z l "$1" && exit 0
-            exit 1
-            ;;
-        *.rar|*.cbr)
-            have unrar && unrar l "$1" && exit 0
-            exit 1
-            ;;
-        *.class)
-            hl -l java <(javap -sysinfo -private -constants "$1")
-            ;;
-        *.iso)
-            have isoinfo && isoinfo -l -i "$1" && exit 0
-            exit 1
-            ;;
-        *.md|*.markdown)
-            have mdcat && mdcat "$1" && exit 0
-            exit 1
-            ;;
-        *)
-            hl "$1" 2>/dev/null && exit 0
-            exit 1
-    esac
-) 2>/dev/null

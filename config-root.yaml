@@ -15,6 +15,7 @@ actions:
       fd-find \
       fzf \
       gron \
+      hexyl \
       inputplug \
       keynav \
       light \
