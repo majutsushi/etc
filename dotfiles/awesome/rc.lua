@@ -756,7 +756,7 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-client.connect_signal("request::urgent", function(c)
+client.connect_signal("property::urgent", function(c)
     if client.focus ~= c then
         c.border_color = beautiful.fg_urgent
     end
