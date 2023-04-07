@@ -1,5 +1,21 @@
 if [[ "$INCOGNITO" != 1 ]]; then
     eval "$(atuin init zsh)"
+
+    # Adapted from
+    # https://leahneukirchen.org/blog/archive/2013/03/10-fresh-zsh-tricks-you-may-not-know.html
+    autoload -Uz narrow-to-region
+    _atuin_search_nested() {
+        local state
+        MARK=CURSOR
+        narrow-to-region -S state
+        LBUFFER+=$(RUST_LOG=error atuin search $* -i 3>&1 1>&2 2>&3)
+        narrow-to-region -R state
+        zle reset-prompt
+    }
+    zle -N _atuin_search_nested
+    bindkey -M emacs '\er' _atuin_search_nested
+    bindkey -M vicmd '\er' _atuin_search_nested
+    bindkey -M viins '\er' _atuin_search_nested
 fi
 
 if have direnv; then

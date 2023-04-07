@@ -9,20 +9,8 @@ FZF_CTRL_T_OPTS="
 
 FZF_ALT_C_COMMAND="fd --type directory"
 
-FZF_CTRL_R_OPTS="
-    --no-sort
-    --preview 'echo {}'
-    --preview-window 'bottom,border-rounded,3,hidden'
-    --bind 'ctrl-/:toggle-preview'
-"
-
 if [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
-
-    # Make fzf widget accessible even when atuin is used
-    bindkey -M emacs '\er' fzf-history-widget
-    bindkey -M vicmd '\er' fzf-history-widget
-    bindkey -M viins '\er' fzf-history-widget
 fi
 
 
