@@ -22,4 +22,7 @@ export GPG_TTY=$(tty)
 export SACK_SHORTCUT_FILE="$XDG_CACHE_HOME/sack_shortcuts/$$"
 mkdir -p "$(dirname "$SACK_SHORTCUT_FILE")"
 
+# See https://git-scm.com/docs/git-config#ENVIRONMENT
+export GIT_CONFIG_COUNT=0
+
 # vim: filetype=zsh

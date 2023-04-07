@@ -184,12 +184,6 @@
 
 [delta]
 	features = line-numbers decorations
-	; syntax-theme = Monokai Extended
-	syntax-theme = zenburn
-	minus-style = syntax "#3f0001"
-	minus-emph-style = syntax "#af0000"
-	plus-style = syntax "#003800"
-	plus-emph-style = syntax "#008700"
 
 [delta "decorations"]
 	commit-decoration-style = bold yellow box ul
@@ -199,11 +193,6 @@
 
 [delta "line-numbers"]
 	line-numbers = true
-	line-numbers-zero-style = "#999999"
-	line-numbers-left-style = blue
-	line-numbers-right-style = blue
-	line-numbers-minus-style = "#af0000"
-	line-numbers-plus-style = "#008700"
 
 [url "ssh://[login]@git.gnome.org/git/"]
 	insteadof = gnome:
