@@ -22,3 +22,12 @@ V noaction g|$/usr/bin/vim -\n
 ^N down
 
 ^[ abort
+
+#env
+# See 'man 5 termcap' for capabilities
+# start bold mode => bold red
+LESS_TERMCAP_md = ^[[1;31m
+# start underlining => bold green
+LESS_TERMCAP_us = ^[[1;32m
+# end underlining => turn off all attributes
+LESS_TERMCAP_ue = ^[[m^O
