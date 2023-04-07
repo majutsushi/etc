@@ -47,4 +47,14 @@ ls-colors() {
     echo "$LS_COLORS" | tr : '\n' | sed 's/\(.*\)=\(.*\)/\x1b[\2m\1\t\2\x1b[0m/'
 }
 
+
+_update_bat() {
+    if [[ "$1" == dark ]]; then
+        export BAT_THEME="Monokai Extended"
+    else
+        export BAT_THEME="Monokai Extended Light"
+    fi
+}
+_update_colours_funcs+=_update_bat
+
 # vim: filetype=zsh
