@@ -127,9 +127,6 @@ export GROFF_NO_SGR=1
 
 export MANWIDTH="${MANWIDTH:-80}"
 
-export CLICOLOR=1
-eval "$(dircolors -b "$DOTFILES/shell-common/dircolors")" 2>/dev/null || :
-
 export ZIPOPT="--exclude=@$DOTFILES/excludes/archive"
 export TAR_OPTIONS="--exclude-from=$DOTFILES/excludes/archive --exclude-caches-all --exclude-caches-under"
 

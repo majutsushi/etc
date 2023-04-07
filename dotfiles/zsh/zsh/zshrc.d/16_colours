@@ -1,0 +1,50 @@
+# Enable colour for BSD ls and a few other tools
+export CLICOLOR=1
+
+typeset -g __toggledark_timestamp
+typeset -ga _update_colours_funcs
+
+_update_colours() {
+    local mode
+    if is-dark-mode; then
+        mode="dark"
+    else
+        mode="light"
+    fi
+    for func in ${_update_colours_funcs[@]}; do
+        $func $mode
+    done
+}
+
+_check_update_colours() {
+    local timestamp=$(zstat +ctime "$XDG_STATE_HOME/toggledark")
+    if (( timestamp > __toggledark_timestamp )); then
+        _update_colours
+    fi
+    __toggledark_timestamp=$timestamp
+}
+add-zsh-hook preexec _check_update_colours
+
+
+_update_ls_colors() {
+    if [[ "$1" == dark ]]; then
+        LS_COLORS=$(vivid generate molokai)
+    else
+        LS_COLORS=$(vivid generate ayu)
+    fi
+    zstyle ':completion:*:default' list-colors 'hi=30;41' 'du=37;41' ${(s.:.)LS_COLORS}
+}
+if have vivid; then
+    _update_colours_funcs+=_update_ls_colors
+    _update_ls_colors
+    export LS_COLORS
+else
+    eval "$(dircolors -b "$DOTFILES/shell-common/dircolors")" 2>/dev/null || :
+    zstyle ':completion:*:default' list-colors 'hi=30;41' 'du=37;41' ${(s.:.)LS_COLORS}
+fi
+
+ls-colors() {
+    echo "$LS_COLORS" | tr : '\n' | sed 's/\(.*\)=\(.*\)/\x1b[\2m\1\t\2\x1b[0m/'
+}
+
+# vim: filetype=zsh

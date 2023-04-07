@@ -23,6 +23,7 @@ actions:
       playerctl \
       ripgrep \
       rofi \
+      vivid \
       wmctrl \
       xclip \
       xinput \

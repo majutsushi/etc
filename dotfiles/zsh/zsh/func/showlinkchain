@@ -1,5 +1,3 @@
-zmodload -F zsh/stat b:zstat
-
 local args
 
 while [[ -h $1 ]]; do

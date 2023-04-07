@@ -33,13 +33,6 @@ zstyle ':completion:*' single-ignored show
 # caching
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' cache-path $ZSH_CACHEDIR/zcompcache/
-# activate color-completion
-# see http://www.zsh.org/mla/users/2008/msg00699.html
-# zstyle -e ':completion:*:default' list-colors 'reply=(
-#     "${PREFIX:+=(#bi)($PREFIX:t)(?)*=00=38;5;243='${color[underline]}'}"
-#     ${(s.:.)LS_COLORS}
-# )'
-zstyle ':completion:*:default' list-colors 'hi=30;41' 'du=37;41' ${(s.:.)LS_COLORS}
 
 zstyle ':completion:*' accept-exact-dirs true
 zstyle ':completion:*' squeeze-slashes true

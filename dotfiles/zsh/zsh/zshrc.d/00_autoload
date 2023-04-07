@@ -1,3 +1,5 @@
+zmodload -F zsh/stat b:zstat
+
 # autoload all executable files in $fpath
 autoload -U $^fpath/*(.xN:t)
 
