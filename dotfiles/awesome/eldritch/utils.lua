@@ -15,6 +15,14 @@ function utils.exec(cmd)
     return out
 end
 
+function utils.exec_code(cmd)
+    local f = io.popen(cmd)
+    if f == nil then return "" end
+    local out = f:read("*all")
+    local exit_code = f:close()
+    return out, exit_code
+end
+
 function utils.split(inputstr, sep)
     if sep == nil then
         sep = "%s"
