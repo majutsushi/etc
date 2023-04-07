@@ -66,8 +66,13 @@ add-zle-hook-widget line-finish line-finish-keypad
 
 
 # custom escape code mappings
+# S/A/C-Return
+bindkey -s '\eQ13;2~' '\n'
 bindkey -s '\eQ13;3~' '\e^M'
 bindkey -s '\eQ13;5~' '^\n' # conflicts with '^J'
+# S/A/C-Space
+bindkey -s '\eQ32;2~' ' '
+bindkey -s '\eQ32;3~' ' '
 bindkey -s '\eQ32;5~' '^@'
 
 # only search local history by default, and all history for isearch
