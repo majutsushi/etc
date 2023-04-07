@@ -158,12 +158,6 @@ dotfiles:
   f_latexmkrc:
     src: latexmkrc
     dst: ~/.latexmkrc
-  f_lessfilter:
-    src: less/lessfilter
-    dst: ~/.config/lessfilter
-  f_lesskey:
-    src: less/lesskey
-    dst: ~/.config/lesskey
   f_profile:
     src: shell-common/profile
     dst: ~/.profile
