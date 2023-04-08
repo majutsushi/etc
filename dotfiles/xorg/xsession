@@ -25,7 +25,7 @@ else
           export XSECURELOCK_SAVER=saver_blank
           xss-lock --notifier="/usr/libexec/xsecurelock/dimmer" -l -- xsecurelock &
      else
-          xss-lock --notifier="$DOTFILES/../bin/xss-notify" -- slock &
+          xss-lock --notifier="$DOTFILES/bin/xss-notify" -- slock &
      fi
 fi
 
