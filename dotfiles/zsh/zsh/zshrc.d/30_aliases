@@ -42,17 +42,14 @@ lr() {
     } **/*(N.mh-${1:-1}) **/*(N.Om[-${2:-10},-1])
 }
 
-if is_root; then
-    INTERACTIVE="-i"
-fi
 if islinux; then
-    alias cp="nocorrect cp --preserve=timestamps $INTERACTIVE"
-    alias rm="nocorrect rm --one-file-system $INTERACTIVE"
+    alias cp="nocorrect cp --preserve=timestamps"
+    alias rm="nocorrect rm --one-file-system"
 else
-    alias cp="nocorrect cp $INTERACTIVE"
-    alias rm="nocorrect rm $INTERACTIVE"
+    alias cp="nocorrect cp"
+    alias rm="nocorrect rm"
 fi
-alias mv="nocorrect mv $INTERACTIVE"
+alias mv="nocorrect mv"
 alias mkdir="nocorrect mkdir"
 
 mcd() { mkdir -p "$@"; cd "$@" }
@@ -88,17 +85,12 @@ fi
 alias da='du -sch'
 alias decolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
 alias g="pager-wrapper grep --color=always --extended-regexp"
-alias jo='jobs -l'
-alias jsonpp='python -mjson.tool'
-alias le='/usr/share/vim/vimcurrent/macros/less.sh'
 alias myip='curl http://v4.ipv6-test.com/api/myip.php'
 alias pa='ps aux | less'
 alias pu='ps ux | less'
 alias rr='ranger'
 alias rot13='tr a-zA-Z n-za-mN-ZA-M'
-alias ta='noglob task'
 alias vi='nvim'
-alias wr='wget --recursive --level=inf --convert-links --page-requisites --no-parent'
 alias x='extract'
 
 vimlint() {
@@ -154,19 +146,10 @@ wdiff() { command wdiff --start-insert=${fg[green]} --end-insert=${reset_color} 
 alias diffstat="decolor | diffstat -C"
 
 echoerr()  { echo "$@" 1>&2 }
-quotify()  { local r="$(sed -e 's/'\''/'\'\\\\\'\''/g')" && echo "'"$r"'" }
 bk()       { cp -r -b ${1} ${1}_$(date --iso-8601=m) }
-sshot()    { scrot '%Y-%m-%d-%H%M%S_$wx$h.png' -e 'mv $f ~/media/desktop/screenshots/' "$@" }
-wp()       { dig +short txt ${1// /_}.wp.dg.cx }
-getlinks() { perl -ne 'while ( m/"((www|ftp|http):\/\/.*?)"/gc ) { print $1, "\n"; }' $* }
 flip()     { perl -C3 -Mutf8 -lpe '$_=reverse;y/a-zA-Z.['\'',({?!\"<_;‿⁅∴\r/ɐqɔpǝɟƃɥıɾʞ|ɯuodbɹsʇnʌʍxʎzɐqɔpǝɟƃɥıɾʞ|ɯuodbɹsʇnʌʍxʎz˙],'\'')}¿¡,>‾؛⁀⁆∵\n/' <<< "$1" }
-hl()       { egrep --color=always -e '' -e${^*} }
 xc()       { perl -pe "chomp if eof" | clipboard-copy }
 copy-path() { readlink -f "$1" | xc }
-
-anytoany() { print $(( [##$2] $1#$3 )) }
-dectohex() { anytoany 10 16 $1 }
-hextodec() { anytoany 16 10 $1 }
 
 incognito() {
     INCOGNITO=1 zsh
@@ -288,14 +271,6 @@ compdef _jkill jkill
 doc() { cd /usr/share/doc/$1 && ll }
 _doc() { _files -W /usr/share/doc -/ }
 compdef _doc doc
-
-# conversions
-alias i2u='iconv --from-code=ISO-8859-15 --to-code=UTF-8'
-alias u2i='iconv --from-code=UTF-8 --to-code=ISO-8859-15'
-
-# switch terminal encoding (rxvt-unicode only)
-alias eucjp="printf '\33]701;%s\007' ja_JP.EUC-JP; export LANG=ja_JP.EUC-JP"
-alias utf8="printf '\33]701;%s\007' en_US.UTF-8; export LANG=en_US.UTF-8"
 
 # grep for running process, like: 'psgrep vim'
 psgrep() {

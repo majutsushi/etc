@@ -75,16 +75,13 @@ bindkey -s '\eQ32;2~' ' '
 bindkey -s '\eQ32;3~' ' '
 bindkey -s '\eQ32;5~' '^@'
 
+# Use prefix search for Ctrl-p/n
 autoload up-line-or-beginning-search
-# hack to get zsh highlighting to work for this widget
-_up-line-or-beginning-search() { up-line-or-beginning-search }
-zle -N up-line-or-beginning-search _up-line-or-beginning-search
+zle -N up-line-or-beginning-search
 bindkey '^p' up-line-or-beginning-search
 bindkey -M menuselect '^p' up-line-or-search
 autoload down-line-or-beginning-search
-# hack to get zsh highlighting to work for this widget
-_down-line-or-beginning-search() { down-line-or-beginning-search }
-zle -N down-line-or-beginning-search _down-line-or-beginning-search
+zle -N down-line-or-beginning-search
 bindkey '^n' down-line-or-beginning-search
 bindkey -M menuselect '^n' down-line-or-search
 

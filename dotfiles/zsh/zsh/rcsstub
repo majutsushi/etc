@@ -10,7 +10,6 @@
 
 if [[ -o rcs ]]; then
   source $ZDOTDIR/logging
-  source $ZDOTDIR/util
   source $ZDOTDIR/sourcedir
 
 #  __do_debug && set -x || :
