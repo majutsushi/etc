@@ -50,4 +50,6 @@ remove_escaped_chars() {
     sed -E "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
 }
 
-$BIN "$@" | tee >/dev/null >(display_shortcuts) >(process_shorcut_paths | remove_escaped_chars > "${SACK_SHORTCUT_FILE}") | less -F
+$BIN "$@" | \
+    tee >/dev/null >(display_shortcuts) >(process_shorcut_paths | remove_escaped_chars > "${SACK_SHORTCUT_FILE}") | \
+    less -F
