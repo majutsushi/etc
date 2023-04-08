@@ -10,7 +10,9 @@ if [[ -d "$HOME/.local/etc/zshenv.d" ]]; then
     done
 fi
 
+# Disable some features from Debian's /etc/zsh/zshrc
 DEBIAN_PREVENT_KEYBOARD_CHANGES=1
+skip_global_compinit=1
 
 # Disable shell sessions in macOS's Terminal app
 SHELL_SESSIONS_DISABLE=1
