@@ -81,6 +81,8 @@ case "$MIME_TYPE" in
         else echo "No wvText, antiword or catdoc available"; fi ;;
     application/pdf)
         try pdftotext -layout -nopgbrk -q "$FILE_PATH" - ;;
+    application/postscript)
+        gs -dQUIET -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=txtwrite -sOutputFile=- -q "$FILE_PATH" ;;
     application/vnd.debian.binary-package)
         echo "$FILE_PATH"; dpkg --info "$FILE_PATH"
         echo
