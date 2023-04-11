@@ -59,6 +59,12 @@ if [ "$PV_IMAGE_ENABLED" = "True" ]; then
                 exit 4
             fi
             ;;
+        application/pdf)
+            # pdftocairo adds the extension itself, so we have to remove it
+            pdftocairo -jpeg -singlefile "$FILE_PATH" "$IMAGE_CACHE_PATH" \
+                && mv "${IMAGE_CACHE_PATH}.jpg" "$IMAGE_CACHE_PATH" \
+                && exit 6
+            ;;
         # Image preview for video, disabled by default.:
         ###video/*)
         ###    ffmpegthumbnailer -i "$FILE_PATH" -o "$IMAGE_CACHE_PATH" -s 0 && exit 6 || exit 1;;
