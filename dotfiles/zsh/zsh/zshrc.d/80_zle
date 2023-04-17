@@ -144,7 +144,7 @@ bindkey "^Xf" insert-files
 # press esc-e for editing command line in $EDITOR or $VISUAL
 autoload -U edit-command-line
 zle -N edit-command-line
-bindkey '^[e' edit-command-line
+bindkey '^X^E' edit-command-line
 
 bindkey '^[q' push-line-or-edit
 
