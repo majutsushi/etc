@@ -28,7 +28,10 @@ alert() {
 
     if islinux; then
         local body="\$ $__last_cmd\n<span font-style='italic'>${__last_cmd_dir}</span>"
-        notify-send --expire-time=10000 --urgency=$urgency "$summary" "$body"
+        notify-send \
+            --icon /usr/share/icons/gnome/48x48/apps/terminal.png \
+            --expire-time=10000 \
+            --urgency=$urgency "$summary" "$body"
 
         # set urgent hint on window
         wmctrl -i -r $WINDOWID -b add,demands_attention
