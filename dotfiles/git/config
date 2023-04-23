@@ -21,7 +21,7 @@
 	ci = commit
 	co = checkout
 	br = branch
-	dft = difftool
+	dft = difftool --dir-diff
 
 	ls  = log --stat
 	lg  = log --graph --oneline --decorate
