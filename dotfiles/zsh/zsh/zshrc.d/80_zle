@@ -65,16 +65,6 @@ line-finish-keypad() { printf '%s' ${terminfo[rmkx]}; }
 add-zle-hook-widget line-finish line-finish-keypad
 
 
-# custom escape code mappings
-# S/A/C-Return
-bindkey -s '\eQ13;2~' '\n'
-bindkey -s '\eQ13;3~' '\e^M'
-bindkey -s '\eQ13;5~' '^\n' # conflicts with '^J'
-# S/A/C-Space
-bindkey -s '\eQ32;2~' ' '
-bindkey -s '\eQ32;3~' ' '
-bindkey -s '\eQ32;5~' '^@'
-
 # Use prefix search for Ctrl-p/n
 autoload up-line-or-beginning-search
 zle -N up-line-or-beginning-search

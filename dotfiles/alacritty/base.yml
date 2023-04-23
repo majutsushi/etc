@@ -87,9 +87,9 @@ key_bindings:
   # Map private escape sequences so vim can remap them
   # https://en.wikipedia.org/wiki/C0_and_C1_control_codes
   # https://en.wikipedia.org/wiki/ANSI_escape_code
-  - { key: Return,   mods: Shift,   chars: "\x1bQ13;2~"                      }
-  - { key: Return,   mods: Alt,     chars: "\x1bQ13;3~"                      }
-  - { key: Return,   mods: Control, chars: "\x1bQ13;5~"                      }
-  - { key: Space,    mods: Shift,   chars: "\x1bQ32;2~"                      }
-  - { key: Space,    mods: Alt,     chars: "\x1bQ32;3~"                      }
-  - { key: Space,    mods: Control, chars: "\x1bQ32;5~"                      }
+  # - { key: Return,   mods: Shift,   chars: "\x1b[13;2u"                      }
+  # - { key: Return,   mods: Alt,     chars: "\x1b[13;3u"                      }
+  - { key: Return,   mods: Control, chars: "\x1b[13;5u"                      }
+  # - { key: Space,    mods: Shift,   chars: "\x1b[32;2u"                      }
+  # - { key: Space,    mods: Alt,     chars: "\x1b[32;3u"                      }
+  - { key: Space,    mods: Control, chars: "\x1b[32;5u"                      }
