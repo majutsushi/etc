@@ -1190,7 +1190,7 @@ if !exists('s:known_links')
     let s:known_links = {}
 endif
 
-function! s:find_links() " {{{1
+function! s:find_links() " {{{2
     " Find and remember links between highlighting groups.
     redir => listing
     try
@@ -1210,7 +1210,7 @@ function! s:find_links() " {{{1
     endfor
 endfunction
 
-function! s:restore_links() " {{{1
+function! s:restore_links() " {{{2
     " Restore broken links between highlighting groups.
     redir => listing
     try
@@ -1242,7 +1242,7 @@ endfunction
 
 command! -nargs=1 -complete=color MyColorscheme call s:accurate_colorscheme(<q-args>)
 
-function! s:determine_colorscheme() abort
+function! s:determine_colorscheme() abort " {{{2
     if has('nvim')
         call system(["is-dark-mode"])
     else
