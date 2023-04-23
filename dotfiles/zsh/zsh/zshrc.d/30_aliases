@@ -93,6 +93,9 @@ alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 alias vi='nvim'
 alias x='extract'
 
+alias icat="kitty +kitten icat"
+alias kd='kitty +kitten diff'
+
 vimlint() {
     local bundles="$HOME/.var/lib/vim/bundles"
     "$bundles"/vim-vimlint/bin/vimlint.sh -l "$bundles"/vim-vimlint -p "$bundles"/vim-vimlparser "$@"

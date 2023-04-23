@@ -47,6 +47,7 @@ def main(args: argparse.Namespace) -> int:
     handle_timestamp(is_dark)
     handle_awesome(is_dark)
     handle_alacritty(is_dark)
+    handle_kitty(is_dark)
     handle_vim(is_dark)
     handle_xsettings(is_dark)
     handle_gnome(is_dark)
@@ -83,6 +84,20 @@ def handle_alacritty(is_dark: bool) -> None:
     """
     ).lstrip()
     theme_file.write_text(settings)
+
+
+def handle_kitty(is_dark: bool) -> None:
+    theme = "theme-desert.conf" if is_dark else "theme-material.conf"
+    link_path = XDG_CONFIG_HOME / "kitty" / "current-theme.conf"
+    if link_path.exists():
+        link_path.unlink()
+    link_path.symlink_to(XDG_CONFIG_HOME / "kitty" / theme)
+
+    try:
+        pid = int(check_output(["pidof", "-s", "kitty"]))
+        os.kill(pid, signal.SIGUSR1)
+    except CalledProcessError:
+        return
 
 
 def handle_vim(is_dark: bool) -> None:

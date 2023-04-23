@@ -97,6 +97,11 @@ dotfiles:
     src: icons
     dst: ~/.local/share/icons
     link: link_children
+  d_kitty:
+    src: kitty
+    dst: ~/.config/kitty
+    actions:
+      - ln "$HOME/.config/kitty/theme-desert.conf" "$HOME/.config/kitty/current-theme.conf"
   d_ncdu:
     src: ncdu
     dst: ~/.config/ncdu
