@@ -66,6 +66,19 @@ endif
 
 highlight Search ctermbg=3 ctermfg=0
 
+function! s:osc52_yank(text) abort
+    let encoded = system("base64", a:text)
+    let encoded = system("tr -d '\r\n'", encoded)
+    if v:shell_error
+        echoerr encoded
+    else
+        let escaped = "\033]52;c;" . encoded . "\a"
+        call writefile([escaped], "/dev/tty", "b")
+        " execute "silent !echo -ne " . escaped
+    endif
+endfunction
+autocmd TextYankPost * call s:osc52_yank(join(v:event.regcontents, "\n"))
+
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
 nnoremap <silent> g/ :execute 'vimgrep /' . @/ . '/g %'<CR>:copen<CR>
 nnoremap Y y$
