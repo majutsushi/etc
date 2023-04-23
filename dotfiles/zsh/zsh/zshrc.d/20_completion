@@ -1,3 +1,6 @@
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+# https://thevaluable.dev/zsh-completion-guide-examples/
+
 # Whenever a command completion is attempted, make sure the entire command
 # path is hashed first.
 setopt hash_list_all
