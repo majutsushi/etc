@@ -58,6 +58,7 @@ gmon.out
 .classpath
 .project
 .settings/
+*.iml
 
 .mypy_cache/
 .venv/
