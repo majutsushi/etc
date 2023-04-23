@@ -1,4 +1,7 @@
-if [[ -n "${DISPLAY}" ]]; then
+if [[ "$TERM" == xterm-kitty ]]; then
+    local kitty_focused=$(kitty @ ls | jq ".[].tabs[] | select(.windows[].is_self == true) | .is_focused")
+    [[ $kitty_focused == false ]] && return 1
+elif [[ -n "${DISPLAY}" ]]; then
     local activewin=$(xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | cut -f 2)
     local -l curwin="0x$(print $(( [##16] 10#${WINDOWID} )) )"
 
