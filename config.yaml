@@ -230,7 +230,7 @@ dotfiles:
     dst: ~/.vintrc.yaml
   # X
   d_fontconfig:
-    src: xorg/fontconfig
+    src: fontconfig
     dst: ~/.config/fontconfig
     # actions:
     #   - has_command X
