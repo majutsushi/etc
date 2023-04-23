@@ -1,18 +1,18 @@
 # start tmux if not already in it or running a dumb terminal
 
 # 'rxvt' is needed for dvtm
-if [[ ! "$TERM" =~ ^\(screen.*\|rxvt\|dumb\|vt100\)$ ]] \
-   && [[ -z "$TMUX" ]] \
-   && [[ -z "$TMUX_DISABLE" ]] \
-   && [[ -z "$ZSHRUN" ]] \
-   && [[ -z "$VIM" ]] \
-   && [[ "$TERM_PROGRAM" != vscode ]] \
-   && [[ "$TERMINAL_EMULATOR" != JetBrains-JediTerm ]]; then
-    export ORIGTERM=$TERM
-    export ORIGCOLORTERM=$COLORTERM
-    unset TMUX
-    tmux new-session
-fi
+# if [[ ! "$TERM" =~ ^\(screen.*\|rxvt\|dumb\|vt100\)$ ]] \
+#    && [[ -z "$TMUX" ]] \
+#    && [[ -z "$TMUX_DISABLE" ]] \
+#    && [[ -z "$ZSHRUN" ]] \
+#    && [[ -z "$VIM" ]] \
+#    && [[ "$TERM_PROGRAM" != vscode ]] \
+#    && [[ "$TERMINAL_EMULATOR" != JetBrains-JediTerm ]]; then
+#     export ORIGTERM=$TERM
+#     export ORIGCOLORTERM=$COLORTERM
+#     unset TMUX
+#     tmux new-session
+# fi
 
 # update session environment variables if they got changed after re-attaching
 # a tmux session
