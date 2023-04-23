@@ -52,12 +52,14 @@ if [ "$PV_IMAGE_ENABLED" = "True" ]; then
         # image files (unless overriden as above), but might fail for
         # unsupported types.
         image/*)
-            if command -v ueberzug >/dev/null && [[ -n "$DISPLAY" ]]; then
-                exit 7
-            else
-                chafa --colors 240 --size "${PV_WIDTH}x${PV_HEIGHT}" "$FILE_PATH"
-                exit 4
+            orientation="$( identify -format '%[EXIF:Orientation]\n' -- "${FILE_PATH}" )"
+            ## If orientation data is present and the image actually
+            ## needs rotating ("1" means no rotation)...
+            if [[ -n "$orientation" && "$orientation" != 1 ]]; then
+                ## ...auto-rotate the image according to the EXIF data.
+                convert -- "${FILE_PATH}" -auto-orient "${IMAGE_CACHE_PATH}" && exit 6
             fi
+            exit 7 ;;
             ;;
         application/pdf)
             # pdftocairo adds the extension itself, so we have to remove it
