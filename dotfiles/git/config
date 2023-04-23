@@ -89,7 +89,8 @@
 	difftool = true
 
 [diff]
-	tool = difftastic
+	tool = kitty
+	guitool = kitty.gui
 	algorithm = histogram
 	submodule = log
 	; noprefix = true
@@ -101,9 +102,14 @@
 
 [difftool]
 	prompt = false
+	trustExitCode = true
 
 [difftool "difftastic"]
 	cmd = difft "$LOCAL" "$REMOTE"
+[difftool "kitty"]
+	cmd = kitty +kitten diff "$LOCAL" "$REMOTE"
+[difftool "kitty.gui"]
+	cmd = kitty kitty +kitten diff "$LOCAL" "$REMOTE"
 
 [init]
 	defaultBranch = main
