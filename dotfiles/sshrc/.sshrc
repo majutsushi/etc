@@ -142,6 +142,7 @@ export PAGER=less
 if command -v vim >/dev/null; then
     export EDITOR=vim
     export VISUAL=vim
+    alias vi=vim
 else
     export EDITOR=vi
     export VISUAL=vi
@@ -156,7 +157,6 @@ else
     alias ll='LC_COLLATE=POSIX ls -lFh --color=auto'
     alias l='LC_COLLATE=POSIX ls -lAFh --color=auto'
 fi
-command -v vim &>/dev/null && alias vi=vim
 command -v tree &>/dev/null && alias t="tree -F -C"
 
 export SSHRCD="$SSHHOME/.sshrc.d"
