@@ -4,7 +4,7 @@ _update_terminal_title() {
     elif [[ -n "$SSH_CLIENT" ]]; then
         set_terminal_title "${(%):-%m}"
     else
-        set_terminal_title "zsh"
+        set_terminal_title "${(%):-%(4~|…/%3~|%~)}"
     fi
 }
 add-zsh-hook precmd _update_terminal_title
