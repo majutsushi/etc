@@ -9,8 +9,9 @@ FZF_CTRL_T_OPTS="
 
 FZF_ALT_C_COMMAND="fd --type directory"
 
-if [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]]; then
+if [[ -d /usr/share/doc/fzf/examples ]]; then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
+    source /usr/share/doc/fzf/examples/completion.zsh
 fi
 
 
