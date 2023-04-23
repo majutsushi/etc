@@ -148,15 +148,9 @@ else
     export VISUAL=vi
 fi
 
-if ls --help | grep -q -- --group-directories-first; then
-    alias ls='LC_COLLATE=POSIX ls  -Fh --color=auto --group-directories-first'
-    alias ll='LC_COLLATE=POSIX ls -lFh --color=auto --group-directories-first'
-    alias l='LC_COLLATE=POSIX ls -lAFh --color=auto --group-directories-first'
-else
-    alias ls='LC_COLLATE=POSIX ls  -Fh --color=auto'
-    alias ll='LC_COLLATE=POSIX ls -lFh --color=auto'
-    alias l='LC_COLLATE=POSIX ls -lAFh --color=auto'
-fi
+alias ls='LC_COLLATE=POSIX ls  -Fh --color=auto --group-directories-first --hyperlink=auto'
+alias ll='LC_COLLATE=POSIX ls -lFh --color=auto --group-directories-first --hyperlink=auto'
+alias l='LC_COLLATE=POSIX ls -lAFh --color=auto --group-directories-first --hyperlink=auto'
 command -v tree &>/dev/null && alias t="tree -F -C"
 
 export SSHRCD="$SSHHOME/.sshrc.d"
