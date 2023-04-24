@@ -100,7 +100,6 @@ bindkey '^Xj' jump-target
 #  WORDCHARS=.
 #  WORDCHARS='*?_[]~=&;!#$%^(){}'
 #  WORDCHARS='${WORDCHARS:s@/@}'
-export WORDCHARS="${WORDCHARS}|"
 
 # only slash should be considered as a word separator:
 slash-backward-kill-word() {
