@@ -130,11 +130,6 @@ export MANWIDTH="${MANWIDTH:-80}"
 export ZIPOPT="--exclude=@$DOTFILES/excludes/archive"
 export TAR_OPTIONS="--exclude-from=$DOTFILES/excludes/archive --exclude-caches-all --exclude-caches-under"
 
-export DEBEMAIL="jan@majutsushi.net"
-export DEBFULLNAME="Jan Larres"
-export BTS_CACHE=no
-
-
 # export RUBYOPT="-w $RUBYOPT"
 export RI="-f ansi"
 
@@ -188,8 +183,6 @@ export CCACHE_COMPRESS=1
 export CCACHE_HASHDIR=1
 
 export CLIFF_FIT_WIDTH=1
-
-export NNTPSERVER=news.gmane.org
 
 export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git --type file"
 export FZF_DEFAULT_OPTS="
