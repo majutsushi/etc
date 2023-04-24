@@ -101,9 +101,9 @@ bindkey '^Xj' jump-target
 #  WORDCHARS='*?_[]~=&;!#$%^(){}'
 #  WORDCHARS='${WORDCHARS:s@/@}'
 
-# only slash should be considered as a word separator:
+# only slash and equals should be considered as a word separator:
 slash-backward-kill-word() {
-    local WORDCHARS="${WORDCHARS:s@/@}"
+    local WORDCHARS="${${WORDCHARS:s@/@}:s@=@}"
     # zle backward-word
     zle backward-kill-word
 }
