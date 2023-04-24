@@ -113,52 +113,10 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 export BROWSER=xdg-open
 
-export PAGER="${PAGER:-less}"
-
-export LESS='-iRX-P%f ?m(file %i/%m) .lines %lt-%lb?L/%L. ?e(END)?x - Next\: %x.:?PB%PB\%..%t'
-export SYSTEMD_LESS="-F$LESS"
-export LESSHISTFILE="$HOME/.var/lib/lesshst"
-export LESSKEYIN="$DOTFILES/less/lesskey"
-export LESSOPEN="| $DOTFILES/less/lessfilter %s"
-
-# make groff not output ANSI escape sequences directly, but old codes with
-# backspace that can then be changed with the less codes above
-export GROFF_NO_SGR=1
-
-export MANWIDTH="${MANWIDTH:-80}"
-
-export ZIPOPT="--exclude=@$DOTFILES/excludes/archive"
-export TAR_OPTIONS="--exclude-from=$DOTFILES/excludes/archive --exclude-caches-all --exclude-caches-under"
-
-# export RUBYOPT="-w $RUBYOPT"
-export RI="-f ansi"
-
 export GOPATH="$HOME/src/go"
 _add_to_path post PATH "$GOPATH/bin"
 
-export TERMINFO="$XDG_DATA_HOME/terminfo"
-
-export SSHHOME="$DOTFILES/sshrc"
-
-export AUTOSSH_PORT=0
-
-export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
-
-export BIBTOOLRSC="$DOTFILES/bibtoolrsc"
-export GNUPGHOME="$XDG_DATA_HOME"/gnupg
-export INPUTRC="$XDG_CONFIG_HOME"/inputrc
-export IPYTHONDIR="$XDG_CONFIG_HOME"/ipython
-export PYLINTHOME="$XDG_CACHE_HOME"/pylint
-export RIPGREP_CONFIG_PATH="$DOTFILES/ripgreprc"
-export SQLITE_HISTORY="$HOME"/.var/lib/sqlite_history
-export TIGRC_USER="$DOTFILES"/tigrc
-export WEECHAT_HOME="$XDG_CONFIG_HOME"/weechat
 # export WINEPREFIX="$XDG_DATA_HOME"/wine/prefixes/default
-
-export PSQLRC="$XDG_CONFIG_HOME/psqlrc"
-export PGPASSFILE="$XDG_DATA_HOME/postgresql/pgpass"
-export PGSERVICEFILE="$XDG_DATA_HOME/postgresql/pg_service.conf"
-export PSQL_HISTORY="$XDG_CACHE_HOME/psql_history"
 
 export RUSTUP_HOME="$HOME/.var/lib/rustup"
 export CARGO_HOME="$HOME/.var/lib/cargo"
@@ -182,21 +140,9 @@ export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
 export CCACHE_COMPRESS=1
 export CCACHE_HASHDIR=1
 
-export CLIFF_FIT_WIDTH=1
-
-export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git --type file"
-export FZF_DEFAULT_OPTS="
-    --exact
-    --reverse
-    --bind 'ctrl-y:execute-silent(echo {} | clipboard-copy)+abort'
-    --color fg:-1,bg:-1,hl:green,fg+:bright-yellow,bg+:-1,hl+:bright-green,prompt:cyan,pointer:bright-red,marker:red
-"
-
 export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
 
 export GITHUB_USER=majutsushi
-
-export NETHACKOPTIONS="@$DOTFILES/nethackrc"
 
 
 # Make sure this is first in PATH
