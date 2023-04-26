@@ -121,12 +121,6 @@ _add_to_path post PATH "$GOPATH/bin"
 export RUSTUP_HOME="$HOME/.var/lib/rustup"
 export CARGO_HOME="$HOME/.var/lib/cargo"
 _add_to_path post PATH "$CARGO_HOME/bin"
-if command -v rustc > /dev/null; then
-    # Also see https://github.com/rust-lang-nursery/rustup.rs/issues/450
-    _rust_root="$(rustc --print sysroot)"
-    _add_to_path post MANPATH "$_rust_root/share/man"
-    unset _rust_root
-fi
 if command -v sccache > /dev/null; then
     export RUSTC_WRAPPER=sccache
 fi
