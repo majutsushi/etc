@@ -19,6 +19,14 @@ zmodload zsh/complist
 # initialize completion system
 autoload -U compinit
 compinit -d $ZCOMPDUMP
+# Execute code that does not affect the current session in the background.
+# From https://github.com/sorin-ionescu/prezto/blob/4abbc5572149baa6a5e7e38393a4b2006f01024f/runcoms/zlogin#L9-L15
+{
+    # Compile the completion dump to increase startup speed.
+    if [[ -s "$ZCOMPDUMP" && (! -s "${ZCOMPDUMP}.zwc" || "$ZCOMPDUMP" -nt "${ZCOMPDUMP}.zwc") ]]; then
+        flock -x -E 0 -n "$ZCOMPDUMP" zsh -f -c "zcompile '$ZCOMPDUMP'"
+    fi
+} &!
 
 
 ## general settings
