@@ -16,7 +16,7 @@ case "$DEVICE_TYPE" in
         echo "Handling keyboard '$DEVICE_NAME'"
         echo "Setting custom keymap and symbols"
         # http://madduck.net/docs/extending-xkb/
-        xkbcomp -w3 "-I${DOTFILES}/xorg/xkb" "${DOTFILES}/xorg/xkb/keymap/default" "${DISPLAY%%.*}"
+        xkbcomp -w3 "-I${XDG_CONFIG_HOME}/xkb" "${XDG_CONFIG_HOME}/xkb/keymap/default" "${DISPLAY%%.*}"
         ;;
     XISlavePointer)
         echo "Handling pointer '$DEVICE_NAME'"

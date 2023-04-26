@@ -228,12 +228,15 @@ dotfiles:
   f_vintrv:
     src: vintrc.yaml
     dst: ~/.vintrc.yaml
-  # X
+  # X/Wayland
   d_fontconfig:
     src: fontconfig
     dst: ~/.config/fontconfig
     # actions:
     #   - has_command X
+  d_xkb:
+    src: xkb
+    dst: ~/.config/xkb
   f_xsession:
     src: xorg/xsession
     dst: ~/.xsession
