@@ -138,6 +138,15 @@ export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
 
 export GITHUB_USER=majutsushi
 
+export DVDCSS_CACHE="$XDG_CACHE_HOME/dvdcss"
+export GTK_OVERLAY_SCROLLING=0
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+export NO_AT_BRIDGE=1
+export GRAMPSHOME="$XDG_DATA_HOME"
+
+export IDEA_PROPERTIES="$DOTFILES/idea/idea.properties"
+export IDEA_VM_OPTIONS="$DOTFILES/idea/idea64.vmoptions"
+
 
 # Make sure this is first in PATH
 _add_to_path pre PATH "$HOME/bin"
