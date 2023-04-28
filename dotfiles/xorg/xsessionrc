@@ -11,8 +11,6 @@ export GRAMPSHOME="$XDG_DATA_HOME"
 export IDEA_PROPERTIES="$DOTFILES/idea/idea.properties"
 export IDEA_VM_OPTIONS="$DOTFILES/idea/idea64.vmoptions"
 
-xset +fp $HOME/.local/share/fonts
-
 # Fix Java menu issues in Awesome
 xprop -root -f _NET_WM_NAME 8u -set _NET_WM_NAME Sawfish
 
