@@ -37,6 +37,9 @@ if [[ "$1" == *: ]]; then
 fi
 
 FILE_PATH="$(readlink -f "$1")"
+if ! [[ -r "$FILE_PATH" ]]; then
+    exit 1
+fi
 
 # Use shared-mime-info database if possible
 if has_cmd gio; then
