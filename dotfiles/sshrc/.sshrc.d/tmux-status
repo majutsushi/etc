@@ -53,7 +53,7 @@ __cpu_usage() {
 
     echo "$current" >| "$cpu_usage_cache"
 
-    printf "#[fg=brightblack,bg=yellow,bold]%2s#[default]#[fg=brightblack,bg=yellow]%%#[default] " "$diff"
+    printf "#[fg=black,bg=yellow,bold]%2s#[default]#[fg=black,bg=yellow]%%#[default] " "$diff"
 }
 
 
