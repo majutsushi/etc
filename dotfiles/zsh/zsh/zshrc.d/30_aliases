@@ -91,7 +91,7 @@ alias pu='ps ux | less'
 alias rr='ranger'
 alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 alias vi='nvim'
-alias x='extract'
+alias x='unpack'
 
 alias icat="kitty +kitten icat"
 alias kd='kitty +kitten diff'
