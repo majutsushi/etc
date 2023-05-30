@@ -93,8 +93,24 @@ alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 alias vi='nvim'
 alias x='unpack'
 
-alias icat="kitty +kitten icat"
+alias icat="kitty +kitten icat --align left"
+alias isvg="rsvg-convert | icat"
 alias kd='kitty +kitten diff'
+idot() {
+    # Based on https://twitter.com/thingskatedid/status/1483847024894099458
+    local bg fg
+    if is-dark-mode; then
+        bg=black
+        fg=white
+    else
+        bg=white
+        fg=black
+    fi
+    dot -Efontsize=18 -Efontname=sans -Nfontname=sans -Tpng \
+        -Gbgcolor=$bg -Gcolor=$fg -Ecolor=$fg -Efontcolor=$fg -Ncolor=$fg -Nfontcolor=$fg \
+    | convert -trim -bordercolor $bg -border 20 -transparent $bg -resize '80%' - - \
+    | icat
+}
 
 vimlint() {
     local bundles="$HOME/.var/lib/vim/bundles"
