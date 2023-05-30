@@ -179,6 +179,8 @@ eval "$(dircolors -b "$SSHRCD"/dircolors)" 2>/dev/null || :
 
 echo -e "\\e]0;${HOSTNAME%%.*}\\e\\"
 
+alias x='$SSHRCD/unpack'
+
 if [[ -f "$SSHRCD/kitty.bash" ]]; then
     export KITTY_SHELL_INTEGRATION="enabled"
     # shellcheck disable=SC1091
