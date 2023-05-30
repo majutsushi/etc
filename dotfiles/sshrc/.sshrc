@@ -112,6 +112,8 @@ __prompt_command() {
         PS1+="${prompt_colour_red}$exit_code ${prompt_colour_default}"
     fi
     PS1+="\$ "
+
+    history -a
 }
 
 __rprompt() {
