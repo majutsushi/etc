@@ -117,6 +117,8 @@ case "$MIME_TYPE" in
             hl -l java <(javap -sysinfo -private -constants "$FILE_PATH")
         fi
         ;;
+    application/x-lha)
+        try lha -l "$FILE_PATH" ;;
     application/x-rar | application/vnd.rar | application/vnd.comicbook-rar)
         try unrar l "$FILE_PATH" ;;
     application/x-troff-man)
