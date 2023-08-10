@@ -39,7 +39,7 @@ EOF
 
     local percent=$(( (total_diff - idle_diff) * 100 / total_diff ))
 
-    printf "%s" $percent
+    printf "%02d" $percent
 }
 
 __cpu_usage() {
@@ -53,7 +53,7 @@ __cpu_usage() {
 
     echo "$current" >| "$cpu_usage_cache"
 
-    printf "#[fg=black,bg=yellow,bold]%2s#[default]#[fg=black,bg=yellow]%%#[default] " "$diff"
+    printf "#[fg=black,bg=yellow]C#[bold]%s#[default]#[fg=black,bg=yellow]%%#[default] " "$diff"
 }
 
 
@@ -112,12 +112,12 @@ __memory() {
     usage=$(( 100 * fo_buffers / total ))
 
     if (( usage > 90 )); then
-        color="#[fg=#ff5f87,bg=#5f8700,bold]"
+        color="#[fg=#ff5f87,bg=#5f8700]"
     else
-        color="#[fg=brightwhite,bg=#5f8700,bold]"
+        color="#[fg=brightwhite,bg=#5f8700]"
     fi
 
-    printf "%2s%s#[default]#[fg=brightwhite,bg=#5f8700]%%#[default] " "$color" "$usage"
+    printf "%2sM#[bold]%02d#[default]#[fg=brightwhite,bg=#5f8700]%%#[default] " "$color" "$usage"
 }
 
 
