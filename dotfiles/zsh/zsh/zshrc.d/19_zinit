@@ -28,9 +28,6 @@ zinit light starship/starship
 zinit ice from"gh-r" as"program" mv"exa* -> exa"
 zinit light ogham/exa
 
-zinit ice from"gh-r" as"program" pick"delta-*/delta"
-zinit light dandavison/delta
-
 zinit ice from"gh-r" as"program"
 zinit light extrawurst/gitui
 
