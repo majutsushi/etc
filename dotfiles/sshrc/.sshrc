@@ -12,14 +12,17 @@ prompt_colour_cyan='\[\e[36m\]'
 prompt_colour_white='\[\e[37m\]'
 
 tmuxrc() {
-    local TMUXDIR=/tmp/sshrctmux
-    if ! [ -d $TMUXDIR ]; then
-        rm -rf $TMUXDIR
-        mkdir -p $TMUXDIR
+    local TMUXDIR=/tmp/sshrctmux-$(whoami)
+    if ! [[ -d "$TMUXDIR" ]]; then
+        rm -rf "$TMUXDIR"
+        mkdir -p "$TMUXDIR"
     fi
-    rm -rf $TMUXDIR/.sshrc.d
+    rm -rf "$TMUXDIR/.sshrc.d"
     cp -r "$SSHHOME"/.sshrc "$SSHHOME"/bashsshrc "$SSHHOME"/sshrc "$SSHHOME"/.sshrc.d "$TMUXDIR"
-    SSHHOME=$TMUXDIR SHELL=$TMUXDIR/bashsshrc /usr/bin/tmux -S "$TMUXDIR"/tmuxserver -f "$SSHRCD"/tmux.conf "$@"
+    local SSHHOME=$TMUXDIR
+    local SSHRCD=$SSHHOME/.sshrc.d
+    local SHELL=$SSHHOME/bashsshrc
+    command tmux -S "$TMUXDIR"/tmuxserver -f "$SSHRCD/tmux.conf" new-session -A -s 0
 }
 SHELL=$(which bash)
 

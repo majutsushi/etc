@@ -3,7 +3,7 @@
 
 ITEMS="cpu_usage memory loadavg"
 
-TMUX_CACHE="$SSHRCCLEANUP/cache/tmux"
+TMUX_CACHE="$SSHRCD/cache/tmux"
 mkdir -p "$TMUX_CACHE"/{status,.last}
 
 status_freq() {
