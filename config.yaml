@@ -82,8 +82,6 @@ dotfiles:
   d_git:
     src: git
     dst: ~/.config/git
-    actions:
-      - ln "$HOME/.config/git/ignore" "$HOME/.agignore"
   d_gitui:
     src: gitui
     dst: ~/.config/gitui
