@@ -12,3 +12,15 @@ set print array-indexes on
 
 # Show the concrete types behind nsIFoo
 set print object on
+
+
+# https://droettboom.com/blog/2015/11/20/gdb-python-extensions/
+python
+import gdb
+import sys
+import os
+sys.path.insert(0, "/usr/share/doc/python3.11/examples/gdb")
+def setup_python(event):
+    import libpython
+gdb.events.new_objfile.connect(setup_python)
+end
