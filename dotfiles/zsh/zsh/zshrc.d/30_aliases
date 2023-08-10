@@ -365,12 +365,13 @@ lcheck() {
 
 # debian stuff
 if [[ -r /etc/debian_version ]] ; then
-    alias acs='apt-cache search'
+    alias acs='apt search'
     alias aps='aptitude search -F "%c%a%M%S %p %I %Z %v %V"'
-    alias acsh='apt-cache show'
+    alias acsh='apt show'
+    alias apl='apt list'
     alias acp='apt-cache policy'
     alias afs='apt-file search'
-    alias api="$SUDO aptitude install"
+    alias api="$SUDO apt install"
     alias dbp='dpkg-buildpackage'
     alias aptitude-just-recommended='aptitude -o "Aptitude::Pkg-Display-Limit=!?reverse-depends(~i) ~M !?essential"'
     alias aptitude-also-via-dependency='aptitude -o "Aptitude::Pkg-Display-Limit=~i !~M ?reverse-depends(~i) !?essential"'
