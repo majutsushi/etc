@@ -443,7 +443,7 @@ local globalkeys = awful.util.table.join(
     --           {description = "run prompt", group = "launcher"}),
     awful.key({ modkey, "Control" }, "u", function() awful.spawn("select-unicode-char") end,
         { description = "select unicode character", group = "launcher" }),
-    awful.key({ modkey }, "r", function() awful.spawn("urxvt -name zshrun -geometry 100x10 -e env ZSHRUN=1 zsh") end,
+    awful.key({ modkey }, "r", function() awful.spawn("kitty --name zshrun -o remember_window_size=no -o initial_window_width=80c -o initial_window_height=10c -o font_size=15 env ZSHRUN=1 zsh") end,
         { description = "zshrun", group = "launcher" }),
 
     awful.key({ modkey }, "x",
@@ -634,7 +634,7 @@ awful.rules.rules = {
     { rule = { class = "URxvt" },
         properties = { size_hints_honor = false } },
 
-    { rule = { class = "URxvt", instance = "zshrun" },
+    { rule = { class = "kitty", instance = "zshrun" },
         properties = { floating = true },
         callback = function(c)
             awful.placement.centered(c, nil)

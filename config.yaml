@@ -124,9 +124,6 @@ dotfiles:
     link: link_children
     actions:
       - systemd_setup
-  d_urxvt:
-    src: urxvt
-    dst: ~/.urxvt
   d_weechat:
     src: weechat
     dst: ~/.config/weechat
