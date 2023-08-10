@@ -119,7 +119,7 @@ __prompt_command() {
 
     PS1=""
     if [[ -f /var/run/reboot-required ]]; then
-        PS1+="${prompt_colour_red}R ${prompt_colour_default}"
+        PS1+="${prompt_colour_red}↻ ${prompt_colour_default}"
     fi
     PS1+="$PROMPT_LOGO"
     PS1+="${prompt_colour_red}\u${prompt_colour_default}@${prompt_colour_yellow}\h${prompt_colour_default}"
