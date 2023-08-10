@@ -609,7 +609,8 @@ awful.rules.rules = {
             "xtightvncviewer",
             "MPlayer",
             "fs-uae",
-            "Minecraft.*"
+            "Minecraft.*",
+            "dosbox-x"
         },
 
         name = {
