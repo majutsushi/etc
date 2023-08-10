@@ -1,3 +1,7 @@
 Defaults	insults
 
+# Don't create ~/.sudo_as_admin_successful file
+# https://github.com/sudo-project/sudo/issues/56
+Defaults	!admin_flag
+
 # vim: ft=sudoers
