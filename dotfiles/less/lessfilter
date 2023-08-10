@@ -152,7 +152,8 @@ case "$MIME_TYPE" in
     font/otf | font/ttf | font/sfnt | application/vnd.ms-opentype)
         fontinfo "$FILE_PATH" ;;
     image/*)
-        try mediainfo "$FILE_PATH" ;;
+        if has_cmd exiftool; then exiftool "$FILE_PATH"
+        else try mediainfo "$FILE_PATH"; fi ;;
     message/rfc822)
         try mu view "$FILE_PATH" ;;
     text/csv)
