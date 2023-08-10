@@ -124,6 +124,11 @@ dotfiles:
     link: link_children
     actions:
       - systemd_setup
+  d_tmux:
+    src: tmux
+    dst: ~/.config/tmux
+    actions:
+      - tmux_plugin_install
   d_weechat:
     src: weechat
     dst: ~/.config/weechat
@@ -173,11 +178,6 @@ dotfiles:
     dst: ~/.ssh/config
     actions:
       - mkdir "$HOME/.ssh/sock"
-  f_tmuxconf:
-    src: tmux/tmux.conf
-    dst: ~/.tmux.conf
-    actions:
-      - tmux_plugin_install
   f_zathura:
     src: zathurarc
     dst: ~/.config/zathura/zathurarc
