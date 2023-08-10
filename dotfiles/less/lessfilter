@@ -29,6 +29,25 @@ iso_list() {
     isoinfo -f "${opts[@]}" -i "$1"
 }
 
+fontinfo() {
+    if ! has_cmd otfinfo; then
+        echo "No otfinfo available"
+        return
+    fi
+    otfinfo --info "$1"
+    echo
+    fc-scan --format "Font format: %{fontformat}\n" "$1"
+    echo
+    echo "Features:"
+    otfinfo --features "$1"
+    echo
+    echo "Tables:"
+    otfinfo --tables "$1"
+    echo
+    echo "Scripts:"
+    otfinfo --scripts "$1"
+}
+
 
 # If a ':' is appended, just display the original file
 if [[ "$1" == *: ]]; then
@@ -131,7 +150,7 @@ case "$MIME_TYPE" in
     audio/*)
         try mediainfo "$FILE_PATH" ;;
     font/otf | font/ttf | font/sfnt | application/vnd.ms-opentype)
-        try otfinfo --info "$FILE_PATH" ;;
+        fontinfo "$FILE_PATH" ;;
     image/*)
         try mediainfo "$FILE_PATH" ;;
     message/rfc822)
