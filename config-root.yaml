@@ -57,9 +57,9 @@ dotfiles:
   f_aptitude:
     src: aptitude/config
     dst: /root/.aptitude/config
-  f_sudo_insults:
-    src: insults
-    dst: /etc/sudoers.d/insults
+  f_sudoers_local:
+    src: sudoers.local
+    dst: /etc/sudoers.d/local
     chmod: 440
 profiles:
   default:
