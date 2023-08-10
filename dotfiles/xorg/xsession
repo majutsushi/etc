@@ -55,6 +55,9 @@ fi
 "$DOTFILES/xorg/xsettingsd-setup"
 inputplug -0 -c "$DOTFILES/xorg/inputplug-hook"
 
+# https://gitlab.freedesktop.org/pipewire/pipewire/-/merge_requests/836
+pactl load-module module-switch-on-connect
+
 # Wayland alternative: https://github.com/rvaiya/warpd
 keynav "loadconfig $DOTFILES/keynavrc"
 
