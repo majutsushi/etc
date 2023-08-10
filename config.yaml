@@ -102,6 +102,9 @@ dotfiles:
     dst: ~/.config/kitty
     actions:
       - ln "$HOME/.config/kitty/theme-desert.conf" "$HOME/.config/kitty/current-theme.conf"
+  d_latexmk:
+    src: latexmk
+    dst: ~/.config/latexmk
   d_ncdu:
     src: ncdu
     dst: ~/.config/ncdu
@@ -131,16 +134,16 @@ dotfiles:
     dst: ~/.config/weechat
   f_colordiffrc:
     src: colordiffrc
-    dst: ~/.colordiffrc
+    dst: ~/.config/colordiff/colordiffrc
   f_ctags:
     src: ctags
-    dst: ~/.ctags
+    dst: ~/.config/ctags/default.ctags
   f_digrc:
     src: digrc
     dst: ~/.digrc
   f_gdbinit:
     src: gdbinit
-    dst: ~/.gdbinit
+    dst: ~/.config/gdb/gdbinit
   f_gnuplot:
     src: gnuplot/gnuplot
     dst: ~/.gnuplot
@@ -160,9 +163,6 @@ dotfiles:
   f_irbrc:
     src: irbrc
     dst: ~/.irbrc
-  f_latexmkrc:
-    src: latexmkrc
-    dst: ~/.latexmkrc
   f_profile:
     src: shell-common/profile
     dst: ~/.profile
@@ -173,9 +173,6 @@ dotfiles:
   f_redshift:
     src: redshift.conf
     dst: ~/.config/redshift.conf
-  f_rprofile:
-    src: Rprofile
-    dst: ~/.Rprofile
   f_sshconfig:
     src: ssh_config
     dst: ~/.ssh/config
