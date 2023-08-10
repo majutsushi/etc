@@ -48,6 +48,9 @@
 	assume   = update-index --assume-unchanged
 	unassume = update-index --no-assume-unchanged
 	assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
+	skip = update-index --skip-worktree
+	noskip = update-index --no-skip-worktree
+	skipped  = "!git ls-files -t | grep ^S | cut -c 3-"
 	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
 
 	undo-commit = reset --soft HEAD^
