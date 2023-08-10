@@ -1,6 +1,0 @@
-cmdargs:
-    severity: 'style_problem'
-
-policies:
-    ProhibitImplicitScopeVariable:
-        enabled: false

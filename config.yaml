@@ -220,9 +220,6 @@ dotfiles:
   d_vim:
     src: vim
     dst: ~/.vim
-  f_vintrv:
-    src: vintrc.yaml
-    dst: ~/.vintrc.yaml
   # X/Wayland
   d_fontconfig:
     src: fontconfig
