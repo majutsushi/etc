@@ -13,6 +13,11 @@ if &compatible || exists('g:loaded_swapexists')
 endif
 let g:loaded_swapexists = 1
 
+" Disable default Nvim swapfile handler
+if exists('#nvim_swapfile')
+    autocmd! nvim_swapfile
+endif
+
 augroup handleswap
     autocmd!
     autocmd SwapExists * let v:swapchoice = s:handle_swapfile(expand('<afile>:p'))
