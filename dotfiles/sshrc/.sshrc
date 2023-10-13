@@ -130,7 +130,7 @@ __prompt_command() {
     if (( exit_code != 0 )); then
         PS1+="${prompt_colour_red}$exit_code ${prompt_colour_default}"
     fi
-    PS1+="\$ "
+    PS1+="\\$ "
 
     history -a
 }
