@@ -4,6 +4,7 @@
 # Last changed: {{ strftime('%Y-%m-%d %H:%M:%S %z %Z') }}
 
 set -eEu -o pipefail
+shopt -s inherit_errexit
 IFS=$'\n\t'
 PS4='+\t '
 
