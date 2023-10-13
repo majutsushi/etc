@@ -175,9 +175,9 @@ alias l='LC_COLLATE=POSIX ls -lAFh --color=auto --group-directories-first --hype
 command -v tree &>/dev/null && alias t="tree -F -C"
 
 export SSHRCD="$SSHHOME/.sshrc.d"
-export XDG_CONFIG_HOME="$SSHRCD/config"
 export MYVIMRC="$SSHRCD/vimrc"
 export VIMINIT="source $MYVIMRC"
+export GIT_CONFIG_GLOBAL="$SSHRCD/git/config"
 
 export INPUTRC="$SSHRCD/inputrc"
 
