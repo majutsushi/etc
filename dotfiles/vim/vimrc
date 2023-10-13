@@ -83,7 +83,7 @@ Plug 'jamessan/vim-gnupg'
 
 Plug 'vim-scripts/ZoomWin'
 
-for bundle_path in glob('~/.vim/bundles/*', 0, 1)
+for bundle_path in glob(expand('$XDG_CONFIG_HOME') . '/nvim/bundles/*', 0, 1)
     call plug#(bundle_path)
 endfor
 for bundle_path in glob('~/src/vim/bundles/*', 0, 1)
