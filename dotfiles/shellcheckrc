@@ -1,0 +1,19 @@
+# See shellcheck --list-optional
+
+# Suggest adding a default case in `case` statements
+enable=add-default-case
+
+# Suggest explicitly using -n in `[ $var ]`
+enable=avoid-nullary-conditions
+
+# Check for additional cases where exit codes are masked
+enable=check-extra-masked-returns
+
+# Notify when set -e is suppressed during function invocation
+enable=check-set-e-suppressed
+
+# Warn when uppercase variables are unassigned
+enable=check-unassigned-uppercase
+
+# Suggest 'command -v' instead of 'which'
+enable=deprecate-which

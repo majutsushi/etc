@@ -173,6 +173,9 @@ dotfiles:
   f_redshift:
     src: redshift.conf
     dst: ~/.config/redshift.conf
+  f_shellcheck:
+    src: shellcheckrc
+    dst: ~/.config/shellcheckrc
   f_sshconfig:
     src: ssh_config
     dst: ~/.ssh/config
