@@ -50,7 +50,8 @@ def main(args: argparse.Namespace) -> int:
     handle_awesome(is_dark)
     handle_alacritty(is_dark)
     handle_kitty(is_dark)
-    handle_vim(is_dark)
+    # handle_vim(is_dark)
+    handle_neovim(is_dark)
     handle_gitui(is_dark)
 
     return 0
@@ -109,6 +110,23 @@ def handle_vim(is_dark: bool) -> None:
         scheme_file.parent.mkdir()
 
     scheme_file.write_text(dark_theme if is_dark else light_theme)
+
+
+def handle_neovim(_is_dark: bool) -> None:
+    servers = (
+        check_output(["nvr", "--serverlist"]).decode(sys.stdout.encoding).splitlines()
+    )
+    for server in servers:
+        run(
+            [
+                "nvr",
+                "--servername",
+                server,
+                "-c",
+                "DetermineColorscheme",
+            ],
+            check=True,
+        )
 
 
 def handle_xsettings(is_dark: bool) -> None:

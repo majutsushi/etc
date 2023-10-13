@@ -1260,9 +1260,10 @@ function! s:determine_colorscheme() abort " {{{2
         endif
     endif
 endfunction
-let g:colorscheme_ftime = 0
+command! DetermineColorscheme call s:determine_colorscheme()
+
 call s:determine_colorscheme()
-autocmd vimrc CursorHold,CursorHoldI * nested call s:determine_colorscheme()
+" autocmd vimrc CursorHold,CursorHoldI * nested call s:determine_colorscheme()
 " Workaround for some highlighting issues
 autocmd ColorScheme * exe 'set filetype=' . &filetype
 
