@@ -3,7 +3,7 @@
 # http://mika.l3ib.org/code/dot-zshrc
 
 if [[ -n "$ZSHRUN" ]]; then
-    PS1=$'%Bzshrun%b %F{9}%~%f> '
+    PS1=$'%Bzshrun%b %F{2}%~%f> '
 
     setopt hist_ignore_all_dups
     unsetopt share_history
