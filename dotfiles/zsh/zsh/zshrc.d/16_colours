@@ -58,8 +58,10 @@ _update_bat() {
 _update_colours_funcs+=_update_bat
 
 
-typeset -g __delta_git_config_number=$(( GIT_CONFIG_COUNT++ ))
 _update_delta() {
+    if [[ -z "$__delta_git_config_number" ]]; then
+        typeset -g __delta_git_config_number=$(( GIT_CONFIG_COUNT++ ))
+    fi
     export GIT_CONFIG_KEY_${__delta_git_config_number}=delta.syntax-theme
     if [[ "$1" == dark ]]; then
         export GIT_CONFIG_VALUE_${__delta_git_config_number}="Monokai Extended"
