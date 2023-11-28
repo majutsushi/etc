@@ -88,4 +88,7 @@ fi
 # See https://git-scm.com/docs/git-config#ENVIRONMENT
 export GIT_CONFIG_COUNT=0
 
+# https://jqlang.github.io/jq/manual/#colors
+export JQ_COLORS="0;35:0;31:0;32:0;36:0;33:1;39:1;39:1;32"
+
 # vim: filetype=zsh
