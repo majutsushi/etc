@@ -12,6 +12,10 @@ Host console.gandi.net
     KexAlgorithms +diffie-hellman-group14-sha1
 
 Host *
+    # This needs to be at the top so that included files
+    # have priority over the defaults below
+    Include ~/.ssh/config.d/*.conf
+
     AddKeysToAgent yes
     Ciphers -3des-cbc,arcfour*,blowfish-cbc,cast128-cbc
     Compression yes
@@ -24,7 +28,6 @@ Host *
     HostKeyAlgorithms -*ecdsa*,*nist*,rsa-*
     IdentitiesOnly yes
     # IdentityFile ~/.ssh/id_rsa
-    Include ~/.ssh/config.d/*.conf
     KexAlgorithms -*nist*,diffie-hellman-*-sha1
     LocalCommand echo -e "\e]0;%h\e\\"
     MACs -*-md5,*-md5-*,*-sha1,*-sha1-*,umac-64*
