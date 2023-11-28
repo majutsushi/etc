@@ -68,16 +68,16 @@ alias ts="ts '%Y-%m-%dT%H:%M:%.S%z'"
 # execute last command as root
 alias fu='sudo $(fc -ln -1) '
 
-if have exa; then
-    typeset -a _exa_args
-    _exa_args=(--group-directories-first --git --classify)
-    alias t="exa $_exa_args --tree -l"
-    alias e="exa $_exa_args -la"
-    alias ee="exa $_exa_args -l"
-    alias ls="exa $_exa_args"
+if have eza; then
+    typeset -a _eza_args
+    _eza_args=(--group-directories-first --git --classify --hyperlink)
+    alias t="eza $_eza_args --tree -l"
+    alias e="eza $_eza_args -la"
+    alias ee="eza $_eza_args -l"
+    alias ls="eza $_eza_args"
     alias ll=ee
     alias l=e
-    unset _exa_args
+    unset _eza_args
 else
     alias t='tree --dirsfirst -F'
 fi
