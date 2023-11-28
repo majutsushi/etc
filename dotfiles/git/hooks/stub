@@ -15,6 +15,10 @@
 # The hook-specific scripts found in those directories will be merged and
 # executed in alphabetic order, with hooks in higher-priority directories
 # overriding hooks in lower-priority directories.
+#
+# In addition, if $GIT_DIR/hooks contains normal hook scripts (i.e. scripts
+# called "hookname" instead of scripts in "hookname.d" directories), they will
+# be executed first.
 
 
 set -eEu -o pipefail
@@ -44,6 +48,12 @@ HOOKDIRS+=("$GIT_DIR/hooks")
 
 # The Git name of the hook to execute
 HOOKNAME=$(basename "$0")
+
+# Execute a normal hook first if it exists in the local Git dir
+hookscript="$GIT_DIR/hooks/$HOOKNAME"
+if [[ -f "$hookscript" && -x "$hookscript" ]]; then
+    "$hookscript" "$@" || exit $?
+fi
 
 # Associative array of the hook scripts to run
 #   - Key is the basename of the file
