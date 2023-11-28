@@ -18,12 +18,29 @@
 
 
 set -eEu -o pipefail
+shopt -s inherit_errexit
+IFS=$'\n\t'
+PS4='+\t '
+
+error_handler() { echo "Error: Line ${1} exited with status ${2}"; }
+trap 'error_handler ${LINENO} $?' ERR
+
+[[ "${TRACE:-0}" == "1" ]] && set -x
+
+
+# Unset existing Git vars and set GIT_DIR explicitly, as per
+# https://github.com/git/git/commit/772f8ff826fcb15cba94bfd8f23eb0917f3e9edc
+# https://public-inbox.org/git/20180826004150.GA31168@sigill.intra.peff.net/t/
+# shellcheck disable=SC2046
+unset $(git rev-parse --local-env-vars || true)
+GIT_DIR=$(git rev-parse --git-dir)
+export GIT_DIR
 
 # Array of the supported hook directories in ascending order of priority
 declare -a HOOKDIRS
 HOOKDIRS+=("$(cd "$(dirname "$0")" && pwd)")
 [[ -n "${GIT_CUSTOM_HOOKS_DIR:-}" ]] && HOOKDIRS+=("$GIT_CUSTOM_HOOKS_DIR")
-[[ -n "${GIT_DIR:-}" ]] && HOOKDIRS+=("$GIT_DIR/hooks")
+HOOKDIRS+=("$GIT_DIR/hooks")
 
 # The Git name of the hook to execute
 HOOKNAME=$(basename "$0")
@@ -54,6 +71,6 @@ for key in "${!TO_RUN[@]}"; do
 done | sort | while read -r hookname; do
     hookscript="${TO_RUN["$hookname"]}"
     if [[ -f "$hookscript" && -x "$hookscript" ]]; then
-        "$hookscript" "$@"
+        "$hookscript" "$@" || exit $?
     fi
 done
