@@ -44,6 +44,7 @@
 
 	spull = "!f() { git pull \"$@\" && git submodule sync --recursive && git submodule update --init --recursive; }; f"
 	spush = push --recurse-submodules=on-demand
+	fpush = push --force-with-lease --force-if-includes
 
 	assume   = update-index --assume-unchanged
 	unassume = update-index --no-assume-unchanged
