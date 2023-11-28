@@ -195,7 +195,7 @@ zstyle ':completion:*:users' ignored-patterns avahi avahi-autoipd backup bin bit
 # use generic completion for programs that support --help
 compdef _gnu_generic tail head cp mv df uname
 
-compdef '_files -g "*.(#l)(tar.bz2|tbz2|tbz|tar.gz|tgz|tar.xz|txz|tar.lzma|tar|rar|lha|lzh|7z|zip|jar|war|ear|xpi|deb|bz2|gz|Z|xz|lzma)"' extract
+compdef '_files -g "*.(#l)(tar.bz2|tbz2|tbz|tar.gz|tgz|tar.xz|txz|tar.lzma|tar|rar|lha|lzh|7z|zip|jar|war|ear|xpi|deb|bz2|gz|Z|xz|lzma)"' unpack
 
 compdef '_files -g "*.(pdf|ps|djv(|u))"' evince
 compdef '_files -g "*.(pdf|ps|djv(|u))"' zathura
