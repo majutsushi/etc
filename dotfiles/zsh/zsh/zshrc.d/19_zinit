@@ -25,9 +25,6 @@ zinit light romkatv/zsh-prompt-benchmark
 zinit ice from"gh-r" as"program" bpick"*.tar.gz"
 zinit light starship/starship
 
-zinit ice from"gh-r" as"program" mv"exa* -> exa"
-zinit light ogham/exa
-
 zinit ice from"gh-r" as"program"
 zinit light extrawurst/gitui
 
