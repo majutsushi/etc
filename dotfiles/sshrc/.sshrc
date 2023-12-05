@@ -97,6 +97,10 @@ color-log() {
         -e "s/(.*debug.*)/$(tput setaf 7)\\1$(tput sgr0)/I"
 }
 
+mcd() {
+    mkdir "$1" && cd "$1"
+}
+
 
 __prompt_command() {
     local exit_code="$?"
