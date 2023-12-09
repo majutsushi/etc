@@ -8,6 +8,7 @@
 	pager = less -F
 	whitespace = blank-at-eol,space-before-tab,tab-in-indent,blank-at-eof,cr-at-eol
 	untrackedCache = true
+	precomposeUnicode = true
 
 [feature]
 	# JGit only supports index version 4 in v5.9+
