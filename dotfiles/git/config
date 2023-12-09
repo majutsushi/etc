@@ -126,6 +126,7 @@
 	rebase = merges
 
 [push]
+	autoSetupRemote = true
 	default = simple
 	recurseSubmodules = on-demand
 
