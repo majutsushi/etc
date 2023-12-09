@@ -32,6 +32,8 @@ trap 'error_handler ${LINENO} $?' ERR
 [[ "${TRACE:-0}" == "1" ]] && set -x
 
 
+STDIN=$(cat)
+
 # Unset existing Git vars and set GIT_DIR explicitly, as per
 # https://github.com/git/git/commit/772f8ff826fcb15cba94bfd8f23eb0917f3e9edc
 # https://public-inbox.org/git/20180826004150.GA31168@sigill.intra.peff.net/t/
@@ -56,7 +58,7 @@ HOOKNAME=$(basename "$0")
 # Execute a normal hook first if it exists in the local Git dir
 hookscript="$GIT_DIR/hooks/$HOOKNAME"
 if [[ -f "$hookscript" && -x "$hookscript" ]]; then
-    "$hookscript" "$@" || exit $?
+    echo "$STDIN" | "$hookscript" "$@" || exit $?
 fi
 
 # Associative array of the hook scripts to run
@@ -85,6 +87,6 @@ for key in "${!TO_RUN[@]}"; do
 done | sort | while read -r hookname; do
     hookscript="${TO_RUN["$hookname"]}"
     if [[ -f "$hookscript" && -x "$hookscript" ]]; then
-        "$hookscript" "$@" || exit $?
+        echo "$STDIN" | "$hookscript" "$@" || exit $?
     fi
 done
