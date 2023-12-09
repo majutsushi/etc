@@ -69,14 +69,12 @@ highlight Search ctermbg=3 ctermfg=0
 " See :h no-eval-feature
 if 1
     function! s:osc52_yank(text) abort
-        let encoded = system("base64", a:text)
-        let encoded = system("tr -d '\r\n'", encoded)
+        let encoded = system("base64 -w 0", a:text)
         if v:shell_error
             echoerr encoded
         else
-            let escaped = "\033]52;c;" . encoded . "\a"
-            call writefile([escaped], "/dev/tty", "b")
-            " execute "silent !echo -ne " . escaped
+            let osc_seq = "\x1b]52;c;" . encoded . "\x07"
+            call writefile([osc_seq], "/dev/fd/2", "b")
         endif
     endfunction
     autocmd TextYankPost * call s:osc52_yank(join(v:event.regcontents, "\n"))
