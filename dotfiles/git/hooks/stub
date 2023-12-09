@@ -35,10 +35,14 @@ trap 'error_handler ${LINENO} $?' ERR
 # Unset existing Git vars and set GIT_DIR explicitly, as per
 # https://github.com/git/git/commit/772f8ff826fcb15cba94bfd8f23eb0917f3e9edc
 # https://public-inbox.org/git/20180826004150.GA31168@sigill.intra.peff.net/t/
+# Preserve GIT_DIR if it is set in case we're not currently in the Git repo
+# (like when cloning)
+[[ -n "${GIT_DIR:-}" ]] && git_dir_tmp="$GIT_DIR"
 # shellcheck disable=SC2046
 unset $(git rev-parse --local-env-vars || true)
-GIT_DIR=$(git rev-parse --git-dir)
+GIT_DIR=$(git rev-parse --git-dir 2>/dev/null) || GIT_DIR="$git_dir_tmp"
 export GIT_DIR
+unset git_dir_tmp
 
 # Array of the supported hook directories in ascending order of priority
 declare -a HOOKDIRS
