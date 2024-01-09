@@ -67,7 +67,9 @@ else
     MIME_TYPE=$(file --mime-type --dereference --brief "$FILE_PATH" 2> /dev/null)
 fi
 
-BASENAME=$(basename "$FILE_PATH" | tr '[:upper:]' '[:lower:]')
+BASENAME="$(basename "$FILE_PATH")"
+BASENAME_LOWER=$(echo "$BASENAME" | tr '[:upper:]' '[:lower:]')
+PARENT_DIR="$(dirname "$FILE_PATH")"
 
 case "$MIME_TYPE" in
     application/epub+zip)
@@ -78,7 +80,7 @@ case "$MIME_TYPE" in
         fi
         ;;
     application/*java-archive | application/zip | application/*+zip)
-        case "$BASENAME" in
+        case "$BASENAME_LOWER" in
             *.egg)
                 unzip -p "$FILE_PATH" EGG-INFO/PKG-INFO | \
                     sed '/^Description:/,/^\S/{/^Description:/d; /^\S/b; d}'
@@ -130,11 +132,14 @@ case "$MIME_TYPE" in
         try readelf -WCa "${FILE_PATH}" ;;
     application/x-java | application/x-java-applet)
         if has_cmd procyon; then
-            if is-dark-mode; then
-                JDK_JAVA_OPTIONS='-DAnsi=true' procyon "$FILE_PATH" 2>/dev/null
-            else
-                JDK_JAVA_OPTIONS='-DAnsi=true' procyon --light "$FILE_PATH" 2>/dev/null
-            fi
+            (
+                cd "$PARENT_DIR" || return
+                if is-dark-mode; then
+                    JDK_JAVA_OPTIONS='-DAnsi=true' procyon "$BASENAME" 2>/dev/null
+                else
+                    JDK_JAVA_OPTIONS='-DAnsi=true' procyon --light "$BASENAME" 2>/dev/null
+                fi
+            )
         elif has_cmd javap; then
             hl -l java <(javap -sysinfo -private -constants "$FILE_PATH")
         fi
@@ -175,7 +180,7 @@ case "$MIME_TYPE" in
     video/*)
         try mediainfo "$FILE_PATH" ;;
     *)
-        case "$BASENAME" in
+        case "$BASENAME_LOWER" in
             *.crt | *.pem)
                 try openssl x509 -hash -text -noout -in "$FILE_PATH" ;;
             *.crl)
