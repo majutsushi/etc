@@ -28,6 +28,9 @@ zinit light starship/starship
 zinit ice from"gh-r" as"program"
 zinit light extrawurst/gitui
 
+zinit ice from"gh-r" as"program" bpick"*x86_64*"
+zinit light jesseduffield/lazygit
+
 zinit ice from"gh-r" as"program"
 zinit light Wilfred/difftastic
 

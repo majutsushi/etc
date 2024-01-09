@@ -1,0 +1,16 @@
+gui:
+  timeFormat: '2006-01-02'
+  shortTimeFormat: '03:04'
+  theme:
+    selectedLineBgColor:
+      - reverse
+    selectedRangeBgColor:
+      - reverse
+  nerdFontsVersion: "3"
+git:
+  branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=iso --pretty=medium {{branchName}} --'
+  allBranchesLogCmd: 'git log --graph --all --color=always --abbrev-commit --decorate --date=iso  --pretty=medium'
+keybinding:
+  commits:
+    markCommitAsBaseForRebase: b
+    viewBisectOptions: B
