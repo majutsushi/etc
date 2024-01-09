@@ -40,4 +40,8 @@ mkdir -p $HOME/.ssh/sock
 
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
+for patharray in path manpath library_path ld_library_path; do
+    rationalize_path $patharray
+done
+
 # vim: filetype=zsh

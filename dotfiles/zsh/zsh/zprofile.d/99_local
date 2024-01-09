@@ -7,8 +7,4 @@ if [[ -d "$HOME/.local/etc/zprofile.d" ]]; then
     done
 fi
 
-for patharray in path manpath library_path ld_library_path; do
-    rationalize_path $patharray
-done
-
 # vim: filetype=zsh
