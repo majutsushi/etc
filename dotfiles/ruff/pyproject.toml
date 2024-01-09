@@ -54,6 +54,27 @@ select = [
   "PLE", "PLR", "PLW",
   # tryceratops
   "TRY",
+  # refurb
+  "FURB",
   # Ruff-specific rules
   "RUF",
+]
+
+ignore = [
+  # builtin-attribute-shadowing: Class attribute {name} is shadowing a python builtin
+  # Attributes don't actually shadow anything
+  "A003",
+  # error-suffix-on-exception-name
+  "N818",
+  # raise-vanilla-args: Avoid specifying long messages outside the exception class
+  "TRY003",
+  # try-consider-else: Consider moving this statement to an else block
+  "TRY300"
+]
+
+unfixable = [
+  # unused-variable: Local variable {name} is assigned to but never used
+  # This can be undesirable if the file is saved before adding the code that
+  # uses a variable.
+  "F841",
 ]
