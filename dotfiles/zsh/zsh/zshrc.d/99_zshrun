@@ -29,6 +29,12 @@ if [[ -n "$ZSHRUN" ]]; then
     }
     zle -N _accept_and_quit
     bindkey "^M" _accept_and_quit
+
+    _exit() {
+        exit
+    }
+    zle -N _exit
+    bindkey "\e" _exit
 fi
 
 # vim: filetype=zsh
