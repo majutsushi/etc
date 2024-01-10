@@ -1,4 +1,6 @@
 #!/bin/bash
+# Record the branch that a new branch was created from
+# as branch.<new branch>.parent
 
 set -eEu -o pipefail
 IFS=$'\n\t'
@@ -40,5 +42,5 @@ while read -r LINE; do
         continue
     fi
 
-    git config branch."${NEW_BRANCH}".mergeBranch "$OLD_BRANCH"
+    git config branch."${NEW_BRANCH}".parent "$OLD_BRANCH"
 done

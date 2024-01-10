@@ -72,28 +72,28 @@ symbol = ""
 show_always = false
 format = "[$user]($style) • "
 
-[custom.mergediff]
+[custom.parentdiff]
 require_repo = true
 when = true
 shell = ["bash", "--noprofile", "--norc"]
 command = '''
     branch="$(git symbolic-ref --short -q HEAD)"
-    merge_branch="$(git config branch.${branch}.mergeBranch)"
-    [[ -z "$merge_branch" ]] && exit
+    parent_branch="$(git config branch.${branch}.parent)"
+    [[ -z "$parent_branch" ]] && exit
 
     green() { echo -e "\033[32m$1\033[0m"; }
     red() { echo -e "\033[31m$1\033[0m"; }
-    count="$(git rev-list --count --left-right $merge_branch...HEAD 2>/dev/null)"
+    count="$(git rev-list --count --left-right $parent_branch...HEAD 2>/dev/null)"
 
-    out="$merge_branch:"
+    out="$parent_branch:"
     case "$count" in
-        "0	0") # equal to merge_branch
+        "0	0") # equal to parent_branch
             exit ;;
-        "0	"*) # ahead of merge_branch
+        "0	"*) # ahead of parent_branch
             out+="$(green ↑)${count#0	}" ;;
-        *"	0") # behind merge_branch
+        *"	0") # behind parent_branch
             out+="$(red ↓)${count%	0}" ;;
-        *)	    # diverged from merge_branch
+        *)	    # diverged from parent_branch
             out+="$(green ↑)${count#*	}/$(red ↓)${count%	*}" ;;
     esac
 
