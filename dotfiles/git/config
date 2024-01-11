@@ -127,7 +127,7 @@
 
 [push]
 	autoSetupRemote = true
-	default = simple
+	default = current
 	recurseSubmodules = on-demand
 
 [fetch]
