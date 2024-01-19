@@ -47,42 +47,62 @@ if ! term_exists "$TERM"; then
 fi
 
 prompt_logo() {
-    local logo="?"
+    # https://github.com/Lukas-W/font-logos
+    local -A logos=(
+        [alpaquita]=" "
+        [alpine]="${prompt_colour_blue} "
+        [amzn]="\\[\\e[38;5;208m\\] "
+        [arch]="${prompt_colour_blue} "
+        [artix]="${prompt_colour_blue} "
+        [centos]="${prompt_colour_magenta} "
+        [debian]="${prompt_colour_red} "
+        [dragonfly]=" "
+        [elementary]=" "
+        [fedora]="${prompt_colour_blue} "
+        [freebsd]="${prompt_colour_red} "
+        [gentoo]=" "
+        [illumos]="${prompt_colour_red} "
+        [kali]=" "
+        [mageia]=" "
+        [manjaro]="${prompt_colour_green} "
+        [linux]=" "
+        [linuxmint]="${prompt_colour_green} "
+        [macos]=" "
+        [mariner]="${prompt_colour_blue} "
+        [netbsd]="${prompt_colour_red} "
+        [nixos]="${prompt_colour_blue} "
+        [ol]="${prompt_colour_red}󰌷 "
+        [openbsd]="${prompt_colour_yellow} "
+        [opensuse]="${prompt_colour_green} "
+        [pop]="${prompt_colour_cyan} "
+        [raspbian]="${prompt_colour_red} "
+        [redox]="󰀘 "
+        [rhel]="${prompt_colour_red} "
+        [rocky]="${prompt_colour_green} "
+        [sabayon]=" "
+        [slackware]=" "
+        [ubuntu]="\\[\\e[38;5;202m\\] "
+        [unknown]="${prompt_colour_red} "
+        [windows]="${prompt_colour_blue}󰍲 "
+    )
+    local os
     if [[ -r "/etc/os-release" ]]; then
         local distro=$(. /etc/os-release && echo "$ID")
         case "$distro" in
-            debian)
-                logo="${prompt_colour_red}@"
-                ;;
-            ubuntu)
-                logo="\\[\\e[38;5;202m\\]u"
-                ;;
-            centos)
-                logo="${prompt_colour_green}*${prompt_colour_magenta}*${prompt_colour_yellow}*${prompt_colour_blue}*"
-                ;;
-            amzn)
-                logo="\\[\\e[38;5;208m\\]⬢"
-                ;;
-            raspbian)
-                logo="${prompt_colour_red}🍓"
-                ;;
+            arch*) os=arch ;;
+            opensuse*|sles*) os=opensuse ;;
+            *) os=$distro ;;
         esac
-    elif [[ -r "/etc/issue" ]]; then
-        local issue
-        IFS="" read -r issue < /etc/issue
-        case "$issue" in
-            Debian*)
-                logo="${prompt_colour_red}@"
-                ;;
-            Ubuntu*)
-                logo="\\[\\e[38;5;202m\\]u"
-                ;;
-            Red\ Hat\ Enterprise*)
-                logo="${prompt_colour_red}RH"
-                ;;
+    elif command -v uname >/dev/null; then
+        kernel=$(uname -s | tr '[:upper:]' '[:lower:]')
+        case $kernel in
+            darwin) os=macos ;;
+            sunos) os=illumos ;;
+            *) os=$kernel ;;
         esac
     fi
 
+    logo=${logos[$os]:-${logos[unknown]}}
     printf "%s%s " "$logo" "${prompt_colour_default}"
 }
 PROMPT_LOGO="$(prompt_logo)"
