@@ -222,6 +222,7 @@ if command -v dircolors >/dev/null; then
     eval "$(dircolors -b "$SSHRCD"/dircolors)" 2>/dev/null
 fi
 
+# Set window title to the short hostname
 echo -e "\\e]0;${HOSTNAME%%.*}\\e\\"
 
 alias x='$SSHRCD/unpack'
