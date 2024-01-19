@@ -218,7 +218,9 @@ export GROFF_NO_SGR=1
 
 export CLIFF_FIT_WIDTH=1
 
-eval "$(dircolors -b "$SSHRCD"/dircolors)" 2>/dev/null || :
+if command -v dircolors >/dev/null; then
+    eval "$(dircolors -b "$SSHRCD"/dircolors)" 2>/dev/null
+fi
 
 echo -e "\\e]0;${HOSTNAME%%.*}\\e\\"
 
