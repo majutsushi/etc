@@ -14,6 +14,7 @@ if [[ "$1" != "committed" ]]; then
 fi
 
 while read -r LINE; do
+    [[ -z "$LINE" ]] && continue
     IFS=' ' read -r -a ARRAY <<< "$LINE"
 
     OLD_REF="${ARRAY[0]}"
