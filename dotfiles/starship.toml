@@ -97,6 +97,6 @@ command = '''
             out+="$(green ↑)${count#*	}/$(red ↓)${count%	*}" ;;
     esac
 
-    echo "$out "
+    echo "$out"
 '''
-format = "$output"
+format = "($output )"
