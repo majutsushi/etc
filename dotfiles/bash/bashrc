@@ -23,7 +23,7 @@ stty -ixon
 
 HISTCONTROL=ignorespace:ignoredups:erasedups
 HISTSIZE=100000
-HISTFILE=$HOME/.var/lib/bash_history
+HISTFILE=$XDG_STATE_HOME/bash_history
 HISTFILESIZE=100000
 HISTTIMEFORMAT='%F %T '
 shopt -s histappend

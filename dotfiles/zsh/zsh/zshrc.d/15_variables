@@ -13,8 +13,8 @@ ZSH_CACHEDIR=$XDG_CACHE_HOME/zsh
 [[ ! -d $ZSH_CACHEDIR ]] && mkdir $ZSH_CACHEDIR
 ZCOMPDUMP=$ZSH_CACHEDIR/zcompdump_${ZSH_VERSION}
 
-ZSH_VAR_LIB_DIR=$HOME/.var/lib/zsh
-[[ ! -d $ZSH_VAR_LIB_DIR ]] && mkdir $ZSH_VAR_LIB_DIR
+ZSH_STATE_DIR=$XDG_STATE_HOME/zsh
+[[ ! -d $ZSH_STATE_DIR ]] && mkdir $ZSH_STATE_DIR
 
 
 export PAGER="${PAGER:-less}"
@@ -55,7 +55,7 @@ export LG_CONFIG_FILE="$DOTFILES/lazygit/config.yml"
 export NAVE_DIR="$XDG_DATA_HOME/nave"
 export PYLINTHOME="$XDG_CACHE_HOME"/pylint
 export RIPGREP_CONFIG_PATH="$DOTFILES/ripgreprc"
-export SQLITE_HISTORY="$HOME"/.var/lib/sqlite_history
+export SQLITE_HISTORY="$XDG_STATE_HOME/sqlite_history"
 export TIGRC_USER="$DOTFILES"/tigrc
 
 export PSQLRC="$XDG_CONFIG_HOME/psqlrc"

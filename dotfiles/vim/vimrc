@@ -13,13 +13,13 @@ if !has('nvim')
     call mkdir(expand("$XDG_STATE_HOME/vim/undo"), "p")
 endif
 
-let plugin_dir = '~/.var/lib/vim/plugged'
+let plugin_dir = expand('$XDG_STATE_HOME/vim/plugged')
 if empty(glob(plugin_dir . '/vim-plug/autoload/plug.vim'))
     silent execute '!curl -fLo ' . plugin_dir . '/vim-plug/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 if has('vim_starting')
-    set runtimepath+=~/.var/lib/vim/plugged/vim-plug/
+    let &runtimepath ..= "," .. plugin_dir .. "/vim-plug"
 endif
 
 call plug#begin(plugin_dir)

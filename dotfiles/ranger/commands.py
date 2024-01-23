@@ -18,7 +18,6 @@ class movetotrash(Command):
     """
 
     def execute(self) -> None:
-
         if self.rest(1):
             self.fm.notify(
                 "Error: movetotrash takes no arguments! It "
@@ -68,7 +67,7 @@ class fzfrecent(Command):
     """
 
     def execute(self) -> None:
-        with open(Path.home() / ".var/lib/zsh/recent-dirs") as f:
+        with open(Path(os.environ["XDG_STATE_HOME"]) / "zsh/recent-dirs") as f:
             entries = (" ".join(line.split()[3:]) for line in f)
             unique_entries = list(dict.fromkeys(entries))
             directory = (
@@ -130,7 +129,7 @@ class scp(Command):
                 hosts_set = set()
                 for line in host_lines:
                     hosts_set |= set(line.split()[1:])
-        except IOError:
+        except OSError:
             print("Can't open ssh config")
             return None
 

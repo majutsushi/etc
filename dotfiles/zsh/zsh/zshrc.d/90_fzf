@@ -15,7 +15,7 @@ if [[ -d /usr/share/doc/fzf/examples ]]; then
 fi
 
 
-RECENTDIRS_FILE="$ZSH_VAR_LIB_DIR/recent-dirs"
+RECENTDIRS_FILE="$ZSH_STATE_DIR/recent-dirs"
 chpwd_add_recent_dir() {
     if [[ "$PWD" != $HOME ]]; then
         print -P '0\t%D{%s}\t1\t%~' >>| "$RECENTDIRS_FILE"
@@ -41,17 +41,6 @@ j() {
 
 J() {
     cd "$(hash -d | sed -e 's/^.*=//' | fzf --exact)"
-}
-
-v() {
-    local viminfo="$HOME/.var/lib/vim/viminfo"
-
-    sed -r -n -e 's/^> //p'  ~/.var/lib/vim/viminfo | tac | while read line; do
-        [[ -f "${line/\~/$HOME/}" ]] || continue
-        [[ "${line//*\//}" == COMMIT_EDITMSG ]] && continue
-
-        echo $line
-    done | fzf
 }
 
 

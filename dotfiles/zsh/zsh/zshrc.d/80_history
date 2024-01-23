@@ -22,7 +22,7 @@ setopt hist_lex_words
 if [[ "$INCOGNITO" == 1 ]]; then
     unset HISTFILE
 else
-    HISTFILE=$ZSH_VAR_LIB_DIR/history
+    HISTFILE=$ZSH_STATE_DIR/history
 fi
 HISTSIZE=100000
 SAVEHIST=100000

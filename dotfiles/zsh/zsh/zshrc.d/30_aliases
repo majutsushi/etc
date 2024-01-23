@@ -115,7 +115,7 @@ idot() {
 }
 
 vimlint() {
-    local bundles="$HOME/.var/lib/vim/bundles"
+    local bundles="$XDG_STATE_HOME/vim/plugged"
     "$bundles"/vim-vimlint/bin/vimlint.sh -l "$bundles"/vim-vimlint -p "$bundles"/vim-vimlparser "$@"
 }
 

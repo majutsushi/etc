@@ -8,7 +8,7 @@ hash -d log=/var/log
 # name=directory`. Both prompt expansion and completion know how to
 # handle them. We populate the hash with directories.
 
-MARKPATH=$ZSH_VAR_LIB_DIR/marks
+MARKPATH=$ZSH_STATE_DIR/marks
 
 # Populate the hash
 for link ($MARKPATH/*(N@)) {

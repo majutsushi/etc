@@ -2,7 +2,7 @@
 accounts = Main
 ui = ttyui
 pythonfile = ~/.config/offlineimap/helpers.py
-metadata = ~/.var/lib/offlineimap
+metadata = $XDG_STATE_HOME/offlineimap
 fsync = False
 
 [Account Main]

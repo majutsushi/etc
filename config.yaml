@@ -33,22 +33,22 @@ actions:
     systemctl --user enable daily-cleanup.service
     systemctl --user enable --now weekly.timer
   tmux_plugin_install: |
-    if ! [ -d $HOME/.var/lib/tmux/plugins/tpm/.git ]; then
-        git clone https://github.com/tmux-plugins/tpm.git "$HOME/.var/lib/tmux/plugins/tpm"
+    if ! [ -d $XDG_STATE_HOME/tmux/plugins/tpm/.git ]; then
+        git clone https://github.com/tmux-plugins/tpm.git "$XDG_STATE_HOME/tmux/plugins/tpm"
     fi
     if command -v tmux >/dev/null; then
         if tmux server-info >/dev/null 2>&1; then
-            "$HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh"
+            "$XDG_STATE_HOME/tmux/plugins/tpm/scripts/install_plugins.sh"
         else
             tmux start-server
             tmux new-session -d
-            "$HOME/.var/lib/tmux/plugins/tpm/scripts/install_plugins.sh"
+            "$XDG_STATE_HOME/tmux/plugins/tpm/scripts/install_plugins.sh"
             tmux kill-server
         fi
     fi
   zinit_clone: |
-    if ! [ -d "$HOME/.var/lib/zsh/zinit" ]; then
-        git clone https://github.com/zdharma-continuum/zinit.git "$HOME/.var/lib/zsh/zinit/bin"
+    if ! [ -d "$XDG_STATE_HOME/zsh/zinit" ]; then
+        git clone https://github.com/zdharma-continuum/zinit.git "$XDG_STATE_HOME/zsh/zinit/bin"
     fi
   gnome_settings: |
     if command -v gsettings >/dev/null; then

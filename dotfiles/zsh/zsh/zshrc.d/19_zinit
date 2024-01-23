@@ -1,4 +1,4 @@
-ZINIT_DIR=$HOME/.var/lib/zsh/zinit
+ZINIT_DIR=$XDG_STATE_HOME/zsh/zinit
 
 typeset -gAH ZINIT
 ZINIT[BIN_DIR]=$ZINIT_DIR/bin

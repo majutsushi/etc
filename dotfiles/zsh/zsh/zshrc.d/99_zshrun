@@ -7,7 +7,7 @@ if [[ -n "$ZSHRUN" ]]; then
 
     setopt hist_ignore_all_dups
     unsetopt share_history
-    HISTFILE=$ZSH_VAR_LIB_DIR/zshrun-history
+    HISTFILE=$ZSH_STATE_DIR/zshrun-history
 
     unset ZSHRUN
 
