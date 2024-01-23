@@ -130,9 +130,6 @@ dotfiles:
     dst: ~/.config/tmux
     actions:
       - tmux_plugin_install
-  d_weechat:
-    src: weechat
-    dst: ~/.config/weechat
   f_colordiffrc:
     src: colordiffrc
     dst: ~/.config/colordiff/colordiffrc
