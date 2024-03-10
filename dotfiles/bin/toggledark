@@ -126,6 +126,7 @@ def handle_neovim(_is_dark: bool) -> None:
                 "DetermineColorscheme",
             ],
             check=True,
+            timeout=10,
         )
 
 
