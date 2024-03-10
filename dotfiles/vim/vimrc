@@ -1947,9 +1947,9 @@ if has('nvim')
 endif
 
 " Change window size
-nnoremap <M->> <C-W>>
-nnoremap <M-<> <C-W><
-nnoremap <M-+> <C-W>+
+nnoremap <M-C-S-.> <C-W>>
+nnoremap <M-C-S-,> <C-W><
+nnoremap <M-S-=> <C-W>+
 nnoremap <M--> <C-W>-
 nnoremap <M-=> <C-W>=
 
