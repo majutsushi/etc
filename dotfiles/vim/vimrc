@@ -777,12 +777,6 @@ set define=^\\(\\s*#\\s*define\\\|[a-z]*\\s*const\\s*[a-z]*\\)
 
 " when completing tags in Insert mode show more info
 set showfulltag
-" use cscope for tag commands
-set nocscopetag
-" give messages when adding a cscope database
-set cscopeverbose
-" When to open a quickfix window for cscope
-set cscopequickfix=s-,c-,d-,i-,t-,e-
 
 " displaying text {{{2
 
@@ -872,6 +866,8 @@ set tabpagemax=50
 
 " specifies what the cursor looks like in different modes
 set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+" show info in the window title
+set title
 
 " using the mouse {{{2
 
@@ -884,22 +880,6 @@ if !has('nvim')
     " "xterm", "xterm2", "dec" or "netterm"; type of mouse
     set ttymouse=xterm
 endif
-
-" printing {{{2
-
-" list of items that control the format of :hardcopy output
-set printoptions=paper:A4,left:5pc,right:5pc,top:5pc,bottom:5pc,syntax:a,number:y
-" name of the font to be used for :hardcopy
-set printfont=:h8
-
-" expression used to print the PostScript file for :hardcopy
-set printexpr=PrintFile(v:fname_in)
-function! PrintFile(fname)
-"    call system("lp " . (&printdevice == '' ? '' : ' -s -d' . &printdevice) . ' ' . a:fname)
-    call system("evince " . a:fname)
-    call delete(a:fname)
-    return v:shell_error
-endfunc
 
 " messages and info {{{2
 
