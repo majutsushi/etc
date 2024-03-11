@@ -18,7 +18,11 @@ function! qftoggle#toggle() abort
     if s:quickfix_is_open
         cclose
         let s:quickfix_is_open = 0
-        execute s:quickfix_return_to_window . "wincmd w"
+        if exists("s:quickfix_return_to_window")
+            execute s:quickfix_return_to_window . "wincmd w"
+        else
+            wincmd p
+        endif
     else
         call qftoggle#openqfwin()
     endif
@@ -82,6 +86,10 @@ function! qftoggle#islocwinopen() abort
         let is_open = 0
     endif
     return is_open
+endfunction
+
+function! qftoggle#set_open() abort
+    let s:quickfix_is_open = 1
 endfunction
 
 let s:quickfix_is_open = 0
