@@ -18,7 +18,9 @@ function! s:gnuplot(args) range abort
 
     let datafile = tempname()
 
-    if visualmode() ==# ''
+    if visualmode() ==# "\026"
+        " Visual block mode
+
         let reg_save = @g
 
         normal! gv"gy
