@@ -1,7 +1,3 @@
-if exists('&macatsui')
-    set nomacatsui
-endif
-
 if has('macunix')
     set guifont=Monaco:h10
 else
