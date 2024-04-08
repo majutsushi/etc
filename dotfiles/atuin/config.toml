@@ -80,5 +80,6 @@ workspaces = true
 #   "^innocuous-cmd .*--secret=.+"
 # ]
 history_filter = [
-    "^f "
+    "^f ",
+    "^l$"
 ]
