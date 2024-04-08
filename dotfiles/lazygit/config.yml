@@ -6,6 +6,7 @@ gui:
       - reverse
     selectedRangeBgColor:
       - reverse
+  showCommandLog: false
   nerdFontsVersion: "3"
 git:
   branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=iso --pretty=medium {{branchName}} --'
