@@ -50,7 +50,6 @@ def main(args: argparse.Namespace) -> int:
     handle_awesome(is_dark)
     handle_alacritty(is_dark)
     handle_kitty(is_dark)
-    # handle_vim(is_dark)
     handle_neovim(is_dark)
     handle_gitui(is_dark)
 
@@ -99,17 +98,6 @@ def handle_kitty(is_dark: bool) -> None:
         os.kill(pid, signal.SIGUSR1)
     except CalledProcessError:
         return
-
-
-def handle_vim(is_dark: bool) -> None:
-    light_theme = "vim-material"
-    dark_theme = "desert"
-
-    scheme_file = Path.home() / ".local/etc/vim/colorscheme.txt"
-    if not scheme_file.parent.exists():
-        scheme_file.parent.mkdir()
-
-    scheme_file.write_text(dark_theme if is_dark else light_theme)
 
 
 def handle_neovim(_is_dark: bool) -> None:
