@@ -467,8 +467,8 @@ if exists("+showtabline")
 "    set stal=2
 endif
 
-" GenCscopeAndTags() {{{2
-function! GenCscopeAndTags()
+" s:gen_ctags() {{{2
+function! s:gen_ctags()
     " see ~/.ctags
     if g:ctagsbin == ''
         echomsg 'No ctags found!'
@@ -482,21 +482,7 @@ function! GenCscopeAndTags()
         endif
     endfor
 
-    if filereadable("cscope.files")
-        execute '!cscope -qbc'
-        execute '!' . ctagsbin . ' -L cscope.files'
-    else
-        execute '!cscope -Rqbc'
-        execute '!' . ctagsbin . ' -R'
-    endif
-    if filereadable('cscope.out')
-        if cscope_connection(2, "cscope.out") == 0
-            execute 'cs add cscope.out'
-        else
-            execute 'cs reset'
-        endif
-    endif
-"    execute 'CCTreeLoadDB cscope.out'
+    execute '!' . ctagsbin . ' -R'
 endfunction
 
 " InsertGuards() {{{2
@@ -577,86 +563,6 @@ endfunction
 
 command! -bar Qf2Args call s:Qf2Args()
 
-" s:RangerChooser() {{{2
-function! s:RangerChooser() abort
-    let tmpfile = tempname()
-    let ranger_cmd = 'ranger --choosefile=' . tmpfile . ' ' . expand('%:p:h')
-    if has('gui_running')
-        execute '!urxvt -geometry 140x40 -e ' . ranger_cmd
-    else
-        execute 'silent !' . ranger_cmd
-    endif
-    if filereadable(tmpfile)
-        execute 'edit ' . system('cat ' . tmpfile)
-        call system('rm ' . tmpfile)
-    endif
-    redraw!
-endfunction
-nnoremap <silent> ,ra :call <SID>RangerChooser()<CR>
-
-" Redir {{{2
-" Taken from
-" https://github.com/jszakmeister/vimfiles/blob/master/vimrc
-" Redirect to register "x":
-"   Redir @x
-" Redirect to global variable "v":
-"   Redir => v
-" Disable previous redirection (any of these):
-"   Redir
-"   Redir end
-"   Redir END
-" While redirected, the 'more' option is reset to avoid the need
-" to press <Space> after each screen of output.
-command! -nargs=* -bar Redir
-            \ if <q-args> == "" || <q-args> ==? "end" |
-            \     set more |
-            \     redir END |
-            \ else |
-            \     redir <args> |
-            \     set nomore |
-            \ endif
-
-" RunShellCommand() {{{2
-function! s:RunShellCommand(cmdline)
-    botright new
-    setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
-    setlocal nowrap
-    nmap <buffer> q :close<cr>
-"    call setline(1,a:cmdline)
-"    call setline(2,substitute(a:cmdline,'.','=','g'))
-    if v:version >= 702
-        if stridx(a:cmdline, "git") == 0
-            setlocal filetype=git
-        endif
-    elseif stridx(a:cmdline, "diff") >= 0
-        set filetype=diff
-    endif
-    execute 'silent 0read !'.escape(a:cmdline,'%#')
-    setlocal nomodifiable
-    1
-endfunction
-
-command! -complete=file -nargs=* Git   call s:RunShellCommand('git '.<q-args>)
-command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
-
-" SmartTOHtml() {{{2
-"A function that inserts links & anchors on a TOhtml export.
-" Notice:
-" Syntax used is:
-"   *> Link
-"   => Anchor
-function! SmartTOHtml()
-    TOhtml
-    try
-        %s/&quot;\s\+\*&gt; \(.\+\)</" <a href="#\1" style="color: cyan">\1<\/a></g
-        %s/&quot;\(-\|\s\)\+\*&gt; \(.\+\)</" \&nbsp;\&nbsp; <a href="#\2" style="color: cyan;">\2<\/a></g
-        %s/&quot;\s\+=&gt; \(.\+\)</" <a name="\1" style="color: #fff">\1<\/a></g
-    catch
-    endtry
-    exe ":write!"
-    exe ":bd"
-endfunction
-
 " s:Spelllang() {{{2
 function! s:Spelllang(lang) abort
     let &spelllang = a:lang
@@ -682,10 +588,6 @@ endfunction
 command! -bar -range=% StripTrailingWhitespace <line1>,<line2>call StripTrailing('\s\+')
 command! -bar -range=% StripTrailingCtrlM      <line1>,<line2>call StripTrailing('<C-M>')
 
-" Tab2Space/Space2Tab {{{2
-command! -range=% -nargs=0 Tab2Space exec "<line1>,<line2>s/^\\t\\+/\\=substitute(submatch(0), '\\t', "repeat(' ', ".&ts."), 'g')"
-command! -range=% -nargs=0 Space2Tab exec "<line1>,<line2>s/^\\( \\{".&ts."\\}\\)\\+/\\=substitute(submatch(0), ' \\{".&ts."\\}', '\\t', 'g')"
-
 " Timestamp() {{{2
 function! Timestamp()
     let matchpat = '\v\C%(<Last changed\s*:\s+)\zs\d{4}-\d{2}-\d{2} (\d{2}):\d{2}:\d{2} [+-]\d{4} \a+|<TIMESTAMP>'
@@ -707,21 +609,6 @@ function! Timestamp()
     endfor
 endfunction
 autocmd vimrc BufWritePre * call Timestamp()
-
-" ToggleExpandTab() {{{2
-function! ToggleExpandTab()
-    if &sts == 4
-        setlocal softtabstop=8
-        setlocal shiftwidth=8
-        setlocal noexpandtab
-    else
-        setlocal softtabstop=4
-        setlocal shiftwidth=4
-        setlocal expandtab
-    endif
-    unlet! b:statusline_tab_warning
-    set expandtab?
-endfunction
 
 " ToggleFold() {{{2
 " Toggle fold state between closed and opened.
@@ -1817,8 +1704,6 @@ nnoremap Q gqip
 
 set pastetoggle=<F3>
 
-nnoremap <S-F2> :call ToggleExpandTab()<CR>
-
 " in/de-crease indent/autoindent what you just pasted
 " https://twitter.com/dotvimrc/status/347055253318950913
 nnoremap >< V`]>
@@ -2008,7 +1893,7 @@ nnoremap <leader>e :execute "Shell " . expand("%:p")<CR>
 " Switch to current dir
 nnoremap <silent> <leader>cd :cd %:p:h<cr>
 
-nnoremap <S-F10> :call GenCscopeAndTags()<CR>
+nnoremap <S-F10> :call s:gen_ctags()<CR>
 
 "inoremap  <Esc><Right>
 
