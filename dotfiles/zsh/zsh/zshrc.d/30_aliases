@@ -157,12 +157,7 @@ f() {
 }
 
 # diff
-local _diff_opts="-Nurd --exclude-from=$DOTFILES/excludes/diff"
-if have colordiff; then
-    alias diff="colordiff $_diff_opts"
-else
-    alias diff="diff $_diff_opts"
-fi
+alias diff="diff -Nurd --color=auto --exclude-from=$DOTFILES/excludes/diff"
 wdiff() { command wdiff --start-insert=${fg[green]} --end-insert=${reset_color} --start-delete=${fg[red]} --end-delete=${reset_color} "$@" }
 alias diffstat="decolor | diffstat -C"
 

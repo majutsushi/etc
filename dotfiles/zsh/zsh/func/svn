@@ -18,7 +18,7 @@ local sub_cmd=$1
 shift
 
 if [[ $sub_cmd == diff ]]; then
-    command svn diff "$@" | colordiff | less -RF
+    command svn diff "$@" | diff | less -RF
 
 # note that C and M can be preceded by whitespace - see $svn help status
 elif [[ $sub_cmd =~ ^(status|st)$ ]]; then
