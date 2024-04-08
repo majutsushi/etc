@@ -30,7 +30,7 @@ update_check = false
 
 ## which search mode to use
 ## possible values: prefix, fulltext, fuzzy, skim
-# search_mode = "fuzzy"
+search_mode = "fulltext"
 
 ## which filter mode to use
 ## possible values: global, host, session, directory
