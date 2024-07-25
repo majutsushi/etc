@@ -74,13 +74,12 @@ def handle_alacritty(is_dark: bool) -> None:
     light_theme = "material"
     dark_theme = "desert"
 
-    theme_file = XDG_CONFIG_HOME / "alacritty/theme.yaml"
+    theme_file = XDG_CONFIG_HOME / "alacritty/theme.toml"
     theme = dark_theme if is_dark else light_theme
 
     settings = textwrap.dedent(
         f"""
-    import:
-        - {str(XDG_CONFIG_HOME / f"alacritty/{theme}-theme.yaml")}
+    import = ["{XDG_CONFIG_HOME / f"alacritty/{theme}-theme.toml"!s}"]
     """
     ).lstrip()
     theme_file.write_text(settings)

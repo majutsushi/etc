@@ -15,16 +15,13 @@ actions:
     Hidden=true
     EOF
   alacritty_gen: |
-    if ! [ -e "$XDG_CONFIG_HOME/alacritty/alacritty.yml" ]; then
+    if ! [ -e "$XDG_CONFIG_HOME/alacritty/alacritty.toml" ]; then
         mkdir -p "$XDG_CONFIG_HOME/alacritty"
-        cat > "$XDG_CONFIG_HOME/alacritty/alacritty.yml" << EOF
-    import:
-        - $XDG_CONFIG_HOME/alacritty/base.yml
-        - $XDG_CONFIG_HOME/alacritty/theme.yaml
+        cat > "$XDG_CONFIG_HOME/alacritty/alacritty.toml" << EOF
+    import = ["$XDG_CONFIG_HOME/alacritty/base.toml", "$XDG_CONFIG_HOME/alacritty/theme.toml"]
     EOF
-        cat > "$XDG_CONFIG_HOME/alacritty/theme.yaml" << EOF
-    import:
-        - $XDG_CONFIG_HOME/alacritty/desert-theme.yaml
+        cat > "$XDG_CONFIG_HOME/alacritty/theme.toml" << EOF
+    import = ["$XDG_CONFIG_HOME/alacritty/material-theme.toml"]
     EOF
     fi
   systemd_setup: |
