@@ -61,19 +61,19 @@ window_title		= default	default
 # a directory in the menu
 directory		= blue		default
 # a directory that is selected using arrows
-selected_directory	= black		white
+selected_directory	= default	default	reverse
 # playlist file
 playlist		= default	default
 # see selected directory
-selected_playlist	= black		white
+selected_playlist	= default	default	reverse
 # an ordinary file in the menu (mp3, ogg, ...)
 file			= default	default
 # see selected directory
-selected_file		= black		white
+selected_file		= default	default	reverse
 # a file that is currently being played
 marked_file		= default	default	bold
 # a file that is currently being played and is also selected using arrows
-marked_selected_file	= black		white	bold
+marked_selected_file	= default	default	bold,reverse
 # information shown at the right side of files
 info			= yellow	default
 # see selected directory
@@ -93,7 +93,7 @@ current_time		= default	default	bold
 # the time left to the end of playing the current file
 time_left		= default	default
 # the length of the currently played file
-total_time		= white		default
+total_time		= default	default
 # the brackets outside the total time of a file ([10:13])
 time_total_frames	= default	default
 # the frequency and bitrate numbers
@@ -101,7 +101,7 @@ sound_parameters	= default	default	bold
 # "KHz" and "Kbps"
 legend			= default	default
 # disabled element ([STEREO])
-disabled		= white		default
+disabled		= default	default	dim
 # enabled element
 enabled			= default	default	bold
 # "empty" part of the volume bar
@@ -111,7 +111,7 @@ filled_mixer_bar	= default	magenta	bold
 # "empty" part of the time bar
 empty_time_bar		= default	default
 # "filled" part of the time bar
-filled_time_bar		= default	white
+filled_time_bar		= default	default	reverse
 # place wher user can type a search query or a file name
 entry			= default	default
 # the title of an entry
