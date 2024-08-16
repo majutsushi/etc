@@ -16,7 +16,7 @@ try() {
 }
 
 hl() {
-    bat --color always --style changes,numbers "$@"
+    bat --color always --style changes "$@"
 }
 
 # Slightly modified from the bundled lesspipe
