@@ -26,3 +26,5 @@ autocmd TermEnter * stopinsert
 
 nmap q :qa!<CR>
 nmap i <Nop>
+
+highlight CurSearch ctermfg=0 ctermbg=2 guifg=Black guibg=LightGreen
