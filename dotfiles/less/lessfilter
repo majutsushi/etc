@@ -79,7 +79,7 @@ case "$MIME_TYPE" in
             try pandoc -s -t plain "$FILE_PATH"
         fi
         ;;
-    application/*java-archive | application/zip | application/*+zip)
+    application/*java-archive | application/x-xpinstall | application/zip | application/*+zip)
         case "$BASENAME_LOWER" in
             *.egg)
                 unzip -p "$FILE_PATH" EGG-INFO/PKG-INFO | \
@@ -112,6 +112,8 @@ case "$MIME_TYPE" in
         echo
         echo '*** Contents:'; dpkg-deb --contents "$FILE_PATH"
         ;;
+    application/vnd.ms-cab-compressed)
+        try lsar -l "$FILE_PATH" ;;
     application/vnd.openxmlformats-officedocument.wordprocessingml.document)
         try docx2txt "$FILE_PATH" - ;;
     application/vnd.sqlite3)
@@ -125,7 +127,7 @@ case "$MIME_TYPE" in
         try ar tv "$FILE_PATH" ;;
     application/x-bittorrent)
         try transmission-show "$FILE_PATH" ;;
-    application/x-cd-image | application/x-iso9660-image)
+    application/vnd.efi.iso | application/x-cd-image | application/x-iso9660-image)
         if has_cmd isoinfo; then iso_list "$FILE_PATH"
         else echo "No isoinfo available"; fi ;;
     application/x-executable | application/x-pie-executable | application/x-sharedlib)
@@ -146,10 +148,14 @@ case "$MIME_TYPE" in
         ;;
     application/x-lha)
         try lha -l "$FILE_PATH" ;;
+    application/x-msi)
+        try lsar -l "$FILE_PATH" ;;
     application/x-rar | application/vnd.rar | application/vnd.comicbook-rar)
         try unrar l "$FILE_PATH" ;;
     application/x-troff-man)
         MAN_KEEP_FORMATTING=1 man --local-file "$FILE_PATH" ;;
+    application/x-xz-compressed-tar)
+        tar tvf "$FILE_PATH" --force-local ;;
     application/x-zoo)
         try lsar -l "$FILE_PATH" ;;
     audio/*)
