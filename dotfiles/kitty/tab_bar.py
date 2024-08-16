@@ -13,7 +13,7 @@ LEFT_SEP = ""
 RIGHT_SEP = ""
 SOFT_SEP = "│"
 PADDING = " "
-SSH_ICON = "🌐 "
+SSH_ICON = "󰌘  "
 
 
 def draw_tab(
