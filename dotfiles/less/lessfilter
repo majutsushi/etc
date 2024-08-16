@@ -62,7 +62,7 @@ fi
 
 # Use shared-mime-info database if possible
 if has_cmd gio; then
-    MIME_TYPE=$(gio info --attributes=standard::content-type "$FILE_PATH" | tail -n 1 | cut -d" " -f4)
+    MIME_TYPE=$(gio info --attributes=standard::content-type "$FILE_PATH" | awk '/standard::content-type/ { print $2 }')
 else
     MIME_TYPE=$(file --mime-type --dereference --brief "$FILE_PATH" 2> /dev/null)
 fi
