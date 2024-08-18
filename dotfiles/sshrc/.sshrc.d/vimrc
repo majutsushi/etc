@@ -10,7 +10,6 @@ endif
 
 set autoread
 set backspace=indent,eol,start
-set clipboard=unnamed,unnamedplus,exclude:cons\|linux
 set completeopt=longest,menuone
 set confirm
 set cursorline
@@ -40,9 +39,7 @@ set formatoptions-=o " don't continue comments when pressing o/O
 set formatoptions+=n " recognize numbered lists when formatting
 set formatoptions+=2 " use indent of second line in paragraph
 set formatoptions+=l " don't break long lines that were already too long
-if v:version > 703 || v:version == 703 && has("patch541")
-    set formatoptions+=j " Delete comment character when joining commented lines
-endif
+set formatoptions+=j " Delete comment character when joining commented lines
 
 set tabstop=8
 set shiftwidth=4
@@ -56,13 +53,9 @@ set timeoutlen=1000
 set ttimeoutlen=10
 
 set wildmode=list:longest,full
-if exists("&wildignorecase")
-    set wildignorecase
-endif
+set wildignorecase
 
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-    runtime! macros/matchit.vim
-endif
+runtime! macros/matchit.vim
 
 highlight Search ctermbg=3 ctermfg=0
 
