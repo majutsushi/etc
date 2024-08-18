@@ -641,7 +641,6 @@ nnoremap <silent> <F11> :call ToggleFullscreen()<CR>
 " Options {{{1
 
 " important {{{2
-set cpoptions+=$
 set cpoptions-=a
 
 " moving around, searching and patterns {{{2
