@@ -45,6 +45,11 @@ export AUTOSSH_PORT=0
 
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 
+if [[ "$TERM" == xterm-kitty ]]; then
+    export EZA_ICONS_AUTO=automatic
+    export EZA_ICON_SPACING=2
+fi
+
 export BIBTOOLRSC="$DOTFILES/bibtoolrsc"
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
