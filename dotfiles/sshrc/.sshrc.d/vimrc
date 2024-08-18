@@ -58,6 +58,8 @@ set wildignorecase
 runtime! macros/matchit.vim
 
 highlight Search ctermbg=3 ctermfg=0
+highlight Visual NONE
+highlight Visual term=reverse cterm=reverse
 
 " This prevents errors if Vim was compiled without +eval,
 " see :h no-eval-feature
