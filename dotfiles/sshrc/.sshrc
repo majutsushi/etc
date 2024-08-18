@@ -233,6 +233,17 @@ echo -e "\\e]0;${HOSTNAME%%.*}\\e\\"
 
 alias x='$SSHRCD/unpack'
 
+
+# Add a basic base64 wrapper for Kitty and Vim
+if ! command -v base64 >/dev/null; then
+    cat > "$SSHHOME/base64" <<"EOF"
+#!/bin/sh
+exec openssl enc -base64 "$@"
+EOF
+    chmod +x "$SSHHOME/base64"
+fi
+
+
 if [[ -f "$SSHRCD/kitty.bash" ]]; then
     export KITTY_SHELL_INTEGRATION="enabled"
     # shellcheck disable=SC1091

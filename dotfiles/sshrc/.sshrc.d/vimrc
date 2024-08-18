@@ -59,18 +59,21 @@ runtime! macros/matchit.vim
 
 highlight Search ctermbg=3 ctermfg=0
 
-" See :h no-eval-feature
+" This prevents errors if Vim was compiled without +eval,
+" see :h no-eval-feature
 if 1
-    function! s:osc52_yank(text) abort
-        let encoded = system("base64 -w 0", a:text)
+    function! s:osc52_yank() abort
+        let text = join(v:event.regcontents, "\n")
+        let encoded = system("base64", text)
         if v:shell_error
             echoerr encoded
         else
+            let encoded = substitute(encoded, "\n", "", "g")
             let osc_seq = "\x1b]52;c;" . encoded . "\x07"
             call writefile([osc_seq], "/dev/fd/2", "b")
         endif
     endfunction
-    autocmd TextYankPost * call s:osc52_yank(join(v:event.regcontents, "\n"))
+    autocmd TextYankPost * call s:osc52_yank()
 endif
 
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
