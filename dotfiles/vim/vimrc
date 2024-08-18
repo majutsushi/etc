@@ -1169,7 +1169,7 @@ let g:ale_python_pylint_auto_pipenv = 1
 let g:ale_rust_cargo_use_clippy = 1
 
 let g:ale_fixers = {
-\   'python': ['black', 'ruff'],
+\   'python': ['ruff', 'ruff_format'],
 \   'rust': ['rustfmt'],
 \}
 let g:ale_fix_on_save = 1
