@@ -1,5 +1,5 @@
-[tool.ruff]
-# https://beta.ruff.rs/docs/rules/
+[tool.ruff.lint]
+# https://docs.astral.sh/ruff/rules/
 select = [
   # pyflakes
   "F",
@@ -32,14 +32,20 @@ select = [
   "EXE",
   # flake8-implicit-str-concat
   "ISC",
+  # flake8-import-conventions
+  "ICN",
   # flake8-logging-format
   "G",
+  # flake8-no-pep420
+  "INP",
   # flake8-pie
   "PIE",
   # flake8-pytest-style
   "PT",
   # flake8-return
   "RET",
+  # flake8-self
+  "SLF",
   # flake8-simplify
   "SIM",
   # flake8-type-checking
@@ -48,12 +54,20 @@ select = [
   "ARG",
   # flake8-use-pathlib
   "PTH",
+  # flake8-todos
+  "TD",
+  # eradicate
+  "ERA",
   # pygrep-hooks
-  "PGH003", "PGH004",
+  "PGH",
   # pylint
   "PLE", "PLR", "PLW",
   # tryceratops
   "TRY",
+  # flynt
+  "FLY",
+  # Perflint
+  "PERF",
   # refurb
   "FURB",
   # Ruff-specific rules
@@ -69,7 +83,10 @@ ignore = [
   # raise-vanilla-args: Avoid specifying long messages outside the exception class
   "TRY003",
   # try-consider-else: Consider moving this statement to an else block
-  "TRY300"
+  "TRY300",
+  # Disable some rules that conflict with the formatter
+  # https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
+  "W191", "E111", "E114", "E117", "E501", "D206", "D300", "Q000", "Q001", "Q002", "Q003", "COM812", "COM819", "ISC001", "ISC002"
 ]
 
 unfixable = [
