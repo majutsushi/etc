@@ -71,4 +71,8 @@ _update_delta() {
 }
 _update_colours_funcs+=_update_delta
 
+
+# Set correct colours before the first preexec call
+_check_update_colours
+
 # vim: filetype=zsh
