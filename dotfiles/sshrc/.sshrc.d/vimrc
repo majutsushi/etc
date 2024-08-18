@@ -63,6 +63,11 @@ highlight Search ctermbg=3 ctermfg=0
 " see :h no-eval-feature
 if 1
     function! s:osc52_yank() abort
+        " Don't copy text from delete events
+        if v:event.operator == "d"
+            return
+        endif
+
         let text = join(v:event.regcontents, "\n")
         let encoded = system("base64", text)
         if v:shell_error
