@@ -70,6 +70,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'Konfekt/vim-keyword-lookup'
 
 " Misc
+Plug 'ibhagwan/smartyank.nvim'
 Plug 'tomtom/tlib_vim'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
@@ -789,7 +790,7 @@ set confirm
 
 " 'unnamed' to use the * register like unnamed register
 " 'autoselect' to always put selected text into register *
-set clipboard=unnamed,unnamedplus
+set clipboard=
 
 " editing text {{{2
 
