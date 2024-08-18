@@ -1,6 +1,6 @@
 FZF_CTRL_T_COMMAND="fd --hidden --exclude .git --type file"
 FZF_CTRL_T_OPTS="
-    --preview 'less {}'
+    --preview '$DOTFILES/less/lessfilter {}'
     --preview-window 'right,border-left,50%'
     --bind 'ctrl-/:change-preview-window(down,50%,border-top|hidden|)'
     --bind 'ctrl-l:preview:echo {}'
