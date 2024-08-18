@@ -92,6 +92,7 @@ alias pu='ps ux | less'
 alias rr='ranger'
 alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 alias vi='nvim'
+alias wcurl='curl --location --remote-name --remote-header-name --remote-time --retry 10 --retry-max-time 10 --styled-output --progress-bar'
 alias x='unpack'
 
 alias icat="kitty +kitten icat --align left"
