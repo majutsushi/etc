@@ -193,10 +193,16 @@ else
     export VISUAL=vi
 fi
 
-alias ls='LC_COLLATE=POSIX ls  -Fh --color=auto --group-directories-first --hyperlink=auto'
-alias ll='LC_COLLATE=POSIX ls -lFh --color=auto --group-directories-first --hyperlink=auto'
-alias l='LC_COLLATE=POSIX ls -lAFh --color=auto --group-directories-first --hyperlink=auto'
-command -v tree &>/dev/null && alias t="tree -F -C"
+if command ls --version >/dev/null 2>/dev/null; then
+    alias ls='LC_COLLATE=POSIX ls  -Fh --color=auto --group-directories-first --hyperlink=auto'
+    alias ll='LC_COLLATE=POSIX ls -lFh --color=auto --group-directories-first --hyperlink=auto'
+    alias l='LC_COLLATE=POSIX ls -lAFh --color=auto --group-directories-first --hyperlink=auto'
+else
+    alias ls='LC_COLLATE=POSIX ls  -Fh'
+    alias ll='LC_COLLATE=POSIX ls -lFh'
+    alias l='LC_COLLATE=POSIX ls -lAFh'
+fi
+command -v tree >/dev/null && alias t="tree -F -C"
 
 export SSHRCD="$SSHHOME/.sshrc.d"
 export MYVIMRC="$SSHRCD/vimrc"
