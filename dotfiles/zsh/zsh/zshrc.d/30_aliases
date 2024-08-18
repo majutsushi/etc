@@ -185,7 +185,7 @@ set_terminal_title() {
 }
 
 cd() {
-    if (( $# == 2 )); then
+    if (( $# == 2 )) && [[ "$1" != -- ]]; then
         local src="$1" rep="$2" dir
         integer n=1
         while true; do
