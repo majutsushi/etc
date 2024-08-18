@@ -7,6 +7,7 @@ user_pref('browser.startup.page', 3);
 
 user_pref('browser.tabs.loadDivertedInBackground', true);
 user_pref('browser.urlbar.trimURLs', false);
+user_pref('browser.urlbar.update2.engineAliasRefresh', true);
 user_pref('devtools.chrome.enabled', true);
 user_pref('devtools.command-button-eyedropper.enabled', true);
 user_pref('devtools.command-button-rulers.enabled', true);
