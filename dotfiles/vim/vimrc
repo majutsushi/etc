@@ -488,8 +488,8 @@ endfunction
 " InsertGuards() {{{2
 function! InsertGuards()
     let guardname = "_" . substitute(toupper(expand("%:t")), "[\\.-]", "_", "g") . "_"
-    execute "normal! ggI#ifndef " . guardname
-    execute "normal! o#define " . guardname . " "
+    execute "normal! ggO#ifndef " . guardname
+    execute "normal! o#define " . guardname
     execute "normal! Go#endif /* " . guardname . " */"
     normal! kk
 endfunction
