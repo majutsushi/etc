@@ -249,7 +249,7 @@ __get_pids() {
 }
 __kill() {
     local -a names=(${(z)2})
-    if command kill "${(z)1}"; then
+    if builtin kill "${(z)1}"; then
         echo
         for name in $names; do
             echo " (╯°□°）╯︵$(flip "$name")"
