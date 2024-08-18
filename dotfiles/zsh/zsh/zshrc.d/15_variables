@@ -52,7 +52,6 @@ export INPUTRC="$XDG_CONFIG_HOME"/inputrc
 export IPYTHONDIR="$XDG_DATA_HOME"/ipython
 export IRBRC="$DOTFILES/irbrc"
 export LG_CONFIG_FILE="$DOTFILES/lazygit/config.yml"
-export NAVE_DIR="$XDG_DATA_HOME/nave"
 export PYLINTHOME="$XDG_CACHE_HOME"/pylint
 export RIPGREP_CONFIG_PATH="$DOTFILES/ripgreprc"
 export SQLITE_HISTORY="$XDG_STATE_HOME/sqlite_history"
