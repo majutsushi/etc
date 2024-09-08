@@ -184,7 +184,11 @@ if [[ -r "/usr/share/bash-completion/bash_completion" ]]; then
 fi
 
 export PAGER=less
-if command -v vim >/dev/null; then
+if command -v nvim >/dev/null; then
+    export EDITOR=nvim
+    export VISUAL=nvim
+    alias vi=nvim
+elif command -v vim >/dev/null; then
     export EDITOR=vim
     export VISUAL=vim
     alias vi=vim
