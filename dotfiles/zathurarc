@@ -7,7 +7,7 @@ set adjust-open width
 # set show-scrollbars true
 set first-page-column 2
 set window-title-basename true
-# set database sqlite
+set database sqlite
 set recolor-keephue
 set selection-clipboard clipboard
 
