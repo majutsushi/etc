@@ -134,7 +134,7 @@ playlist_full_paths =	P
 enqueue_file =		z
 clear_queue =		Z
 
-exec_command1 = 	F1
+exec_command1 = 	DEL
 exec_command2 = 	F2
 exec_command3 = 	F3
 exec_command4 = 	F4
