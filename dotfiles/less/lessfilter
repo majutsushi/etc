@@ -127,6 +127,8 @@ case "$MIME_TYPE" in
         try ar tv "$FILE_PATH" ;;
     application/x-bittorrent)
         try transmission-show "$FILE_PATH" ;;
+    application/vnd.efi.img)
+        try fdisk -l --color=always "$FILE_PATH" ;;
     application/vnd.efi.iso | application/x-cd-image | application/x-iso9660-image)
         if has_cmd isoinfo; then iso_list "$FILE_PATH"
         else echo "No isoinfo available"; fi ;;
