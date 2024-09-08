@@ -21,6 +21,7 @@ set blink-matching-paren on
 set colored-stats on
 set enable-bracketed-paste on
 set mark-symlinked-directories on
+set revert-all-at-newline on
 set visible-stats on
 
 set colored-completion-prefix on
