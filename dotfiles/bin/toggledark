@@ -51,6 +51,7 @@ def main(args: argparse.Namespace) -> int:
     handle_alacritty(is_dark)
     handle_kitty(is_dark)
     handle_neovim(is_dark)
+    handle_delta(is_dark)
 
     return 0
 
@@ -151,6 +152,14 @@ def handle_gnome(is_dark: bool) -> None:
         ],
         check=True,
     )
+
+
+def handle_delta(is_dark: bool) -> None:
+    config_path = Path.home() / ".local/etc/gitconfig"
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    key = "delta.syntax-theme"
+    theme = "Monokai Extended" if is_dark else "Monokai Extended Light"
+    run(["git", "config", "--file", str(config_path), key, theme], check=True)
 
 
 if __name__ == "__main__":
