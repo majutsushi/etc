@@ -69,7 +69,7 @@ alias fu='sudo $(fc -ln -1) '
 
 if have eza; then
     typeset -a _eza_args
-    _eza_args=(--group-directories-first --git --classify --hyperlink)
+    _eza_args=(--group-directories-first --git --git-repos --classify --hyperlink)
     alias t="eza $_eza_args --tree -l"
     alias e="eza $_eza_args -la"
     alias ee="eza $_eza_args -l"
