@@ -130,6 +130,12 @@ export POETRY_VIRTUALENVS_PREFER_ACTIVE_PYTHON=true
 export PIPENV_VENV_IN_PROJECT=1
 export PIPENV_SHELL_FANCY=1
 
+export LUA_INIT="@$DOTFILES/lua/init.lua"
+export LUAROCKS_CONFIG="$DOTFILES/lua/luarocks-config.lua"
+if command -v luarocks > /dev/null; then
+    _add_to_path pre PATH "$(luarocks config deploy_bin_dir)"
+fi
+
 export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
 export CCACHE_COMPRESS=1
 export CCACHE_HASHDIR=1
