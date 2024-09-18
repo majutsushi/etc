@@ -50,9 +50,6 @@ zinit ice from"gh-r" as"program"
 zinit light ms-jpq/sad
 
 zinit ice as"program"
-zinit snippet https://github.com/eikenb/terminal-colors/blob/master/terminal-colors
-
-zinit ice as"program"
 zinit snippet https://github.com/grawity/code/blob/main/misc/xterm-color-chooser
 
 zinit ice as"program"
