@@ -43,7 +43,6 @@ setopt function_argzero
 
 # ctrl-s will no longer freeze the terminal.
 setopt no_flow_control
-stty stop ''
 stty -ixoff
 stty -ixon
 

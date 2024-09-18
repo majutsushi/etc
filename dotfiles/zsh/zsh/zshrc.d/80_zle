@@ -184,11 +184,21 @@ bindkey ' ' magic-abbrev-expand
 bindkey -M isearch ' ' self-insert
 
 _normalize_prompt() {
-    [[ -n $TTY && -n $terminfo ]] && {
+    [[ -n $TTY ]] || return
+    [[ -n $terminfo ]] && {
         echoti rmacs
         echoti sgr0
         echoti cnorm
     } > $TTY 2> /dev/null
+    stty sane -ixoff -ixon
+    # Disable mouse tracking
+    printf '\x1b[?1000l'
+    printf '\x1b[?1002l'
+    printf '\x1b[?1003l'
+    printf '\x1b[?1006l'
+    printf '\x1b[?1015l'
+    # Use normal screen
+    printf '\x1b[?1049l'
 }
 add-zsh-hook precmd _normalize_prompt
 
