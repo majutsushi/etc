@@ -1,0 +1,68 @@
+# Default: https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/yazi.toml
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
+[manager]
+# ratio = [1, 4, 3]
+sort_by = "natural"
+sort_dir_first = true
+# linemode = "size"
+
+[opener]
+reveal = [
+    { run = 'less "$1"', block = true, desc = "less" },
+    { run = 'xdg-open "$1"',                desc = "Open", for = "linux" },
+    { run = 'open "$@"',                    desc = "Open", for = "macos" },
+    { run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
+
+    # TODO: turn into plugin with popup?
+    { run = 'xfile "$1"; read _', block = true, desc = "xfile" },
+    { run = 'stat "$1"; read _', block = true, desc = "stat" },
+
+    { run = 'open -R "$1"',                          desc = "Reveal", for = "macos" },
+    { run = 'explorer /select, "%1"', orphan = true, desc = "Reveal", for = "windows" },
+    { run = 'gtk-launch $(xdg-mime query default inode/directory) "$1"', orphan = true, desc = "Reveal", for = "linux" },
+]
+extract = [
+    { run = 'unpack "$1"', desc = "Extract here", for = "unix" },
+    { run = 'unpack "%1"', desc = "Extract here", for = "windows" },
+]
+editbulk = [
+    { run = 'VIM_FORK=0 $EDITOR "$@"', block = true },
+]
+ncdu = [
+    { run = 'ncdu "$1"', block = true, desc = "ncdu" }
+]
+
+[open]
+prepend_rules = [
+    { name = "*/", use = [ "ncdu", "edit", "reveal" ] },
+    # https://github.com/sxyazi/yazi/blob/884de41b6606d805d9465004b5b3ce7758e065d8/yazi-core/src/manager/commands/bulk_rename.rs#L13
+    { name = "bulk.txt", use = "editbulk" },
+]
+
+[plugin]
+prepend_previewers = [
+    { mime = "text/*",                 run = "lessfilter" },
+    { mime = "*/xml",                  run = "lessfilter" },
+    { mime = "*/javascript",           run = "lessfilter" },
+    { mime = "*/x-wine-extension-ini", run = "lessfilter" },
+    { mime = "application/json",       run = "lessfilter" },
+
+    { mime = "application/*zip",            run = "lessfilter" },
+    { mime = "application/x-tar",           run = "lessfilter" },
+    { mime = "application/x-bzip*",         run = "lessfilter" },
+    { mime = "application/x-7z-compressed", run = "lessfilter" },
+    { mime = "application/x-rar",           run = "lessfilter" },
+    { mime = "application/x-xz",            run = "lessfilter" },
+]
+append_previewers = [
+    { name = "*", run = "lessfilter" },
+]
+prepend_fetchers = [
+    { id = "git", name = "*",  run  = "git" },
+    { id = "git", name = "*/", run  = "git" },
+]
+
+
+[select]
+open_offset = [ 0, 1, 50, 15 ]

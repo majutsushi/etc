@@ -43,6 +43,7 @@ actions:
             tmux kill-server
         fi
     fi
+  yazi_package_install: 'yazi-package install'
   zinit_clone: |
     if ! [ -d "$XDG_STATE_HOME/zsh/zinit" ]; then
         git clone https://github.com/zdharma-continuum/zinit.git "$XDG_STATE_HOME/zsh/zinit/bin"
@@ -121,6 +122,11 @@ dotfiles:
     dst: ~/.config/tmux
     actions:
       - tmux_plugin_install
+  d_yazi:
+    src: yazi
+    dst: ~/.config/yazi
+    actions:
+      - yazi_package_install
   f_ctags:
     src: ctags
     dst: ~/.config/ctags/default.ctags

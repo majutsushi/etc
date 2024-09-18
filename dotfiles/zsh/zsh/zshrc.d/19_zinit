@@ -25,6 +25,8 @@ zinit light romkatv/zsh-prompt-benchmark
 zinit ice from"gh-r" as"program" bpick"*.tar.gz"
 zinit light starship/starship
 
+zinit ice from"gh-r" as"program" bpick"yazi-x86_64-unknown-linux-gnu.zip" pick"yazi-*/yazi" completions
+zinit light sxyazi/yazi
 
 zinit ice from"gh-r" as"program" bpick"*x86_64*"
 zinit light jesseduffield/lazygit

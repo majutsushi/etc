@@ -1,0 +1,41 @@
+# Default: https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/keymap.toml
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+[manager]
+prepend_keymap = [
+    { on = "<Esc>",   run = [ "escape", "unyank" ],                     desc = "Exit visual mode, clear selected, or cancel search" },
+    { on = "<C-[>",   run = [ "escape", "unyank" ],                     desc = "Exit visual mode, clear selected, or cancel search" },
+    { on = "q",       run = "plugin --sync simple-close",               desc = "Close the current tab, or quit if it is last tab, without writing cwd file" },
+    { on = "Q",       run = "close",                                    desc = "Close the current tab, or quit if it is last tab" },
+    { on = "l",       run = "plugin --sync smart-enter",                desc = "Enter the child directory, or open the file" },
+    { on = "<Enter>", run = "open --interactive",                       desc = "Open selected files interactively" },
+    { on = "<C-s>",   run = 'shell "$SHELL" --block --confirm',         desc = "Open shell here" },
+    { on = "<C-n>",   run = '''shell 'ripdrag -a -x "$@"' --confirm''', desc = "Start drag&drop with ripdrag" },
+    { on = "<C-[>",   run = 'plugin --sync parent-arrow --args=-1',     desc = "Go to previous parent directory" },
+    { on = "<C-]>",   run = 'plugin --sync parent-arrow --args=1',      desc = "Go to next parent directory" },
+
+    # Plugins
+    { on = "o",          run = "plugin open-with-cmd --args=block",  desc = "Open with command in the terminal" },
+    { on = "O",          run = "plugin open-with-cmd",               desc = "Open with command" },
+    { on = "i",          run = "plugin --sync max-preview",          desc = "Maximize or restore preview" },
+    { on = "I",          run = "plugin --sync hide-preview",         desc = "Hide or show preview" },
+    { on = [ "c", "a" ], run = "plugin compress",                    desc = "Archive selected files" },
+    { on = [ "c", "m" ], run = "plugin chmod",                       desc = "Chmod on selected files" },
+    { on = [ "c", "p" ], run = "plugin command",                     desc = "Yazi command prompt" },
+]
+
+[tasks]
+prepend_keymap = [
+    { on = "d", run = "cancel", desc = "Cancel the task" },
+]
+
+[input]
+prepend_keymap = [
+    { on = [ "<Esc>" ], run = 'close',  desc = "Cancel input" },
+]
+
+[completion]
+append_keymap = [
+    { on = [ "<C-k>" ], run = "arrow -1", desc = "Move cursor up" },
+    { on = [ "<C-j>" ], run = "arrow 1",  desc = "Move cursor down" },
+]

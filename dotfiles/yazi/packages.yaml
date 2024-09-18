@@ -1,0 +1,12 @@
+- url: https://github.com/yazi-rs/plugins
+  path: chmod.yazi
+- url: https://github.com/yazi-rs/plugins
+  path: git.yazi
+- url: https://github.com/yazi-rs/plugins
+  path: hide-preview.yazi
+- url: https://github.com/yazi-rs/plugins
+  path: max-preview.yazi
+- url: https://github.com/KKV9/compress.yazi
+- url: https://github.com/KKV9/command.yazi
+- url: https://github.com/Rolv-Apneseth/starship.yazi
+- url: https://github.com/Ape/open-with-cmd.yazi

@@ -1,0 +1,50 @@
+# Default: https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/theme.toml
+"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
+
+[manager]
+border_style = { fg = "darkgray" }
+
+[status]
+mode_normal = { fg = "white", bg = "#6182b8", bold = true }
+mode_select = { fg = "white", bg = "red", bold = true }
+mode_unset  = { fg = "white", bg = "red", bold = true }
+
+[which]
+cols = 1
+mask            = { bg = "reset" }
+cand            = { fg = "red" }
+# rest            = { fg = "darkgray" }
+desc            = { fg = "reset" }
+# separator       = "  "
+# separator_style = { fg = "darkgray" }
+
+[filetype]
+rules = [
+    # Images
+    { mime = "image/*", fg = "cyan" },
+
+    # Media
+    { mime = "video/*", fg = "yellow" },
+    { mime = "audio/*", fg = "yellow" },
+
+    # Archives
+    { mime = "application/*zip",            fg = "magenta" },
+    { mime = "application/x-tar",           fg = "magenta" },
+    { mime = "application/x-bzip*",         fg = "magenta" },
+    { mime = "application/x-7z-compressed", fg = "magenta" },
+    { mime = "application/x-rar",           fg = "magenta" },
+    { mime = "application/x-xz",            fg = "magenta" },
+
+    # Documents
+    { mime = "application/doc",   fg = "green" },
+    { mime = "application/pdf",   fg = "green" },
+    { mime = "application/rtf",   fg = "green" },
+    { mime = "application/vnd.*", fg = "green" },
+
+    { name = "*", is = "link", fg = "cyan", bold = true },
+    { name = "*", is = "exec", fg = "green", bold = true },
+
+    # Fallback
+    # { name = "*", fg = "reset" },
+    { name = "*/", fg = "blue" }
+]
