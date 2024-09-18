@@ -9,6 +9,12 @@ FZF_CTRL_T_OPTS="
 
 FZF_ALT_C_COMMAND="fd --type directory"
 
+# Only return files for path completion
+# https://github.com/junegunn/fzf#settings
+_fzf_compgen_path() {
+    fd --hidden --exclude ".git" --type file . "$1"
+}
+
 if [[ -d /usr/share/doc/fzf/examples ]]; then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
     source /usr/share/doc/fzf/examples/completion.zsh
