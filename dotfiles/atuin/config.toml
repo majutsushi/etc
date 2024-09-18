@@ -83,3 +83,6 @@ history_filter = [
     "^f ",
     "^l$"
 ]
+
+[sync]
+records = true
