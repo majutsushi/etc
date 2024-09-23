@@ -57,7 +57,8 @@ select = [
   # flake8-todos
   "TD",
   # eradicate
-  "ERA",
+  # Disabled because of too many false positives
+  # "ERA",
   # pygrep-hooks
   "PGH",
   # pylint
