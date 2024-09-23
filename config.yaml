@@ -24,6 +24,7 @@ actions:
     import = ["$XDG_CONFIG_HOME/alacritty/material-theme.toml"]
     EOF
     fi
+  build_bat_cache: 'bat cache --build'
   systemd_setup: |
     systemctl --user daemon-reload
     systemctl --user enable --now daily.timer
@@ -78,6 +79,11 @@ dotfiles:
   d_awesome:
     src: awesome
     dst: ~/.config/awesome
+  d_bat:
+    src: bat
+    dst: ~/.config/bat
+    actions:
+      - build_bat_cache
   d_git:
     src: git
     dst: ~/.config/git

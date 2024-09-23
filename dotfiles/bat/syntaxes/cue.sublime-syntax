@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/3/syntax.html
+# Converted from https://github.com/relikd/CUE-Sheet_sublime
+name: CUE Sheet
+comment: Textmate bundle for CUE Sheets
+file_extensions:
+  - cue
+  - CUE
+scope: source.cuesheet
+contexts:
+  main:
+    - match: \b(CATALOG|CDTEXTFILE|FILE|FLAGS|INDEX|ISRC|PERFORMER|(POST|PRE)GAP|REM (GENRE|DATE|DISCID|DISCNUMBER|TOTALDISCS|COMMENT)|SONGWRITER|TITLE|TRACK)\b
+      scope: keyword
+    - match: \b(BINARY|MOTOROLA|AIFF|WAVE|MP3)\w*\b
+      scope: constant.other
+    - match: \b(4CH|DCP|PRE|SCMS)\w*\b
+      scope: constant.other
+    - match: \b(AUDIO|CDG|MODE(1/(2048|2336)|2/(2336|2352))|CDI/23(36|52))\w*\b
+      scope: constant.other
+    - match: '\b[0-9]{2}:[0-9]{2}:[0-9]{2}\b'
+      scope: constant.numeric
+    - match: '"'
+      push:
+        - meta_scope: variable.parameter
+        - match: '"'
+          pop: true
