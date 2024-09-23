@@ -69,7 +69,7 @@ export PSQL_HISTORY="$XDG_CACHE_HOME/psql_history"
 
 export CLIFF_FIT_WIDTH=1
 
-export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git --type file"
+export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git"
 export FZF_DEFAULT_OPTS="
     --exact
     --reverse
