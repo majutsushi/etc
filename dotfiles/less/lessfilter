@@ -2,6 +2,16 @@
 # Ideas:
 # https://github.com/ranger/ranger/blob/master/ranger/data/scope.sh
 # https://github.com/wofr06/lesspipe/blob/lesspipe/lesspipe.sh
+#
+# shellcheck disable=SC2310
+
+set -eEu -o pipefail
+shopt -s inherit_errexit
+IFS=$'\n\t'
+PS4='+\t '
+
+[[ "${TRACE:-0}" == "1" ]] && set -x
+
 
 has_cmd() {
     type -P "$1" > /dev/null
