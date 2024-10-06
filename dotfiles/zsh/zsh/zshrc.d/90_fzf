@@ -1,5 +1,16 @@
-FZF_CTRL_T_COMMAND="fd --hidden --exclude .git --type file"
+# https://junegunn.github.io/fzf/reference/#directory-traversal
+
+export FZF_DEFAULT_OPTS="
+    --walker=file,dir,hidden,follow
+    --walker-skip=.git,node_modules,target
+    --exact
+    --reverse
+    --bind 'ctrl-y:execute-silent(echo {} | clipboard-copy)+abort'
+    --color fg:-1,bg:-1,hl:green,fg+:bright-yellow,bg+:-1,hl+:bright-green,prompt:cyan,pointer:bright-red,marker:red
+"
+
 FZF_CTRL_T_OPTS="
+    --walker=file,hidden,follow
     --preview '$DOTFILES/less/lessfilter {}'
     --preview-window 'right,border-left,50%'
     --bind 'ctrl-/:change-preview-window(down,50%,border-top|hidden|)'
@@ -7,18 +18,13 @@ FZF_CTRL_T_OPTS="
     --bind 'f1:execute(less -+F -f {})'
 "
 
-FZF_ALT_C_COMMAND="fd --type directory"
-
 # Only return files for path completion
 # https://github.com/junegunn/fzf#settings
 _fzf_compgen_path() {
     fd --hidden --exclude ".git" --type file . "$1"
 }
 
-if [[ -d /usr/share/doc/fzf/examples ]]; then
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-    source /usr/share/doc/fzf/examples/completion.zsh
-fi
+have fzf && eval "$(fzf --zsh)"
 
 
 RECENTDIRS_FILE="$ZSH_STATE_DIR/recent-dirs"

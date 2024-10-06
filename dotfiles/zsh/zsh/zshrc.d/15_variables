@@ -69,14 +69,6 @@ export PSQL_HISTORY="$XDG_CACHE_HOME/psql_history"
 
 export CLIFF_FIT_WIDTH=1
 
-export FZF_DEFAULT_COMMAND="fd --hidden --exclude .git"
-export FZF_DEFAULT_OPTS="
-    --exact
-    --reverse
-    --bind 'ctrl-y:execute-silent(echo {} | clipboard-copy)+abort'
-    --color fg:-1,bg:-1,hl:green,fg+:bright-yellow,bg+:-1,hl+:bright-green,prompt:cyan,pointer:bright-red,marker:red
-"
-
 export NETHACKOPTIONS="@$DOTFILES/nethackrc"
 
 export GPG_TTY=$(tty)
