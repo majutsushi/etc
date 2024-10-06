@@ -1,4 +1,4 @@
-rationalize_path() {
+normalize_path() {
     eval $1'=( ${(u)^'${1}':A}(N-/xe:'\''[[ "$REPLY" != "." ]]'\'':) )'
 }
 
@@ -7,10 +7,10 @@ fpath=(
     "$ZDOTDIR/func"
     $fpath
 )
-rationalize_path fpath
+normalize_path fpath
 
 # cdpath=(.. ~)
-rationalize_path cdpath
+normalize_path cdpath
 
 typeset -gxT LIBRARY_PATH library_path
 typeset -gxT LD_LIBRARY_PATH ld_library_path
