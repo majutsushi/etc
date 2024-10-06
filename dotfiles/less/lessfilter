@@ -111,7 +111,12 @@ case "$MIME_TYPE" in
                 unzip -l "$FILE_PATH"
         esac ;;
     application/json | application/*+json)
-        try jq --color-output . "$FILE_PATH" ;;
+        if has_cmd jq; then
+            jq --color-output . "$FILE_PATH"
+        else
+            hl "$FILE_PATH"
+        fi
+        ;;
     application/msword)
         if has_cmd wvText; then wvText "$FILE_PATH" /dev/stdout
         elif has_cmd antiword; then antiword "$FILE_PATH"
@@ -182,9 +187,19 @@ case "$MIME_TYPE" in
         if has_cmd exiftool; then exiftool "$FILE_PATH"
         else try mediainfo "$FILE_PATH"; fi ;;
     message/rfc822)
-        try mu view "$FILE_PATH" ;;
+        if has_cmd mu; then
+            mu view "$FILE_PATH"
+        else
+            hl "$FILE_PATH"
+        fi
+        ;;
     text/csv)
-        try csvlook "$FILE_PATH" ;;
+        if has_cmd csvlook; then
+            csvlook "$FILE_PATH"
+        else
+            hl "$FILE_PATH"
+        fi
+        ;;
     text/html)
         if has_cmd w3m; then w3m -dump "$FILE_PATH"
         elif has_cmd lynx; then lynx -dump -- "$FILE_PATH"
@@ -210,7 +225,12 @@ case "$MIME_TYPE" in
             *.csr)
                 try openssl req -text -noout -in "$FILE_PATH" ;;
             *.md | *.markdown)
-                try mdcat "$FILE_PATH" ;;
+                if has_cmd mdcat; then
+                    mdcat "$FILE_PATH"
+                else
+                    hl "$FILE_PATH"
+                fi
+                ;;
             *.pcap | *.pcapng | *.pcap.* | *.pcapng.*)
                 try tshark -t a -r "$FILE_PATH" ;;
             *.tar | *.tar.* | *.tgz)
