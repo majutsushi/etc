@@ -237,6 +237,11 @@ echo -e "\\e]0;${HOSTNAME%%.*}\\e\\"
 
 alias x='$SSHRCD/unpack'
 
+export BAT_THEME=ansi
+if command -v batcat >/dev/null && ! command -v bat >/dev/null; then
+    alias bat=batcat
+fi
+
 
 # Add a basic base64 wrapper for Kitty and Vim
 if ! command -v base64 >/dev/null; then
