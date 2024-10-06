@@ -41,8 +41,14 @@ rules = [
     { mime = "application/rtf",   fg = "green" },
     { mime = "application/vnd.*", fg = "green" },
 
-    { name = "*", is = "link", fg = "cyan", bold = true },
+    # Special files
+    { name = "*", is = "link", fg = "cyan" },
+    { name = "*", is = "orphan", bg = "red"},
     { name = "*", is = "exec", fg = "green", bold = true },
+
+    # Dummy files
+    { name = "*", is = "dummy", bg = "red" },
+    { name = "*/", is = "dummy", bg = "red" },
 
     # Fallback
     # { name = "*", fg = "reset" },
