@@ -140,6 +140,7 @@
 [fetch]
 	recurseSubmodules = on-demand
 	prune = true
+	writeCommitGraph = true
 
 [tag]
 	sort = version:refname
