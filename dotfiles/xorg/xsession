@@ -32,8 +32,6 @@ fi
 dex -a -e Awesome
 clipit &
 xbanish &
-# logger-wrapper darkman run &
-playerctld daemon
 
 if [[ $(systemd-detect-virt) == "oracle" ]]; then
      picom --config "$DOTFILES/picom-vbox.conf" -b
