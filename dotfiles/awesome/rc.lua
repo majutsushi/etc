@@ -431,7 +431,7 @@ local globalkeys = awful.util.table.join(
         { description = "lock screen", group = "misc" }),
     awful.key({ altkey, "Control" }, "l", function() awful.spawn("xset s activate") end,
         { description = "lock screen", group = "misc" }),
-    awful.key({}, "Print", function() awful.spawn("gnome-screenshot") end,
+    awful.key({}, "Print", function() awful.spawn("flameshot gui") end,
         { description = "take screenshot", group = "misc" }),
     awful.key({ "Control" }, "Print", function() awful.spawn("gnome-screenshot --interactive") end,
         { description = "take screenshot interactive", group = "misc" }),
@@ -610,7 +610,9 @@ awful.rules.rules = {
             "MPlayer",
             "fs-uae",
             "Minecraft.*",
-            "dosbox-x"
+            "dosbox-x",
+            "solanum",
+            "hatari"
         },
 
         name = {
@@ -795,33 +797,6 @@ client.connect_signal("property::geometry", function(c)
     else
         c.shape = nil
     end
-end)
--- }}}
-
--- {{{ Arrange signal handler
-awful.screen.connect_for_each_screen(function(s)
-    s:connect_signal("arrange", function()
-        local clients = awful.client.visible(s)
-        local layout = awful.layout.getname(awful.layout.get(s))
-
-        -- Fine grained borders and floaters control
-        if #clients > 0 then
-            for _, c in pairs(clients) do
-                -- if c.fullscreen or c.name == "Steam" or
-                if c.fullscreen or
-                    (c.name ~= nil and c.name:match("[pP]lugin%-container")) then
-                    c.border_width = 0
-                elseif c.floating or layout == "floating" then
-                    c.border_width = beautiful.border_width
-                elseif #clients == 1 or layout == "max" or
-                    #clients == 2 and (clients[1].floating or clients[2].floating) then
-                    c.border_width = 0
-                else
-                    c.border_width = beautiful.border_width
-                end
-            end
-        end
-    end)
 end)
 -- }}}
 

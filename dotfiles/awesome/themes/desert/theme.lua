@@ -24,7 +24,7 @@ theme.bg_systray = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
-theme.border_width  = 0
+theme.border_width  = 3
 theme.border_normal_dark = "#333333"
 theme.border_focus_dark  = "#6B8E23"
 theme.border_normal_light = "#FAFAFA"
@@ -60,7 +60,7 @@ theme.notification_icon_size = 128
 theme.tooltip_bg = theme.bg_normal
 theme.tooltip_title_color = "#f0e68c"
 theme.tooltip_key_color = "#98fb98"
-theme.tooltip_border_width = 0
+theme.tooltip_border_width = 1
 theme.tooltip_border_color = "#777777"
 -- }}}
 
