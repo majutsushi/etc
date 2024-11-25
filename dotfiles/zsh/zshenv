@@ -1,2 +1,2 @@
-ZDOTDIR=$DOTFILES/zsh/zsh
+ZDOTDIR={{@@ _dotdrop_dotpath @@}}/zsh/zsh
 [ -f $ZDOTDIR/.zshenv ] && . $ZDOTDIR/.zshenv

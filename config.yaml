@@ -201,6 +201,7 @@ dotfiles:
   f_zshenv:
     src: zsh/zshenv
     dst: ~/.zshenv
+    link: nolink
     actions:
       - zinit_clone
   # Bash
