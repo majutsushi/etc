@@ -1,0 +1,34 @@
+setopt err_return
+
+print Updating zinit
+zinit update --all
+
+if have flatpak; then
+    print
+    print Updating flatpak
+    flatpak update --noninteractive
+fi
+
+if have rustup; then
+    print
+    print Updating Rust
+    rustup update stable
+fi
+
+if have cargo; then
+    print
+    print Updating cargo
+    cargo install-update --all
+fi
+
+if have pipx; then
+    print
+    print Updating pipx
+    pipx upgrade-all
+fi
+
+print
+print Updating yazi packages
+yazi-package update
+
+# vim: filetype=zsh
