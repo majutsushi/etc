@@ -9,19 +9,19 @@ actions:
   ln: 'ln -sf "{0}" "{1}"'
   mkdir: 'mkdir -p "{0}"'
   disable_autostart: |
-    mkdir -p "$HOME/.config/autostart"
-    cat > "$HOME/.config/autostart/{0}" << EOF
+    mkdir -p "{{@@ xdg_config_home @@}}/autostart"
+    cat > "{{@@ xdg_config_home @@}}/autostart/{0}" << EOF
     [Desktop Entry]
     Hidden=true
     EOF
   alacritty_gen: |
-    if ! [ -e "$XDG_CONFIG_HOME/alacritty/alacritty.toml" ]; then
-        mkdir -p "$XDG_CONFIG_HOME/alacritty"
-        cat > "$XDG_CONFIG_HOME/alacritty/alacritty.toml" << EOF
-    import = ["$XDG_CONFIG_HOME/alacritty/base.toml", "$XDG_CONFIG_HOME/alacritty/theme.toml"]
+    if ! [ -e "{{@@ xdg_config_home @@}}/alacritty/alacritty.toml" ]; then
+        mkdir -p "{{@@ xdg_config_home @@}}/alacritty"
+        cat > "{{@@ xdg_config_home @@}}/alacritty/alacritty.toml" << EOF
+    import = ["{{@@ xdg_config_home @@}}/alacritty/base.toml", "{{@@ xdg_config_home @@}}/alacritty/theme.toml"]
     EOF
-        cat > "$XDG_CONFIG_HOME/alacritty/theme.toml" << EOF
-    import = ["$XDG_CONFIG_HOME/alacritty/material-theme.toml"]
+        cat > "{{@@ xdg_config_home @@}}/alacritty/theme.toml" << EOF
+    import = ["{{@@ xdg_config_home @@}}/alacritty/material-theme.toml"]
     EOF
     fi
   build_bat_cache: 'bat cache --build'
@@ -31,23 +31,23 @@ actions:
     systemctl --user enable daily-cleanup.service
     systemctl --user enable --now weekly.timer
   tmux_plugin_install: |
-    if ! [ -d $XDG_STATE_HOME/tmux/plugins/tpm/.git ]; then
-        git clone https://github.com/tmux-plugins/tpm.git "$XDG_STATE_HOME/tmux/plugins/tpm"
+    if ! [ -d {{@@ xdg_state_home @@}}/tmux/plugins/tpm/.git ]; then
+        git clone https://github.com/tmux-plugins/tpm.git "{{@@ xdg_state_home @@}}/tmux/plugins/tpm"
     fi
     if command -v tmux >/dev/null; then
         if tmux server-info >/dev/null 2>&1; then
-            "$XDG_STATE_HOME/tmux/plugins/tpm/scripts/install_plugins.sh"
+            "{{@@ xdg_state_home @@}}/tmux/plugins/tpm/scripts/install_plugins.sh"
         else
             tmux start-server
             tmux new-session -d
-            "$XDG_STATE_HOME/tmux/plugins/tpm/scripts/install_plugins.sh"
+            "{{@@ xdg_state_home @@}}/tmux/plugins/tpm/scripts/install_plugins.sh"
             tmux kill-server
         fi
     fi
   yazi_package_install: 'yazi-package install'
   zinit_clone: |
-    if ! [ -d "$XDG_STATE_HOME/zsh/zinit" ]; then
-        git clone https://github.com/zdharma-continuum/zinit.git "$XDG_STATE_HOME/zsh/zinit/bin"
+    if ! [ -d "{{@@ xdg_state_home @@}}/zsh/zinit" ]; then
+        git clone https://github.com/zdharma-continuum/zinit.git "{{@@ xdg_state_home @@}}/zsh/zinit/bin"
     fi
   gnome_settings: |
     if command -v gsettings >/dev/null; then
@@ -65,6 +65,10 @@ config:
   link_on_import: absolute
   longkey: true
 dynvariables:
+  xdg_config_home: "echo ${XDG_CONFIG_HOME:-$HOME/.config}"
+  xdg_state_home: "echo ${XDG_STATE_HOME:-$HOME/.local/state}"
+  xdg_data_home: "echo ${XDG_DATA_HOME:-$HOME/.local/share}"
+  xdg_cache_home: "echo ${XDG_CACHE_HOME:-$HOME/.cache}"
   mozpath: find ~/.mozilla/firefox -name '*.default'
 dotfiles:
   d_alacritty:
