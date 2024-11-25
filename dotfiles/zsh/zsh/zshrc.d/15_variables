@@ -58,6 +58,7 @@ export IPYTHONDIR="$XDG_DATA_HOME"/ipython
 export IRBRC="$DOTFILES/irbrc"
 export LG_CONFIG_FILE="$DOTFILES/lazygit/config.yml"
 export PYLINTHOME="$XDG_CACHE_HOME"/pylint
+export PYTHON_HISTORY="$XDG_STATE_HOME/python_history"
 export RIPGREP_CONFIG_PATH="$DOTFILES/ripgreprc"
 export SQLITE_HISTORY="$XDG_STATE_HOME/sqlite_history"
 export TIGRC_USER="$DOTFILES"/tigrc
