@@ -148,28 +148,19 @@
 [mergetool]
 	hideResolved = true
 	keepBackup = false
-[mergetool "gvimdiff3"]
-	cmd = gvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
-[mergetool "vimdiff3"]
-	cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 [mergetool "nvimdiff3"]
 	cmd = nvim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
-[mergetool "fugitive"]
-	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 [mergetool "imediff"]
 	cmd = imediff -o \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
-[mergetool "splice"]
-	cmd = "nvim -f $BASE $LOCAL $REMOTE $MERGED --cmd 'autocmd VimEnter * SpliceInit'"
-	trustExitCode = true
 [mergetool "idea"]
 	cmd = idea merge \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\" --wait
 	; trustExitCode = true
-[mergetool "code"]
-	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+[mergetool "vscode"]
+	cmd = code --wait --merge \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"
 
 [merge]
-	tool = splice
 	conflictstyle = diff3
+	tool = vscode
 	ff = false
 
 [rebase]
