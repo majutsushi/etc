@@ -51,9 +51,6 @@ fi
      dbus-update-activation-environment --verbose --systemd --all
 )
 
-# https://www.mail-archive.com/systemd-devel@lists.freedesktop.org/msg17273.html
-# systemctl --user start lightson@"$DISPLAY".service
-
 "$DOTFILES/xorg/xsettingsd-setup"
 inputplug -0 -c "$DOTFILES/xorg/inputplug-hook"
 
