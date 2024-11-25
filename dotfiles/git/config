@@ -142,6 +142,9 @@
 	prune = true
 	writeCommitGraph = true
 
+[commit]
+	cleanup = scissors
+
 [tag]
 	sort = version:refname
 
