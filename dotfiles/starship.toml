@@ -39,7 +39,7 @@ stashed = '[\$](yellow)'
 modified = "[*](red)"
 staged = "[+](green)"
 renamed = "[»](cyan)"
-deleted = "[✘](red)"
+deleted = "[-](red)"
 
 [hostname]
 ssh_only = true
