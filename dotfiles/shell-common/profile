@@ -12,28 +12,6 @@ ismac() {
     {{@@ "true" if os == "Darwin" else "false" @@}}
 }
 
-_add_to_path() {
-    # This is non-POSIX but works in dash
-    local pos="$1"
-    local pathvar="$2"
-    local dir="$3"
-
-    case "$(eval "echo \"\$$pathvar\"")" in
-        $dir:*|*:$dir:*|*:$dir)
-            # Don't add again
-            ;;
-        *)
-            case $pos in
-                pre)
-                    eval "$pathvar='$dir':\$$pathvar" ;;
-                post)
-                    eval "$pathvar=\$$pathvar:'$dir'" ;;
-            esac
-            ;;
-    esac
-}
-
-
 # This wrapper makes the filename of the sourced file available as $1 in the file
 _source() {
     # shellcheck source=/dev/null
@@ -72,30 +50,26 @@ export DOTDROP_PROFILE=default
 
 export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
 if [ -d "$PYENV_ROOT/bin" ]; then
-    _add_to_path pre PATH "$PYENV_ROOT/bin"
+    PATH="$PYENV_ROOT/bin:$PATH"
 fi
 if command -v pyenv > /dev/null; then
     eval "$(pyenv init --path)"
 fi
 
 if [ -n "$HOMEBREW_PREFIX" ]; then
-    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin"
-    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-getopt/bin"
-    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gawk/libexec/gnubin"
-    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin"
-    _add_to_path pre PATH "$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin"
+    PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/gnu-getopt/bin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/gawk/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH"
+    PATH="$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin:$PATH"
 fi
 
 # Necessary for fd-find on Debian
-_add_to_path pre PATH "/usr/lib/cargo/bin"
+PATH="/usr/lib/cargo/bin:$PATH"
 
-_add_to_path pre PATH "$HOME/.local/bin"
-_add_to_path pre PATH "$HOME/usr/bin"
-_add_to_path pre PATH "$HOME/.bin"
-
-_add_to_path post PATH /usr/local/sbin
-_add_to_path post PATH /sbin
-_add_to_path post PATH /usr/sbin
+PATH="$PATH:/usr/local/sbin"
+PATH="$PATH:/sbin"
+PATH="$PATH:/usr/sbin"
 
 if [ -z "$MANPATH" ]; then
     MANPATH="$(manpath)"
@@ -115,13 +89,13 @@ export VISUAL="$EDITOR"
 export BROWSER=xdg-open
 
 export GOPATH="$HOME/src/go"
-_add_to_path post PATH "$GOPATH/bin"
+PATH="$GOPATH/bin:$PATH"
 
 # export WINEPREFIX="$XDG_DATA_HOME"/wine/prefixes/default
 
 export RUSTUP_HOME="$HOME/.var/lib/rustup"
 export CARGO_HOME="$HOME/.var/lib/cargo"
-_add_to_path post PATH "$CARGO_HOME/bin"
+PATH="$CARGO_HOME/bin:$PATH"
 if command -v sccache > /dev/null; then
     export RUSTC_WRAPPER=sccache
 fi
@@ -134,7 +108,7 @@ export PIPENV_SHELL_FANCY=1
 export LUA_INIT="@$DOTFILES/lua/init.lua"
 export LUAROCKS_CONFIG="$DOTFILES/lua/luarocks-config.lua"
 if command -v luarocks > /dev/null; then
-    _add_to_path pre PATH "$(luarocks config deploy_bin_dir)"
+    PATH="$(luarocks config deploy_bin_dir):$PATH"
 fi
 
 export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
@@ -159,10 +133,13 @@ export IDEA_VM_OPTIONS="$DOTFILES/idea/idea64.vmoptions"
 export R_PROFILE_USER="$DOTFILES/R/Rprofile"
 
 
-# Make sure this is first in PATH
-_add_to_path pre PATH "$HOME/bin"
+# Make sure these are first in PATH
+PATH="$HOME/.local/bin:$PATH"
+PATH="$HOME/usr/bin:$PATH"
+PATH="$HOME/.bin:$PATH"
+PATH="$HOME/bin:$PATH"
 
-unset -f _add_to_path _source
+unset -f _source
 
 # shellcheck disable=SC1072
 # vim: ft=sh
