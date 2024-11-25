@@ -96,8 +96,7 @@ def handle_kitty(is_dark: bool) -> None:
     link_path.symlink_to(XDG_CONFIG_HOME / "kitty" / theme)
 
     try:
-        pid = int(check_output(["pidof", "-s", "kitty"]))
-        os.kill(pid, signal.SIGUSR1)
+        run(["pkill", "-USR1", "kitty"], check=True, timeout=10)
     except CalledProcessError:
         return
 
