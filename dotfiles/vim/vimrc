@@ -45,7 +45,6 @@ Plug 'kana/vim-textobj-line'
 Plug 'Konfekt/FastFold'
 Plug 'saihoooooooo/vim-textobj-space'
 Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
-Plug 'sjl/splice.vim', {'on': 'SpliceInit'}
 Plug 'terryma/vim-expand-region', {'on': '<Plug>(expand_region'}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
