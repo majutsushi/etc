@@ -175,6 +175,8 @@ case "$MIME_TYPE" in
         try lsar -l "$FILE_PATH" ;;
     application/x-rar | application/vnd.rar | application/vnd.comicbook-rar)
         try unrar l "$FILE_PATH" ;;
+    application/x-sfbk)
+        try sf2parse "$FILE_PATH" ;;
     application/x-troff-man)
         MAN_KEEP_FORMATTING=1 man --local-file "$FILE_PATH" ;;
     application/x-xz-compressed-tar)
