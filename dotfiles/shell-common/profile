@@ -6,9 +6,10 @@
 #
 # *** {{@@ header() @@}} ***
 
+# shellcheck disable=SC1009
 ismac() {
-    # shellcheck disable=SC2050
-    [ "{{@@ os @@}}" = darwin ]
+    # shellcheck disable=SC1073,SC1054,SC1083
+    {{@@ "true" if os == "Darwin" else "false" @@}}
 }
 
 _add_to_path() {
@@ -163,4 +164,5 @@ _add_to_path pre PATH "$HOME/bin"
 
 unset -f _add_to_path _source
 
+# shellcheck disable=SC1072
 # vim: ft=sh
