@@ -30,7 +30,9 @@ hl() {
     if has_cmd batcat; then
         bat=batcat
     fi
-    $bat --color always --style changes "$@"
+    if has_cmd $bat; then
+        $bat --color always --style changes "$@"
+    fi
 }
 
 # Slightly modified from the bundled lesspipe
