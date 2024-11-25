@@ -2,16 +2,8 @@
 # based on
 # https://github.com/vincentbernat/awesome-configuration/blob/master/bin/xsettingsd-setup
 
-case $(autorandr --detected) in
-    home)
-        dpi=117
-        cursor_size=36
-        ;;
-    *)
-        dpi=96
-        cursor_size=24
-        ;;
-esac
+dpi=120
+cursor_size=36
 
 # Build xsettingsd
 cp  "$DOTFILES/xorg/xsettingsd" ~/.config/xsettingsd
