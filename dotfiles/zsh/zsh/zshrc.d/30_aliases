@@ -114,6 +114,15 @@ idot() {
     | icat
 }
 
+btail() {
+    if (( $# == 2 )); then
+        tail -F "$1" | bat --style=plain --paging=never -l "$2"
+    else
+        echo "usage: $0 <file> <type>" >&2
+        return 2
+    fi
+}
+
 vimlint() {
     local bundles="$XDG_STATE_HOME/vim/plugged"
     "$bundles"/vim-vimlint/bin/vimlint.sh -l "$bundles"/vim-vimlint -p "$bundles"/vim-vimlparser "$@"
