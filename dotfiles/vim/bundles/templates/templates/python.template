@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 # Author: Jan Larres <jan@majutsushi.net>
 # License: MIT/X11
+#
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#   "requests<3",
+#   "rich",
+# ]
+# ///
 
 import argparse
 import fileinput
