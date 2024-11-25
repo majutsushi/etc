@@ -258,7 +258,7 @@ __get_pids() {
     args=(${(@)args##\-*}) # remove 'kill' options
     print ${args}
 }
-__kill() {
+__do_kill() {
     local -a names=(${(z)2})
     if builtin kill "${(z)1}"; then
         echo
@@ -270,13 +270,19 @@ __kill() {
         return $?
     fi
 }
-kill() {
+__kill() {
     local args="$@"
     local -a pids=($(__get_pids "$args"))
-    [[ -z "$pids" ]] && echo "No PIDs found" >&2 && return 1
-    local -a names=($(ps --no-headers --format comm ${(z)pids}))
-    __kill "$args" "$names"
+    if [[ -n "$pids" ]]; then
+        local -a names=($(ps --no-headers --format comm ${(z)pids}))
+        __do_kill "$args" "$names"
+    else
+        builtin kill "$@"
+    fi
 }
+compdef _kill __kill
+# Use an alias instead of a function to not interfere with plugins
+alias kill=__kill
 
 jkill() {
     local args="$@"
