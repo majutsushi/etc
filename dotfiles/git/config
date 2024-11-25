@@ -13,6 +13,9 @@
 [safe]
 	bareRepository = explicit
 
+[help]
+	autoCorrect = prompt
+
 [feature]
 	# JGit only supports index version 4 in v5.9+
 	manyFiles = false
