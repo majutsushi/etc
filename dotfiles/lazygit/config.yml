@@ -1,4 +1,6 @@
 gui:
+  enlargedSideViewLocation: 'top'
+  expandFocusedSidePanel: true
   timeFormat: '2006-01-02'
   shortTimeFormat: '03:04'
   theme:
@@ -7,8 +9,13 @@ gui:
     selectedRangeBgColor:
       - reverse
   showCommandLog: false
+  showDivergenceFromBaseBranch: arrowAndNumber # or 'onlyArrow'
   nerdFontsVersion: "3"
 git:
+  paging:
+    # colorArg: always
+    # pager: delta --features=decorations --paging=never
+    pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
   branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=iso --pretty=medium {{branchName}} --'
   allBranchesLogCmd: 'git log --graph --all --color=always --abbrev-commit --decorate --date=iso  --pretty=medium'
 keybinding:
