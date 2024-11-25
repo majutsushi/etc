@@ -27,6 +27,10 @@ if have pyenv; then
     eval "$(pyenv virtualenv-init - | sed s/precmd/chpwd/g)"
 fi
 
+export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+path+="$PNPM_HOME"
+alias pn=pnpm
+
 if [[ -f $HOME/.local/etc/zshrc ]]; then
     source $HOME/.local/etc/zshrc
 fi
