@@ -62,6 +62,9 @@ def handle_timestamp(_is_dark: bool) -> None:
 
 
 def handle_awesome(is_dark: bool) -> None:
+    if os.environ.get("XDG_CURRENT_DESKTOP", "") != "awesome":
+        return
+
     run(
         ["awesome-client"],
         input=f'awesome.emit_signal("toggle_dark", {"true" if is_dark else "false"})',
