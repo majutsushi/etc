@@ -48,16 +48,6 @@ ls-colors() {
 }
 
 
-_update_bat() {
-    if [[ "$1" == dark ]]; then
-        export BAT_THEME="Monokai Extended"
-    else
-        export BAT_THEME="Monokai Extended Light"
-    fi
-}
-_update_colours_funcs+=_update_bat
-
-
 # Set correct colours before the first preexec call
 _check_update_colours
 
