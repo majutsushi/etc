@@ -125,7 +125,11 @@ zstyle ':completion:*:*:(^rm):*:*' ignored-patterns '*(.o|~)' '#*#(D)' '*.zwc' '
 zstyle ':completion:*:*:vim:*:*' ignored-patterns $(zstyle -s ':completion:*:*:(^rm):*:*' ignored-patterns pat && echo $pat) \
     '(|**/)tags' '*.aux' '*.pdf' '*.class'
 
-zstyle ':completion:*:processes'          command 'ps xwww --forest -o pid,s,%cpu,tty,stime,command'
+if ismac; then
+    zstyle ':completion:*:processes'          command 'ps xwww  -o pid,s,%cpu,tty,stime,command'
+else
+    zstyle ':completion:*:processes'          command 'ps xwww --forest -o pid,s,%cpu,tty,stime,command'
+fi
 zstyle ':completion:*:kill:*'             force-list always
 zstyle -e ':completion:*:processes' list-colors 'reply=(
     "=(#bi) #([0-9]#) #([^ ]#) #([^ ]#) #([^ ]#) #([^ ]#) ##*($PREFIX)*=0=1;31=32=35=36=33=1;32"
