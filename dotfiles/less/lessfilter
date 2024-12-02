@@ -224,6 +224,8 @@ case "$MIME_TYPE" in
         case "$BASENAME_LOWER" in
             *.crt | *.pem)
                 try openssl x509 -hash -text -noout -in "$FILE_PATH" ;;
+            *.key)
+                try openssl pkey -text -noout -in "$FILE_PATH" ;;
             *.crl)
                 try openssl crl -hash -text -noout -in "$FILE_PATH" ;;
             *.csr)
