@@ -37,7 +37,7 @@ export TAR_OPTIONS="--exclude-from=$DOTFILES/excludes/archive --exclude-caches-a
 # export RUBYOPT="-w $RUBYOPT"
 export RI="-f ansi"
 
-export TERMINFO="$XDG_DATA_HOME/terminfo"
+# export TERMINFO="$XDG_DATA_HOME/terminfo"
 
 export SSHHOME="$DOTFILES/sshrc"
 
