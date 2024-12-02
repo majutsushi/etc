@@ -10,6 +10,7 @@
 import argparse
 import logging
 import os
+import platform
 import re
 import signal
 import sys
@@ -45,13 +46,15 @@ def main(args: argparse.Namespace) -> int:
     is_dark = args.mode == "dark"
 
     handle_timestamp(is_dark)
-    handle_gnome(is_dark)
-    handle_xsettings(is_dark)
-    handle_awesome(is_dark)
     handle_alacritty(is_dark)
     handle_kitty(is_dark)
     handle_neovim(is_dark)
     handle_delta(is_dark)
+
+    if platform.system() == "Linux":
+        handle_awesome(is_dark)
+        handle_gnome(is_dark)
+        handle_xsettings(is_dark)
 
     return 0
 
