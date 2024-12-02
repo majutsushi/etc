@@ -17,7 +17,12 @@ _update_colours() {
 }
 
 _check_update_colours() {
-    local timestamp=$(zstat +ctime "$XDG_STATE_HOME/toggledark")
+    local timestamp
+    if [[ -f "$XDG_STATE_HOME/toggledark" ]]; then
+        timestamp=$(zstat +ctime "$XDG_STATE_HOME/toggledark")
+    else
+        timestamp=0
+    fi
     if (( timestamp > __toggledark_timestamp )); then
         _update_colours
     fi
