@@ -20,6 +20,10 @@
 # called "hookname" instead of scripts in "hookname.d" directories), they will
 # be executed first.
 
+# Old Bash probably on macOS which doesn't support some features used here
+if (( BASH_VERSINFO < 5 )); then
+    exit 0
+fi
 
 set -eEu -o pipefail
 shopt -s inherit_errexit
