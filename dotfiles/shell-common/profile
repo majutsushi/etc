@@ -9,7 +9,7 @@
 # shellcheck disable=SC1009
 ismac() {
     # shellcheck disable=SC1073,SC1054,SC1083
-    {{@@ "true" if os == "Darwin" else "false" @@}}
+    {{@@ "true" if os.lower() == "darwin" else "false" @@}}
 }
 
 # This wrapper makes the filename of the sourced file available as $1 in the file
