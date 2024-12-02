@@ -283,7 +283,7 @@ __kill() {
     local args="$@"
     local -a pids=($(__get_pids "$args"))
     if [[ -n "$pids" ]]; then
-        local -a names=($(ps --no-headers --format comm ${(z)pids}))
+        local -a names=($(ps -o comm= ${(z)pids}))
         __do_kill "$args" "$names"
     else
         builtin kill "$@"
