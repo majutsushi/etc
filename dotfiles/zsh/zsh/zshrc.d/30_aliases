@@ -384,6 +384,17 @@ lcheck() {
     fi
 }
 
+# Only good way to do this on macOS
+get-listening-ports() {
+    local sudo=''
+    if [[ "$1" == -a ]]; then
+        sudo=sudo
+    fi
+    $sudo lsof -iTCP -sTCP:LISTEN -n -P | \
+        awk 'NR>1 { sub(/.*:/, "", $9); "ps -p "$2" -o command="|getline name; sub(/^-/, "", name); print "Port", $9":", name, "(PID:",$2")"}' | \
+        sort -n -k 2
+}
+
 # debian stuff
 if [[ -r /etc/debian_version ]] ; then
     alias acs='apt search'
