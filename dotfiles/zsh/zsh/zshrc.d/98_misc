@@ -1,3 +1,24 @@
+lazy_load() {
+    local load_func=$1
+    local lazy_func="lazy_${load_func}"
+    shift
+
+    eval "
+        function $@ {
+            for func in $@; do
+                if (( \$+functions[\$func] )); then
+                    unfunction \$func
+                fi
+            done
+            eval $load_func
+            unfunction $load_func
+            \"\$0\" \"\$@\"
+        }
+    "
+}
+# lazy_load <slow_func> cmd1 cmd2 ...
+
+
 if [[ "$INCOGNITO" != 1 ]]; then
     eval "$(atuin init zsh)"
 
