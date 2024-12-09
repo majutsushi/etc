@@ -66,9 +66,6 @@ zinit snippet https://github.com/holman/spark/blob/master/spark
 zinit ice as"program"
 zinit snippet https://github.com/bill-auger/git-branch-status/blob/master/git-branch-status
 
-zinit ice as"program"
-zinit snippet https://github.com/mviereck/x11docker/blob/master/x11docker
-
 zinit ice as"completion"
 zinit snippet https://github.com/bazelbuild/bazel/blob/master/scripts/zsh_completion/_bazel
 
