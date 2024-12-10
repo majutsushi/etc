@@ -11,9 +11,17 @@ require("session"):setup {
 require("git"):setup({ order = 500 })
 require("starship"):setup()
 
--- https://github.com/sxyazi/yazi/blob/shipped/yazi-plugin/preset/components/linemode.lua
+-- https://github.com/sxyazi/yazi/blob/main/yazi-plugin/preset/components/linemode.lua
 function Linemode:ctime()
-    local time = (self._file.cha.created or 0) // 1
+    local time = math.floor(self._file.cha.ctime or 0)
+    if time == 0 then
+        return ui.Line("")
+    else
+        return ui.Line(os.date("%Y-%m-%d %H:%M", time))
+    end
+end
+function Linemode:btime()
+    local time = math.floor(self._file.cha.btime or 0)
     if time == 0 then
         return ui.Line("")
     else
@@ -21,7 +29,7 @@ function Linemode:ctime()
     end
 end
 function Linemode:mtime()
-    local time = (self._file.cha.modified or 0) // 1
+    local time = math.floor(self._file.cha.mtime or 0)
     if time == 0 then
         return ui.Line("")
     else
@@ -29,7 +37,7 @@ function Linemode:mtime()
     end
 end
 
--- https://github.com/sxyazi/yazi/blob/shipped/yazi-plugin/preset/components/header.lua
+-- https://github.com/sxyazi/yazi/blob/main/yazi-plugin/preset/components/header.lua
 Header:children_add(function()
     local h = cx.active.current.hovered
     if not h then
@@ -52,7 +60,7 @@ Status:children_add(function()
         return ui.Line {}
     end
 
-    local time = (h.cha.modified or 0) // 1
+    local time = (h.cha.mtime or 0) // 1
     if time == 0 then
         return ui.Line("")
     else

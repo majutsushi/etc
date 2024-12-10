@@ -4,10 +4,10 @@
 [manager]
 border_style = { fg = "darkgray" }
 
-[status]
-mode_normal = { fg = "white", bg = "#6182b8", bold = true }
-mode_select = { fg = "white", bg = "red", bold = true }
-mode_unset  = { fg = "white", bg = "red", bold = true }
+[mode]
+normal_main = { fg = "white", bg = "#6182b8", bold = true }
+select_main = { fg = "white", bg = "red", bold = true }
+unset_main  = { fg = "white", bg = "red", bold = true }
 
 [which]
 cols = 1

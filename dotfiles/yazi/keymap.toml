@@ -3,22 +3,29 @@
 
 [manager]
 prepend_keymap = [
-    { on = "<Esc>",   run = [ "escape", "unyank" ],                     desc = "Exit visual mode, clear selected, or cancel search" },
-    { on = "<C-[>",   run = [ "escape", "unyank" ],                     desc = "Exit visual mode, clear selected, or cancel search" },
-    { on = "q",       run = "plugin --sync simple-close",               desc = "Close the current tab, or quit if it is last tab, without writing cwd file" },
-    { on = "Q",       run = "close",                                    desc = "Close the current tab, or quit if it is last tab" },
-    { on = "l",       run = "plugin --sync smart-enter",                desc = "Enter the child directory, or open the file" },
-    { on = "<Enter>", run = "open --interactive",                       desc = "Open selected files interactively" },
-    { on = "<C-s>",   run = 'shell "$SHELL" --block --confirm',         desc = "Open shell here" },
-    { on = "<C-n>",   run = '''shell 'ripdrag -a -x "$@"' --confirm''', desc = "Start drag&drop with ripdrag" },
-    { on = "<C-[>",   run = 'plugin --sync parent-arrow --args=-1',     desc = "Go to previous parent directory" },
-    { on = "<C-]>",   run = 'plugin --sync parent-arrow --args=1',      desc = "Go to next parent directory" },
+    { on = "<Esc>",   run = [ "escape", "unyank" ],           desc = "Exit visual mode, clear selected, or cancel search" },
+    { on = "<C-[>",   run = [ "escape", "unyank" ],           desc = "Exit visual mode, clear selected, or cancel search" },
+    { on = "q",       run = "plugin simple-close",            desc = "Close the current tab, or quit if it is last tab, without writing cwd file" },
+    { on = "Q",       run = "close",                          desc = "Close the current tab, or quit if it is last tab" },
+    { on = "l",       run = "plugin smart-enter",             desc = "Enter the child directory, or open the file" },
+    { on = "<Enter>", run = "open --interactive",             desc = "Open selected files interactively" },
+    { on = "<C-s>",   run = 'shell "$SHELL" --block',         desc = "Open shell here" },
+    { on = "<C-n>",   run = '''shell 'ripdrag -a -x "$@"'''', desc = "Start drag&drop with ripdrag" },
+    { on = "<C-[>",   run = 'plugin parent-arrow --args=-1',  desc = "Go to previous parent directory" },
+    { on = "<C-]>",   run = 'plugin parent-arrow --args=1',   desc = "Go to next parent directory" },
+
+    # Linemode
+    { on = [ "m", "c" ], run = "linemode ctime",       desc = "Linemode: ctime" },
+
+    # Sorting
+    { on = [ ",", "c" ], run = [ "sort ctime --reverse=no", "linemode ctime" ], desc = "Sort by changed time" },
+    { on = [ ",", "C" ], run = [ "sort ctime --reverse", "linemode ctime" ],    desc = "Sort by changed time (reverse)" },
 
     # Plugins
     { on = "o",          run = "plugin open-with-cmd --args=block",  desc = "Open with command in the terminal" },
     { on = "O",          run = "plugin open-with-cmd",               desc = "Open with command" },
-    { on = "i",          run = "plugin --sync max-preview",          desc = "Maximize or restore preview" },
-    { on = "I",          run = "plugin --sync hide-preview",         desc = "Hide or show preview" },
+    { on = "i",          run = "plugin max-preview",          desc = "Maximize or restore preview" },
+    { on = "I",          run = "plugin hide-preview",         desc = "Hide or show preview" },
     { on = [ "c", "a" ], run = "plugin compress",                    desc = "Archive selected files" },
     { on = [ "c", "m" ], run = "plugin chmod",                       desc = "Chmod on selected files" },
     { on = [ "c", "p" ], run = "plugin command",                     desc = "Yazi command prompt" },

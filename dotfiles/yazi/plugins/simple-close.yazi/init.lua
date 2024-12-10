@@ -1,3 +1,4 @@
+--- @sync entry
 return {
     entry = function()
         if #cx.tabs > 1 then

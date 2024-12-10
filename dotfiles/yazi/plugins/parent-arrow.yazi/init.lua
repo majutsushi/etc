@@ -1,3 +1,4 @@
+--- @sync entry
 local function entry(_, args)
     local parent = cx.active.parent
     if not parent then
