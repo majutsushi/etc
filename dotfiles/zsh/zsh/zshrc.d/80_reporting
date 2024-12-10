@@ -35,7 +35,7 @@ alert() {
             --urgency=$urgency "$summary" "$body"
 
         # set urgent hint on window
-        wmctrl -i -r $WINDOWID -b add,demands_attention
+        tput bel
     elif ismac; then
         osascript -e "display notification \"\$ ${__last_cmd//\\/\\\\}\" with title \"$summary\" subtitle \"$__last_cmd_dir\""
         tmux-echo '\e]1337;RequestAttention=yes\a'
