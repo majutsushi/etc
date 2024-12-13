@@ -4,7 +4,7 @@ if exists("did_load_filetypes")
 endif
 
 augroup filetypedetect
-    autocmd BufNewFile,BufReadPost *.json    setfiletype jsonc
+    " autocmd BufNewFile,BufReadPost *.json    setfiletype jsonc
     autocmd BufNewFile,BufReadPost *.rhtml   setfiletype eruby
     autocmd BufNewFile,BufReadPost *.rbx     setfiletype ruby
     autocmd BufNewFile,BufReadPost *.viki    setfiletype viki
