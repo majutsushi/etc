@@ -104,7 +104,7 @@ def handle_kitty(is_dark: bool) -> None:
         return
 
 
-def handle_neovim(_is_dark: bool) -> None:
+def handle_neovim(is_dark: bool) -> None:
     servers = (
         check_output(["nvr", "--serverlist"]).decode(sys.stdout.encoding).splitlines()
     )
@@ -115,7 +115,7 @@ def handle_neovim(_is_dark: bool) -> None:
                 "--servername",
                 server,
                 "-c",
-                "DetermineColorscheme",
+                f"SetColorscheme {'dark' if is_dark else 'light'}",
             ],
             check=True,
             timeout=10,

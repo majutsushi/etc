@@ -1124,7 +1124,7 @@ function! s:restore_links() " {{{2
     endfor
 endfunction
 
-function! s:accurate_colorscheme(colo_name)
+function! s:accurate_colorscheme(colo_name) " {{{2
     call s:find_links()
     exec "colorscheme " a:colo_name
     call s:restore_links()
@@ -1132,13 +1132,8 @@ endfunction
 
 command! -nargs=1 -complete=color MyColorscheme call s:accurate_colorscheme(<q-args>)
 
-function! s:determine_colorscheme() abort " {{{2
-    if has('nvim')
-        call system(["is-dark-mode"])
-    else
-        call system("is-dark-mode")
-    endif
-    if v:shell_error
+function! s:set_colorscheme(color) abort " {{{2
+    if a:color == "light"
         if get(g:, "colors_name", "") != "vim-material"
             set background=light
             call s:accurate_colorscheme("vim-material")
@@ -1148,6 +1143,20 @@ function! s:determine_colorscheme() abort " {{{2
             set background=dark
             call s:accurate_colorscheme("desert")
         endif
+    endif
+endfunction
+command! -nargs=1 SetColorscheme call s:set_colorscheme(<q-args>)
+
+function! s:determine_colorscheme() abort " {{{2
+    if has('nvim')
+        call system(["is-dark-mode"])
+    else
+        call system("is-dark-mode")
+    endif
+    if v:shell_error
+        call s:set_colorscheme("light")
+    else
+        call s:set_colorscheme("dark")
     endif
 endfunction
 command! DetermineColorscheme call s:determine_colorscheme()
