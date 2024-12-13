@@ -146,17 +146,12 @@ def handle_xsettings(is_dark: bool) -> None:
 
 
 def handle_gnome(is_dark: bool) -> None:
-    scheme = "prefer-dark" if is_dark else "default"
-    run(
-        [
-            "gsettings",
-            "set",
-            "org.gnome.desktop.interface",
-            "color-scheme",
-            scheme,
-        ],
-        check=True,
-    )
+    color_scheme = "prefer-dark" if is_dark else "default"
+    set_gsettings("color-scheme", color_scheme)
+    gtk_theme = "Adwaita-dark" if is_dark else "Adwaita"
+    set_gsettings("gtk-theme", gtk_theme)
+    cursor_theme = "Bibata-Modern-Ice" if is_dark else "Bibata-Modern-Classic"
+    set_gsettings("cursor-theme", cursor_theme)
 
 
 def handle_delta(is_dark: bool) -> None:
@@ -165,6 +160,19 @@ def handle_delta(is_dark: bool) -> None:
     key = "delta.syntax-theme"
     theme = "Monokai Extended" if is_dark else "Monokai Extended Light"
     run(["git", "config", "--file", str(config_path), key, theme], check=True)
+
+
+def set_gsettings(setting: str, value: str) -> None:
+    run(
+        [
+            "gsettings",
+            "set",
+            "org.gnome.desktop.interface",
+            setting,
+            value,
+        ],
+        check=True,
+    )
 
 
 if __name__ == "__main__":
