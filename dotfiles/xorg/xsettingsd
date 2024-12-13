@@ -9,7 +9,7 @@ Net/DoubleClickDistance 5
 Net/DoubleClickTime 400
 Net/EnableEventSounds 0
 Net/EnableInputFeedbackSounds 0
-Net/IconThemeName "Faenza-Darkest"
+# Net/IconThemeName "Faenza-Darkest"
 Net/SoundThemeName "freedesktop"
 Net/ThemeName "Adwaita-dark"
 

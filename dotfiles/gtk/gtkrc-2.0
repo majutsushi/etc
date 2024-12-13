@@ -1,4 +1,4 @@
-gtk-icon-theme-name = "Faenza-Darkest"
+# gtk-icon-theme-name = "Faenza-Darkest"
 gtk-toolbar-style = GTK_TOOLBAR_ICONS
 gtk-toolbar-icon-size = GTK_ICON_SIZE_SMALL_TOOLBAR
 gtk-theme-name = "Adwaita-dark"

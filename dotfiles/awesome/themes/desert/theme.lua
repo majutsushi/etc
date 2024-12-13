@@ -109,7 +109,7 @@ theme.widget_docker_active = theme.confdir .. "/icons/widgets/docker_active.png"
 theme.widget_notifhist = theme.confdir .. "/icons/widgets/notifhist.png"
 
 -- {{{ Misc
-theme.icon_theme        = "Faenza-Darkest"
+-- theme.icon_theme        = "Faenza-Darkest"
 theme.awesome_icon      = theme.confdir .. "/icons/awesome-icon.png"
 theme.menu_submenu_icon = theme.confdir .. "/icons/submenu.png"
 -- }}}

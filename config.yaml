@@ -106,10 +106,6 @@ dotfiles:
   d_hg:
     src: hg
     dst: ~/.config/hg
-  d_icons:
-    src: icons
-    dst: ~/.local/share/icons
-    link: link_children
   d_kitty:
     src: kitty
     dst: ~/.config/kitty
