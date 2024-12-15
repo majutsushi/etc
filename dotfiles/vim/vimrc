@@ -187,7 +187,6 @@ autocmd vimrc BufWritePost *
 augroup vimrc
     autocmd FileType asciidoc  setlocal comments=://,b:#,:%,n:>,fb:-,fb:*,fb:.
     autocmd FileType make      setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=0
-    autocmd FileType gtkrc     setlocal tabstop=2 shiftwidth=2 softtabstop=2
     autocmd FileType haskell   compiler ghc
     autocmd FileType ruby      setlocal omnifunc=rubycomplete#Complete
     autocmd FileType gitcommit setlocal textwidth=72
@@ -199,7 +198,6 @@ augroup commentstrings
     autocmd FileType cfg         setlocal commentstring=#%s
     autocmd FileType cpp         setlocal commentstring=//%s
     autocmd FileType desktop     setlocal commentstring=#%s
-    autocmd FileType gtkrc       setlocal commentstring=#%s
     autocmd FileType pentadactyl setlocal commentstring=\"%s
     autocmd FileType pfmain      setlocal commentstring=#%s
     autocmd FileType tmux        setlocal commentstring=#%s

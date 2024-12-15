@@ -15,7 +15,6 @@ augroup filetypedetect
     autocmd BufNewFile,BufReadPost *.otl.gpg setfiletype vo_base
     autocmd BufNewFile,BufReadPost {.,}tmux.conf setfiletype tmux
     autocmd BufNewFile,BufReadPost sgc*.dat  setfiletype xml
-    autocmd BufNewFile,BufReadPost *.gtkrc   setfiletype gtkrc
     autocmd BufNewFile,BufReadPost *.adoc,*.asciidoc setfiletype asciidoc
     autocmd BufNewFile,BufReadPost *.vala,*.vapi setfiletype vala
     autocmd BufNewFile,BufReadPost *.confluence setfiletype confluencewiki
