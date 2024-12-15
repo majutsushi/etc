@@ -1,0 +1,33 @@
+#!/bin/bash
+# https://man.sr.ht/~kennylevinsen/greetd/#how-to-set-xdg_session_typewayland
+
+# Session
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=sway
+export XDG_CURRENT_DESKTOP=sway
+
+# Wayland stuff
+export MOZ_ENABLE_WAYLAND=1
+export QT_QPA_PLATFORM=wayland
+export SDL_VIDEODRIVER=wayland
+export _JAVA_AWT_WM_NONREPARENTING=1
+export ELECTRON_OZONE_PLATFORM_HINT=auto
+
+# https://gitlab.freedesktop.org/wlroots/wlroots/-/issues/1873
+export WLR_DRM_NO_MODIFIERS=1
+
+if [[ -f "$HOME/.profile" ]]; then
+    . "$HOME/.profile"
+fi
+
+eval "$(ssh-agent -s)"
+
+# exec sway "$@"
+exec systemd-cat --identifier=sway sway "$@"
+
+#
+# If you use systemd and want sway output to go to the journal, use this
+# instead of the `exec sway "$@"` above:
+#
+#    exec systemd-cat --identifier=sway sway "$@"
+#

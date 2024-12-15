@@ -1,0 +1,122 @@
+@define-color cc-bg @theme_bg_color;
+@define-color noti-border-color @borders;
+@define-color noti-bg @noti-bg-opaque;
+@define-color noti-bg-opaque @cc-bg;
+@define-color noti-bg-darker rgb(38, 38, 38);
+@define-color noti-bg-hover @noti-bg-hover-opaque;
+@define-color noti-bg-hover-opaque @theme_selected_bg_color;
+@define-color noti-bg-focus rgba(68, 68, 68, 0.6);
+@define-color noti-close-bg rgba(255, 255, 255, 0.1);
+@define-color noti-close-bg-hover rgba(255, 255, 255, 0.15);
+@define-color text-color @theme_text_color;
+@define-color text-color-disabled @insensitive_fg_color;
+@define-color bg-selected @theme_selected_bg_color;
+
+* {
+  font-family: Ubuntu, Symbols Nerd Font, sans-serif;
+}
+
+.notification-row:focus, .notification-row:hover {
+  color: @theme_selected_fg_color;
+  background: @noti-bg-focus;
+}
+
+.notification-row .notification-background .notification .notification-action:hover, .notification-row .notification-background .notification .notification-default-action:hover {
+  -gtk-icon-effect: none;
+  color: @theme_selected_fg_color;
+  background: @noti-bg-hover;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button:hover {
+  color: @theme_selected_fg_color;
+  background: @noti-bg-hover;
+}
+
+.notification-group.collapsed:hover .notification-row:not(:only-child) .notification {
+  color: @theme_selected_fg_color;
+  background-color: @noti-bg-hover-opaque;
+}
+
+.control-center {
+  /* background: #282828; */
+  background: @cc-bg;
+  color: @text-color;
+  border: 1px solid @noti-border-color;
+  border-radius: 12px;
+}
+
+.control-center .control-center-list .notification .notification-default-action:hover,
+.control-center .control-center-list .notification .notification-action:hover {
+  color: @theme_selected_fg_color;
+  background-color: @noti-bg-hover;
+}
+
+.widget-buttons-grid {
+  font-size: 36px;
+  background: transparent;
+}
+.widget-buttons-grid>flowbox>flowboxchild>button {
+  padding: 6px 62px;
+  background: transparent;
+  border-radius: 8px;
+}
+.widget-buttons-grid>flowbox>flowboxchild>button:hover {
+  color: #282828;
+  background: #b8bb26;
+}
+.widget-buttons-grid>flowbox>flowboxchild:last-child {
+  border-left: 2px solid #989899;
+}
+.widget-buttons-grid>flowbox>flowboxchild:first-child {
+  border-right: 2px solid #989899;
+}
+
+
+.widget-title {
+  color: @text-color;
+  margin: 8px;
+  font-size: 1.5rem;
+}
+.widget-title button {
+  font-size: initial;
+  color: @text-color;
+  text-shadow: none;
+  background: @noti-bg;
+  border: 1px solid @noti-border-color;
+  box-shadow: none;
+  border-radius: 12px;
+}
+.widget-title button:hover {
+  color: @theme_selected_fg_color;
+  background: @noti-bg-hover;
+}
+
+
+.widget-dnd {
+  color: @text-color;
+  background: transparent;
+  font-size: 1.1rem;
+}
+.widget-dnd>switch {
+  font-size: initial;
+  border-radius: 12px;
+  /* background: @noti-bg; */
+  background: @unfocused_insensitive_color;
+  border: 1px solid @noti-border-color;
+  box-shadow: none;
+}
+.widget-dnd>switch:checked {
+  background: @bg-selected;
+}
+.widget-dnd > switch slider {
+  background: @cc-bg;
+  border: 1px solid @noti-border-color;
+  border-radius: 12px;
+}
+
+
+@define-color mpris-button-hover @theme_selected_bg_color;
+.widget-mpris .widget-mpris-player {
+  background-color: @cc-bg;
+  box-shadow: unset;
+}

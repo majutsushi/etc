@@ -100,6 +100,9 @@ dotfiles:
     dst: ~/.config/bat
     actions:
       - build_bat_cache
+  d_fuzzel:
+    src: fuzzel
+    dst: ~/.config/fuzzel
   d_git:
     src: git
     dst: ~/.config/git
@@ -129,6 +132,12 @@ dotfiles:
   d_rofi:
     src: rofi
     dst: ~/.config/rofi
+  d_sway:
+    src: sway
+    dst: ~/.config/sway
+  d_swaync:
+    src: swaync
+    dst: ~/.config/swaync
   d_systemd:
     src: systemd
     dst: ~/.config/systemd/user
@@ -140,6 +149,15 @@ dotfiles:
     dst: ~/.config/tmux
     actions:
       - tmux_plugin_install
+  d_waybar:
+    src: waybar
+    dst: ~/.config/waybar
+  d_xdg_desktop_portal:
+    src: xdg-desktop-portal
+    dst: ~/.config/xdg-desktop-portal
+  d_xdg_desktop_portal_wlr:
+    src: xdg-desktop-portal-wlr
+    dst: ~/.config/xdg-desktop-portal-wlr
   d_yazi:
     src: yazi
     dst: ~/.config/yazi

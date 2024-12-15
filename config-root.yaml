@@ -9,22 +9,40 @@ actions:
   packages: |
     apt-get install \
       autorandr \
+      autotiling \
       awesome \
       bat \
+      bibata-cursor-theme \
+      bitwise \
+      cliphist \
       dex \
       fd-find \
+      fuzzel \
       fzf \
+      gammastep \
       gron \
       hexyl \
       inputplug \
       keynav \
+      libgirepository1.0-dev \
       light \
       libnotify-bin \
+      mate-polkit \
       moreutils \
       playerctl \
       ripgrep \
       rofi \
+      sway \
+      sway-notification-center \
+      swayidle \
+      swaylock \
+      swaysome \
+      udiskie \
       vivid \
+      waybar \
+      wl-clipboard \
+      wl-mirror \
+      wlogout \
       wmctrl \
       xclip \
       xinput \
@@ -61,6 +79,12 @@ dotfiles:
     src: sudoers.local
     dst: /etc/sudoers.d/local
     chmod: 440
+  f_sway_run:
+    src: sway-run
+    dst: /usr/local/bin/sway-run
+  f_sway_run_desktop:
+    src: sway-run.desktop
+    dst: /usr/local/share/wayland-sessions/sway-run.desktop
 profiles:
   default:
     dotfiles:

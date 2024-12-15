@@ -1,0 +1,7 @@
+# Copy to /usr/local/share/wayland-sessions/
+[Desktop Entry]
+Name=Sway-run
+Comment=An i3-compatible Wayland compositor
+Exec=sway-run
+Type=Application
+DesktopNames=sway

@@ -1,0 +1,259 @@
+// -*- mode: jsonc -*-
+{
+    // "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 30, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "sway/scratchpad",
+        //"custom/media",
+        "mpris"
+    ],
+    "modules-center": [
+        "sway/window"
+    ],
+    "modules-right": [
+        "idle_inhibitor",
+        "pulseaudio",
+        //"power-profiles-daemon",
+        "cpu",
+        "memory",
+        "battery",
+        //"temperature",
+        //"backlight",
+        //"sway/language",
+        //"battery#bat2",
+        "tray",
+        "custom/notification",
+        "clock#date",
+        "clock#time",
+        "custom/power"
+    ],
+    // Modules configuration
+    "sway/workspaces": {
+        "format": "{index}: {windows}",
+        "window-rewrite-default": "",
+        "window-format": "{name}",
+        "window-rewrite": {
+            "class<firefox>": "󰈹",
+            "class<google-chrome>": "",
+            "class<chromium>": "",
+            "class<Microsoft-edge>": "",
+            "class<thunderbird.*>": "",
+            //"class<thunderbird.*>": "",
+            "class<kitty>": "",
+            "class<Alacritty>": "",
+            "class<terminal_scratchpad>": "",
+            "class<org.gnome.Nautilus>": "",
+            "class<mpv>": "",
+            "class<lollypop>": "󱥰",
+            "class<code>": "󰨞",
+            "class<dev.zed.Zed>": "",
+            "class<jetbrains-idea-ce>": "",
+            "class<steam>": "",
+            "class<calibre-gui>": "󱉟",
+            "class<gimp-.*>": "",
+            "class<org.gnome.Shotwell>": "",
+            "class<com.github.johnfactotum.Foliate>": "",
+            "class<deluge>": "",
+            "class<com.transmissionbt..*>": "",
+            "class<libreoffice-base>": "",
+            "class<libreoffice-calc>": "",
+            "class<libreoffice-draw>": "",
+            "class<libreoffice-impress>": "",
+            "class<libreoffice-math>": "",
+            "class<libreoffice-writer>": ""
+        }
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "sway/scratchpad": {
+        "format": "{icon} {count}",
+        "show-empty": false,
+        "format-icons": ["", ""],
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
+    },
+    "custom/media": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        "escape": true,
+        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"
+        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    },
+    "mpris": {
+        //"interval": 5,
+        "format": "{player_icon} {status_icon} {dynamic}",
+        "dynamic-order": ["artist", "title"],
+        "player-icons": {
+            "default": " ",
+            "mpv": " ",
+            //"firefox": " ",
+            "firefox": "󰈹 ",
+            "lollypop": "󱥰 "
+        },
+        "status-icons": {
+            "playing": " ",
+            "paused": " ",
+            "stopped": " "
+        },
+    },
+    "sway/window": {
+        "format": "{title} [{shell}]",
+        "rewrite": {
+            "(.*) \\[xdg_shell\\]": "$1",
+            "(.*) \\[xwayland\\]": "  $1",
+            " \\[\\]": ""
+        }
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "power-profiles-daemon": {
+      "format": "{icon}",
+      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      "tooltip": true,
+      "format-icons": {
+        "default": "",
+        "performance": "",
+        "balanced": "",
+        "power-saver": ""
+      }
+    },
+    "cpu": {
+        "format": "{usage:2}% ",
+        "tooltip": true
+    },
+    "memory": {
+        "format": "{}% "
+    },
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% 󰂄",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        //"format-icons": ["", "", "", "", ""]
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "battery#bat2": {
+        "bat": "BAT2"
+    },
+    "temperature": {
+        // "thermal-zone": 2,
+        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        // "format-critical": "{temperatureC}°C {icon}",
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
+    },
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+    "clock#date": {
+        // "timezone": "America/New_York",
+        //"tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>",
+        "tooltip-format": "<tt><big>{calendar}</big></tt>",
+        "calendar": {
+            "mode"          : "year",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            },
+            "actions":  {
+                "on-click-right": "mode",
+                "on-scroll-up": "shift_up",
+                "on-scroll-down": "shift_down"
+            }
+        },
+        "format": "<small>{:%a %d %b}</small>",
+    },
+    "clock#time": {
+        // "timezone": "America/New_York",
+        "format": "{:%H:%M}",
+    },
+    "custom/power": {
+        "format" : "⏻ ",
+        "tooltip": false,
+        "menu": "on-click",
+        "menu-file": "$HOME/.config/waybar/power_menu.xml",
+        "menu-actions": {
+            "shutdown": "systemctl poweroff",
+            "reboot": "systemctl reboot",
+            "suspend": "systemctl suspend",
+            "hibernate": "systemctl hibernate"
+        }
+    }
+}

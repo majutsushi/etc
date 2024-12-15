@@ -50,6 +50,7 @@ def main(args: argparse.Namespace) -> int:
     handle_kitty(is_dark)
     handle_neovim(is_dark)
     handle_delta(is_dark)
+    handle_sway(is_dark)
 
     if platform.system() == "Linux":
         handle_awesome(is_dark)
@@ -160,6 +161,14 @@ def handle_delta(is_dark: bool) -> None:
     key = "delta.syntax-theme"
     theme = "Monokai Extended" if is_dark else "Monokai Extended Light"
     run(["git", "config", "--file", str(config_path), key, theme], check=True)
+
+
+def handle_sway(is_dark: bool) -> None:
+    if os.environ.get("XDG_CURRENT_DESKTOP", "") != "sway":
+        return
+
+    script_path = XDG_CONFIG_HOME / "sway/toggle-dark.py"
+    run([script_path, "dark" if is_dark else "light"], check=True)
 
 
 def set_gsettings(setting: str, value: str) -> None:
