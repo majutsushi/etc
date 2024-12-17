@@ -27,8 +27,8 @@ bind generic D :toggle word-diff
 
 # User-defined commands
 # ---------------------
-bind generic y @sh -c 'printf %(commit) | clipboard-copy'
-bind generic Y @sh -c 'git svn find-rev %(commit) | tr -d [:cntrl:] | clipboard-copy'
+bind generic y @sh -c 'printf %(commit) | cb'
+bind generic Y @sh -c 'git svn find-rev %(commit) | tr -d [:cntrl:] | cb'
 bind generic L !sh -c 'FILENAME="$(basename %(file))"; TMPFILE="$(mktemp --suffix=_$FILENAME)"; trap "rm $TMPFILE" EXIT; git show %(commit):%(file) > "$TMPFILE"; less -F "$TMPFILE"'
 
 # Vim keybindings from https://github.com/jonas/tig/blob/master/contrib/vim.tigrc

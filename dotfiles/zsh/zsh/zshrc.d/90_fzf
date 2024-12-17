@@ -5,7 +5,7 @@ export FZF_DEFAULT_OPTS="
     --walker-skip=.git,node_modules,target
     --exact
     --reverse
-    --bind 'ctrl-y:execute-silent(echo {} | clipboard-copy)+abort'
+    --bind 'ctrl-y:execute-silent(echo {} | cb)+abort'
     --color fg:-1,bg:-1,hl:green,fg+:bright-yellow,bg+:-1,hl+:bright-green,prompt:cyan,pointer:bright-red,marker:red
 "
 

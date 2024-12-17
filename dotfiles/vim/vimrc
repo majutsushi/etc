@@ -133,7 +133,7 @@ autocmd vimrc InsertEnter * set nocursorline
 
 " Copy clipboard contents to + register when entering vim
 if has("clipboard")
-    autocmd VimEnter * call setreg('+', system('clipboard-paste'))
+    autocmd VimEnter * call setreg('+', system('cb'))
 endif
 
 autocmd vimrc StdinReadPost * set buftype=nofile

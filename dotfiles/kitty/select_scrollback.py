@@ -62,4 +62,4 @@ def handle_result(
     args: List[str], selected_text: Optional[str], target_window_id: int, boss: Boss
 ) -> None:
     if selected_text:
-        subprocess.run(["clipboard-copy"], check=True, text=True, input=selected_text)
+        subprocess.run(["cb"], check=True, text=True, input=selected_text)
