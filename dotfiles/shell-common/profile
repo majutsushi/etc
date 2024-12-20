@@ -73,6 +73,8 @@ PATH="$PATH:/usr/sbin"
 
 if [ -z "$MANPATH" ]; then
     MANPATH="$(manpath)"
+else
+    MANPATH="$MANPATH:$(MANPATH= manpath)"
 fi
 export MANPATH
 
