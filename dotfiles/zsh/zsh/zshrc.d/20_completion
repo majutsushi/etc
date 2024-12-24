@@ -171,6 +171,10 @@ if have rustup; then
 fi
 have atuin && lazycomplete atuin "atuin gen-completions --shell zsh"
 have poetry && lazycomplete poetry "poetry completions zsh"
+if have uv; then
+    lazycomplete uv "uv --generate-shell-completion zsh"
+    lazycomplete uvx "uvx --generate-shell-completion zsh"
+fi
 
 
 # host completion
