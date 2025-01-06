@@ -27,6 +27,12 @@ if have pipx; then
     pipx upgrade-all
 fi
 
+if have brew; then
+    print
+    print Updating Homebrew
+    brew upgrade
+fi
+
 print
 print Updating yazi packages
 yazi-package update
