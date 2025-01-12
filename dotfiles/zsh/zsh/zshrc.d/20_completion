@@ -151,6 +151,7 @@ zstyle ':completion:*:*:-command-:*' ignored-patterns './config.*'
 lazycomplete() {
     local cmd="$1"
     local completer="$2"
+    have $cmd || return
 
     eval "\
 _lazycomplete_$cmd() {
@@ -165,16 +166,12 @@ _lazycomplete_$cmd() {
 "
     compdef _lazycomplete_$cmd $cmd
 }
-if have rustup; then
-    lazycomplete rustup "rustup completions zsh rustup"
-    lazycomplete cargo "rustup completions zsh cargo"
-fi
-have atuin && lazycomplete atuin "atuin gen-completions --shell zsh"
-have poetry && lazycomplete poetry "poetry completions zsh"
-if have uv; then
-    lazycomplete uv "uv --generate-shell-completion zsh"
-    lazycomplete uvx "uvx --generate-shell-completion zsh"
-fi
+lazycomplete rustup "rustup completions zsh rustup"
+lazycomplete cargo "rustup completions zsh cargo"
+lazycomplete atuin "atuin gen-completions --shell zsh"
+lazycomplete poetry "poetry completions zsh"
+lazycomplete uv "uv --generate-shell-completion zsh"
+lazycomplete uvx "uvx --generate-shell-completion zsh"
 
 
 # host completion
