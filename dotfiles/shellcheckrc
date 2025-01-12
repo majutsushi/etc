@@ -10,7 +10,8 @@ enable=avoid-nullary-conditions
 enable=check-extra-masked-returns
 
 # Notify when set -e is suppressed during function invocation
-enable=check-set-e-suppressed
+# Warns about functions called in if-conditions
+# enable=check-set-e-suppressed
 
 # Warn when uppercase variables are unassigned
 enable=check-unassigned-uppercase
