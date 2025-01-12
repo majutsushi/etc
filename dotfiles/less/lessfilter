@@ -247,11 +247,17 @@ case "$MIME_TYPE" in
             *.xz)
                 try xz -dc "$FILE_PATH" ;;
             *)
-                MIME_ENC=$(file --mime-encoding --dereference --brief "$FILE_PATH")
-                if [[ "$MIME_ENC" != binary ]]; then
-                    hl "$FILE_PATH"
-                else
-                    xfile "$FILE_PATH"
-                fi
+                case $MIME_TYPE in
+                    # Check for gzip with non-standard extension
+                    application/gzip)
+                        gzip -fdc "$FILE_PATH" ;;
+                    *)
+                        MIME_ENC=$(file --mime-encoding --dereference --brief "$FILE_PATH")
+                        if [[ "$MIME_ENC" != binary ]]; then
+                            hl "$FILE_PATH"
+                        else
+                            xfile "$FILE_PATH"
+                        fi
+                esac
         esac
 esac
