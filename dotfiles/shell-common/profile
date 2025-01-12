@@ -70,6 +70,8 @@ PATH="/usr/lib/cargo/bin:$PATH"
 PATH="$PATH:/usr/local/sbin"
 PATH="$PATH:/sbin"
 PATH="$PATH:/usr/sbin"
+PATH="$PATH:/usr/local/games"
+PATH="$PATH:/usr/games"
 
 if [ -z "$MANPATH" ]; then
     MANPATH="$(manpath)"
