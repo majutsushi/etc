@@ -110,7 +110,7 @@ case "$MIME_TYPE" in
                 unzip -v "$FILE_PATH"
                 ;;
             *)
-                unzip -l "$FILE_PATH"
+                unzip -v "$FILE_PATH"
         esac ;;
     application/json | application/*+json)
         if has_cmd jq; then
