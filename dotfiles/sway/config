@@ -305,6 +305,8 @@ for_window [title="Picture-in-Picture"] floating enable
 
 for_window [app_id="thunderbird.*" title=".* Reminder"] floating enable
 for_window [app_id="org.gnome.NautilusPreviewer"] floating enable
+for_window [app_id="dosbox-x"] floating enable
+for_window [app_id="fs-uae"] floating enable
 
 # https://github.com/flameshot-org/flameshot/blob/master/docs/Sway%20and%20wlroots%20support.md
 for_window [app_id="flameshot"] floating enable, fullscreen disable, move absolute position 0 0, border pixel 0
