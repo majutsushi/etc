@@ -43,7 +43,7 @@
   "notification-visibility": {
     "transient-pasystray": {
       "state": "transient",
-      "desktop-entry": "pasystray.desktop",
+      "app-name": "pasystray",
       "summary": "(New sink|New source).*"
     }
   },
