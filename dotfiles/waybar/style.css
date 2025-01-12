@@ -1,6 +1,8 @@
 /* Theme color variables from
  * https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
- * */
+ * https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors.scss
+ * https://docs.gtk.org/gtk3/css-overview.html
+ */
 
 * {
     /* font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif; */
@@ -9,16 +11,13 @@
 }
 
 window#waybar {
-    /* background-color: rgba(43, 48, 59, 0.5); */
-    background-color: #333333;
-    /* border-bottom: 3px solid rgba(100, 114, 125, 0.5); */
-    color: #ffffff;
+    color: @theme_text_color;
+    background-color: @theme_bg_color;
+
     transition-property: background-color;
     transition-duration: .5s;
 
-    background: @theme_base_color;
     border-bottom: 1px solid @unfocused_borders;
-    color: @theme_text_color;
 }
 
 window#waybar.hidden {
