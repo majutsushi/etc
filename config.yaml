@@ -81,7 +81,17 @@ dynvariables:
   xdg_state_home: "echo ${XDG_STATE_HOME:-$HOME/.local/state}"
   xdg_data_home: "echo ${XDG_DATA_HOME:-$HOME/.local/share}"
   xdg_cache_home: "echo ${XDG_CACHE_HOME:-$HOME/.cache}"
-  mozpath: find ~/.mozilla/firefox -name '*.default'
+  mozpath: |
+    if [ -d "$HOME/.mozilla/firefox" ]; then
+        profiles_dir="$HOME/.mozilla/firefox"
+    else
+        profiles_dir="$HOME/Library/Application Support/Firefox/Profiles"
+    fi
+    if [ -d "$profiles_dir"/*.default-release ]; then
+        echo "$profiles_dir"/*.default-release
+    else
+        echo "$profiles_dir"/*.default
+    fi
 dotfiles:
   d_alacritty:
     src: alacritty
