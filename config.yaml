@@ -67,6 +67,15 @@ actions:
     DOTFILES={{@@ _dotdrop_dotpath @@}}
     PATH=\$PATH:\$HOME/.local/bin:\$HOME/bin:\$HOME/.bin
     EOF
+  launchctl_env: |
+    if command -v launchctl >/dev/null; then
+        launchctl setenv XDG_CONFIG_HOME {{@@ xdg_config_home @@}}
+        launchctl setenv XDG_STATE_HOME {{@@ xdg_state_home @@}}
+        launchctl setenv XDG_DATA_HOME {{@@ xdg_data_home @@}}
+        launchctl setenv XDG_CACHE_HOME {{@@ xdg_cache_home @@}}
+        launchctl setenv DOTFILES {{@@ _dotdrop_dotpath @@}}
+        launchctl setenv PATH $PATH:$HOME/.local/bin:$HOME/bin:$HOME/.bin
+    fi
 config:
   backup: true
   banner: false
@@ -274,4 +283,5 @@ profiles:
       - ALL
     actions:
       - systemd_env
+      - launchctl_env
       - gnome_settings
