@@ -209,6 +209,8 @@ fi
 command -v tree >/dev/null && alias t="tree -F -C"
 
 export SSHRCD="$SSHHOME/.sshrc.d"
+PATH="$PATH:$SSHRCD"
+
 export MYVIMRC="$SSHRCD/vimrc"
 export VIMINIT="source $MYVIMRC"
 export GIT_CONFIG_GLOBAL="$SSHRCD/git/config"
