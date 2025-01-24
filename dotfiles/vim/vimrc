@@ -753,6 +753,9 @@ set tabpagemax=50
 set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 " show info in the window title
 set title
+set titlelen=25
+" set titlestring=vi(%<%F)
+set titlestring=%t(%<%{expand(\"%:~:h\")})
 
 " using the mouse {{{2
 
