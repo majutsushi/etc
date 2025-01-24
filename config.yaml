@@ -136,6 +136,9 @@ dotfiles:
   d_latexmk:
     src: latexmk
     dst: ~/.config/latexmk
+  d_mise:
+    src: mise
+    dst: ~/.config/mise
   d_ncdu:
     src: ncdu
     dst: ~/.config/ncdu

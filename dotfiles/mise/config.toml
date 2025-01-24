@@ -1,0 +1,5 @@
+[settings]
+
+[settings.status]
+show_env = true
+show_tools = true

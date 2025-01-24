@@ -62,3 +62,6 @@ gmon.out
 
 .mypy_cache/
 .venv/
+
+mise.local.toml
+.mise.local.toml
