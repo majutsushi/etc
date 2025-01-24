@@ -80,6 +80,7 @@ export SACK_SHORTCUT_FILE="$XDG_CACHE_HOME/sack_shortcuts/$$"
 mkdir -p "$(dirname "$SACK_SHORTCUT_FILE")"
 
 export SSHRC_FILES="$(which unpack)"
+SSHRC_FILES+="|$(which xfile)"
 if [[ "$TERM" == xterm-kitty ]]; then
     SSHRC_FILES+="|$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"
 fi
