@@ -67,3 +67,14 @@ Status:children_add(function()
         return ui.Line(" " .. os.date("%Y-%m-%d %H:%M", time))
     end
 end, 1500, Status.RIGHT)
+
+Status:children_add(function()
+    local files = cx.active.current.files
+    local sum = 0
+    for i, file in ipairs(files) do
+        if not file.cha.is_dir then
+            sum = sum + file:size()
+        end
+    end
+    return ui.Line(ui.Span(" " .. ya.readable_size(sum)))
+end, 1600, Status.RIGHT)
