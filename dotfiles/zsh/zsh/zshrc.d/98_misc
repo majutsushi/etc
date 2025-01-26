@@ -43,11 +43,6 @@ if have direnv; then
     eval "$(direnv hook zsh)"
 fi
 
-if have pyenv; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init - | sed s/precmd/chpwd/g)"
-fi
-
 if have mise; then
     eval "$(mise activate zsh)"
 fi

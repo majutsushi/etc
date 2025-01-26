@@ -48,14 +48,6 @@ export DOTFILES="{{@@ _dotdrop_dotpath @@}}"
 export DOTDROP_CONFIG="{{@@ _dotdrop_cfgpath @@}}"
 export DOTDROP_PROFILE=default
 
-export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
-if [ -d "$PYENV_ROOT/bin" ]; then
-    PATH="$PYENV_ROOT/bin:$PATH"
-fi
-if command -v pyenv > /dev/null; then
-    eval "$(pyenv init --path)"
-fi
-
 if [ -n "$HOMEBREW_PREFIX" ]; then
     PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
     PATH="$HOMEBREW_PREFIX/opt/gnu-getopt/bin:$PATH"
