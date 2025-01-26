@@ -39,10 +39,6 @@ if [[ "$INCOGNITO" != 1 ]]; then
     bindkey -M viins '\er' _atuin_search_nested
 fi
 
-if have direnv; then
-    eval "$(direnv hook zsh)"
-fi
-
 if have mise; then
     eval "$(mise activate zsh)"
 fi
