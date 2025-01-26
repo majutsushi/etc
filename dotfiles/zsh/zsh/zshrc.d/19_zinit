@@ -61,13 +61,7 @@ zinit ice as"program"
 zinit snippet https://github.com/grawity/code/blob/main/misc/xterm-color-chooser
 
 zinit ice as"program"
-zinit snippet https://github.com/holman/spark/blob/master/spark
-
-zinit ice as"program"
 zinit snippet https://github.com/bill-auger/git-branch-status/blob/master/git-branch-status
-
-zinit ice as"completion"
-zinit snippet https://github.com/bazelbuild/bazel/blob/master/scripts/zsh_completion/_bazel
 
 zinit snippet https://github.com/junegunn/fzf-git.sh/blob/main/fzf-git.sh
 
