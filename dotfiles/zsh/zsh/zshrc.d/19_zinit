@@ -60,6 +60,9 @@ zinit light ms-jpq/sad
 zinit ice as"program"
 zinit snippet https://github.com/grawity/code/blob/main/misc/xterm-color-chooser
 
+zinit ice as"program"
+zinit snippet https://github.com/grawity/treeify/blob/main/treeify
+
 zinit ice as"program" atclone"sed -r -i -e 's/CDEFAULT=.*/CDEFAULT=/' git-branch-status" atpull'%atclone'
 zinit snippet https://github.com/bill-auger/git-branch-status/blob/development/git-branch-status
 
