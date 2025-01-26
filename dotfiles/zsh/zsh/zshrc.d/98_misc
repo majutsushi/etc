@@ -58,8 +58,6 @@ fi
 
 mkdir -p $HOME/.ssh/sock
 
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
-
 for patharray in path manpath library_path ld_library_path; do
     normalize_path $patharray
 done

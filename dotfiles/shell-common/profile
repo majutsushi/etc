@@ -111,8 +111,6 @@ export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
 export CCACHE_COMPRESS=1
 export CCACHE_HASHDIR=1
 
-export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
-
 export GITHUB_USER=majutsushi
 
 export DVDCSS_CACHE="$XDG_CACHE_HOME/dvdcss"
