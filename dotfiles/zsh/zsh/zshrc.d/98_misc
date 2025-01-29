@@ -47,6 +47,10 @@ export PNPM_HOME="$XDG_DATA_HOME/pnpm"
 path+="$PNPM_HOME"
 alias pn=pnpm
 
+for dir in "$XDG_DATA_HOME"/gem/ruby/*/bin; do
+    path+="$dir"
+done
+
 if [[ -f $HOME/.local/etc/zshrc ]]; then
     source $HOME/.local/etc/zshrc
 fi
