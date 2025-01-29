@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Based on https://github.com/denisbrodbeck/machineid#snippets
+
+set -eEu -o pipefail
+shopt -s inherit_errexit
+IFS=$'\n\t'
+PS4='+\t '
+
+error_handler() { echo "Error: Line ${1} exited with status ${2}"; }
+trap 'error_handler ${LINENO} $?' ERR
+
+[[ "${TRACE:-0}" == "1" ]] && set -x
+
+
+if [[ -f /var/lib/dbus/machine-id ]]; then
+    cat /var/lib/dbus/machine-id
+elif [[ -f /etc/machine-id ]]; then
+    cat /etc/machine-id
+elif [[ -f /etc/hostid ]]; then
+    cat /etc/hostid
+elif command -v kenv >/dev/null; then
+    kenv -q smbios.system.uuid
+elif command -v ioreg >/dev/null; then
+    ioreg -rd1 -c IOPlatformExpertDevice | grep IOPlatformUUID
+else
+    echo "No machine id source found" >&2
+    exit 1
+fi
