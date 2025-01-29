@@ -96,10 +96,6 @@ if command -v sccache > /dev/null; then
     export RUSTC_WRAPPER=sccache
 fi
 
-export POETRY_VIRTUALENVS_IN_PROJECT=true
-export POETRY_VIRTUALENVS_PREFER_ACTIVE_PYTHON=true
-export PIPENV_VENV_IN_PROJECT=1
-export PIPENV_SHELL_FANCY=1
 export PYTHONPYCACHEPREFIX="$XDG_CACHE_HOME/pycache"
 
 export LUA_INIT="@$DOTFILES/lua/init.lua"
