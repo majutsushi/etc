@@ -18,7 +18,7 @@ fi
 if have cargo; then
     print
     print Updating cargo
-    cargo install-update --all
+    nice -n 19 cargo install-update --all
 fi
 
 if have pipx; then
