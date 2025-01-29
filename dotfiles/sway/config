@@ -241,6 +241,8 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+bindsym Print exec $DOTFILES/bin/grimshot-wrapper
+
 bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle

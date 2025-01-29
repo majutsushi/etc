@@ -45,6 +45,10 @@
       "state": "transient",
       "app-name": "pasystray",
       "summary": "(New sink|New source).*"
+    },
+    "transient-grimshot": {
+      "state": "transient",
+      "app-name": "grimshot"
     }
   },
   "widgets": [

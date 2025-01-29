@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -eEu -o pipefail
+shopt -s inherit_errexit
+IFS=$'\n\t'
+PS4='+\t '
+
+error_handler() {
+    echo "Error: Line ${1} exited with status ${2}"
+    notify-send -a grimshot-wrapper --urgency=critical -i image "Error saving screenshot"
+}
+trap 'error_handler ${LINENO} $?' ERR
+
+[[ "${TRACE:-0}" == "1" ]] && set -x
+
+
+if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs" ]]; then
+    . "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+fi
+TARGET_DIR="${XDG_PICTURES_DIR:-$HOME}/Screenshots"
+TARGET_FILE="$TARGET_DIR/$(date +'%Y-%m-%d %H-%M-%S').png"
+
+grimshot save anything - | \
+    magick - \
+        \( +clone -background black -shadow 50x15+0+10 \) \
+        +swap \
+        -background white \
+        -layers merge \
+        +repage \
+        "$TARGET_FILE"
+
+echo "$TARGET_FILE" | cb
+notify-send -t 3000 -a grimshot-wrapper -i image -e "Screenshot" "Saved to $TARGET_FILE"
