@@ -206,7 +206,10 @@ else
     alias ll='LC_COLLATE=POSIX ls -lFh'
     alias l='LC_COLLATE=POSIX ls -lAFh'
 fi
-command -v tree >/dev/null && alias t="tree -F -C"
+if command -v tree >/dev/null; then
+    alias t="tree -F -C"
+    alias tl="tree -F -C -D -h"
+fi
 
 export SSHRCD="$SSHHOME/.sshrc.d"
 PATH="$PATH:$SSHRCD"
