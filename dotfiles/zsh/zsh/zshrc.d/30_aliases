@@ -86,7 +86,6 @@ alias decolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
 alias g="pager-wrapper grep --color=always --extended-regexp"
 alias lg=lazygit
 alias myip='curl http://v4.ipv6-test.com/api/myip.php'
-alias open=xdg-open
 alias pa='ps aux | less'
 alias pu='ps ux | less'
 alias rr='ranger'
