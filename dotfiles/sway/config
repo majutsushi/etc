@@ -176,8 +176,8 @@ input "type:keyboard" {
     bindsym $mod+Mod5+9 exec "swaysome focus-group 9"
     bindsym $mod+Mod5+0 exec "swaysome focus-group 0"
 
-    bindsym $mod+period exec "swaysome focus-next-output"
-    bindsym $mod+comma exec "swaysome focus-prev-output"
+    bindsym $mod+period focus output right
+    bindsym $mod+comma focus output left
 #
 # Layout stuff:
 #
