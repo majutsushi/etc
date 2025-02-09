@@ -10,9 +10,9 @@ prepend_keymap = [
     { on = "l",       run = "plugin smart-enter",             desc = "Enter the child directory, or open the file" },
     { on = "<Enter>", run = "open --interactive",             desc = "Open selected files interactively" },
     { on = "<C-s>",   run = 'shell "$SHELL" --block',         desc = "Open shell here" },
-    { on = "<C-n>",   run = '''shell 'ripdrag -a -x "$@"'''', desc = "Start drag&drop with ripdrag" },
-    { on = "<{>",   run = 'plugin parent-arrow --args=-1',  desc = "Go to previous parent directory" },
-    { on = "<}>",   run = 'plugin parent-arrow --args=1',   desc = "Go to next parent directory" },
+    { on = "<C-n>",   run = 'shell -- ripdrag -a -x "$@"',    desc = "Start drag&drop with ripdrag" },
+    { on = "<{>",     run = 'plugin parent-arrow -- -1',      desc = "Go to previous parent directory" },
+    { on = "<}>",     run = 'plugin parent-arrow -- 1',       desc = "Go to next parent directory" },
 
     # Linemode
     { on = [ "m", "c" ], run = "linemode ctime",       desc = "Linemode: ctime" },
@@ -22,7 +22,7 @@ prepend_keymap = [
     { on = [ ",", "C" ], run = [ "sort ctime --reverse", "linemode ctime" ],    desc = "Sort by changed time (reverse)" },
 
     # Plugins
-    { on = "o",          run = "plugin open-with-cmd --args=block",  desc = "Open with command in the terminal" },
+    { on = "o",          run = "plugin open-with-cmd block",  desc = "Open with command in the terminal" },
     { on = "O",          run = "plugin open-with-cmd",               desc = "Open with command" },
     { on = "i",          run = "plugin max-preview",          desc = "Maximize or restore preview" },
     { on = "I",          run = "plugin hide-preview",         desc = "Hide or show preview" },
