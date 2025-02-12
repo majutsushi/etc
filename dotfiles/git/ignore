@@ -65,3 +65,5 @@ gmon.out
 
 mise.local.toml
 .mise.local.toml
+mise.*.local.toml
+.mise.*.local.toml
