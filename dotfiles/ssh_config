@@ -12,6 +12,9 @@ Host bitbucket.org
     ControlMaster no
     HostKeyAlgorithms +ssh-rsa
 
+Host ssh.dev.azure.com vs-ssh.visualstudio.com
+    HostKeyAlgorithms +rsa-sha2-512
+
 Host console.gandi.net
     KexAlgorithms +diffie-hellman-group14-sha1
 
