@@ -21,7 +21,7 @@ elif [[ -f /etc/hostid ]]; then
 elif command -v kenv >/dev/null; then
     kenv -q smbios.system.uuid
 elif command -v ioreg >/dev/null; then
-    ioreg -rd1 -c IOPlatformExpertDevice | grep IOPlatformUUID
+    ioreg -rd1 -c IOPlatformExpertDevice | awk '/IOPlatformUUID/ { gsub("\"", "", $3); print $3 }'
 else
     echo "No machine id source found" >&2
     exit 1
