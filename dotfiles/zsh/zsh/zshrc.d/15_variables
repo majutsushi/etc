@@ -66,7 +66,7 @@ export TIGRC_USER="$DOTFILES"/tigrc
 export PSQLRC="$XDG_CONFIG_HOME/psqlrc"
 export PGPASSFILE="$XDG_DATA_HOME/postgresql/pgpass"
 export PGSERVICEFILE="$XDG_DATA_HOME/postgresql/pg_service.conf"
-export PSQL_HISTORY="$XDG_CACHE_HOME/psql_history"
+export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
 
 export CLIFF_FIT_WIDTH=1
 
