@@ -21,6 +21,13 @@ if have cargo; then
     nice -n 19 cargo install-update --all
 fi
 
+if have uv; then
+    print
+    print Updating uv
+    INSTALLER_NO_MODIFY_PATH=1 uv self update
+    uv tool upgrade --all
+fi
+
 if have pipx; then
     print
     print Updating pipx
