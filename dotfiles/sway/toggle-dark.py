@@ -1,6 +1,12 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 # Author: Jan Larres <jan@majutsushi.net>
 # License: MIT/X11
+
+# /// script
+# dependencies = [
+#   "i3ipc",
+# ]
+# ///
 #
 # ruff: noqa: S603, S607
 
