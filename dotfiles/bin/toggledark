@@ -1,6 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 # Author: Jan Larres <jan@majutsushi.net>
 # License: MIT/X11
+#
+# /// script
+# dependencies = [
+#   "psutil",
+#   "pynvim",
+# ]
+# ///
 #
 # Future ideas:
 # https://github.com/blueyed/dotfiles/blob/9f2c882fb8e9844d013fa9af6d7f04b122badd26/vimrc#L1525
@@ -17,6 +24,9 @@ import sys
 import textwrap
 from pathlib import Path
 from subprocess import CalledProcessError, check_output, run
+
+import psutil
+import pynvim
 
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -106,21 +116,15 @@ def handle_kitty(is_dark: bool) -> None:
 
 
 def handle_neovim(is_dark: bool) -> None:
-    servers = (
-        check_output(["nvr", "--serverlist"]).decode(sys.stdout.encoding).splitlines()
-    )
-    for server in servers:
-        run(
-            [
-                "nvr",
-                "--servername",
-                server,
-                "-c",
-                f"SetColorscheme {'dark' if is_dark else 'light'}",
-            ],
-            check=True,
-            timeout=10,
-        )
+    for proc in psutil.process_iter(attrs=["name"]):
+        if proc.info["name"] == "nvim":
+            try:
+                for conn in proc.net_connections("unix"):
+                    if conn.laddr:
+                        nvim = pynvim.attach("socket", path=conn.laddr)
+                        nvim.command(f"SetColorscheme {'dark' if is_dark else 'light'}")
+            except psutil.AccessDenied:
+                log.debug("Access denied for PID %s", proc.pid)
 
 
 def handle_xsettings(is_dark: bool) -> None:
