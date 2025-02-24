@@ -24,8 +24,8 @@ prepend_keymap = [
     # Plugins
     { on = "o",          run = "plugin open-with-cmd block",  desc = "Open with command in the terminal" },
     { on = "O",          run = "plugin open-with-cmd",               desc = "Open with command" },
-    { on = "i",          run = "plugin max-preview",          desc = "Maximize or restore preview" },
-    { on = "I",          run = "plugin hide-preview",         desc = "Hide or show preview" },
+    { on = "i",          run = "plugin toggle-pane max-preview",     desc = "Maximize or restore preview" },
+    { on = "I",          run = "plugin toggle-pane min-preview",     desc = "Hide or show preview" },
     { on = [ "c", "a" ], run = "plugin compress",                    desc = "Archive selected files" },
     { on = [ "c", "m" ], run = "plugin chmod",                       desc = "Chmod on selected files" },
     { on = [ "c", "p" ], run = "plugin command",                     desc = "Yazi command prompt" },
