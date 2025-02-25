@@ -179,7 +179,7 @@ case "$MIME_TYPE" in
         try sf2parse "$FILE_PATH" ;;
     application/x-troff-man)
         MAN_KEEP_FORMATTING=1 man --local-file "$FILE_PATH" ;;
-    application/x-xz-compressed-tar)
+    application/x-tar | application/x-xz-compressed-tar)
         tar tvf "$FILE_PATH" --force-local ;;
     application/x-zoo)
         try lsar -l "$FILE_PATH" ;;
