@@ -79,6 +79,9 @@ ignore = [
   # builtin-attribute-shadowing: Class attribute {name} is shadowing a python builtin
   # Attributes don't actually shadow anything
   "A003",
+  # shebang-missing-python
+  # Disabled because of https://github.com/astral-sh/ruff/issues/13021
+  "EXE003",
   # error-suffix-on-exception-name
   "N818",
   # raise-vanilla-args: Avoid specifying long messages outside the exception class
