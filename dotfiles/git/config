@@ -93,6 +93,9 @@
 [status]
 	submoduleSummary = true
 
+[format]
+	pretty = fuller
+
 [pager]
 	diff = delta
 	log = delta
