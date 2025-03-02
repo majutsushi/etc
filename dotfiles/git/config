@@ -130,6 +130,7 @@
 
 [branch]
 	autosetuprebase = always
+	sort = -committerdate
 
 [pull]
 	rebase = merges
