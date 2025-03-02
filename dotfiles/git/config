@@ -142,18 +142,21 @@
 	recurseSubmodules = on-demand
 
 [fetch]
+	all = true
 	recurseSubmodules = on-demand
 	prune = true
+	pruneTags = true
 	writeCommitGraph = true
 
 [commit]
 	cleanup = scissors
+	verbose = true
 
 [tag]
 	sort = version:refname
 
 [log]
-	date = format-local:"%Y-%m-%d %H:%M"
+	date = iso
 	follow = true
 	decorate = short
 
@@ -187,6 +190,9 @@
 [stash]
 	showPatch = true
 	showStat = true
+
+[grep]
+	patternType = perl
 
 [svn]
 	rmdir = true
