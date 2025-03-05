@@ -28,12 +28,6 @@ if have uv; then
     uv tool upgrade --all
 fi
 
-if have pipx; then
-    print
-    print Updating pipx
-    pipx upgrade-all
-fi
-
 if have brew; then
     print
     print Updating Homebrew
