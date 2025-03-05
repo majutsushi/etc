@@ -133,7 +133,8 @@ case "$MIME_TYPE" in
     application/vnd.ms-cab-compressed)
         try lsar -l "$FILE_PATH" ;;
     application/vnd.openxmlformats-officedocument.wordprocessingml.document)
-        try docx2txt "$FILE_PATH" - ;;
+        if has_cmd markitdown && has_cmd mdcat; then markitdown "$FILE_PATH" | mdcat
+        else try docx2txt "$FILE_PATH" -; fi ;;
     application/vnd.sqlite3)
         try sqlite3 "file:${FILE_PATH}?mode=ro" ".schema" -header -column ;;
     application/x-7z-compressed)
