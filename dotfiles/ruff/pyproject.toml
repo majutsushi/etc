@@ -49,7 +49,7 @@ select = [
   # flake8-simplify
   "SIM",
   # flake8-type-checking
-  "TCH",
+  "TC",
   # flake8-unused-arguments
   "ARG",
   # flake8-use-pathlib
