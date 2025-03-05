@@ -24,7 +24,6 @@ fi
 if have uv; then
     print
     print Updating uv
-    INSTALLER_NO_MODIFY_PATH=1 uv self update
     uv tool upgrade --all
 fi
 

@@ -75,6 +75,7 @@ zinit as"null" from"gh-r" for \
     id-as"rga" light-mode lbin"*/rga;*/rga-fzf;*/rga-preproc" @phiresky/ripgrep-all \
     id-as"sad" light-mode lbin @ms-jpq/sad \
     id-as"sd" light-mode lbin"sd-*/sd" @chmln/sd \
+    id-as"uv" light-mode lbin"*/uv;*/uvx" @astral-sh/uv \
     id-as"yq" light-mode lbin"yq* -> yq" @mikefarah/yq
 
 # scripts
