@@ -1,4 +1,5 @@
 ZINIT_DIR=$XDG_STATE_HOME/zsh/zinit
+ZPFX=$HOME/.local
 
 typeset -gAH ZINIT
 ZINIT[BIN_DIR]=$ZINIT_DIR/bin
