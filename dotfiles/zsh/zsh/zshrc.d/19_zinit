@@ -7,6 +7,8 @@ ZINIT[ZCOMPDUMP_PATH]=$ZCOMPDUMP
 
 source $ZINIT_DIR/bin/zinit.zsh
 
+manpath+=${ZINIT[MAN_DIR]}
+
 zinit ice wait lucid blockf atpull'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
@@ -25,6 +27,9 @@ zinit light romkatv/zsh-prompt-benchmark
 zinit ice from"gh-r" as"program" bpick"*.tar.gz"
 zinit light starship/starship
 
+zinit ice from"gh-r" as"program" bpick"*.tar.gz" pick"atuin-*/atuin"
+zinit light atuinsh/atuin
+
 if ismac; then
     zinit ice from"gh-r" as"program" bpick"yazi-aarch64-apple-darwin.zip" pick"yazi-*/yazi" completions
 else
@@ -40,7 +45,24 @@ fi
 zinit light jesseduffield/lazygit
 
 zinit ice from"gh-r" as"program"
+zinit light jdx/usage
+zinit ice from"gh-r" as"program" mv"mise-* -> mise"
+zinit light jdx/mise
+
+zinit ice from"gh-r" as"program" mv"choose-* -> choose"
+zinit light theryangeary/choose
+
+zinit ice from"gh-r" as"program"
 zinit light Wilfred/difftastic
+
+zinit ice from"gh-r" as"program" pick"dua-*/dua"
+zinit light Byron/dua-cli
+
+zinit ice from"gh-r" as"program" mv"fx* -> fx"
+zinit light antonmedv/fx
+
+zinit ice from"gh-r" as"program" pick"bin/hwatch" completions atclone"cp -vf man/*.1 ${ZINIT[MAN_DIR]}/man1" atpull'%atclone'
+zinit light blacknon/hwatch
 
 zinit ice from"gh-r" as"program"
 zinit light PaulJuliusMartinez/jless
@@ -48,14 +70,26 @@ zinit light PaulJuliusMartinez/jless
 zinit ice from"gh-r" as"program" pick"mdcat-*/mdcat"
 zinit light swsnr/mdcat
 
-zinit ice from"gh-r" as"program" mv"fx* -> fx"
-zinit light antonmedv/fx
+zinit ice from"gh-r" as"program"
+zinit light o2sh/onefetch
 
-zinit ice from"gh-r" as"program" mv"yq* -> yq"
-zinit light mikefarah/yq
+zinit ice from"gh-r" as"program" pick"ouch-*/ouch" atclone"cp -vf ouch-*/man/*.1 ${ZINIT[MAN_DIR]}/man1" atpull'%atclone'
+zinit light ouch-org/ouch
+
+zinit ice from"gh-r" as"program" pick"pastel-*/pastel"
+zinit light sharkdp/pastel
+
+zinit ice from"gh-r" as"program" pick"ripgrep_all-*/rga"
+zinit light phiresky/ripgrep-all
+
+zinit ice from"gh-r" as"program" pick"sd-*/sd"
+zinit light chmln/sd
 
 zinit ice from"gh-r" as"program"
 zinit light ms-jpq/sad
+
+zinit ice from"gh-r" as"program" mv"yq* -> yq"
+zinit light mikefarah/yq
 
 zinit ice as"program"
 zinit snippet https://github.com/grawity/code/blob/main/misc/xterm-color-chooser
