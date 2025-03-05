@@ -49,6 +49,9 @@ zinit light jdx/usage
 zinit ice from"gh-r" as"program" mv"mise-* -> mise"
 zinit light jdx/mise
 
+zinit ice from"gh-r" as"program" pick"bat-*/bat"
+zinit light sharkdp/bat
+
 zinit ice from"gh-r" as"program" mv"choose-* -> choose"
 zinit light theryangeary/choose
 

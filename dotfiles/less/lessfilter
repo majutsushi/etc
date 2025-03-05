@@ -26,12 +26,8 @@ try() {
 }
 
 hl() {
-    local bat=bat
-    if has_cmd batcat; then
-        bat=batcat
-    fi
-    if has_cmd $bat; then
-        $bat --color always --style changes "$@"
+    if has_cmd bat; then
+        bat --color always --style changes "$@"
     fi
 }
 
