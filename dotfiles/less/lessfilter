@@ -87,7 +87,7 @@ PARENT_DIR="$(dirname "$FILE_PATH")"
 case "$MIME_TYPE" in
     application/epub+zip)
         if has_cmd mdcat; then
-            try pandoc -s -t markdown "$FILE_PATH" | mdcat
+            try pandoc -s -t markdown "$FILE_PATH" | mdcat -l
         else
             try pandoc -s -t plain "$FILE_PATH"
         fi
@@ -133,7 +133,7 @@ case "$MIME_TYPE" in
     application/vnd.ms-cab-compressed)
         try lsar -l "$FILE_PATH" ;;
     application/vnd.openxmlformats-officedocument.wordprocessingml.document)
-        if has_cmd markitdown && has_cmd mdcat; then markitdown "$FILE_PATH" | mdcat
+        if has_cmd markitdown && has_cmd mdcat; then markitdown "$FILE_PATH" | mdcat -l
         else try docx2txt "$FILE_PATH" -; fi ;;
     application/vnd.sqlite3)
         try sqlite3 "file:${FILE_PATH}?mode=ro" ".schema" -header -column ;;
@@ -230,7 +230,7 @@ case "$MIME_TYPE" in
                 try openssl req -text -noout -in "$FILE_PATH" ;;
             *.md | *.markdown)
                 if has_cmd mdcat; then
-                    mdcat "$FILE_PATH"
+                    mdcat -l "$FILE_PATH"
                 else
                     hl "$FILE_PATH"
                 fi
