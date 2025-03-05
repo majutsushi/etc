@@ -30,20 +30,6 @@ zinit as"null" from"gh-r" for \
     light-mode id-as"starship" lbin bpick"*.tar.gz" @starship/starship \
     light-mode id-as"atuin" lbin"atuin-*/atuin" bpick"*.tar.gz" @atuinsh/atuin
 
-if ismac; then
-    zinit ice from"gh-r" as"program" bpick"yazi-aarch64-apple-darwin.zip" pick"yazi-*/yazi" completions
-else
-    zinit ice from"gh-r" as"program" bpick"yazi-x86_64-unknown-linux-gnu.zip" pick"yazi-*/yazi" completions
-fi
-zinit light sxyazi/yazi
-
-if ismac; then
-    zinit ice from"gh-r" as"program" bpick"*Darwin_arm64*"
-else
-    zinit ice from"gh-r" as"program" bpick"*x86_64*"
-fi
-zinit light jesseduffield/lazygit
-
 # mise
 zinit as"null" from"gh-r" for \
     light-mode id-as"usage" lbin @jdx/usage \
@@ -66,6 +52,7 @@ zinit as"null" from"gh-r" for \
         atpull'%atclone' \
         @gpanders/ijq \
     id-as"jless" light-mode lbin @PaulJuliusMartinez/jless \
+    id-as"lazygit" light-mode lbin @jesseduffield/lazygit \
     id-as"mdcat" light-mode lbin"mdcat-*/mdcat" @swsnr/mdcat \
     id-as"onefetch" light-mode lbin @o2sh/onefetch \
     id-as"ouch" light-mode lbin"ouch-*/ouch" \
@@ -77,6 +64,7 @@ zinit as"null" from"gh-r" for \
     id-as"sad" light-mode lbin @ms-jpq/sad \
     id-as"sd" light-mode lbin"sd-*/sd" @chmln/sd \
     id-as"uv" light-mode lbin"*/uv;*/uvx" @astral-sh/uv \
+    id-as"yazi" light-mode lbin"*/ya;*/yazi" completions @sxyazi/yazi \
     id-as"yq" light-mode lbin"yq* -> yq" @mikefarah/yq
 
 # scripts
