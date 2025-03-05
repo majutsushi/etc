@@ -62,6 +62,15 @@ fi
 
 mkdir -p $HOME/.ssh/sock
 
+# Needs to happen late since manpath automatically finds man locations
+# based on PATH
+if [[ -z "$MANPATH" ]]; then
+    MANPATH="$(manpath)"
+else
+    MANPATH="$MANPATH:$(MANPATH= manpath)"
+fi
+export MANPATH
+
 for patharray in path manpath library_path ld_library_path; do
     normalize_path $patharray
 done

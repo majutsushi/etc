@@ -29,12 +29,6 @@ export LESSOPEN="| $DOTFILES/less/lessfilter %s"
 # backspace that can then be changed with the less codes above
 export GROFF_NO_SGR=1
 
-if [[ -z "$MANPATH" ]]; then
-    MANPATH="$(manpath)"
-else
-    MANPATH="$MANPATH:$(MANPATH= manpath)"
-fi
-export MANPATH
 export MANWIDTH="${MANWIDTH:-80}"
 
 export ZIPOPT="--exclude=@$DOTFILES/excludes/archive"
