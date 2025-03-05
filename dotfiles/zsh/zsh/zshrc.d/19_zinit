@@ -60,6 +60,10 @@ zinit as"null" from"gh-r" for \
         atclone"cp -vf man/*.1 ${ZINIT[MAN_DIR]}/man1" \
         atpull'%atclone' \
         @blacknon/hwatch \
+    id-as"ijq" light-mode lbin"ijq-*/ijq" \
+        atclone"cp -vf ijq-*/*.1 ${ZINIT[MAN_DIR]}/man1" \
+        atpull'%atclone' \
+        @gpanders/ijq \
     id-as"jless" light-mode lbin @PaulJuliusMartinez/jless \
     id-as"mdcat" light-mode lbin"mdcat-*/mdcat" @swsnr/mdcat \
     id-as"onefetch" light-mode lbin @o2sh/onefetch \
