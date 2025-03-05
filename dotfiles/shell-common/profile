@@ -65,13 +65,6 @@ PATH="$PATH:/usr/sbin"
 PATH="$PATH:/usr/local/games"
 PATH="$PATH:/usr/games"
 
-if [ -z "$MANPATH" ]; then
-    MANPATH="$(manpath)"
-else
-    MANPATH="$MANPATH:$(MANPATH= manpath)"
-fi
-export MANPATH
-
 export LD_LIBRARY_PATH="$HOME/.local/lib/ld"
 
 
