@@ -13,7 +13,7 @@ zinit light zdharma-continuum/zinit-annex-binary-symlink
 zinit ice wait lucid blockf atpull'zinit creinstall -q .'
 zinit light zsh-users/zsh-completions
 
-zinit ice wait lucid
+zinit ice wait lucid completions
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=0
@@ -36,14 +36,13 @@ zinit as"null" from"gh-r" for \
     light-mode id-as"mise" lbin"mise-* -> mise" @jdx/mise
 
 # various tools
-zinit as"null" from"gh-r" for \
+zinit as"null" from"gh-r" completions for \
     id-as"bat" light-mode lbin"bat-*/bat" @sharkdp/bat \
     id-as"choose" light-mode lbin"choose-* -> choose" @theryangeary/choose \
     id-as"difftastic" light-mode lbin @Wilfred/difftastic \
     id-as"dua" light-mode lbin"dua-*/dua" @Byron/dua-cli \
     id-as"fx" light-mode lbin"fx* -> fx" @antonmedv/fx \
     id-as"hwatch" light-mode lbin"bin/hwatch" \
-        completions \
         atclone"cp -vf man/*.1 ${ZINIT[MAN_DIR]}/man1" \
         atpull'%atclone' \
         @blacknon/hwatch \
@@ -59,12 +58,12 @@ zinit as"null" from"gh-r" for \
         atclone"cp -vf ouch-*/man/*.1 ${ZINIT[MAN_DIR]}/man1" \
         atpull'%atclone' \
         @ouch-org/ouch \
-    id-as"pastel" light-mode lbin"pastel-*/pastel" completions @sharkdp/pastel \
+    id-as"pastel" light-mode lbin"pastel-*/pastel" @sharkdp/pastel \
     id-as"rga" light-mode lbin"*/rga;*/rga-fzf;*/rga-preproc" @phiresky/ripgrep-all \
     id-as"sad" light-mode lbin @ms-jpq/sad \
     id-as"sd" light-mode lbin"sd-*/sd" @chmln/sd \
     id-as"uv" light-mode lbin"*/uv;*/uvx" @astral-sh/uv \
-    id-as"yazi" light-mode lbin"*/ya;*/yazi" completions @sxyazi/yazi \
+    id-as"yazi" light-mode lbin"*/ya;*/yazi" @sxyazi/yazi \
     id-as"yq" light-mode lbin"yq* -> yq" @mikefarah/yq
 
 # scripts
