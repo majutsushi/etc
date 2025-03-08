@@ -107,6 +107,7 @@ export DVDCSS_CACHE="$XDG_CACHE_HOME/dvdcss"
 export GTK_OVERLAY_SCROLLING=0
 export NO_AT_BRIDGE=1
 export GRAMPSHOME="$XDG_DATA_HOME"
+export QT_QPA_PLATFORMTHEME=gtk3
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 export IDEA_PROPERTIES="$DOTFILES/idea/idea.properties"
