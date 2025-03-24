@@ -178,7 +178,7 @@
 [merge]
 	conflictstyle = diff3
 	tool = vscode
-	ff = false
+	; ff = false
 
 [rebase]
 	autoSquash = true
