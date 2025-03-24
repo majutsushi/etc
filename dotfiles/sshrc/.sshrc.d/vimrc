@@ -57,6 +57,8 @@ set wildignorecase
 
 runtime! macros/matchit.vim
 
+autocmd FileType qf nmap <buffer> q :cclose<CR>
+
 highlight Search ctermbg=3 ctermfg=0
 highlight Visual NONE
 highlight Visual term=reverse cterm=reverse
