@@ -176,7 +176,7 @@
 	cmd = code --wait --merge \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"
 
 [merge]
-	conflictstyle = diff3
+	conflictstyle = zdiff3
 	tool = vscode
 	; ff = false
 
