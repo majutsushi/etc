@@ -98,5 +98,5 @@ if 1
 endif
 
 nnoremap <silent> <C-l> :nohlsearch<CR><C-l>
-nnoremap <silent> g/ :execute 'vimgrep /' . @/ . '/g %'<CR>:copen<CR>
+nnoremap <silent> g/ :execute 'vimgrep /' . @/ . '/j %'<CR>:copen<CR>
 nnoremap Y y$
