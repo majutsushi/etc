@@ -28,3 +28,11 @@ nmap q :qa!<CR>
 nmap i <Nop>
 
 highlight CurSearch ctermfg=0 ctermbg=2 guifg=Black guibg=LightGreen
+
+augroup quickfix
+    autocmd BufReadPost quickfix syntax match ConcealedDetails /\v^[^|]*\|[^|]*\| / conceal
+    autocmd FileType qf setlocal conceallevel=2
+    autocmd FileType qf setlocal concealcursor=nvic
+    autocmd FileType qf setlocal nowrap
+    autocmd FileType qf nmap <buffer> q :cclose<CR>
+augroup END
