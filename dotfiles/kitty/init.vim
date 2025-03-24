@@ -36,3 +36,6 @@ augroup quickfix
     autocmd FileType qf setlocal nowrap
     autocmd FileType qf nmap <buffer> q :cclose<CR>
 augroup END
+
+" Populate the quickfix window with the last search
+nnoremap <silent> g/ :execute 'vimgrep /' . @/ . '/j %'<CR>:copen<CR>
