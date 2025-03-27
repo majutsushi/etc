@@ -31,11 +31,9 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Lokaltog/vim-easymotion', {'on': '<Plug>(easymotion'}
 Plug 'bruno-/vim-vertical-move', {'on': '<Plug>(vertical_move'}
-Plug 'jlanzarotta/bufexplorer', {'on': 'BufExplorer'}
 
 " Editing
 Plug 'SirVer/ultisnips'
-Plug 'dhruvasagar/vim-table-mode'
 Plug 'junegunn/vim-easy-align', {'on': ['EasyAlign', '<Plug>(EasyAlign)']}
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
@@ -331,13 +329,6 @@ nnoremap <C-g> :call CtrlG()<CR>
 if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
-
-" s:fakemap() {{{2
-function! s:fakemap(target) abort
-    execute 'map <Plug>Fake' . s:fakemap_idx . ' ' . a:target
-    let s:fakemap_idx += 1
-endfunction
-let s:fakemap_idx = 0
 
 " FindAutocmdTouching() {{{2
 " Find autocmds that set certain parameters
@@ -1192,14 +1183,6 @@ augroup AleRunning
 augroup END
 
 
-" bufexplorer {{{2
-let g:bufExplorerDisableDefaultKeyMapping=1    " Disable mapping.
-nnoremap <silent> <leader>be :BufExplorer<CR>
-
-" cecutil.vim {{{2
-call s:fakemap('<Plug>RestoreWinPosn')
-call s:fakemap('<Plug>SaveWinPosn')
-
 " Ctrl-P {{{2
 let g:ctrlp_map = ''
 let g:ctrlp_cmd = 'CtrlP'
@@ -1260,12 +1243,6 @@ let g:ctrlp_buftag_ctags_bin = g:ctagsbin
 let g:ctrlp_buftag_types = {
     \ 'grace' : '--options=' . $HOME . '/.vim/bundle/vim-grace/ctags/grace.cnf --language-force=grace --grace-types=idvtcm'
 \ }
-
-" devhelp {{{2
-let g:devhelpSearch = 1
-let g:devhelpAssistant = 0
-let g:devhelpSearchKey = '<F7>'
-let g:devhelpWordLength = 5
 
 " EasyAlign {{{2
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
@@ -1499,10 +1476,6 @@ let g:splice_initial_diff_compare = 1
 let g:splice_initial_scrollbind_grid = 1
 let g:splice_initial_scrollbind_compare = 1
 let g:splice_initial_scrollbind_path = 1
-
-" Table mode {{{2
-nmap <expr> <silent>   <Tab> getline('.') =~ '^\s*\|' ? ']\|' :   "\<Tab>"
-nmap <expr> <silent> <S-Tab> getline('.') =~ '^\s*\|' ? '[\|' : "\<S-Tab>"
 
 " Tagbar {{{2
 let g:tagbar_ctags_bin = g:ctagsbin
