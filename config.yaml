@@ -125,9 +125,6 @@ dotfiles:
   d_git:
     src: git
     dst: ~/.config/git
-  d_hg:
-    src: hg
-    dst: ~/.config/hg
   d_kitty:
     src: kitty
     dst: ~/.config/kitty
