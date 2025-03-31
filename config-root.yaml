@@ -9,7 +9,6 @@ actions:
   packages: |
     apt-get install \
       autorandr \
-      autotiling \
       awesome \
       bat \
       bibata-cursor-theme \

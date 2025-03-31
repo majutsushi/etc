@@ -321,8 +321,6 @@ for_window [class="jetbrains-(.*)" title="Open Project"] floating enable
 for_window [class="jetbrains-(.*)" title="splash"] floating enable
 
 
-exec_always --no-startup-id autotiling
-
 exec "unset XDG_SEAT; unset XDG_SESSION_ID; unset XDG_VTNR; dbus-update-activation-environment --verbose --systemd --all"
 
 # Needs to start after importing the environment
