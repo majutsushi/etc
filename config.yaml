@@ -198,9 +198,6 @@ dotfiles:
     src: gnuplot/gnuplot
     dst: ~/.gnuplot
     link: nolink
-  f_gtk3:
-    src: gtk/gtk-3.0/gtk.css
-    dst: ~/.config/gtk-3.0/gtk.css
   f_ideavimrc:
     src: idea/ideavimrc
     dst: ~/.config/ideavim/ideavimrc
