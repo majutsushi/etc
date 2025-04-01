@@ -1,4 +1,8 @@
 [settings]
+experimental = true
+
+[settings.python]
+uv_venv_auto = true
 
 [settings.status]
 show_env = true
