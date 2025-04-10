@@ -70,6 +70,8 @@ export PSQL_HISTORY="$XDG_STATE_HOME/psql_history"
 
 export CLIFF_FIT_WIDTH=1
 
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 export NETHACKOPTIONS="@$DOTFILES/nethackrc"
 
 export GPG_TTY=$(tty)
