@@ -43,6 +43,6 @@ prepend_keymap = [
 
 [completion]
 append_keymap = [
-    { on = [ "<C-k>" ], run = "arrow -1", desc = "Move cursor up" },
-    { on = [ "<C-j>" ], run = "arrow 1",  desc = "Move cursor down" },
+    { on = [ "<C-k>" ], run = "arrow prev", desc = "Move cursor up" },
+    { on = [ "<C-j>" ], run = "arrow next", desc = "Move cursor down" },
 ]
