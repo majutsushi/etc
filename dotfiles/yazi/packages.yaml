@@ -6,6 +6,8 @@
   path: hide-preview.yazi
 - url: https://github.com/yazi-rs/plugins
   path: toggle-pane.yazi
+- url: https://github.com/yazi-rs/plugins
+  path: vcs-files.yazi
 - url: https://github.com/KKV9/compress.yazi
 - url: https://github.com/KKV9/command.yazi
 - url: https://github.com/Rolv-Apneseth/starship.yazi
