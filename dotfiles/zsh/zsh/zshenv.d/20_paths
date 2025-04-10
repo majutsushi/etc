@@ -5,6 +5,7 @@ normalize_path() {
 fpath=(
     "$HOME/.local/etc/zshfunc"
     "$ZDOTDIR/func"
+    /usr/share/zsh/site-functions
     $fpath
 )
 normalize_path fpath
