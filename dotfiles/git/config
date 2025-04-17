@@ -110,7 +110,7 @@
 	; noprefix = true
 	renames = true
 	indentHeuristic = true
-	; mnemonicPrefix = true
+	mnemonicPrefix = true
 	colorMoved = zebra
 	colorMovedWS = ignore-all-space
 
