@@ -22,3 +22,24 @@ keybinding:
   commits:
     markCommitAsBaseForRebase: b
     viewBisectOptions: B
+customCommands:
+  - key: D
+    command: git d {{.SelectedLocalBranch.UpstreamRemote}}/{{.SelectedLocalBranch.UpstreamBranch}}..{{.SelectedLocalBranch.Name}}
+    context: localBranches
+    description: Show diff with upstream
+    subprocess: true
+  - key: t
+    command: tig show {{.SelectedSubCommit.Sha}}
+    context: subCommits
+    description: tig commit (`t` again to browse files at revision)
+    subprocess: true
+  - key: t
+    command: tig show {{.SelectedLocalBranch.Name}}
+    context: localBranches
+    description: tig branch (`t` again to browse files at revision)
+    subprocess: true
+  - key: t
+    command: tig show {{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}
+    context: remoteBranches
+    description: tig branch (`t` again to browse files at revision)
+    subprocess: true
