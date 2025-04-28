@@ -5,6 +5,8 @@
 - url: https://github.com/yazi-rs/plugins
   path: hide-preview.yazi
 - url: https://github.com/yazi-rs/plugins
+  path: mount.yazi
+- url: https://github.com/yazi-rs/plugins
   path: smart-enter.yazi
 - url: https://github.com/yazi-rs/plugins
   path: smart-filter.yazi

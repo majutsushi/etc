@@ -13,6 +13,7 @@ prepend_keymap = [
     { on = "<C-n>",   run = 'shell -- ripdrag -a -x "$@"',    desc = "Start drag&drop with ripdrag" },
     { on = "<{>",     run = 'plugin parent-arrow -- -1',      desc = "Go to previous parent directory" },
     { on = "<}>",     run = 'plugin parent-arrow -- 1',       desc = "Go to next parent directory" },
+    { on = "M",       run = 'plugin mount',                   desc = "Manage mounts" },
 
     # Linemode
     { on = [ "m", "c" ], run = "linemode ctime",       desc = "Linemode: ctime" },
