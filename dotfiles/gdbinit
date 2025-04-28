@@ -16,6 +16,10 @@ set print array-indexes on
 # Show the concrete types behind nsIFoo
 set print object on
 
+# https://wiki.archlinux.org/title/Debuginfod
+set debuginfod enabled on
+set debuginfod urls https://debuginfod.debian.net/ https://debuginfod.elfutils.org/
+
 
 # https://droettboom.com/blog/2015/11/20/gdb-python-extensions/
 python
