@@ -25,8 +25,8 @@ endif
 call plug#begin(plugin_dir)
 
 " Navigation
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Lokaltog/vim-easymotion', {'on': '<Plug>(easymotion'}
@@ -1171,67 +1171,6 @@ augroup AleRunning
 augroup END
 
 
-" Ctrl-P {{{2
-let g:ctrlp_map = ''
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-
-" https://github.com/jszakmeister/vimfiles/blob/master/vimrc
-" Define prefix mapping for CtrlP plugin so that buffer-local mappings
-" for CTRL-P (such as in Tagbar) will override all CtrlP plugin mappings.
-nmap <C-P> <SNR>CtrlP.....
-
-" An incomplete mapping should do nothing.
-nnoremap <SNR>CtrlP..... <Nop>
-
-nnoremap <SNR>CtrlP.....<C-B> :<C-U>CtrlPBookmarkDir<CR>
-nnoremap <SNR>CtrlP.....c     :<C-U>CtrlPChange<CR>
-nnoremap <SNR>CtrlP.....C     :<C-U>CtrlPChangeAll<CR>
-nnoremap <SNR>CtrlP.....<C-D> :<C-U>CtrlPDir<CR>
-nnoremap <SNR>CtrlP.....<C-F> :<C-U>CtrlPCurFile<CR>
-nnoremap <SNR>CtrlP.....<C-L> :<C-U>CtrlPLine<CR>
-nnoremap <SNR>CtrlP.....<C-M> :<C-U>CtrlPMRU<CR>
-nnoremap <SNR>CtrlP.....m     :<C-U>CtrlPMixed<CR>
-
-" Mnemonic: "open files"
-nnoremap <SNR>CtrlP.....<C-O> :<C-U>CtrlPBuffer<CR>
-nnoremap <SNR>CtrlP.....<C-P> :<C-U>CtrlP<CR>
-nnoremap <SNR>CtrlP.....<C-Q> :<C-U>CtrlPQuickfix<CR>
-nnoremap <SNR>CtrlP.....<C-R> :<C-U>CtrlPRoot<CR>
-nnoremap <SNR>CtrlP.....<C-T> :<C-U>CtrlPTag<CR>
-nnoremap <SNR>CtrlP.....t     :<C-U>CtrlPBufTag<CR>
-nnoremap <SNR>CtrlP.....T     :<C-U>CtrlPBufTagAll<CR>
-nnoremap <SNR>CtrlP.....<C-U> :<C-U>CtrlPUndo<CR>
-
-let g:ctrlp_working_path_mode = 'a'
-let g:ctrlp_prompt_mappings = {
-    \ 'PrtBS()'      : ['<bs>', '<c-]>', '<c-h>'],
-    \ 'PrtCurLeft()' : ['<left>', '<c-^>'],
-\ }
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-let g:ctrlp_mruf_exclude = '/tmp/.*'
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-    \ 'file': '\.exe$\|\.so$\|\.dll$',
-\ }
-let g:ctrlp_max_files = 0
-let g:ctrlp_user_command = {
-    \ 'types': {
-        \ 1: ['.git/', 'cd %s && git ls-files -oc --exclude-standard'],
-        \ 2: ['.hg/', 'hg --cwd %s locate -I .'],
-    \ },
-    \ 'fallback': 'find %s -type f'
-\ }
-let g:ctrlp_open_new_file = 'r'
-let g:ctrlp_lazy_update = 0
-let g:ctrlp_mruf_relative = 0
-let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript']
-
-let g:ctrlp_buftag_ctags_bin = g:ctagsbin
-let g:ctrlp_buftag_types = {
-    \ 'grace' : '--options=' . $HOME . '/.vim/bundle/vim-grace/ctags/grace.cnf --language-force=grace --grace-types=idvtcm'
-\ }
-
 " EasyAlign {{{2
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vmap <Enter> <Plug>(EasyAlign)
@@ -1287,6 +1226,22 @@ let g:expand_region_text_objects = {
 " Fugitive {{{2
 " automatically delete fugitive buffers when leaving them
 autocmd vimrc BufReadPost fugitive://* set bufhidden=delete
+
+" FZF {{{2
+
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>r :RG<CR>
+
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " gitgutter {{{2
 let g:gitgutter_map_keys = 0
