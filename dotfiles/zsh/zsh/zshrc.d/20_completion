@@ -167,6 +167,7 @@ _lazycomplete_$cmd() {
     compdef _lazycomplete_$cmd $cmd
 }
 lazycomplete atuin "atuin gen-completions --shell zsh"
+lazycomplete bat "bat --completion zsh"
 lazycomplete cargo "rustup completions zsh cargo"
 lazycomplete mise "mise completion zsh"
 lazycomplete poetry "poetry completions zsh"
