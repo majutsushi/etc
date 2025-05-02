@@ -4,7 +4,12 @@
 
 # Specify desired highlighting theme (e.g. "TwoDark"). Run `bat --list-themes`
 # for a list of all available themes
---theme=ansi-custom
+--theme=ansi
+
+# Automatic dark mode detection:
+# https://github.com/sharkdp/bat/pull/2896
+# --theme-dark=
+# --theme-light=
 
 # Enable this to use italic text on the terminal. This is not supported on all
 # terminal emulators (like tmux, by default):
