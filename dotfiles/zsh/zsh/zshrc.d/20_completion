@@ -166,13 +166,13 @@ _lazycomplete_$cmd() {
 "
     compdef _lazycomplete_$cmd $cmd
 }
-lazycomplete rustup "rustup completions zsh rustup"
-lazycomplete cargo "rustup completions zsh cargo"
 lazycomplete atuin "atuin gen-completions --shell zsh"
+lazycomplete cargo "rustup completions zsh cargo"
+lazycomplete mise "mise completion zsh"
 lazycomplete poetry "poetry completions zsh"
+lazycomplete rustup "rustup completions zsh rustup"
 lazycomplete uv "uv --generate-shell-completion zsh"
 lazycomplete uvx "uvx --generate-shell-completion zsh"
-lazycomplete mise "mise completion zsh"
 
 
 # host completion
