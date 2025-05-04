@@ -33,6 +33,12 @@ if have brew; then
     brew upgrade
 fi
 
+if have gh; then
+    print
+    print Updating GitHub CLI extensions
+    gh extension upgrade --all
+fi
+
 print
 print Updating yazi packages
 yazi-package update
