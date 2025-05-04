@@ -12,6 +12,7 @@ gui:
   showDivergenceFromBaseBranch: arrowAndNumber # or 'onlyArrow'
   nerdFontsVersion: "3"
 git:
+  autoForwardBranches: none
   paging:
     # colorArg: always
     # pager: delta --features=decorations --paging=never
