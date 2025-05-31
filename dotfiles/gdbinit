@@ -24,10 +24,19 @@ set debuginfod urls https://debuginfod.debian.net/ https://debuginfod.elfutils.o
 # https://droettboom.com/blog/2015/11/20/gdb-python-extensions/
 python
 import gdb
+import re
 import sys
 import os
-sys.path.insert(0, "/usr/share/doc/python3.11/examples/gdb")
-def setup_python(event):
-    import libpython
-gdb.events.new_objfile.connect(setup_python)
+from pathlib import Path
+PATTERN = re.compile(r"^python3\.[0-9]+$")
+for p in Path("/usr/share/doc/").glob("python3.*"):
+    match = PATTERN.match(p.name)
+    if match is not None:
+        sys.path.insert(0, str(p / "examples/gdb"))
+        def setup_python(event):
+            import libpython
+        gdb.events.new_objfile.connect(setup_python)
+        break
+else:
+    print("No GDB Python integration found")
 end
