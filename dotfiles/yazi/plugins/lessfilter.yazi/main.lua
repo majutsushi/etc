@@ -3,7 +3,7 @@ local M = {}
 function M:peek(job)
     local dotfiles = os.getenv("DOTFILES")
     local child = Command(dotfiles .. "/less/lessfilter")
-        :args({
+        :arg({
             tostring(job.file.url),
         })
         :stdout(Command.PIPED)
