@@ -18,9 +18,11 @@ actions:
     if ! [ -e "{{@@ xdg_config_home @@}}/alacritty/alacritty.toml" ]; then
         mkdir -p "{{@@ xdg_config_home @@}}/alacritty"
         cat > "{{@@ xdg_config_home @@}}/alacritty/alacritty.toml" << EOF
+    [general]
     import = ["{{@@ xdg_config_home @@}}/alacritty/base.toml", "{{@@ xdg_config_home @@}}/alacritty/theme.toml"]
     EOF
         cat > "{{@@ xdg_config_home @@}}/alacritty/theme.toml" << EOF
+    [general]
     import = ["{{@@ xdg_config_home @@}}/alacritty/material-theme.toml"]
     EOF
     fi
