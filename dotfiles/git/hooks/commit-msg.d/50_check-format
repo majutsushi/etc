@@ -39,6 +39,7 @@ if (( $(head -1 "$MSGFILE" | wc -c) > 81 )); then
     warn "Summary is longer than 80 characters, please try rephrasing it by running 'git commit --amend'"
 fi
 
-if (( $(cat "$MSGFILE" | sed -e '/# ------------------------ >8 ------------------------/,$d' | grep -v '^#' | wc -l) > 1 )) && ! grep -v '^#' "$MSGFILE" | head -2 | tail -1 | grep '^$'; then
+if (( $(cat "$MSGFILE" | sed -e '/# ------------------------ >8 ------------------------/,$d' | wc -l) > 1 )) && \
+        ! cat "$MSGFILE" | head -2 | tail -1 | grep '^$'; then
     error "The second line in a commit message must be empty"
 fi
