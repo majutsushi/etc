@@ -18,7 +18,8 @@ git:
     # pager: delta --features=decorations --paging=never
     pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
   branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=iso --pretty=medium {{branchName}} --'
-  allBranchesLogCmd: 'git log --graph --all --color=always --abbrev-commit --decorate --date=iso  --pretty=medium'
+  allBranchesLogCmds:
+    - git log --graph --all --color=always --abbrev-commit --decorate --date=iso  --pretty=medium
 keybinding:
   commits:
     markCommitAsBaseForRebase: b
@@ -28,19 +29,19 @@ customCommands:
     command: git d {{.SelectedLocalBranch.UpstreamRemote}}/{{.SelectedLocalBranch.UpstreamBranch}}..{{.SelectedLocalBranch.Name}}
     context: localBranches
     description: Show diff with upstream
-    subprocess: true
+    output: terminal
   - key: t
     command: tig show {{.SelectedSubCommit.Sha}}
     context: subCommits
     description: tig commit (`t` again to browse files at revision)
-    subprocess: true
+    output: terminal
   - key: t
     command: tig show {{.SelectedLocalBranch.Name}}
     context: localBranches
     description: tig branch (`t` again to browse files at revision)
-    subprocess: true
+    output: terminal
   - key: t
     command: tig show {{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}
     context: remoteBranches
     description: tig branch (`t` again to browse files at revision)
-    subprocess: true
+    output: terminal
