@@ -46,6 +46,7 @@ fi
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
 path+="$PNPM_HOME"
 alias pn=pnpm
+alias pnpx='pnpm dlx'
 
 for dir in "$XDG_DATA_HOME"/gem/ruby/*/bin; do
     path+="$dir"
