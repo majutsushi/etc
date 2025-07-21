@@ -104,6 +104,9 @@ dynvariables:
         echo "$profiles_dir"/*.default
     fi
 dotfiles:
+  d_aerospace:
+    src: aerospace
+    dst: ~/.config/aerospace
   d_alacritty:
     src: alacritty
     dst: ~/.config/alacritty
