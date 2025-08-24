@@ -1,0 +1,6 @@
+[Unit]
+Description=output email for %i
+
+[Service]
+Type=oneshot
+ExecStart=bash ${DOTFILES}/bin/systemd-output-mail %u@%H %i

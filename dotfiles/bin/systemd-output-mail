@@ -1,0 +1,17 @@
+#!/bin/bash
+
+BODY="$(journalctl --since="$(systemctl --user show -p ExecMainStartTimestamp "$2" | cut -d= -f 2)" --output=cat _SYSTEMD_USER_UNIT="$2")"
+
+if [[ -z "$BODY" ]]; then
+    exit 0
+fi
+
+/usr/sbin/sendmail -t <<MAIL
+To: $1
+From: systemd on $HOSTNAME <root@$HOSTNAME>
+Subject: Unit $2 output
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+
+$BODY
+MAIL
