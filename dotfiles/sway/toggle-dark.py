@@ -57,13 +57,13 @@ def set_colours(sway: i3ipc.Connection, is_dark: bool):
     # defaults: https://github.com/swaywm/sway/blob/5312376077254d6431bb92ba22de3840b9933f67/sway/config.c#L314
     if is_dark:
         # class                               border  backgr. text    indicator child_border
-        sway.command("client.focused          #6B8E23 #6B8E23 #FFFFFF #00FF00 #6B8E23")
+        sway.command("client.focused          #6B8E23 #222222 #FFFFFF #00FF00 #6B8E23")
         sway.command("client.focused_inactive #222222 #222222 #888888 #222222 #222222")
         sway.command("client.unfocused        #222222 #222222 #888888 #222222 #222222")
         sway.command("client.urgent           #900000 #900000 #FFFFFF #900000 #900000")
     else:
         # class                               border  backgr. text    indicator child_border
-        sway.command("client.focused          #39ADB5 #39ADB5 #FFFFFF #00FF00 #39ADB5")
+        sway.command("client.focused          #39ADB5 #BBBBBB #000000 #00FF00 #39ADB5")
         sway.command("client.focused_inactive #BBBBBB #BBBBBB #000000 #BBBBBB #BBBBBB")
         sway.command("client.unfocused        #BBBBBB #BBBBBB #000000 #BBBBBB #BBBBBB")
         sway.command("client.urgent           #900000 #900000 #FFFFFF #900000 #900000")
