@@ -151,7 +151,7 @@ def handle_xsettings(is_dark: bool) -> None:
 
 
 def handle_gnome(is_dark: bool) -> None:
-    color_scheme = "prefer-dark" if is_dark else "default"
+    color_scheme = "prefer-dark" if is_dark else "prefer-light"
     set_gsettings("color-scheme", color_scheme)
     gtk_theme = "Adwaita-dark" if is_dark else "Adwaita"
     set_gsettings("gtk-theme", gtk_theme)
