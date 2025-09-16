@@ -41,3 +41,10 @@ user_pref('privacy.donottrackheader.value', 1);
 user_pref('privacy.globalprivacycontrol.enabled', true);
 user_pref('privacy.trackingprotection.enabled', true);
 user_pref('dom.private-attribution.submission.enabled', false);
+
+// Disable AI stuff
+user_pref('browser.ml.enabled', false);
+user_pref('browser.ml.chat.enabled', false);
+user_pref('browser.ml.chat.menu', false);
+user_pref('browser.ml.chat.sidebar', false);
+user_pref('browser.tabs.groups.smart.enabled', false);
