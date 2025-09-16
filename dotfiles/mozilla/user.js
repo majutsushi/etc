@@ -38,4 +38,6 @@ user_pref('network.cookie.cookieBehavior', 1);
 
 user_pref('privacy.donottrackheader.enabled', true);
 user_pref('privacy.donottrackheader.value', 1);
+user_pref('privacy.globalprivacycontrol.enabled', true);
 user_pref('privacy.trackingprotection.enabled', true);
+user_pref('dom.private-attribution.submission.enabled', false);
