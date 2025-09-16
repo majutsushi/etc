@@ -4,6 +4,7 @@ from kitty.fast_data_types import Screen, get_boss
 from kitty.rgb import alpha_blend
 from kitty.tab_bar import DrawData, ExtraData, TabBarData, as_rgb, draw_title
 from kitty.utils import color_as_int
+from kitty.window import Window
 
 if TYPE_CHECKING:
     from kitty.boss import Boss
@@ -43,7 +44,7 @@ def draw_tab(
 
     boss: Boss = get_boss()
     tab_window = boss.tab_for_id(tab.tab_id).active_window
-    is_ssh = tab_window.child_is_remote or bool(tab_window.ssh_kitten_cmdline())
+    is_ssh = child_is_remote(tab_window) or bool(tab_window.ssh_kitten_cmdline())
 
     def draw_element(element: Optional[str], fg: int, bg: int) -> None:
         screen.cursor.fg = fg
@@ -77,3 +78,13 @@ def draw_tab(
     # Element ends before soft separator
     end: int = screen.cursor.x - (len(soft_sep) if soft_sep else 0)
     return end
+
+
+# Slightly changed from
+# https://github.com/kovidgoyal/kitty/blob/33ab1d9019b91e9ed4ddbb647cacca9ad3a5973c/kitty/window.py#L1683
+def child_is_remote(window: Window) -> bool:
+    for p in window.child.foreground_processes:
+        q = list(p["cmdline"] or ())
+        if q and q[0].lower() in ("ssh", "mosh", "mosh-client"):
+            return True
+    return False
