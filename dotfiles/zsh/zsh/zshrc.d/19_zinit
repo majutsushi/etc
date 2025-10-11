@@ -27,56 +27,56 @@ zinit light romkatv/zsh-prompt-benchmark
 
 # important shell components
 zinit as"null" from"gh-r" for \
-    light-mode id-as"starship" lbin bpick"*.tar.gz" @starship/starship \
-    light-mode id-as"atuin" lbin"atuin-*/atuin" bpick"*.tar.gz" @atuinsh/atuin
+    light-mode id-as"starship" lbin"!" bpick"*.tar.gz" @starship/starship \
+    light-mode id-as"atuin" lbin"!atuin-*/atuin" bpick"*.tar.gz" @atuinsh/atuin
 
 # mise
 zinit as"null" from"gh-r" for \
-    light-mode id-as"usage" lbin @jdx/usage \
-    light-mode id-as"mise" lbin"mise-* -> mise" @jdx/mise
+    light-mode id-as"usage" lbin"!" @jdx/usage \
+    light-mode id-as"mise" lbin"!mise-* -> mise" @jdx/mise
 
 # various tools
 zinit as"null" from"gh-r" completions for \
-    id-as"bat" light-mode lbin"bat-*/bat" @sharkdp/bat \
-    id-as"choose" light-mode lbin"choose-* -> choose" @theryangeary/choose \
-    id-as"difftastic" light-mode lbin @Wilfred/difftastic \
-    id-as"dua" light-mode lbin"dua-*/dua" @Byron/dua-cli \
-    id-as"fx" light-mode lbin"fx* -> fx" @antonmedv/fx \
-    id-as"hwatch" light-mode lbin"bin/hwatch" \
+    id-as"bat" light-mode lbin"!bat-*/bat" @sharkdp/bat \
+    id-as"choose" light-mode lbin"!choose-* -> choose" @theryangeary/choose \
+    id-as"difftastic" light-mode lbin"!" @Wilfred/difftastic \
+    id-as"dua" light-mode lbin"!dua-*/dua" @Byron/dua-cli \
+    id-as"fx" light-mode lbin"!fx* -> fx" @antonmedv/fx \
+    id-as"hwatch" light-mode lbin"!bin/hwatch" \
         atclone"cp -vf man/*.1 ${ZINIT[MAN_DIR]}/man1" \
         atpull'%atclone' \
         @blacknon/hwatch \
-    id-as"ijq" light-mode lbin"ijq-*/ijq" \
+    id-as"ijq" light-mode lbin"!ijq-*/ijq" \
         atclone"cp -vf ijq-*/*.1 ${ZINIT[MAN_DIR]}/man1" \
         atpull'%atclone' \
         @gpanders/ijq \
-    id-as"jless" light-mode lbin @PaulJuliusMartinez/jless \
-    id-as"lazygit" light-mode lbin @jesseduffield/lazygit \
-    id-as"mdcat" light-mode lbin"mdcat-*/mdcat" @swsnr/mdcat \
-    id-as"onefetch" light-mode lbin @o2sh/onefetch \
-    id-as"ouch" light-mode lbin"ouch-*/ouch" \
+    id-as"jless" light-mode lbin"!" @PaulJuliusMartinez/jless \
+    id-as"lazygit" light-mode lbin"!" @jesseduffield/lazygit \
+    id-as"mdcat" light-mode lbin"!mdcat-*/mdcat" @swsnr/mdcat \
+    id-as"onefetch" light-mode lbin"!" @o2sh/onefetch \
+    id-as"ouch" light-mode lbin"!ouch-*/ouch" \
         atclone"cp -vf ouch-*/man/*.1 ${ZINIT[MAN_DIR]}/man1" \
         atpull'%atclone' \
         @ouch-org/ouch \
-    id-as"pastel" light-mode lbin"pastel-*/pastel" @sharkdp/pastel \
-    id-as"pnpm" light-mode lbin"pnpm-* -> pnpm" @pnpm/pnpm \
-    id-as"prek" light-mode lbin"prek-*/prek" @j178/prek \
-    id-as"rga" light-mode lbin"*/rga;*/rga-fzf;*/rga-preproc" @phiresky/ripgrep-all \
-    id-as"sad" light-mode lbin @ms-jpq/sad \
-    id-as"sd" light-mode lbin"sd-*/sd" @chmln/sd \
-    id-as"uv" light-mode lbin"*/uv;*/uvx" @astral-sh/uv \
-    id-as"yazi" light-mode lbin"*/ya;*/yazi" @sxyazi/yazi \
-    id-as"yq" light-mode lbin"yq* -> yq" @mikefarah/yq
+    id-as"pastel" light-mode lbin"!pastel-*/pastel" @sharkdp/pastel \
+    id-as"pnpm" light-mode lbin"!pnpm-* -> pnpm" @pnpm/pnpm \
+    id-as"prek" light-mode lbin"!prek-*/prek" @j178/prek \
+    id-as"rga" light-mode lbin"!*/rga;!*/rga-fzf;!*/rga-preproc" @phiresky/ripgrep-all \
+    id-as"sad" light-mode lbin"!" @ms-jpq/sad \
+    id-as"sd" light-mode lbin"!sd-*/sd" @chmln/sd \
+    id-as"uv" light-mode lbin"!*/uv;!*/uvx" @astral-sh/uv \
+    id-as"yazi" light-mode lbin"!*/ya;!*/yazi" @sxyazi/yazi \
+    id-as"yq" light-mode lbin"!yq* -> yq" @mikefarah/yq
 
 # scripts
 zinit as"null" for \
     id-as"git-branch-status" \
-        lbin \
+        lbin"!" \
         atclone"sed -r -i -e 's/CDEFAULT=.*/CDEFAULT=/' git-branch-status" \
         atpull'%atclone' \
         https://github.com/bill-auger/git-branch-status/blob/development/git-branch-status \
-    id-as"treeify" lbin https://github.com/grawity/treeify/blob/main/treeify \
-    id-as"xterm-color-chooser" lbin https://github.com/grawity/code/blob/main/misc/xterm-color-chooser
+    id-as"treeify" lbin"!" https://github.com/grawity/treeify/blob/main/treeify \
+    id-as"xterm-color-chooser" lbin"!" https://github.com/grawity/code/blob/main/misc/xterm-color-chooser
 
 zinit snippet https://github.com/junegunn/fzf-git.sh/blob/main/fzf-git.sh
 
