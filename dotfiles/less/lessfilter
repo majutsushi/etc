@@ -221,13 +221,18 @@ case "$MIME_TYPE" in
     *)
         case "$BASENAME_LOWER" in
             *.crt | *.pem)
-                try openssl x509 -hash -text -noout -in "$FILE_PATH" ;;
+                if [[ $(head -n 1 "$FILE_PATH") == *RSA* ]]; then
+                    try openssl rsa -text -noout -check -in "$FILE_PATH"
+                else
+                    try openssl x509 -hash -text -noout -in "$FILE_PATH"
+                fi
+                ;;
             *.key)
                 try openssl pkey -text -noout -in "$FILE_PATH" ;;
             *.crl)
                 try openssl crl -hash -text -noout -in "$FILE_PATH" ;;
             *.csr)
-                try openssl req -text -noout -in "$FILE_PATH" ;;
+                try openssl req -text -noout -verify -in "$FILE_PATH" ;;
             *.md | *.markdown)
                 if has_cmd mdcat; then
                     mdcat -l "$FILE_PATH"
