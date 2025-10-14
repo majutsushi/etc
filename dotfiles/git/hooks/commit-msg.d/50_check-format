@@ -2,9 +2,12 @@
 
 set -eEu -o pipefail
 IFS=$'\n\t'
+PS4="$BASH_SOURCE:"'+\t '
 
 error_handler() { echo "Error: Line ${1} exited with status ${2}"; }
 trap 'error_handler ${LINENO} $?' ERR
+
+[[ "${TRACE:-0}" == "1" ]] && set -x
 
 
 error() {

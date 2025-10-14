@@ -2,6 +2,11 @@
 # Remove local branches whose upstream branch has been removed by
 # "git fetch --prune" and that have been fully merged
 
+PS4="$BASH_SOURCE:"'+\t '
+
+[[ "${TRACE:-0}" == "1" ]] && set -x
+
+
 # Only run on branch checkouts
 [[ "$3" == 1 ]] || exit 0
 
