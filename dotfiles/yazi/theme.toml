@@ -54,3 +54,9 @@ rules = [
     # { name = "*", fg = "reset" },
     { name = "*/", fg = "blue" }
 ]
+
+[icon]
+append_exts = [
+    { name = "cbz", text = "" },
+    { name = "cbr", text = "" }
+]
