@@ -110,7 +110,8 @@ automatically-unhide-macos-hidden-apps = false
 
     alt-enter = 'exec-and-forget /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~'
     # alt-enter = 'exec-and-forget /Applications/kitty.app/Contents/MacOS/kitty -d ~'
-    alt-minus = 'exec-and-forget $HOME/.config/aerospace/scratchpad.sh'
+    # alt-minus = 'exec-and-forget $HOME/.config/aerospace/scratchpad.sh'
+    alt-minus = 'exec-and-forget /Applications/kitty.app/Contents/MacOS/kitten quick-access-terminal'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-slash = 'layout tiles horizontal vertical'
