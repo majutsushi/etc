@@ -1,21 +1,21 @@
 # https://junegunn.github.io/fzf/reference/#directory-traversal
 
-export FZF_DEFAULT_OPTS="
-    --walker=file,dir,hidden,follow
-    --walker-skip=.git,node_modules,target
-    --exact
-    --reverse
-    --bind 'ctrl-y:execute-silent(echo {} | cb)+abort'
-    --color fg:-1,bg:-1,hl:green,fg+:bright-yellow,bg+:-1,hl+:bright-green,prompt:cyan,pointer:bright-red,marker:red
+export FZF_DEFAULT_OPTS="\
+    --walker=file,dir,hidden,follow \
+    --walker-skip=.git,node_modules,target \
+    --exact \
+    --reverse \
+    --bind 'ctrl-y:execute-silent(echo {} | cb)+abort' \
+    --color fg:-1,bg:-1,hl:green,fg+:bright-yellow,bg+:-1,hl+:bright-green,prompt:cyan,pointer:bright-red,marker:red \
 "
 
-FZF_CTRL_T_OPTS="
-    --walker=file,hidden,follow
-    --preview '$DOTFILES/less/lessfilter {}'
-    --preview-window 'right,border-left,50%'
-    --bind 'ctrl-/:change-preview-window(down,50%,border-top|hidden|)'
-    --bind 'ctrl-l:preview:echo {}'
-    --bind 'f1:execute(less -+F -f {})'
+FZF_CTRL_T_OPTS="\
+    --walker=file,hidden,follow \
+    --preview '$DOTFILES/less/lessfilter {}' \
+    --preview-window 'right,border-left,50%' \
+    --bind 'ctrl-/:change-preview-window(down,50%,border-top|hidden|)' \
+    --bind 'ctrl-l:preview:echo {}' \
+    --bind 'f1:execute(less -+F -f {})' \
 "
 
 # Only return files for path completion
