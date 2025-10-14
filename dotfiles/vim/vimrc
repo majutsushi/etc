@@ -55,6 +55,7 @@ Plug 'wellle/targets.vim'
 Plug 'preservim/vim-markdown'
 Plug 'mhinz/vim-rfc'
 Plug 'dense-analysis/ale'
+Plug 'fladson/vim-kitty'
 
 " Information
 Plug 'airblade/vim-gitgutter'
