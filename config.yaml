@@ -141,6 +141,9 @@ dotfiles:
   d_mise:
     src: mise
     dst: ~/.config/mise
+  d_mpv:
+    src: mpv
+    dst: ~/.config/mpv
   d_ncdu:
     src: ncdu
     dst: ~/.config/ncdu
