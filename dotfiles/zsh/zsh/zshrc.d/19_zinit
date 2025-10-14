@@ -47,6 +47,7 @@ zinit as"null" from"gh-r" completions for \
         atpull'%atclone' \
         @blacknon/hwatch \
     id-as"ijq" light-mode lbin"!ijq-*/ijq" \
+        ver"v1.1.2" \
         atclone"cp -vf ijq-*/*.1 ${ZINIT[MAN_DIR]}/man1" \
         atpull'%atclone' \
         @gpanders/ijq \
