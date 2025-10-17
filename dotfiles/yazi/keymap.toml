@@ -1,3 +1,4 @@
+# https://yazi-rs.github.io/docs/configuration/keymap
 # Default: https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/keymap-default.toml
 "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
@@ -14,7 +15,8 @@ prepend_keymap = [
     { on = "<{>",     run = 'plugin parent-arrow -- -1',      desc = "Go to previous parent directory" },
     { on = "<}>",     run = 'plugin parent-arrow -- 1',       desc = "Go to next parent directory" },
     { on = "M",       run = 'plugin mount',                   desc = "Manage mounts" },
-    { on = "<C-Space>", run = 'shell -- qlmanage -p "$@"',    desc = "Open Quick Look" },
+    { on = "<C-Space>", run = 'shell -- qlmanage -p "$@"',    desc = "Open Quick Look", for = "macos" },
+    { on = "<C-Space>", run = 'shell -- sushi "$@"',          desc = "Open Quick Look", for = "linux" },
 
     # Linemode
     { on = [ "m", "c" ], run = "linemode ctime",       desc = "Linemode: ctime" },
