@@ -12,6 +12,9 @@ user_pref('browser.tabs.loadDivertedInBackground', true);
 user_pref('browser.urlbar.trimURLs', false);
 user_pref('browser.urlbar.update2.engineAliasRefresh', true);
 
+// Enable use of userChrome.css
+user_pref('toolkit.legacyUserProfileCustomizations.stylesheets', true);
+
 user_pref('devtools.chrome.enabled', true);
 user_pref('devtools.command-button-measure.enabled', true);
 user_pref('devtools.command-button-rulers.enabled', true);
