@@ -9,3 +9,44 @@
 #sidebar-switcher-target {
     font-size: 75%;
 }
+
+/* Dim unloaded tabs */
+.tabbrowser-tab[pending="true"] {
+    opacity: 0.6;
+}
+
+/* Make new tabs italic */
+/* Doesn't actually work properly :( */
+/* https://www.reddit.com/r/FirefoxCSS/comments/nfin2q/tabbar_improvment/ */
+/* .tabbrowser-tab[notselectedsinceload="true"] { */
+/*     font-style: italic; */
+/* } */
+
+/* Make the vertical tabs sidebar more compact */
+#tabbrowser-tabs[orient="vertical"] {
+    & .tabbrowser-tab {
+        padding-block: 0px !important;
+    }
+}
+#tabbrowser-tabs[orient="vertical"] {
+    & .tab-background {
+        min-height: 1.9em !important;
+    }
+}
+@media -moz-pref("sidebar.verticalTabs") {
+    :root {
+        --tab-block-margin: 0px;
+    }
+}
+.tab-group-label-container {
+    #tabbrowser-tabs[orient="vertical"] & {
+        margin-block-start: 0 !important;
+    }
+}
+.tab-group-label-hover-highlight {
+    tab-group[collapsed]:not([movingtabgroup]) &:hover, tab-group[previewpanelactive] & {
+        #tabbrowser-tabs[orient="vertical"] & {
+            box-shadow: none !important;
+        }
+    }
+}
