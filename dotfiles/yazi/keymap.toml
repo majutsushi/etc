@@ -14,6 +14,7 @@ prepend_keymap = [
     { on = "<{>",     run = 'plugin parent-arrow -- -1',      desc = "Go to previous parent directory" },
     { on = "<}>",     run = 'plugin parent-arrow -- 1',       desc = "Go to next parent directory" },
     { on = "M",       run = 'plugin mount',                   desc = "Manage mounts" },
+    { on = "<C-Space>", run = 'shell -- qlmanage -p "$@"',    desc = "Open Quick Look" },
 
     # Linemode
     { on = [ "m", "c" ], run = "linemode ctime",       desc = "Linemode: ctime" },
