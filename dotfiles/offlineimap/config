@@ -16,6 +16,7 @@ keepalive = 60
 type = Maildir
 localfolders = ~/Maildir
 nametrans = lambda folder: 'INBOX' if len(folder) == 0 else re.sub('^.', '', folder)
+sync_deletes = no
 
 [Repository Remote]
 type = IMAP
@@ -26,6 +27,8 @@ remotepasseval = get_password()
 ssl = yes
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 nametrans = lambda folder: '' if folder == 'INBOX' else '.' + folder
+readonly = yes
+sync_deletes = yes
 # idlefolders = ['INBOX']
 
 # vim: ft=cfg
