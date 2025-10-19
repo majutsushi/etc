@@ -104,3 +104,8 @@ unfixable = [
 
 # Enable `from __future__ import annotations` imports
 future-annotations = true
+
+[tool.ruff.lint.flake8-import-conventions]
+banned-from = ["datetime"]
+[tool.ruff.lint.flake8-import-conventions.extend-aliases]
+datetime = "dt"
