@@ -21,7 +21,7 @@ if [[ -n "$ZSHRUN" ]]; then
         if have -c $buf[1]; then
             print -sr -- "${BUFFER}"
             print -s
-            zsh -c "${BUFFER}" 0>&- 1>&- 2>&- &|
+            zsh -c "systemd-cat -t zshrun ${BUFFER}" 0>&- 1>&- 2>&- &|
             exit
         else
             zle -M "Command $buf[1] not found"
