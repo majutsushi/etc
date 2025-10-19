@@ -125,22 +125,6 @@ mcd() {
 __prompt_command() {
     local exit_code="$?"
 
-    local end=$(date '+%s');
-    local last_cmd="$(HISTTIMEFORMAT='%s ' history 1)";
-    local start=$(awk '{print $2}' <<<"$last_cmd");
-    local cmd=$(cut -d' ' -f6- <<<"$last_cmd");
-
-    if (( end - start >= 20 )) && [[ $TERM == xterm-kitty ]]; then
-        local title
-        if (( exit_code == 0 )); then
-            title="✅ Command finished on $HOSTNAME"
-        else
-            title="❌ Command failed on $HOSTNAME"
-        fi
-        printf '\x1b]99;i=1:d=0;%s\x1b'\\ "$title"
-        printf '\x1b]99;i=1:d=1:p=body;%s\x1b'\\ "$cmd"
-    fi
-
     PS1=""
     if [[ -f /var/run/reboot-required ]]; then
         PS1+="${prompt_colour_red}↻ ${prompt_colour_default}"

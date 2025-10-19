@@ -1,8 +1,0 @@
-typeset -gi __last_cmd_exitstatus
-
-_record_exitstatus() {
-  __last_cmd_exitstatus=$(print -P "%?")
-}
-add-zsh-hook precmd _record_exitstatus
-
-# vim: filetype=zsh
