@@ -16,6 +16,15 @@ export ELECTRON_OZONE_PLATFORM_HINT=auto
 # https://gitlab.freedesktop.org/wlroots/wlroots/-/issues/1873
 export WLR_DRM_NO_MODIFIERS=1
 
+# https://github.com/zed-industries/zed/issues/32792
+# https://github.com/swaywm/sway/issues/8755
+export WLR_RENDER_NO_EXPLICIT_SYNC=1
+
+# Prevent spamming "Atomic commit failed: Device or resource busy" logs
+# https://gitlab.freedesktop.org/wlroots/wlroots/-/issues/3507
+# https://gitlab.freedesktop.org/wlroots/wlroots/-/blob/master/docs/env_vars.md
+export WLR_DRM_NO_ATOMIC=1
+
 if [[ -f "$HOME/.profile" ]]; then
     . "$HOME/.profile"
 fi
