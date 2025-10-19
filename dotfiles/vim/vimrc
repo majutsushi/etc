@@ -33,7 +33,6 @@ Plug 'Lokaltog/vim-easymotion', {'on': '<Plug>(easymotion'}
 Plug 'bruno-/vim-vertical-move', {'on': '<Plug>(vertical_move'}
 
 " Editing
-Plug 'SirVer/ultisnips'
 Plug 'junegunn/vim-easy-align', {'on': ['EasyAlign', '<Plug>(EasyAlign)']}
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
