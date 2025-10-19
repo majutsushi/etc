@@ -78,6 +78,8 @@ export GPG_TTY=$(tty)
 
 export MOCP_OPTS="--moc-dir $DOTFILES/moc"
 
+export HWATCH="--differences word --color"
+
 export SACK_SHORTCUT_FILE="$XDG_CACHE_HOME/sack_shortcuts/$$"
 mkdir -p "$(dirname "$SACK_SHORTCUT_FILE")"
 
