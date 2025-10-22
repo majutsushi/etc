@@ -1,14 +1,7 @@
-#TabsToolbar {
-    visibility: collapse;
-}
-
-/* #sidebar-header { */
-/*     display:none; */
-/* } */
-
-#sidebar-switcher-target {
-    font-size: 75%;
-}
+/*
+ * Platform media queries:
+ * https://github.com/mozilla-firefox/firefox/commit/8de26dc4c10d16c3cece98840e77c4b68ea32747
+ */
 
 /* Dim unloaded tabs */
 .tabbrowser-tab[pending="true"] {
@@ -30,7 +23,13 @@
 }
 #tabbrowser-tabs[orient="vertical"] {
     & .tab-background {
-        min-height: 1.9em !important;
+        @media (-moz-platform: linux) {
+            margin-block: 0 !important;
+            min-height: 0 !important;
+        }
+        @media (-moz-platform: macos) {
+            min-height: 1.9em !important;
+        }
     }
 }
 @media -moz-pref("sidebar.verticalTabs") {
@@ -47,6 +46,21 @@
     tab-group[collapsed]:not([movingtabgroup]) &:hover, tab-group[previewpanelactive] & {
         #tabbrowser-tabs[orient="vertical"] & {
             box-shadow: none !important;
+        }
+    }
+}
+
+@media (-moz-platform: linux) {
+    #sidebar-main {
+        background-color: #eaeaed;
+        @media (prefers-color-scheme: dark) {
+            background-color: #222;
+        }
+    }
+    #sidebar-tools-and-extensions-splitter {
+        border-color: #eaeaed !important;
+        @media (prefers-color-scheme: dark) {
+            border-color: #222 !important;
         }
     }
 }
