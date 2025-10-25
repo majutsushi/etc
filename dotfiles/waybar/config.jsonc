@@ -242,11 +242,11 @@
                 "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
                 "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
             },
-            "actions":  {
-                "on-click-right": "mode",
-                "on-scroll-up": "shift_up",
-                "on-scroll-down": "shift_down"
-            }
+        },
+        "actions":  {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
         },
         "format": "<small>{:%a %d %b}</small>",
     },
