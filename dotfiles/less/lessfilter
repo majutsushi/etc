@@ -137,7 +137,7 @@ case "$MIME_TYPE" in
         else try docx2txt "$FILE_PATH" -; fi ;;
     application/vnd.sqlite3)
         try sqlite3 "file:${FILE_PATH}?mode=ro" ".schema" -header -column ;;
-    application/x-7z-compressed)
+    application/x-7z-compressed | application/x-cb7)
         try 7z l "$FILE_PATH" ;;
     application/x-arc)
         if has_cmd lsar; then lsar -l "$FILE_PATH"
