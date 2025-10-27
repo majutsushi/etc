@@ -30,4 +30,4 @@ grimshot save anything - | \
         "$TARGET_FILE"
 
 echo "$TARGET_FILE" | cb
-notify-send -t 3000 -a grimshot-wrapper -i image -e "Screenshot" "Saved to $TARGET_FILE"
+notify-send -t 3000 -a grimshot-wrapper -i image-x-generic -e "Screenshot" "Saved to $TARGET_FILE"
