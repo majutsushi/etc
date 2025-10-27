@@ -58,5 +58,6 @@ rules = [
 [icon]
 append_exts = [
     { name = "cbz", text = "" },
-    { name = "cbr", text = "" }
+    { name = "cbr", text = "" },
+    { name = "cb7", text = "" }
 ]
