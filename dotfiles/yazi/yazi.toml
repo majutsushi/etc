@@ -46,14 +46,31 @@ prepend_rules = [
 ]
 
 [plugin]
+prepend_preloaders = [
+    { mime = "text/*",                 run = "lessfilter" },
+    { mime = "*/xml",                  run = "lessfilter" },
+    { mime = "*/javascript",           run = "lessfilter" },
+    { mime = "*/wine-extension-ini",   run = "lessfilter" },
+    { mime = "application/json",       run = "lessfilter" },
+
+    { mime = "application/*zip",          run = "lessfilter" },
+    { mime = "application/tar",           run = "lessfilter" },
+    { mime = "application/bzip*",         run = "lessfilter" },
+    { mime = "application/7z-compressed", run = "lessfilter" },
+    { mime = "application/rar",           run = "lessfilter" },
+    { mime = "application/xz",            run = "lessfilter" },
+]
+append_preloaders = [
+    { name = "*", run = "lessfilter" },
+]
 prepend_previewers = [
     { mime = "text/*",                 run = "lessfilter" },
     { mime = "*/xml",                  run = "lessfilter" },
     { mime = "*/javascript",           run = "lessfilter" },
-    { mime = "*/wine-extension-ini", run = "lessfilter" },
+    { mime = "*/wine-extension-ini",   run = "lessfilter" },
     { mime = "application/json",       run = "lessfilter" },
 
-    { mime = "application/*zip",            run = "lessfilter" },
+    { mime = "application/*zip",          run = "lessfilter" },
     { mime = "application/tar",           run = "lessfilter" },
     { mime = "application/bzip*",         run = "lessfilter" },
     { mime = "application/7z-compressed", run = "lessfilter" },
