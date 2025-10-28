@@ -196,7 +196,9 @@ case "$MIME_TYPE" in
         fi
         ;;
     text/csv)
-        if has_cmd csvlook; then
+        if has_cmd sqlite3; then
+            sqlite3 :memory: -cmd '.mode csv' -cmd ".import '$FILE_PATH' data" -cmd '.mode box' 'SELECT * FROM data'
+        elif has_cmd csvlook; then
             csvlook "$FILE_PATH"
         else
             hl "$FILE_PATH"
