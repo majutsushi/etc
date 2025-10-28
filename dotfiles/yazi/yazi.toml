@@ -61,7 +61,7 @@ prepend_preloaders = [
     { mime = "application/xz",            run = "lessfilter" },
 ]
 append_preloaders = [
-    { name = "*", run = "lessfilter" },
+    { mime = "application/*", prio = "low", run = "lessfilter" },
 ]
 prepend_previewers = [
     { mime = "text/*",                 run = "lessfilter" },
