@@ -37,16 +37,18 @@ function M:peek(job)
     end
 
     local limit = job.area.h
-    local i, lines = 0, ""
+    local i = 0
+    local lines = {}
     for line in io.lines(tostring(cache)) do
         i = i + 1
         if i > job.skip + limit then
             break
         end
         if i > job.skip then
-            lines = lines .. line .. "\n"
+            lines[#lines+1] = line
         end
     end
+    lines = table.concat(lines, "\n")
 
     if job.skip > 0 and i < job.skip + limit then
         ya.emit("peek", { math.max(0, i - limit), only_if = job.file.url, upper_bound = true })
@@ -61,7 +63,7 @@ function M:seek(job)
     local h = cx.active.current.hovered
     if h and h.url == job.file.url then
         local step = math.floor(job.units * job.area.h / 10)
-        ya.manager_emit("peek", {
+        ya.emit("peek", {
             math.max(0, cx.active.preview.skip + step),
             force = true,
             only_if = job.file.url,
@@ -95,7 +97,7 @@ function M:preload(job)
         return true, Err("Failed to run `lessfilter`, stderr: %s", output.stderr)
     end
 
-    local ok, err = fs.write(cache, output.stdout)
+    local ok, err = fs.write(cache, output.stdout or "[no output]")
     if ok then
         return true
     else
