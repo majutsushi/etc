@@ -60,6 +60,15 @@ fontinfo() {
     otfinfo --scripts "$1"
 }
 
+view_csv() {
+    if has_cmd sqlite3; then
+        sqlite3 :memory: -cmd '.mode csv' -cmd ".import '$1' data" -cmd '.mode box' 'SELECT * FROM data'
+    elif has_cmd csvlook; then
+        csvlook "$1"
+    else
+        hl "$1"
+    fi
+}
 
 # If a ':' is appended, just display the original file
 if [[ "$1" == *: ]]; then
@@ -135,6 +144,18 @@ case "$MIME_TYPE" in
     application/vnd.openxmlformats-officedocument.wordprocessingml.document)
         if has_cmd markitdown && has_cmd mdcat; then markitdown "$FILE_PATH" | mdcat -l
         else try docx2txt "$FILE_PATH" -; fi ;;
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
+        if has_cmd xlsx2csv; then
+            view_csv <(xlsx2csv "$FILE_PATH")
+        elif has_cmd in2csv; then
+            view_csv <(in2csv "$FILE_PATH")
+        fi
+        ;;
+    application/vnd.ms-excel)
+        if has_cmd in2csv; then
+            view_csv <(in2csv "$FILE_PATH")
+        fi
+        ;;
     application/vnd.sqlite3)
         try sqlite3 "file:${FILE_PATH}?mode=ro" ".schema" -header -column ;;
     application/x-7z-compressed | application/x-cb7)
@@ -196,13 +217,7 @@ case "$MIME_TYPE" in
         fi
         ;;
     text/csv)
-        if has_cmd sqlite3; then
-            sqlite3 :memory: -cmd '.mode csv' -cmd ".import '$FILE_PATH' data" -cmd '.mode box' 'SELECT * FROM data'
-        elif has_cmd csvlook; then
-            csvlook "$FILE_PATH"
-        else
-            hl "$FILE_PATH"
-        fi
+        view_csv "$FILE_PATH"
         ;;
     text/html)
         if has_cmd w3m; then w3m -dump "$FILE_PATH"
