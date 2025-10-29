@@ -35,6 +35,8 @@ prepend_keymap = [
     { on = [ "c", "m" ], run = "plugin chmod",                       desc = "Chmod on selected files" },
     { on = [ "c", "p" ], run = "plugin command",                     desc = "Yazi command prompt" },
     { on = [ "g", "c" ], run = "plugin vcs-files",                   desc = "Show Git file changes" },
+    { on = "H",          run = "plugin lessfilter -1",               desc = "Hide or show preview" },
+    { on = "L",          run = "plugin lessfilter +1",               desc = "Hide or show preview" },
 ]
 
 [tasks]

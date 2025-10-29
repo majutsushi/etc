@@ -1,4 +1,24 @@
+-- https://yazi-rs.github.io/docs/plugins/overview/#async-context
+local set_scroll = ya.sync(function(state, delta)
+    state.scroll = delta
+end)
+local get_scroll = ya.sync(function(state)
+    return state.scroll
+end)
+
+
 local M = {}
+
+function M:entry(job)
+    local arg = job.args and job.args[1]
+    if arg ~= "+1" and arg ~= "-1" then
+        return
+    end
+    local scroll_delta = tonumber(arg)
+    local cur_scroll = get_scroll() or 0
+    set_scroll(math.max(0, cur_scroll + scroll_delta))
+    ya.emit("seek", { "horizontal scroll" })
+end
 
 function M:peek(job)
     -- Temporarily change 'skip' as it is used as part of the cache hash
@@ -32,7 +52,8 @@ function M:peek(job)
         ya.emit("peek", { math.max(0, i - limit), only_if = job.file.url, upper_bound = true })
     else
         lines = lines:gsub("\t", string.rep(" ", rt.preview.tab_size))
-        ya.preview_widget(job, { ui.Text.parse(lines):area(job.area):wrap(rt.preview.wrap == "yes" and ui.Text.WRAP or ui.Text.WRAP_NO) })
+        local scroll_delta = get_scroll() or 0
+        ya.preview_widget(job, { ui.Text.parse(lines):area(job.area):scroll(scroll_delta * 10, 0) })
     end
 end
 
@@ -42,7 +63,8 @@ function M:seek(job)
         local step = math.floor(job.units * job.area.h / 10)
         ya.manager_emit("peek", {
             math.max(0, cx.active.preview.skip + step),
-            only_if = tostring(job.file.url),
+            force = true,
+            only_if = job.file.url,
         })
     end
 end
