@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 PS4="$BASH_SOURCE:"'+\t '
 
