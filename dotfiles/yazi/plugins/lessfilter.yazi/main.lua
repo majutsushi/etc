@@ -6,6 +6,16 @@ local get_scroll = ya.sync(function(state)
     return state.scroll
 end)
 
+local function get_cache_path(job)
+    -- Temporarily change 'skip' as it is used as part of the cache hash
+    -- See https://github.com/sxyazi/yazi/issues/2531
+    local offset = job.skip or 0
+    job.skip = 0
+    local cache = ya.file_cache(job)
+    job.skip = offset
+    return cache
+end
+
 
 local M = {}
 
@@ -21,12 +31,7 @@ function M:entry(job)
 end
 
 function M:peek(job)
-    -- Temporarily change 'skip' as it is used as part of the cache hash
-    -- See https://github.com/sxyazi/yazi/issues/2531
-    local offset = job.skip or 0
-    job.skip = 0
-    local cache = ya.file_cache(job)
-    job.skip = offset
+    local cache = get_cache_path(job)
     if not cache then
         return
     end
@@ -72,10 +77,7 @@ function M:seek(job)
 end
 
 function M:preload(job)
-    local offset = job.skip or 0
-    job.skip = 0
-    local cache = ya.file_cache(job)
-    job.skip = offset
+    local cache = get_cache_path(job)
     if not cache or fs.cha(cache) then
         return true
     end
