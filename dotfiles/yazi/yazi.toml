@@ -53,6 +53,10 @@ prepend_preloaders = [
     { mime = "*/wine-extension-ini",   run = "lessfilter" },
     { mime = "application/json",       run = "lessfilter" },
 
+    { mime = "application/epub+zip",           run = "thumbnailer epub",   for = "linux" },
+    { mime = "application/x-mobipocket-ebook", run = "thumbnailer mobi",   for = "linux" },
+    { name = "*.{cbz,cbr,cb7}",                run = "thumbnailer papers", for = "linux" },
+
     { mime = "application/*zip",          run = "lessfilter" },
     { mime = "application/tar",           run = "lessfilter" },
     { mime = "application/bzip*",         run = "lessfilter" },
@@ -69,6 +73,10 @@ prepend_previewers = [
     { mime = "*/javascript",           run = "lessfilter" },
     { mime = "*/wine-extension-ini",   run = "lessfilter" },
     { mime = "application/json",       run = "lessfilter" },
+
+    { mime = "application/epub+zip",           run = "thumbnailer epub",   for = "linux" },
+    { mime = "application/x-mobipocket-ebook", run = "thumbnailer mobi",   for = "linux" },
+    { name = "*.{cbz,cbr,cb7}",                run = "thumbnailer papers", for = "linux" },
 
     { mime = "application/*zip",          run = "lessfilter" },
     { mime = "application/tar",           run = "lessfilter" },
