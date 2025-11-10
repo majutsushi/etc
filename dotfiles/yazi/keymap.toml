@@ -18,6 +18,9 @@ prepend_keymap = [
     { on = "<C-Space>", run = 'shell -- qlmanage -p "$@"',    desc = "Open Quick Look", for = "macos" },
     { on = "<C-Space>", run = 'shell -- sushi "$@"',          desc = "Open Quick Look", for = "linux" },
 
+    { on = "!", run = 'shell --block --interactive --cursor=0 \"$0\"', desc = "Run command" },
+    { on = "@", run = 'shell --block --interactive --cursor=0 \"$@\"', desc = "Run command" },
+
     # Linemode
     { on = [ "m", "c" ], run = "linemode ctime",       desc = "Linemode: ctime" },
 
