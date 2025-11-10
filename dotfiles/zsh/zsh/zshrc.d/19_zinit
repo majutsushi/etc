@@ -35,9 +35,16 @@ zinit as"null" from"gh-r" for \
     light-mode id-as"usage" lbin"!" @jdx/usage \
     light-mode id-as"mise" lbin"!mise-* -> mise" @jdx/mise
 
+if ismac; then
+    BUN_ARCHIVE=bun-darwin-aarch64.zip
+else
+    BUN_ARCHIVE=bun-linux-x64.zip
+fi
+
 # various tools
 zinit as"null" from"gh-r" completions for \
     id-as"bat" light-mode lbin"!bat-*/bat" @sharkdp/bat \
+    id-as"bun" light-mode lbin"!bun-*/bun" bpick"$BUN_ARCHIVE" @oven-sh/bun \
     id-as"choose" light-mode lbin"!choose-* -> choose" @theryangeary/choose \
     id-as"csvlens" light-mode lbin"!" @YS-L/csvlens \
     id-as"difftastic" light-mode lbin"!" @Wilfred/difftastic \
@@ -69,6 +76,8 @@ zinit as"null" from"gh-r" completions for \
     id-as"uv" light-mode lbin"!*/uv;!*/uvx" @astral-sh/uv \
     id-as"yazi" light-mode lbin"!*/ya;!*/yazi" @sxyazi/yazi \
     id-as"yq" light-mode lbin"!yq* -> yq" @mikefarah/yq
+
+unset BUN_ARCHIVE
 
 # scripts
 zinit as"null" for \
