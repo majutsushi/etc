@@ -81,9 +81,9 @@ if ! [[ -r "$FILE_PATH" ]]; then
     exit 1
 fi
 
-# Use shared-mime-info database if possible
-# On macOS gio returns nonsense mime types for some reason
-if has_cmd gio && [[ $OSTYPE != darwin* ]]; then
+if [[ $OSTYPE = darwin* ]]; then
+    MIME_TYPE=$(mdls -name kMDItemContentType "$FILE_PATH" | sed -r -e 's/.*"([^"]+)"/\1/' | uti-to-mime)
+elif has_cmd gio; then
     MIME_TYPE=$(gio info --attributes=standard::content-type "$FILE_PATH" | awk '/standard::content-type/ { print $2 }')
 else
     MIME_TYPE=$(file --mime-type --dereference --brief "$FILE_PATH" 2> /dev/null)
