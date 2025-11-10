@@ -14,20 +14,11 @@ ismac() {
 
 # This wrapper makes the filename of the sourced file available as $1 in the file
 _source() {
-    # shellcheck source=/dev/null
-    . "$1"
+    if [ -f "$1" ]; then
+        # shellcheck source=/dev/null
+        . "$1"
+    fi
 }
-
-if [ -f ~/.local/etc/profile ]; then
-    _source ~/.local/etc/profile
-fi
-if [ -d ~/.local/etc/profile.d ]; then
-    for file in "$HOME"/.local/etc/profile.d/??_*; do
-        # Protect against empty directories
-        [ -e "$file" ] || continue
-        _source "$file"
-    done
-fi
 
 
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -116,6 +107,12 @@ export IDEA_VM_OPTIONS="$DOTFILES/idea/idea64.vmoptions"
 
 # https://cran.r-project.org/web/packages/startup/vignettes/startup-intro.html
 export R_PROFILE_USER="$DOTFILES/R/Rprofile"
+
+
+_source ~/.local/etc/profile
+for file in ~/.local/etc/profile.d/??_*; do
+    _source "$file"
+done
 
 
 # Make sure these are first in PATH
