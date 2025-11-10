@@ -39,6 +39,7 @@ zinit as"null" from"gh-r" for \
 zinit as"null" from"gh-r" completions for \
     id-as"bat" light-mode lbin"!bat-*/bat" @sharkdp/bat \
     id-as"choose" light-mode lbin"!choose-* -> choose" @theryangeary/choose \
+    id-as"csvlens" light-mode lbin"!" @YS-L/csvlens \
     id-as"difftastic" light-mode lbin"!" @Wilfred/difftastic \
     id-as"dua" light-mode lbin"!dua-*/dua" @Byron/dua-cli \
     id-as"fx" light-mode lbin"!fx* -> fx" @antonmedv/fx \
