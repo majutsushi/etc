@@ -12,10 +12,11 @@ wrap = "yes"
 
 [opener]
 reveal = [
-    { run = 'less "$1"', block = true, desc = "less" },
     { run = 'xdg-open "$1"',                desc = "Open", for = "linux" },
     { run = 'open "$@"',                    desc = "Open", for = "macos" },
     { run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
+
+    { run = 'less "$1"', block = true, desc = "less" },
 
     # TODO: turn into plugin with popup?
     { run = 'xfile "$1"; read _', block = true, desc = "xfile" },
