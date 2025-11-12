@@ -70,6 +70,14 @@ view_csv() {
     fi
 }
 
+_numfmt() {
+    if has_cmd numfmt; then
+        numfmt --to=iec-i --invalid=ignore "$@"
+    else
+        cat
+    fi
+}
+
 # If a ':' is appended, just display the original file
 if [[ "$1" == *: ]]; then
     cat "${1%:}"
@@ -102,21 +110,24 @@ case "$MIME_TYPE" in
         fi
         ;;
     application/*java-archive | application/x-xpinstall | application/zip | application/*+zip)
+        _unzip() {
+            unzip -v "$1" | _numfmt --field=1,3 --header=3 --padding=8
+        }
         case "$BASENAME_LOWER" in
             *.egg)
                 unzip -p "$FILE_PATH" EGG-INFO/PKG-INFO | \
                     sed '/^Description:/,/^\S/{/^Description:/d; /^\S/b; d}'
                 echo
-                unzip -v "$FILE_PATH"
+                _unzip "$FILE_PATH"
                 ;;
             *.xpi)
                 unzip -p "$FILE_PATH" manifest.json | \
                     try jq --color-output '. | {name,version,description,author}'
                 echo
-                unzip -v "$FILE_PATH"
+                _unzip "$FILE_PATH"
                 ;;
             *)
-                unzip -v "$FILE_PATH"
+                _unzip "$FILE_PATH"
         esac ;;
     application/json | application/*+json)
         if has_cmd jq; then
@@ -139,8 +150,8 @@ case "$MIME_TYPE" in
         echo
         echo '*** Contents:'; dpkg-deb --contents "$FILE_PATH"
         ;;
-    application/vnd.ms-cab-compressed)
-        try lsar -l "$FILE_PATH" ;;
+    application/vnd.ms-cab-compressed | application/x-msi | application/x-zoo)
+        try lsar -l "$FILE_PATH" | _numfmt --field=3 --header=3 ;;
     application/vnd.openxmlformats-officedocument.wordprocessingml.document)
         if has_cmd markitdown && has_cmd mdcat; then markitdown "$FILE_PATH" | mdcat -l
         else try docx2txt "$FILE_PATH" -; fi ;;
@@ -159,10 +170,11 @@ case "$MIME_TYPE" in
     application/vnd.sqlite3)
         try sqlite3 "file:${FILE_PATH}?mode=ro" ".schema" -header -column ;;
     application/x-7z-compressed | application/x-cb7)
-        try 7z l "$FILE_PATH" ;;
+        try 7z l "$FILE_PATH" | _numfmt --field=4,5 --header=16 ;;
     application/x-arc)
-        if has_cmd lsar; then lsar -l "$FILE_PATH"
-        else try arc l "$FILE_PATH"; fi ;;
+        if has_cmd lsar; then lsar -l "$FILE_PATH" | _numfmt --field=3 --header=3
+        elif has_cmd arc; then arc l "$FILE_PATH" | _numfmt --field=2 --header=2
+        fi ;;
     application/x-archive)
         try ar tv "$FILE_PATH" ;;
     application/x-bittorrent)
@@ -189,19 +201,15 @@ case "$MIME_TYPE" in
         fi
         ;;
     application/x-lha)
-        try lha -l "$FILE_PATH" ;;
-    application/x-msi)
-        try lsar -l "$FILE_PATH" ;;
+        try lha -l "$FILE_PATH" | _numfmt --field=2 --header=2 ;;
     application/x-rar | application/vnd.rar | application/vnd.comicbook-rar)
-        try unrar l "$FILE_PATH" ;;
+        try unrar l "$FILE_PATH" | _numfmt --field=2 --header=8 ;;
     application/x-sfbk)
         try sf2parse "$FILE_PATH" ;;
     application/x-troff-man)
         MAN_KEEP_FORMATTING=1 man --local-file "$FILE_PATH" ;;
     application/x-tar | application/x-xz-compressed-tar)
-        tar tvf "$FILE_PATH" --force-local ;;
-    application/x-zoo)
-        try lsar -l "$FILE_PATH" ;;
+        tar tvf "$FILE_PATH" --force-local | _numfmt --field=3 ;;
     audio/*)
         try mediainfo "$FILE_PATH" ;;
     font/otf | font/ttf | font/sfnt | application/vnd.ms-opentype)
@@ -260,7 +268,7 @@ case "$MIME_TYPE" in
             *.pcap | *.pcapng | *.pcap.* | *.pcapng.*)
                 try tshark -t a -r "$FILE_PATH" ;;
             *.tar | *.tar.* | *.tgz)
-                tar tvf "$FILE_PATH" --force-local ;;
+                tar tvf "$FILE_PATH" --force-local | _numfmt --field=3 ;;
             # These need to come after the tar matches
             *.gz | *.z | *.dz)
                 gzip -dc "$FILE_PATH" ;;
