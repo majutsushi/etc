@@ -162,6 +162,8 @@ case "$MIME_TYPE" in
             view_csv <(in2csv "$FILE_PATH")
         fi
         ;;
+    application/vnd.microsoft.portable-executable)
+        try exiftool "$FILE_PATH" ;;
     application/vnd.ms-excel)
         if has_cmd in2csv; then
             view_csv <(in2csv "$FILE_PATH")
