@@ -30,9 +30,6 @@ extract = [
     { run = 'unpack "$1"', desc = "Extract here", for = "unix" },
     { run = 'unpack "%1"', desc = "Extract here", for = "windows" },
 ]
-editbulk = [
-    { run = 'VIM_FORK=0 $EDITOR "$@"', block = true },
-]
 ncdu = [
     { run = 'ncdu "$1"', block = true, desc = "ncdu" }
 ]
@@ -45,9 +42,6 @@ prepend_rules = [
     { name = "*/", use = [ "ncdu", "edit", "reveal" ] },
     { name = "*.{cbz,cbr,cb7}", use = [ "open", "reveal" ] },
     { name = "*.csv", use = ["csvlens", "reveal" ] },
-    # https://github.com/sxyazi/yazi/blob/884de41b6606d805d9465004b5b3ce7758e065d8/yazi-core/src/manager/commands/bulk_rename.rs#L13
-    { name = "bulk.txt", use = "editbulk" },
-    { name = "bulk-*", use = "editbulk" },
 ]
 
 [plugin]
