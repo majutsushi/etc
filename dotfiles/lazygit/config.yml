@@ -13,10 +13,10 @@ gui:
   nerdFontsVersion: "3"
 git:
   autoForwardBranches: none
-  paging:
-    # colorArg: always
-    # pager: delta --features=decorations --paging=never
-    pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+  pagers:
+    - # colorArg: always
+      # pager: delta --features=decorations --paging=never
+      pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
   branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=iso --pretty=medium {{branchName}} --'
   allBranchesLogCmds:
     - git log --graph --all --color=always --abbrev-commit --decorate --date=iso  --pretty=medium
