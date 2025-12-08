@@ -97,6 +97,11 @@ else
     MIME_TYPE=$(file --mime-type --dereference --brief "$FILE_PATH" 2> /dev/null)
 fi
 
+# Try 'file' as a fallback if we don't have anything specific by now
+if [[ $MIME_TYPE == "application/octet-string" ]]; then
+    MIME_TYPE=$(file --mime-type --dereference --brief "$FILE_PATH" 2> /dev/null)
+fi
+
 BASENAME="$(basename "$FILE_PATH")"
 BASENAME_LOWER=$(echo "$BASENAME" | tr '[:upper:]' '[:lower:]')
 PARENT_DIR="$(dirname "$FILE_PATH")"
