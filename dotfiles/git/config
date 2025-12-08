@@ -1,3 +1,5 @@
+# vim: filetype=gitconfig noexpandtab sw=8 sts=8
+
 [user]
 	name = Jan Larres
 	email = jan@majutsushi.net
@@ -225,5 +227,3 @@
 
 [include]
 	path = ~/.local/etc/gitconfig
-
-# vim: filetype=gitconfig noexpandtab sw=8 sts=8
