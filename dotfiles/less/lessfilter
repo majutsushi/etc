@@ -158,8 +158,14 @@ case "$MIME_TYPE" in
     application/vnd.ms-cab-compressed | application/x-msi | application/x-zoo)
         try lsar -l "$FILE_PATH" | _numfmt --field=3 --header=3 ;;
     application/vnd.openxmlformats-officedocument.wordprocessingml.document)
-        if has_cmd markitdown && has_cmd mdcat; then markitdown "$FILE_PATH" | mdcat -l
-        else try docx2txt "$FILE_PATH" -; fi ;;
+        if has_cmd doxx && has_cmd mdcat; then
+            doxx --export markdown "$FILE_PATH" | mdcat -l
+        elif has_cmd markitdown && has_cmd mdcat; then
+            markitdown "$FILE_PATH" | mdcat -l
+        else
+            try docx2txt "$FILE_PATH" -
+        fi
+        ;;
     application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
         if has_cmd xlsx2csv; then
             view_csv <(xlsx2csv "$FILE_PATH")
