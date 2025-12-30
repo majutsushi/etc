@@ -30,12 +30,7 @@ rules = [
     { mime = "audio/*", fg = "yellow" },
 
     # Archives
-    { mime = "application/*zip",            fg = "magenta" },
-    { mime = "application/x-tar",           fg = "magenta" },
-    { mime = "application/x-bzip*",         fg = "magenta" },
-    { mime = "application/x-7z-compressed", fg = "magenta" },
-    { mime = "application/x-rar",           fg = "magenta" },
-    { mime = "application/x-xz",            fg = "magenta" },
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "magenta" },
 
     # Documents
     { mime = "application/doc",   fg = "green" },
