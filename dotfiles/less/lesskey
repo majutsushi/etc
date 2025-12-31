@@ -31,3 +31,5 @@ LESS_TERMCAP_md = ^[[1;31m
 LESS_TERMCAP_us = ^[[1;32m
 # end underlining => turn off all attributes
 LESS_TERMCAP_ue = ^[[m^O
+# https://github.com/ryanoasis/nerd-fonts/wiki/FAQ-and-Troubleshooting#less-settings
+LESSUTFCHARDEF=e000-f8ff:p,f0001-fffff:p
