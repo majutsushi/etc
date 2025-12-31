@@ -78,6 +78,14 @@ _numfmt() {
     fi
 }
 
+get_size() {
+    if [[ $OSTYPE = darwin* ]]; then
+        stat -f%z "$1"
+    else
+        stat --format=%s "$1"
+    fi
+}
+
 # If a ':' is appended, just display the original file
 if [[ "$1" == *: ]]; then
     cat "${1%:}"
@@ -288,10 +296,23 @@ case "$MIME_TYPE" in
             *.tar | *.tar.* | *.tgz)
                 tar tvf "$FILE_PATH" --force-local | _numfmt --field=3 ;;
             # These need to come after the tar matches
-            *.gz | *.z | *.dz)
+            *.txt.gz | *.txt.z | *.txt.dz)
                 gzip -dc "$FILE_PATH" ;;
-            *.xz)
+            *.gz | *.z | *.dz)
+                if (( $(get_size "$FILE_PATH") > 10000000 )); then
+                    gzip -l "$FILE_PATH"
+                else
+                    gzip -dc "$FILE_PATH"
+                fi
+                ;;
+            *.txt.bz2)
+                try bzip2 -dc "$FILE_PATH" ;;
+            *.bz2)
+                try bzip2 -l "$FILE_PATH" ;;
+            *.txt.xz)
                 try xz -dc "$FILE_PATH" ;;
+            *.xz)
+                try xz -l "$FILE_PATH" ;;
             *)
                 case $MIME_TYPE in
                     # Check for gzip with non-standard extension
