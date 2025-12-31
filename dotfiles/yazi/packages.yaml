@@ -16,7 +16,7 @@
   path: vcs-files.yazi
 - url: https://github.com/yazi-rs/plugins
   path: zoom.yazi
-- url: https://github.com/KKV9/compress.yazi
 - url: https://github.com/KKV9/command.yazi
 - url: https://github.com/Rolv-Apneseth/starship.yazi
 - url: https://github.com/Ape/open-with-cmd.yazi
+- url: https://github.com/ndtoan96/ouch.yazi

@@ -54,13 +54,6 @@ prepend_preloaders = [
     { mime = "application/epub+zip",           run = "thumbnailer epub",   for = "linux" },
     { mime = "application/x-mobipocket-ebook", run = "thumbnailer mobi",   for = "linux" },
     { url  = "*.{cbz,cbr,cb7}",                run = "thumbnailer papers", for = "linux" },
-
-    { mime = "application/*zip",          run = "lessfilter" },
-    { mime = "application/tar",           run = "lessfilter" },
-    { mime = "application/bzip*",         run = "lessfilter" },
-    { mime = "application/7z-compressed", run = "lessfilter" },
-    { mime = "application/rar",           run = "lessfilter" },
-    { mime = "application/xz",            run = "lessfilter" },
 ]
 append_preloaders = [
     { mime = "application/*", prio = "low", run = "lessfilter" },
@@ -76,12 +69,7 @@ prepend_previewers = [
     { mime = "application/x-mobipocket-ebook", run = "thumbnailer mobi",   for = "linux" },
     { url  = "*.{cbz,cbr,cb7}",                run = "thumbnailer papers", for = "linux" },
 
-    { mime = "application/*zip",          run = "lessfilter" },
-    { mime = "application/tar",           run = "lessfilter" },
-    { mime = "application/bzip*",         run = "lessfilter" },
-    { mime = "application/7z-compressed", run = "lessfilter" },
-    { mime = "application/rar",           run = "lessfilter" },
-    { mime = "application/xz",            run = "lessfilter" },
+    { mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}", run  = "ouch" },
 ]
 append_previewers = [
     { url = "*", run = "lessfilter" },
