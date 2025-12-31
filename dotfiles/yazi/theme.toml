@@ -26,30 +26,28 @@ rules = [
     { mime = "image/*", fg = "cyan" },
 
     # Media
-    { mime = "video/*", fg = "yellow" },
-    { mime = "audio/*", fg = "yellow" },
+    { mime = "{audio,video}/*", fg = "yellow" },
 
     # Archives
     { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "magenta" },
 
     # Documents
-    { mime = "application/doc",   fg = "green" },
-    { mime = "application/pdf",   fg = "green" },
-    { mime = "application/rtf",   fg = "green" },
-    { mime = "application/vnd.*", fg = "green" },
+    { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "green" },
+
+    # Virtual file system
+    { mime = "vfs/{absent,stale}", fg = "darkgray" },
 
     # Special files
-    { name = "*", is = "link", fg = "cyan" },
-    { name = "*", is = "orphan", bg = "red"},
-    { name = "*", is = "exec", fg = "green", bold = true },
+    { url = "*", is = "orphan", bg = "red" },
+    { url = "*", is = "exec",   fg = "green", bold = true },
+    { url = "*", is = "link",   fg = "cyan" },
 
     # Dummy files
-    { name = "*", is = "dummy", bg = "red" },
-    { name = "*/", is = "dummy", bg = "red" },
+    { url = "*", is = "dummy", bg = "red" },
+    { url = "*/", is = "dummy", bg = "red" },
 
     # Fallback
-    # { name = "*", fg = "reset" },
-    { name = "*/", fg = "blue" }
+    { url = "*/", fg = "blue" }
 ]
 
 [icon]

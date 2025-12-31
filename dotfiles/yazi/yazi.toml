@@ -12,36 +12,35 @@ wrap = "yes"
 
 [opener]
 reveal = [
-    { run = 'xdg-open "$1"',                desc = "Open", for = "linux" },
-    { run = 'open "$@"',                    desc = "Open", for = "macos" },
-    { run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
+    { run = 'xdg-open %s1',                desc = "Open", for = "linux" },
+    { run = 'open %s',                     desc = "Open", for = "macos" },
+    { run = 'start "" %s1', orphan = true, desc = "Open", for = "windows" },
 
-    { run = 'less "$1"', block = true, desc = "less" },
+    { run = 'less %s1', block = true, desc = "less" },
 
     # TODO: turn into plugin with popup?
-    { run = 'xfile "$1"; read _', block = true, desc = "xfile" },
-    { run = 'stat "$1"; read _', block = true, desc = "stat" },
+    { run = 'xfile %s1; read _', block = true, desc = "xfile" },
+    { run = 'stat %s1; read _', block = true, desc = "stat" },
 
-    { run = 'open -R "$1"',                          desc = "Reveal", for = "macos" },
-    { run = 'explorer /select, "%1"', orphan = true, desc = "Reveal", for = "windows" },
-    { run = 'gtk-launch $(xdg-mime query default inode/directory) "$1"', orphan = true, desc = "Reveal", for = "linux" },
+    { run = 'open -R %s1',                          desc = "Reveal", for = "macos" },
+    { run = 'explorer /select, %s1', orphan = true, desc = "Reveal", for = "windows" },
+    { run = 'gtk-launch $(xdg-mime query default inode/directory) %s1', orphan = true, desc = "Reveal", for = "linux" },
 ]
 extract = [
-    { run = 'unpack "$1"', desc = "Extract here", for = "unix" },
-    { run = 'unpack "%1"', desc = "Extract here", for = "windows" },
+    { run = 'unpack %s1', desc = "Extract here" },
 ]
 ncdu = [
-    { run = 'ncdu "$1"', block = true, desc = "ncdu" }
+    { run = 'ncdu %s1', block = true, desc = "ncdu" }
 ]
 csvlens = [
-    { run = 'csvlens "$1"', block = true, desc = "csvlens" }
+    { run = 'csvlens %s1', block = true, desc = "csvlens" }
 ]
 
 [open]
 prepend_rules = [
-    { name = "*/", use = [ "ncdu", "edit", "reveal" ] },
-    { name = "*.{cbz,cbr,cb7}", use = [ "open", "reveal" ] },
-    { name = "*.csv", use = ["csvlens", "reveal" ] },
+    { url = "*/", use = [ "ncdu", "edit", "reveal" ] },
+    { url = "*.{cbz,cbr,cb7}", use = [ "open", "reveal" ] },
+    { url = "*.csv", use = ["csvlens", "reveal" ] },
 ]
 
 [plugin]
@@ -54,7 +53,7 @@ prepend_preloaders = [
 
     { mime = "application/epub+zip",           run = "thumbnailer epub",   for = "linux" },
     { mime = "application/x-mobipocket-ebook", run = "thumbnailer mobi",   for = "linux" },
-    { name = "*.{cbz,cbr,cb7}",                run = "thumbnailer papers", for = "linux" },
+    { url  = "*.{cbz,cbr,cb7}",                run = "thumbnailer papers", for = "linux" },
 
     { mime = "application/*zip",          run = "lessfilter" },
     { mime = "application/tar",           run = "lessfilter" },
@@ -75,7 +74,7 @@ prepend_previewers = [
 
     { mime = "application/epub+zip",           run = "thumbnailer epub",   for = "linux" },
     { mime = "application/x-mobipocket-ebook", run = "thumbnailer mobi",   for = "linux" },
-    { name = "*.{cbz,cbr,cb7}",                run = "thumbnailer papers", for = "linux" },
+    { url  = "*.{cbz,cbr,cb7}",                run = "thumbnailer papers", for = "linux" },
 
     { mime = "application/*zip",          run = "lessfilter" },
     { mime = "application/tar",           run = "lessfilter" },
@@ -85,11 +84,11 @@ prepend_previewers = [
     { mime = "application/xz",            run = "lessfilter" },
 ]
 append_previewers = [
-    { name = "*", run = "lessfilter" },
+    { url = "*", run = "lessfilter" },
 ]
 prepend_fetchers = [
-    { id = "git", name = "*",  run  = "git" },
-    { id = "git", name = "*/", run  = "git" },
+    { id = "git", url = "*",  run  = "git" },
+    { id = "git", url = "*/", run  = "git" },
 ]
 
 
