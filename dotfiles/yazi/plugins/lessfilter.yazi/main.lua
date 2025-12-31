@@ -96,7 +96,7 @@ function M:preload(job)
     if not output then
         return true, Err("Failed to start `lessfilter`, error: %s", err)
     elseif not output.status.success then
-        return true, Err("Failed to run `lessfilter`, stderr: %s", output.stderr)
+        return true, Err("Failed to run `lessfilter`\nSTDOUT:\n%s\nSTDERR:\n%s", output.stdout, output.stderr)
     end
 
     local ok, err = fs.write(cache, output.stdout or "[no output]")
