@@ -69,7 +69,9 @@ prepend_previewers = [
     { mime = "application/x-mobipocket-ebook", run = "thumbnailer mobi",   for = "linux" },
     { url  = "*.{cbz,cbr,cb7}",                run = "thumbnailer papers", for = "linux" },
 
-    { mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}", run  = "ouch" },
+    { mime = "application/{zip,tar,7z*,rar,zstd,java-archive}", run  = "ouch" },
+    { url = "*.{tar,tar.*,tgz}", run  = "ouch" },
+    { mime = "application/{gzip,bzip2,xz}", run = "lessfilter" },
 ]
 append_previewers = [
     { url = "*", run = "lessfilter" },
