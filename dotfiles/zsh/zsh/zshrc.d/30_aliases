@@ -122,9 +122,9 @@ btail() {
 }
 
 myip() {
-    curl http://v4.ipv6-test.com/api/myip.php
+    curl -s https://api.ipify.org
     echo
-    curl http://v6.ipv6-test.com/api/myip.php
+    curl -s https://api6.ipify.org
     echo
 }
 
