@@ -40,6 +40,8 @@ prepend_keymap = [
     { on = [ "g", "c" ], run = "plugin vcs-files",                   desc = "Show Git file changes" },
     { on = "H",          run = "plugin lessfilter -1",               desc = "Scroll preview left" },
     { on = "L",          run = "plugin lessfilter +1",               desc = "Scroll preview right" },
+    { on = "+",          run  = "plugin zoom 1",                     desc = "Zoom in hovered file" },
+    { on = "-",          run  = "plugin zoom -1",                    desc = "Zoom out hovered file" },
 ]
 
 [tasks]
