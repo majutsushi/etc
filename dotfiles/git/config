@@ -198,6 +198,9 @@
 [grep]
 	patternType = perl
 
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+
 [svn]
 	rmdir = true
 
