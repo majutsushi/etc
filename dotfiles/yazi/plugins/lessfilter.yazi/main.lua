@@ -83,12 +83,14 @@ function M:preload(job)
     end
 
     local dotfiles = os.getenv("DOTFILES")
+    local url = tostring(job.file.url)
+
+    -- Remove search prefix if it exists
+    url, _count = url:gsub("^search://[^/]+/", "")
 
     -- stylua: ignore
     local output, err = Command(dotfiles .. "/less/lessfilter")
-        :arg({
-            tostring(job.file.url),
-        })
+        :arg({ url })
         :stdout(Command.PIPED)
         :stderr(Command.PIPED)
         :output()
