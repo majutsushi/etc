@@ -43,9 +43,11 @@ STDIN=$(cat)
 # https://public-inbox.org/git/20180826004150.GA31168@sigill.intra.peff.net/t/
 # Preserve GIT_DIR if it is set in case we're not currently in the Git repo
 # (like when cloning)
+# Also preserve GIT_INDEX_FILE because of
+# https://github.com/j178/prek/blob/4406340db0fa6b99559dc145d5c787af110d5a8c/crates/prek/src/git.rs#L42
 [[ -n "${GIT_DIR:-}" ]] && git_dir_tmp="$GIT_DIR"
 # shellcheck disable=SC2046
-unset $(git rev-parse --local-env-vars || true)
+unset $(git rev-parse --local-env-vars | grep -v GIT_INDEX_FILE || true)
 GIT_DIR=$(git rev-parse --git-dir 2>/dev/null) || GIT_DIR="$git_dir_tmp"
 export GIT_DIR
 unset git_dir_tmp
