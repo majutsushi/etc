@@ -3,7 +3,7 @@ experimental = true
 idiomatic_version_file_enable_tools = ["python", "node"]
 
 [settings.python]
-uv_venv_auto = true
+uv_venv_auto = 'source'
 
 [settings.status]
 show_env = true
