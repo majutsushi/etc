@@ -235,6 +235,7 @@
             "mode-mon-col"  : 3,
             "weeks-pos"     : "right",
             "on-scroll"     : 1,
+            "iso8601"       : true,
             "format": {
                 "months":     "<span color='#ffead3'><b>{}</b></span>",
                 "days":       "<span color='#ecc6d9'><b>{}</b></span>",
