@@ -37,7 +37,6 @@
     "sway/workspaces": {
         "format": "{index}: {windows}",
         "window-rewrite-default": "",
-        "window-format": "{name}",
         "window-rewrite": {
             "class<firefox>": "󰈹",
             "class<google-chrome>": "",
