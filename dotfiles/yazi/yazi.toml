@@ -5,7 +5,7 @@
 # ratio = [1, 4, 3]
 sort_by = "natural"
 sort_dir_first = true
-# linemode = "size"
+linemode = "size"
 
 [preview]
 wrap = "yes"
