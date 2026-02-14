@@ -28,7 +28,7 @@ zinit light romkatv/zsh-prompt-benchmark
 # important shell components
 zinit as"null" from"gh-r" for \
     light-mode id-as"starship" lbin"!" bpick"*.tar.gz" @starship/starship \
-    light-mode id-as"atuin" lbin"!atuin-*/atuin" bpick"*.tar.gz" @atuinsh/atuin
+    light-mode id-as"atuin" lbin"!atuin-*/atuin" bpick"atuin-[ax]*.tar.gz" @atuinsh/atuin
 
 # mise
 zinit as"null" from"gh-r" for \
