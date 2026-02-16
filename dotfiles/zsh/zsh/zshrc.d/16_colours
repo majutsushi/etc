@@ -52,6 +52,15 @@ ls-colors() {
     echo "$LS_COLORS" | tr : '\n' | sed 's/\(.*\)=\(.*\)/\x1b[\2m\1\t\2\x1b[0m/'
 }
 
+_update_mise() {
+    if [[ "$1" == dark ]]; then
+        export MISE_COLOR_THEME="catppuccin"
+    else
+        export MISE_COLOR_THEME="base16"
+    fi
+}
+_update_colours_funcs+=_update_mise
+
 
 # Set correct colours before the first preexec call
 _check_update_colours
