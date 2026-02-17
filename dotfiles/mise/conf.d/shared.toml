@@ -1,6 +1,6 @@
 [settings]
 experimental = true
-idiomatic_version_file_enable_tools = ["python", "node"]
+idiomatic_version_file_enable_tools = ["python", "node", "pnpm"]
 
 [settings.python]
 uv_venv_auto = 'source'
