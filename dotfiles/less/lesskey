@@ -9,7 +9,7 @@ Q quit \1
 D noaction j/\^((diff|commit|Date|From) )|((added|deleted|modified): )\n\eu
 # ^s noaction /\^\\s+
 ^s noaction /\^       
-V noaction g|$^V^Psed -r 's/\\x1B\\[[\^mK]*[m|K]//g' | $EDITOR -\n
+V noaction g|$^V^Psed -r 's/\\x1B\\[([0-9]{1,2}(;[0-9]{1,3}){0,4})?[m|K]//g' | $EDITOR -\n
 
 #line-edit
 ^A home
