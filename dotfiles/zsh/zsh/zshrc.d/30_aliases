@@ -82,7 +82,7 @@ else
 fi
 
 alias da='du -sch'
-alias decolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
+alias decolor='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,3}){0,4})?[m|K]//g"'
 alias g="pager-wrapper grep --color=always --extended-regexp --line-buffered"
 alias lg=lazygit
 alias pa='ps aux | less'
