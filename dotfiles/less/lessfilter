@@ -144,7 +144,7 @@ case "$MIME_TYPE" in
         esac ;;
     application/json | application/*+json)
         if has_cmd jq; then
-            jq --color-output . "$FILE_PATH" || cat "$FILE_PATH"
+            jq --color-output . "$FILE_PATH" || hl "$FILE_PATH"
         else
             hl "$FILE_PATH"
         fi
