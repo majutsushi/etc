@@ -86,3 +86,7 @@ history_filter = [
 
 [sync]
 records = true
+
+[daemon]
+enabled = true
+autostart = true
