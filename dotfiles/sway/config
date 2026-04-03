@@ -352,6 +352,6 @@ exec udiskie -t
 # exec_always kanshictl reload
 # exec_always pkill -USR1 kanshi
 exec shikane
-exec_always sleep 1.5; shikanectl reload
+exec_always 'sleep 1.5; shikanectl reload'
 
 include /etc/sway/config.d/*
