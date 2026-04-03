@@ -43,9 +43,9 @@ exec swayidle \
         timeout 580 '$DOTFILES/bin/idle-notify' \
         resume 'pkill -f --signal INT "^python3 .*idle-notify$"'
 exec swayidle -w \
-         timeout 600 'swaylock -f -c 000000' \
+         timeout 600 'swaylock -f -c 000000 --indicator-idle-visible' \
          timeout 1200 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 000000'
+         before-sleep 'swaylock -f -c 000000 --indicator-idle-visible'
 #
 #          before-sleep 'playerctl pause'
 #
