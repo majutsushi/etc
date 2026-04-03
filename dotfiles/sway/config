@@ -282,7 +282,7 @@ seat * hide_cursor when-typing enable
 #
 # Read `man 5 sway-bar` for more information about this section.
 # See also: https://github.com/elkowar/eww
-bar swaybar_command waybar
+# bar swaybar_command waybar
 # bar {
 #     position top
 
@@ -296,6 +296,8 @@ bar swaybar_command waybar
 #         inactive_workspace #32323200 #32323200 #5c5c5c
 #     }
 # }
+# Starting it like this seems to prevent https://github.com/Alexays/Waybar/issues/3344
+exec waybar
 
 
 # for_window [shell=".*"] title_format "%title :: %shell"
