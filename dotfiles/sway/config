@@ -327,6 +327,7 @@ exec "unset XDG_SEAT; unset XDG_SESSION_ID; unset XDG_VTNR; dbus-update-activati
 
 # Needs to start after importing the environment
 exec 'sleep 1; systemctl --user start darkman.service'
+exec 'sleep 1; systemctl --user restart swaync.service'
 
 exec wl-paste --watch cliphist store
 bindsym $mod+c exec cliphist list | fuzzel --dmenu | cliphist decode | wl-copy -n
