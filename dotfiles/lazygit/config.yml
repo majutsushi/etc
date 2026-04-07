@@ -8,6 +8,7 @@ gui:
       - reverse
     selectedRangeBgColor:
       - reverse
+  fileTreeSortOrder: foldersFirst
   showCommandLog: false
   showDivergenceFromBaseBranch: arrowAndNumber # or 'onlyArrow'
   nerdFontsVersion: "3"
