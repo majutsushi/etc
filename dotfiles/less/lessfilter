@@ -50,6 +50,9 @@ fontinfo() {
     echo
     fc-scan --format "Font format: %{fontformat}\n" "$1"
     echo
+    echo "Monospace:"
+    check-font-monospace "$1"
+    echo
     echo "Features:"
     otfinfo --features "$1"
     echo
