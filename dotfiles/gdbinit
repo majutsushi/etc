@@ -28,15 +28,12 @@ import re
 import sys
 import os
 from pathlib import Path
-PATTERN = re.compile(r"^python3\.[0-9]+$")
-for p in Path("/usr/share/doc/").glob("python3.*"):
-    match = PATTERN.match(p.name)
-    if match is not None:
-        sys.path.insert(0, str(p / "examples/gdb"))
-        def setup_python(event):
-            import libpython
-        gdb.events.new_objfile.connect(setup_python)
-        break
+path = Path(f"/usr/share/doc/python3.{sys.version_info.minor}/examples/gdb")
+if path.exists():
+    sys.path.insert(0, str(path))
+    def setup_python(event):
+        import libpython
+    gdb.events.new_objfile.connect(setup_python)
 else:
     print("No GDB Python integration found")
 end
