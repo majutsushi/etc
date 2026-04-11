@@ -244,17 +244,19 @@ bindsym $mod+r mode "resize"
 
 bindsym Print exec $DOTFILES/bin/grimshot-wrapper
 
-bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume raise
+bindsym XF86AudioLowerVolume exec swayosd-client --output-volume lower
+bindsym XF86AudioMute exec swayosd-client --output-volume mute-toggle
+bindsym XF86AudioMicMute exec swayosd-client --input-volume mute-toggle
 
-bindsym --locked XF86AudioPlay exec playerctl play-pause
-bindsym --locked XF86AudioNext exec playerctl next
-bindsym --locked XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec swayosd-client --playerctl play-pause
+bindsym XF86AudioNext exec swayosd-client --playerctl next
+bindsym XF86AudioPrev exec swayosd-client --playerctl previous
 
-bindsym XF86MonBrightnessUp exec light -A 3
-bindsym XF86MonBrightnessDown exec light -U 3
+bindsym XF86MonBrightnessUp exec swayosd-client --brightness raise
+bindsym XF86MonBrightnessDown exec swayosd-client --brightness lower
+
+bindsym --release Caps_Lock exec swayosd-client --caps-lock
 
 bindsym $mod+apostrophe exec swaync-client -t -sw
 bindsym $mod+u exec select-unicode-char
@@ -340,6 +342,7 @@ bindsym $mod+c exec cliphist list | fuzzel --dmenu | cliphist decode | wl-copy -
 
 exec pactl load-module module-switch-on-connect
 
+exec swayosd-server
 exec dex -a
 # exec pasystray
 # exec ~/.config/sway/pulse-notify.py
