@@ -121,10 +121,10 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-f = 'fullscreen --no-outer-gaps'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-    alt-h = 'focus --boundaries all-monitors-outer-frame left'
-    alt-j = 'focus --boundaries all-monitors-outer-frame down'
-    alt-k = 'focus --boundaries all-monitors-outer-frame up'
-    alt-l = 'focus --boundaries all-monitors-outer-frame right'
+    alt-h = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-the-workspace left'
+    alt-j = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-the-workspace down'
+    alt-k = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-the-workspace up'
+    alt-l = 'focus --boundaries all-monitors-outer-frame --boundaries-action wrap-around-the-workspace right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
     alt-shift-h = 'move left'
