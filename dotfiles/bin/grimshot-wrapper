@@ -20,14 +20,7 @@ fi
 TARGET_DIR="${XDG_PICTURES_DIR:-$HOME}/Screenshots"
 TARGET_FILE="$TARGET_DIR/$(date +'%Y-%m-%d %H-%M-%S').png"
 
-grimshot save anything - | \
-    magick - \
-        \( +clone -background black -shadow 50x15+0+10 \) \
-        +swap \
-        -background white \
-        -layers merge \
-        +repage \
-        "$TARGET_FILE"
+grimshot save anything "$TARGET_FILE"
 
 echo "$TARGET_FILE" | cb
 notify-send -t 3000 -a grimshot-wrapper -i image-x-generic -e "Screenshot" "Saved to $TARGET_FILE"
