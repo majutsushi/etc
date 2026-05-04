@@ -6,7 +6,6 @@
 
 [core]
 	autocrlf = input
-	hooksPath = ~/.config/git/hooks
 	pager = less -F
 	whitespace = blank-at-eol,space-before-tab,tab-in-indent,blank-at-eof,cr-at-eol
 	untrackedCache = true
@@ -198,6 +197,21 @@
 
 [grep]
 	patternType = perl
+
+[hook "commit-msg-check-format"]
+	event = commit-msg
+	command = "$DOTFILES/git/hooks/commit-msg/check-format"
+[hook "commit-msg-upstream"]
+	event = commit-msg
+	command = "$(git rev-parse --path-format=absolute --git-dir)/hooks/commit-msg.sample"
+[hook "check-whitespace"]
+	event = pre-commit
+	command = "$DOTFILES/git/hooks/pre-commit/check-whitespace"
+[hook "prune-local-branches"]
+	event = post-checkout
+	# The variable fallback is necessary because Homebrew doesn't preserve
+	# the variable during certain operations like 'tap'
+	command = "${DOTFILES:-$(. $HOME/.profile && printf $DOTFILES)}/git/hooks/post-checkout/prune-local-branches"
 
 [credential "https://dev.azure.com"]
 	useHttpPath = true
