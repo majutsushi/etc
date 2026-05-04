@@ -131,7 +131,8 @@
 	defaultBranch = main
 
 [branch]
-	autosetuprebase = always
+	autoSetupMerge = inherit
+	autoSetupRebase = always
 	sort = -committerdate
 
 [pull]

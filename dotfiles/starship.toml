@@ -73,28 +73,31 @@ symbol = ""
 show_always = false
 format = "[$user]($style) • "
 
-[custom.parentdiff]
+# Show difference to push branch, if it exists
+[custom.pushdiff]
 require_repo = true
 when = true
 shell = ["bash", "--noprofile", "--norc"]
 command = '''
-    branch="$(git symbolic-ref --short -q HEAD)"
-    parent_branch="$(git config branch.${branch}.parent)"
-    [[ -z "$parent_branch" ]] && exit
+    upstream="$(git rev-parse --symbolic-full-name @\{upstream\})"
+    push="$(git rev-parse --symbolic-full-name @\{push\})"
+    # Bail out if push branch is not set
+    (( $? != 0 )) && exit
+    [[ $upstream == $push ]] && exit
 
-    green() { echo -e "\033[32m$1\033[0m"; }
-    red() { echo -e "\033[31m$1\033[0m"; }
-    count="$(git rev-list --count --left-right $parent_branch...HEAD 2>/dev/null)"
+    green() { printf '\033[32m%s\033[0m' "$1"; }
+    red() { printf '\033[31m%s\033[0m' "$1"; }
+    count="$(git rev-list --count --left-right $push...HEAD 2>/dev/null)"
 
-    out="$parent_branch:"
+    out="push:"
     case "$count" in
-        "0	0") # equal to parent_branch
-            exit ;;
-        "0	"*) # ahead of parent_branch
+        "0	0") # equal to push branch
+            out+=$(green ✔) ;;
+        "0	"*) # ahead of push branch
             out+="$(green ↑)${count#0	}" ;;
-        *"	0") # behind parent_branch
+        *"	0") # behind push branch
             out+="$(red ↓)${count%	0}" ;;
-        *)	    # diverged from parent_branch
+        *)	    # diverged from push branch
             out+="$(green ↑)${count#*	}/$(red ↓)${count%	*}" ;;
     esac
 
