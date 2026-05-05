@@ -1,7 +1,8 @@
 # Defaults:
 # https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/theme-light.toml
 # https://github.com/sxyazi/yazi/blob/main/yazi-config/preset/theme-dark.toml
-"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
+
+#:schema https://yazi-rs.github.io/schemas/theme.json
 
 [mgr]
 border_style = { fg = "darkgray" }
