@@ -178,7 +178,9 @@ case "$MIME_TYPE" in
         fi
         ;;
     application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
-        if has_cmd xlsx2csv; then
+        if has_cmd xleak; then
+            xleak -n 0 "$FILE_PATH"
+        elif has_cmd xlsx2csv; then
             view_csv <(xlsx2csv "$FILE_PATH")
         elif has_cmd in2csv; then
             view_csv <(in2csv "$FILE_PATH")

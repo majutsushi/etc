@@ -36,12 +36,16 @@ ncdu = [
 csvlens = [
     { run = 'csvlens %s1', block = true, desc = "csvlens" }
 ]
+xleak = [
+    { run = 'xleak -i %s1', block = true, desc = "xleak" }
+]
 
 [open]
 prepend_rules = [
     { url = "*/", use = [ "ncdu", "edit", "reveal" ] },
     { url = "*.{cbz,cbr,cb7}", use = [ "open", "reveal" ] },
     { url = "*.csv", use = ["csvlens", "reveal" ] },
+    { url = "*.xlsx", use = ["xleak", "reveal" ] },
 ]
 
 [plugin]
