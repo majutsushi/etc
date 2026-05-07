@@ -28,7 +28,7 @@ variable = "MISE_ENV"
 format = "🍽️  [$env_value]($style) "
 
 [git_branch]
-format = "@ [$branch(:$remote_branch)]($style) "
+format = " [$branch(:$remote_branch)]($style) "
 style = "bold yellow"
 
 [git_status]
