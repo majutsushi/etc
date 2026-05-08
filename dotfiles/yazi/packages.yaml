@@ -9,8 +9,6 @@
 - url: https://github.com/yazi-rs/plugins
   path: smart-filter.yazi
 - url: https://github.com/yazi-rs/plugins
-  path: toggle-pane.yazi
-- url: https://github.com/yazi-rs/plugins
   path: types.yazi
 - url: https://github.com/yazi-rs/plugins
   path: vcs-files.yazi
