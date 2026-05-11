@@ -77,8 +77,7 @@ zinit as"null" for \
         atclone"sed -r -i -e 's/CDEFAULT=.*/CDEFAULT=/' git-branch-status" \
         atpull'%atclone' \
         https://github.com/bill-auger/git-branch-status/blob/development/git-branch-status \
-    id-as"treeify" lbin"!" https://github.com/grawity/treeify/blob/main/treeify \
-    id-as"xterm-color-chooser" lbin"!" https://github.com/grawity/code/blob/main/misc/xterm-color-chooser
+    id-as"treeify" lbin"!" https://github.com/grawity/treeify/blob/main/treeify
 
 zinit snippet https://github.com/junegunn/fzf-git.sh/blob/main/fzf-git.sh
 
