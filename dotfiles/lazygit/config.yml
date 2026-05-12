@@ -47,3 +47,14 @@ customCommands:
     context: remoteBranches
     description: tig branch (`t` again to browse files at revision)
     output: terminal
+  - key: i
+    command: 'git config list | grep "^branch\.{{.SelectedLocalBranch.Name}}\." | sed -e "s/^branch\.{{.SelectedLocalBranch.Name}}\.//"'
+    context: localBranches
+    description: Show branch info
+    output: popup
+  - key: 'P'
+    command: "git push {{.SelectedRemote.Name}} {{.SelectedLocalCommit.Sha}}:{{.SelectedLocalBranch.Name}}"
+    context: "commits"
+    loadingText: "Pushing commit..."
+    description: "Push a specific commit (and any preceding)"
+    output: "log"
