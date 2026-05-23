@@ -1,0 +1,10 @@
+prefix = ${XDG_DATA_HOME}/npm
+cache = ${XDG_CACHE_HOME}/npm
+init-module = ${XDG_CONFIG_HOME}/npm/npm-init.js
+logs-dir = ${XDG_STATE_HOME}/npm/logs
+
+min-release-age = 7
+
+# This breaks the ESLint language server
+# https://github.com/zed-industries/zed/issues/56066
+# ignore-scripts = true

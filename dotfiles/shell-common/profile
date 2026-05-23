@@ -89,6 +89,8 @@ if command -v luarocks > /dev/null; then
     PATH="$(luarocks config deploy_bin_dir):$PATH"
 fi
 
+export NPM_CONFIG_USERCONFIG="$DOTFILES/npm/npmrc"
+
 export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
 export CCACHE_COMPRESS=1
 export CCACHE_HASHDIR=1
