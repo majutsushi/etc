@@ -61,7 +61,7 @@ zinit as"null" from"gh-r" completions for \
         atpull'%atclone' \
         @ouch-org/ouch \
     id-as"pastel" light-mode lbin"!pastel-*/pastel" @sharkdp/pastel \
-    id-as"pnpm" light-mode lbin"!" @pnpm/pnpm \
+    id-as"pnpm" light-mode lbin"!" bpick"*(arm64|x64).tar.gz" @pnpm/pnpm \
     id-as"prek" light-mode lbin"!prek-*/prek" @j178/prek \
     id-as"rga" light-mode lbin"!*/rga;!*/rga-fzf;!*/rga-preproc" @phiresky/ripgrep-all \
     id-as"sad" light-mode lbin"!" @ms-jpq/sad \
