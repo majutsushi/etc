@@ -93,8 +93,6 @@ export CCACHE_DIR="$XDG_CACHE_HOME/ccache"
 export CCACHE_COMPRESS=1
 export CCACHE_HASHDIR=1
 
-export GITHUB_USER=majutsushi
-
 export DVDCSS_CACHE="$XDG_CACHE_HOME/dvdcss"
 export GTK_OVERLAY_SCROLLING=0
 export NO_AT_BRIDGE=1
