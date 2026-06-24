@@ -56,11 +56,12 @@ function M:peek(job)
     lines = table.concat(lines, "\n")
 
     if job.skip > 0 and i < job.skip + limit then
-        ya.emit("peek", { math.max(0, i - limit), only_if = job.file.url, upper_bound = true })
+        ya.emit("peek", { math.max(0, i - limit), only_if = job.file.url, upper_bound = true, force = true })
     else
         lines = lines:gsub("\t", string.rep(" ", rt.preview.tab_size))
         local scroll_delta = get_scroll() or 0
         ya.preview_widget(job, { ui.Text.parse(lines):area(job.area):scroll(scroll_delta * 10, 0) })
+        ya.emit("peek", { force = true })
     end
 end
 
