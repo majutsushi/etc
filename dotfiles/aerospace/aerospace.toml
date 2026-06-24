@@ -132,6 +132,11 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-k = 'move up'
     alt-shift-l = 'move right'
 
+    alt-ctrl-h = 'swap left'
+    alt-ctrl-j = 'swap down'
+    alt-ctrl-k = 'swap up'
+    alt-ctrl-l = 'swap right'
+
     # See: https://nikitabobko.github.io/AeroSpace/commands#resize
     alt-shift-minus = 'resize smart -50'
     alt-shift-equal = 'resize smart +50'
