@@ -199,7 +199,11 @@ case "$MIME_TYPE" in
         fi
         ;;
     application/vnd.sqlite3)
-        try sqlite3 "file:${FILE_PATH}?mode=ro" ".schema" -header -column ;;
+        # 'immutable=1' can result in outdated data or 'SQLITE_CORRUPT' errors
+        # if a write is happening at the same time, but should be fine here to
+        # avoid creating WAL/SHM files
+        # https://hoelz.ro/blog/using-sqlites-immutable-and-mode-flags-to-get-around-database-is-locked-error
+        try sqlite3 "file:${FILE_PATH}?mode=ro&immutable=1" ".schema" -header -column ;;
     application/x-7z-compressed | application/x-cb7)
         try 7z l "$FILE_PATH" | _numfmt --field=4,5 --header=16 ;;
     application/x-arc)
