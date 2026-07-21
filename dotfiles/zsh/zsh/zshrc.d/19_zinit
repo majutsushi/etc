@@ -54,7 +54,7 @@ zinit as"null" from"gh-r" completions for \
         @gpanders/ijq \
     id-as"jless" light-mode lbin"!" @PaulJuliusMartinez/jless \
     id-as"lazygit" light-mode lbin"!" @jesseduffield/lazygit \
-    id-as"mdcat" light-mode lbin"!mdcat-*/mdcat" @swsnr/mdcat \
+    id-as"mdcat" light-mode lbin"!mdcat-*/mdcat" @BIRSAx2/mdcat \
     id-as"onefetch" light-mode lbin"!" @o2sh/onefetch \
     id-as"ouch" light-mode lbin"!ouch-*/ouch" \
         atclone"cp -vf ouch-*/man/*.1 ${ZINIT[MAN_DIR]}/man1" \
