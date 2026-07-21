@@ -73,6 +73,14 @@ view_csv() {
     fi
 }
 
+mdcat() {
+    if [[ -n "${1:-}" ]]; then
+        command mdcat --local --ansi "$1"
+    else
+        command mdcat --local --ansi
+    fi
+}
+
 _numfmt() {
     if has_cmd numfmt; then
         numfmt --to=iec-i --invalid=ignore "$@"
@@ -120,7 +128,7 @@ PARENT_DIR="$(dirname "$FILE_PATH")"
 case "$MIME_TYPE" in
     application/epub+zip)
         if has_cmd mdcat; then
-            try pandoc -s -t markdown "$FILE_PATH" | mdcat -l
+            try pandoc -s -t markdown "$FILE_PATH" | mdcat
         else
             try pandoc -s -t plain "$FILE_PATH"
         fi
@@ -170,9 +178,9 @@ case "$MIME_TYPE" in
         try lsar -l "$FILE_PATH" | _numfmt --field=3 --header=3 ;;
     application/vnd.openxmlformats-officedocument.wordprocessingml.document)
         if has_cmd doxx && has_cmd mdcat; then
-            doxx --export markdown "$FILE_PATH" | mdcat -l
+            doxx --export markdown "$FILE_PATH" | mdcat
         elif has_cmd markitdown && has_cmd mdcat; then
-            markitdown "$FILE_PATH" | mdcat -l
+            markitdown "$FILE_PATH" | mdcat
         else
             try docx2txt "$FILE_PATH" -
         fi
@@ -195,7 +203,7 @@ case "$MIME_TYPE" in
         ;;
     application/vnd.openxmlformats-officedocument.presentationml.presentation | application/vnd.ms-office)
         if has_cmd markitdown && has_cmd mdcat; then
-            markitdown "$FILE_PATH" | mdcat -l
+            markitdown "$FILE_PATH" | mdcat
         fi
         ;;
     application/vnd.sqlite3)
@@ -295,7 +303,7 @@ case "$MIME_TYPE" in
                 try openssl req -text -noout -verify -in "$FILE_PATH" ;;
             *.md | *.markdown)
                 if has_cmd mdcat; then
-                    mdcat -l "$FILE_PATH"
+                    mdcat "$FILE_PATH"
                 else
                     hl "$FILE_PATH"
                 fi
