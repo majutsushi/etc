@@ -65,7 +65,7 @@ fontinfo() {
 
 view_csv() {
     if has_cmd sqlite3; then
-        sqlite3 :memory: -cmd '.mode csv' -cmd ".import '$1' data" -cmd '.mode box' 'SELECT * FROM data'
+        sqlite3 :memory: -cmd '.mode csv' -cmd '.import "'${1//\"/\\\"}'" data' -cmd '.mode box' 'SELECT * FROM data'
     elif has_cmd csvlook; then
         csvlook "$1"
     else
