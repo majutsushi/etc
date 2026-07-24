@@ -211,7 +211,87 @@ case "$MIME_TYPE" in
         # if a write is happening at the same time, but should be fine here to
         # avoid creating WAL/SHM files
         # https://hoelz.ro/blog/using-sqlites-immutable-and-mode-flags-to-get-around-database-is-locked-error
-        try sqlite3 "file:${FILE_PATH}?mode=ro&immutable=1" ".schema" -header -column ;;
+        # The preview code is mostly from
+        # https://github.com/ranger/ranger/blob/master/ranger/data/scope.sh
+        if has_cmd sqlite3; then
+            SQLITE_ROW_LIMIT=5
+            sqlite_show_query() {
+                sqlite3 "file:${FILE_PATH}?mode=ro&immutable=1" "${1}" -header -column
+            }
+            sqlite_no_header() {
+                sqlite3 "file:${FILE_PATH}?mode=ro&immutable=1" "${1}" -noheader
+            }
+            sqlite_rowcount_query="$(
+                sqlite_no_header \
+                    "SELECT group_concat(
+                        'SELECT ''' || name || ''' AS tblname,
+                                            count(*) AS rowcount
+                            FROM ' || name,
+                        ' UNION ALL '
+                    )
+                    FROM sqlite_master
+                    WHERE type='table' AND name NOT LIKE 'sqlite_%';"
+            )"
+            sqlite_show_query \
+                "SELECT tblname AS 'table', rowcount AS 'count',
+                (
+                    SELECT '(' || group_concat(name, ', ') || ')'
+                    FROM pragma_table_info(tblname)
+                ) AS 'columns',
+                (
+                    SELECT '(' || group_concat(
+                        upper(type) || (
+                            CASE WHEN pk > 0 THEN ' PRIMARY KEY' ELSE '' END
+                        ),
+                        ', '
+                    ) || ')'
+                    FROM pragma_table_info(tblname)
+                ) AS 'types'
+                FROM (${sqlite_rowcount_query});"
+            if (( SQLITE_ROW_LIMIT >= 0 )); then
+                echo && echo "***************************************************"
+                sqlite_no_header \
+                    "SELECT name FROM sqlite_master
+                    WHERE type='table' AND name NOT LIKE 'sqlite_%';" |
+                    while read -r sqlite_table; do
+                        sqlite_rowcount="$(sqlite_no_header "SELECT count(*) FROM ${sqlite_table}")"
+                        echo
+                        if (( SQLITE_ROW_LIMIT > 0 )) &&
+                           (( SQLITE_ROW_LIMIT < sqlite_rowcount )); then
+                            echo "${sqlite_table} [${SQLITE_ROW_LIMIT} of ${sqlite_rowcount}]:"
+                            sqlite_ellipsis_query="$(
+                                sqlite_no_header \
+                                    "SELECT 'SELECT ' || group_concat(
+                                        '''...''', ', '
+                                    )
+                                    FROM pragma_table_info(
+                                        '${sqlite_table}'
+                                    );"
+                            )"
+                            sqlite_show_query \
+                                "SELECT * FROM (
+                                    SELECT * FROM ${sqlite_table} LIMIT 1
+                                )
+                                UNION ALL ${sqlite_ellipsis_query} UNION ALL
+                                SELECT * FROM (
+                                    SELECT * FROM ${sqlite_table}
+                                    LIMIT (${SQLITE_ROW_LIMIT} - 1)
+                                    OFFSET (
+                                        ${sqlite_rowcount}
+                                        - (${SQLITE_ROW_LIMIT} - 1)
+                                    )
+                                );"
+                        else
+                            echo "${sqlite_table} [${sqlite_rowcount}]:"
+                            sqlite_show_query "SELECT * FROM ${sqlite_table};"
+                        fi
+                    done
+            fi
+            echo && echo "***************************************************" && echo
+            sqlite_show_query ".schema"
+        else
+            echo "No sqlite3 available"
+        fi ;;
     application/x-7z-compressed | application/x-cb7)
         try 7z l "$FILE_PATH" | _numfmt --field=4,5 --header=16 ;;
     application/x-arc)
