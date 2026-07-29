@@ -82,6 +82,8 @@ append_previewers = [
 prepend_fetchers = [
     { url = "*",  run  = "git", group = "git" },
     { url = "*/", run  = "git", group = "git" },
+    { url = "*",  run  = "cloudbadge", group = "cloudbadge" },
+    { url = "*/", run  = "cloudbadge", group = "cloudbadge" },
 ]
 
 

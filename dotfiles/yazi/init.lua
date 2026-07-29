@@ -18,6 +18,7 @@ require("session"):setup {
 }
 
 require("git"):setup({ order = 500 })
+require("cloudbadge"):setup()
 require("starship"):setup()
 
 -- https://github.com/sxyazi/yazi/blob/main/yazi-plugin/preset/components/linemode.lua

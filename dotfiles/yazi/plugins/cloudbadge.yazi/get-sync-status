@@ -1,0 +1,104 @@
+#!/usr/bin/env -S uv run --script
+# Author: Jan Larres <jan@majutsushi.net>
+# License: MIT/X11
+#
+# /// script
+# dependencies = [
+#     "pyobjc-framework-Cocoa; sys_platform=='darwin'",
+# ]
+# ///
+#
+# https://developer.apple.com/documentation/foundation/urlresourcekey?language=objc
+
+import argparse
+import sys
+from pathlib import Path
+
+if sys.platform == "darwin":
+    from Foundation import (
+        NSURL,
+        NSURLIsUbiquitousItemKey,
+        NSURLUbiquitousItemDownloadingStatusCurrent,
+        NSURLUbiquitousItemDownloadingStatusDownloaded,
+        NSURLUbiquitousItemDownloadingStatusKey,
+        NSURLUbiquitousItemDownloadingStatusNotDownloaded,
+        NSURLUbiquitousItemIsDownloadingKey,
+        NSURLUbiquitousItemIsUploadingKey,
+    )
+
+
+def main(args: argparse.Namespace) -> int:
+    for path in args.path:
+        print(f"{get_icon_for_path(path, args.verbose)}\t{path}")
+
+
+def get_icon_for_path(path: Path, verbose: bool) -> str:
+    url = NSURL.fileURLWithPath_(str(path))
+
+    keys = [
+        NSURLIsUbiquitousItemKey,
+        NSURLUbiquitousItemDownloadingStatusKey,
+        NSURLUbiquitousItemIsDownloadingKey,
+        NSURLUbiquitousItemIsUploadingKey,
+    ]
+
+    values, error = url.resourceValuesForKeys_error_(keys, None)
+    # values, error = url.resourceValuesForKeys_error_(None, None)
+
+    if verbose:
+        if error:
+            print(error)
+        else:
+            for k, v in values.items():
+                print(k, v)
+
+    if not values.get(NSURLIsUbiquitousItemKey, False):
+        return ""
+
+    # There is no feasible way to get the sync status of directories,
+    # so just use a generic cloud icon
+    if path.is_dir():
+        return "󰅟 "
+    if (
+        values[NSURLUbiquitousItemIsDownloadingKey]
+        or values[NSURLUbiquitousItemIsUploadingKey]
+    ):
+        return " "
+    if (
+        values[NSURLUbiquitousItemDownloadingStatusKey]
+        == NSURLUbiquitousItemDownloadingStatusNotDownloaded
+    ):
+        return " "
+    if (
+        values[NSURLUbiquitousItemDownloadingStatusKey]
+        == NSURLUbiquitousItemDownloadingStatusDownloaded
+    ):
+        return "󰅢 "
+    if (
+        values[NSURLUbiquitousItemDownloadingStatusKey]
+        == NSURLUbiquitousItemDownloadingStatusCurrent
+    ):
+        return "󰅠 "
+
+    return "󰨹 "
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="List sync status of cloud paths")
+    parser.add_argument(
+        "path", type=Path, nargs="+", help="the path to get the sync status for"
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        default=False,
+        help="increase output verbosity",
+    )
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    if sys.platform != "darwin":
+        sys.exit(0)
+    sys.exit(main(parse_args()))
