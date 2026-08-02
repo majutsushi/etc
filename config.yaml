@@ -14,18 +14,6 @@ actions:
     [Desktop Entry]
     Hidden=true
     EOF
-  alacritty_gen: |
-    if ! [ -e "{{@@ xdg_config_home @@}}/alacritty/alacritty.toml" ]; then
-        mkdir -p "{{@@ xdg_config_home @@}}/alacritty"
-        cat > "{{@@ xdg_config_home @@}}/alacritty/alacritty.toml" << EOF
-    [general]
-    import = ["{{@@ xdg_config_home @@}}/alacritty/base.toml", "{{@@ xdg_config_home @@}}/alacritty/theme.toml"]
-    EOF
-        cat > "{{@@ xdg_config_home @@}}/alacritty/theme.toml" << EOF
-    [general]
-    import = ["{{@@ xdg_config_home @@}}/alacritty/material-theme.toml"]
-    EOF
-    fi
   build_bat_cache: 'bat cache --build'
   systemd_setup: |
     if command -v systemctl >/dev/null; then
@@ -108,12 +96,6 @@ dotfiles:
   d_aerospace:
     src: aerospace
     dst: ~/.config/aerospace
-  d_alacritty:
-    src: alacritty
-    dst: ~/.config/alacritty
-    link: link_children
-    actions:
-      - alacritty_gen
   d_atuin:
     src: atuin
     dst: ~/.config/atuin

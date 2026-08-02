@@ -18,7 +18,6 @@ import platform
 import re
 import signal
 import sys
-import textwrap
 from pathlib import Path
 from subprocess import CalledProcessError, check_output, run
 
@@ -50,7 +49,6 @@ def main(args: argparse.Namespace) -> int:
     is_dark = args.mode == "dark"
 
     handle_timestamp(is_dark)
-    handle_alacritty(is_dark)
     handle_delta(is_dark)
     handle_sway(is_dark)
 
@@ -77,21 +75,6 @@ def handle_awesome(is_dark: bool) -> None:
         check=True,
         text=True,
     )
-
-
-def handle_alacritty(is_dark: bool) -> None:
-    light_theme = "material"
-    dark_theme = "desert"
-
-    theme_file = XDG_CONFIG_HOME / "alacritty/theme.toml"
-    theme = dark_theme if is_dark else light_theme
-
-    settings = textwrap.dedent(
-        f"""
-    import = ["{XDG_CONFIG_HOME / f"alacritty/{theme}-theme.toml"!s}"]
-    """
-    ).lstrip()
-    theme_file.write_text(settings)
 
 
 def handle_xsettings(is_dark: bool) -> None:
