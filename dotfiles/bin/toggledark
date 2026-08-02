@@ -4,13 +4,10 @@
 #
 # /// script
 # dependencies = [
-#   "psutil",
-#   "pynvim",
 # ]
 # ///
 #
 # Future ideas:
-# https://github.com/blueyed/dotfiles/blob/9f2c882fb8e9844d013fa9af6d7f04b122badd26/vimrc#L1525
 # https://github.com/blueyed/dotfiles/blob/master/usr/bin/sh-setup-x-theme
 # https://github.com/blueyed/dotfiles/blob/master/usr/bin/get-daytime-period
 
@@ -24,9 +21,6 @@ import sys
 import textwrap
 from pathlib import Path
 from subprocess import CalledProcessError, check_output, run
-
-import psutil
-import pynvim
 
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 log = logging.getLogger(__name__)
@@ -58,7 +52,6 @@ def main(args: argparse.Namespace) -> int:
     handle_timestamp(is_dark)
     handle_alacritty(is_dark)
     handle_kitty(is_dark)
-    handle_neovim(is_dark)
     handle_delta(is_dark)
     handle_sway(is_dark)
 
@@ -113,18 +106,6 @@ def handle_kitty(is_dark: bool) -> None:
         run(["pkill", "-USR1", "kitty"], check=True, timeout=10)
     except CalledProcessError:
         return
-
-
-def handle_neovim(is_dark: bool) -> None:
-    for proc in psutil.process_iter(attrs=["name"]):
-        if proc.info["name"] == "nvim":
-            try:
-                for conn in proc.net_connections("unix"):
-                    if conn.laddr:
-                        nvim = pynvim.attach("socket", path=conn.laddr)
-                        nvim.command(f"SetColorscheme {'dark' if is_dark else 'light'}")
-            except psutil.AccessDenied:
-                log.debug("Access denied for PID %s", proc.pid)
 
 
 def handle_xsettings(is_dark: bool) -> None:

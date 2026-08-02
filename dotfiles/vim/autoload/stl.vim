@@ -3,6 +3,38 @@
 
 scriptencoding utf-8
 
+function! s:set_colours(colours) abort
+endfunction
+
+function! stl#set_statuscolours(theme) abort
+    let normalized = substitute(a:theme, '-', '_', 'g')
+    if !has_key(g:, normalized . '_statuscolours')
+        return
+    endif
+
+    let statuscolours = g:{normalized}_statuscolours
+    for name in keys(statuscolours)
+        let colours = {'c': statuscolours[name][0], 'nc': statuscolours[name][1]}
+        let name = (name ==# 'NONE' ? '' : name)
+
+        if exists("colours['c'][0]")
+            exec 'hi StatusLine' . name .
+               \ ' guibg=' . colours['c'][0] .
+               \ ' guifg=' . colours['c'][1] .
+               \ ' gui='   . colours['c'][2] .
+               \ ' cterm=' . colours['c'][2]
+        endif
+
+        if exists("colours['nc'][0]")
+            exec 'hi StatusLine' . name . 'NC' .
+               \ ' guibg=' . colours['nc'][0] .
+               \ ' guifg=' . colours['nc'][1] .
+               \ ' gui='   . colours['nc'][2] .
+               \ ' cterm=' . colours['nc'][2]
+        endif
+    endfor
+endfunction
+
 function! stl#update() abort
     for nr in range(1, winnr('$'))
         call setwinvar(nr, '&statusline', '%!stl#update_win(' . nr . ')')

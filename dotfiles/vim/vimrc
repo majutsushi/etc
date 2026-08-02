@@ -1112,39 +1112,19 @@ endfunction
 
 command! -nargs=1 -complete=color MyColorscheme call s:accurate_colorscheme(<q-args>)
 
-function! s:set_colorscheme(color) abort " {{{2
-    if a:color == "light"
-        if get(g:, "colors_name", "") != "vim-material"
-            set background=light
-            call s:accurate_colorscheme("vim-material")
-        endif
-    else
-        if get(g:, "colors_name", "") != "desert"
-            set background=dark
-            call s:accurate_colorscheme("desert")
-        endif
-    endif
+function! s:set_colorscheme() abort " {{{2
+    let colorscheme = &background == "light" ? "vim-material" : "desert"
+    call s:accurate_colorscheme(colorscheme)
+    call stl#set_statuscolours(colorscheme)
 endfunction
-command! -nargs=1 SetColorscheme call s:set_colorscheme(<q-args>)
 
-function! s:determine_colorscheme() abort " {{{2
-    if has('nvim')
-        call system(["is-dark-mode"])
-    else
-        call system("is-dark-mode")
-    endif
-    if v:shell_error
-        call s:set_colorscheme("light")
-    else
-        call s:set_colorscheme("dark")
-    endif
-endfunction
-command! DetermineColorscheme call s:determine_colorscheme()
-
-call s:determine_colorscheme()
-" autocmd vimrc CursorHold,CursorHoldI * nested call s:determine_colorscheme()
 " Workaround for some highlighting issues
 autocmd ColorScheme * exe 'set filetype=' . &filetype
+
+call s:set_colorscheme()
+" The 'background' value updates automatically, see
+" https://github.com/neovim/neovim/pull/31350
+autocmd OptionSet background call s:set_colorscheme()
 
 " Plugin and script options {{{1
 
