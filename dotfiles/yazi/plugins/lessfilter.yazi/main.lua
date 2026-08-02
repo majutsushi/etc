@@ -27,7 +27,8 @@ function M:entry(job)
     local scroll_delta = tonumber(arg)
     local cur_scroll = get_scroll() or 0
     set_scroll(math.max(0, cur_scroll + scroll_delta))
-    ya.emit("seek", { "horizontal scroll" })
+    -- Force a re-render, see https://github.com/wylie102/duckdb.yazi/issues/32
+    ya.emit("peek", { force = true })
 end
 
 function M:peek(job)
@@ -61,7 +62,6 @@ function M:peek(job)
         lines = lines:gsub("\t", string.rep(" ", rt.preview.tab_size))
         local scroll_delta = get_scroll() or 0
         ya.preview_widget(job, { ui.Text.parse(lines):area(job.area):scroll(scroll_delta * 10, 0) })
-        ya.emit("peek", { force = true })
     end
 end
 
