@@ -51,7 +51,6 @@ def main(args: argparse.Namespace) -> int:
 
     handle_timestamp(is_dark)
     handle_alacritty(is_dark)
-    handle_kitty(is_dark)
     handle_delta(is_dark)
     handle_sway(is_dark)
 
@@ -93,19 +92,6 @@ def handle_alacritty(is_dark: bool) -> None:
     """
     ).lstrip()
     theme_file.write_text(settings)
-
-
-def handle_kitty(is_dark: bool) -> None:
-    theme = "theme-desert.conf" if is_dark else "theme-material.conf"
-    link_path = XDG_CONFIG_HOME / "kitty" / "current-theme.conf"
-    if link_path.exists():
-        link_path.unlink()
-    link_path.symlink_to(XDG_CONFIG_HOME / "kitty" / theme)
-
-    try:
-        run(["pkill", "-USR1", "kitty"], check=True, timeout=10)
-    except CalledProcessError:
-        return
 
 
 def handle_xsettings(is_dark: bool) -> None:
