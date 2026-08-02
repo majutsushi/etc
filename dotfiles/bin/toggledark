@@ -10,6 +10,8 @@
 # Future ideas:
 # https://github.com/blueyed/dotfiles/blob/master/usr/bin/sh-setup-x-theme
 # https://github.com/blueyed/dotfiles/blob/master/usr/bin/get-daytime-period
+#
+# ruff: noqa: S603, S607
 
 import argparse
 import logging
