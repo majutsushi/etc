@@ -875,7 +875,10 @@ let g:vimsyn_folding = 'afmpPrt'
 set diffopt=filler,vertical
 
 function s:diffexpr()
-    let opt = "--text --binary --minimal "
+    let opt = "--text --minimal "
+    if !has('mac')
+        let opt .= "--binary "
+    endif
     if &diffopt =~ "icase"
         let opt .= "-i "
     endif
