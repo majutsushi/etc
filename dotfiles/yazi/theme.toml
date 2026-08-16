@@ -57,3 +57,11 @@ append_exts = [
     { name = "cbr", text = "" },
     { name = "cb7", text = "" }
 ]
+
+[git]
+modified_sign = "M"
+added_sign = "A"
+untracked_sign = "?"
+ignored_sign = "!"
+deleted_sign = "D"
+updated_sign = "U"

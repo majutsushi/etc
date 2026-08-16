@@ -50,11 +50,7 @@ prepend_rules = [
 
 [plugin]
 prepend_preloaders = [
-    { mime = "text/*",                 run = "lessfilter" },
-    { mime = "*/xml",                  run = "lessfilter" },
-    { mime = "*/javascript",           run = "lessfilter" },
-    { mime = "*/wine-extension-ini",   run = "lessfilter" },
-    { mime = "application/json",       run = "lessfilter" },
+    { mime = "{text/*,*/xml,*/javascript,*/wine-extension-ini,application/json,application/iso9660-image}", run = "lessfilter" },
 
     { mime = "application/epub+zip",           run = "thumbnailer epub",   for = "linux" },
     { mime = "application/x-mobipocket-ebook", run = "thumbnailer mobi",   for = "linux" },
@@ -64,17 +60,11 @@ append_preloaders = [
     { mime = "application/*", prio = "low", run = "lessfilter" },
 ]
 prepend_previewers = [
-    { mime = "text/*",                 run = "lessfilter" },
-    { mime = "*/xml",                  run = "lessfilter" },
-    { mime = "*/javascript",           run = "lessfilter" },
-    { mime = "*/wine-extension-ini",   run = "lessfilter" },
-    { mime = "application/json",       run = "lessfilter" },
+    { mime = "{text/*,*/xml,*/javascript,*/wine-extension-ini,application/json,application/iso9660-image}", run = "lessfilter" },
 
     { mime = "application/epub+zip",           run = "thumbnailer epub",   for = "linux" },
     { mime = "application/x-mobipocket-ebook", run = "thumbnailer mobi",   for = "linux" },
     { url  = "*.{cbz,cbr,cb7}",                run = "thumbnailer papers", for = "linux" },
-
-    { mime = "application/iso9660-image", run = "lessfilter" },
 ]
 append_previewers = [
     { url = "*", run = "lessfilter" },

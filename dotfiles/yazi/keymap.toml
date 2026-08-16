@@ -12,7 +12,6 @@ prepend_keymap = [
     { on = "l",       run = "plugin smart-enter",             desc = "Enter the child directory, or open the file" },
     { on = "<Enter>", run = "open --interactive",             desc = "Open selected files interactively" },
     { on = "<C-s>",   run = 'shell "$SHELL" --block',         desc = "Open shell here" },
-    { on = [ "c", "k" ], run = 'shell --block -- kitten dnd %s', desc = "Start drag&drop" },
     { on = "<{>",     run = 'plugin parent-arrow -- -1',      desc = "Go to previous parent directory" },
     { on = "<}>",     run = 'plugin parent-arrow -- 1',       desc = "Go to next parent directory" },
     { on = "M",       run = 'plugin mount',                   desc = "Manage mounts" },
@@ -60,4 +59,10 @@ prepend_keymap = [
 append_keymap = [
     { on = [ "<C-k>" ], run = "arrow prev", desc = "Move cursor up" },
     { on = [ "<C-j>" ], run = "arrow next", desc = "Move cursor down" },
+]
+
+[help]
+append_keymap = [
+    { on = "<C-k>", run = "arrow prev", desc = "Previous line" },
+    { on = "<C-j>", run = "arrow next", desc = "Next line" },
 ]

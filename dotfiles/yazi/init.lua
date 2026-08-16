@@ -1,15 +1,6 @@
 package.path = package.path .. ";" .. os.getenv("DOTFILES") .. "/lua/?.lua"
 package.cpath = package.cpath .. ";" .. os.getenv("DOTFILES") .. "/lua/?.so"
 
--- https://github.com/yazi-rs/plugins/tree/main/git.yazi
-th.git = th.git or {}
-th.git.modified_sign = "M"
-th.git.added_sign = "A"
-th.git.untracked_sign = "?"
-th.git.ignored_sign = "!"
-th.git.deleted_sign = "D"
-th.git.updated_sign = "U"
-
 -- inspect = require("inspect")
 
 -- https://yazi-rs.github.io/docs/dds/#session.lua
@@ -54,7 +45,7 @@ Header:children_add(function()
         return ui.Line {}
     end
 
-    local icon = h:icon()
+    local icon = th.icon:match(h)
     local icon_span = ui.Span(" " .. icon.text .. " "):style(icon.style)
     local linked = ""
     if h.link_to ~= nil then
