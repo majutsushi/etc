@@ -18,3 +18,7 @@
 - url: https://github.com/Rolv-Apneseth/starship.yazi
 - url: https://github.com/Ape/open-with-cmd.yazi
 - url: https://github.com/ndtoan96/ouch.yazi
+- url: https://github.com/yazi-rs/flavors
+  path: catppuccin-mocha.yazi
+- url: https://github.com/yazi-rs/flavors
+  path: catppuccin-latte.yazi

@@ -4,22 +4,12 @@
 
 #:schema https://yazi-rs.github.io/schemas/theme.json
 
-[mgr]
-border_style = { fg = "darkgray" }
-
-[mode]
-normal_main = { fg = "white", bg = "#6182b8", bold = true }
-select_main = { fg = "white", bg = "red", bold = true }
-unset_main  = { fg = "white", bg = "red", bold = true }
+[flavor]
+dark  = "catppuccin-mocha"
+light = "catppuccin-latte"
 
 [which]
 cols = 1
-mask            = { bg = "reset" }
-cand            = { fg = "red" }
-# rest            = { fg = "darkgray" }
-desc            = { fg = "reset" }
-# separator       = "  "
-# separator_style = { fg = "darkgray" }
 
 [filetype]
 rules = [
