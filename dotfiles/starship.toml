@@ -25,7 +25,7 @@ description = "Incognito mode"
 
 [env_var.MISE]
 variable = "MISE_ENV"
-format = "🍽️  [$env_value]($style) "
+format = "🍽️ [$env_value]($style) "
 
 [git_branch]
 format = " [$branch(:$remote_branch)]($style) "
