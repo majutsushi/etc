@@ -216,7 +216,7 @@ case "$MIME_TYPE" in
         if has_cmd sqlite3; then
             SQLITE_ROW_LIMIT=5
             sqlite_show_query() {
-                sqlite3 "file:${FILE_PATH}?mode=ro&immutable=1" ".mode box --wrap 50" "${1}" -header
+                sqlite3 "file:${FILE_PATH}?mode=ro&immutable=1" ".mode box --wrap 50 --linelimit 10 --charlimit 500 --titlelimit 20" "${1}" -header
             }
             sqlite_no_header() {
                 sqlite3 "file:${FILE_PATH}?mode=ro&immutable=1" "${1}" -noheader
