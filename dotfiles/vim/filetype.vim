@@ -21,4 +21,9 @@ augroup filetypedetect
     autocmd BufNewFile,BufReadPost *.sieve   setfiletype sieve
     autocmd BufNewFile,BufReadPost *.jobdsl   setfiletype groovy
     autocmd BufNewFile,BufReadPost Dockerfile.*,*.Dockerfile   setfiletype dockerfile
+
+    au BufNewFile,BufRead *
+        \  if getline(1) =~ '#!/usr/bin/env -S uv run'
+        \|   setf python
+        \| endif
 augroup END
