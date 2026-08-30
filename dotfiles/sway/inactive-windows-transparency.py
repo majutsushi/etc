@@ -33,7 +33,8 @@ def on_window_focus(ipc: i3ipc.Connection, event):
 
     if focused.id != prev_focused.id:  # https://github.com/swaywm/sway/issues/2859
         focused.command("opacity 1")
-        prev_focused.command("opacity " + OPACITY)
+        if focused.scratchpad_state != "fresh" and not prev_focused.sticky:
+            prev_focused.command("opacity " + OPACITY)
         prev_focused = focused
 
 
@@ -42,7 +43,7 @@ def set_opacity(ipc: i3ipc.Connection):
     for window in ipc.get_tree():
         if window.focused:
             prev_focused = window
-        else:
+        elif not window.sticky:
             window.command("opacity " + OPACITY)
 
 
